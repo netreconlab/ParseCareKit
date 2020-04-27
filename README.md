@@ -38,7 +38,7 @@ During initialization of `ParseSynchronizedCareKitStoreManager`, all CareKit dat
 ** Note that only the latest state of an OCK entity is synchronized to parse-server. The parse-server doesn't maintain the versioned data like the local OCKStore. If you want this functionality, you will have to develop it as the framework doesn't support it, and parse-server queries are not setup for this. **
 
 The mapping from CareKit -> Parse tables/classes are as follows:
-* OCKPatient <-> User
+* OCKPatient <-> User - Note that by default of this framework, any "user" (doctor, patient, caregiver, etc.) is an `OCKPatient` and will have a corresponding record in your Parse `User` table.
 * OCKCarePlan <-> CarePlan
 * OCKTask <-> Task
 * OCKContact <-> Contact
@@ -50,22 +50,84 @@ The mapping from CareKit -> Parse tables/classes are as follows:
 To create a Parse object from a CareKit object:
 
 ```swift
-let newPatient = OCKPatient(id: "uniqueId", givenName: "Alice", familyName: "Johnson")
-let parseObject = PFUser(careKitEntity: newPatient, storeManager: dataStoreManager){
-    copiedParse in
+let newCarePlan = OCKCarePlan(id: "uniqueId", title: "New Care Plan", patientID: nil)
+let _ = PFUser(careKitEntity: newCarePlan, storeManager: dataStoreManager){
+    copiedToParseObject in
                     
-    guard let parseUserObject = copiedParse else{
-        print("Error copying OCKPatient")
+    guard let parseCarePlan = copiedToParseObject else{
+        print("Error copying OCKCarePlan")
         return
     }
 }
 ```
 
 To create a CareKit object from a Parse object:
+
 ```swift
-guard let careKitObject = newPatient.convertToCareKit() else{
+guard let careKitCarePlan = parseCarePlan.convertToCareKit() else{
   print("Error converting to CareKit object")
   return
+}
+
+dataStoreManager.store.addAnyCarePlan(patient, callbackQueue: .main){
+    result in
+
+    switch result{
+    case .success(let savedCareKitCarePlan):
+        print("patient \(savedCareKitCarePlan) saved successfully")
+        
+        //Note that since the "cloudStoreManager" singleton is still alive, it will automatically sync your new CarePlan to Parse. There is no need to save the Parse object directly. I recommend letting "ParseSynchronizedCareKitStoreManager" sync all of your data to Parse instead of saving your own objects (with the exception of signing up a PFUser, which I show later)
+    case .failure(let error):
+        print("Error savinf OCKCarePlan. \(error)")
+    }
+```
+
+Signing up a `PFUser` and then using them as an `OCKPatient` is a slightly different process due to you needing to let Parse properly sign in the user (verifying credentials, creating tokens, etc) before saving them to the `OCKStore`. An example is below:
+
+```swift
+let newParsePatient = PFUser()
+newParsePatient.username = uniqueUsername
+newParsePatient.password = "strongPassword"
+newParsePatient.email = "email@netreconlab.cs.uky.edu"
+
+newParsePatient.signUpInBackground{
+    (success, error)->Void in
+    if (success == true){
+        print("Sign Up successfull")
+    
+        guard let signedInPatient = PFUser.current() else{
+            //Something went wrong with signing up this user
+            print(Error signing in \(error))
+            return
+        }
+        
+        //... fill in the rest of the signedInPatient attributes
+        var nameComponents = PersonNameComponents()
+        nameComponents.givenName = firstName
+        nameComponents.familyName = lastName
+        let name = CareKitParsonNameComponents.familyName.convertToDictionary(nameComponents)
+        signedInPatient.name = name
+        
+        signedInPatient.uuid = UUID().uuidString
+        signedInPatient.tags = [signedInPatient.uuid]
+        
+        guard let careKitPatient = signedInPatient.convertToCareKit() else{
+          print("Error converting to CareKit object")
+          return
+        }
+        
+        dataStoreManager.store.addAnyPatient(careKitPatient, callbackQueue: .main){
+        result in
+
+        switch result{
+        case .success(let savedCareKitPatient):
+            print("Your new patient \(savedCareKitPatient) is saved to OCKStore locally and synced to your Parse Server")
+        case .failure(let error):
+            print("Error savinf OCKCarePlan. \(error)")
+        }
+    else{
+        print("Parse had trouble signing in user with error: \(error)")
+    }    
 }
 ```
 
