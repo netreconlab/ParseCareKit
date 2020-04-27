@@ -22,6 +22,7 @@
 		9119D61024561D10001B7AA3 /* CareKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9119D60F24561D10001B7AA3 /* CareKit */; };
 		9119D61F24562933001B7AA3 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; };
 		9119D62024562933001B7AA3 /* Pods_ParseCareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9119D69A245689DA001B7AA3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9119D699245689D9001B7AA3 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,6 +57,7 @@
 		9119D60024561A28001B7AA3 /* OutcomeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutcomeValue.swift; sourceTree = "<group>"; };
 		9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitConstants.swift; sourceTree = "<group>"; };
 		9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitUtility.swift; sourceTree = "<group>"; };
+		9119D699245689D9001B7AA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		9119D5E1245618D7001B7AA3 = {
 			isa = PBXGroup;
 			children = (
+				9119D699245689D9001B7AA3 /* README.md */,
 				9119D5ED245618D7001B7AA3 /* ParseCareKit */,
 				9119D5EC245618D7001B7AA3 /* Products */,
 				0530611FC1C08596D30B7FAF /* Pods */,
@@ -204,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9119D69A245689DA001B7AA3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,7 +23,7 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
     private var storeManager: OCKSynchronizedStoreManager!
     private var cancellable:AnyCancellable!
     
-    public init(_ synchronizedStore: OCKSynchronizedStoreManager) {
+    public init(_ synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool=true) {
         super.init()
         
         storeManager = synchronizedStore
@@ -44,10 +44,12 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
                 print("Warning in ParseSynchronizedCareKitStoreManager.init(). Handling notificication \(notification) isn't implemented")
             }
         }
-        synchonizeAllDataToCloud()
+        if synchCareStoreDataNow{
+            synchonizeAllDataToCloud()
+        }
     }
     
-    private func handlePatientNotification(_ notification: OCKPatientNotification) {
+    open func handlePatientNotification(_ notification: OCKPatientNotification) {
         switch notification.category {
         case .add: addCloudPatients([notification.patient])
         case .update: updateCloudPatients([notification.patient])
@@ -55,7 +57,7 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
         }
     }
     
-    private func handleCarePlanNotification(_ notification: OCKCarePlanNotification) {
+    open func handleCarePlanNotification(_ notification: OCKCarePlanNotification) {
         switch notification.category {
         case .add: addCloudCarePlans([notification.carePlan])
         case .update: updateCloudCarePlans([notification.carePlan])
@@ -63,7 +65,7 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
         }
     }
     
-    private func handleTaskNotification(_ notification: OCKTaskNotification) {
+    open func handleTaskNotification(_ notification: OCKTaskNotification) {
         switch notification.category {
         case .add: addCloudTasks([notification.task])
         case .update: updateCloudTasks([notification.task])
@@ -71,7 +73,7 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
         }
     }
     
-    private func handleOutcomeNotification(_ notification: OCKOutcomeNotification) {
+    open func handleOutcomeNotification(_ notification: OCKOutcomeNotification) {
         switch notification.category {
         case .add: addCloudOutcomes([notification.outcome])
         case .update: updateCloudOutcomes([notification.outcome])
@@ -79,7 +81,7 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
         }
     }
     
-    private func handleContactNotification(_ notification: OCKContactNotification) {
+    open func handleContactNotification(_ notification: OCKContactNotification) {
         switch notification.category {
         case .add: addCloudContacts([notification.contact])
         case .update: updateCloudContacts([notification.contact])
