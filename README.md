@@ -27,7 +27,7 @@ Assuming you are already familiar with [CareKit](https://github.com/carekit-appl
 
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedCareKitStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedCareKitStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
-```
+```swift
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk)
 let dataStoreManager = OCKSynchronizedStoreManager(wrapping: dataStore)
 let cloudStoreManager = ParseSynchronizedCareKitStoreManager(dataStoreManager)
@@ -49,20 +49,20 @@ The mapping from CareKit -> Parse tables/classes are as follows:
 
 To create a Parse object from a CareKit object:
 
-```
+```swift
 let newPatient = OCKPatient(id: "uniqueId", givenName: "Alice", familyName: "Johnson")
 let parseObject = PFUser(careKitEntity: newPatient, storeManager: dataStoreManager){
     copiedParse in
                     
-                    guard let parseUserObject = copiedParse else{
-                        print("Error copying OCKPatient")
-                        return
-                    }
-                }
+    guard let parseUserObject = copiedParse else{
+        print("Error copying OCKPatient")
+        return
+    }
+}
 ```
 
 To create a CareKit object from a Parse object:
-```
+```swift
 guard let careKitObject = newPatient.convertToCareKit() else{
   print("Error converting to CareKit object")
   return
