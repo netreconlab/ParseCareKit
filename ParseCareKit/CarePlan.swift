@@ -9,6 +9,12 @@
 import Parse
 import CareKit
 
+protocol PCKAnyCarePlan: PCKEntity {
+    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
+    func updateCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager)
+    func deleteFromCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager)
+}
+
 public class CarePlan : PFObject, PFSubclassing {
 
     //Parse only
@@ -41,15 +47,11 @@ public class CarePlan : PFObject, PFSubclassing {
     }
 }
 
-extension CarePlan: PCKEntity {
+extension CarePlan: PCKAnyCarePlan {
     
     public convenience init(careKitEntity: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        guard let _ = PFUser.current(),
-            let castedCarePlan = careKitEntity as? OCKCarePlan else{
-            return
-        }
-        self.copyCareKit(castedCarePlan, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     open func updateCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager){
@@ -266,9 +268,12 @@ extension CarePlan: PCKEntity {
         }
     }
     
-    
-    
-    func copyCareKit(_ carePlan: OCKCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(CarePlan?) -> Void){
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(CarePlan?) -> Void){
+        
+        guard let _ = PFUser.current(),
+            let carePlan = carePlanAny as? OCKCarePlan else{
+            return
+        }
         
         self.uuid = carePlan.id
         self.title = carePlan.title

@@ -9,6 +9,12 @@
 import Parse
 import CareKit
 
+protocol PCKAnyOutcome: PCKEntity {
+    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
+    func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
+    func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
+}
+
 public class Outcome : PFObject, PFSubclassing {
 
     //Parse only
@@ -41,14 +47,11 @@ public class Outcome : PFObject, PFSubclassing {
     }
 }
 
-extension Outcome: PCKEntity {
+extension Outcome: PCKAnyOutcome {
     
     public convenience init(careKitEntity: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        guard let castedOutcome = careKitEntity as? OCKOutcome else{
-            return
-        }
-        self.copyCareKit(castedOutcome, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     open func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager){
@@ -285,7 +288,13 @@ extension Outcome: PCKEntity {
         }
     }
     
-    func copyCareKit(_ outcome: OCKOutcome, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Outcome?) -> Void){
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Outcome?) -> Void){
+        
+        guard let _ = PFUser.current(),
+            let outcome = outcomeAny as? OCKOutcome else{
+            return
+        }
+        
         self.careKitId = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier

@@ -286,8 +286,8 @@ public enum CareKitParsonNameComponents:String{
                 components.nameSuffix = value
             case .nickname:
                 components.nickname = value
-            @unknown default:
-                continue
+            //@unknown default:
+            //    continue
             }
             
         }
@@ -515,8 +515,8 @@ public enum CareKitInterval:String{
                     continue
                 }
                 yearForWeekOfYear = Int(convertedValue)
-            @unknown default:
-                continue
+            //@unknown default:
+            //    continue
             }
         }
         

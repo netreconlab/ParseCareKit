@@ -9,6 +9,12 @@
 import Parse
 import CareKit
 
+protocol PCKAnyContact: PCKEntity {
+    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
+    func updateCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager)
+    func deleteFromCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager)
+}
+
 public class Contact : PFObject, PFSubclassing {
 
     //Parse only
@@ -54,15 +60,11 @@ public class Contact : PFObject, PFSubclassing {
     }
 }
 
-extension Contact: PCKEntity {
+extension Contact: PCKAnyContact {
     
     public convenience init(careKitEntity: OCKAnyContact, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        guard let _ = PFUser.current(),
-            let castedContact = careKitEntity as? OCKContact else{
-            return
-        }
-        self.copyCareKit(castedContact, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     open func updateCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager){
@@ -278,7 +280,12 @@ extension Contact: PCKEntity {
         }
     }
     
-    func copyCareKit(_ contact: OCKContact, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Contact?) -> Void){
+    open func copyCareKit(_ contactAny: OCKAnyContact, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Contact?) -> Void){
+        
+        guard let _ = PFUser.current(),
+            let contact = contactAny as? OCKContact else{
+            return
+        }
         
         self.uuid = contact.id
         self.groupIdentifier = contact.groupIdentifier

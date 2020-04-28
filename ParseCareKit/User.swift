@@ -9,7 +9,13 @@
 import Parse
 import CareKit
 
-extension PFUser: PCKEntity {
+protocol PCKAnyUser: PCKEntity {
+    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
+    func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
+    func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
+}
+
+extension PFUser: PCKAnyUser {
     
     //Parse only
     @NSManaged public var availableTypes:[String]//This can be appended on OCKStore name for type
@@ -47,11 +53,7 @@ extension PFUser: PCKEntity {
 
     public convenience init(careKitEntity: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        guard let _ = PFUser.current(),
-            let castedPatient = careKitEntity as? OCKPatient else{
-            return
-        }
-        self.copyCareKit(castedPatient, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     open func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager){
@@ -290,7 +292,12 @@ extension PFUser: PCKEntity {
         }
     }
     
-    func copyCareKit(_ patient: OCKPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFUser)->Void){
+    open func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFUser)->Void){
+        
+        guard let _ = PFUser.current(),
+            let patient = patientAny as? OCKPatient else{
+            return
+        }
         
         self.uuid = patient.id
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(patient.name)

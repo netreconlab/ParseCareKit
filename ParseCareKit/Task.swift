@@ -9,6 +9,12 @@
 import Parse
 import CareKit
 
+protocol PCKAnyTask: PCKEntity {
+    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
+    func updateCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager)
+    func deleteFromCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager)
+}
+
 public class Task : PFObject, PFSubclassing {
 
     //Parse only
@@ -43,15 +49,11 @@ public class Task : PFObject, PFSubclassing {
     }
 }
 
-extension Task: PCKEntity {
+extension Task: PCKAnyTask {
     
     public convenience init(careKitEntity: OCKAnyTask, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        guard let _ = PFUser.current(),
-            let castedTask = careKitEntity as? OCKTask else{
-            return
-        }
-        self.copyCareKit(castedTask, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     open func updateCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager){
@@ -267,7 +269,12 @@ extension Task: PCKEntity {
         }
     }
     
-    func copyCareKit(_ task: OCKTask, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Task?) -> Void){
+    open func copyCareKit(_ taskAny: OCKAnyTask, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Task?) -> Void){
+        
+        guard let _ = PFUser.current(),
+            let task = taskAny as? OCKTask else{
+            return
+        }
         
         self.uuid = task.id
         self.groupIdentifier = task.groupIdentifier
