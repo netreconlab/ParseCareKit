@@ -13,7 +13,7 @@ import CareKit
 //#Mark - Parse Database Keys
 
 //#Mark - User Class
-public let kPCKUserClassKey                                 = PFUser.parseClassName()
+public let kPCKUserClassKey                                 = User.parseClassName()
 
 // Field keys
 public let kPCKUserNameKey                                     = "name"

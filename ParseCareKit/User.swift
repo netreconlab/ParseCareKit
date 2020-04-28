@@ -15,7 +15,7 @@ protocol PCKAnyUser: PCKEntity {
     func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
 }
 
-extension PFUser: PCKAnyUser {
+open class User: PFUser, PCKAnyUser {
     
     //Parse only
     @NSManaged public var availableTypes:[String]//This can be appended on OCKStore name for type
@@ -57,7 +57,7 @@ extension PFUser: PCKAnyUser {
     }
     
     open func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedPatient = patient as? OCKPatient else{
             return
         }
@@ -69,12 +69,12 @@ extension PFUser: PCKAnyUser {
         guard let remoteID = castedPatient.remoteID else{
             
             //Check to see if this entity is already in the Cloud, but not paired locally
-            let query = PFUser.query()!
+            let query = User.query()!
             query.whereKey(kPCKUserIdKey, equalTo: patient.id)
             query.findObjectsInBackground{
                 (objects, error) in
                 
-                guard let foundObject = objects?.first as? PFUser else{
+                guard let foundObject = objects?.first as? User else{
                     return
                 }
                 self.compareUpdate(castedPatient, parse: foundObject, storeManager: storeManager)
@@ -83,19 +83,19 @@ extension PFUser: PCKAnyUser {
         }
         
         //Get latest item from the Cloud to compare against
-        let query = PFUser.query()!
+        let query = User.query()!
         query.whereKey(kPCKUserObjectIdKey, equalTo: remoteID)
         query.findObjectsInBackground{
             (objects, error) in
             
-            guard let foundObject = objects?.first as? PFUser else{
+            guard let foundObject = objects?.first as? User else{
                 return
             }
             self.compareUpdate(castedPatient, parse: foundObject, storeManager: storeManager)
         }
     }
     
-    func compareUpdate(_ careKit: OCKPatient, parse: PFUser, storeManager: OCKSynchronizedStoreManager){
+    func compareUpdate(_ careKit: OCKPatient, parse: User, storeManager: OCKSynchronizedStoreManager){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             self.copyCareKit(careKit, storeManager: storeManager){
@@ -153,7 +153,7 @@ extension PFUser: PCKAnyUser {
     }
     
     open func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedPatient = patient as? OCKPatient else{
             return
         }
@@ -161,12 +161,12 @@ extension PFUser: PCKAnyUser {
         guard let remoteID = castedPatient.remoteID else{
             
             //Check to see if this entity is already in the Cloud, but not paired locally
-            let query = PFUser.query()!
+            let query = User.query()!
             query.whereKey(kPCKUserIdKey, equalTo: patient.id)
             query.findObjectsInBackground{
                 (objects, error) in
                 
-                guard let foundObject = objects?.first as? PFUser else{
+                guard let foundObject = objects?.first as? User else{
                     return
                 }
                 self.compareDelete(castedPatient, parse: foundObject, storeManager: storeManager)
@@ -175,19 +175,19 @@ extension PFUser: PCKAnyUser {
         }
         
         //Get latest item from the Cloud to compare against
-        let query = PFUser.query()!
+        let query = User.query()!
         query.whereKey(kPCKUserObjectIdKey, equalTo: remoteID)
         query.findObjectsInBackground{
             (objects, error) in
             
-            guard let foundObject = objects?.first as? PFUser else{
+            guard let foundObject = objects?.first as? User else{
                 return
             }
             self.compareDelete(castedPatient, parse: foundObject, storeManager: storeManager)
         }
     }
     
-    func compareDelete(_ careKit: OCKPatient, parse: PFUser, storeManager: OCKSynchronizedStoreManager){
+    func compareDelete(_ careKit: OCKPatient, parse: User, storeManager: OCKSynchronizedStoreManager){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
@@ -198,9 +198,9 @@ extension PFUser: PCKAnyUser {
                 (success, error) in
                 if !success{
                     guard let error = error else{return}
-                    print("Error in PFUser.deleteFromCloudEventually(). \(error)")
+                    print("Error in User.deleteFromCloudEventually(). \(error)")
                 }else{
-                    print("Successfully deleted PFUser \(self) in the Cloud")
+                    print("Successfully deleted User \(self) in the Cloud")
                 }
             }
         }else {
@@ -209,16 +209,16 @@ extension PFUser: PCKAnyUser {
                 result in
                 switch result{
                 case .success(_):
-                    print("Successfully deleting PFUser \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    print("Successfully deleting User \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 case .failure(_):
-                    print("Error deleting PFUser \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    print("Error deleting User \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
     open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
-        guard let thisUser = PFUser.current() else{
+        guard let thisUser = User.current() else{
             return
         }
         //If this doesn't belong to this patient, they are not allowed to push it to the Cloud
@@ -231,7 +231,7 @@ extension PFUser: PCKAnyUser {
             case .success(let fetchedPatient):
                 guard let patient = fetchedPatient as? OCKPatient else{return}
                 //Check to see if already in the cloud
-                let query = PFUser.query()!
+                let query = User.query()!
                 query.whereKey(kPCKUserIdKey, equalTo: patient.id)
                 query.findObjectsInBackground(){
                     (objects, error) in
@@ -292,9 +292,9 @@ extension PFUser: PCKAnyUser {
         }
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFUser)->Void){
+    open func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(User)->Void){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let patient = patientAny as? OCKPatient else{
             return
         }

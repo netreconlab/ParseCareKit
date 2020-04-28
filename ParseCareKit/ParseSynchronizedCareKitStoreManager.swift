@@ -18,7 +18,7 @@ public protocol PCKEntity {
     func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
 }
 
-public class ParseSynchronizedCareKitStoreManager: NSObject{
+open class ParseSynchronizedCareKitStoreManager: NSObject{
     
     private var storeManager: OCKSynchronizedStoreManager!
     private var cancellable:AnyCancellable!
@@ -292,10 +292,10 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
         var patientsDictionary = [String:OCKAnyPatient]()
         patients.forEach{patientsDictionary[$0.id] = $0}
         //Setup Parse query for User table
-        let query = PFUser.query()!
+        let query = User.query()!
         query.whereKey(kPCKUserIdKey, containedIn: Array(patientsDictionary.keys))
         query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundUsers = objects as? [PFUser] else{
+            guard let foundUsers = objects as? [User] else{
                 return
             }
             //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
@@ -312,10 +312,10 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
         var patientsDictionary = [String:OCKAnyPatient]()
         patients.forEach{patientsDictionary[$0.id] = $0}
         //Setup Parse query for User table
-        let query = PFUser.query()!
+        let query = User.query()!
         query.whereKey(kPCKUserIdKey, containedIn: Array(patientsDictionary.keys))
         query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundUsers = objects as? [PFUser] else{
+            guard let foundUsers = objects as? [User] else{
                 return
             }
             //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
@@ -329,13 +329,13 @@ public class ParseSynchronizedCareKitStoreManager: NSObject{
     
     private func addCloudPatients(_ patients: [OCKAnyPatient]) {
         patients.forEach{
-            guard let thisUser = PFUser.current() else{
+            guard let thisUser = User.current() else{
                 return
             }
             
             //Can only add to Cloud if this patient is you
             if thisUser.uuid == $0.id{
-                let _ = PFUser(careKitEntity: $0, storeManager: storeManager){
+                let _ = User(careKitEntity: $0, storeManager: storeManager){
                     copiedPatient in
                     if copiedPatient != nil{
                         copiedPatient!.addToCloudInBackground(self.storeManager)

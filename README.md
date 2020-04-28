@@ -51,7 +51,7 @@ To create a Parse object from a CareKit object:
 
 ```swift
 let newCarePlan = OCKCarePlan(id: "uniqueId", title: "New Care Plan", patientID: nil)
-let _ = PFUser(careKitEntity: newCarePlan, storeManager: dataStoreManager){
+let _ = User(careKitEntity: newCarePlan, storeManager: dataStoreManager){
     copiedToParseObject in
                     
     guard let parseCarePlan = copiedToParseObject else{
@@ -76,17 +76,17 @@ dataStoreManager.store.addAnyCarePlan(patient, callbackQueue: .main){
     case .success(let savedCareKitCarePlan):
         print("patient \(savedCareKitCarePlan) saved successfully")
         
-        //Note that since the "cloudStoreManager" singleton is still alive, it will automatically sync your new CarePlan to Parse. There is no need to save the Parse object directly. I recommend letting "ParseSynchronizedCareKitStoreManager" sync all of your data to Parse instead of saving your own objects (with the exception of signing up a PFUser, which I show later)
+        //Note that since the "cloudStoreManager" singleton is still alive, it will automatically sync your new CarePlan to Parse. There is no need to save the Parse object directly. I recommend letting "ParseSynchronizedCareKitStoreManager" sync all of your data to Parse instead of saving your own objects (with the exception of signing up a User, which I show later)
     case .failure(let error):
         print("Error savinf OCKCarePlan. \(error)")
     }
 }
 ```
 
-Signing up a `PFUser` and then using them as an `OCKPatient` is a slightly different process due to you needing to let Parse properly sign in the user (verifying credentials, creating tokens, etc) before saving them to the `OCKStore`. An example is below:
+Signing up a `User` and then using them as an `OCKPatient` is a slightly different process due to you needing to let Parse properly sign in the user (verifying credentials, creating tokens, etc) before saving them to the `OCKStore`. An example is below:
 
 ```swift
-let newParsePatient = PFUser()
+let newParsePatient = User()
 newParsePatient.username = uniqueUsername
 newParsePatient.password = "strongPassword"
 newParsePatient.email = "email@netreconlab.cs.uky.edu"
@@ -96,7 +96,7 @@ newParsePatient.signUpInBackground{
     if (success == true){
         print("Sign Up successfull")
     
-        guard let signedInPatient = PFUser.current() else{
+        guard let signedInPatient = User.current() else{
             //Something went wrong with signing up this user
             print(Error signing in \(error))
             return

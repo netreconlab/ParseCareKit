@@ -15,11 +15,11 @@ protocol PCKAnyTask: PCKEntity {
     func deleteFromCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager)
 }
 
-public class Task : PFObject, PFSubclassing {
+open class Task : PFObject, PFSubclassing, PCKAnyTask {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
-    @NSManaged public var userDeliveredToDestination:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
+    @NSManaged public var userDeliveredToDestination:User?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -47,9 +47,6 @@ public class Task : PFObject, PFSubclassing {
     public static func parseClassName() -> String {
         return kPCKTaskClassKey
     }
-}
-
-extension Task: PCKAnyTask {
     
     public convenience init(careKitEntity: OCKAnyTask, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
@@ -57,7 +54,7 @@ extension Task: PCKAnyTask {
     }
     
     open func updateCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedTask = task as? OCKTask else{
             return
         }
@@ -134,7 +131,7 @@ extension Task: PCKAnyTask {
     }
     
     open func deleteFromCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedTask = task as? OCKTask else{
             return
         }
@@ -201,7 +198,7 @@ extension Task: PCKAnyTask {
     }
     
     open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current()else{
+        guard let _ = User.current()else{
             return
         }
         storeManager.store.fetchAnyTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
@@ -271,7 +268,7 @@ extension Task: PCKAnyTask {
     
     open func copyCareKit(_ taskAny: OCKAnyTask, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Task?) -> Void){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let task = taskAny as? OCKTask else{
             return
         }

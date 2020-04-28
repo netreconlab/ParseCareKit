@@ -10,11 +10,11 @@ import Parse
 import CareKit
 
 
-public class OutcomeValue : PFObject, PFSubclassing {
+open class OutcomeValue : PFObject, PFSubclassing {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
-    @NSManaged public var userDeliveredToDestination:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
+    @NSManaged public var userDeliveredToDestination:User?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var index:Int
@@ -41,9 +41,6 @@ public class OutcomeValue : PFObject, PFSubclassing {
     public static func parseClassName() -> String {
         return kPCKOutcomeValueClassKey
     }
-}
-
-extension OutcomeValue {
     
     public convenience init(careKitEntity:OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
         self.init()

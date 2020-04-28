@@ -15,13 +15,13 @@ protocol PCKAnyCarePlan: PCKEntity {
     func deleteFromCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager)
 }
 
-public class CarePlan : PFObject, PFSubclassing {
+open class CarePlan : PFObject, PFSubclassing, PCKAnyCarePlan {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
-    @NSManaged public var userDeliveredToDestination:PFUser?
-    @NSManaged public var patient:PFUser?
-    @NSManaged public var author:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
+    @NSManaged public var userDeliveredToDestination:User?
+    @NSManaged public var patient:User?
+    @NSManaged public var author:User?
     @NSManaged public var authorId:String?
     
     //1 to 1 between Parse and CareStore
@@ -45,9 +45,6 @@ public class CarePlan : PFObject, PFSubclassing {
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey
     }
-}
-
-extension CarePlan: PCKAnyCarePlan {
     
     public convenience init(careKitEntity: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
@@ -55,7 +52,7 @@ extension CarePlan: PCKAnyCarePlan {
     }
     
     open func updateCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedCarePlan = carePlan as? OCKCarePlan else{
             return
         }
@@ -133,7 +130,7 @@ extension CarePlan: PCKAnyCarePlan {
     }
     
     open func deleteFromCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedCarePlan = carePlan as? OCKCarePlan else{
             return
         }
@@ -198,7 +195,7 @@ extension CarePlan: PCKAnyCarePlan {
     }
     
     open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current() else{
+        guard let _ = User.current() else{
             return
         }
         storeManager.store.fetchAnyCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
@@ -270,7 +267,7 @@ extension CarePlan: PCKAnyCarePlan {
     
     open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(CarePlan?) -> Void){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let carePlan = carePlanAny as? OCKCarePlan else{
             return
         }
@@ -319,7 +316,7 @@ extension CarePlan: PCKAnyCarePlan {
                         return
                     }
                     
-                    self.author = PFUser(withoutDataWithObjectId: authorRemoteId)
+                    self.author = User(withoutDataWithObjectId: authorRemoteId)
                     
                     //Search for patient
                     if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientIDKey]{
@@ -335,7 +332,7 @@ extension CarePlan: PCKAnyCarePlan {
                                         completion(nil)
                                     return
                                 }
-                                self.patient = PFUser(withoutDataWithObjectId: patientRemoteId)
+                                self.patient = User(withoutDataWithObjectId: patientRemoteId)
                             case .failure(_):
                                 completion(nil)
                             }

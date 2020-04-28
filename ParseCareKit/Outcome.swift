@@ -15,10 +15,10 @@ protocol PCKAnyOutcome: PCKEntity {
     func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
 }
 
-public class Outcome : PFObject, PFSubclassing {
+open class Outcome : PFObject, PFSubclassing, PCKAnyOutcome {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -39,16 +39,13 @@ public class Outcome : PFObject, PFSubclassing {
     @NSManaged public var uuid:String //maps to id
     
     //SOSDatabase fields
-    @NSManaged public var userDeliveredToDestination:PFUser?
+    @NSManaged public var userDeliveredToDestination:User?
     @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
     
     public static func parseClassName() -> String {
         return kPCKOutcomeClassKey
     }
-}
 
-extension Outcome: PCKAnyOutcome {
-    
     public convenience init(careKitEntity: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
@@ -56,7 +53,7 @@ extension Outcome: PCKAnyOutcome {
     
     open func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedOutcome = outcome as? OCKOutcome else{
             return
         }
@@ -139,7 +136,7 @@ extension Outcome: PCKAnyOutcome {
     
     open func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedOutcome = outcome as? OCKOutcome else{
             return
         }
@@ -211,7 +208,7 @@ extension Outcome: PCKAnyOutcome {
     
     open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
             
-        guard let _ = PFUser.current() else{
+        guard let _ = User.current() else{
             return
         }
         let careKitQuery = OCKOutcomeQuery(id: self.careKitId)
@@ -290,7 +287,7 @@ extension Outcome: PCKAnyOutcome {
     
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Outcome?) -> Void){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let outcome = outcomeAny as? OCKOutcome else{
             return
         }

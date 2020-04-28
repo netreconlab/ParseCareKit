@@ -9,11 +9,11 @@
 import Parse
 import CareKit
 
-public class Note : PFObject, PFSubclassing {
+open class Note : PFObject, PFSubclassing {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
-    @NSManaged public var userDeliveredToDestination:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
+    @NSManaged public var userDeliveredToDestination:User?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -29,7 +29,7 @@ public class Note : PFObject, PFSubclassing {
     @NSManaged public var uuid:String //Maps to userInfo?[kPCKNoteUserInfoIDKey]
     
     //Not 1 to 1
-    @NSManaged public var author:PFUser
+    @NSManaged public var author:User
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
     
@@ -39,9 +39,6 @@ public class Note : PFObject, PFSubclassing {
     public static func parseClassName() -> String {
         return kPCKNoteClassKey
     }
-}
-
-extension Note {
     
     public convenience init(careKitEntity: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
         self.init()
@@ -67,7 +64,7 @@ extension Note {
                     completion(nil)
                     return
                 }
-                self.author = PFUser()
+                self.author = User()
                 self.author.copyCareKit(patient, storeManager: storeManager){
                     _ in
                     

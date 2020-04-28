@@ -15,11 +15,11 @@ protocol PCKAnyContact: PCKEntity {
     func deleteFromCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager)
 }
 
-public class Contact : PFObject, PFSubclassing {
+open class Contact : PFObject, PFSubclassing, PCKAnyContact {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
-    @NSManaged public var userDeliveredToDestination:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
+    @NSManaged public var userDeliveredToDestination:User?
     //@NSManaged public var task:Task
     
     //1 to 1 between Parse and CareStore
@@ -46,8 +46,8 @@ public class Contact : PFObject, PFSubclassing {
     @NSManaged public var carePlanId:String?
 
     //Not 1 to 1
-    @NSManaged public var user:PFUser?
-    @NSManaged public var author:PFUser
+    @NSManaged public var user:User?
+    @NSManaged public var author:User
     
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String //maps to id
@@ -58,17 +58,14 @@ public class Contact : PFObject, PFSubclassing {
     public static func parseClassName() -> String {
         return kPCKContactClassKey
     }
-}
 
-extension Contact: PCKAnyContact {
-    
     public convenience init(careKitEntity: OCKAnyContact, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     open func updateCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedContact = contact as? OCKContact else{
             return
         }
@@ -145,7 +142,7 @@ extension Contact: PCKAnyContact {
     }
     
     open func deleteFromCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let castedContact = contact as? OCKContact else{
             return
         }
@@ -282,7 +279,7 @@ extension Contact: PCKAnyContact {
     
     open func copyCareKit(_ contactAny: OCKAnyContact, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Contact?) -> Void){
         
-        guard let _ = PFUser.current(),
+        guard let _ = User.current(),
             let contact = contactAny as? OCKContact else{
             return
         }
@@ -375,7 +372,7 @@ extension Contact: PCKAnyContact {
                 
                 if let authorRemoteID = theAuthor.remoteID{
                     
-                    self.author = PFUser(withoutDataWithObjectId: authorRemoteID)
+                    self.author = User(withoutDataWithObjectId: authorRemoteID)
                     
                     self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
                         self.copyNotesAndCarePlan(contact, storeManager: storeManager){
@@ -383,12 +380,12 @@ extension Contact: PCKAnyContact {
                         }
                     }
                 }else{
-                    let userQuery = PFUser.query()!
+                    let userQuery = User.query()!
                     userQuery.whereKey(kPCKUserIdKey, equalTo: theAuthor.id)
                     userQuery.findObjectsInBackground(){
                         (objects, error) in
                         
-                        guard let authorFound = objects?.first as? PFUser else{
+                        guard let authorFound = objects?.first as? User else{
                             completion(self)
                             return
                         }
@@ -425,12 +422,12 @@ extension Contact: PCKAnyContact {
         
         guard let relatedRemoteId = patient.remoteID else{
             
-            let query = PFUser.query()!
+            let query = User.query()!
             query.whereKey(kPCKUserIdKey, equalTo: patient.id)
             query.findObjectsInBackground(){
                 (objects,error) in
                 
-                guard let found = objects?.first as? PFUser else{
+                guard let found = objects?.first as? User else{
                     return
                 }
                 
@@ -442,7 +439,7 @@ extension Contact: PCKAnyContact {
             return
         }
             
-        self.user = PFUser.init(withoutDataWithObjectId: relatedRemoteId)
+        self.user = User.init(withoutDataWithObjectId: relatedRemoteId)
         completion()
     }
     

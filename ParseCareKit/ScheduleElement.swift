@@ -9,11 +9,11 @@
 import Parse
 import CareKit
 
-public class ScheduleElement : PFObject, PFSubclassing {
+open class ScheduleElement : PFObject, PFSubclassing {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:PFUser?
-    @NSManaged public var userDeliveredToDestination:PFUser?
+    @NSManaged public var userUploadedToCloud:User?
+    @NSManaged public var userDeliveredToDestination:User?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -40,9 +40,6 @@ public class ScheduleElement : PFObject, PFSubclassing {
     public static func parseClassName() -> String {
         return kAScheduleElementClassKey
     }
-}
-
-extension ScheduleElement {
     
     public convenience init(careKitEntity:OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
         self.init()
