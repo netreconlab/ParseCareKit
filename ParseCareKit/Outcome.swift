@@ -15,7 +15,7 @@ protocol PCKAnyOutcome: PCKEntity {
     func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
 }
 
-open class Outcome : PFObject, PFSubclassing, PCKAnyOutcome {
+open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
 
     //Parse only
     @NSManaged public var userUploadedToCloud:User?

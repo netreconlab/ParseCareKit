@@ -132,4 +132,42 @@ newParsePatient.signUpInBackground{
 }
 ```
 
-If you have a custom store, there are a few files/methods you will want to override. Look at the "open" methods in the following [files](https://github.com/netreconlab/ParseCareKit/tree/master/ParseCareKit).
+There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override methods such as `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->User:
+
+```
+class AppUser: User{
+    @NSManaged public var primaryCondition:String?
+    @NSManaged public var comorbidities:String?
+    
+    override func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping (User) -> Void) {
+        
+        guard let patient = patientAny as? OCKPatient else{
+            completion(self)
+            return
+        }
+        
+        super.copyCareKit(patientAny, storeManager: storeManager){
+            _ in
+            self.primaryCondition = patient.userInfo?[kPCKPatientUserInfoPrimaryConditionKey]
+            self.comorbidities = patient.userInfo?[kPCKPatientUserInfoComorbiditiesKey]
+            completion(self)
+        }
+    }
+    
+    override func convertToCareKit() -> OCKPatient? {
+        var partiallyConvertedUser = super.convertToCareKit()
+        var userInfo = [String:String]()
+        if let primaryCondition = self.primaryCondition{
+            userInfo[kPCKPatientUserInfoPrimaryConditionKey] = primaryCondition
+        }
+        if let comorbidities = self.comorbidities{
+            userInfo[kPCKPatientUserInfoComorbiditiesKey] = comorbidities
+        }
+        partiallyConvertedUser?.userInfo = userInfo
+        return partiallyConvertedUser
+    }
+}
+```
+Of course, you can custimize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
+
+If you have a custom store, and have created your own entities, you simply need to conform to the `PCKEntity` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloudInBackground,updateCloudEventually,deleteFromCloudEventually` and properly subclass `ParseSynchronizedCareKitStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 

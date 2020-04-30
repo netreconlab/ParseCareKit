@@ -15,7 +15,7 @@ protocol PCKAnyCarePlan: PCKEntity {
     func deleteFromCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager)
 }
 
-open class CarePlan : PFObject, PFSubclassing, PCKAnyCarePlan {
+open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
 
     //Parse only
     @NSManaged public var userUploadedToCloud:User?

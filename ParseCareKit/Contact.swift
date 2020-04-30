@@ -15,7 +15,7 @@ protocol PCKAnyContact: PCKEntity {
     func deleteFromCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager)
 }
 
-open class Contact : PFObject, PFSubclassing, PCKAnyContact {
+open class Contact: PFObject, PFSubclassing, PCKAnyContact {
 
     //Parse only
     @NSManaged public var userUploadedToCloud:User?

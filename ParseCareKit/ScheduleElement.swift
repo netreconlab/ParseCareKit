@@ -9,7 +9,7 @@
 import Parse
 import CareKit
 
-open class ScheduleElement : PFObject, PFSubclassing {
+open class ScheduleElement: PFObject, PFSubclassing {
 
     //Parse only
     @NSManaged public var userUploadedToCloud:User?

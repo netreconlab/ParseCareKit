@@ -10,7 +10,7 @@ import Parse
 import CareKit
 
 
-open class OutcomeValue : PFObject, PFSubclassing {
+open class OutcomeValue: PFObject, PFSubclassing {
 
     //Parse only
     @NSManaged public var userUploadedToCloud:User?
