@@ -289,6 +289,7 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         
         guard let _ = User.current(),
             let outcome = outcomeAny as? OCKOutcome else{
+            completion(nil)
             return
         }
         
@@ -374,7 +375,10 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKOutcome?) -> Void){
         
-        guard let task = self.task else{return}
+        guard let task = self.task else{
+            completion(nil)
+            return
+        }
         
         //Outcomes can only be converted if they have a relationship with a task locally
         storeManager.store.fetchAnyTask(withID: task.uuid){

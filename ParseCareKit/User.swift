@@ -288,6 +288,7 @@ open class User: PFUser, PCKAnyUser {
         
         guard let _ = User.current(),
             let patient = patientAny as? OCKPatient else{
+            completion(nil)
             return
         }
         

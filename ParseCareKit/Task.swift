@@ -270,6 +270,7 @@ open class Task : PFObject, PFSubclassing, PCKAnyTask {
         
         guard let _ = User.current(),
             let task = taskAny as? OCKTask else{
+            completion(nil)
             return
         }
         

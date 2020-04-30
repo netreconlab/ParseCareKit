@@ -44,10 +44,11 @@ open class OutcomeValue: PFObject, PFSubclassing {
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(OutcomeValue) -> Void){
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(OutcomeValue?) -> Void){
         
         guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoIDKey] else{
             print("Error in OutcomeValue.copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoIDKey) in \(String(describing: outcomeValue.userInfo))")
+            completion(nil)
             return
         }
         
@@ -177,7 +178,9 @@ open class OutcomeValue: PFObject, PFSubclassing {
             let newOutcomeValue = OutcomeValue()
             newOutcomeValue.copyCareKit(value, storeManager: storeManager){
                 (valueFound) in
-                returnValues.append(valueFound)
+                if valueFound != nil{
+                    returnValues.append(valueFound!)
+                }
                 //copyCareKit is async, so we need it to tell us when it's finished
                 if index == (values.count-1){
                     completion(returnValues)

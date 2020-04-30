@@ -134,15 +134,15 @@ newParsePatient.signUpInBackground{
 
 There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override methods such as `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->User:
 
-```
+```swift
 class AppUser: User{
     @NSManaged public var primaryCondition:String?
     @NSManaged public var comorbidities:String?
     
-    override func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping (User) -> Void) {
+    override func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping (User?) -> Void) {
         
         guard let patient = patientAny as? OCKPatient else{
-            completion(self)
+            completion(nil)
             return
         }
         

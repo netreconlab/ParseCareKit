@@ -281,6 +281,7 @@ open class Contact: PFObject, PFSubclassing, PCKAnyContact {
         
         guard let _ = User.current(),
             let contact = contactAny as? OCKContact else{
+            completion(nil)
             return
         }
         

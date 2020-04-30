@@ -269,6 +269,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
         
         guard let _ = User.current(),
             let carePlan = carePlanAny as? OCKCarePlan else{
+            completion(nil)
             return
         }
         
