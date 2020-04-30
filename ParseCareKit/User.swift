@@ -40,14 +40,6 @@ open class User: PFUser, PCKAnyUser {
     //Not 1 to 1
     @NSManaged public var uuid:String
     
-    //Not 1 to 1 UserInfo fields on CareStore
-    @NSManaged public var usernameLiteral: String?
-    @NSManaged public var primaryCondition:String?
-    @NSManaged public var comorbidities:String?
-    @NSManaged public var uiSelected:String?
-    @NSManaged public var quote:String?
-    @NSManaged public var lastTypeSelected:String?
-    
     //SOSDatabase info
     @NSManaged public var sosDeliveredToDestinationAt:Date
 
@@ -102,7 +94,7 @@ open class User: PFUser, PCKAnyUser {
                 userToSave in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                userToSave.saveEventually{
+                userToSave?.saveEventually{
                     (success,error) in
                     
                     if !success{
@@ -120,7 +112,7 @@ open class User: PFUser, PCKAnyUser {
                 userToSave in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                userToSave.saveEventually{
+                userToSave?.saveEventually{
                     (success,error) in
                     
                     if !success{
@@ -292,7 +284,7 @@ open class User: PFUser, PCKAnyUser {
         }
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(User)->Void){
+    open func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(User?)->Void){
         
         guard let _ = User.current(),
             let patient = patientAny as? OCKPatient else{
@@ -303,13 +295,6 @@ open class User: PFUser, PCKAnyUser {
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
-        self.email = patient.userInfo?[kPCKPatientUserInfoEmailKey]
-        self.primaryCondition = patient.userInfo?[kPCKPatientUserInfoPrimaryConditionKey]
-        self.comorbidities = patient.userInfo?[kPCKPatientUserInfoComorbiditiesKey]
-        self.usernameLiteral = patient.userInfo?[kPCKPatientUserInfoUsernameLiteralKey]
-        self.lastTypeSelected = patient.userInfo?[kPCKPatientUserInfoTypeKey]
-        self.uiSelected = patient.userInfo?[kPCKPatientUserInfoUserInterfaceSelectedKey]
-        self.quote = patient.userInfo?[kPCKPatientUserInfoQuoteKey]
         self.locallyUpdatedAt = patient.updatedDate
         
         //Only copy this over if the Local Version is older than the Parse version
@@ -342,46 +327,13 @@ open class User: PFUser, PCKAnyUser {
         patient.tags = self.tags
         patient.source = self.source
         patient.asset = self.asset
+        patient.notes = self.notes?.compactMap{$0.convertToCareKit()}
         if let timeZone = TimeZone(abbreviation: self.timezone){
             patient.timezone = timeZone
         }
-        
-        patient.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        
         if let sex = self.sex{
             patient.sex = OCKBiologicalSex(rawValue: sex)
         }
-        
-        var userInfo = [String:String]()
-        
-        if let email = self.email{
-            userInfo[kPCKPatientUserInfoEmailKey] = email
-        }
-        
-        if let primaryCondition = self.primaryCondition{
-            userInfo[kPCKPatientUserInfoPrimaryConditionKey] = primaryCondition
-        }
-        
-        if let usernameLiteral = self.usernameLiteral{
-            userInfo[kPCKPatientUserInfoUsernameLiteralKey] = usernameLiteral
-        }
-        
-        if let lastTypeSelected = self.lastTypeSelected{
-            userInfo[kPCKPatientUserInfoTypeKey] = lastTypeSelected
-        }
-        
-        if let quote = self.quote{
-            userInfo[kPCKPatientUserInfoQuoteKey] = quote
-        }
-        
-        //Need to fix this is it can only be an array of combine strings (Can probably add a delimiter in the string)
-        if let comorbidities = self.comorbidities{
-            userInfo[kPCKPatientUserInfoComorbiditiesKey] = comorbidities
-        }
-        
-        patient.userInfo = userInfo
-        
         return patient
-        
     }
 }

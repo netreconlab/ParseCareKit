@@ -190,16 +190,6 @@ public let kPCKNoteTitleKey                                    = "title"
 public let kPCKNoteIdKey                                       = "uuid"
 
 //#Mark - CareKit UserInfo Database Keys
-
-//User Class
-public let kPCKPatientUserInfoEmailKey                   = "email"
-public let kPCKPatientUserInfoPrimaryConditionKey        = "primaryCondition"
-public let kPCKPatientUserInfoComorbiditiesKey           = "comorbidities"
-public let kPCKPatientUserInfoUsernameLiteralKey         = "usernameLiteral"
-public let kPCKPatientUserInfoTypeKey                    = "type"
-public let kPCKPatientUserInfoUserInterfaceSelectedKey   = "userInferfaceSelected"
-public let kPCKPatientUserInfoQuoteKey                   = "quote"
-
 //CarePlan Class
 public let kPCKCarePlanUserInfoPatientIDKey           = "patientId"
 
@@ -212,8 +202,6 @@ public let kPCKOutcomeUserInfoIDKey                   = "uuid"
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoIDKey              = "uuid"
-public let kPCKOutcomeValueUserInfoStartDateKey       = "startDate"
-public let kPCKOutcomeValueUserInfoEndDateKey         = "endDate"
 
 //Schedule Element Class
 public let kPCKScheduleElementUserInfoIDKey           = "uuid"

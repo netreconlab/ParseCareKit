@@ -45,7 +45,7 @@ open class Note : PFObject, PFSubclassing {
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
-    func copyCareKit(_ note: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Note?) -> Void){
+    open func copyCareKit(_ note: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Note?) -> Void){
         
         //Every note should be created with an ID
         guard let authorUUID = note.author else{
@@ -190,7 +190,7 @@ open class Note : PFObject, PFSubclassing {
         }*/
     }
     
-    class func convertCareKitArrayToParse(_ notes: [OCKNote]?, storeManager: OCKSynchronizedStoreManager, completion: @escaping([Note]?) -> Void){
+    open class func convertCareKitArrayToParse(_ notes: [OCKNote]?, storeManager: OCKSynchronizedStoreManager, completion: @escaping([Note]?) -> Void){
         
         guard let careKitNotes = notes else{
             completion(nil)

@@ -1,7 +1,7 @@
 # ParseCareKit
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license) ![Swift](https://img.shields.io/badge/swift-5.0-brightgreen.svg) ![Xcode 11.0+](https://img.shields.io/badge/Xcode-11.0%2B-blue.svg) ![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg)
 
-**Use at your own risk. There is not promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
+**Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
 This framework contains an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.0+ data with [parse-server](https://github.com/parse-community/parse-server). Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance. Look at hipaa-mongo and [hipaa_mongo](https://github.com/netreconlab/hipaa_mongodb) and [hipaa-postges]()(will post soon) to get started with HIPAA compliant databases that can be configured with pare-server. An example of how to use parse-server with [postgres](https://www.postgresql.org) and [parse-dashboard](https://github.com/parse-community/parse-dashboard) can be found at [parse-postgres](https://github.com/netreconlab/parse-postgres). 
 

@@ -31,12 +31,9 @@ open class OutcomeValue : PFObject, PFSubclassing {
     
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String
-    @NSManaged public var startDate:Date? //When was the outcome generated
-    @NSManaged public var endDate:Date? //When was the outcome generated
     
     //SOSDatabase info
     @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
-    
     
     public static func parseClassName() -> String {
         return kPCKOutcomeValueClassKey
@@ -47,7 +44,7 @@ open class OutcomeValue : PFObject, PFSubclassing {
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
-    func copyCareKit(_ outcomeValue: OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(OutcomeValue) -> Void){
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(OutcomeValue) -> Void){
         
         guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoIDKey] else{
             print("Error in OutcomeValue.copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoIDKey) in \(String(describing: outcomeValue.userInfo))")
@@ -85,19 +82,6 @@ open class OutcomeValue : PFObject, PFSubclassing {
         self.groupIdentifier = outcomeValue.groupIdentifier
         self.tags = outcomeValue.tags
         self.source = outcomeValue.source
-        
-        if let startDateAsString = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoStartDateKey]{
-            if let date = ParseCareKitUtility.stringToDate(startDateAsString){
-                self.startDate = date
-            }
-        }
-        
-        if let endDateAsString = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoEndDateKey]{
-            if let date = ParseCareKitUtility.stringToDate(endDateAsString){
-                self.endDate = date
-            }
-        }
-        
         self.locallyUpdatedAt = outcomeValue.updatedDate
         
         //Only copy this over if the Local Version is older than the Parse version
@@ -172,12 +156,6 @@ open class OutcomeValue : PFObject, PFSubclassing {
             
             var convertedUserInfo = [String:String]()
             convertedUserInfo[kPCKOutcomeValueUserInfoIDKey] = self.uuid
-            if let startingDate = self.startDate{
-                 convertedUserInfo[kPCKOutcomeValueUserInfoStartDateKey] = ParseCareKitUtility.dateToString(startingDate)
-            }
-            if let endingDate = self.endDate{
-                 convertedUserInfo[kPCKOutcomeValueUserInfoEndDateKey] = ParseCareKitUtility.dateToString(endingDate)
-            }
             outcomeValue!.userInfo = convertedUserInfo
         }
         
@@ -185,7 +163,7 @@ open class OutcomeValue : PFObject, PFSubclassing {
         
     }
     
-    class func convertCareKitArrayToParse(_ values: [OCKOutcomeValue], storeManager: OCKSynchronizedStoreManager, completion: @escaping([OutcomeValue]) -> Void){
+    open class func convertCareKitArrayToParse(_ values: [OCKOutcomeValue], storeManager: OCKSynchronizedStoreManager, completion: @escaping([OutcomeValue]) -> Void){
         
         var returnValues = [OutcomeValue]()
         
