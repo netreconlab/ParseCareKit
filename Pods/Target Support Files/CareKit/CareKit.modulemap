@@ -1,0 +1,6 @@
+framework module CareKit {
+  umbrella header "CareKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

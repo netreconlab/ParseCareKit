@@ -1,0 +1,6 @@
+framework module CareKitUI {
+  umbrella header "CareKitUI-umbrella.h"
+
+  export *
+  module * { export * }
+}
