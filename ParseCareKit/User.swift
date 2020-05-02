@@ -9,7 +9,7 @@
 import Parse
 import CareKit
 
-protocol PCKAnyUser: PCKEntity {
+public protocol PCKAnyUser: PCKEntity {
     func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
     func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
 }
