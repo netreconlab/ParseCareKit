@@ -1,0 +1,50 @@
+{
+  "name": "CareKit",
+  "version": "2.0",
+  "summary": "CareKit is an open source software framework for creating apps that help people better understand and manage their health.",
+  "homepage": "https://github.com/carekit-apple/CareKit/",
+  "documentation_url": "https://developer.apple.com/documentation/carekit",
+  "screenshots": [
+    "https://user-images.githubusercontent.com/51756298/69096972-66de0b00-0a0a-11ea-96f0-4605d04ab396.gif",
+    "https://user-images.githubusercontent.com/51756298/69107801-7586eb00-0a27-11ea-8aa2-eca687602c76.gif"
+  ],
+  "license": {
+    "type": "BSD",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "researchandcare.org": "https://www.researchandcare.org"
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "swift_versions": "5.0",
+  "source": {
+    "git": "https://github.com/carekit-apple/carekit.git",
+    "tag": "2.0"
+  },
+  "source_files": "CareKit/CareKit/**/*",
+  "exclude_files": [
+    "CareKit/CareKit/**/*.plist",
+    "OCKCatalog",
+    "OCKSample",
+    "DerivedData"
+  ],
+  "xcconfig": {
+    "LIBRARY_SEARCH_PATHS": "$(SRCROOT)/Pods/**"
+  },
+  "requires_arc": true,
+  "frameworks": [
+    "CareKitUI",
+    "CareKitStore"
+  ],
+  "dependencies": {
+    "CareKitUI": [
+      "2.0"
+    ],
+    "CareKitStore": [
+      "2.0"
+    ]
+  },
+  "swift_version": "5.0"
+}
