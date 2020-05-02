@@ -89,7 +89,7 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         }
         
         if cloudUpdatedAt < careKitLastUpdated{
-            self.copyCareKit(careKit, storeManager: storeManager){_ in
+            parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
                 self.saveEventually{
                     (success,error) in

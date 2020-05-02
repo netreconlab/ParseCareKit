@@ -79,7 +79,7 @@ open class User: PFUser, PCKAnyUser {
     func compareUpdate(_ careKit: OCKPatient, parse: User, storeManager: OCKSynchronizedStoreManager){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            self.copyCareKit(careKit, storeManager: storeManager){
+            parse.copyCareKit(careKit, storeManager: storeManager){
                 userToSave in
                 
                 //An update may occur when Internet isn't available, try to update at some point
@@ -97,7 +97,7 @@ open class User: PFUser, PCKAnyUser {
             return
         }
         if cloudUpdatedAt < careKitLastUpdated{
-            self.copyCareKit(careKit, storeManager: storeManager){
+            parse.copyCareKit(careKit, storeManager: storeManager){
                 userToSave in
                 
                 //An update may occur when Internet isn't available, try to update at some point

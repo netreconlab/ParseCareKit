@@ -83,7 +83,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
             return
         }
         if cloudUpdatedAt < careKitLastUpdated{
-            self.copyCareKit(careKit, storeManager: storeManager){returnedCarePlan in
+            parse.copyCareKit(careKit, storeManager: storeManager){returnedCarePlan in
                 
                 guard let copiedCarePlan = returnedCarePlan else{
                     return
