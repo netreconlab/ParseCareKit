@@ -14,7 +14,7 @@ import Parse
 /**
  Protocol that defines the properties and methods for parse careKit entities.
  */
-public protocol PCKEntity {
+public protocol PCKEntity: PFObject, PFSubclassing {
     func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
 }
 
