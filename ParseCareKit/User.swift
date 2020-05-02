@@ -10,7 +10,6 @@ import Parse
 import CareKit
 
 protocol PCKAnyUser: PCKEntity {
-    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
     func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
     func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
 }
