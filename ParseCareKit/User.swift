@@ -43,10 +43,6 @@ open class User: PFUser, PCKAnyUser {
             return
         }
         
-        //If this doesn't belong to this patient, they are not allowed to push it to the Cloud
-        /*if thisUser.uuid != patient.id{
-            return
-        }*/
         guard let remoteID = castedPatient.remoteID else{
             
             //Check to see if this entity is already in the Cloud, but not paired locally
@@ -198,13 +194,10 @@ open class User: PFUser, PCKAnyUser {
     }
     
     open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
-        guard let thisUser = User.current() else{
+        guard let _ = User.current() else{
             return
         }
-        //If this doesn't belong to this patient, they are not allowed to push it to the Cloud
-        if thisUser.uuid != self.uuid{
-            return
-        }
+
         storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
             result in
             switch result{
