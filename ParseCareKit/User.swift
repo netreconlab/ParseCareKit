@@ -80,10 +80,10 @@ open class User: PFUser, PCKAnyUser {
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             parse.copyCareKit(careKit, storeManager: storeManager){
-                userToSave in
+                _ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                userToSave?.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{
@@ -98,10 +98,9 @@ open class User: PFUser, PCKAnyUser {
         }
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, storeManager: storeManager){
-                userToSave in
-                
+                _ in
                 //An update may occur when Internet isn't available, try to update at some point
-                userToSave?.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{

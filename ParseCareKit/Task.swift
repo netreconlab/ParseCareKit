@@ -85,11 +85,11 @@ open class Task : PFObject, PFSubclassing, PCKAnyTask {
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
-            
+    
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                self.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{

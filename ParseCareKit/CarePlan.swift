@@ -83,14 +83,10 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
             return
         }
         if cloudUpdatedAt < careKitLastUpdated{
-            parse.copyCareKit(careKit, storeManager: storeManager){returnedCarePlan in
-                
-                guard let copiedCarePlan = returnedCarePlan else{
-                    return
-                }
+            parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                copiedCarePlan.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{
