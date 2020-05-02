@@ -27,7 +27,7 @@ target 'MyApp' do #Change to your app name
 end
 ```
 
-The above podspec will also install the minimum required Parse framework (and it's dependencies) as it's also a dependency for ParseCareKit.
+The above podspec will also install the minimum required [Parse iOS framework](https://github.com/parse-community/Parse-SDK-iOS-OSX)(and its dependencies) as it's also a requirement for ParseCareKit.
 
 ### Installing as a framework
 - Fork the project

@@ -10,17 +10,12 @@ import Parse
 import CareKit
 
 protocol PCKAnyTask: PCKEntity {
-    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
     func updateCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager)
     func deleteFromCloudEventually(_ task: OCKAnyTask, storeManager: OCKSynchronizedStoreManager)
 }
 
 open class Task : PFObject, PFSubclassing, PCKAnyTask {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var carePlan:CarePlan?
@@ -37,7 +32,6 @@ open class Task : PFObject, PFSubclassing, PCKAnyTask {
     @NSManaged public var title:String?
     @NSManaged public var uuid:String //maps to id
     
-    //Different
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
     
     //SOSDatabase info
@@ -91,11 +85,11 @@ open class Task : PFObject, PFSubclassing, PCKAnyTask {
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
-            
+    
         if cloudUpdatedAt < careKitLastUpdated{
-            self.copyCareKit(careKit, storeManager: storeManager){_ in
+            parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                self.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{

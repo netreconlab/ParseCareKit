@@ -10,19 +10,11 @@ import Parse
 import CareKit
 
 protocol PCKAnyUser: PCKEntity {
-    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
     func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
     func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
 }
 
 open class User: PFUser, PCKAnyUser {
-    
-    //Parse only
-    @NSManaged public var availableTypes:[String]//This can be appended on OCKStore name for type
-    @NSManaged public var backgroundPicture:PFFileObject?
-    @NSManaged public var isApprovedHealthCare:Bool
-    @NSManaged public var profilePicture:PFFileObject?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
@@ -39,9 +31,6 @@ open class User: PFUser, PCKAnyUser {
     
     //Not 1 to 1
     @NSManaged public var uuid:String
-    
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date
 
     public convenience init(careKitEntity: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
@@ -54,10 +43,6 @@ open class User: PFUser, PCKAnyUser {
             return
         }
         
-        //If this doesn't belong to this patient, they are not allowed to push it to the Cloud
-        /*if thisUser.uuid != patient.id{
-            return
-        }*/
         guard let remoteID = castedPatient.remoteID else{
             
             //Check to see if this entity is already in the Cloud, but not paired locally
@@ -90,11 +75,11 @@ open class User: PFUser, PCKAnyUser {
     func compareUpdate(_ careKit: OCKPatient, parse: User, storeManager: OCKSynchronizedStoreManager){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            self.copyCareKit(careKit, storeManager: storeManager){
-                userToSave in
+            parse.copyCareKit(careKit, storeManager: storeManager){
+                _ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                userToSave?.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{
@@ -108,11 +93,10 @@ open class User: PFUser, PCKAnyUser {
             return
         }
         if cloudUpdatedAt < careKitLastUpdated{
-            self.copyCareKit(careKit, storeManager: storeManager){
-                userToSave in
-                
+            parse.copyCareKit(careKit, storeManager: storeManager){
+                _ in
                 //An update may occur when Internet isn't available, try to update at some point
-                userToSave?.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{
@@ -210,13 +194,10 @@ open class User: PFUser, PCKAnyUser {
     }
     
     open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
-        guard let thisUser = User.current() else{
+        guard let _ = User.current() else{
             return
         }
-        //If this doesn't belong to this patient, they are not allowed to push it to the Cloud
-        if thisUser.uuid != self.uuid{
-            return
-        }
+
         storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
             result in
             switch result{

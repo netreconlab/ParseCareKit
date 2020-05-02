@@ -10,18 +10,12 @@ import Parse
 import CareKit
 
 protocol PCKAnyContact: PCKEntity {
-    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
     func updateCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager)
     func deleteFromCloudEventually(_ contact: OCKAnyContact, storeManager: OCKSynchronizedStoreManager)
 }
 
 open class Contact: PFObject, PFSubclassing, PCKAnyContact {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    //@NSManaged public var task:Task
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
     @NSManaged public var asset:String?
@@ -52,9 +46,6 @@ open class Contact: PFObject, PFSubclassing, PCKAnyContact {
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String //maps to id
 
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
-    
     public static func parseClassName() -> String {
         return kPCKContactClassKey
     }

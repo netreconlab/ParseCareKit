@@ -10,16 +10,12 @@ import Parse
 import CareKit
 
 protocol PCKAnyOutcome: PCKEntity {
-    func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
     func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
     func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
 }
 
 open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var careKitId:String //maps to id
@@ -37,10 +33,6 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
     
     //Not 1 tot 1, UserInfo fields in CareStore
     @NSManaged public var uuid:String //maps to id
-    
-    //SOSDatabase fields
-    @NSManaged public var userDeliveredToDestination:User?
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
     
     public static func parseClassName() -> String {
         return kPCKOutcomeClassKey
@@ -97,9 +89,9 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         }
         
         if cloudUpdatedAt < careKitLastUpdated{
-            self.copyCareKit(careKit, storeManager: storeManager){_ in
+            parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                self.saveEventually{
+                parse.saveEventually{
                     (success,error) in
                     
                     if !success{

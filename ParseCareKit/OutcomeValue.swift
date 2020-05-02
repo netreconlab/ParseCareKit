@@ -12,10 +12,6 @@ import CareKit
 
 open class OutcomeValue: PFObject, PFSubclassing {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var index:Int
     @NSManaged public var groupIdentifier:String?
