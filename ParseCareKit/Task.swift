@@ -17,10 +17,6 @@ protocol PCKAnyTask: PCKEntity {
 
 open class Task : PFObject, PFSubclassing, PCKAnyTask {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var carePlan:CarePlan?
@@ -37,7 +33,6 @@ open class Task : PFObject, PFSubclassing, PCKAnyTask {
     @NSManaged public var title:String?
     @NSManaged public var uuid:String //maps to id
     
-    //Different
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
     
     //SOSDatabase info

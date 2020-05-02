@@ -34,13 +34,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CareKit:
-    :commit: 0573f1da086ad17c4ca9929e9513f16ae232185f
+    :commit: 7254399a68e3bf903f59e2edb96edcb8c3cf9602
     :git: https://github.com/cbaker6/CareKit.git
   CareKitStore:
-    :commit: 0573f1da086ad17c4ca9929e9513f16ae232185f
+    :commit: 7254399a68e3bf903f59e2edb96edcb8c3cf9602
     :git: https://github.com/cbaker6/CareKit.git
   CareKitUI:
-    :commit: 0573f1da086ad17c4ca9929e9513f16ae232185f
+    :commit: 7254399a68e3bf903f59e2edb96edcb8c3cf9602
     :git: https://github.com/cbaker6/CareKit.git
 
 SPEC CHECKSUMS:

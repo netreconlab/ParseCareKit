@@ -11,10 +11,6 @@ import CareKit
 
 open class Note: PFObject, PFSubclassing {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var content:String
@@ -32,9 +28,6 @@ open class Note: PFObject, PFSubclassing {
     @NSManaged public var author:User
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
-    
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
     
     public static func parseClassName() -> String {
         return kPCKNoteClassKey

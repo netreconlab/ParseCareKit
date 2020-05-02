@@ -16,13 +16,6 @@ protocol PCKAnyUser: PCKEntity {
 }
 
 open class User: PFUser, PCKAnyUser {
-    
-    //Parse only
-    @NSManaged public var availableTypes:[String]//This can be appended on OCKStore name for type
-    @NSManaged public var backgroundPicture:PFFileObject?
-    @NSManaged public var isApprovedHealthCare:Bool
-    @NSManaged public var profilePicture:PFFileObject?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
@@ -39,9 +32,6 @@ open class User: PFUser, PCKAnyUser {
     
     //Not 1 to 1
     @NSManaged public var uuid:String
-    
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date
 
     public convenience init(careKitEntity: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
         self.init()

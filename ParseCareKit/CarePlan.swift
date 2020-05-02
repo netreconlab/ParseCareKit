@@ -18,8 +18,6 @@ protocol PCKAnyCarePlan: PCKEntity {
 open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
 
     //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
     @NSManaged public var patient:User?
     @NSManaged public var author:User?
     @NSManaged public var authorId:String?
@@ -38,9 +36,6 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var patientId:String?
-    
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
     
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey

@@ -17,9 +17,6 @@ protocol PCKAnyOutcome: PCKEntity {
 
 open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var careKitId:String //maps to id
@@ -37,10 +34,6 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
     
     //Not 1 tot 1, UserInfo fields in CareStore
     @NSManaged public var uuid:String //maps to id
-    
-    //SOSDatabase fields
-    @NSManaged public var userDeliveredToDestination:User?
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
     
     public static func parseClassName() -> String {
         return kPCKOutcomeClassKey

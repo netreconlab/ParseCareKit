@@ -17,11 +17,6 @@ protocol PCKAnyContact: PCKEntity {
 
 open class Contact: PFObject, PFSubclassing, PCKAnyContact {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    //@NSManaged public var task:Task
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
     @NSManaged public var asset:String?
@@ -52,9 +47,6 @@ open class Contact: PFObject, PFSubclassing, PCKAnyContact {
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String //maps to id
 
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
-    
     public static func parseClassName() -> String {
         return kPCKContactClassKey
     }

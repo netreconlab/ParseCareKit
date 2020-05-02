@@ -11,10 +11,6 @@ import CareKit
 
 open class ScheduleElement: PFObject, PFSubclassing {
 
-    //Parse only
-    @NSManaged public var userUploadedToCloud:User?
-    @NSManaged public var userDeliveredToDestination:User?
-    
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var groupIdentifier:String?
@@ -33,9 +29,6 @@ open class ScheduleElement: PFObject, PFSubclassing {
   
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String //maps to id
-    
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
     
     public static func parseClassName() -> String {
         return kAScheduleElementClassKey
