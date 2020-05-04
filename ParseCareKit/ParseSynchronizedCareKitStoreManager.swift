@@ -139,20 +139,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     private func updateCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var outcomeDictionary = [String:OCKAnyOutcome]()
-        outcomes.forEach{outcomeDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeCareKitIdKey, containedIn: Array(outcomeDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundOutcomes = objects as? [Outcome] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundOutcomes.forEach{
-                guard let outcome = outcomeDictionary[$0.careKitId] else{return}
-                $0.updateCloudEventually(outcome, storeManager: self.storeManager)
+        outcomes.forEach{
+            let outcome = $0
+            var _ = Outcome(careKitEntity: outcome, storeManager: storeManager){
+                returnedOutcome in
+                guard let outcomeToUpdate = returnedOutcome as? Outcome else{return}
+                outcomeToUpdate.updateCloudEventually(outcome, storeManager: self.storeManager)
             }
         }
     }

@@ -46,14 +46,15 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
     open func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager){
         
         guard let _ = User.current(),
-            let castedOutcome = outcome as? OCKOutcome else{
+            let castedOutcome = outcome as? OCKOutcome,
+            let outcomeId = castedOutcome.userInfo?[kPCKOutcomeUserInfoIDKey] else{
             return
         }
         
         guard let remoteID = castedOutcome.remoteID else{
             //Check to see if this entity is already in the Cloud, but not matched locally
             let query = Outcome.query()!
-            query.whereKey(kPCKOutcomeCareKitIdKey, equalTo: outcome.id)
+            query.whereKey(kPCKOutcomeIdKey, equalTo: outcomeId)
             query.includeKey(kPCKOutcomeTaskKey)
             query.findObjectsInBackground{
                 (objects, error) in
