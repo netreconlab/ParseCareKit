@@ -207,7 +207,7 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeCareKitIdKey, equalTo: self.careKitId)
+        query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{
@@ -228,7 +228,8 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
             
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead added
-                let careKitQuery = OCKOutcomeQuery(id: self.careKitId)
+                var careKitQuery = OCKOutcomeQuery(for: Date())
+                careKitQuery.tags = [self.uuid]
                 storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
@@ -258,6 +259,16 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
                     case .success(let fetchedOutcome):
                         guard var mutableOutcome = fetchedOutcome as? OCKOutcome else{return}
                         mutableOutcome.remoteID = self.objectId
+                        
+                        //UUIDs are custom, make sure to add them as a tag for querying
+                        if let outcomeTags = mutableOutcome.tags{
+                            if !outcomeTags.contains(self.uuid){
+                                mutableOutcome.tags!.append(self.uuid)
+                            }
+                        }else{
+                            mutableOutcome.tags = [self.uuid]
+                        }
+                        
                         self.values.forEach{
                             for (index,value) in mutableOutcome.values.enumerated(){
                                 guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
