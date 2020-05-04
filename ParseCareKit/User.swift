@@ -9,12 +9,8 @@
 import Parse
 import CareKit
 
-public protocol PCKAnyUser: PCKEntity {
-    func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
-    func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager)
-}
 
-open class User: PFUser, PCKAnyUser {
+open class User: PFUser, PCKEntity {
     //1 to 1 between Parse and CareStore
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
@@ -37,38 +33,47 @@ open class User: PFUser, PCKAnyUser {
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
-    open func updateCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current(),
-            let castedPatient = patient as? OCKPatient else{
+    open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
+        guard let _ = User.current() else{
             return
         }
         
-        guard let remoteID = castedPatient.remoteID else{
-            
-            //Check to see if this entity is already in the Cloud, but not paired locally
-            let query = User.query()!
-            query.whereKey(kPCKUserIdKey, equalTo: patient.id)
-            query.findObjectsInBackground{
-                (objects, error) in
+        storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let fetchedPatient):
+                guard let patient = fetchedPatient as? OCKPatient else{return}
                 
-                guard let foundObject = objects?.first as? User else{
+                guard let remoteID = patient.remoteID else{
+                    
+                    //Check to see if this entity is already in the Cloud, but not paired locally
+                    let query = User.query()!
+                    query.whereKey(kPCKUserIdKey, equalTo: patient.id)
+                    query.findObjectsInBackground{
+                        (objects, error) in
+                        
+                        guard let foundObject = objects?.first as? User else{
+                            return
+                        }
+                        self.compareUpdate(patient, parse: foundObject, storeManager: storeManager)
+                    }
                     return
                 }
-                self.compareUpdate(castedPatient, parse: foundObject, storeManager: storeManager)
+                
+                //Get latest item from the Cloud to compare against
+                let query = User.query()!
+                query.whereKey(kPCKUserObjectIdKey, equalTo: remoteID)
+                query.findObjectsInBackground{
+                    (objects, error) in
+                    
+                    guard let foundObject = objects?.first as? User else{
+                        return
+                    }
+                    self.compareUpdate(patient, parse: foundObject, storeManager: storeManager)
+                }
+            case .failure(let error):
+                print("Error in Contact.addToCloudInBackground(). \(error)")
             }
-            return
-        }
-        
-        //Get latest item from the Cloud to compare against
-        let query = User.query()!
-        query.whereKey(kPCKUserObjectIdKey, equalTo: remoteID)
-        query.findObjectsInBackground{
-            (objects, error) in
-            
-            guard let foundObject = objects?.first as? User else{
-                return
-            }
-            self.compareUpdate(castedPatient, parse: foundObject, storeManager: storeManager)
         }
     }
     
@@ -128,43 +133,26 @@ open class User: PFUser, PCKAnyUser {
         }
     }
     
-    open func deleteFromCloudEventually(_ patient: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current(),
-            let castedPatient = patient as? OCKPatient else{
-            return
-        }
-        
-        guard let remoteID = castedPatient.remoteID else{
-            
-            //Check to see if this entity is already in the Cloud, but not paired locally
-            let query = User.query()!
-            query.whereKey(kPCKUserIdKey, equalTo: patient.id)
-            query.findObjectsInBackground{
-                (objects, error) in
-                
-                guard let foundObject = objects?.first as? User else{
-                    return
-                }
-                self.compareDelete(castedPatient, parse: foundObject, storeManager: storeManager)
-            }
+    open func deleteFromCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
+        guard let _ = User.current() else{
             return
         }
         
         //Get latest item from the Cloud to compare against
         let query = User.query()!
-        query.whereKey(kPCKUserObjectIdKey, equalTo: remoteID)
+        query.whereKey(kPCKUserIdKey, equalTo: self.uuid)
         query.findObjectsInBackground{
             (objects, error) in
             
             guard let foundObject = objects?.first as? User else{
                 return
             }
-            self.compareDelete(castedPatient, parse: foundObject, storeManager: storeManager)
+            self.compareDelete(foundObject, storeManager: storeManager)
         }
     }
     
-    func compareDelete(_ careKit: OCKPatient, parse: User, storeManager: OCKSynchronizedStoreManager){
-        guard let careKitLastUpdated = careKit.updatedDate,
+    func compareDelete(_ parse: User, storeManager: OCKSynchronizedStoreManager){
+        guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
@@ -198,62 +186,65 @@ open class User: PFUser, PCKAnyUser {
             return
         }
 
-        storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let fetchedPatient):
-                guard let patient = fetchedPatient as? OCKPatient else{return}
-                //Check to see if already in the cloud
-                let query = User.query()!
-                query.whereKey(kPCKUserIdKey, equalTo: patient.id)
-                query.findObjectsInBackground(){
-                    (objects, error) in
-                    guard let foundObjects = objects else{
-                        guard let error = error as NSError?,
-                            let errorDictionary = error.userInfo["error"] as? [String:Any],
-                            let reason = errorDictionary["routine"] as? String else {return}
-                        //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                        if reason == "errorMissingColumn"{
-                            //Saving the new item with the custom column should resolve the issue
-                            print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                            self.saveAndCheckRemoteID(patient, storeManager: storeManager)
-                        }else{
-                            //There was a different issue that we don't know how to handle
-                            print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
-                        }
-                        return
-                    }
-                    //If object already in the Cloud, exit
-                    if foundObjects.count > 0{
-                        //Maybe this needs to be updated instead
-                        self.updateCloudEventually(patient, storeManager: storeManager)
-                        return
-                    }
-                    self.saveAndCheckRemoteID(patient, storeManager: storeManager)
+        //Check to see if already in the cloud
+        let query = User.query()!
+        query.whereKey(kPCKUserIdKey, equalTo: self.uuid)
+        query.findObjectsInBackground(){
+            (objects, error) in
+            guard let foundObjects = objects else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    self.saveAndCheckRemoteID(storeManager)
+                }else{
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
                 }
-            case .failure(let error):
-                print("Error in Contact.addToCloudInBackground(). \(error)")
+                return
+            }
+            //If object already in the Cloud, exit
+            if foundObjects.count > 0{
+                //Maybe this needs to be updated instead
+                self.updateCloudEventually(storeManager)
+            }else{
+                self.saveAndCheckRemoteID(storeManager)
             }
         }
     }
     
-    func saveAndCheckRemoteID(_ careKitEntity: OCKPatient, storeManager: OCKSynchronizedStoreManager){
+    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager){
         self.saveEventually{
             (success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Only save data back to CarePlanStore if it's never been saved before
-                if careKitEntity.remoteID == nil{
-                    var updatedPatient = careKitEntity
-                    updatedPatient.remoteID = self.objectId!
-                    storeManager.store.updateAnyPatient(updatedPatient, callbackQueue: .global(qos: .background)){
-                        result in
-                        switch result{
-                        case .success(_):
-                            print("Successfully added Patient \(updatedPatient) to Cloud")
-                        case .failure(let error):
-                            print("Error in User.addToCloudInBackground() adding Patient \(updatedPatient) to Cloud. \(error)")
+                storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(let fetchedPatient):
+                        guard var mutableEntity = fetchedPatient as? OCKPatient else{return}
+                        if mutableEntity.remoteID == nil{
+                            mutableEntity.remoteID = self.objectId
+                        }else{
+                            if mutableEntity.remoteID! != self.objectId{
+                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
+                            }
                         }
+                        storeManager.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
+                            result in
+                            switch result{
+                            case .success(_):
+                                print("Successfully added Patient \(mutableEntity) to Cloud")
+                            case .failure(let error):
+                                print("Error in \(self.parseClassName).addToCloudInBackground() adding Patient \(mutableEntity) to Cloud. \(error)")
+                            }
+                        }
+                    case .failure(let error):
+                        print("Error in Contact.addToCloudInBackground(). \(error)")
                     }
                 }
             }else{

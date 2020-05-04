@@ -9,12 +9,8 @@
 import Parse
 import CareKit
 
-public protocol PCKAnyOutcome: PCKEntity {
-    func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
-    func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager)
-}
 
-open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
+open class Outcome: PFObject, PFSubclassing, PCKEntity {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -43,43 +39,53 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
-    open func updateCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager){
+    open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
         
-        guard let _ = User.current(),
-            let castedOutcome = outcome as? OCKOutcome,
-            let outcomeId = castedOutcome.userInfo?[kPCKOutcomeUserInfoIDKey] else{
+        guard let _ = User.current() else{
             return
         }
         
-        guard let remoteID = castedOutcome.remoteID else{
-            //Check to see if this entity is already in the Cloud, but not matched locally
-            let query = Outcome.query()!
-            query.whereKey(kPCKOutcomeIdKey, equalTo: outcomeId)
-            query.includeKey(kPCKOutcomeTaskKey)
-            query.findObjectsInBackground{
-                (objects, error) in
+        var careKitQuery = OCKOutcomeQuery(for: Date())
+        careKitQuery.tags = [self.uuid]
+        storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let fetchedOutcome):
+                guard let outcome = fetchedOutcome as? OCKOutcome else{return}
                 
-                guard let foundObject = objects?.first as? Outcome else{
+                guard let remoteID = outcome.remoteID else{
+                    //Check to see if this entity is already in the Cloud, but not matched locally
+                    let query = Outcome.query()!
+                    query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
+                    query.includeKey(kPCKOutcomeTaskKey)
+                    query.findObjectsInBackground{
+                        (objects, error) in
+                        
+                        guard let foundObject = objects?.first as? Outcome else{
+                            return
+                        }
+                        var mutableOutcome = outcome
+                        mutableOutcome.remoteID = foundObject.objectId
+                        self.compareUpdate(mutableOutcome, parse: foundObject, storeManager: storeManager)
+                    }
                     return
                 }
-                var mutableOutcome = castedOutcome
-                mutableOutcome.remoteID = foundObject.objectId
-                self.compareUpdate(mutableOutcome, parse: foundObject, storeManager: storeManager)
+                
+                //Get latest item from the Cloud to compare against
+                let query = Outcome.query()!
+                query.whereKey(kPCKOutcomeObjectIdKey, equalTo: remoteID)
+                query.includeKey(kPCKOutcomeTaskKey)
+                query.findObjectsInBackground{
+                    (objects, error) in
+                    
+                    guard let foundObject = objects?.first as? Outcome else{
+                        return
+                    }
+                    self.compareUpdate(outcome, parse: foundObject, storeManager: storeManager)
+                }
+            case .failure(let error):
+                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
             }
-            return
-        }
-        
-        //Get latest item from the Cloud to compare against
-        let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeObjectIdKey, equalTo: remoteID)
-        query.includeKey(kPCKOutcomeTaskKey)
-        query.findObjectsInBackground{
-            (objects, error) in
-            
-            guard let foundObject = objects?.first as? Outcome else{
-                return
-            }
-            self.compareUpdate(castedOutcome, parse: foundObject, storeManager: storeManager)
         }
     }
     
@@ -127,44 +133,27 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         }
     }
     
-    open func deleteFromCloudEventually(_ outcome: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager){
+    open func deleteFromCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
         
-        guard let _ = User.current(),
-            let castedOutcome = outcome as? OCKOutcome else{
+        guard let _ = User.current() else{
             return
         }
-        
-        guard let remoteID = castedOutcome.remoteID else{
-            
-            //Check to see if this entity is already in the Cloud, but not matched locally
-            let query = Outcome.query()!
-            query.whereKey(kPCKOutcomeCareKitIdKey, equalTo: outcome.id)
-            query.includeKey(kPCKOutcomeTaskIDKey)
-            query.findObjectsInBackground{
-                (objects, error) in
-                guard let foundObject = objects?.first as? Outcome else{
-                    return
-                }
-                self.compareDelete(castedOutcome, parse: foundObject, storeManager: storeManager)
-            }
-            return
-        }
-        
+                
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeObjectIdKey, equalTo: remoteID)
+        query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
         query.includeKey(kPCKOutcomeTaskKey)
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Outcome else{
                 return
             }
-            self.compareDelete(castedOutcome, parse: foundObject, storeManager: storeManager)
+            self.compareDelete(foundObject, storeManager: storeManager)
         }
     }
     
-    func compareDelete(_ careKit: OCKOutcome, parse: Outcome, storeManager: OCKSynchronizedStoreManager){
-        guard let careKitLastUpdated = careKit.updatedDate,
+    func compareDelete(_ parse: Outcome, storeManager: OCKSynchronizedStoreManager){
+        guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
@@ -228,18 +217,8 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
             
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead added
-                var careKitQuery = OCKOutcomeQuery(for: Date())
-                careKitQuery.tags = [self.uuid]
-                storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(let fetchedOutcome):
-                        guard let outcome = fetchedOutcome as? OCKOutcome else{return}
-                        self.updateCloudEventually(outcome, storeManager: storeManager)
-                    case .failure(let error):
-                        print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
-                    }
-                }
+                self.updateCloudEventually(storeManager)
+                
             }else{
                 //This is the first object, make sure to save it
                 self.saveAndCheckRemoteID(storeManager)
@@ -258,7 +237,13 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
                     switch result{
                     case .success(let fetchedOutcome):
                         guard var mutableOutcome = fetchedOutcome as? OCKOutcome else{return}
-                        mutableOutcome.remoteID = self.objectId
+                        if mutableOutcome.remoteID == nil{
+                            mutableOutcome.remoteID = self.objectId
+                        }else{
+                            if mutableOutcome.remoteID! != self.objectId{
+                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal (self.objectId)")
+                            }
+                        }
                         
                         //UUIDs are custom, make sure to add them as a tag for querying
                         if let outcomeTags = mutableOutcome.tags{
