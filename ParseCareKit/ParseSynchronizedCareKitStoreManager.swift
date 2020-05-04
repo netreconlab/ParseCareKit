@@ -12,7 +12,7 @@ import Combine
 import Parse
 
 /**
- Protocol that defines the properties and methods for parse careKit entities.
+ Protocol that defines the properties and methods for parse carekit entities.
  */
 public protocol PCKEntity: PFObject, PFSubclassing {
     func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
@@ -154,17 +154,13 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     private func updateCloudTasks(_ tasks: [OCKAnyTask]){
-        
-        //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
         tasks.forEach{
             let _ = Task(careKitEntity: $0, storeManager: self.storeManager){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
                 task.updateCloudEventually(self.storeManager)
             }
-            
         }
-        
     }
     
     private func deleteCloudTasks(_ tasks: [OCKAnyTask]){
