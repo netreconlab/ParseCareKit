@@ -203,69 +203,80 @@ open class Outcome: PFObject, PFSubclassing, PCKAnyOutcome {
         guard let _ = User.current() else{
             return
         }
-        let careKitQuery = OCKOutcomeQuery(id: self.careKitId)
-        storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let fetchedOutcome):
-                guard let outcome = fetchedOutcome as? OCKOutcome else{return}
-                //Check to see if already in the cloud
-                let query = Outcome.query()!
-                query.whereKey(kPCKOutcomeCareKitIdKey, equalTo: outcome.id)
-                query.findObjectsInBackground(){
-                    (objects, error) in
-                    guard let foundObjects = objects else{
-                        guard let error = error as NSError?,
-                            let errorDictionary = error.userInfo["error"] as? [String:Any],
-                            let reason = errorDictionary["routine"] as? String else {return}
-                        //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                        if reason == "errorMissingColumn"{
-                            //Saving the new item with the custom column should resolve the issue
-                            print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                            self.saveAndCheckRemoteID(outcome, storeManager: storeManager)
-                        }else{
-                            //There was a different issue that we don't know how to handle
-                            print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
-                        }
-                        return
-                    }
-                    //If object already in the Cloud, exit
-                    if foundObjects.count > 0{
-                        //Maybe this needs to be updated instead
-                        self.updateCloudEventually(outcome, storeManager: storeManager)
-                        return
-                    }
-                    self.saveAndCheckRemoteID(outcome, storeManager: storeManager)
+        
+        //Check to see if already in the cloud
+        let query = Outcome.query()!
+        query.whereKey(kPCKOutcomeCareKitIdKey, equalTo: self.careKitId)
+        query.findObjectsInBackground(){
+            (objects, error) in
+            guard let foundObjects = objects else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    self.saveAndCheckRemoteID(storeManager)
+                }else{
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
                 }
-            case .failure(let error):
-                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
+                return
             }
+            
+            if foundObjects.count > 0{
+                //Maybe this needs to be updated instead added
+                let careKitQuery = OCKOutcomeQuery(id: self.careKitId)
+                storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(let fetchedOutcome):
+                        guard let outcome = fetchedOutcome as? OCKOutcome else{return}
+                        self.updateCloudEventually(outcome, storeManager: storeManager)
+                    case .failure(let error):
+                        print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
+                    }
+                }
+            }else{
+                //This is the first object, make sure to save it
+                self.saveAndCheckRemoteID(storeManager)
+            }
+            
         }
     }
     
-    func saveAndCheckRemoteID(_ careKitEntity: OCKOutcome, storeManager: OCKSynchronizedStoreManager){
+    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager){
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
-                //Need to save remoteId for this and all relational data
-                var mutableOutcome = careKitEntity
-                mutableOutcome.remoteID = self.objectId
-                self.values.forEach{
-                    for (index,value) in mutableOutcome.values.enumerated(){
-                        guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
-                            id == $0.uuid else{
-                            continue
-                        }
-                        mutableOutcome.values[index].remoteID = $0.objectId
-                    }
-                }
-                storeManager.store.updateAnyOutcome(mutableOutcome){
+                let careKitQuery = OCKOutcomeQuery(id: self.careKitId)
+                storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(let updatedContact):
-                        print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
+                    case .success(let fetchedOutcome):
+                        guard var mutableOutcome = fetchedOutcome as? OCKOutcome else{return}
+                        mutableOutcome.remoteID = self.objectId
+                        self.values.forEach{
+                            for (index,value) in mutableOutcome.values.enumerated(){
+                                guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
+                                    id == $0.uuid else{
+                                    continue
+                                }
+                                mutableOutcome.values[index].remoteID = $0.objectId
+                            }
+                        }
+                        storeManager.store.updateAnyOutcome(mutableOutcome){
+                            result in
+                            switch result{
+                            case .success(let updatedContact):
+                                print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
+                            case .failure(let error):
+                                print("Error updating remoteID. \(error)")
+                            }
+                        }
                     case .failure(let error):
-                        print("Error updating remoteID. \(error)")
+                        print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
                     }
                 }
             }else{
