@@ -56,11 +56,12 @@ open class ScheduleElement: PFObject, PFSubclassing {
             returnedValues in
             
             self.targetValues = returnedValues
-            
+            completion(self)
+            /*
             ScheduleElement.convertCareKitArrayToParse(scheduleElement.elements, storeManager: storeManager){ returnedElements in
                 self.elements = returnedElements
                 completion(self)
-            }
+            }*/
             
         }
         
