@@ -49,12 +49,10 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         var careKitQuery = OCKOutcomeQuery()
         careKitQuery.tags = [self.uuid]
         careKitQuery.sortDescriptors = [.date(ascending: false)]
-        store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
+        store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let fetchedOutcome):
-                guard let outcome = fetchedOutcome as? OCKOutcome else{return}
-                
+            case .success(let outcome):
                 guard let remoteID = outcome.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
@@ -239,8 +237,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(let fetchedOutcome):
-                        var mutableOutcome = fetchedOutcome
+                    case .success(var mutableOutcome):
                         if mutableOutcome.remoteID == nil{
                             mutableOutcome.remoteID = self.objectId
                         }else{
@@ -347,7 +344,8 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Outcome?) -> Void){
         
         guard let _ = User.current(),
-            let outcome = outcomeAny as? OCKOutcome else{
+            let outcome = outcomeAny as? OCKOutcome,
+            let store = storeManager.store as? OCKStore else{
             completion(nil)
             return
         }
@@ -387,12 +385,12 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 //ID's are the same for related Plans
                 var query = OCKTaskQuery()
                 query.versionIDs = [outcome.taskID]
-                storeManager.store.fetchAnyTasks(query: query, callbackQueue: .global(qos: .background)){
+                store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(let anyTask):
                         
-                        guard let task = anyTask.first as? OCKTask else{
+                        guard let task = anyTask.first else{
                             completion(nil)
                             return
                         }

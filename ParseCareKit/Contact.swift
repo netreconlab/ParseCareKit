@@ -52,15 +52,15 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
     }
     
     open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = storeManager.store as? OCKStore else{
             return
         }
         
-        storeManager.store.fetchAnyContact(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchContact(withID: self.uuid, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let fetchedContact):
-                guard let contact = fetchedContact as? OCKContact else{return}
+            case .success(let contact):
                 guard let remoteID = contact.remoteID else{
                     
                     //Check to see if this entity is already in the Cloud, but not matched locally
@@ -73,7 +73,6 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                             return
                         }
                         self.compareUpdate(contact, parse: foundObject, storeManager: storeManager)
-                        
                     }
                     return
                 }
@@ -225,15 +224,15 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
     }
     
     func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+        guard let store = storeManager.store as? OCKStore else{return}
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
-                storeManager.store.fetchAnyContact(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchContact(withID: self.uuid, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(let fetchedContact):
-                        guard var mutableEntity = fetchedContact as? OCKContact else{return}
+                    case .success(var mutableEntity):
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             storeManager.store.updateAnyContact(mutableEntity){
@@ -276,7 +275,8 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
     open func copyCareKit(_ contactAny: OCKAnyContact, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Contact?) -> Void){
         
         guard let _ = User.current(),
-            let contact = contactAny as? OCKContact else{
+            let contact = contactAny as? OCKContact,
+            let store = storeManager.store as? OCKStore else{
             completion(nil)
             return
         }
@@ -357,14 +357,12 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             query.ids.append(relatedID)
         }
         
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
             
             switch result{
-            case .success(let fetchedPatients):
-                guard let patientsFound = fetchedPatients as? [OCKPatient] else{return}
+            case .success(let patientsFound):
                 let foundAuthor = patientsFound.filter{$0.id == authorID}.first
-                
                 guard let theAuthor = foundAuthor else{return}
                 
                 if let authorRemoteID = theAuthor.remoteID{
@@ -494,7 +492,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKContact?) -> Void){
-        
+        guard let store = storeManager.store as? OCKStore else{return}
         let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
         var contact = OCKContact(id: self.uuid, name: nameComponents, carePlanID: nil)
         
@@ -574,14 +572,12 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             return
         }
         //Outcomes can only be converted if they have a relationship with a task locally
-        storeManager.store.fetchAnyCarePlan(withID: carePlanID){
+        store.fetchCarePlan(withID: carePlanID){
             result in
             
             switch result{
-            case .success(let fetchedCarePlan):
-                
-                guard let carePlan = fetchedCarePlan as? OCKCarePlan,
-                    let carePlanID = carePlan.localDatabaseID else{
+            case .success(let carePlan):
+                guard let carePlanID = carePlan.localDatabaseID else{
                     return
                 }
                 

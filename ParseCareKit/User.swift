@@ -34,16 +34,15 @@ open class User: PFUser, PCKEntity {
     }
     
     open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = storeManager.store as? OCKStore else{
             return
         }
         
-        storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let fetchedPatient):
-                guard let patient = fetchedPatient as? OCKPatient else{return}
-                
+            case .success(let patient):
                 guard let remoteID = patient.remoteID else{
                     
                     //Check to see if this entity is already in the Cloud, but not paired locally
@@ -216,16 +215,16 @@ open class User: PFUser, PCKEntity {
     }
     
     func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+        guard let store = storeManager.store as? OCKStore else{return}
         self.saveEventually{
             (success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Only save data back to CarePlanStore if it's never been saved before
-                storeManager.store.fetchAnyPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(let fetchedPatient):
-                        guard var mutableEntity = fetchedPatient as? OCKPatient else{return}
+                    case .success(var mutableEntity):
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             storeManager.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){

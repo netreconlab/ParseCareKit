@@ -42,18 +42,17 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
     }
     
     open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = storeManager.store as? OCKStore else{
             return
         }
         
-        storeManager.store.fetchAnyCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let fetchedCarePlan):
-                guard let carePlan = fetchedCarePlan as? OCKCarePlan else{return}
+            case .success(let carePlan):
                 //Check to see if already in the cloud
                 guard let remoteID = carePlan.remoteID else{
-                    
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
                     query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
@@ -214,14 +213,15 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
     
     
     private func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+        guard let store = storeManager.store as? OCKStore else{return}
+        
         self.saveEventually{(success, error) in
             if success{
                 //Only save data back to CarePlanStore if it's never been saved before
-                storeManager.store.fetchAnyCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(let fetchedCarePlan):
-                        guard var mutableEntity = fetchedCarePlan as? OCKCarePlan else{return}
+                    case .success(var mutableEntity):
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             storeManager.store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
@@ -352,15 +352,16 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKCarePlan?) -> Void){
         
-        guard let authorID = self.author?.uuid else {return}
+        guard let authorID = self.author?.uuid,
+            let store = storeManager.store as? OCKStore else {return}
         var query = OCKPatientQuery()
         query.ids = [authorID]
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let authors):
                 //Should only be one patient returned
-                guard let careKitAuthor = authors.first as? OCKPatient else{
+                guard let careKitAuthor = authors.first else{
                     completion(nil)
                     return
                 }

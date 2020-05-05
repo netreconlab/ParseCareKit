@@ -44,16 +44,15 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
     }
     
     open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = storeManager.store as? OCKStore else{
             return
         }
         
-        storeManager.store.fetchAnyTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let fetchedTask):
-                guard let task = fetchedTask as? OCKTask else{return}
-            
+            case .success(let task):
                 guard let remoteID = task.remoteID else{
                            
                     //Check to see if this entity is already in the Cloud, but not matched locally
@@ -74,8 +73,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 query.whereKey(kPCKTaskObjectIdKey, equalTo: remoteID)
                 query.findObjectsInBackground{
                     (objects, error) in
-                    guard let foundObject = objects?.first as? Task/*,
-                        let author = foundObject.author*/ else{
+                    guard let foundObject = objects?.first as? Task else{
                         return
                     }
                     self.compareUpdate(task, parse: foundObject, storeManager: storeManager)
@@ -217,15 +215,15 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
     }
     
     private func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+        guard let store = storeManager.store as? OCKStore else{return}
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
-                storeManager.store.fetchAnyTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(let fetchedTask):
-                        guard var mutableEntity = fetchedTask as? OCKTask else{return}
+                    case .success(var mutableEntity):
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             storeManager.store.updateAnyTask(mutableEntity){
@@ -483,18 +481,18 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         task.notes = self.notes?.compactMap{$0.convertToCareKit()}
         task.remoteID = self.objectId
         
-        guard let parseCarePlan = self.carePlan else{
+        guard let parseCarePlan = self.carePlan,
+            let store = storeManager.store as? OCKStore else{
             completion(task)
             return
         }
         
         //Need to grab the local CarePlan ID from the CarePlanStore in order to link locally
-        storeManager.store.fetchAnyCarePlan(withID: parseCarePlan.uuid){
+        store.fetchCarePlan(withID: parseCarePlan.uuid){
             result in
             
             switch result{
-            case .success(let fetchedPlan):
-                guard let foundPlan = fetchedPlan as? OCKCarePlan else {return}
+            case .success(let foundPlan):
                 task.carePlanID = foundPlan.localDatabaseID
                 completion(task)
                 /*
