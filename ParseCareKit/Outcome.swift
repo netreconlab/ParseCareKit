@@ -97,7 +97,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(storeManager){
+                parse.saveAndCheckRemoteID(storeManager, outcomeValues: careKit.values){
                     (success) in
                     
                     if !success{
@@ -225,8 +225,37 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
-    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+    func replaceOutcomeValuesWithReferences(_ parseValues: [OutcomeValue], careKitValues: [OCKOutcomeValue])->[OutcomeValue]{
+        var replacedValues = [OutcomeValue]()
+        var uuids = [String]()
+        careKitValues.forEach{
+            guard let uuid = $0.userInfo?[kPCKOutcomeValueUserInfoIDKey],
+                let remoteId = $0.remoteID else{
+                return
+            }
+            replacedValues.append(OutcomeValue(withoutDataWithObjectId: remoteId))
+            uuids.append(uuid)
+        }
+        
+        var mutableReturnValues = parseValues
+        for (index,uuid) in uuids.enumerated(){
+            for (returnIndex,value) in parseValues.enumerated(){
+                if uuid == value.uuid{
+                    mutableReturnValues[returnIndex] = replacedValues[index]
+                }
+            }
+        }
+        
+        return mutableReturnValues
+    }
+    
+    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, outcomeValues:[OCKOutcomeValue]?=nil, completion: @escaping(Bool) -> Void){
         guard let store = storeManager.store as? OCKStore else {return}
+        
+        //Check to see if some Outcomes are already in the Cloud, if so, need their references. This assumes OutcomeValues can't be updated, but instead are either "added" or "deleted"
+        if let values = outcomeValues{
+            self.values = replaceOutcomeValuesWithReferences(self.values, careKitValues: values)
+        }
         
         self.saveEventually{(success, error) in
             if success{
