@@ -324,35 +324,6 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                             mutableOutcome.tags = [self.uuid]
                             needToUpdate = true
                         }
-                        
-                        self.values.forEach{
-                            $0.fetchIfNeededInBackground(){
-                                (object,error) in
-                                
-                                guard let fetchedOutcomeValue = object as? OutcomeValue else{
-                                    if error != nil{
-                                        print("Error/Warning in Outcome.saveAndCheckRemoteID(). Couldn't fetch OutcomeValue. \(error!)")
-                                    }
-                                    return
-                                }
-                                for (index,value) in mutableOutcome.values.enumerated(){
-                                    guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
-                                        id == fetchedOutcomeValue.uuid else{
-                                        continue
-                                    }
-                                    
-                                    if mutableOutcome.values[index].remoteID == nil{
-                                        mutableOutcome.values[index].remoteID = fetchedOutcomeValue.objectId
-                                        needToUpdate = true
-                                    }
-                                    
-                                    guard let updatedValue = fetchedOutcomeValue.compareUpdate(mutableOutcome.values[index], parse: fetchedOutcomeValue, storeManager: storeManager) else {continue}
-                                    mutableOutcome.values[index] = updatedValue
-                                    needToUpdate = true
-                                }
-                            }
-                        }
-                        
                         if needToUpdate{
                             store.updateOutcome(mutableOutcome){
                                 result in
@@ -367,6 +338,49 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                             }
                         }else{
                             completion(true)
+                        }
+                        
+                        //These get handled and saved seperatly
+                        self.values.forEach{
+                            $0.fetchIfNeededInBackground(){
+                                (object,error) in
+                                
+                                guard let fetchedOutcomeValue = object as? OutcomeValue else{
+                                    if error != nil{
+                                        print("Error/Warning in Outcome.saveAndCheckRemoteID(). Couldn't fetch OutcomeValue. \(error!)")
+                                    }
+                                    return
+                                }
+                                
+                                var changedOutcomeValue = false
+                                for (index,value) in mutableOutcome.values.enumerated(){
+                                    guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
+                                        id == fetchedOutcomeValue.uuid else{
+                                        continue
+                                    }
+                                    
+                                    if mutableOutcome.values[index].remoteID == nil{
+                                        mutableOutcome.values[index].remoteID = fetchedOutcomeValue.objectId
+                                        changedOutcomeValue = true
+                                    }
+                                    
+                                    guard let updatedValue = fetchedOutcomeValue.compareUpdate(mutableOutcome.values[index], parse: fetchedOutcomeValue, storeManager: storeManager) else {continue}
+                                    mutableOutcome.values[index] = updatedValue
+                                    changedOutcomeValue = true
+                                }
+                                
+                                if changedOutcomeValue{
+                                    store.updateOutcome(mutableOutcome){
+                                        result in
+                                        switch result{
+                                        case .success(let updatedContact):
+                                            print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
+                                        case .failure(let error):
+                                            print("Error updating remoteID. \(error)")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     case .failure(let error):
                         print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
