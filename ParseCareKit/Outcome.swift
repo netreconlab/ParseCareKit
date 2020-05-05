@@ -88,6 +88,17 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
+    func deleteOutcomeValueFromCloudIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue]){
+        var parseObjectIds = Set(parseValues.compactMap{$0.uuid})
+        let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
+        parseObjectIds.subtract(careKitRemoteIds)
+        
+        parseObjectIds.forEach{
+            let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: $0)
+            outcomeValueToDelete.deleteEventually()
+        }
+    }
+    
     func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, storeManager: OCKSynchronizedStoreManager){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
@@ -95,6 +106,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         }
         
         if cloudUpdatedAt < careKitLastUpdated{
+            deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
                 parse.saveAndCheckRemoteID(storeManager, outcomeValues: careKit.values){
