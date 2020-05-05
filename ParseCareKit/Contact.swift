@@ -444,13 +444,13 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             copiedNotes in
             self.notes = copiedNotes
             //contactInfoDictionary[kPCKContactNotes] = copiedNotes
-            guard let carePlanID = contact.carePlanID else{
+            guard let carePlanID = contact.carePlanUUID else{
                 completion()
                 return
             }
             //ID's are the same for related Plans
             var query = OCKCarePlanQuery()
-            query.versionIDs = [carePlanID]
+            query.uuids = [carePlanID]
             storeManager.store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
                 result in
                     switch result{
@@ -494,7 +494,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
     open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKContact?) -> Void){
         guard let store = storeManager.store as? OCKStore else{return}
         let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        var contact = OCKContact(id: self.uuid, name: nameComponents, carePlanID: nil)
+        var contact = OCKContact(id: self.uuid, name: nameComponents, carePlanUUID: nil)
         
         contact.role = self.role
         contact.title = self.title
@@ -577,11 +577,11 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             
             switch result{
             case .success(let carePlan):
-                guard let carePlanID = carePlan.localDatabaseID else{
+                guard let carePlanID = carePlan.uuid else{
                     return
                 }
                 
-                contact.carePlanID = carePlanID
+                contact.carePlanUUID = carePlanID
                 completion(contact)
                 
             case .failure(_):

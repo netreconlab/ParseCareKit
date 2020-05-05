@@ -142,24 +142,27 @@ public let kPCKOutcomeValueLocallyUpdatedAtKey                    = "locallyUpda
 //#Mark - Schedule Element Class
 public let kAScheduleElementClassKey                           = "ScheduleElement"
 // Field keys
-public let kPCKScheduleElementCreatedAtKey                           = "createdAt"
-public let kPCKScheduleElementUpdatedAtKey                           = "updatedAt"
-public let kPCKScheduleElementPostedAtKey                            = "postedAt"
-public let kPCKScheduleElementIdKey                                  = "uuid"
-public let kPCKScheduleElementGroupIdentifierKey                  = "groupIdentifier"
 public let kPCKScheduleElementTextKey                             = "text"
-public let kPCKScheduleElementNotesKey                            = "notes"
-public let kPCKScheduleElementSourceKey                           = "source"
-public let kPCKScheduleElementTagsKey                             = "tags"
-public let kPCKScheduleElementAssetKey                            = "asset"
 public let kPCKScheduleElementStartKey                            = "start"
 public let kPCKScheduleElementEndKey                              = "end"
 public let kPCKScheduleElementIntervalKey                         = "interval"
 public let kPCKScheduleElementTargetValuesKey                     = "targetValues"
 public let kPCKScheduleElementElementsKey                         = "elements"
+
+/*
+public let kPCKScheduleElementCreatedAtKey                           = "createdAt"
+public let kPCKScheduleElementUpdatedAtKey                           = "updatedAt"
+public let kPCKScheduleElementPostedAtKey                            = "postedAt"
+public let kPCKScheduleElementIdKey                                  = "uuid"
+public let kPCKScheduleElementGroupIdentifierKey                  = "groupIdentifier"
+public let kPCKScheduleElementNotesKey                            = "notes"
+public let kPCKScheduleElementSourceKey                           = "source"
+public let kPCKScheduleElementTagsKey                             = "tags"
+public let kPCKScheduleElementAssetKey                            = "asset"
 public let kPCKScheduleElementLocallyCreatedAtKey                    = "locallyCreatedAt"
 public let kPCKScheduleElementLocallyUpdatedAtKey                    = "locallyUpdatedAt"
 public let kPCKScheduleElementTimezoneKey                         = "timezone"
+*/
 
 //#Mark - Note Class
 public let kPCKNoteClassKey                                    = "Note"

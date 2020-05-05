@@ -12,44 +12,63 @@ import CareKit
 open class ScheduleElement: PFObject, PFSubclassing {
 
     //1 to 1 between Parse and CareStore
-    @NSManaged public var asset:String?
+    /*@NSManaged public var asset:String?
     @NSManaged public var groupIdentifier:String?
-    @NSManaged public var elements:[ScheduleElement]
-    @NSManaged public var end:Date?
-    @NSManaged public var interval:[String:Any]
+    
+    
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
     @NSManaged public var notes:[Note]?
-    @NSManaged public var start:Date
+    
     @NSManaged public var source:String?
     @NSManaged public var tags:[String]?
+    
+    @NSManaged public var timezone:String
+    
+    */
+    @NSManaged public var elements:[ScheduleElement]
+    @NSManaged public var end:Date?
+    @NSManaged public var interval:[String:Any]
+    @NSManaged public var start:Date
     @NSManaged public var text:String?
     @NSManaged public var targetValues:[OutcomeValue]
-    @NSManaged public var timezone:String
-  
+    
     //UserInfo fields on CareStore
-    @NSManaged public var uuid:String //maps to id
+    //@NSManaged public var uuid:String //maps to id
     
     public static func parseClassName() -> String {
         return kAScheduleElementClassKey
     }
     
-    public convenience init(careKitEntity:OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
+    public convenience init(careKitEntity:OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(ScheduleElement?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
     func copyCareKit(_ scheduleElement: OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(ScheduleElement)->Void){
         
-        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoIDKey] {
-            self.uuid = id
-        }
-        
         self.text = scheduleElement.text
         self.interval = CareKitInterval.era.convertToDictionary(scheduleElement.interval)
         self.start = scheduleElement.start
         self.end = scheduleElement.end
         
+        OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, storeManager: storeManager){
+            returnedValues in
+            
+            self.targetValues = returnedValues
+            completion(self)
+            /*
+            ScheduleElement.convertCareKitArrayToParse(scheduleElement.elements, storeManager: storeManager){ returnedElements in
+                self.elements = returnedElements
+                completion(self)
+            }*/
+            
+        }
+        
+        /*
+        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoIDKey] {
+            self.uuid = id
+        }
         self.groupIdentifier = scheduleElement.groupIdentifier
         self.tags = scheduleElement.tags
         self.source = scheduleElement.source
@@ -77,7 +96,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
                 self.targetValues = returnedValues
                 completion(self)
             }
-        }
+        }*/
         
         /*
         if let notes = scheduleElement.notes {
@@ -101,7 +120,9 @@ open class ScheduleElement: PFObject, PFSubclassing {
         let interval = CareKitInterval.era.convertToDateComponents(self.interval)
         
         var scheduleElement = OCKScheduleElement(start: self.start, end: self.end, interval: interval)
-        
+        scheduleElement.targetValues = self.targetValues.compactMap{$0.convertToCareKit()}
+        scheduleElement.text = self.text
+        /*
         scheduleElement.groupIdentifier = self.groupIdentifier
         scheduleElement.tags = self.tags
         scheduleElement.source = self.source
@@ -111,12 +132,10 @@ open class ScheduleElement: PFObject, PFSubclassing {
         if let timeZone = TimeZone(abbreviation: self.timezone){
             scheduleElement.timezone = timeZone
         }
-        scheduleElement.text = self.text
+        
         scheduleElement.remoteID = self.objectId
-        
-        scheduleElement.targetValues = self.targetValues.compactMap{$0.convertToCareKit()}
         scheduleElement.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        
+        */
         return scheduleElement
         /*
         guard let queryTarget = OutcomeValue.query()/*,
@@ -217,17 +236,24 @@ open class ScheduleElement: PFObject, PFSubclassing {
         
         for (index,value) in values.enumerated(){
     
-            let newScheduleElement = ScheduleElement()
-            newScheduleElement.copyCareKit(value, storeManager: storeManager){
-                (valueCopied) in
-            
-                returnValues.append(valueCopied)
+            let _ = ScheduleElement(careKitEntity: value, storeManager: storeManager){
+                newElement in
                 
-                //copyCareKit is async, so we need it to tell us when it's finished
-                if index == (values.count-1){
-                    completion(returnValues)
+                guard let newScheduleElement = newElement as? ScheduleElement else{
+                    return
+                }
+                newScheduleElement.copyCareKit(value, storeManager: storeManager){
+                    (valueCopied) in
+                
+                    returnValues.append(valueCopied)
+                    
+                    //copyCareKit is async, so we need it to tell us when it's finished
+                    if index == (values.count-1){
+                        completion(returnValues)
+                    }
                 }
             }
+            
         }
     }
 }

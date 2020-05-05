@@ -33,7 +33,7 @@ open class Note: PFObject, PFSubclassing {
         return kPCKNoteClassKey
     }
     
-    public convenience init(careKitEntity: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
+    public convenience init(careKitEntity: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Note?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
