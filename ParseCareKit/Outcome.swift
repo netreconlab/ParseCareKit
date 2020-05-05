@@ -280,7 +280,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         
                         if error.localizedDescription.contains("matching"){
                             //Need to find and save Outcome with correct tag, only way to do this is search all outcomes
-                            let query = OCKOutcomeQuery(for: Date())
+                            let query = OCKOutcomeQuery()
                             storeManager.store.fetchAnyOutcomes(query: query, callbackQueue: .global(qos: .background)){
                                 result in
                                 
