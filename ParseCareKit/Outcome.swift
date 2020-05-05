@@ -291,20 +291,30 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         }
                         
                         self.values.forEach{
-                            for (index,value) in mutableOutcome.values.enumerated(){
-                                guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
-                                    id == $0.uuid else{
-                                    continue
-                                }
+                            $0.fetchIfNeededInBackground(){
+                                (object,error) in
                                 
-                                if mutableOutcome.values[index].remoteID == nil{
-                                    mutableOutcome.values[index].remoteID = $0.objectId
+                                guard let fetchedOutcomeValue = object as? OutcomeValue else{
+                                    if error != nil{
+                                        print("Error/Warning in Outcome.saveAndCheckRemoteID(). Couldn't fetch OutcomeValue. \(error!)")
+                                    }
+                                    return
+                                }
+                                for (index,value) in mutableOutcome.values.enumerated(){
+                                    guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
+                                        id == fetchedOutcomeValue.uuid else{
+                                        continue
+                                    }
+                                    
+                                    if mutableOutcome.values[index].remoteID == nil{
+                                        mutableOutcome.values[index].remoteID = fetchedOutcomeValue.objectId
+                                        needToUpdate = true
+                                    }
+                                    
+                                    guard let updatedValue = fetchedOutcomeValue.compareUpdate(mutableOutcome.values[index], parse: fetchedOutcomeValue, storeManager: storeManager) else {continue}
+                                    mutableOutcome.values[index] = updatedValue
                                     needToUpdate = true
                                 }
-                                
-                                guard let updatedValue = $0.compareUpdate(mutableOutcome.values[index], parse: $0, storeManager: storeManager) else {continue}
-                                mutableOutcome.values[index] = updatedValue
-                                needToUpdate = true
                             }
                         }
                         
