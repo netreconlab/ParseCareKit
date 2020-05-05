@@ -501,7 +501,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 self.values = copiedValues
                 //ID's are the same for related Plans
                 var query = OCKTaskQuery()
-                query.versionIDs = [outcome.taskID]
+                query.uuids = [outcome.taskUUID]
                 store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
@@ -562,14 +562,14 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
             switch result{
             case .success(let fetchedTask):
                 
-                guard let taskID = fetchedTask.localDatabaseID else{
+                guard let taskID = fetchedTask.uuid else{
                     completion(nil)
                     return
                 }
                 
                 let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
                 
-                var outcome = OCKOutcome(taskID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+                var outcome = OCKOutcome(taskUUID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
                 
                 outcome.groupIdentifier = self.groupIdentifier
                 outcome.tags = self.tags

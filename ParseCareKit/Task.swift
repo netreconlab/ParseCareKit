@@ -292,8 +292,8 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
             self.notes = copiedNotes
             //Elements don't have have id's and tags when initially created, need to add them
             let elements = task.schedule.elements.map{(element) -> OCKScheduleElement in
-                var newElement = element
-                if newElement.userInfo == nil{
+                let newElement = element
+                /*if newElement.userInfo == nil{
                     newElement.userInfo = [kPCKScheduleElementUserInfoIDKey: UUID.init().uuidString]
                 }else{
                     if newElement.userInfo![kPCKScheduleElementUserInfoIDKey] == nil{
@@ -306,7 +306,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                     }
                 }else{
                     newElement.tags = [task.id]
-                }
+                }*/
                 return newElement
             }
             
@@ -314,13 +314,13 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 copiedScheduleElements in
                 self.elements = copiedScheduleElements
                 
-                guard let carePlanLocalID = task.carePlanID else{
+                guard let carePlanLocalID = task.carePlanUUID else{
                     completion(self)
                     return
                 }
                 
                 var query = OCKCarePlanQuery()
-                query.versionIDs = [carePlanLocalID]
+                query.uuids = [carePlanLocalID]
                 storeManager.store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
                     result in
                     
@@ -467,7 +467,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
         let schedule = OCKSchedule(composing: careKitScheduleElements)
         
-        var task = OCKTask(id: self.uuid, title: self.title, carePlanID: nil, schedule: schedule)
+        var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source
@@ -493,7 +493,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
             
             switch result{
             case .success(let foundPlan):
-                task.carePlanID = foundPlan.localDatabaseID
+                task.carePlanUUID = foundPlan.uuid
                 completion(task)
                 /*
                 guard let taskID = task.localDatabaseID,

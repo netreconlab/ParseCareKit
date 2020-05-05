@@ -289,13 +289,13 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             copiedNotes in
             self.notes = copiedNotes
         
-            guard let authorID = carePlan.patientID else{
+            guard let authorID = carePlan.patientUUID else{
                 completion(self)
                 return
             }
             //ID's are the same for related Plans
             var query = OCKPatientQuery()
-            query.versionIDs = [authorID]
+            query.uuids = [authorID]
             storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
                 result in
                 switch result{
@@ -366,7 +366,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                     return
                 }
                 
-                var carePlan = OCKCarePlan(id: self.uuid, title: self.title, patientID: careKitAuthor.localDatabaseID)
+                var carePlan = OCKCarePlan(id: self.uuid, title: self.title, patientUUID: careKitAuthor.uuid)
                 carePlan.groupIdentifier = self.groupIdentifier
                 carePlan.tags = self.tags
                 carePlan.source = self.source
