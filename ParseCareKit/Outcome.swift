@@ -230,7 +230,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
-                var careKitQuery = OCKOutcomeQuery(for: Date())
+                var careKitQuery = OCKOutcomeQuery()
                 careKitQuery.tags = [self.uuid]
                 storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
