@@ -41,14 +41,15 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     
     open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
         
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = storeManager.store as? OCKStore else{
             return
         }
         
         var careKitQuery = OCKOutcomeQuery()
         careKitQuery.tags = [self.uuid]
         careKitQuery.sortDescriptors = [.date(ascending: false)]
-        storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
+        store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let fetchedOutcome):
@@ -227,16 +228,19 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     }
     
     func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+        guard let store = storeManager.store as? OCKStore else {return}
+        
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
+                
                 var careKitQuery = OCKOutcomeQuery()
                 careKitQuery.tags = [self.uuid]
-                storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(let fetchedOutcome):
-                        guard var mutableOutcome = fetchedOutcome as? OCKOutcome else{return}
+                        var mutableOutcome = fetchedOutcome
                         if mutableOutcome.remoteID == nil{
                             mutableOutcome.remoteID = self.objectId
                         }else{
@@ -265,7 +269,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                                 mutableOutcome.values[index].remoteID = $0.objectId
                             }
                         }
-                        storeManager.store.updateAnyOutcome(mutableOutcome){
+                        store.updateOutcome(mutableOutcome){
                             result in
                             switch result{
                             case .success(let updatedContact):
@@ -283,14 +287,12 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                             //Need to find and save Outcome with correct tag, only way to do this is search all outcomes
                             var query = OCKOutcomeQuery()
                             query.sortDescriptors = [.date(ascending: false)]
-                            storeManager.store.fetchAnyOutcomes(query: query, callbackQueue: .global(qos: .background)){
+                            store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
                                 result in
                                 
                                 switch result{
                                 case .success(let foundOutcomes):
-                                    guard let outcomes = foundOutcomes as? [OCKOutcome] else{return}
-                                    
-                                    let matchingOutcomes = outcomes.filter{
+                                    let matchingOutcomes = foundOutcomes.filter{
                                         guard let foundUuid = $0.userInfo?[kPCKOutcomeUserInfoIDKey] else{return false}
                                         if foundUuid == self.uuid{
                                             return true
@@ -309,8 +311,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                                     }
                                     //Fix tag
                                     outcomeToUse.tags = [self.uuid]
-                                    
-                                    storeManager.store.updateAnyOutcome(outcomeToUse, callbackQueue: .global(qos: .background)){
+                                    store.updateOutcome(outcomeToUse, callbackQueue: .global(qos: .background)){
                                         result in
                                         
                                         switch result{
@@ -350,7 +351,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
             completion(nil)
             return
         }
-        
+
         self.careKitId = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
@@ -433,20 +434,20 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKOutcome?) -> Void){
         
-        guard let task = self.task else{
+        guard let task = self.task,
+         let store = storeManager.store as? OCKStore else{
             completion(nil)
             return
         }
         
         //Outcomes can only be converted if they have a relationship with a task locally
-        storeManager.store.fetchAnyTask(withID: task.uuid){
+        store.fetchTask(withID: task.uuid){
             result in
             
             switch result{
             case .success(let fetchedTask):
                 
-                guard let task = fetchedTask as? OCKTask,
-                    let taskID = task.localDatabaseID else{
+                guard let taskID = fetchedTask.localDatabaseID else{
                     completion(nil)
                     return
                 }
