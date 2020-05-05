@@ -238,8 +238,10 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                     result in
                     switch result{
                     case .success(var mutableOutcome):
+                        var needToUpdate = false
                         if mutableOutcome.remoteID == nil{
                             mutableOutcome.remoteID = self.objectId
+                            needToUpdate = true
                         }else{
                             if mutableOutcome.remoteID! != self.objectId!{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal (self.objectId)")
@@ -252,9 +254,11 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         if let outcomeTags = mutableOutcome.tags{
                             if !outcomeTags.contains(self.uuid){
                                 mutableOutcome.tags!.append(self.uuid)
+                                needToUpdate = true
                             }
                         }else{
                             mutableOutcome.tags = [self.uuid]
+                            needToUpdate = true
                         }
                         
                         self.values.forEach{
@@ -263,19 +267,32 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                                     id == $0.uuid else{
                                     continue
                                 }
-                                mutableOutcome.values[index].remoteID = $0.objectId
+                                
+                                if mutableOutcome.values[index].remoteID == nil{
+                                    mutableOutcome.values[index].remoteID = $0.objectId
+                                    needToUpdate = true
+                                }
+                                
+                                guard let updatedValue = $0.compareUpdate(mutableOutcome.values[index], parse: $0, storeManager: storeManager) else {continue}
+                                mutableOutcome.values[index] = updatedValue
+                                needToUpdate = true
                             }
                         }
-                        store.updateOutcome(mutableOutcome){
-                            result in
-                            switch result{
-                            case .success(let updatedContact):
-                                print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
-                                completion(true)
-                            case .failure(let error):
-                                print("Error updating remoteID. \(error)")
-                                completion(false)
+                        
+                        if needToUpdate{
+                            store.updateOutcome(mutableOutcome){
+                                result in
+                                switch result{
+                                case .success(let updatedContact):
+                                    print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
+                                    completion(true)
+                                case .failure(let error):
+                                    print("Error updating remoteID. \(error)")
+                                    completion(false)
+                                }
                             }
+                        }else{
+                            completion(true)
                         }
                     case .failure(let error):
                         print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
