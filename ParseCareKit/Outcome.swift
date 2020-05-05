@@ -47,6 +47,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         
         var careKitQuery = OCKOutcomeQuery()
         careKitQuery.tags = [self.uuid]
+        careKitQuery.sortDescriptors = [.date(ascending: false)]
         storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
@@ -280,7 +281,8 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         
                         if error.localizedDescription.contains("matching"){
                             //Need to find and save Outcome with correct tag, only way to do this is search all outcomes
-                            let query = OCKOutcomeQuery()
+                            var query = OCKOutcomeQuery()
+                            query.sortDescriptors = [.date(ascending: false)]
                             storeManager.store.fetchAnyOutcomes(query: query, callbackQueue: .global(qos: .background)){
                                 result in
                                 
