@@ -277,7 +277,57 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         }
                     case .failure(let error):
                         print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
-                        completion(false)
+                        
+                        if error.localizedDescription.contains("matching"){
+                            //Need to find and save Outcome with correct tag, only way to do this is search all outcomes
+                            let query = OCKOutcomeQuery(for: Date())
+                            storeManager.store.fetchAnyOutcomes(query: query, callbackQueue: .global(qos: .background)){
+                                result in
+                                
+                                switch result{
+                                case .success(let foundOutcomes):
+                                    guard let outcomes = foundOutcomes as? [OCKOutcome] else{return}
+                                    
+                                    let matchingOutcomes = outcomes.filter{
+                                        guard let foundUuid = $0.userInfo?[kPCKOutcomeUserInfoIDKey] else{return false}
+                                        if foundUuid == self.uuid{
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    
+                                    if matchingOutcomes.count > 1{
+                                        print("Warning in \(self.parseClassName).saveAndCheckRemoteID(), found \(matchingOutcomes.count) matching uuid \(self.uuid). There should only be 1")
+                                    }
+
+                                    guard var outcomeToUse = matchingOutcomes.first else{
+                                        print("Error in \(self.parseClassName).saveAndCheckRemoteID(), found no matching Outcomes with uuid \(self.uuid). There should be 1")
+                                        completion(false)
+                                        return
+                                    }
+                                    //Fix tag
+                                    outcomeToUse.tags = [self.uuid]
+                                    
+                                    storeManager.store.updateAnyOutcome(outcomeToUse, callbackQueue: .global(qos: .background)){
+                                        result in
+                                        
+                                        switch result{
+                                        case .success(let foundOutcome):
+                                            print("Fixed tag for \(foundOutcome)")
+                                        case .failure(let error):
+                                            print("Error fixing tag on \(outcomeToUse). \(error)")
+                                        }
+                                        completion(false)
+                                    }
+                                case .failure(let error):
+                                    print("Error updating remoteID. \(error)")
+                                    completion(false)
+                                }
+                            }
+                        }else{
+                            completion(false)
+                        }
+                        
                     }
                 }
             }else{
