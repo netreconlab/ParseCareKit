@@ -88,14 +88,37 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
+    func fetchOutcomeValuesIfNeeded(_ values:[OutcomeValue], completion: @escaping(Bool) -> Void){
+        var itemsFetched = 0
+        values.forEach{
+            $0.fetchIfNeededInBackground(){
+                (object,error) in
+                guard let _ = object else{
+                    if error != nil{
+                        print("Error in Outcome.fetchOutcomeValuesIfNeeded(). \(error!)")
+                    }
+                    completion(true)
+                    return
+                }
+                itemsFetched += 1
+                if itemsFetched == values.count{
+                    completion(true)
+                }
+            }
+        }
+    }
+    
     func deleteOutcomeValueFromCloudIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue]){
-        var parseObjectIds = Set(parseValues.compactMap{$0.uuid})
-        let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
-        parseObjectIds.subtract(careKitRemoteIds)
-        
-        parseObjectIds.forEach{
-            let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: $0)
-            outcomeValueToDelete.deleteEventually()
+        fetchOutcomeValuesIfNeeded(parseValues){
+            finished in
+            var parseObjectIds = Set(parseValues.compactMap{$0.uuid})
+            let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
+            parseObjectIds.subtract(careKitRemoteIds)
+            
+            parseObjectIds.forEach{
+                let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: $0)
+                outcomeValueToDelete.deleteEventually()
+            }
         }
     }
     
