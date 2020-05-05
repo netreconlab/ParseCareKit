@@ -111,7 +111,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     func deleteOutcomeValueFromCloudIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue]){
         fetchOutcomeValuesIfNeeded(parseValues){
             finished in
-            var parseObjectIds = Set(parseValues.compactMap{$0.uuid})
+            var parseObjectIds = Set(parseValues.compactMap{$0.objectId})
             let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
             parseObjectIds.subtract(careKitRemoteIds)
             
