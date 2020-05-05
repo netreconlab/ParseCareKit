@@ -235,17 +235,24 @@ open class ScheduleElement: PFObject, PFSubclassing {
         
         for (index,value) in values.enumerated(){
     
-            let newScheduleElement = ScheduleElement()
-            newScheduleElement.copyCareKit(value, storeManager: storeManager){
-                (valueCopied) in
-            
-                returnValues.append(valueCopied)
+            let _ = ScheduleElement(careKitEntity: value, storeManager: storeManager){
+                newElement in
                 
-                //copyCareKit is async, so we need it to tell us when it's finished
-                if index == (values.count-1){
-                    completion(returnValues)
+                guard let newScheduleElement = newElement as? ScheduleElement else{
+                    return
+                }
+                newScheduleElement.copyCareKit(value, storeManager: storeManager){
+                    (valueCopied) in
+                
+                    returnValues.append(valueCopied)
+                    
+                    //copyCareKit is async, so we need it to tell us when it's finished
+                    if index == (values.count-1){
+                        completion(returnValues)
+                    }
                 }
             }
+            
         }
     }
 }
