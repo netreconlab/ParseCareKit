@@ -120,7 +120,6 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: objectIdToDelete)
                 outcomeValueToDelete.deleteInBackground{
                     (success,error) in
-                    
                     if success{
                         print("Successfully deleted OutcomeValue from Cloud with objectId: \(objectIdToDelete)")
                     }else{
