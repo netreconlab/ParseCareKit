@@ -96,12 +96,11 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveEventually{
-                    (success,error) in
+                parse.saveAndCheckRemoteID(storeManager){
+                    (success) in
                     
                     if !success{
-                        guard let error = error else{return}
-                        print("Error in Task.updateCloudEventually(). \(error)")
+                        print("Error in \(self.parseClassName).updateCloudEventually(). Error updating \(careKit)")
                     }else{
                         print("Successfully updated Task \(self) in the Cloud")
                     }
@@ -199,7 +198,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    self.saveAndCheckRemoteID(storeManager)
+                    self.saveAndCheckRemoteID(storeManager){_ in}
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
@@ -212,12 +211,12 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 //Maybe this needs to be updated instead
                 self.updateCloudEventually(storeManager)
             }else{
-                self.saveAndCheckRemoteID(storeManager)
+                self.saveAndCheckRemoteID(storeManager){_ in}
             }
         }
     }
     
-    private func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager){
+    private func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
@@ -229,29 +228,35 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                         guard var mutableEntity = fetchedTask as? OCKTask else{return}
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
+                            storeManager.store.updateAnyTask(mutableEntity){
+                                result in
+                                switch result{
+                                case .success(let updatedTask):
+                                    print("Updated remoteID of task \(updatedTask)")
+                                    completion(true)
+                                case .failure(let error):
+                                    print("Error in \(self.parseClassName).addToCloudInBackground() updating remoteID. \(error)")
+                                    completion(false)
+                                }
+                            }
                         }else{
                             if mutableEntity.remoteID! != self.objectId{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
-                            }
-                        }
-                        storeManager.store.updateAnyTask(mutableEntity){
-                            result in
-                            switch result{
-                            case .success(let updatedTask):
-                                print("Updated remoteID of task \(updatedTask)")
-                            case .failure(let error):
-                                print("Error in \(self.parseClassName).addToCloudInBackground() updating remoteID. \(error)")
+                                completion(false)
                             }
                         }
                     case .failure(let error):
                         print("Error in Contact.addToCloudInBackground(). \(error)")
+                        completion(false)
                     }
                 }
             }else{
                 guard let error = error else{
+                    completion(false)
                     return
                 }
                 print("Error in \(self.parseClassName).addToCloudInBackground(). \(error)")
+                completion(false)
             }
         }
     }

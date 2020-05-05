@@ -77,14 +77,13 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 query.includeKey(kPCKOutcomeTaskKey)
                 query.findObjectsInBackground{
                     (objects, error) in
-                    
                     guard let foundObject = objects?.first as? Outcome else{
                         return
                     }
                     self.compareUpdate(outcome, parse: foundObject, storeManager: storeManager)
                 }
             case .failure(let error):
-                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
+                print("Error in \(self.parseClassName).updateCloudEventually(). \(error)")
             }
         }
     }
@@ -98,12 +97,11 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveEventually{
-                    (success,error) in
+                parse.saveAndCheckRemoteID(storeManager){
+                    (success) in
                     
                     if !success{
-                        guard let error = error else{return}
-                        print("Error in \(self.parseClassName).updateCloudEventually(). \(error)")
+                        print("Error in \(self.parseClassName).updateCloudEventually(). Couldn't update in cloud: \(careKit)")
                     }else{
                         print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
                     }
@@ -207,7 +205,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    self.saveAndCheckRemoteID(storeManager)
+                    self.saveAndCheckRemoteID(storeManager){_ in }
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
@@ -221,17 +219,18 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 
             }else{
                 //This is the first object, make sure to save it
-                self.saveAndCheckRemoteID(storeManager)
+                self.saveAndCheckRemoteID(storeManager){_ in }
             }
             
         }
     }
     
-    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager){
+    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
-                let careKitQuery = OCKOutcomeQuery(id: self.careKitId)
+                var careKitQuery = OCKOutcomeQuery(for: Date())
+                careKitQuery.tags = [self.uuid]
                 storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
@@ -240,8 +239,10 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         if mutableOutcome.remoteID == nil{
                             mutableOutcome.remoteID = self.objectId
                         }else{
-                            if mutableOutcome.remoteID! != self.objectId{
+                            if mutableOutcome.remoteID! != self.objectId!{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal (self.objectId)")
+                                completion(false)
+                                return
                             }
                         }
                         
@@ -268,19 +269,24 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                             switch result{
                             case .success(let updatedContact):
                                 print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
+                                completion(true)
                             case .failure(let error):
                                 print("Error updating remoteID. \(error)")
+                                completion(false)
                             }
                         }
                     case .failure(let error):
                         print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")
+                        completion(false)
                     }
                 }
             }else{
                 guard let error = error else{
+                    completion(false)
                     return
                 }
                 print("Error in CarePlan.addToCloudInBackground(). \(error)")
+                completion(false)
             }
         }
     }

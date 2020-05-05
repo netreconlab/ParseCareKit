@@ -84,12 +84,11 @@ open class User: PFUser, PCKEntity {
                 _ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveEventually{
-                    (success,error) in
+                parse.saveAndCheckRemoteID(storeManager){
+                    (success) in
                     
                     if !success{
-                        guard let error = error else{return}
-                        print("Error in User.updateCloudEventually(). \(error)")
+                        print("Error in \(self.parseClassName).updateCloudEventually(). Error updating \(careKit)")
                     }else{
                         print("Successfully updated Patient \(self) in the Cloud")
                     }
@@ -199,7 +198,7 @@ open class User: PFUser, PCKEntity {
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    self.saveAndCheckRemoteID(storeManager)
+                    self.saveAndCheckRemoteID(storeManager){_ in}
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
@@ -211,12 +210,12 @@ open class User: PFUser, PCKEntity {
                 //Maybe this needs to be updated instead
                 self.updateCloudEventually(storeManager)
             }else{
-                self.saveAndCheckRemoteID(storeManager)
+                self.saveAndCheckRemoteID(storeManager){_ in}
             }
         }
     }
     
-    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager){
+    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
         self.saveEventually{
             (success, error) in
             if success{
@@ -229,29 +228,37 @@ open class User: PFUser, PCKEntity {
                         guard var mutableEntity = fetchedPatient as? OCKPatient else{return}
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
+                            storeManager.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
+                                result in
+                                switch result{
+                                case .success(_):
+                                    print("Successfully added Patient \(mutableEntity) to Cloud")
+                                    completion(true)
+                                case .failure(let error):
+                                    print("Error in \(self.parseClassName).addToCloudInBackground() adding Patient \(mutableEntity) to Cloud. \(error)")
+                                    completion(false)
+                                }
+                            }
                         }else{
                             if mutableEntity.remoteID! != self.objectId{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
-                            }
-                        }
-                        storeManager.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
-                            result in
-                            switch result{
-                            case .success(_):
-                                print("Successfully added Patient \(mutableEntity) to Cloud")
-                            case .failure(let error):
-                                print("Error in \(self.parseClassName).addToCloudInBackground() adding Patient \(mutableEntity) to Cloud. \(error)")
+                                completion(false)
+                            }else{
+                                completion(true)
                             }
                         }
                     case .failure(let error):
                         print("Error in Contact.addToCloudInBackground(). \(error)")
+                        completion(false)
                     }
                 }
             }else{
                 guard let error = error else{
+                    completion(false)
                     return
                 }
                 print("Error in User.addToCloudInBackground(). \(error)")
+                completion(false)
             }
         }
     }

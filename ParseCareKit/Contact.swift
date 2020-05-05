@@ -104,12 +104,11 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveEventually{
-                    (success,error) in
+                parse.saveAndCheckRemoteID(storeManager){
+                    (success) in
                     
                     if !success{
-                        guard let error = error else{return}
-                        print("Error in Contact.updateCloudEventually(). \(error)")
+                        print("Error in \(self.parseClassName).updateCloudEventually(). Couldn't update \(careKit)")
                     }else{
                         print("Successfully updated Contact \(parse) in the Cloud")
                     }
@@ -207,7 +206,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    self.saveAndCheckRemoteID(storeManager)
+                    self.saveAndCheckRemoteID(storeManager){_ in}
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
@@ -220,12 +219,12 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                 self.updateCloudEventually(storeManager)
                 
             }else{
-                self.saveAndCheckRemoteID(storeManager)
+                self.saveAndCheckRemoteID(storeManager){_ in}
             }
         }
     }
     
-    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager){
+    func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
         self.saveEventually{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
@@ -237,28 +236,39 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                         guard var mutableEntity = fetchedContact as? OCKContact else{return}
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
+                            storeManager.store.updateAnyContact(mutableEntity){
+                                result in
+                                switch result{
+                                case .success(let updatedContact):
+                                    print("Updated remoteID of Contact \(updatedContact)")
+                                    completion(true)
+                                case .failure(let error):
+                                    print("Error in Contact.saveAndCheckRemoteID() updating remoteID of Contact. \(error)")
+                                    completion(false)
+                                }
+                            }
                         }else{
                             if mutableEntity.remoteID! != self.objectId{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
+                                completion(false)
+                            }else{
+                                completion(true)
                             }
                         }
-                        storeManager.store.updateAnyContact(mutableEntity){
-                            result in
-                            switch result{
-                            case .success(let updatedContact):
-                                print("Updated remoteID of Contact \(updatedContact)")
-                            case .failure(let error):
-                                print("Error in Contact.saveAndCheckRemoteID() updating remoteID of Contact. \(error)")
-                            }
-                        }
+                        
                     case .failure(let error):
                         print("Error adding contact to cloud \(error)")
+                        completion(false)
                     }
                 }
                 
             }else{
-                guard let error = error else{return}
+                guard let error = error else{
+                    completion(false)
+                    return
+                }
                 print("Error in Contact.saveAndCheckRemoteID(). \(error)")
+                completion(false)
             }
         }
     }
