@@ -45,7 +45,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
             return
         }
         
-        var careKitQuery = OCKOutcomeQuery(for: Date())
+        var careKitQuery = OCKOutcomeQuery()
         careKitQuery.tags = [self.uuid]
         storeManager.store.fetchAnyOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
