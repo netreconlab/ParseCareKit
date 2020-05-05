@@ -34,13 +34,13 @@ open class ScheduleElement: PFObject, PFSubclassing {
     @NSManaged public var targetValues:[OutcomeValue]
     
     //UserInfo fields on CareStore
-    @NSManaged public var uuid:String //maps to id
+    //@NSManaged public var uuid:String //maps to id
     
     public static func parseClassName() -> String {
         return kAScheduleElementClassKey
     }
     
-    public convenience init(careKitEntity:OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
+    public convenience init(careKitEntity:OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(ScheduleElement?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
