@@ -116,8 +116,21 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
             parseObjectIds.subtract(careKitRemoteIds)
             
             parseObjectIds.forEach{
-                let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: $0)
-                outcomeValueToDelete.deleteEventually()
+                let objectIdToDelete = $0
+                let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: objectIdToDelete)
+                outcomeValueToDelete.deleteInBackground{
+                    (success,error) in
+                    
+                    if success{
+                        print("Successfully deleted OutcomeValue from Cloud with objectId: \(objectIdToDelete)")
+                    }else{
+                        guard let error = error else{
+                            print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). Unknown error")
+                            return
+                        }
+                        print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). \(error)")
+                    }
+                }
             }
         }
     }
