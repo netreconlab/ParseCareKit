@@ -254,7 +254,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     
     public func synchronizePatients(){
         let query = OCKPatientQuery(for: Date())
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .main){
+        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
             
             switch result{
@@ -270,7 +270,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
 
     public func synchronizeCarePlans(){
         let query = OCKCarePlanQuery(for: Date())
-        storeManager.store.fetchAnyCarePlans(query: query, callbackQueue: .main){
+        storeManager.store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let foundCarePlans):
@@ -285,7 +285,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     
     public func synchronizeTasks(){
         let query = OCKTaskQuery(for: Date())
-        storeManager.store.fetchAnyTasks(query: query, callbackQueue: .main){
+        storeManager.store.fetchAnyTasks(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let foundTasks):
@@ -300,7 +300,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     
     public func synchronizeOutcome(){
         let query = OCKPatientQuery(for: Date())
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .main){
+        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let foundPatients):
@@ -315,7 +315,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
         
     public func synchronizeContacts(){
         let query = OCKContactQuery(for: Date())
-        storeManager.store.fetchAnyContacts(query: query, callbackQueue: .main){
+        storeManager.store.fetchAnyContacts(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let foundContacts):
