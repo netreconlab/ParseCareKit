@@ -9,12 +9,8 @@
 import Parse
 import CareKit
 
-public protocol PCKAnyCarePlan: PCKEntity {
-    func updateCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager)
-    func deleteFromCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager)
-}
 
-open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
+open class CarePlan: PFObject, PFSubclassing, PCKEntity {
 
     //Parse only
     @NSManaged public var patient:User?
@@ -45,36 +41,46 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
         self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
     }
     
-    open func updateCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager){
+    open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
         guard let _ = User.current(),
-            let castedCarePlan = carePlan as? OCKCarePlan else{
+            let store = storeManager.store as? OCKStore else{
             return
         }
-        guard let remoteID = castedCarePlan.remoteID else{
-            
-            //Check to see if this entity is already in the Cloud, but not matched locally
-            let query = CarePlan.query()!
-            query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
-            query.findObjectsInBackground{
-                (objects, error) in
-                guard let foundObject = objects?.first as? CarePlan else{
+        
+        store.fetchCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let carePlan):
+                //Check to see if already in the cloud
+                guard let remoteID = carePlan.remoteID else{
+                    //Check to see if this entity is already in the Cloud, but not matched locally
+                    let query = CarePlan.query()!
+                    query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
+                    query.findObjectsInBackground{
+                        (objects, error) in
+                        guard let foundObject = objects?.first as? CarePlan else{
+                            return
+                        }
+                        self.compareUpdate(carePlan, parse: foundObject, storeManager: storeManager)
+                        
+                    }
                     return
                 }
-                self.compareUpdate(castedCarePlan, parse: foundObject, storeManager: storeManager)
-                
+                //Get latest item from the Cloud to compare against
+                let query = CarePlan.query()!
+                query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
+                query.findObjectsInBackground{
+                    (objects, error) in
+                    guard let foundObject = objects?.first as? CarePlan else{
+                        return
+                    }
+                    self.compareUpdate(carePlan, parse: foundObject, storeManager: storeManager)
+                }
+            case .failure(let error):
+                print("Error in Contact.addToCloudInBackground(). \(error)")
             }
-            return
         }
-        //Get latest item from the Cloud to compare against
-        let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
-        query.findObjectsInBackground{
-            (objects, error) in
-            guard let foundObject = objects?.first as? CarePlan else{
-                return
-            }
-            self.compareUpdate(castedCarePlan, parse: foundObject, storeManager: storeManager)
-        }
+        
     }
     
     private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, storeManager: OCKSynchronizedStoreManager){
@@ -86,12 +92,11 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
             parse.copyCareKit(careKit, storeManager: storeManager){_ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveEventually{
-                    (success,error) in
+                parse.saveAndCheckRemoteID(storeManager){
+                    (success) in
                     
                     if !success{
-                        guard let error = error else{return}
-                        print("Error in CarePlan.updateCloudEventually(). \(error)")
+                        print("Error in CarePlan.updateCloudEventually(). Couldn't update \(careKit)")
                     }else{
                         print("Successfully updated CarePlan \(self) in the Cloud")
                     }
@@ -119,38 +124,25 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
         }
     }
     
-    open func deleteFromCloudEventually(_ carePlan: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager){
-        guard let _ = User.current(),
-            let castedCarePlan = carePlan as? OCKCarePlan else{
+    open func deleteFromCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
+        guard let _ = User.current() else{
             return
         }
-        guard let remoteID = castedCarePlan.remoteID else{
-            //Check to see if this entity is already in the Cloud, but not matched locally
-            let query = CarePlan.query()!
-            query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
-            query.findObjectsInBackground{
-                (objects, error) in
-                guard let foundObject = objects?.first as? CarePlan else{
-                    return
-                }
-                self.compareDelete(castedCarePlan, parse: foundObject, storeManager: storeManager)
-            }
-            return
-        }
+       
         //Get latest item from the Cloud to compare against
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
+        query.whereKey(kPCKCarePlanIDKey, equalTo: self.uuid)
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? CarePlan else{
                 return
             }
-            self.compareDelete(castedCarePlan, parse: foundObject, storeManager: storeManager)
+            self.compareDelete(foundObject, storeManager: storeManager)
         }
     }
     
-    func compareDelete(_ careKit: OCKCarePlan, parse: CarePlan, storeManager: OCKSynchronizedStoreManager){
-        guard let careKitLastUpdated = careKit.updatedDate,
+    func compareDelete(_ parse: CarePlan, storeManager: OCKSynchronizedStoreManager){
+        guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
@@ -188,69 +180,81 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
         guard let _ = User.current() else{
             return
         }
-        storeManager.store.fetchAnyCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let fetchedCarePlan):
-                guard let carePlan = fetchedCarePlan as? OCKCarePlan else{return}
-                //Check to see if already in the cloud
-                let query = CarePlan.query()!
-                query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
-                query.findObjectsInBackground(){
-                    (objects, error) in
-                    guard let foundObjects = objects else{
-                        guard let error = error as NSError?,
-                            let errorDictionary = error.userInfo["error"] as? [String:Any],
-                            let reason = errorDictionary["routine"] as? String else {return}
-                        //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                        if reason == "errorMissingColumn"{
-                            //Saving the new item with the custom column should resolve the issue
-                            print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                            self.saveAndCheckRemoteID(carePlan, storeManager: storeManager)
-                        }else{
-                            //There was a different issue that we don't know how to handle
-                            print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
-                        }
-                        return
-                    }
-                    //If object already in the Cloud, exit
-                    if foundObjects.count > 0{
-                        //Maybe this needs to be updated instead
-                        self.updateCloudEventually(carePlan, storeManager: storeManager)
-                        return
-                    }
-                    self.saveAndCheckRemoteID(carePlan, storeManager: storeManager)
+        
+        let query = CarePlan.query()!
+        query.whereKey(kPCKCarePlanIDKey, equalTo: self.uuid)
+        query.findObjectsInBackground(){
+            (objects, error) in
+            guard let foundObjects = objects else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    self.saveAndCheckRemoteID(storeManager){_ in}
+                }else{
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
                 }
-            case .failure(let error):
-                print("Error in Contact.addToCloudInBackground(). \(error)")
+                return
+            }
+            //If object already in the Cloud, exit
+            if foundObjects.count > 0{
+                //Maybe this needs to be updated instead
+                self.updateCloudEventually(storeManager)
+                
+            }else{
+                self.saveAndCheckRemoteID(storeManager){_ in}
             }
         }
     }
     
     
-    private func saveAndCheckRemoteID(_ careKitEntity: OCKCarePlan, storeManager: OCKSynchronizedStoreManager){
+    private func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
+        guard let store = storeManager.store as? OCKStore else{return}
+        
         self.saveEventually{(success, error) in
             if success{
                 //Only save data back to CarePlanStore if it's never been saved before
-                if careKitEntity.remoteID == nil{
-                    //Make a mutable version of the CarePlan
-                    var mutableEntity = careKitEntity
-                    mutableEntity.remoteID = self.objectId
-                    storeManager.store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
-                        result in
-                        switch result{
-                        case .success(_):
-                            print("Successfully added CarePlan \(mutableEntity) to Cloud")
-                        case .failure(_):
-                            print("Error in CarePlan.saveAndCheckRemoteID() adding CarePlan \(mutableEntity) to Cloud")
+                store.fetchCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(var mutableEntity):
+                        if mutableEntity.remoteID == nil{
+                            mutableEntity.remoteID = self.objectId
+                            storeManager.store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
+                                result in
+                                switch result{
+                                case .success(_):
+                                    print("Successfully added CarePlan \(mutableEntity) to Cloud")
+                                    completion(true)
+                                case .failure(_):
+                                    print("Error in CarePlan.saveAndCheckRemoteID() adding CarePlan \(mutableEntity) to Cloud")
+                                    completion(false)
+                                }
+                            }
+                        }else{
+                            if mutableEntity.remoteID! != self.objectId{
+                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
+                                completion(false)
+                            }else{
+                                completion(true)
+                            }
                         }
+                    case .failure(let error):
+                        print("Error in Contact.addToCloudInBackground(). \(error)")
+                        completion(false)
                     }
                 }
             }else{
                 guard let error = error else{
+                    completion(false)
                     return
                 }
                 print("Error in CarePlan.saveAndCheckRemoteID(). \(error)")
+                completion(false)
             }
         }
     }
@@ -348,15 +352,16 @@ open class CarePlan: PFObject, PFSubclassing, PCKAnyCarePlan {
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKCarePlan?) -> Void){
         
-        guard let authorID = self.author?.uuid else {return}
+        guard let authorID = self.author?.uuid,
+            let store = storeManager.store as? OCKStore else {return}
         var query = OCKPatientQuery()
         query.ids = [authorID]
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let authors):
                 //Should only be one patient returned
-                guard let careKitAuthor = authors.first as? OCKPatient else{
+                guard let careKitAuthor = authors.first else{
                     completion(nil)
                     return
                 }

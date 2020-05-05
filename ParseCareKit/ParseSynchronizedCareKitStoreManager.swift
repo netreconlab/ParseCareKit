@@ -12,10 +12,12 @@ import Combine
 import Parse
 
 /**
- Protocol that defines the properties and methods for parse careKit entities.
+ Protocol that defines the properties and methods for parse carekit entities.
  */
 public protocol PCKEntity: PFObject, PFSubclassing {
     func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager)
+    func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager)
+    func deleteFromCloudEventually(_ storeManager: OCKSynchronizedStoreManager)
 }
 
 open class ParseSynchronizedCareKitStoreManager: NSObject{
@@ -90,39 +92,22 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     private func updateCloudContacts(_ contacts: [OCKAnyContact]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var contactDictionary = [String:OCKAnyContact]()
-        contacts.forEach{contactDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = Contact.query()!
-        query.whereKey(kPCKContactIdKey, containedIn: Array(contactDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundContacts = objects as? [Contact] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundContacts.forEach{
-                guard let contact = contactDictionary[$0.uuid] else{return}
-                $0.updateCloudEventually(contact, storeManager: self.storeManager)
+
+        contacts.forEach{
+            let _ = Contact(careKitEntity: $0, storeManager: self.storeManager){
+                copiedContact in
+                guard let contact = copiedContact as? Contact else{return}
+                contact.updateCloudEventually(self.storeManager)
             }
         }
     }
     
     private func deleteCloudContacts(_ contacts: [OCKAnyContact]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var contactDictionary = [String:OCKAnyContact]()
-        contacts.forEach{contactDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = Contact.query()!
-        query.whereKey(kPCKContactIdKey, containedIn: Array(contactDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundContacts = objects as? [Contact] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundContacts.forEach{
-                guard let contact = contactDictionary[$0.uuid] else{return}
-                $0.deleteFromCloudEventually(contact, storeManager: self.storeManager)
+        contacts.forEach{
+            let _ = Contact(careKitEntity: $0, storeManager: self.storeManager){
+                copiedContact in
+                guard let contact = copiedContact as? Contact else{return}
+                contact.deleteFromCloudEventually(self.storeManager)
             }
         }
     }
@@ -131,47 +116,29 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
         contacts.forEach{
             let _ = Contact(careKitEntity: $0, storeManager: self.storeManager){
                 copiedContact in
-                if copiedContact != nil{
-                    copiedContact!.addToCloudInBackground(self.storeManager)
-                }
+                guard let contact = copiedContact as? Contact else{return}
+                contact.addToCloudInBackground(self.storeManager)
             }
         }
     }
     
     private func updateCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var outcomeDictionary = [String:OCKAnyOutcome]()
-        outcomes.forEach{outcomeDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeCareKitIdKey, containedIn: Array(outcomeDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundOutcomes = objects as? [Outcome] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundOutcomes.forEach{
-                guard let outcome = outcomeDictionary[$0.careKitId] else{return}
-                $0.updateCloudEventually(outcome, storeManager: self.storeManager)
+        outcomes.forEach{
+            let outcome = $0
+            let _ = Outcome(careKitEntity: outcome, storeManager: storeManager){
+                copiedOutcome in
+                guard let outcome = copiedOutcome as? Outcome else{return}
+                outcome.updateCloudEventually(self.storeManager)
             }
         }
     }
     
     private func deleteCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var outcomeDictionary = [String:OCKAnyOutcome]()
-        outcomes.forEach{outcomeDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeCareKitIdKey, containedIn: Array(outcomeDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundOutcomes = objects as? [Outcome] else{
-                return
-            }
-            //Only deleting users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundOutcomes.forEach{
-                guard let outcome = outcomeDictionary[$0.careKitId] else{return}
-                $0.deleteFromCloudEventually(outcome, storeManager: self.storeManager)
+        outcomes.forEach{
+            let _ = Outcome(careKitEntity: $0, storeManager: self.storeManager){
+                copiedOutcome in
+                guard let outcome = copiedOutcome as? Outcome else{return}
+                outcome.deleteFromCloudEventually(self.storeManager)
             }
         }
     }
@@ -180,48 +147,28 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
         outcomes.forEach{
             let _ = Outcome(careKitEntity: $0, storeManager: self.storeManager){
                 copiedOutcome in
-                if copiedOutcome != nil{
-                    copiedOutcome!.addToCloudInBackground(self.storeManager)
-                }
+                guard let outcome = copiedOutcome as? Outcome else{return}
+                outcome.addToCloudInBackground(self.storeManager)
             }
         }
     }
     
     private func updateCloudTasks(_ tasks: [OCKAnyTask]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var taskDictionary = [String:OCKAnyTask]()
-        tasks.forEach{taskDictionary[$0.id] = $0}
-        
-        //Setup Parse query for User table
-        let query = Task.query()!
-        query.whereKey(kPCKTaskIdKey, containedIn: Array(taskDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundCarePlans = objects as? [Task] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundCarePlans.forEach{
-                guard let task = taskDictionary[$0.uuid] else{return}
-                $0.updateCloudEventually(task, storeManager: self.storeManager)
+        tasks.forEach{
+            let _ = Task(careKitEntity: $0, storeManager: self.storeManager){
+                copiedTask in
+                guard let task = copiedTask as? Task else{return}
+                task.updateCloudEventually(self.storeManager)
             }
         }
     }
     
     private func deleteCloudTasks(_ tasks: [OCKAnyTask]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var taskDictionary = [String:OCKAnyTask]()
-        tasks.forEach{taskDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = Task.query()!
-        query.whereKey(kPCKTaskIdKey, containedIn: Array(taskDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundCarePlans = objects as? [Task] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundCarePlans.forEach{
-                guard let task = taskDictionary[$0.uuid] else{return}
-                $0.deleteFromCloudEventually(task, storeManager: self.storeManager)
+        tasks.forEach{
+            let _ = Task(careKitEntity: $0, storeManager: self.storeManager){
+                copiedTask in
+                guard let task = copiedTask as? Task else{return}
+                task.deleteFromCloudEventually(self.storeManager)
             }
         }
     }
@@ -230,47 +177,28 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
         tasks.forEach{
             let _ = Task(careKitEntity: $0, storeManager: self.storeManager){
                 copiedTask in
-                if copiedTask != nil{
-                    copiedTask!.addToCloudInBackground(self.storeManager)
-                }
+                guard let task = copiedTask as? Task else{return}
+                task.addToCloudInBackground(self.storeManager)
             }
         }
     }
     
     private func updateCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var carePlanDictionary = [String:OCKAnyCarePlan]()
-        carePlans.forEach{carePlanDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanIDKey, containedIn: Array(carePlanDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundCarePlans = objects as? [CarePlan] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundCarePlans.forEach{
-                guard let carePlan = carePlanDictionary[$0.uuid] else{return}
-                $0.updateCloudEventually(carePlan, storeManager: self.storeManager)
+        carePlans.forEach{
+            let _ = CarePlan(careKitEntity: $0, storeManager: self.storeManager){
+                copiedCarePlan in
+                guard let carePlan = copiedCarePlan as? CarePlan else{return}
+                carePlan.updateCloudEventually(self.storeManager)
             }
         }
     }
     
     private func deleteCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var carePlanDictionary = [String:OCKAnyCarePlan]()
-        carePlans.forEach{carePlanDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanIDKey, containedIn: Array(carePlanDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundCarePlans = objects as? [CarePlan] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundCarePlans.forEach{
-                guard let carePlan = carePlanDictionary[$0.uuid] else{return}
-                $0.deleteFromCloudEventually(carePlan, storeManager: self.storeManager)
+        carePlans.forEach{
+            let _ = CarePlan(careKitEntity: $0, storeManager: self.storeManager){
+                copiedCarePlan in
+                guard let carePlan = copiedCarePlan as? CarePlan else{return}
+                carePlan.deleteFromCloudEventually(self.storeManager)
             }
         }
     }
@@ -279,68 +207,39 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
         carePlans.forEach{
             let _ = CarePlan(careKitEntity: $0, storeManager: self.storeManager){
                 copiedCarePlan in
-                if copiedCarePlan != nil{
-                    copiedCarePlan!.addToCloudInBackground(self.storeManager)
-                }
+                guard let carePlan = copiedCarePlan as? CarePlan else{return}
+                carePlan.addToCloudInBackground(self.storeManager)
             }
-            
         }
     }
     
     private func updateCloudPatients(_ patients: [OCKAnyPatient]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var patientsDictionary = [String:OCKAnyPatient]()
-        patients.forEach{patientsDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = User.query()!
-        query.whereKey(kPCKUserIdKey, containedIn: Array(patientsDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundUsers = objects as? [User] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundUsers.forEach{
-                guard let patient = patientsDictionary[$0.uuid] else{return}
-                $0.updateCloudEventually(patient, storeManager: self.storeManager)
+        
+        patients.forEach{
+            let _ = User(careKitEntity: $0, storeManager: storeManager){
+                copiedPatient in
+                guard let patient = copiedPatient as? User else{return}
+                patient.updateCloudEventually(self.storeManager)
             }
         }
-        return
     }
     
     private func deleteCloudPatients(_ patients: [OCKAnyPatient]){
-        //Create a dictionary of patients based on their UUID to quicky find patient later
-        var patientsDictionary = [String:OCKAnyPatient]()
-        patients.forEach{patientsDictionary[$0.id] = $0}
-        //Setup Parse query for User table
-        let query = User.query()!
-        query.whereKey(kPCKUserIdKey, containedIn: Array(patientsDictionary.keys))
-        query.findObjectsInBackground{(objects, error) -> Void in
-            guard let foundUsers = objects as? [User] else{
-                return
-            }
-            //Only updating users found in the Cloud, if they are not in the Cloud, they are ignored
-            foundUsers.forEach{
-                guard let patient = patientsDictionary[$0.uuid] else{return}
-                $0.deleteFromCloudEventually(patient, storeManager: self.storeManager)
+        patients.forEach{
+            let _ = User(careKitEntity: $0, storeManager: storeManager){
+                copiedPatient in
+                guard let patient = copiedPatient as? User else{return}
+                patient.deleteFromCloudEventually(self.storeManager)
             }
         }
-        return
     }
     
     private func addCloudPatients(_ patients: [OCKAnyPatient]) {
         patients.forEach{
-            guard let thisUser = User.current() else{
-                return
-            }
-            
-            //Can only add to Cloud if this patient is you
-            if thisUser.uuid == $0.id{
-                let _ = User(careKitEntity: $0, storeManager: storeManager){
-                    copiedPatient in
-                    if copiedPatient != nil{
-                        copiedPatient!.addToCloudInBackground(self.storeManager)
-                    }
-                }
+            let _ = User(careKitEntity: $0, storeManager: storeManager){
+                copiedPatient in
+                guard let patient = copiedPatient as? User else{return}
+                patient.addToCloudInBackground(self.storeManager)
             }
         }
     }
@@ -354,13 +253,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     public func synchronizePatients(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKPatientQuery(for: Date())
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .main){
+        store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
-            
             switch result{
-            case .success(let foundPatients):
-                guard let patients = foundPatients as? [OCKPatient] else{return}
+            case .success(let patients):
                 let patientsToSync = patients.filter{$0.remoteID == nil}
                 self.addCloudPatients(patientsToSync)
             case .failure(let error):
@@ -370,12 +268,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
 
     public func synchronizeCarePlans(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKCarePlanQuery(for: Date())
-        storeManager.store.fetchAnyCarePlans(query: query, callbackQueue: .main){
+        store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundCarePlans):
-                guard let carePlans = foundCarePlans as? [OCKCarePlan] else{return}
+            case .success(let carePlans):
                 let carePlansToSync = carePlans.filter{$0.remoteID == nil}
                 self.addCloudCarePlans(carePlansToSync)
             case .failure(let error):
@@ -385,12 +283,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     public func synchronizeTasks(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKTaskQuery(for: Date())
-        storeManager.store.fetchAnyTasks(query: query, callbackQueue: .main){
+        store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundTasks):
-                guard let tasks = foundTasks as? [OCKTask] else{return}
+            case .success(let tasks):
                 let tasksToSync = tasks.filter{$0.remoteID == nil}
                 self.addCloudTasks(tasksToSync)
             case .failure(let error):
@@ -400,32 +298,109 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     public func synchronizeOutcome(){
-        let query = OCKPatientQuery(for: Date())
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .main){
+        guard let store = storeManager.store as? OCKStore else{return}
+        let query = OCKOutcomeQuery(for: Date())
+        store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundPatients):
-                guard let patients = foundPatients as? [OCKPatient] else{return}
-                let patientsToSync = patients.filter{$0.remoteID == nil}
-                self.addCloudPatients(patientsToSync)
+            case .success(let outcomes):
+                let outcomesToSync = outcomes.filter{$0.remoteID == nil}
+                self.addCloudOutcomes(outcomesToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizePatients(). \(error)")
+                print("Error in ParseSynchronizedCareKitStoreManager.synchronizeOutcomes(). \(error)")
             }
         }
     }
         
     public func synchronizeContacts(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKContactQuery(for: Date())
-        storeManager.store.fetchAnyContacts(query: query, callbackQueue: .main){
+        store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundContacts):
-                guard let contacts = foundContacts as? [OCKContact] else{return}
+            case .success(let contacts):
                 let contactsToSync = contacts.filter{$0.remoteID == nil}
                 self.addCloudContacts(contactsToSync)
             case .failure(let error):
                 print("Error in ParseSynchronizedCareKitStoreManager.synchronizeContacts(). \(error)")
             }
         }
+    }
+    
+    public func patchAddUUIDsToOutcomes(){
+        guard let store = storeManager.store as? OCKStore else{return}
+        let query = OCKOutcomeQuery()
+        store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
+            results in
+            switch results{
+                
+            case .success(let outcomes):
+                outcomes.forEach{
+                    var outcomeUpdated = false
+                    var mutableOutcome = $0
+                    if mutableOutcome.userInfo == nil{
+                        let uuid = UUID.init().uuidString
+                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoIDKey: uuid]
+                        if mutableOutcome.tags == nil{
+                            mutableOutcome.tags = [uuid]
+                        }else{
+                            mutableOutcome.tags!.append(uuid)
+                        }
+                        outcomeUpdated = true
+                    }else if mutableOutcome.userInfo![kPCKOutcomeUserInfoIDKey] == nil{
+                        let uuid = UUID.init().uuidString
+                        mutableOutcome.userInfo![kPCKOutcomeUserInfoIDKey] = uuid
+                        if mutableOutcome.tags == nil{
+                            mutableOutcome.tags = [uuid]
+                        }else{
+                            mutableOutcome.tags!.append(uuid)
+                        }
+                        outcomeUpdated = true
+                    }
+                    
+                    for (index,value) in mutableOutcome.values.enumerated(){
+                        var mutableValue = value
+                        if mutableValue.userInfo == nil{
+                            let uuid = UUID.init().uuidString
+                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoIDKey: uuid]
+                            if mutableValue.tags == nil{
+                                mutableValue.tags = [uuid]
+                            }else{
+                                mutableValue.tags!.append(uuid)
+                            }
+                            mutableOutcome.values[index] = mutableValue
+                            outcomeUpdated = true
+                        }else if mutableValue.userInfo![kPCKOutcomeValueUserInfoIDKey] == nil{
+                            let uuid = UUID.init().uuidString
+                            mutableValue.userInfo![kPCKOutcomeValueUserInfoIDKey] = uuid
+                            if mutableValue.tags == nil{
+                                mutableValue.tags = [uuid]
+                            }else{
+                                mutableValue.tags!.append(uuid)
+                            }
+                            mutableOutcome.values[index] = mutableValue
+                            outcomeUpdated = true
+                        }
+                    }
+                    
+                    if outcomeUpdated{
+                        store.updateOutcome(mutableOutcome, callbackQueue: .global(qos: .background)){
+                            results in
+                            switch results{
+                                
+                            case .success(let outcome):
+                                print("ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes() added UUID to \(outcome)")
+                            case .failure(let error):
+                                print("Error saving updated outcome in ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+                            }
+                        }
+                    }
+                    
+                }
+            case .failure(let error):
+                print("Error fetching outcomes in ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+            }
+        }
+        
     }
 }

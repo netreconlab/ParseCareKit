@@ -184,5 +184,29 @@ open class OutcomeValue: PFObject, PFSubclassing {
             }
         }
     }
+    
+    func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, storeManager: OCKSynchronizedStoreManager)->OCKOutcomeValue?{
+        guard let careKitLastUpdated = careKit.updatedDate,
+            let cloudUpdatedAt = parse.locallyUpdatedAt else{
+            return nil
+        }
+        
+        if cloudUpdatedAt < careKitLastUpdated{
+            parse.copyCareKit(careKit, storeManager: storeManager){copiedCareKit in
+                //An update may occur when Internet isn't available, try to update at some point
+                copiedCareKit?.saveEventually{(success, error) in
+                    if !success{
+                        print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
+                    }else{
+                        print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                    }
+                }
+            }
+        }else if cloudUpdatedAt > careKitLastUpdated {
+            return parse.convertToCareKit()
+        }
+        
+        return nil
+    }
 }
 
