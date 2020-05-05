@@ -253,13 +253,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     public func synchronizePatients(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKPatientQuery(for: Date())
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
-            
             switch result{
-            case .success(let foundPatients):
-                guard let patients = foundPatients as? [OCKPatient] else{return}
+            case .success(let patients):
                 let patientsToSync = patients.filter{$0.remoteID == nil}
                 self.addCloudPatients(patientsToSync)
             case .failure(let error):
@@ -269,12 +268,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
 
     public func synchronizeCarePlans(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKCarePlanQuery(for: Date())
-        storeManager.store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundCarePlans):
-                guard let carePlans = foundCarePlans as? [OCKCarePlan] else{return}
+            case .success(let carePlans):
                 let carePlansToSync = carePlans.filter{$0.remoteID == nil}
                 self.addCloudCarePlans(carePlansToSync)
             case .failure(let error):
@@ -284,12 +283,12 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     public func synchronizeTasks(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKTaskQuery(for: Date())
-        storeManager.store.fetchAnyTasks(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundTasks):
-                guard let tasks = foundTasks as? [OCKTask] else{return}
+            case .success(let tasks):
                 let tasksToSync = tasks.filter{$0.remoteID == nil}
                 self.addCloudTasks(tasksToSync)
             case .failure(let error):
@@ -299,32 +298,109 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     }
     
     public func synchronizeOutcome(){
-        let query = OCKPatientQuery(for: Date())
-        storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
+        guard let store = storeManager.store as? OCKStore else{return}
+        let query = OCKOutcomeQuery(for: Date())
+        store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundPatients):
-                guard let patients = foundPatients as? [OCKPatient] else{return}
-                let patientsToSync = patients.filter{$0.remoteID == nil}
-                self.addCloudPatients(patientsToSync)
+            case .success(let outcomes):
+                let outcomesToSync = outcomes.filter{$0.remoteID == nil}
+                self.addCloudOutcomes(outcomesToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizePatients(). \(error)")
+                print("Error in ParseSynchronizedCareKitStoreManager.synchronizeOutcomes(). \(error)")
             }
         }
     }
         
     public func synchronizeContacts(){
+        guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKContactQuery(for: Date())
-        storeManager.store.fetchAnyContacts(query: query, callbackQueue: .global(qos: .background)){
+        store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let foundContacts):
-                guard let contacts = foundContacts as? [OCKContact] else{return}
+            case .success(let contacts):
                 let contactsToSync = contacts.filter{$0.remoteID == nil}
                 self.addCloudContacts(contactsToSync)
             case .failure(let error):
                 print("Error in ParseSynchronizedCareKitStoreManager.synchronizeContacts(). \(error)")
             }
         }
+    }
+    
+    public func patchAddUUIDsToOutcomes(){
+        guard let store = storeManager.store as? OCKStore else{return}
+        let query = OCKOutcomeQuery()
+        store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
+            results in
+            switch results{
+                
+            case .success(let outcomes):
+                outcomes.forEach{
+                    var outcomeUpdated = false
+                    var mutableOutcome = $0
+                    if mutableOutcome.userInfo == nil{
+                        let uuid = UUID.init().uuidString
+                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoIDKey: uuid]
+                        if mutableOutcome.tags == nil{
+                            mutableOutcome.tags = [uuid]
+                        }else{
+                            mutableOutcome.tags!.append(uuid)
+                        }
+                        outcomeUpdated = true
+                    }else if mutableOutcome.userInfo![kPCKOutcomeUserInfoIDKey] == nil{
+                        let uuid = UUID.init().uuidString
+                        mutableOutcome.userInfo![kPCKOutcomeUserInfoIDKey] = uuid
+                        if mutableOutcome.tags == nil{
+                            mutableOutcome.tags = [uuid]
+                        }else{
+                            mutableOutcome.tags!.append(uuid)
+                        }
+                        outcomeUpdated = true
+                    }
+                    
+                    for (index,value) in mutableOutcome.values.enumerated(){
+                        var mutableValue = value
+                        if mutableValue.userInfo == nil{
+                            let uuid = UUID.init().uuidString
+                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoIDKey: uuid]
+                            if mutableValue.tags == nil{
+                                mutableValue.tags = [uuid]
+                            }else{
+                                mutableValue.tags!.append(uuid)
+                            }
+                            mutableOutcome.values[index] = mutableValue
+                            outcomeUpdated = true
+                        }else if mutableValue.userInfo![kPCKOutcomeValueUserInfoIDKey] == nil{
+                            let uuid = UUID.init().uuidString
+                            mutableValue.userInfo![kPCKOutcomeValueUserInfoIDKey] = uuid
+                            if mutableValue.tags == nil{
+                                mutableValue.tags = [uuid]
+                            }else{
+                                mutableValue.tags!.append(uuid)
+                            }
+                            mutableOutcome.values[index] = mutableValue
+                            outcomeUpdated = true
+                        }
+                    }
+                    
+                    if outcomeUpdated{
+                        store.updateOutcome(mutableOutcome, callbackQueue: .global(qos: .background)){
+                            results in
+                            switch results{
+                                
+                            case .success(let outcome):
+                                print("ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes() added UUID to \(outcome)")
+                            case .failure(let error):
+                                print("Error saving updated outcome in ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+                            }
+                        }
+                    }
+                    
+                }
+            case .failure(let error):
+                print("Error fetching outcomes in ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+            }
+        }
+        
     }
 }
