@@ -14,10 +14,9 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public var delegate: OCKRemoteSynchronizationDelegate?
     
     public var automaticallySynchronizes: Bool
-    let store:OCKStore!
+    public weak var store:OCKStore!
     
-    public init(_ store: OCKStore){
-        self.store = store
+    public override init(){
         self.automaticallySynchronizes = true
         super.init()
     }
@@ -43,6 +42,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     guard let carePlan = copiedCarePlan as? CarePlan else{return}
                     carePlan.addToCloudInBackground(self.store)
                 }
+                
             case .contact(let contact):
                 let _ = Contact(careKitEntity: contact, store: self.store){
                     copiedContact in
@@ -70,10 +70,5 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
         completion(conflictPolicy)
     }
-    
-    
-    
-    
-    
     
 }
