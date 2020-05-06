@@ -57,7 +57,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
                     query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
-                    query.includeKey(kPCKOutcomeTaskKey)
+                    query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
                         
@@ -74,7 +74,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 //Get latest item from the Cloud to compare against
                 let query = Outcome.query()!
                 query.whereKey(kPCKOutcomeObjectIdKey, equalTo: remoteID)
-                query.includeKey(kPCKOutcomeTaskKey)
+                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
                 query.findObjectsInBackground{
                     (objects, error) in
                     guard let foundObject = objects?.first as? Outcome else{
@@ -109,8 +109,8 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     }
     
     func deleteOutcomeValueFromCloudIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue]){
-        fetchOutcomeValuesIfNeeded(parseValues){
-            finished in
+        /*fetchOutcomeValuesIfNeeded(parseValues){
+            finished in*/
             var parseObjectIds = Set(parseValues.compactMap{$0.objectId})
             let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
             parseObjectIds.subtract(careKitRemoteIds)
@@ -131,7 +131,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                     }
                 }
             }
-        }
+        //}
     }
     
     func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol){
@@ -242,6 +242,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         //Check to see if already in the cloud
         let query = Outcome.query()!
         query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{

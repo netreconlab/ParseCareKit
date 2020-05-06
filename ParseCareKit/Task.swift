@@ -58,6 +58,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Task.query()!
                     query.whereKey(kPCKCarePlanIDKey, equalTo: task.id)
+                    query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
                         guard let foundObject = objects?.first as? Task else{
@@ -71,6 +72,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 //Get latest item from the Cloud to compare against
                 let query = Task.query()!
                 query.whereKey(kPCKTaskObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
                 query.findObjectsInBackground{
                     (objects, error) in
                     guard let foundObject = objects?.first as? Task else{
@@ -186,6 +188,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         //Check to see if already in the cloud
         let query = Task.query()!
         query.whereKey(kPCKTaskIdKey, equalTo: self.uuid)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{
@@ -464,8 +467,8 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKTask?) -> Void){
         
+        /*
         let elementObjectIds = self.elements.compactMap{$0.objectId}
-        
         let query = ScheduleElement.query()!
         query.whereKey(kPCKScheduleElementObjectIdKey, containedIn: elementObjectIds)
         query.findObjectsInBackground(){
@@ -477,9 +480,10 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 }
                 completion(nil)
                 return
-            }
+            }*/
             
-            let careKitScheduleElements = elementsFound.compactMap{$0.convertToCareKit()}
+            //let careKitScheduleElements = elementsFound.compactMap{$0.convertToCareKit()}
+        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
             let schedule = OCKSchedule(composing: careKitScheduleElements)
             
             var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
@@ -555,7 +559,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
             
                 }
             
-            }
+            //}
         }
         
         
