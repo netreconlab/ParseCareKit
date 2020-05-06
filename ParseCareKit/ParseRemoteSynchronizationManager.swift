@@ -10,10 +10,10 @@ import Foundation
 import CareKitStore
 import Parse
 
-class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
-    var delegate: OCKRemoteSynchronizationDelegate?
+open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
+    public var delegate: OCKRemoteSynchronizationDelegate?
     
-    var automaticallySynchronizes: Bool
+    public var automaticallySynchronizes: Bool
     let store:OCKStore!
     
     public init(_ store: OCKStore){
@@ -23,7 +23,8 @@ class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
     }
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
-        
+        let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+        mergeRevision(revision, completion)
     }
     
     public func pushRevisions(deviceRevision: OCKRevisionRecord, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
@@ -62,10 +63,12 @@ class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
                 }
             }
         }
+        completion(nil)
     }
     
     public func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
-        
+        let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
+        completion(conflictPolicy)
     }
     
     
