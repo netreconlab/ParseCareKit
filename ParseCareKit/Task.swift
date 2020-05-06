@@ -464,83 +464,100 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKTask?) -> Void){
         
-        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule(composing: careKitScheduleElements)
+        let elementObjectIds = self.elements.compactMap{$0.objectId}
         
-        var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
-        task.groupIdentifier = self.groupIdentifier
-        task.tags = self.tags
-        task.source = self.source
-        task.instructions = self.instructions
-        task.impactsAdherence = self.impactsAdherence
-        task.groupIdentifier = self.groupIdentifier
-        task.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
-            task.timezone = timeZone
-        }
-        task.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        task.remoteID = self.objectId
-        
-        guard let parseCarePlan = self.carePlan,
-            let store = store as? OCKStore else{
-            completion(task)
-            return
-        }
-        
-        //Need to grab the local CarePlan ID from the CarePlanStore in order to link locally
-        store.fetchCarePlan(withID: parseCarePlan.uuid){
-            result in
+        let query = ScheduleElement.query()!
+        query.whereKey(kPCKScheduleElementObjectIdKey, containedIn: elementObjectIds)
+        query.findObjectsInBackground(){
+            (objects,error) in
             
-            switch result{
-            case .success(let foundPlan):
-                task.carePlanUUID = foundPlan.uuid
-                completion(task)
-                /*
-                guard let taskID = task.localDatabaseID,
-                    let query = OutcomeValue.query() else{
-                    return
+            guard let elementsFound = objects as? [ScheduleElement] else{
+                if error != nil{
+                    print("Error in Task.convertToCareKit(). \(error!)")
                 }
+                completion(nil)
+                return
+            }
+            
+            let careKitScheduleElements = elementsFound.compactMap{$0.convertToCareKit()}
+            let schedule = OCKSchedule(composing: careKitScheduleElements)
+            
+            var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
+            task.groupIdentifier = self.groupIdentifier
+            task.tags = self.tags
+            task.source = self.source
+            task.instructions = self.instructions
+            task.impactsAdherence = self.impactsAdherence
+            task.groupIdentifier = self.groupIdentifier
+            task.asset = self.asset
+            if let timeZone = TimeZone(abbreviation: self.timezone){
+                task.timezone = timeZone
+            }
+            task.notes = self.notes?.compactMap{$0.convertToCareKit()}
+            task.remoteID = self.objectId
+            
+            guard let parseCarePlan = self.carePlan,
+                let store = store as? OCKStore else{
+                completion(task)
+                return
+            }
+            
+            //Need to grab the local CarePlan ID from the CarePlanStore in order to link locally
+            store.fetchCarePlan(withID: parseCarePlan.uuid){
+                result in
                 
-                
-                query.whereKey(kPCKOutcomeValueId, containsAllObjectsIn: self.values)
-                query.order(byAscending: kPCKOutcomeValueIndex)
-                
-                query.findObjectsInBackground{
-                    (objects, error) in
-                    
-                    guard let parseOutcomeValues = objects as? [OutcomeValue] else{
-                        completion(nil)
+                switch result{
+                case .success(let foundPlan):
+                    task.carePlanUUID = foundPlan.uuid
+                    completion(task)
+                    /*
+                    guard let taskID = task.localDatabaseID,
+                        let query = OutcomeValue.query() else{
                         return
                     }
                     
-                    let outcomeValues = parseOutcomeValues.compactMap{
-                        return $0.convertToCareKit()
-                    }
                     
-                    var outcome = OCKOutcome(taskID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+                    query.whereKey(kPCKOutcomeValueId, containsAllObjectsIn: self.values)
+                    query.order(byAscending: kPCKOutcomeValueIndex)
                     
-                    //outcome.taskID = OCKLocalVersionID(self.taskID)
-                    outcome.groupIdentifier = self.groupIdentifier
-                    outcome.tags = self.tags
-                    outcome.source = self.source
-                    outcome.userInfo?[kPCKOutcomeUserInfoIDKey] = self.id
+                    query.findObjectsInBackground{
+                        (objects, error) in
+                        
+                        guard let parseOutcomeValues = objects as? [OutcomeValue] else{
+                            completion(nil)
+                            return
+                        }
+                        
+                        let outcomeValues = parseOutcomeValues.compactMap{
+                            return $0.convertToCareKit()
+                        }
+                        
+                        var outcome = OCKOutcome(taskID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+                        
+                        //outcome.taskID = OCKLocalVersionID(self.taskID)
+                        outcome.groupIdentifier = self.groupIdentifier
+                        outcome.tags = self.tags
+                        outcome.source = self.source
+                        outcome.userInfo?[kPCKOutcomeUserInfoIDKey] = self.id
+                        
+                        outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
+                        outcome.groupIdentifier = self.groupIdentifier
+                        outcome.asset = self.asset
+                        if let timeZone = TimeZone(abbreviation: self.timezone){
+                            outcome.timezone = timeZone
+                        }
+                        
+                        completion(outcome)
+                    }*/
                     
-                    outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
-                    outcome.groupIdentifier = self.groupIdentifier
-                    outcome.asset = self.asset
-                    if let timeZone = TimeZone(abbreviation: self.timezone){
-                        outcome.timezone = timeZone
-                    }
-                    
-                    completion(outcome)
-                }*/
-                
-            case .failure(_):
-                completion(nil)
-        
+                case .failure(_):
+                    completion(nil)
+            
+                }
+            
             }
-        
         }
+        
         
     }
 }

@@ -121,6 +121,7 @@ public let kPCKOutcomeIdKey                                       = "uuid"
 //#Mark - Outcome Class
 public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
 // Field keys
+public let kPCKOutcomeValueObjectIdKey                         = "objectId"
 public let kPCKOutcomeValueCreatedAtKey                           = "createdAt"
 public let kPCKOutcomeValueUpdatedAtKey                           = "updatedAt"
 public let kPCKOutcomeValuePostedAtKey                            = "postedAt"
@@ -142,6 +143,7 @@ public let kPCKOutcomeValueLocallyUpdatedAtKey                    = "locallyUpda
 //#Mark - Schedule Element Class
 public let kAScheduleElementClassKey                           = "ScheduleElement"
 // Field keys
+public let kPCKScheduleElementObjectIdKey                         = "objectId"
 public let kPCKScheduleElementTextKey                             = "text"
 public let kPCKScheduleElementStartKey                            = "start"
 public let kPCKScheduleElementEndKey                              = "end"
