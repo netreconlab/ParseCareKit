@@ -33,19 +33,19 @@ open class Note: PFObject, PFSubclassing {
         return kPCKNoteClassKey
     }
     
-    public convenience init(careKitEntity: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Note?) -> Void) {
+    public convenience init(careKitEntity: OCKNote, store: OCKAnyStoreProtocol, completion: @escaping(Note?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func copyCareKit(_ note: OCKNote, storeManager: OCKSynchronizedStoreManager, completion: @escaping(Note?) -> Void){
+    open func copyCareKit(_ note: OCKNote, store: OCKAnyStoreProtocol, completion: @escaping(Note?) -> Void){
         
         //Every note should be created with an ID
         guard let authorUUID = note.author else{
             completion(nil)
             return
         }
-        storeManager.store.fetchAnyPatient(withID: authorUUID){
+        store.fetchAnyPatient(withID: authorUUID){
             result in
             
             switch result{
@@ -58,7 +58,7 @@ open class Note: PFObject, PFSubclassing {
                     return
                 }
                 self.author = User()
-                self.author.copyCareKit(patient, storeManager: storeManager){
+                self.author.copyCareKit(patient, store: store){
                     _ in
                     
                     self.uuid = id
@@ -78,7 +78,7 @@ open class Note: PFObject, PFSubclassing {
                         }
                     }
                         
-                    Note.convertCareKitArrayToParse(note.notes, storeManager: storeManager){
+                    Note.convertCareKitArrayToParse(note.notes, store: store){
                         copiedNotes in
                         self.notes = copiedNotes
                         completion(self)
@@ -183,7 +183,7 @@ open class Note: PFObject, PFSubclassing {
         }*/
     }
     
-    open class func convertCareKitArrayToParse(_ notes: [OCKNote]?, storeManager: OCKSynchronizedStoreManager, completion: @escaping([Note]?) -> Void){
+    open class func convertCareKitArrayToParse(_ notes: [OCKNote]?, store: OCKAnyStoreProtocol, completion: @escaping([Note]?) -> Void){
         
         guard let careKitNotes = notes else{
             completion(nil)
@@ -200,7 +200,7 @@ open class Note: PFObject, PFSubclassing {
         for (index,note) in careKitNotes.enumerated(){
     
             let newNote = Note()
-            newNote.copyCareKit(note, storeManager: storeManager){
+            newNote.copyCareKit(note, store: store){
                 (noteFound) in
                 
                 guard let noteToAppend = noteFound else{

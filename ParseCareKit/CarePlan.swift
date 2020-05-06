@@ -36,14 +36,14 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         return kPCKCarePlanClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PCKEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
+    open func updateCloudEventually(_ store: OCKAnyStoreProtocol){
         guard let _ = User.current(),
-            let store = storeManager.store as? OCKStore else{
+            let store = store as? OCKStore else{
             return
         }
         
@@ -61,7 +61,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                         guard let foundObject = objects?.first as? CarePlan else{
                             return
                         }
-                        self.compareUpdate(carePlan, parse: foundObject, storeManager: storeManager)
+                        self.compareUpdate(carePlan, parse: foundObject, store: store)
                         
                     }
                     return
@@ -74,7 +74,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                     guard let foundObject = objects?.first as? CarePlan else{
                         return
                     }
-                    self.compareUpdate(carePlan, parse: foundObject, storeManager: storeManager)
+                    self.compareUpdate(carePlan, parse: foundObject, store: store)
                 }
             case .failure(let error):
                 print("Error in Contact.addToCloudInBackground(). \(error)")
@@ -83,16 +83,16 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         
     }
     
-    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, storeManager: OCKSynchronizedStoreManager){
+    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, store: OCKAnyStoreProtocol){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
         if cloudUpdatedAt < careKitLastUpdated{
-            parse.copyCareKit(careKit, storeManager: storeManager){_ in
+            parse.copyCareKit(careKit, store: store){_ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(storeManager){
+                parse.saveAndCheckRemoteID(store){
                     (success) in
                     
                     if !success{
@@ -104,14 +104,14 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             }
             
         }else if cloudUpdatedAt > careKitLastUpdated {
-            parse.convertToCareKit(storeManager){
+            parse.convertToCareKit(store){
                 converted in
                 
                 //The cloud version is newer than local, update the local version instead
                 guard let updatedCarePlanFromCloud = converted else{
                     return
                 }
-                storeManager.store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(_):
@@ -124,7 +124,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
-    open func deleteFromCloudEventually(_ storeManager: OCKSynchronizedStoreManager){
+    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol){
         guard let _ = User.current() else{
             return
         }
@@ -137,11 +137,11 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             guard let foundObject = objects?.first as? CarePlan else{
                 return
             }
-            self.compareDelete(foundObject, storeManager: storeManager)
+            self.compareDelete(foundObject, store: store)
         }
     }
     
-    func compareDelete(_ parse: CarePlan, storeManager: OCKSynchronizedStoreManager){
+    func compareDelete(_ parse: CarePlan, store: OCKAnyStoreProtocol){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
@@ -158,10 +158,10 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                 }
             }
         }else {
-            parse.convertToCareKit(storeManager){
+            parse.convertToCareKit(store){
                 converted in
                 guard let updatedCarePlanFromCloud = converted else {return}
-                storeManager.store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(_):
@@ -176,7 +176,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
-    open func addToCloudInBackground(_ storeManager: OCKSynchronizedStoreManager){
+    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol){
         guard let _ = User.current() else{
             return
         }
@@ -193,7 +193,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    self.saveAndCheckRemoteID(storeManager){_ in}
+                    self.saveAndCheckRemoteID(store){_ in}
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
@@ -203,17 +203,17 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             //If object already in the Cloud, exit
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead
-                self.updateCloudEventually(storeManager)
+                self.updateCloudEventually(store)
                 
             }else{
-                self.saveAndCheckRemoteID(storeManager){_ in}
+                self.saveAndCheckRemoteID(store){_ in}
             }
         }
     }
     
     
-    private func saveAndCheckRemoteID(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(Bool) -> Void){
-        guard let store = storeManager.store as? OCKStore else{return}
+    private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool) -> Void){
+        guard let store = store as? OCKStore else{return}
         
         self.saveEventually{(success, error) in
             if success{
@@ -224,7 +224,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                     case .success(var mutableEntity):
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
-                            storeManager.store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
+                            store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
                                 result in
                                 switch result{
                                 case .success(_):
@@ -259,7 +259,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, storeManager: OCKSynchronizedStoreManager, completion: @escaping(CarePlan?) -> Void){
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
         
         guard let _ = User.current(),
             let carePlan = carePlanAny as? OCKCarePlan else{
@@ -285,7 +285,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             }
         }
         
-        Note.convertCareKitArrayToParse(carePlan.notes, storeManager: storeManager){
+        Note.convertCareKitArrayToParse(carePlan.notes, store: store){
             copiedNotes in
             self.notes = copiedNotes
         
@@ -296,7 +296,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             //ID's are the same for related Plans
             var query = OCKPatientQuery()
             query.uuids = [authorID]
-            storeManager.store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
+            store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
                 result in
                 switch result{
                 case .success(let authors):
@@ -318,7 +318,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                         self.patientId = patientIdToSearchFor
                         var patientQuery = OCKPatientQuery()
                         patientQuery.ids = [patientIdToSearchFor]
-                        storeManager.store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
+                        store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
                             result in
                             switch result{
                             case .success(let patients):
@@ -350,10 +350,10 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
     
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit(_ storeManager: OCKSynchronizedStoreManager, completion: @escaping(OCKCarePlan?) -> Void){
+    open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKCarePlan?) -> Void){
         
         guard let authorID = self.author?.uuid,
-            let store = storeManager.store as? OCKStore else {return}
+            let store = store as? OCKStore else {return}
         var query = OCKPatientQuery()
         query.ids = [authorID]
         store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){

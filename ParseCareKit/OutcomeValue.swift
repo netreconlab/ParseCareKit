@@ -35,12 +35,12 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return kPCKOutcomeValueClassKey
     }
     
-    public convenience init(careKitEntity:OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(PFObject?) -> Void) {
+    public convenience init(careKitEntity:OCKOutcomeValue, store: OCKAnyStoreProtocol, completion: @escaping(PFObject?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, storeManager: OCKSynchronizedStoreManager, completion: @escaping(OutcomeValue?) -> Void){
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, store: OCKAnyStoreProtocol, completion: @escaping(OutcomeValue?) -> Void){
         
         guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoIDKey] else{
             print("Error in OutcomeValue.copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoIDKey) in \(String(describing: outcomeValue.userInfo))")
@@ -90,7 +90,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
             }
         }
         
-        Note.convertCareKitArrayToParse(outcomeValue.notes, storeManager: storeManager){
+        Note.convertCareKitArrayToParse(outcomeValue.notes, store: store){
         copiedNotes in
             self.notes = copiedNotes
             completion(self)
@@ -160,7 +160,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
         
     }
     
-    open class func convertCareKitArrayToParse(_ values: [OCKOutcomeValue], storeManager: OCKSynchronizedStoreManager, completion: @escaping([OutcomeValue]) -> Void){
+    open class func convertCareKitArrayToParse(_ values: [OCKOutcomeValue], store: OCKAnyStoreProtocol, completion: @escaping([OutcomeValue]) -> Void){
         
         var returnValues = [OutcomeValue]()
         
@@ -172,7 +172,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
         for (index,value) in values.enumerated(){
     
             let newOutcomeValue = OutcomeValue()
-            newOutcomeValue.copyCareKit(value, storeManager: storeManager){
+            newOutcomeValue.copyCareKit(value, store: store){
                 (valueFound) in
                 if valueFound != nil{
                     returnValues.append(valueFound!)
@@ -185,14 +185,14 @@ open class OutcomeValue: PFObject, PFSubclassing {
         }
     }
     
-    func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, storeManager: OCKSynchronizedStoreManager)->OCKOutcomeValue?{
+    func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return nil
         }
         
         if cloudUpdatedAt < careKitLastUpdated{
-            parse.copyCareKit(careKit, storeManager: storeManager){copiedCareKit in
+            parse.copyCareKit(careKit, store: store){copiedCareKit in
                 //An update may occur when Internet isn't available, try to update at some point
                 copiedCareKit?.saveEventually{(success, error) in
                     if !success{

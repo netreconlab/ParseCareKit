@@ -22,6 +22,7 @@
 		9119D61F24562933001B7AA3 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; };
 		9119D62024562933001B7AA3 /* Pods_ParseCareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9119D69A245689DA001B7AA3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9119D699245689D9001B7AA3 /* README.md */; };
+		916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,7 @@
 		9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitConstants.swift; sourceTree = "<group>"; };
 		9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitUtility.swift; sourceTree = "<group>"; };
 		9119D699245689D9001B7AA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemoteSynchronizationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
 				9119D5F624561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift */,
+				916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */,
 				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
 				9119D5F824561A28001B7AA3 /* Contact.swift */,
 				9119D5FD24561A28001B7AA3 /* Note.swift */,
@@ -249,6 +252,7 @@
 				9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */,
 				9119D60424561A28001B7AA3 /* User.swift in Sources */,
 				9119D5F724561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift in Sources */,
+				916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */,
 				9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
