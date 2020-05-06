@@ -17,7 +17,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public weak var store:OCKStore!
     
     public override init(){
-        self.automaticallySynchronizes = true
+        self.automaticallySynchronizes = false //Don't start until OCKStore is available
         super.init()
     }
     
