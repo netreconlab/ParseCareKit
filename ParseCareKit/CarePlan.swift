@@ -56,6 +56,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
                     query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
+                    query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
                         guard let foundObject = objects?.first as? CarePlan else{
@@ -69,6 +70,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                 //Get latest item from the Cloud to compare against
                 let query = CarePlan.query()!
                 query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
                 query.findObjectsInBackground{
                     (objects, error) in
                     guard let foundObject = objects?.first as? CarePlan else{
@@ -183,6 +185,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         
         let query = CarePlan.query()!
         query.whereKey(kPCKCarePlanIDKey, equalTo: self.uuid)
+        query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{

@@ -66,6 +66,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
                     query.whereKey(kPCKContactIdKey, equalTo: contact.id)
+                    query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
                         
@@ -80,6 +81,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                 //Get latest item from the Cloud to compare against
                 let query = Contact.query()!
                 query.whereKey(kPCKContactObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                 query.includeKey(kPCKContactAuthorKey)
                 query.findObjectsInBackground{
                     (objects, error) in
@@ -142,7 +144,6 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
         //Get latest item from the Cloud to compare against
         let query = Contact.query()!
         query.whereKey(kPCKContactIdKey, equalTo: self.uuid)
-        query.includeKey(kPCKContactAuthorKey)
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Contact else{
@@ -195,6 +196,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
         //Check to see if already in the cloud
         let query = Contact.query()!
         query.whereKey(kPCKContactIdKey, equalTo: self.uuid)
+        query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{

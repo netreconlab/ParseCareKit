@@ -187,7 +187,6 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
         query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
-        query.includeKey(kPCKOutcomeTaskKey)
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Outcome else{
