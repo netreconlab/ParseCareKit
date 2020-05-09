@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 
 open class Contact: PFObject, PFSubclassing, PCKEntity {
@@ -38,6 +38,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
     //Not 1 to 1
     @NSManaged public var user:User?
     @NSManaged public var author:User
+    @NSManaged public var clock:Int64
     
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String //maps to id
@@ -51,7 +52,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             return
@@ -117,26 +118,23 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             }
             
         }else if cloudUpdatedAt > careKitLastUpdated {
-            parse.convertToCareKit(store){
-                converted in
-                //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully updated Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error updating Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+            //The cloud version is newer than local, update the local version instead
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
+            store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                switch result{
+                case .success(_):
+                    print("Successfully updated Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error updating Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current() else{
             return
         }
@@ -170,28 +168,25 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
                 }
             }
         }else {
-            parse.convertToCareKit(store){
-                converted in
-                //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
+            //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
+            store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                
+                switch result{
                     
-                    switch result{
-                        
-                    case .success(_):
-                        print("Successfully deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+                case .success(_):
+                    print("Successfully deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol){
+    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         
         //Check to see if already in the cloud
         let query = Contact.query()!
@@ -493,8 +488,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
     
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKContact?) -> Void){
-        guard let store = store as? OCKStore else{return}
+    open func convertToCareKit()->OCKContact?{
         let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
         var contact = OCKContact(id: self.uuid, name: nameComponents, carePlanUUID: nil)
         
@@ -569,30 +563,12 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             contact.otherContactInfo = labledValuesToSave
         }
         
-        guard let carePlanID = self.carePlan?.uuid else{
-            completion(contact)
-            return
+        guard let carePlanID = self.carePlan?.uuid,
+            let carePlanUUID = UUID(uuidString: carePlanID) else{
+            return contact
         }
-        //Outcomes can only be converted if they have a relationship with a task locally
-        store.fetchCarePlan(withID: carePlanID){
-            result in
-            
-            switch result{
-            case .success(let carePlan):
-                guard let carePlanID = carePlan.uuid else{
-                    return
-                }
-                
-                contact.carePlanUUID = carePlanID
-                completion(contact)
-                
-            case .failure(_):
-                completion(nil)
-        
-            }
-        
-        }
-        
+        contact.carePlanUUID = carePlanUUID
+        return contact
     }
 }
 

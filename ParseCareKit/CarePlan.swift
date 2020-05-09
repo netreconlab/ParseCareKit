@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 
 open class CarePlan: PFObject, PFSubclassing, PCKEntity {
@@ -31,6 +31,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var patientId:String?
+    @NSManaged public var clock:Int64
     
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey
@@ -41,7 +42,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             return
@@ -106,27 +107,23 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             }
             
         }else if cloudUpdatedAt > careKitLastUpdated {
-            parse.convertToCareKit(store){
-                converted in
-                
-                //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully updated CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error updating CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+            //The cloud version is newer than local, update the local version instead
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
+            store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                switch result{
+                case .success(_):
+                    print("Successfully updated CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error updating CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current() else{
             return
         }
@@ -160,25 +157,20 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
                 }
             }
         }else {
-            parse.convertToCareKit(store){
-                converted in
-                guard let updatedCarePlanFromCloud = converted else {return}
-                store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully deleting CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error deleting CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else {return}
+            store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                switch result{
+                case .success(_):
+                    print("Successfully deleting CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error deleting CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
-                
             }
-            
         }
     }
     
-    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol){
+    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current() else{
             return
         }
@@ -353,10 +345,30 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
     
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKCarePlan?) -> Void){
+    open func convertToCareKit()->OCKCarePlan?{
         
         guard let authorID = self.author?.uuid,
-            let store = store as? OCKStore else {return}
+            let authorUUID = UUID(uuidString: authorID) else {return nil}
+        
+        
+        var carePlan = OCKCarePlan(id: self.uuid, title: self.title, patientUUID: authorUUID)
+        carePlan.groupIdentifier = self.groupIdentifier
+        carePlan.tags = self.tags
+        carePlan.source = self.source
+        carePlan.groupIdentifier = self.groupIdentifier
+        carePlan.asset = self.asset
+        carePlan.remoteID = self.objectId
+        carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
+        
+        if let patientUsingCarePlan = self.patient?.objectId{
+            carePlan.userInfo?[kPCKCarePlanUserInfoPatientIDKey] = patientUsingCarePlan
+        }
+        
+        if let timeZone = TimeZone(abbreviation: self.timezone){
+            carePlan.timezone = timeZone
+        }
+        return carePlan
+        /*
         var query = OCKPatientQuery()
         query.ids = [authorID]
         store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
@@ -393,7 +405,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             }
             return
             
-        }
+        }*/
         
     }
 }

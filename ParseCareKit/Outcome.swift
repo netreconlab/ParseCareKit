@@ -7,10 +7,10 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 
-open class Outcome: PFObject, PFSubclassing, PCKEntity {
+open class Outcome: PFObject, PFSubclassing, PCKEntity, Codable {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -29,6 +29,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     
     //Not 1 tot 1, UserInfo fields in CareStore
     @NSManaged public var uuid:String //maps to id
+    @NSManaged public var clock:Int64
     
     public static func parseClassName() -> String {
         return kPCKOutcomeClassKey
@@ -39,7 +40,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         
         guard let _ = User.current(),
             let store = store as? OCKStore else{
@@ -66,7 +67,9 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                         }
                         var mutableOutcome = outcome
                         mutableOutcome.remoteID = foundObject.objectId
-                        self.compareUpdate(mutableOutcome, parse: foundObject, store: store)
+                        
+                        self.compareUpdate(mutableOutcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
+                        
                     }
                     return
                 }
@@ -80,7 +83,9 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                     guard let foundObject = objects?.first as? Outcome else{
                         return
                     }
-                    self.compareUpdate(outcome, parse: foundObject, store: store)
+                    if !usingKnowledgeVector{
+                        self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
+                    }
                 }
             case .failure(let error):
                 print("Error in \(self.parseClassName).updateCloudEventually(). \(error)")
@@ -134,13 +139,13 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         //}
     }
     
-    func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol){
+    func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
         
-        if cloudUpdatedAt < careKitLastUpdated{
+        if ((cloudUpdatedAt < careKitLastUpdated) || usingKnowledgeVector){
             deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
             parse.copyCareKit(careKit, store: store){_ in
                 //An update may occur when Internet isn't available, try to update at some point
@@ -156,29 +161,25 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
             }
             
         }else if cloudUpdatedAt > careKitLastUpdated {
-            parse.convertToCareKit(store){
-                converted in
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
                 
-                //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
+            store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                
+                switch result{
                     
-                    switch result{
-                        
-                    case .success(_):
-                        print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+                case .success(_):
+                    print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         
         guard let _ = User.current() else{
             return
@@ -192,17 +193,17 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
             guard let foundObject = objects?.first as? Outcome else{
                 return
             }
-            self.compareDelete(foundObject, store: store)
+            self.compareDelete(foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
         }
     }
     
-    func compareDelete(_ parse: Outcome, store: OCKAnyStoreProtocol){
+    func compareDelete(_ parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
         
-        if cloudUpdatedAt <= careKitLastUpdated{
+        if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector) {
             parse.deleteInBackground{
                 (success, error) in
                 if !success{
@@ -213,26 +214,22 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
                 }
             }
         }else {
-            parse.convertToCareKit(store){
-                converted in
-                //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
+            store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                switch result{
+                case .success(_):
+                    print("Successfully deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol){
+    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
             
         guard let _ = User.current() else{
             return
@@ -296,7 +293,7 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         return mutableReturnValues
     }
     
-    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, completion: @escaping(Bool) -> Void){
+    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector:Bool=false, completion: @escaping(Bool) -> Void){
         guard let store = store as? OCKStore else {return}
         
         //Check to see if some Outcomes are already in the Cloud, if so, need their references. This assumes OutcomeValues can't be updated, but instead are either "added" or "deleted"
@@ -458,6 +455,45 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
         }
     }
     
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+        
+        let query = Outcome.query()!
+        query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+        query.findObjectsInBackground{ (objects,error) in
+            guard let outcomes = objects as? [Outcome] else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("Warning, table Outcome either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                }
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision)
+                return
+            }
+            let pulledOutcomes = outcomes.compactMap{$0.convertToCareKit()}
+            let outcomeEntities = pulledOutcomes.compactMap{OCKEntity.outcome($0)}
+            let revision = OCKRevisionRecord(entities: outcomeEntities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
+        }
+    }
+    
+    class func pushRevision(_ store: OCKStore, cloudClock: Int, outcome:OCKOutcome){
+        let _ = Outcome(careKitEntity: outcome, store: store){
+            copiedOutcome in
+            guard let parseOutcome = copiedOutcome as? Outcome else{return}
+            parseOutcome.clock = Int64(cloudClock) //Stamp Entity
+            //if outcome.deletedDate == nil{
+                parseOutcome.addToCloudInBackground(store, usingKnowledgeVector: true)
+            /*}else{
+                parseOutcome.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+            }*/
+        }
+    }
+    
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
         
         guard let _ = User.current(),
@@ -547,87 +583,30 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity {
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKOutcome?) -> Void){
+    open func convertToCareKit()->OCKOutcome?{
         
         guard let task = self.task,
-         let store = store as? OCKStore else{
-            completion(nil)
-            return
+            let taskID = UUID(uuidString: task.uuid)/*,
+            let store = store as? OCKStore*/ else{
+            return nil
         }
         
-        //Outcomes can only be converted if they have a relationship with a task locally
-        store.fetchTask(withID: task.uuid){
-            result in
-            
-            switch result{
-            case .success(let fetchedTask):
-                
-                guard let taskID = fetchedTask.uuid else{
-                    completion(nil)
-                    return
-                }
-                
-                let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
-                
-                var outcome = OCKOutcome(taskUUID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
-                
-                outcome.groupIdentifier = self.groupIdentifier
-                outcome.tags = self.tags
-                outcome.source = self.source
-                outcome.userInfo = [kPCKOutcomeUserInfoIDKey: self.uuid] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
-                
-                outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
-                outcome.groupIdentifier = self.groupIdentifier
-                outcome.asset = self.asset
-                if let timeZone = TimeZone(abbreviation: self.timezone){
-                    outcome.timezone = timeZone
-                }
-                outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
-                outcome.remoteID = self.objectId
-                completion(outcome)
-                
-                /*
-                let query = OutcomeValue.query()
-                query.whereKey(kPCKOutcomeValueId, containsAllObjectsIn: self.values)
-                query.order(byAscending: kPCKOutcomeValueIndex)
-                
-                query.findObjectsInBackground{
-                    (objects, error) in
-                    
-                    guard let parseOutcomeValues = objects as? [OutcomeValue] else{
-                        completion(nil)
-                        return
-                    }
-                    
-                    let outcomeValues = parseOutcomeValues.compactMap{
-                        return $0.convertToCareKit()
-                    }
-                    
-                    var outcome = OCKOutcome(taskID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
-                    
-                    //outcome.taskID = OCKLocalVersionID(self.taskID)
-                    outcome.groupIdentifier = self.groupIdentifier
-                    outcome.tags = self.tags
-                    outcome.source = self.source
-                    outcome.userInfo?[kPCKOutcomeUserInfoIDKey] = self.id
-                    
-                    outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
-                    outcome.groupIdentifier = self.groupIdentifier
-                    outcome.asset = self.asset
-                    if let timeZone = TimeZone(abbreviation: self.timezone){
-                        outcome.timezone = timeZone
-                    }
-                    
-                    completion(outcome)
-                }*/
-                
-            case .failure(_):
-                completion(nil)
+        let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
+        var outcome = OCKOutcome(taskUUID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+        outcome.groupIdentifier = self.groupIdentifier
+        outcome.tags = self.tags
+        outcome.source = self.source
+        outcome.userInfo = [kPCKOutcomeUserInfoIDKey: self.uuid] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
         
-            }
-        
+        outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
+        outcome.groupIdentifier = self.groupIdentifier
+        outcome.asset = self.asset
+        if let timeZone = TimeZone(abbreviation: self.timezone){
+            outcome.timezone = timeZone
         }
-        
+        outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
+        outcome.remoteID = self.objectId
+        return outcome
     }
 }
 

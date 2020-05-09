@@ -47,15 +47,15 @@ For details on how to setup parse-server, follow the directions [here](https://g
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedCareKitStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedCareKitStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
+ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk)
 let dataStoreManager = OCKSynchronizedStoreManager(wrapping: dataStore)
-let cloudStoreManager = ParseSynchronizedCareKitStoreManager(dataStoreManager)
+let cloudStoreManager = ParseSynchronizedStoreManager(dataStoreManager)
 ```
 
-During initialization of `ParseSynchronizedCareKitStoreManager`, all CareKit data that has `remoteID == nil` will automatically be synced to your parse-server, once synced, the `remoteID` for each entity will be replaced by the corresponding `objectId` on your parse-server.
+During initialization of `ParseSynchronizedStoreManager`, all CareKit data that has `remoteID == nil` will automatically be synced to your parse-server, once synced, the `remoteID` for each entity will be replaced by the corresponding `objectId` on your parse-server.
 
 ** Note that only the latest state of an OCK entity is synchronized to parse-server. The parse-server doesn't maintain the versioned data like the local OCKStore. If you want this functionality, you will have to develop it as the framework doesn't support it, and parse-server queries are not setup for this. **
 
@@ -98,7 +98,7 @@ dataStoreManager.store.addAnyCarePlan(patient, callbackQueue: .main){
     case .success(let savedCareKitCarePlan):
         print("patient \(savedCareKitCarePlan) saved successfully")
         
-        //Note that since the "cloudStoreManager" singleton is still alive, it will automatically sync your new CarePlan to Parse. There is no need to save the Parse object directly. I recommend letting "ParseSynchronizedCareKitStoreManager" sync all of your data to Parse instead of saving your own objects (with the exception of signing up a User, which I show later)
+        //Note that since the "cloudStoreManager" singleton is still alive, it will automatically sync your new CarePlan to Parse. There is no need to save the Parse object directly. I recommend letting "ParseSynchronizedStoreManager" sync all of your data to Parse instead of saving your own objects (with the exception of signing up a User, which I show later)
     case .failure(let error):
         print("Error savinf OCKCarePlan. \(error)")
     }
@@ -192,4 +192,4 @@ class AppUser: User{
 ```
 Of course, you can custimize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
 
-If you have a custom store, and have created your own entities, you simply need to conform to the `PCKEntity` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloudInBackground,updateCloudEventually,deleteFromCloudEventually` and properly subclass `ParseSynchronizedCareKitStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to the `PCKEntity` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloudInBackground,updateCloudEventually,deleteFromCloudEventually` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 

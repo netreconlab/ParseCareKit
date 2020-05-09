@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 
 open class Task : PFObject, PFSubclassing, PCKEntity {
@@ -27,8 +27,9 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
     @NSManaged public var timezone:String
     @NSManaged public var title:String?
     @NSManaged public var uuid:String //maps to id
-    
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
+    
+    @NSManaged public var clock:Int64
     
     //SOSDatabase info
     @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
@@ -43,7 +44,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             return
@@ -87,13 +88,13 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
        
     }
     
-    func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol){
+    func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
     
-        if cloudUpdatedAt < careKitLastUpdated{
+        if ((cloudUpdatedAt < careKitLastUpdated) || usingKnowledgeVector){
             parse.copyCareKit(careKit, store: store){_ in
                 //An update may occur when Internet isn't available, try to update at some point
                 parse.saveAndCheckRemoteID(store){
@@ -107,28 +108,25 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 }
             }
         }else if cloudUpdatedAt > careKitLastUpdated {
-            parse.convertToCareKit(store){
-                converted in
-                //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
+            //The cloud version is newer than local, update the local version instead
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
+            store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                
+                switch result{
                     
-                    switch result{
-                        
-                    case .success(_):
-                        print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+                case .success(_):
+                    print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current() else{
             return
         }
@@ -145,12 +143,13 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         }
     }
     
-    func compareDelete(_ parse: Task, store: OCKAnyStoreProtocol){
+    func compareDelete(_ parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
-        if cloudUpdatedAt <= careKitLastUpdated{
+        
+        if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector){
             parse.deleteInBackground{
                 (success, error) in
                 if !success{
@@ -161,26 +160,23 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 }
             }
         }else {
-            parse.convertToCareKit(store){
-                converted in
-                //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-                guard let updatedCarePlanFromCloud = converted else{
-                    return
-                }
-                store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    case .failure(_):
-                        print("Error deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    }
+            //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                return
+            }
+            store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                result in
+                switch result{
+                case .success(_):
+                    print("Successfully deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                case .failure(_):
+                    print("Error deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                 }
             }
         }
     }
     
-    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol){
+    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current()else{
             return
         }
@@ -464,8 +460,47 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         
     }
     
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+        
+        let query = Task.query()!
+        query.whereKey(kPCKTaskClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
+        query.findObjectsInBackground{ (objects,error) in
+            guard let tasks = objects as? [Task] else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("Warning, table Task either doesn't exist or is missing the column \(kPCKTaskClockKey). It should be fixed during the first sync of a Task...")
+                }
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision)
+                return
+            }
+            let pulledTasks = tasks.compactMap{$0.convertToCareKit()}
+            let taskEntities = pulledTasks.compactMap{OCKEntity.task($0)}
+            let revision = OCKRevisionRecord(entities: taskEntities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
+        }
+    }
+    
+    class func pushRevision(_ store: OCKStore, cloudClock: Int, task:OCKTask){
+        let _ = Task(careKitEntity: task, store: store){
+            copiedTask in
+            guard let parseTask = copiedTask as? Task else{return}
+            parseTask.clock = Int64(cloudClock) //Stamp Entity
+            if task.deletedDate == nil{
+                parseTask.addToCloudInBackground(store, usingKnowledgeVector: true)
+            }else{
+                parseTask.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+            }
+        }
+    }
+    
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(_ store: OCKAnyStoreProtocol, completion: @escaping(OCKTask?) -> Void){
+    open func convertToCareKit()->OCKTask?{
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
         let schedule = OCKSchedule(composing: careKitScheduleElements)
         var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
@@ -483,24 +518,11 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         task.remoteID = self.objectId
         
         guard let parseCarePlan = self.carePlan,
-            let store = store as? OCKStore else{
-            completion(task)
-            return
+            let carePlanUUID = UUID(uuidString: parseCarePlan.uuid) else{
+            return task
         }
-        
-        //Need to grab the local CarePlan ID from the CarePlanStore in order to link locally
-        store.fetchCarePlan(withID: parseCarePlan.uuid){
-            result in
-            
-            switch result{
-            case .success(let foundPlan):
-                task.carePlanUUID = foundPlan.uuid
-                completion(task)
-            case .failure(_):
-                completion(nil)
-        
-            }
-        }
+        task.carePlanUUID = carePlanUUID
+        return task
     }
 }
 

@@ -8,7 +8,11 @@
 
 import Foundation
 import Parse
-import CareKit
+import CareKitStore
+
+enum ParseCareKitError: Error {
+    case userNotLoggedIn
+}
 
 //#Mark - Parse Database Keys
 
@@ -30,7 +34,7 @@ public let kPCKUserSexKey                                      = "sex"
 public let kPCKUserSourceKey                                   = "source"
 public let kPCKUserTagsKey                                     = "tags"
 public let kPCKUserTimezoneKey                                 = "timezone"
-
+public let kPCKUserClockKey                                    = "clock"
 
 
 //#Mark - CarePlan Class
@@ -51,6 +55,7 @@ public let kPCKCarePlanGroupIdentifierKey                      = "groupIdentifie
 public let kPCKCarePlanNotesKey                                = "notes"
 public let kPCKCarePlanSourceKey                               = "source"
 public let kPCKCarePlanTagsKey                                 = "tags"
+public let kPCKCarePlanClockKey                                    = "clock"
 
 //#Mark - Task Class
 public let kPCKTaskClassKey                                    = "Task"
@@ -69,6 +74,13 @@ public let kPCKTaskTagsKey                                     = "tags"
 public let kPCKTaskAssetKey                                    = "asset"
 public let kPCKTaskTimezoneKey                                 = "timezone"
 public let kPCKTaskElementsKey                                 = "elements"
+public let kPCKTaskClockKey                                    = "clock"
+
+//#Mark - KnowledgeVector Class
+public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
+// Field keys
+public let kPCKKnowledgeVectorUserKey                          = "user"
+public let kPCKKnowledgeVectorVectorKey                        = "vector"
 
 //#Mark - Contact Class
 public let kPCKContactClassKey                                 = "Contact"
@@ -97,6 +109,7 @@ public let kPCKContactMessagingNumbersKey                         = "messagingNu
 public let kPCKContactOtherContactInfoKey                         = "otherContactInfo"
 public let kPCKContactLocallyCreatedAtKey                         = "locallyCreatedAt"
 public let kPCKContactLocallyUpdatedAtKey                         = "locallyUpdatedAt"
+public let kPCKContactClockKey                                    = "clock"
 
 //#Mark -Outcome Class
 public let kPCKOutcomeClassKey                                 = "Outcome"
@@ -117,8 +130,9 @@ public let kPCKOutcomeTimezoneKey                              = "timezone"
 public let kPCKOutcomeSourceKey                                = "source"
 public let kPCKOutcomeValuesKey                                = "values"
 public let kPCKOutcomeIdKey                                       = "uuid"
+public let kPCKOutcomeClockKey                                    = "clock"
 
-//#Mark - Outcome Class
+//#Mark - OutcomeValue Class
 public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
 // Field keys
 public let kPCKOutcomeValueObjectIdKey                         = "objectId"

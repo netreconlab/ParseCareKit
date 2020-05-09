@@ -1,5 +1,5 @@
 //
-//  ParseSynchronizedCareKitStoreManager.swift
+//  ParseSynchronizedStoreManager.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/14/20.
@@ -15,12 +15,12 @@ import Parse
  Protocol that defines the properties and methods for parse carekit entities.
  */
 public protocol PCKEntity: PFObject, PFSubclassing {
-    func addToCloudInBackground(_ store: OCKAnyStoreProtocol)
-    func updateCloudEventually(_ store: OCKAnyStoreProtocol)
-    func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol)
+    func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
+    func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
+    func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
 }
 
-open class ParseSynchronizedCareKitStoreManager: NSObject{
+open class ParseSynchronizedStoreManager: NSObject{
     
     private var storeManager: OCKSynchronizedStoreManager!
     private var cancellable:AnyCancellable!
@@ -43,7 +43,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
             case let contactNotification as OCKContactNotification:
                 self.handleContactNotification(contactNotification)
             default:
-                print("Warning in ParseSynchronizedCareKitStoreManager.init(). Handling notificication \(notification) isn't implemented")
+                print("Warning in ParseSynchronizedStoreManager.init(). Handling notificication \(notification) isn't implemented")
             }
         }
         if synchCareStoreDataNow{
@@ -135,7 +135,8 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
     
     private func deleteCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
-            let _ = Outcome(careKitEntity: $0, store: self.storeManager.store){
+            let careKitEntity = $0
+            let _ = Outcome(careKitEntity: careKitEntity, store: self.storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
                 outcome.deleteFromCloudEventually(self.storeManager.store)
@@ -262,7 +263,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
                 let patientsToSync = patients.filter{$0.remoteID == nil}
                 self.addCloudPatients(patientsToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizePatients(). \(error)")
+                print("Error in ParseSynchronizedStoreManager.synchronizePatients(). \(error)")
             }
         }
     }
@@ -277,7 +278,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
                 let carePlansToSync = carePlans.filter{$0.remoteID == nil}
                 self.addCloudCarePlans(carePlansToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizeCarePlans(). \(error)")
+                print("Error in ParseSynchronizedStoreManager.synchronizeCarePlans(). \(error)")
             }
         }
     }
@@ -292,7 +293,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
                 let tasksToSync = tasks.filter{$0.remoteID == nil}
                 self.addCloudTasks(tasksToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizeTask(). \(error)")
+                print("Error in ParseSynchronizedStoreManager.synchronizeTask(). \(error)")
             }
         }
     }
@@ -307,7 +308,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
                 let outcomesToSync = outcomes.filter{$0.remoteID == nil}
                 self.addCloudOutcomes(outcomesToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizeOutcomes(). \(error)")
+                print("Error in ParseSynchronizedStoreManager.synchronizeOutcomes(). \(error)")
             }
         }
     }
@@ -322,7 +323,7 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
                 let contactsToSync = contacts.filter{$0.remoteID == nil}
                 self.addCloudContacts(contactsToSync)
             case .failure(let error):
-                print("Error in ParseSynchronizedCareKitStoreManager.synchronizeContacts(). \(error)")
+                print("Error in ParseSynchronizedStoreManager.synchronizeContacts(). \(error)")
             }
         }
     }
@@ -389,16 +390,16 @@ open class ParseSynchronizedCareKitStoreManager: NSObject{
                             switch results{
                                 
                             case .success(let outcome):
-                                print("ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes() added UUID to \(outcome)")
+                                print("ParseSynchronizedStoreManager.patchAddUUIDsToOutcomes() added UUID to \(outcome)")
                             case .failure(let error):
-                                print("Error saving updated outcome in ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+                                print("Error saving updated outcome in ParseSynchronizedStoreManager.patchAddUUIDsToOutcomes(). \(error)")
                             }
                         }
                     }
                     
                 }
             case .failure(let error):
-                print("Error fetching outcomes in ParseSynchronizedCareKitStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+                print("Error fetching outcomes in ParseSynchronizedStoreManager.patchAddUUIDsToOutcomes(). \(error)")
             }
         }
         

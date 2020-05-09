@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 
 open class User: PFUser, PCKEntity {
@@ -27,13 +27,14 @@ open class User: PFUser, PCKEntity {
     
     //Not 1 to 1
     @NSManaged public var uuid:String
+    @NSManaged public var clock:Int64
 
     public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             return
@@ -131,7 +132,7 @@ open class User: PFUser, PCKEntity {
         }
     }
     
-    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol){
+    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current() else{
             return
         }
@@ -179,7 +180,7 @@ open class User: PFUser, PCKEntity {
         }
     }
     
-    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol){
+    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
         guard let _ = User.current() else{
             return
         }

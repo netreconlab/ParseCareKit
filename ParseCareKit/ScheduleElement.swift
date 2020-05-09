@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 open class ScheduleElement: PFObject, PFSubclassing {
 
