@@ -83,9 +83,9 @@ open class Outcome: PFObject, PFSubclassing, PCKEntity, Codable {
                     guard let foundObject = objects?.first as? Outcome else{
                         return
                     }
-                    if !usingKnowledgeVector{
-                        self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
-                    }
+                    
+                    self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
+                    
                 }
             case .failure(let error):
                 print("Error in \(self.parseClassName).updateCloudEventually(). \(error)")
