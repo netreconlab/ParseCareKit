@@ -93,8 +93,22 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
         query.getFirstObjectInBackground{ (object,error) in
             
-            guard let foundVector = object as? KnowledgeVector,
-                let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
+            let foundVector:KnowledgeVector!
+            if object == nil{
+                //This is the first time the KnowledgeVector is being setup for this user
+                foundVector = KnowledgeVector()
+            }else{
+                if let found = object as? KnowledgeVector{
+                    foundVector = found
+                }else{
+                    print("Error in ParseRemoteSynchronizationManager.pushRevisions(). Couldn't get KnowledgeVector correctly from Cloud")
+                    foundVector=nil
+                    completion(nil)
+                    return
+                }
+            }
+            
+            guard let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
                 let data = foundVector.vector.data(using: .utf8) else{
                 completion(nil)
                 return

@@ -22,5 +22,10 @@ open class KnowledgeVector: PFObject, PFSubclassing {
     public override init() {
         super.init()
         uuid = UUID.init().uuidString
+        vector = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
+        guard let thisUser = User.current() else{
+            return
+        }
+        user = thisUser
     }
 }
