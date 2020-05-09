@@ -96,7 +96,8 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             let foundVector:KnowledgeVector!
             if object == nil{
                 //This is the first time the KnowledgeVector is being setup for this user
-                foundVector = KnowledgeVector()
+                let uuid = UUID()
+                foundVector = KnowledgeVector(uuid: uuid.uuidString)
             }else{
                 if let found = object as? KnowledgeVector{
                     foundVector = found

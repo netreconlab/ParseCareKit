@@ -19,13 +19,13 @@ open class KnowledgeVector: PFObject, PFSubclassing {
         return kPCKKnowledgeVectorClassKey
     }
     
-    public override init() {
-        super.init()
-        uuid = UUID.init().uuidString
-        vector = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
+    public convenience init(uuid:String) {
+        self.init()
+        self.uuid = uuid
+        self.vector = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
         guard let thisUser = User.current() else{
             return
         }
-        user = thisUser
+        self.user = thisUser
     }
 }
