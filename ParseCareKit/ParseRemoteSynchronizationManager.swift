@@ -91,7 +91,8 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pushRevisions(deviceRevision: OCKRevisionRecord, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
         
-        guard let user = User.current() else{
+        guard let user = User.current(),
+            deviceRevision.entities.count > 0 else{
             completion(nil)
             return
         }
