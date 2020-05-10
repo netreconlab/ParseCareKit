@@ -474,9 +474,22 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         guard let uuidForEntity = self.entityUUID else{
             return nil
         }
+        
+        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
+        let schedule = OCKSchedule(composing: careKitScheduleElements)
+        var tempEntity = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(tempEntity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        
         //Create bare CareKit entity from json
         let json = "{\"id\":\"\(self.uuid)\",\"uuid\":\"\(uuidForEntity)\",\"impactsAdherence\":\(self.impactsAdherence)}"
-        guard let data = json.data(using: .utf8) else{return nil}
+        guard let data = jsonString.data(using: .utf8) else{return nil}
         var task:OCKTask!
         do {
             task = try JSONDecoder().decode(OCKTask.self, from: data)
@@ -485,9 +498,6 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return nil
         }
         
-        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        task.schedule = OCKSchedule(composing: careKitScheduleElements)
-        //var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source
