@@ -460,6 +460,32 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         
     }
     
+    //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
+    open func convertToCareKit()->OCKTask?{
+        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
+        let schedule = OCKSchedule(composing: careKitScheduleElements)
+        var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
+        task.groupIdentifier = self.groupIdentifier
+        task.tags = self.tags
+        task.source = self.source
+        task.instructions = self.instructions
+        task.impactsAdherence = self.impactsAdherence
+        task.groupIdentifier = self.groupIdentifier
+        task.asset = self.asset
+        if let timeZone = TimeZone(abbreviation: self.timezone){
+            task.timezone = timeZone
+        }
+        task.notes = self.notes?.compactMap{$0.convertToCareKit()}
+        task.remoteID = self.objectId
+        
+        guard let parseCarePlan = self.carePlan,
+            let carePlanUUID = UUID(uuidString: parseCarePlan.uuid) else{
+            return task
+        }
+        task.carePlanUUID = carePlanUUID
+        return task
+    }
+    
     open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
@@ -491,7 +517,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         case .task(let careKit):
             let _ = Task(careKitEntity: careKit, store: store){
                 copied in
-                guard let parse = copied as? Contact else{return}
+                guard let parse = copied as? Task else{return}
                 parse.clock = Int64(cloudClock) //Stamp Entity
                 //if careKit.deletedDate == nil{
                     parse.addToCloudInBackground(store, usingKnowledgeVector: true)
@@ -502,32 +528,6 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         default:
             print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
         }
-    }
-    
-    //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKTask?{
-        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule(composing: careKitScheduleElements)
-        var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
-        task.groupIdentifier = self.groupIdentifier
-        task.tags = self.tags
-        task.source = self.source
-        task.instructions = self.instructions
-        task.impactsAdherence = self.impactsAdherence
-        task.groupIdentifier = self.groupIdentifier
-        task.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
-            task.timezone = timeZone
-        }
-        task.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        task.remoteID = self.objectId
-        
-        guard let parseCarePlan = self.carePlan,
-            let carePlanUUID = UUID(uuidString: parseCarePlan.uuid) else{
-            return task
-        }
-        task.carePlanUUID = carePlanUUID
-        return task
     }
 }
 

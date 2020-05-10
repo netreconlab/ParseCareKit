@@ -454,51 +454,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }
         }
     }
-    
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
-        query.findObjectsInBackground{ (objects,error) in
-            guard let outcomes = objects as? [Outcome] else{
-                guard let error = error as NSError?,
-                    let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {return}
-                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                if reason == "errorMissingColumn"{
-                    //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Outcome either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
-                }
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                mergeRevision(revision)
-                return
-            }
-            let pulled = outcomes.compactMap{$0.convertToCareKit()}
-            let entities = pulled.compactMap{OCKEntity.outcome($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
-            mergeRevision(revision)
-        }
-    }
-    
-    open class func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity){
-        switch careKitEntity {
-        case .outcome(let careKit):
-            let _ = Outcome(careKitEntity: careKit, store: store){
-                copied in
-                guard let parse = copied as? Contact else{return}
-                parse.clock = Int64(cloudClock) //Stamp Entity
-                //if careKit.deletedDate == nil{
-                    parse.addToCloudInBackground(store, usingKnowledgeVector: true)
-                /*}else{
-                    parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
-                }*/
-            }
-        default:
-            print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
-        }
-    }
-    
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
         
         guard let _ = User.current(),
@@ -612,6 +568,50 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
         outcome.remoteID = self.objectId
         return outcome
+    }
+    
+    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+        
+        let query = Outcome.query()!
+        query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+        query.findObjectsInBackground{ (objects,error) in
+            guard let outcomes = objects as? [Outcome] else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("Warning, table Outcome either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                }
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision)
+                return
+            }
+            let pulled = outcomes.compactMap{$0.convertToCareKit()}
+            let entities = pulled.compactMap{OCKEntity.outcome($0)}
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
+        }
+    }
+    
+    open class func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity){
+        switch careKitEntity {
+        case .outcome(let careKit):
+            let _ = Outcome(careKitEntity: careKit, store: store){
+                copied in
+                guard let parse = copied as? Outcome else{return}
+                parse.clock = Int64(cloudClock) //Stamp Entity
+                //if careKit.deletedDate == nil{
+                    parse.addToCloudInBackground(store, usingKnowledgeVector: true)
+                /*}else{
+                    parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+                }*/
+            }
+        default:
+            print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
+        }
     }
 }
 
