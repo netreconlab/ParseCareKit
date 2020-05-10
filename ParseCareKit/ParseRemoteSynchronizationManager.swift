@@ -85,7 +85,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }
                 }
-                
             }
         }
     }
@@ -137,39 +136,12 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             deviceRevision.entities.forEach{
                 let entity = $0
                 switch entity{
-                    
-                case .patient(let patient):
-                    
-                    let _ = User(careKitEntity: patient, store: self.store){
-                        copiedPatient in
-                        guard let parsePatient = copiedPatient as? User else{return}
-                        if patient.deletedDate == nil{
-                            parsePatient.addToCloudInBackground(self.store, usingKnowledgeVector: true)
-                        }else{
-                            parsePatient.deleteFromCloudEventually(self.store, usingKnowledgeVector: true)
-                        }
-                    }
-                case .carePlan(let carePlan):
-                    let _ = CarePlan(careKitEntity: carePlan, store: self.store){
-                        copiedCarePlan in
-                        guard let parseCarePlan = copiedCarePlan as? CarePlan else{return}
-                        if carePlan.deletedDate == nil{
-                            parseCarePlan.addToCloudInBackground(self.store, usingKnowledgeVector: true)
-                        }else{
-                            parseCarePlan.deleteFromCloudEventually(self.store, usingKnowledgeVector: true)
-                        }
-                    }
-                case .contact(let contact):
-                    let _ = Contact(careKitEntity: contact, store: self.store){
-                        copiedContact in
-                        guard let parseContact = copiedContact as? Contact else{return}
-                        if contact.deletedDate == nil{
-                            parseContact.addToCloudInBackground(self.store, usingKnowledgeVector: true)
-                        }else{
-                            parseContact.deleteFromCloudEventually(self.store, usingKnowledgeVector: true)
-                        }
-                        
-                    }
+                case .patient(_):
+                    User.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                case .carePlan(_):
+                    CarePlan.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                case .contact(_):
+                    Contact.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
                 case .task(_):
                     Task.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
                 case .outcome(_):
@@ -194,7 +166,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                         print("Error in ParseRemoteSynchronizationManager.pushRevisions(). \(error)")
                     }
-                    
                     completion(error)
                 }
             }catch{
@@ -202,7 +173,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(error)
             }
         }
-        
         completion(nil)
     }
     
