@@ -23,6 +23,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public var automaticallySynchronizes: Bool
     public weak var store:OCKStore!
+    var currrentlyPulling = false
     
     public override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
@@ -31,13 +32,15 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
-        guard let user = User.current() else{
+        guard let user = User.current(),
+            currrentlyPulling == false else{
             //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
             //mergeRevision(revision, completion)
             completion(nil)
             return
         }
         
+        currrentlyPulling = true
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
         query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
@@ -48,6 +51,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 let data = foundVector.vector.data(using: .utf8) else{
                 //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 //mergeRevision(revision, completion)
+                self.currrentlyPulling = false
                 completion(nil)
                 return
             }
@@ -58,6 +62,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 let error = error
                 print("Error in ParseRemoteSynchronizationManager.pullRevisions(). Couldn't decode vector \(data). Error: \(error)")
                 cloudVector = nil
+                self.currrentlyPulling = false
                 completion(nil)
                 /*let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision){
@@ -73,6 +78,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 mergeRevision(taskRevision){
                     error in
                     if error != nil {
+                        self.currrentlyPulling = false
                         completion(error!)
                         return
                     }
@@ -82,9 +88,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             error in
                             if error != nil {
                                 completion(error!)
-                                return
                             }
+                            self.currrentlyPulling = false
                             completion(nil)
+                            return
                         }
                     }
                 }
