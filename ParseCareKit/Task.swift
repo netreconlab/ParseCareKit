@@ -476,7 +476,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule(composing: careKitScheduleElements)
+        let schedule = OCKSchedule.dailyAtTime(hour: 8, minutes: 0, start: Date(), end: nil, text: nil)//OCKSchedule(composing: careKitScheduleElements)
         var tempEntity = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
         let jsonString:String!
         do{
