@@ -33,9 +33,9 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
-        guard let user = User.current(),
+        guard let user = User.current()/*,
             currentlyPulling == false,
-            currentlyPushing == false else{
+            currentlyPushing == false*/ else{
             //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
             //mergeRevision(revision, completion)
             completion(nil)
@@ -111,8 +111,8 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public func pushRevisions(deviceRevision: OCKRevisionRecord, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
         
         guard let user = User.current(),
-            deviceRevision.entities.count > 0,
-            currentlyPushing == false else{
+            deviceRevision.entities.count > 0/*,
+            currentlyPushing == false*/ else{
             completion(nil)
             return
         }
