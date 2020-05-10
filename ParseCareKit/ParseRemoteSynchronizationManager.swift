@@ -73,6 +73,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 completion(error!)
                                 return
                             }
+                            completion(nil)
                         }
                     }
                 }
