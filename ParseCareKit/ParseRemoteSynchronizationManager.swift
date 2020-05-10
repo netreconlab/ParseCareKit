@@ -73,8 +73,15 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 }*/
                 return
             }
-            let localClock = knowledgeVector.clock(for: cloudVectorUUID)
             
+            let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+            mergeRevision(revision){
+                _ in
+                completion(error)
+            }
+            //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
+            /*
+            let localClock = knowledgeVector.clock(for: cloudVectorUUID)
             Task.pullRevisions(localClock, cloudVector: cloudVector){
                 taskRevision in
                 mergeRevision(taskRevision){
@@ -97,7 +104,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }
                 }
-            }
+            }*/
         }
     }
     
