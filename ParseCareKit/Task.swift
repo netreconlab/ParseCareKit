@@ -16,6 +16,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var asset:String?
     @NSManaged public var carePlan:CarePlan?
     @NSManaged public var carePlanId: String?
+    @NSManaged public var entityUUID:String?
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var impactsAdherence:Bool
     @NSManaged public var instructions:String?
@@ -470,9 +471,23 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKTask?{
+        guard let uuidForEntity = self.entityUUID else{
+            return nil
+        }
+        //Create bare CareKit entity from json
+        let json = "{\"id\":\"\(self.uuid)\",\"uuid\":\"\(uuidForEntity)\"}"
+        guard let data = json.data(using: .utf8) else{return nil}
+        var task:OCKTask!
+        do {
+            task = try JSONDecoder().decode(OCKTask.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).convertToCareKit(). \(error)")
+            return nil
+        }
+        
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule(composing: careKitScheduleElements)
-        var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
+        task.schedule = OCKSchedule(composing: careKitScheduleElements)
+        //var task = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source

@@ -15,6 +15,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
     @NSManaged public var birthday:Date?
+    @NSManaged public var entityUUID:String?
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?

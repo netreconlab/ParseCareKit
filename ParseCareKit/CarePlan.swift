@@ -28,6 +28,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     @NSManaged public var uuid:String
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
+    @NSManaged public var entityUUID:String?
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var patientId:String?
@@ -281,6 +282,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.asset = carePlan.asset
         self.timezone = carePlan.timezone.abbreviation()!
         self.locallyUpdatedAt = carePlan.updatedDate
+        self.entityUUID = carePlan.uuid?.uuidString
         
         //Only copy this over if the Local Version is older than the Parse version
         if self.locallyCreatedAt == nil {

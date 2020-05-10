@@ -17,6 +17,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var asset:String?
     @NSManaged public var category:String?
     @NSManaged public var emailAddresses:[String:String]?
+    @NSManaged public var entityUUID:String?
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?

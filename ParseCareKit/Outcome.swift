@@ -15,6 +15,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var careKitId:String //maps to id
+    @NSManaged public var entityUUID:String?
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
