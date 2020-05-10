@@ -40,7 +40,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = User.current(),
             let store = store as? OCKStore else{
@@ -63,12 +63,13 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         (objects, error) in
                         
                         guard let foundObject = objects?.first as? Outcome else{
+                            completion(false,nil)
                             return
                         }
                         var mutableOutcome = outcome
                         mutableOutcome.remoteID = foundObject.objectId
                         
-                        self.compareUpdate(mutableOutcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
+                        self.compareUpdate(mutableOutcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
                         
                     }
                     return
@@ -81,14 +82,15 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 query.findObjectsInBackground{
                     (objects, error) in
                     guard let foundObject = objects?.first as? Outcome else{
+                        completion(false,nil)
                         return
                     }
                     
-                    self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
+                    self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
                     
                 }
             case .failure(let error):
-                print("Error in \(self.parseClassName).updateCloudEventually(). \(error)")
+                print("Error in \(self.parseClassName).updateCloud(). \(error)")
             }
         }
     }
@@ -139,9 +141,10 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         //}
     }
     
-    func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
+    func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
+            completion(false,nil)
             return
         }
         
@@ -150,18 +153,20 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             parse.copyCareKit(careKit, store: store){_ in
                 //An update may occur when Internet isn't available, try to update at some point
                 parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values){
-                    (success) in
+                    (success,error) in
                     
                     if !success{
-                        print("Error in \(self.parseClassName).updateCloudEventually(). Couldn't update in cloud: \(careKit)")
+                        print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
                     }else{
                         print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
                     }
+                    completion(success,error)
                 }
             }
             
         }else if cloudUpdatedAt > careKitLastUpdated {
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                completion(false,nil)
                 return
             }
                 
@@ -172,16 +177,19 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     
                 case .success(_):
                     print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                case .failure(_):
+                    completion(true,nil)
+                case .failure(let error):
                     print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    completion(false,error)
                 }
             }
         }
     }
     
-    open func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
+    open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = User.current() else{
+            completion(false,nil)
             return
         }
                 
@@ -191,15 +199,17 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Outcome else{
+                completion(false,nil)
                 return
             }
-            self.compareDelete(foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector)
+            self.compareDelete(foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
         }
     }
     
-    func compareDelete(_ parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
+    func compareDelete(_ parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
+            completion(false,nil)
             return
         }
         
@@ -207,14 +217,15 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             parse.deleteInBackground{
                 (success, error) in
                 if !success{
-                    guard let error = error else{return}
-                    print("Error in \(self.parseClassName).deleteFromCloudEventually(). \(error)")
+                    print("Error in \(self.parseClassName).deleteFromCloud(). \(String(describing: error))")
                 }else{
                     print("Successfully deleted \(self.parseClassName) \(self) in the Cloud")
                 }
+                completion(success,error)
             }
         }else {
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                completion(false,nil)
                 return
             }
             store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -222,16 +233,19 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 switch result{
                 case .success(_):
                     print("Successfully deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                case .failure(_):
+                    completion(true,nil)
+                case .failure(let error):
                     print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    completion(false,error)
                 }
             }
         }
     }
     
-    open func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
         guard let _ = User.current() else{
+            completion(false,nil)
             return
         }
         
@@ -249,21 +263,22 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    self.saveAndCheckRemoteID(store){_ in }
+                    self.saveAndCheckRemoteID(store, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).addToCloudInBackground(). \(error.localizedDescription)")
+                    print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
+                    completion(false,error)
                 }
                 return
             }
             
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead added
-                self.updateCloudEventually(store)
+                self.updateCloud(store, completion: completion)
                 
             }else{
                 //This is the first object, make sure to save it
-                self.saveAndCheckRemoteID(store){_ in }
+                self.saveAndCheckRemoteID(store, completion: completion)
             }
             
         }
@@ -293,15 +308,18 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         return mutableReturnValues
     }
     
-    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector:Bool=false, completion: @escaping(Bool) -> Void){
-        guard let store = store as? OCKStore else {return}
+    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        guard let store = store as? OCKStore else {
+            completion(false,nil)
+            return
+        }
         
         //Check to see if some Outcomes are already in the Cloud, if so, need their references. This assumes OutcomeValues can't be updated, but instead are either "added" or "deleted"
         if let values = outcomeValues{
             self.values = replaceOutcomeValuesWithReferences(self.values, careKitValues: values)
         }
         
-        self.saveEventually{(success, error) in
+        self.saveInBackground{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 
@@ -318,7 +336,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         }else{
                             if mutableOutcome.remoteID! != self.objectId!{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal (self.objectId)")
-                                completion(false)
+                                completion(false,error)
                                 return
                             }
                         }
@@ -339,14 +357,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                 switch result{
                                 case .success(let updatedContact):
                                     print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
-                                    completion(true)
+                                    completion(true,nil)
                                 case .failure(let error):
                                     print("Error updating remoteID. \(error)")
-                                    completion(false)
+                                    completion(false,error)
                                 }
                             }
                         }else{
-                            completion(true)
+                            completion(true,nil)
                         }
                         
                         //These get handled and saved seperatly
@@ -384,8 +402,10 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                         switch result{
                                         case .success(let updatedContact):
                                             print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
+                                            completion(true,nil)
                                         case .failure(let error):
                                             print("Error updating remoteID. \(error)")
+                                            completion(false,nil)
                                         }
                                     }
                                 }
@@ -417,7 +437,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
 
                                     guard var outcomeToUse = matchingOutcomes.first else{
                                         print("Error in \(self.parseClassName).saveAndCheckRemoteID(), found no matching Outcomes with uuid \(self.uuid). There should be 1")
-                                        completion(false)
+                                        completion(false,nil)
                                         return
                                     }
                                     //Fix tag
@@ -430,27 +450,23 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                             print("Fixed tag for \(foundOutcome)")
                                         case .failure(let error):
                                             print("Error fixing tag on \(outcomeToUse). \(error)")
+                                            completion(false,error)
                                         }
-                                        completion(false)
+                                        
                                     }
                                 case .failure(let error):
                                     print("Error updating remoteID. \(error)")
-                                    completion(false)
+                                    completion(false,error)
                                 }
                             }
                         }else{
-                            completion(false)
+                            completion(false,error)
                         }
-                        
                     }
                 }
             }else{
-                guard let error = error else{
-                    completion(false)
-                    return
-                }
-                print("Error in CarePlan.addToCloudInBackground(). \(error)")
-                completion(false)
+                print("Error in CarePlan.addToCloud(). \(String(describing: error))")
+                completion(false,error)
             }
         }
     }
@@ -596,7 +612,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity){
+    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .outcome(let careKit):
             let _ = Outcome(careKitEntity: careKit, store: store){
@@ -604,13 +620,28 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 guard let parse = copied as? Outcome else{return}
                 parse.clock = cloudClock //Stamp Entity
                 //if careKit.deletedDate == nil{
-                    parse.addToCloudInBackground(store, usingKnowledgeVector: true)
+                    parse.addToCloud(store, usingKnowledgeVector: true){
+                        (success,error) in
+                        if success{
+                            completion(nil)
+                        }else{
+                            completion(error)
+                        }
+                    }
                 /*}else{
-                    parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+                    parse.deleteFromCloud(store, usingKnowledgeVector: true){
+                        (success,error) in
+                        if success{
+                            completion(nil)
+                        }else{
+                            completion(error)
+                        }
+                    }
                 }*/
             }
         default:
             print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
+            completion(nil)
         }
     }
 }

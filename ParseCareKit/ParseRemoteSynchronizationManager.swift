@@ -15,7 +15,7 @@ import Parse
  */
 public protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
     static func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
-    static func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity)
+    static func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -144,19 +144,25 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }
             
             let cloudVectorClock = cloudVector.clock(for: cloudVectorUUID)
-            deviceRevision.entities.forEach{
-                let entity = $0
+            var revisionsCompletedCount = 0
+            for (index,entity) in deviceRevision.entities.enumerated(){
                 switch entity{
                 case .patient(_):
-                    User.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                    User.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){_ in}/*{
+                        error in
+                        revisionsCompletedCount += 1
+                        if revisionsCompletedCount == deviceRevision.entities.count{
+                            
+                        }
+                    }*/
                 case .carePlan(_):
-                    CarePlan.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                    CarePlan.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){_ in}
                 case .contact(_):
-                    Contact.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                    Contact.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){_ in}
                 case .task(_):
-                    Task.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                    Task.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){_ in}
                 case .outcome(_):
-                    Outcome.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                    Outcome.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){_ in}
                 }
             }
             
@@ -184,7 +190,36 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(error)
             }
         }
-        completion(nil)
+    }
+    
+    func completedRevisions(_ parseKnowledgeVector: KnowledgeVector, cloudKnowledgeVector: OCKRevisionRecord.KnowledgeVector, localKnowledgeVector: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
+        
+        guard let cloudVectorUUID = UUID(uuidString: parseKnowledgeVector.uuid) else{
+            completion(nil)
+            return
+        }
+        
+        var cloudVector = cloudKnowledgeVector
+        
+        //Increment and merge Knowledge Vector
+        cloudVector.increment(clockFor: cloudVectorUUID)
+        cloudVector.merge(with: localKnowledgeVector)
+        do{
+            let json = try JSONEncoder().encode(cloudVector)
+            let cloudVectorString = String(data: json, encoding: .utf8)!
+            parseKnowledgeVector.vector = cloudVectorString
+            parseKnowledgeVector.saveInBackground{
+                (success,error) in
+                if !success{
+                    print("Error in ParseRemoteSynchronizationManager.completedRevisions(). \(String(describing: error))")
+                    completion(error)
+                    return
+                }
+                completion(nil)
+            }
+        }catch{
+            completion(error)
+        }
     }
     
     public func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {

@@ -194,7 +194,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
         if cloudUpdatedAt < careKitLastUpdated{
             parse.copyCareKit(careKit, store: store){copiedCareKit in
                 //An update may occur when Internet isn't available, try to update at some point
-                copiedCareKit?.saveEventually{(success, error) in
+                copiedCareKit?.saveInBackground{(success, error) in
                     if !success{
                         print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
                     }else{

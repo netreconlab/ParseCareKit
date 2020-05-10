@@ -15,9 +15,9 @@ import Parse
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a wall clock.
  */
 public protocol PCKSynchronizedEntity: PFObject, PFSubclassing {
-    func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
-    func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
-    func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
+    func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
+    func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
+    func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
 }
 
 open class ParseSynchronizedStoreManager: NSObject{
@@ -97,7 +97,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.updateCloudEventually(self.storeManager.store)
+                contact.updateCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -107,7 +107,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.deleteFromCloudEventually(self.storeManager.store)
+                contact.deleteFromCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -117,7 +117,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.addToCloudInBackground(self.storeManager.store)
+                contact.addToCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -128,7 +128,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Outcome(careKitEntity: outcome, store: storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.updateCloudEventually(self.storeManager.store)
+                outcome.updateCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -139,7 +139,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Outcome(careKitEntity: careKitEntity, store: self.storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.deleteFromCloudEventually(self.storeManager.store)
+                outcome.deleteFromCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -149,7 +149,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Outcome(careKitEntity: $0, store: self.storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.addToCloudInBackground(self.storeManager.store)
+                outcome.addToCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -159,7 +159,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Task(careKitEntity: $0, store: self.storeManager.store){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.updateCloudEventually(self.storeManager.store)
+                task.updateCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -169,7 +169,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Task(careKitEntity: $0, store: self.storeManager.store){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.deleteFromCloudEventually(self.storeManager.store)
+                task.deleteFromCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -179,7 +179,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Task(careKitEntity: $0, store: self.storeManager.store){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.addToCloudInBackground(self.storeManager.store)
+                task.addToCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -189,7 +189,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.updateCloudEventually(self.storeManager.store)
+                carePlan.updateCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -199,7 +199,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.deleteFromCloudEventually(self.storeManager.store)
+                carePlan.deleteFromCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -209,7 +209,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.addToCloudInBackground(self.storeManager.store)
+                carePlan.addToCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -220,7 +220,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = User(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
                 guard let patient = copiedPatient as? User else{return}
-                patient.updateCloudEventually(self.storeManager.store)
+                patient.updateCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -230,7 +230,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = User(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
                 guard let patient = copiedPatient as? User else{return}
-                patient.deleteFromCloudEventually(self.storeManager.store)
+                patient.deleteFromCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
@@ -240,7 +240,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = User(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
                 guard let patient = copiedPatient as? User else{return}
-                patient.addToCloudInBackground(self.storeManager.store)
+                patient.addToCloud(self.storeManager.store){(_,_) in}
             }
         }
     }
