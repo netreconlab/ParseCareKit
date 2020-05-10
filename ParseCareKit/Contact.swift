@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Contact: PFObject, PFSubclassing, PCKEntity {
+open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
@@ -47,7 +47,7 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
         return kPCKContactClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
@@ -450,42 +450,40 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
             query.uuids = [carePlanID]
             store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
                 result in
-                    switch result{
-                    case .success(let carePlans):
-                        guard let carePlan = carePlans.first else{
-                            completion()
-                            return
-                        }
-                        self.carePlanId = carePlan.id
-                        guard let carePlanRemoteID = carePlan.remoteID else{
-                            
-                            let carePlanQuery = CarePlan.query()!
-                            carePlanQuery.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
-                            carePlanQuery.findObjectsInBackground(){
-                                (objects, error) in
-                                
-                                guard let carePlanFound = objects?.first as? CarePlan else{
-                                    completion()
-                                    return
-                                }
-                                
-                                self.carePlan = carePlanFound
-                                completion()
-                            }
-                            return
-                        }
-                        
-                        self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
+                switch result{
+                case .success(let carePlans):
+                    guard let carePlan = carePlans.first else{
                         completion()
-                        
-                    case .failure(_):
-                        completion()
+                        return
                     }
+                    self.carePlanId = carePlan.id
+                    guard let carePlanRemoteID = carePlan.remoteID else{
+                        
+                        let carePlanQuery = CarePlan.query()!
+                        carePlanQuery.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
+                        carePlanQuery.findObjectsInBackground(){
+                            (objects, error) in
+                            
+                            guard let carePlanFound = objects?.first as? CarePlan else{
+                                completion()
+                                return
+                            }
+                            
+                            self.carePlan = carePlanFound
+                            completion()
+                        }
+                        return
+                    }
+                    
+                    self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
+                    completion()
+                    
+                case .failure(_):
+                    completion()
                 }
             }
         }
-
-    
+    }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKContact?{
@@ -569,6 +567,50 @@ open class Contact: PFObject, PFSubclassing, PCKEntity {
         }
         contact.carePlanUUID = carePlanUUID
         return contact
+    }
+    
+    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+        
+        let query = Contact.query()!
+        query.whereKey(kPCKContactClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.findObjectsInBackground{ (objects,error) in
+            guard let carePlans = objects as? [Contact] else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                }
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision)
+                return
+            }
+            let pulled = carePlans.compactMap{$0.convertToCareKit()}
+            let entities = pulled.compactMap{OCKEntity.contact($0)}
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
+        }
+    }
+    
+    open class func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity){
+        switch careKitEntity {
+        case .contact(let careKit):
+            let _ = Contact(careKitEntity: careKit, store: store){
+                copied in
+                guard let parse = copied as? Contact else{return}
+                parse.clock = Int64(cloudClock) //Stamp Entity
+                if careKit.deletedDate == nil{
+                    parse.addToCloudInBackground(store, usingKnowledgeVector: true)
+                }else{
+                    parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+                }
+            }
+        default:
+            print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
+        }
     }
 }
 

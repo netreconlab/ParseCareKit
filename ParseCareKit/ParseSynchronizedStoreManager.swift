@@ -12,9 +12,9 @@ import Combine
 import Parse
 
 /**
- Protocol that defines the properties and methods for parse carekit entities.
+ Protocol that defines the properties and methods for parse carekit entities that are synchronized using a wall clock.
  */
-public protocol PCKEntity: PFObject, PFSubclassing {
+public protocol PCKSynchronizedEntity: PFObject, PFSubclassing {
     func addToCloudInBackground(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
     func updateCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)
     func deleteFromCloudEventually(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool)

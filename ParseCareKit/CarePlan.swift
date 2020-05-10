@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class CarePlan: PFObject, PFSubclassing, PCKEntity {
+open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
     //Parse only
     @NSManaged public var patient:User?
@@ -37,7 +37,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         return kPCKCarePlanClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
@@ -343,7 +343,6 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
         
     }
     
-    
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit()->OCKCarePlan?{
         
@@ -407,6 +406,50 @@ open class CarePlan: PFObject, PFSubclassing, PCKEntity {
             
         }*/
         
+    }
+    
+    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+        
+        let query = CarePlan.query()!
+        query.whereKey(kPCKCarePlanClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+        query.findObjectsInBackground{ (objects,error) in
+            guard let carePlans = objects as? [CarePlan] else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {return}
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                }
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision)
+                return
+            }
+            let pulled = carePlans.compactMap{$0.convertToCareKit()}
+            let entities = pulled.compactMap{OCKEntity.carePlan($0)}
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
+        }
+    }
+    
+    open class func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity){
+        switch careKitEntity {
+        case .carePlan(let careKit):
+            let _ = CarePlan(careKitEntity: careKit, store: store){
+                copied in
+                guard let parse = copied as? CarePlan else{return}
+                parse.clock = Int64(cloudClock) //Stamp Entity
+                if careKit.deletedDate == nil{
+                    parse.addToCloudInBackground(store, usingKnowledgeVector: true)
+                }else{
+                    parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+                }
+            }
+        default:
+            print("Error in CarePlan.pushRevision(). Received wrong type \(careKitEntity)")
+        }
     }
 }
 

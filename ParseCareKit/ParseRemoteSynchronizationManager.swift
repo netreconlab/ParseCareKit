@@ -10,6 +10,14 @@ import Foundation
 import CareKitStore
 import Parse
 
+/**
+ Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
+ */
+public protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
+    static func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
+    static func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity)
+}
+
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
     public var delegate: OCKRemoteSynchronizationDelegate?
     
@@ -162,20 +170,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                         
                     }
-                case .task(let task):
-                    
-                    let _ = Task(careKitEntity: task, store: self.store){
-                        copiedTask in
-                        guard let parseTask = copiedTask as? Task else{return}
-                        if task.deletedDate == nil{
-                            parseTask.addToCloudInBackground(self.store, usingKnowledgeVector: true)
-                        }else{
-                            parseTask.deleteFromCloudEventually(self.store, usingKnowledgeVector: true)
-                        }
-                        
-                    }
-                case .outcome(let outcome):
-                    Outcome.pushRevision(self.store, cloudClock: cloudVectorClock, outcome: outcome)
+                case .task(_):
+                    Task.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
+                case .outcome(_):
+                    Outcome.pushRevision(self.store, cloudClock: cloudVectorClock, careKitEntity: entity)
                 }
             }
             
@@ -205,9 +203,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }
         }
         
-     
-        
-        
         completion(nil)
     }
     
@@ -215,38 +210,4 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
         completion(conflictPolicy)
     }
-    
-    func pullOutcomeRevisions(_ localVector: OCKRevisionRecord.KnowledgeVector, cloudVector: KnowledgeVector, cloudUUID:String, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
-        
-        guard let cloudKnowledgeVectorUUID = UUID(uuidString: cloudVector.uuid) else{
-            let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-            mergeRevision(revision, completion)
-            return
-        }
-        let localClock = localVector.clock(for: cloudKnowledgeVectorUUID)
-        
-        let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
-        query.findObjectsInBackground{ (objects,error) in
-            guard let outcomes = objects as? [Outcome] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                mergeRevision(revision, completion)
-                return
-            }
-            let pulledOutcomes = outcomes.compactMap{$0.convertToCareKit()}
-            let outcomeEntities = pulledOutcomes.compactMap{OCKEntity.outcome($0)}
-            let data = cloudVector.vector.data(using: .utf8)!
-            let revision:OCKRevisionRecord!
-            do {
-                let vector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
-                revision = OCKRevisionRecord(entities: outcomeEntities, knowledgeVector: vector)
-            }catch{
-                print("Error in ParseRemoteSynchronizationManager.pullRevisions(). Couldn't decode vector \(data)")
-                revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-            }
-            mergeRevision(revision, completion)
-        }
-    }
-    
 }

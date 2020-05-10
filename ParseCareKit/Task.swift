@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Task : PFObject, PFSubclassing, PCKEntity {
+open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
@@ -39,7 +39,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         return kPCKTaskClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyTask, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyTask, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
@@ -460,7 +460,7 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
         
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
         query.whereKey(kPCKTaskClockKey, greaterThanOrEqualTo: localClock)
@@ -479,23 +479,28 @@ open class Task : PFObject, PFSubclassing, PCKEntity {
                 mergeRevision(revision)
                 return
             }
-            let pulledTasks = tasks.compactMap{$0.convertToCareKit()}
-            let taskEntities = pulledTasks.compactMap{OCKEntity.task($0)}
-            let revision = OCKRevisionRecord(entities: taskEntities, knowledgeVector: cloudVector)
+            let pulled = tasks.compactMap{$0.convertToCareKit()}
+            let entities = pulled.compactMap{OCKEntity.task($0)}
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
             mergeRevision(revision)
         }
     }
     
-    class func pushRevision(_ store: OCKStore, cloudClock: Int, task:OCKTask){
-        let _ = Task(careKitEntity: task, store: store){
-            copiedTask in
-            guard let parseTask = copiedTask as? Task else{return}
-            parseTask.clock = Int64(cloudClock) //Stamp Entity
-            if task.deletedDate == nil{
-                parseTask.addToCloudInBackground(store, usingKnowledgeVector: true)
-            }else{
-                parseTask.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+    open class func pushRevision(_ store: OCKStore, cloudClock: Int, careKitEntity:OCKEntity){
+        switch careKitEntity {
+        case .task(let careKit):
+            let _ = Task(careKitEntity: careKit, store: store){
+                copied in
+                guard let parse = copied as? Contact else{return}
+                parse.clock = Int64(cloudClock) //Stamp Entity
+                //if careKit.deletedDate == nil{
+                    parse.addToCloudInBackground(store, usingKnowledgeVector: true)
+                /*}else{
+                    parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
+                }*/
             }
+        default:
+            print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
         }
     }
     
