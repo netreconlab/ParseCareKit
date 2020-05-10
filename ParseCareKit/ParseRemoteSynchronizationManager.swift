@@ -32,8 +32,9 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
         guard let user = User.current() else{
-            let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-            mergeRevision(revision, completion)
+            //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+            //mergeRevision(revision, completion)
+            completion(nil)
             return
         }
         
@@ -45,8 +46,9 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             guard let foundVector = object as? KnowledgeVector,
                 let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
                 let data = foundVector.vector.data(using: .utf8) else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                mergeRevision(revision, completion)
+                //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                //mergeRevision(revision, completion)
+                completion(nil)
                 return
             }
             let cloudVector:OCKRevisionRecord.KnowledgeVector!
@@ -56,11 +58,12 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 let error = error
                 print("Error in ParseRemoteSynchronizationManager.pullRevisions(). Couldn't decode vector \(data). Error: \(error)")
                 cloudVector = nil
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                completion(nil)
+                /*let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision){
                     _ in
                     completion(error)
-                }
+                }*/
                 return
             }
             let localClock = knowledgeVector.clock(for: cloudVectorUUID)
