@@ -475,7 +475,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return nil
         }
         //Create bare CareKit entity from json
-        let json = "{\"id\":\"\(self.uuid)\",\"uuid\":\"\(uuidForEntity)\"}"
+        let json = "{\"id\":\"\(self.uuid)\",\"uuid\":\"\(uuidForEntity)\",\"impactsAdherence\":\(self.impactsAdherence)}"
         guard let data = json.data(using: .utf8) else{return nil}
         var task:OCKTask!
         do {
@@ -492,7 +492,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         task.tags = self.tags
         task.source = self.source
         task.instructions = self.instructions
-        task.impactsAdherence = self.impactsAdherence
+        //task.impactsAdherence = self.impactsAdherence
         task.groupIdentifier = self.groupIdentifier
         task.asset = self.asset
         if let timeZone = TimeZone(abbreviation: self.timezone){
