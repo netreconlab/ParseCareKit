@@ -29,7 +29,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var uuid:String //maps to id
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
     
-    @NSManaged public var clock:Int64
+    @NSManaged public var clock:Int
     
     //SOSDatabase info
     @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
@@ -518,12 +518,12 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             let _ = Task(careKitEntity: careKit, store: store){
                 copied in
                 guard let parse = copied as? Task else{return}
-                parse.clock = Int64(cloudClock) //Stamp Entity
-                //if careKit.deletedDate == nil{
+                parse.clock = cloudClock //Stamp Entity
+                if careKit.deletedDate == nil{
                     parse.addToCloudInBackground(store, usingKnowledgeVector: true)
-                /*}else{
+                }else{
                     parse.deleteFromCloudEventually(store, usingKnowledgeVector: true)
-                }*/
+                }
             }
         default:
             print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")

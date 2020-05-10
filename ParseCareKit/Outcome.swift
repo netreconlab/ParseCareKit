@@ -29,7 +29,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     //Not 1 tot 1, UserInfo fields in CareStore
     @NSManaged public var uuid:String //maps to id
-    @NSManaged public var clock:Int64
+    @NSManaged public var clock:Int
     
     public static func parseClassName() -> String {
         return kPCKOutcomeClassKey
@@ -602,7 +602,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             let _ = Outcome(careKitEntity: careKit, store: store){
                 copied in
                 guard let parse = copied as? Outcome else{return}
-                parse.clock = Int64(cloudClock) //Stamp Entity
+                parse.clock = cloudClock //Stamp Entity
                 //if careKit.deletedDate == nil{
                     parse.addToCloudInBackground(store, usingKnowledgeVector: true)
                 /*}else{

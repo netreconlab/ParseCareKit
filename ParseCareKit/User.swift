@@ -27,7 +27,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     
     //Not 1 to 1
     @NSManaged public var uuid:String
-    @NSManaged public var clock:Int64
+    @NSManaged public var clock:Int
 
     public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
@@ -348,7 +348,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             let _ = User(careKitEntity: careKit, store: store){
                 copied in
                 guard let parse = copied as? User else{return}
-                parse.clock = Int64(cloudClock) //Stamp Entity
+                parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloudInBackground(store, usingKnowledgeVector: true)
                 }else{

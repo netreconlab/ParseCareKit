@@ -31,7 +31,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var patientId:String?
-    @NSManaged public var clock:Int64
+    @NSManaged public var clock:Int
     
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey
@@ -440,7 +440,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             let _ = CarePlan(careKitEntity: careKit, store: store){
                 copied in
                 guard let parse = copied as? CarePlan else{return}
-                parse.clock = Int64(cloudClock) //Stamp Entity
+                parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloudInBackground(store, usingKnowledgeVector: true)
                 }else{

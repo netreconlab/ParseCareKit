@@ -38,7 +38,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     //Not 1 to 1
     @NSManaged public var user:User?
     @NSManaged public var author:User
-    @NSManaged public var clock:Int64
+    @NSManaged public var clock:Int
     
     //UserInfo fields on CareStore
     @NSManaged public var uuid:String //maps to id
@@ -601,7 +601,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             let _ = Contact(careKitEntity: careKit, store: store){
                 copied in
                 guard let parse = copied as? Contact else{return}
-                parse.clock = Int64(cloudClock) //Stamp Entity
+                parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloudInBackground(store, usingKnowledgeVector: true)
                 }else{
