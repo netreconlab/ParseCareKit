@@ -471,33 +471,8 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKTask?{
-        guard let uuidForEntity = self.entityUUID else{
-            return nil
-        }
         
-        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule.dailyAtTime(hour: 8, minutes: 0, start: Date(), end: nil, text: nil)//OCKSchedule(composing: careKitScheduleElements)
-        var tempEntity = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(tempEntity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        
-        //Create bare CareKit entity from json
-        let json = "{\"id\":\"\(self.uuid)\",\"uuid\":\"\(uuidForEntity)\",\"impactsAdherence\":\(self.impactsAdherence)}"
-        guard let data = jsonString.data(using: .utf8) else{return nil}
-        var task:OCKTask!
-        do {
-            task = try JSONDecoder().decode(OCKTask.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).convertToCareKit(). \(error)")
-            return nil
-        }
-        
+        guard var task = createDeserializedEntity() else{return nil}
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source
@@ -516,6 +491,38 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return task
         }
         task.carePlanUUID = carePlanUUID
+        return task
+    }
+    
+    func createDeserializedEntity()->OCKTask?{
+        guard let uuidForEntity = self.entityUUID else{
+            return nil
+        }
+        
+        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
+        let schedule = OCKSchedule.dailyAtTime(hour: 8, minutes: 0, start: Date(), end: nil, text: nil)//OCKSchedule(composing: careKitScheduleElements)
+        let tempEntity = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(tempEntity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        
+        //Create bare CareKit entity from json
+        let insertValue = "\"uuid\":\"\(uuidForEntity)\""
+        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
+            let data = modifiedJson.data(using: .utf8) else{return nil}
+        let task:OCKTask!
+        do {
+            task = try JSONDecoder().decode(OCKTask.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).convertToCareKit(). \(error)")
+            return nil
+        }
+        
         return task
     }
     
