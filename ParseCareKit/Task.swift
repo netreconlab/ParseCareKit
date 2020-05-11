@@ -477,7 +477,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         task.tags = self.tags
         task.source = self.source
         task.instructions = self.instructions
-        //task.impactsAdherence = self.impactsAdherence
+        task.impactsAdherence = self.impactsAdherence
         task.groupIdentifier = self.groupIdentifier
         task.asset = self.asset
         if let timeZone = TimeZone(abbreviation: self.timezone){
