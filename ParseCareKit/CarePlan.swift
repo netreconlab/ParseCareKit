@@ -28,7 +28,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     @NSManaged public var uuid:String
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var entityUUID:String?
+    @NSManaged public var entityId:String
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var patientId:String?
@@ -50,7 +50,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             return
         }
         
-        store.fetchCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchCarePlan(withID: self.entityId, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let carePlan):
@@ -58,7 +58,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 guard let remoteID = carePlan.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
-                    query.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
+                    query.whereKey(kPCKCarePlanEntityIdKey, equalTo: carePlan.id)
                     query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
@@ -138,7 +138,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
        
         //Get latest item from the Cloud to compare against
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanIDKey, equalTo: self.uuid)
+        query.whereKey(kPCKCarePlanEntityIdKey, equalTo: self.entityId)
         query.getFirstObjectInBackground{
             (object, error) in
             guard let foundObject = object as? CarePlan else{
@@ -187,7 +187,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
         
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanIDKey, equalTo: self.uuid)
+        query.whereKey(kPCKCarePlanEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
@@ -225,7 +225,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.saveInBackground{(success, error) in
             if success{
                 //Only save data back to CarePlanStore if it's never been saved before
-                store.fetchCarePlan(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchCarePlan(withID: self.entityId, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(var mutableEntity):
@@ -273,8 +273,13 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             completion(nil)
             return
         }
-        
-        self.uuid = carePlan.id
+        guard let uuid = carePlan.uuid?.uuidString else{
+            print("Error in \(parseClassName). Entity missing uuid: \(carePlan)")
+            completion(nil)
+            return
+        }
+        self.uuid = uuid
+        self.entityId = carePlan.id
         self.title = carePlan.title
         self.groupIdentifier = carePlan.groupIdentifier
         self.tags = carePlan.tags
@@ -282,7 +287,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.asset = carePlan.asset
         self.timezone = carePlan.timezone.abbreviation()!
         self.locallyUpdatedAt = carePlan.updatedDate
-        self.entityUUID = carePlan.uuid?.uuidString
+        
         
         //Only copy this over if the Local Version is older than the Parse version
         if self.locallyCreatedAt == nil {
@@ -362,8 +367,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         guard let authorID = self.author?.uuid,
             let authorUUID = UUID(uuidString: authorID) else {return nil}
         
-        
-        var carePlan = OCKCarePlan(id: self.uuid, title: self.title, patientUUID: authorUUID)
+        var carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
         carePlan.source = self.source

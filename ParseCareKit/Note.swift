@@ -20,9 +20,10 @@ open class Note: PFObject, PFSubclassing {
     @NSManaged public var tags:[String]?
     @NSManaged public var timezone:String
     @NSManaged public var title:String
+    @NSManaged public var uuid:String
     
     //Not 1 to 1 UserInfo fields on CareStore
-    @NSManaged public var uuid:String //Maps to userInfo?[kPCKNoteUserInfoIDKey]
+    @NSManaged public var entityId:String //Maps to userInfo?[kPCKNoteUserInfoEntityIdKey]
     
     //Not 1 to 1
     @NSManaged public var author:User
@@ -53,7 +54,7 @@ open class Note: PFObject, PFSubclassing {
             case .success(let result):
                 
                 guard let patient = result as? OCKPatient,
-                    let id = note.userInfo?[kPCKNoteUserInfoIDKey] else{
+                    let id = note.userInfo?[kPCKNoteUserInfoEntityIdKey] else{
                     completion(nil)
                     return
                 }
@@ -61,7 +62,7 @@ open class Note: PFObject, PFSubclassing {
                 self.author.copyCareKit(patient, store: store){
                     _ in
                     
-                    self.uuid = id
+                    self.entityId = id
                     self.groupIdentifier = note.groupIdentifier
                     self.tags = note.tags
                     self.source = note.source
@@ -125,12 +126,12 @@ open class Note: PFObject, PFSubclassing {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKNote{
         
-        var note = OCKNote(author: self.author.uuid, title: self.title, content: self.content)
+        var note = OCKNote(author: self.author.entityId, title: self.title, content: self.content)
         note.asset = self.asset
         note.groupIdentifier = self.groupIdentifier
         note.tags = self.tags
         note.source = self.source
-        note.userInfo?[kPCKNoteUserInfoIDKey] = self.uuid
+        note.userInfo?[kPCKNoteUserInfoEntityIdKey] = self.entityId
         note.remoteID = self.objectId
         note.groupIdentifier = self.groupIdentifier
         note.asset = self.asset

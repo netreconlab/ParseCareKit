@@ -341,16 +341,16 @@ open class ParseSynchronizedStoreManager: NSObject{
                     var mutableOutcome = $0
                     if mutableOutcome.userInfo == nil{
                         let uuid = UUID.init().uuidString
-                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoIDKey: uuid]
+                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: uuid]
                         if mutableOutcome.tags == nil{
                             mutableOutcome.tags = [uuid]
                         }else{
                             mutableOutcome.tags!.append(uuid)
                         }
                         outcomeUpdated = true
-                    }else if mutableOutcome.userInfo![kPCKOutcomeUserInfoIDKey] == nil{
+                    }else if mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] == nil{
                         let uuid = UUID.init().uuidString
-                        mutableOutcome.userInfo![kPCKOutcomeUserInfoIDKey] = uuid
+                        mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] = uuid
                         if mutableOutcome.tags == nil{
                             mutableOutcome.tags = [uuid]
                         }else{
@@ -363,7 +363,7 @@ open class ParseSynchronizedStoreManager: NSObject{
                         var mutableValue = value
                         if mutableValue.userInfo == nil{
                             let uuid = UUID.init().uuidString
-                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoIDKey: uuid]
+                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoEntityIdKey: uuid]
                             if mutableValue.tags == nil{
                                 mutableValue.tags = [uuid]
                             }else{
@@ -371,9 +371,9 @@ open class ParseSynchronizedStoreManager: NSObject{
                             }
                             mutableOutcome.values[index] = mutableValue
                             outcomeUpdated = true
-                        }else if mutableValue.userInfo![kPCKOutcomeValueUserInfoIDKey] == nil{
+                        }else if mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] == nil{
                             let uuid = UUID.init().uuidString
-                            mutableValue.userInfo![kPCKOutcomeValueUserInfoIDKey] = uuid
+                            mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] = uuid
                             if mutableValue.tags == nil{
                                 mutableValue.tags = [uuid]
                             }else{

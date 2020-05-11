@@ -16,7 +16,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var asset:String?
     @NSManaged public var carePlan:CarePlan?
     @NSManaged public var carePlanId: String?
-    @NSManaged public var entityUUID:String?
+    @NSManaged public var entityId:String
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var impactsAdherence:Bool
     @NSManaged public var instructions:String?
@@ -52,7 +52,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return
         }
         
-        store.fetchTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchTask(withID: self.entityId, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let task):
@@ -60,7 +60,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                            
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Task.query()!
-                    query.whereKey(kPCKCarePlanIDKey, equalTo: task.id)
+                    query.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
                     query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
@@ -138,7 +138,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         
         //Get latest item from the Cloud to compare against
         let query = Task.query()!
-        query.whereKey(kPCKTaskIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKTaskEntityIdKey, equalTo: self.entityId)
         query.getFirstObjectInBackground(){
             (objects, error) in
             guard let foundObject = objects as? Task else{
@@ -195,7 +195,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         
         //Check to see if already in the cloud
         let query = Task.query()!
-        query.whereKey(kPCKTaskIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKTaskEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
@@ -232,7 +232,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
-                store.fetchTask(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchTask(withID: self.entityId, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(var mutableEntity):
@@ -274,8 +274,13 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             completion(nil)
             return
         }
-        
-        self.uuid = task.id
+        guard let uuid = task.uuid?.uuidString else{
+            print("Error in \(parseClassName). Entity missing uuid: \(task)")
+            completion(nil)
+            return
+        }
+        self.uuid = uuid
+        self.entityId = task.id
         self.groupIdentifier = task.groupIdentifier
         self.title = task.title
         self.impactsAdherence = task.impactsAdherence
@@ -283,7 +288,6 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.source = task.source
         self.asset = task.asset
         self.timezone = task.timezone.abbreviation()!
-        self.entityUUID = task.uuid?.uuidString
         self.locallyUpdatedAt = task.updatedDate
         
         //Only copy this over if the Local Version is older than the Parse version
@@ -302,10 +306,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             let elements = task.schedule.elements.map{(element) -> OCKScheduleElement in
                 let newElement = element
                 /*if newElement.userInfo == nil{
-                    newElement.userInfo = [kPCKScheduleElementUserInfoIDKey: UUID.init().uuidString]
+                    newElement.userInfo = [kPCKScheduleElementUserInfoEntityIdKey: UUID.init().uuidString]
                 }else{
-                    if newElement.userInfo![kPCKScheduleElementUserInfoIDKey] == nil{
-                        newElement.userInfo![kPCKScheduleElementUserInfoIDKey] = UUID.init().uuidString
+                    if newElement.userInfo![kPCKScheduleElementUserInfoEntityIdKey] == nil{
+                        newElement.userInfo![kPCKScheduleElementUserInfoEntityIdKey] = UUID.init().uuidString
                     }
                 }
                 if let tags = newElement.tags {
@@ -342,7 +346,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                         self.carePlanId = foundPlan.id
                         guard let carePlanRemoteID = foundPlan.remoteID else{
                             let carePlanQuery = CarePlan.query()!
-                            carePlanQuery.whereKey(kPCKCarePlanIDKey, equalTo: foundPlan.id)
+                            carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: foundPlan.id)
                             carePlanQuery.findObjectsInBackground(){
                                 (objects, error) in
                                 
@@ -455,7 +459,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             var noteIDs = [String]()
             notes.forEach{
                 //Ignore notes who don't have a ID
-                guard let noteID = $0.userInfo?[kPCKNoteUserInfoIDKey] else{
+                guard let noteID = $0.userInfo?[kPCKNoteUserInfoEntityIdKey] else{
                     return
                 }
                 
@@ -496,15 +500,15 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     func createDeserializedEntity()->OCKTask?{
-        guard let uuidForEntity = self.entityUUID,
-            let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
         
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
         let schedule = OCKSchedule(composing: careKitScheduleElements)
-        let tempEntity = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
+        let tempEntity = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
         let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(tempEntity)
@@ -515,7 +519,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(uuidForEntity)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKTask!

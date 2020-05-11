@@ -17,7 +17,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var asset:String?
     @NSManaged public var category:String?
     @NSManaged public var emailAddresses:[String:String]?
-    @NSManaged public var entityUUID:String?
+    @NSManaged public var entityId:String
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
@@ -60,7 +60,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             return
         }
         
-        store.fetchContact(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchContact(withID: self.entityId, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let contact):
@@ -68,7 +68,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
-                    query.whereKey(kPCKContactIdKey, equalTo: contact.id)
+                    query.whereKey(kPCKContactEntityIdKey, equalTo: contact.id)
                     query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
@@ -151,7 +151,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         //Get latest item from the Cloud to compare against
         let query = Contact.query()!
-        query.whereKey(kPCKContactIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKContactEntityIdKey, equalTo: self.entityId)
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Contact else{
@@ -200,7 +200,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         //Check to see if already in the cloud
         let query = Contact.query()!
-        query.whereKey(kPCKContactIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKContactEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
@@ -240,7 +240,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
-                store.fetchContact(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchContact(withID: self.entityId, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(var mutableEntity):
@@ -287,8 +287,13 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             completion(nil)
             return
         }
-        
-        self.uuid = contact.id
+        guard let uuid = contact.uuid?.uuidString else{
+            print("Error in \(parseClassName). Entity missing uuid: \(contact)")
+            completion(nil)
+            return
+        }
+        self.uuid = uuid
+        self.entityId = contact.id
         self.groupIdentifier = contact.groupIdentifier
         self.tags = contact.tags
         self.source = contact.source
@@ -299,7 +304,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.asset = contact.asset
         self.timezone = contact.timezone.abbreviation()!
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(contact.name)
-        self.entityUUID = contact.uuid?.uuidString
         self.locallyUpdatedAt = contact.updatedDate
         
         //Only copy this over if the Local Version is older than the Parse version
@@ -470,7 +474,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     guard let carePlanRemoteID = carePlan.remoteID else{
                         
                         let carePlanQuery = CarePlan.query()!
-                        carePlanQuery.whereKey(kPCKCarePlanIDKey, equalTo: carePlan.id)
+                        carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: carePlan.id)
                         carePlanQuery.findObjectsInBackground(){
                             (objects, error) in
                             
@@ -498,7 +502,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKContact?{
         let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        var contact = OCKContact(id: self.uuid, name: nameComponents, carePlanUUID: nil)
+        var contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
         
         contact.role = self.role
         contact.title = self.title

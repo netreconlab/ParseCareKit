@@ -24,9 +24,10 @@ open class OutcomeValue: PFObject, PFSubclassing {
     @NSManaged public var type:String
     @NSManaged public var units:String?
     @NSManaged public var value:[String: Any]
+    @NSManaged public var uuid:String
     
     //UserInfo fields on CareStore
-    @NSManaged public var uuid:String
+    @NSManaged public var entityId:String
     
     //SOSDatabase info
     @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
@@ -42,13 +43,13 @@ open class OutcomeValue: PFObject, PFSubclassing {
     
     open func copyCareKit(_ outcomeValue: OCKOutcomeValue, store: OCKAnyStoreProtocol, completion: @escaping(OutcomeValue?) -> Void){
         
-        guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoIDKey] else{
-            print("Error in OutcomeValue.copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoIDKey) in \(String(describing: outcomeValue.userInfo))")
+        guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey] else{
+            print("Error in OutcomeValue.copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoEntityIdKey) in \(String(describing: outcomeValue.userInfo))")
             completion(nil)
             return
         }
         
-        self.uuid = id
+        self.entityId = id
         //self.associatedID = associatedOutcome.id
         self.kind = outcomeValue.kind
         if let index = outcomeValue.index{
@@ -152,7 +153,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
             outcomeValue!.remoteID = self.objectId
             
             var convertedUserInfo = [String:String]()
-            convertedUserInfo[kPCKOutcomeValueUserInfoIDKey] = self.uuid
+            convertedUserInfo[kPCKOutcomeValueUserInfoEntityIdKey] = self.entityId
             outcomeValue!.userInfo = convertedUserInfo
         }
         

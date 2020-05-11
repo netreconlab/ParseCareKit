@@ -35,12 +35,13 @@ public let kPCKUserSourceKey                                   = "source"
 public let kPCKUserTagsKey                                     = "tags"
 public let kPCKUserTimezoneKey                                 = "timezone"
 public let kPCKUserClockKey                                    = "clock"
+public let kPCKUsereEntityIdKey                                = "entityId"
 
 
 //#Mark - CarePlan Class
 public let kPCKCarePlanClassKey                                = "CarePlan"
 // Field keys
-public let kPCKCarePlanIDKey                                   = "uuid"
+public let kPCKCarePlanUUIDKey                                   = "uuid"
 public let kPCKCarePlanObjectIdKey                                = "objectId"
 public let kPCKCarePlanCreatedAtKey                               = "createdAt"
 public let kPCKCarePlanUpdatedAtKey                               = "updatedAt"
@@ -49,22 +50,23 @@ public let kPCKCarePlanLocallyUpdatedAtKey                        = "locallyUpda
 public let kPCKCarePlanPatientKey                                 = "patient"
 public let kPCKCarePlanAuthorKey                                  = "author"
 public let kPCKCarePlanAuthorIdKey                                = "authorId"
-public let kPCKCarePlanPatientIdKey                               = "patientId"
+public let kPCKCarePlanPatientUUIDKey                             = "patientUUID"
 public let kPCKCarePlanTitleKey                                   = "title"
 public let kPCKCarePlanGroupIdentifierKey                      = "groupIdentifier"
 public let kPCKCarePlanNotesKey                                = "notes"
 public let kPCKCarePlanSourceKey                               = "source"
 public let kPCKCarePlanTagsKey                                 = "tags"
 public let kPCKCarePlanClockKey                                    = "clock"
+public let kPCKCarePlanEntityIdKey                                = "entityId"
 
 //#Mark - Task Class
 public let kPCKTaskClassKey                                    = "Task"
 // Field keys
-public let kPCKTaskIdKey                                          = "uuid"
+public let kPCKTaskUUIDKey                                          = "uuid"
 public let kPCKTaskObjectIdKey                                    = "objectId"
 public let kPCKTaskTitleKey                                       = "title"
 public let kPCKTaskCarePlanKey                                    = "carePlan"
-public let kPCKTaskCarePlanIdKey                                  = "carePlanId"
+public let kPCKTaskCarePlanUUIDKey                                  = "carePlanUUID"
 public let kPCKTaskGroupIdentifierKey                          = "groupIdentifier"
 public let kPCKTaskImpactsAdherenceKey                         = "impactsAdherence"
 public let kPCKTaskInstructionsKey                             = "instructions"
@@ -75,6 +77,7 @@ public let kPCKTaskAssetKey                                    = "asset"
 public let kPCKTaskTimezoneKey                                 = "timezone"
 public let kPCKTaskElementsKey                                 = "elements"
 public let kPCKTaskClockKey                                    = "clock"
+public let kPCKTaskEntityIdKey                                = "entityId"
 
 //#Mark - KnowledgeVector Class
 public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
@@ -85,7 +88,7 @@ public let kPCKKnowledgeVectorVectorKey                        = "vector"
 //#Mark - Contact Class
 public let kPCKContactClassKey                                 = "Contact"
 // Field keys
-public let kPCKContactIdKey                                       = "uuid"
+public let kPCKContactUUIDKey                                       = "uuid"
 public let kPCKContactObjectIdKey                                 = "objectId"
 public let kPCKContactGroupIdKey                                  = "groupIdentifier"
 public let kPCKContactTagsKey                                     = "tags"
@@ -103,20 +106,21 @@ public let kPCKContactEmailAddressesKey                           = "emailAddres
 public let kPCKContactAddressKey                                  = "address"
 public let kPCKContactNotesKey                                    = "notes"
 public let kPCKContactCarePlanKey                                 = "carePlan"
-public let kPCKContactCarePlanIdKey                               = "carePlanId"
+public let kPCKContactCarePlanUUIDKey                               = "carePlanUUID"
 public let kPCKContactPhoneNumbersKey                             = "phoneNumbers"
 public let kPCKContactMessagingNumbersKey                         = "messagingNumbers"
 public let kPCKContactOtherContactInfoKey                         = "otherContactInfo"
 public let kPCKContactLocallyCreatedAtKey                         = "locallyCreatedAt"
 public let kPCKContactLocallyUpdatedAtKey                         = "locallyUpdatedAt"
 public let kPCKContactClockKey                                    = "clock"
+public let kPCKContactEntityIdKey                                = "entityId"
 
 //#Mark -Outcome Class
-public let kPCKOutcomeClassKey                                 = "Outcome"
+public let kPCKOutcomeClassKey                                    = "Outcome"
 // Field keys
-public let kPCKOutcomeTaskKey                                  = "task"
-public let kPCKOutcomeTaskIDKey                                = "taskId"
-public let kPCKOutcomeEntityUUIDKey                                = "entityUUID"
+public let kPCKOutcomeTaskKey                                     = "task"
+public let kPCKOutcomeTaskUUIDKey                                = "taskUUID"
+public let kPCKOutcomeEntityIdKey                                = "entityId"
 public let kPCKOutcomeObjectIdKey                                 = "objectId"
 public let kPCKOutcomeUserUploadedToCloudKey                   = "userUploadedToCloud"
 public let kPCKOutcomeAssetKey                                 = "asset"
@@ -129,7 +133,7 @@ public let kPCKOutcomeTaskOccurrenceIndexKey                   = "taskOccurrence
 public let kPCKOutcomeTimezoneKey                              = "timezone"
 public let kPCKOutcomeSourceKey                                = "source"
 public let kPCKOutcomeValuesKey                                = "values"
-public let kPCKOutcomeIdKey                                       = "uuid"
+public let kPCKOutcomeUUIDKey                                       = "uuid"
 public let kPCKOutcomeClockKey                                    = "clock"
 
 //#Mark - OutcomeValue Class
@@ -205,16 +209,16 @@ public let kPCKContactUserInfoAuthorUserIDKey         = "authorId" //The id of t
 public let kPCKContactUserInfoRelatedUUIDKey          = "relatedId" //The id of the User if there is one.
 
 //Outcome Class
-public let kPCKOutcomeUserInfoIDKey                   = "uuid"
+public let kPCKOutcomeUserInfoEntityIdKey                   = "entityId"
 
 //OutcomeValue Class
-public let kPCKOutcomeValueUserInfoIDKey              = "uuid"
+public let kPCKOutcomeValueUserInfoEntityIdKey              = "entityId"
 
 //Schedule Element Class
-public let kPCKScheduleElementUserInfoIDKey           = "uuid"
+public let kPCKScheduleElementUserInfoEntityIdKey           = "entityId"
 
 //Note Class
-public let kPCKNoteUserInfoIDKey                                 = "uuid"
+public let kPCKNoteUserInfoEntityIdKey                                 = "entityId"
 
 
 //#Mark - Custom Enums

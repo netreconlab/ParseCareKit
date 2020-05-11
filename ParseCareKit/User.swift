@@ -15,7 +15,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
     @NSManaged public var birthday:Date?
-    @NSManaged public var entityUUID:String?
+    @NSManaged public var entityId:String
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
@@ -276,13 +276,17 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             completion(nil)
             return
         }
-        
-        self.uuid = patient.id
+        guard let uuid = patient.uuid?.uuidString else{
+            print("Error in \(parseClassName). Entity missing uuid: \(patient)")
+            completion(nil)
+            return
+        }
+        self.uuid = uuid
+        self.entityId = patient.id
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
         self.locallyUpdatedAt = patient.updatedDate
-        self.entityUUID = patient.uuid?.uuidString
         //Only copy this over if the Local Version is older than the Parse version
         if self.locallyCreatedAt == nil {
             self.locallyCreatedAt = patient.createdDate
@@ -304,7 +308,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     open func convertToCareKit()->OCKPatient?{
         
         let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        var patient = OCKPatient(id: self.uuid, name: nameComponents)
+        var patient = OCKPatient(id: self.entityId, name: nameComponents)
         
         patient.birthday = self.birthday
         patient.remoteID = self.objectId

@@ -66,8 +66,8 @@ open class ScheduleElement: PFObject, PFSubclassing {
         }
         
         /*
-        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoIDKey] {
-            self.uuid = id
+        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoEntityIdKey] {
+            self.entityId = id
         }
         self.groupIdentifier = scheduleElement.groupIdentifier
         self.tags = scheduleElement.tags
@@ -104,7 +104,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
             var noteIDs = [String]()
             notes.forEach{
                 //Ignore notes who don't have a ID
-                guard let noteID = $0.userInfo?[kPCKNoteUserInfoIDKey] else{
+                guard let noteID = $0.userInfo?[kPCKNoteUserInfoEntityIdKey] else{
                     return
                 }
                 
@@ -144,7 +144,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
                 return
         }
         
-        queryTarget.whereKey(kPCKOutcomeValueUserInfoIDKey, containedIn: self.targetValues)
+        queryTarget.whereKey(kPCKOutcomeValueUserInfoEntityIdKey, containedIn: self.targetValues)
         queryTarget.findObjectsInBackground{
             (objects, error) in
             
@@ -195,7 +195,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
                 }
             }*/
             /*
-            queryTarget.whereKey(kPCKOutcomeValueUserInfoIDKey, containedIn: self.elements)
+            queryTarget.whereKey(kPCKOutcomeValueUserInfoEntityIdKey, containedIn: self.elements)
             queryTarget.findObjectsInBackground{
                 (elementObjects, error) in
                 

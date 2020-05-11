@@ -15,7 +15,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
     @NSManaged public var careKitId:String //maps to id
-    @NSManaged public var entityUUID:String?
+    @NSManaged public var entityId:String
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
@@ -44,13 +44,12 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = User.current(),
-            let store = store as? OCKStore,
-            let entityUUID = self.entityUUID else{
+            let store = store as? OCKStore else{
             return
         }
         
         var careKitQuery = OCKOutcomeQuery()
-        careKitQuery.ids = [entityUUID]
+        careKitQuery.ids = [entityId]
         //careKitQuery.tags = [self.uuid]
         careKitQuery.sortDescriptors = [.date(ascending: false)]
         store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
@@ -60,7 +59,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 guard let remoteID = outcome.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
-                    query.whereKey(kPCKOutcomeEntityUUIDKey, equalTo: entityUUID)
+                    query.whereKey(kPCKOutcomeEntityIdKey, equalTo: self.entityId)
                     //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
                     query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
                     query.findObjectsInBackground{
@@ -189,15 +188,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = User.current(),
-            let entityUUID = self.entityUUID else{
+        guard let _ = User.current() else{
             completion(false,nil)
             return
         }
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeEntityUUIDKey, equalTo: entityUUID)
+        query.whereKey(kPCKOutcomeEntityIdKey, equalTo: entityId)
         //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
         query.findObjectsInBackground{
             (objects, error) in
@@ -247,15 +245,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
-        guard let _ = User.current(),
-            let entityUUID = self.entityUUID else{
+        guard let _ = User.current() else{
             completion(false,nil)
             return
         }
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeEntityUUIDKey, equalTo: entityUUID)
+        query.whereKey(kPCKOutcomeEntityIdKey, equalTo: entityId)
         //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
         query.findObjectsInBackground(){
@@ -293,7 +290,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         var replacedValues = [OutcomeValue]()
         var uuids = [String]()
         careKitValues.forEach{
-            guard let uuid = $0.userInfo?[kPCKOutcomeValueUserInfoIDKey],
+            guard let uuid = $0.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
                 let remoteId = $0.remoteID else{
                 return
             }
@@ -314,8 +311,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let entityUUID = self.entityUUID else {
+        guard let store = store as? OCKStore else {
             completion(false,nil)
             return
         }
@@ -330,7 +326,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 print("Successfully saved \(self) in Cloud.")
                 
                 var careKitQuery = OCKOutcomeQuery()
-                careKitQuery.ids = [entityUUID]
+                careKitQuery.ids = [self.entityId]
                 //careKitQuery.tags = [self.uuid]
                 store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
@@ -388,7 +384,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                 
                                 var changedOutcomeValue = false
                                 for (index,value) in mutableOutcome.values.enumerated(){
-                                    guard let id = value.userInfo?[kPCKOutcomeValueUserInfoIDKey],
+                                    guard let id = value.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
                                         id == fetchedOutcomeValue.uuid else{
                                         continue
                                     }
@@ -431,8 +427,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                 switch result{
                                 case .success(let foundOutcomes):
                                     let matchingOutcomes = foundOutcomes.filter{
-                                        guard let foundUuid = $0.userInfo?[kPCKOutcomeUserInfoIDKey] else{return false}
-                                        if foundUuid == self.uuid{
+                                        guard let foundEntityId = $0.userInfo?[kPCKOutcomeUserInfoEntityIdKey] else{return false}
+                                        if foundEntityId == self.entityId{
                                             return true
                                         }
                                         return false
@@ -448,7 +444,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                         return
                                     }
                                     //Fix tag
-                                    outcomeToUse.tags = [self.uuid]
+                                    outcomeToUse.tags = [self.uuid,self.entityId]
                                     store.updateOutcome(outcomeToUse, callbackQueue: .global(qos: .background)){
                                         result in
                                         
@@ -486,8 +482,12 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             completion(nil)
             return
         }
-
-        //self.careKitId = outcome.id
+        
+        guard let uuid = getUUIDFromCareKit(outcome) else {
+            completion(nil)
+            return
+        }
+        self.uuid = uuid
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
         self.tags = outcome.tags
@@ -495,13 +495,12 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.asset = outcome.asset
         self.timezone = outcome.timezone.abbreviation()!
         self.locallyUpdatedAt = outcome.updatedDate
-        self.entityUUID = outcome.id
-        guard let id = outcome.userInfo?[kPCKOutcomeUserInfoIDKey] else{
-            print("Error in \(self.parseClassName).copyCareKit, missing \(kPCKOutcomeUserInfoIDKey) in outcome.userInfo ")
+        
+        guard let id = outcome.userInfo?[kPCKOutcomeUserInfoEntityIdKey] else{
+            print("Error in \(self.parseClassName).copyCareKit, missing \(kPCKOutcomeUserInfoEntityIdKey) in outcome.userInfo ")
             return
         }
-        self.uuid = id
-        
+        self.entityId = id
         
         //Only copy this over if the Local Version is older than the Parse version
         if self.locallyCreatedAt == nil {
@@ -537,7 +536,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         guard let taskRemoteID = task.remoteID else{
                             
                             let taskQuery = Task.query()!
-                            taskQuery.whereKey(kPCKCarePlanIDKey, equalTo: task.id)
+                            taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
                             taskQuery.findObjectsInBackground(){
                                 (objects, error) in
                                 
@@ -571,7 +570,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         outcome.groupIdentifier = self.groupIdentifier
         outcome.tags = self.tags
         outcome.source = self.source
-        outcome.userInfo = [kPCKOutcomeUserInfoIDKey: self.uuid] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
+        outcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: self.entityId] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
         
         outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
         outcome.groupIdentifier = self.groupIdentifier
@@ -587,9 +586,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     func createDeserializedEntity()->OCKOutcome?{
         guard let task = self.task,
             let taskID = UUID(uuidString: task.uuid),
-            let uuidForEntity = self.entityUUID,
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate  else{
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
             
@@ -605,7 +604,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(uuidForEntity)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKOutcome!
@@ -616,6 +615,34 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             return nil
         }
         return entity
+    }
+    
+    func getUUIDFromCareKit(_ entity: OCKOutcome)->String?{
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(entity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        let initialSplit = jsonString.split(separator: ",")
+        let uuids = initialSplit.compactMap{ splitString -> String? in
+            if splitString.contains("uuid"){
+                let secondSplit = splitString.split(separator: ":")
+                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
+            }else{
+                return nil
+            }
+        }
+        
+        if uuids.count == 0 {
+            print("Error in \(parseClassName).getUUIDFromCareKit(). The UUID is missing in \(jsonString!) for entity \(entity)")
+            return nil
+        }else if uuids.count > 1 {
+            print("Warning in \(parseClassName).getUUIDFromCareKit(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
+        }
+        return uuids.first
     }
     
     open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
