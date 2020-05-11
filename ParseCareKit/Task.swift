@@ -480,6 +480,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         task.impactsAdherence = self.impactsAdherence
         task.groupIdentifier = self.groupIdentifier
         task.asset = self.asset
+        
         if let timeZone = TimeZone(abbreviation: self.timezone){
             task.timezone = timeZone
         }
@@ -495,7 +496,9 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     func createDeserializedEntity()->OCKTask?{
-        guard let uuidForEntity = self.entityUUID else{
+        guard let uuidForEntity = self.entityUUID,
+            let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
             return nil
         }
         
@@ -512,7 +515,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(uuidForEntity)\""
+        let insertValue = "\"uuid\":\"\(uuidForEntity)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKTask!

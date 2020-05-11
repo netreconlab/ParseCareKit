@@ -581,7 +581,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     func createDeserializedEntity()->OCKOutcome?{
         guard let task = self.task,
             let taskID = UUID(uuidString: task.uuid),
-            let uuidForEntity = self.entityUUID else{
+            let uuidForEntity = self.entityUUID,
+            let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate  else{
             return nil
         }
             
@@ -597,7 +599,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(uuidForEntity)\""
+        let insertValue = "\"uuid\":\"\(uuidForEntity)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKOutcome!
