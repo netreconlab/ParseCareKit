@@ -305,7 +305,13 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    open func convertToCareKit()->OCKPatient?{
+    open func convertToCareKit(_ attemptingToLogin:Bool=false)->OCKPatient?{
+        
+        if attemptingToLogin{
+            let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
+            return OCKPatient(id: self.entityId, name: nameComponents)
+        }
+        
         guard var patient = createDeserializedEntity() else{return nil}
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
