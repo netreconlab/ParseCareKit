@@ -45,6 +45,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         guard let _ = User.current(),
             let store = store as? OCKStore else{
+            completion(false,nil)
             return
         }
         
@@ -91,6 +92,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }
             case .failure(let error):
                 print("Error in \(self.parseClassName).updateCloud(). \(error)")
+                completion(false,error)
             }
         }
     }
@@ -183,6 +185,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     completion(false,error)
                 }
             }
+        }else{
+            completion(true,nil)
         }
     }
     
@@ -405,10 +409,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                         switch result{
                                         case .success(let updatedContact):
                                             print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
-                                            completion(true,nil)
                                         case .failure(let error):
                                             print("Error updating remoteID. \(error)")
-                                            completion(false,nil)
                                         }
                                     }
                                 }
@@ -451,6 +453,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                         switch result{
                                         case .success(let foundOutcome):
                                             print("Fixed tag for \(foundOutcome)")
+                                            completion(true,nil)
                                         case .failure(let error):
                                             print("Error fixing tag on \(outcomeToUse). \(error)")
                                             completion(false,error)

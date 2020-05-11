@@ -80,6 +80,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 query.findObjectsInBackground{
                     (objects, error) in
                     guard let foundObject = objects?.first as? Task else{
+                        completion(false,error)
                         return
                     }
                     self.compareUpdate(task, parse: foundObject, store: store, completion: completion)
@@ -95,6 +96,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
+            completion(false,nil)
             return
         }
     
@@ -115,6 +117,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }else if cloudUpdatedAt > careKitLastUpdated {
             //The cloud version is newer than local, update the local version instead
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                completion(false,nil)
                 return
             }
             store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -124,15 +127,20 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                     
                 case .success(_):
                     print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                case .failure(_):
+                    completion(true,nil)
+                case .failure(let error):
                     print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    completion(false,error)
                 }
             }
+        }else{
+            completion(true,nil)
         }
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current() else{
+            completion(false,nil)
             return
         }
         
@@ -202,7 +210,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             guard let foundObjects = objects else{
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {return}
+                    let reason = errorDictionary["routine"] as? String else {
+                    completion(false,nil)
+                    return
+                }
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
@@ -227,7 +238,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else{return}
+        guard let store = store as? OCKStore else{
+            completion(false,nil)
+            return
+        }
         self.saveInBackground{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
@@ -252,8 +266,8 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                         }else{
                             if mutableEntity.remoteID! != self.objectId{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
-                                completion(false,error)
                             }
+                            completion(false,error)
                         }
                     case .failure(let error):
                         print("Error in Contact.addToCloud(). \(error)")

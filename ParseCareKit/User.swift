@@ -305,9 +305,9 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    open func convertToCareKit(attemptingToLogin:Bool=false)->OCKPatient?{
+    open func convertToCareKit(firstTimeLoggingIn: Bool=false)->OCKPatient?{
         
-        if attemptingToLogin{
+        if firstTimeLoggingIn{
             let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
             return OCKPatient(id: self.entityId, name: nameComponents)
         }
