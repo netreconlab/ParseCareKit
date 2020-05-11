@@ -68,6 +68,7 @@ The mapping from CareKit -> Parse tables/classes are as follows:
 * OCKOutcomeValue <-> OutcomeValue
 * OCKScheduleElement <-> ScheduleElement
 * OCKNote <-> Note
+* OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
 
 To create a Parse object from a CareKit object:
 
@@ -134,7 +135,7 @@ newParsePatient.signUpInBackground{
         signedInPatient.uuid = UUID().uuidString
         signedInPatient.tags = [signedInPatient.uuid]
         
-        guard let careKitPatient = signedInPatient.convertToCareKit() else{
+        guard let careKitPatient = signedInPatient.convertToCareKit(firstTimeLoggingIn: true) else{
           print("Error converting to CareKit object")
           return
         }
@@ -170,20 +171,20 @@ class AppUser: User{
         
         super.copyCareKit(patientAny, storeManager: storeManager){
             _ in
-            self.primaryCondition = patient.userInfo?[kPCKPatientUserInfoPrimaryConditionKey]
-            self.comorbidities = patient.userInfo?[kPCKPatientUserInfoComorbiditiesKey]
+            self.primaryCondition = patient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
+            self.comorbidities = patient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
             completion(self)
         }
     }
     
-    override func convertToCareKit() -> OCKPatient? {
-        var partiallyConvertedUser = super.convertToCareKit()
+    override func convertToCareKit(firstTimeLoggingIn: Bool=false) -> OCKPatient? {
+        var partiallyConvertedUser = super.convertToCareKit(firstTimeLoggingIn: firstTimeLoggingIn)
         var userInfo = [String:String]()
         if let primaryCondition = self.primaryCondition{
-            userInfo[kPCKPatientUserInfoPrimaryConditionKey] = primaryCondition
+            userInfo["CustomPatientUserInfoPrimaryConditionKey"] = primaryCondition
         }
         if let comorbidities = self.comorbidities{
-            userInfo[kPCKPatientUserInfoComorbiditiesKey] = comorbidities
+            userInfo["CustomPatientUserInfoComorbiditiesKey"] = comorbidities
         }
         partiallyConvertedUser?.userInfo = userInfo
         return partiallyConvertedUser
