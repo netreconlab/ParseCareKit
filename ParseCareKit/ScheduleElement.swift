@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKit
+import CareKitStore
 
 open class ScheduleElement: PFObject, PFSubclassing {
 
@@ -40,25 +40,25 @@ open class ScheduleElement: PFObject, PFSubclassing {
         return kAScheduleElementClassKey
     }
     
-    public convenience init(careKitEntity:OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(ScheduleElement?) -> Void) {
+    public convenience init(careKitEntity:OCKScheduleElement, store: OCKAnyStoreProtocol, completion: @escaping(ScheduleElement?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, storeManager: storeManager, completion: completion)
+        self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    func copyCareKit(_ scheduleElement: OCKScheduleElement, storeManager: OCKSynchronizedStoreManager, completion: @escaping(ScheduleElement)->Void){
+    func copyCareKit(_ scheduleElement: OCKScheduleElement, store: OCKAnyStoreProtocol, completion: @escaping(ScheduleElement)->Void){
         
         self.text = scheduleElement.text
         self.interval = CareKitInterval.era.convertToDictionary(scheduleElement.interval)
         self.start = scheduleElement.start
         self.end = scheduleElement.end
         
-        OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, storeManager: storeManager){
+        OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, store: store){
             returnedValues in
             
             self.targetValues = returnedValues
             completion(self)
             /*
-            ScheduleElement.convertCareKitArrayToParse(scheduleElement.elements, storeManager: storeManager){ returnedElements in
+            ScheduleElement.convertCareKitArrayToParse(scheduleElement.elements, store: store){ returnedElements in
                 self.elements = returnedElements
                 completion(self)
             }*/
@@ -66,8 +66,8 @@ open class ScheduleElement: PFObject, PFSubclassing {
         }
         
         /*
-        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoIDKey] {
-            self.uuid = id
+        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoEntityIdKey] {
+            self.entityId = id
         }
         self.groupIdentifier = scheduleElement.groupIdentifier
         self.tags = scheduleElement.tags
@@ -86,11 +86,11 @@ open class ScheduleElement: PFObject, PFSubclassing {
             }
         }
         
-        Note.convertCareKitArrayToParse(scheduleElement.notes, storeManager: storeManager){
+        Note.convertCareKitArrayToParse(scheduleElement.notes, store: store){
             copiedNotes in
             self.notes = copiedNotes
             
-            OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, storeManager: storeManager){
+            OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, store: store){
                 returnedValues in
                 
                 self.targetValues = returnedValues
@@ -104,7 +104,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
             var noteIDs = [String]()
             notes.forEach{
                 //Ignore notes who don't have a ID
-                guard let noteID = $0.userInfo?[kPCKNoteUserInfoIDKey] else{
+                guard let noteID = $0.userInfo?[kPCKNoteUserInfoEntityIdKey] else{
                     return
                 }
                 
@@ -144,7 +144,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
                 return
         }
         
-        queryTarget.whereKey(kPCKOutcomeValueUserInfoIDKey, containedIn: self.targetValues)
+        queryTarget.whereKey(kPCKOutcomeValueUserInfoEntityIdKey, containedIn: self.targetValues)
         queryTarget.findObjectsInBackground{
             (objects, error) in
             
@@ -195,7 +195,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
                 }
             }*/
             /*
-            queryTarget.whereKey(kPCKOutcomeValueUserInfoIDKey, containedIn: self.elements)
+            queryTarget.whereKey(kPCKOutcomeValueUserInfoEntityIdKey, containedIn: self.elements)
             queryTarget.findObjectsInBackground{
                 (elementObjects, error) in
                 
@@ -225,7 +225,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
         
     }
     
-    class func convertCareKitArrayToParse(_ values: [OCKScheduleElement], storeManager: OCKSynchronizedStoreManager, completion: @escaping([ScheduleElement]) -> Void){
+    class func convertCareKitArrayToParse(_ values: [OCKScheduleElement], store: OCKAnyStoreProtocol, completion: @escaping([ScheduleElement]) -> Void){
         
         var returnValues = [ScheduleElement]()
         
@@ -236,13 +236,13 @@ open class ScheduleElement: PFObject, PFSubclassing {
         
         for (index,value) in values.enumerated(){
     
-            let _ = ScheduleElement(careKitEntity: value, storeManager: storeManager){
+            let _ = ScheduleElement(careKitEntity: value, store: store){
                 newElement in
                 
-                guard let newScheduleElement = newElement as? ScheduleElement else{
+                guard let newScheduleElement = newElement else{
                     return
                 }
-                newScheduleElement.copyCareKit(value, storeManager: storeManager){
+                newScheduleElement.copyCareKit(value, store: store){
                     (valueCopied) in
                 
                     returnValues.append(valueCopied)

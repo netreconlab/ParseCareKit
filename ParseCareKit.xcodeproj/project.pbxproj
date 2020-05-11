@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9119D5F0245618D7001B7AA3 /* ParseCareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9119D5EE245618D7001B7AA3 /* ParseCareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9119D5F724561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F624561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift */; };
+		9119D5F724561A00001B7AA3 /* ParseSynchronizedStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F624561A00001B7AA3 /* ParseSynchronizedStoreManager.swift */; };
 		9119D60124561A28001B7AA3 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F824561A28001B7AA3 /* Contact.swift */; };
 		9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F924561A28001B7AA3 /* ScheduleElement.swift */; };
 		9119D60324561A28001B7AA3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FA24561A28001B7AA3 /* Task.swift */; };
@@ -22,6 +22,8 @@
 		9119D61F24562933001B7AA3 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; };
 		9119D62024562933001B7AA3 /* Pods_ParseCareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9119D69A245689DA001B7AA3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9119D699245689D9001B7AA3 /* README.md */; };
+		916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */; };
+		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,7 +47,7 @@
 		9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParseCareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9119D5EE245618D7001B7AA3 /* ParseCareKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseCareKit.h; sourceTree = "<group>"; };
 		9119D5EF245618D7001B7AA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9119D5F624561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseSynchronizedCareKitStoreManager.swift; sourceTree = "<group>"; };
+		9119D5F624561A00001B7AA3 /* ParseSynchronizedStoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseSynchronizedStoreManager.swift; sourceTree = "<group>"; };
 		9119D5F824561A28001B7AA3 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9119D5F924561A28001B7AA3 /* ScheduleElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleElement.swift; sourceTree = "<group>"; };
 		9119D5FA24561A28001B7AA3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -57,6 +59,8 @@
 		9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitConstants.swift; sourceTree = "<group>"; };
 		9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitUtility.swift; sourceTree = "<group>"; };
 		9119D699245689D9001B7AA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemoteSynchronizationManager.swift; sourceTree = "<group>"; };
+		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +108,8 @@
 			children = (
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
-				9119D5F624561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift */,
+				9119D5F624561A00001B7AA3 /* ParseSynchronizedStoreManager.swift */,
+				916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */,
 				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
 				9119D5F824561A28001B7AA3 /* Contact.swift */,
 				9119D5FD24561A28001B7AA3 /* Note.swift */,
@@ -112,6 +117,7 @@
 				9119D60024561A28001B7AA3 /* OutcomeValue.swift */,
 				9119D5F924561A28001B7AA3 /* ScheduleElement.swift */,
 				9119D5FA24561A28001B7AA3 /* Task.swift */,
+				91AA07222466F0CD00B39452 /* KnowledgeVector.swift */,
 				9119D5FB24561A28001B7AA3 /* User.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D5EF245618D7001B7AA3 /* Info.plist */,
@@ -246,9 +252,11 @@
 				9119D60624561A28001B7AA3 /* Note.swift in Sources */,
 				9119D60924561A28001B7AA3 /* OutcomeValue.swift in Sources */,
 				9119D60124561A28001B7AA3 /* Contact.swift in Sources */,
+				91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */,
 				9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */,
 				9119D60424561A28001B7AA3 /* User.swift in Sources */,
-				9119D5F724561A00001B7AA3 /* ParseSynchronizedCareKitStoreManager.swift in Sources */,
+				9119D5F724561A00001B7AA3 /* ParseSynchronizedStoreManager.swift in Sources */,
+				916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */,
 				9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
