@@ -23,8 +23,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public var automaticallySynchronizes: Bool
     public weak var store:OCKStore!
-    var currentlyPulling = false
-    var currentlyPushing = false
     
     public override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
@@ -33,16 +31,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
-        guard let user = User.current()/*,
-            currentlyPulling == false,
-            currentlyPushing == false*/ else{
-            //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-            //mergeRevision(revision, completion)
+        guard let user = User.current() else{
             completion(nil)
             return
         }
         
-        currentlyPulling = true
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
         query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
@@ -51,9 +44,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             guard let foundVector = object as? KnowledgeVector,
                 let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
                 let data = foundVector.vector.data(using: .utf8) else{
-                //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                //mergeRevision(revision, completion)
-                self.currentlyPulling = false
                 completion(nil)
                 return
             }
@@ -64,21 +54,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 let error = error
                 print("Error in ParseRemoteSynchronizationManager.pullRevisions(). Couldn't decode vector \(data). Error: \(error)")
                 cloudVector = nil
-                self.currentlyPulling = false
                 completion(nil)
-                /*let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                mergeRevision(revision){
-                    _ in
-                    completion(error)
-                }*/
                 return
             }
-            /*
-            let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-            mergeRevision(revision){
-                _ in
-                completion(error)
-            }*/
+            
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: cloudVectorUUID)
             Task.pullRevisions(localClock, cloudVector: cloudVector){
@@ -86,7 +65,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 mergeRevision(taskRevision){
                     error in
                     if error != nil {
-                        self.currentlyPulling = false
                         completion(error!)
                         return
                     }
@@ -97,7 +75,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             if error != nil {
                                 completion(error!)
                             }
-                            self.currentlyPulling = false
                             completion(nil)
                             return
                         }
@@ -110,12 +87,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public func pushRevisions(deviceRevision: OCKRevisionRecord, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
         
         guard let user = User.current(),
-            deviceRevision.entities.count > 0/*,
-            currentlyPushing == false*/ else{
+            deviceRevision.entities.count > 0 else{
             completion(nil)
             return
         }
-        currentlyPushing = true
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
         query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
@@ -132,7 +107,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 }else{
                     print("Error in ParseRemoteSynchronizationManager.pushRevisions(). Couldn't get KnowledgeVector correctly from Cloud")
                     foundVector=nil
-                    self.currentlyPushing = false
                     completion(nil)
                     return
                 }
@@ -140,7 +114,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             
             guard let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
                 let data = foundVector.vector.data(using: .utf8) else{
-                self.currentlyPushing = false
                 completion(nil)
                 return
             }
@@ -150,7 +123,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }catch{
                 print("Error in ParseRemoteSynchronizationManager.pushRevisions(). Couldn't decode vector \(data)")
                 cloudVector = nil
-                self.currentlyPushing = false
                 completion(nil)
                 return
             }
@@ -208,7 +180,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     func completedRevisions(_ parseKnowledgeVector: KnowledgeVector, cloudKnowledgeVector: OCKRevisionRecord.KnowledgeVector, localKnowledgeVector: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
         
         guard let cloudVectorUUID = UUID(uuidString: parseKnowledgeVector.uuid) else{
-            self.currentlyPushing = false
             completion(nil)
             return
         }
@@ -224,7 +195,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             parseKnowledgeVector.vector = cloudVectorString
             parseKnowledgeVector.saveInBackground{
                 (success,error) in
-                self.currentlyPushing = false
                 if !success{
                     print("Error in ParseRemoteSynchronizationManager.completedRevisions(). \(String(describing: error))")
                     completion(error)
@@ -233,7 +203,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(nil)
             }
         }catch{
-            self.currentlyPushing = false
             completion(error)
         }
     }
