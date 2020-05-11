@@ -327,7 +327,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     self.author = User(withoutDataWithObjectId: authorRemoteId)
                     
                     //Search for patient
-                    if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientIDKey]{
+                    if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey]{
                         self.patientId = patientIdToSearchFor
                         var patientQuery = OCKPatientQuery()
                         patientQuery.ids = [patientIdToSearchFor]
@@ -364,10 +364,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit()->OCKCarePlan?{
         
-        guard let authorID = self.author?.uuid,
-            let authorUUID = UUID(uuidString: authorID) else {return nil}
-        
-        var carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
+        guard var carePlan = createDeserializedEntity() else{return nil}
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
         carePlan.source = self.source
@@ -377,52 +374,46 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
         
         if let patientUsingCarePlan = self.patient?.objectId{
-            carePlan.userInfo?[kPCKCarePlanUserInfoPatientIDKey] = patientUsingCarePlan
+            carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey] = patientUsingCarePlan
         }
         
         if let timeZone = TimeZone(abbreviation: self.timezone){
             carePlan.timezone = timeZone
         }
         return carePlan
-        /*
-        var query = OCKPatientQuery()
-        query.ids = [authorID]
-        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let authors):
-                //Should only be one patient returned
-                guard let careKitAuthor = authors.first else{
-                    completion(nil)
-                    return
-                }
-                
-                var carePlan = OCKCarePlan(id: self.uuid, title: self.title, patientUUID: careKitAuthor.uuid)
-                carePlan.groupIdentifier = self.groupIdentifier
-                carePlan.tags = self.tags
-                carePlan.source = self.source
-                carePlan.groupIdentifier = self.groupIdentifier
-                carePlan.asset = self.asset
-                carePlan.remoteID = self.objectId
-                carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
-                
-                if let patientUsingCarePlan = self.patient?.objectId{
-                    carePlan.userInfo?[kPCKCarePlanUserInfoPatientIDKey] = patientUsingCarePlan
-                }
-                
-                if let timeZone = TimeZone(abbreviation: self.timezone){
-                    carePlan.timezone = timeZone
-                }
-                
-                completion(carePlan)
-                    
-            case .failure(_):
-                completion(nil)
-            }
-            return
+    }
+    
+    open func createDeserializedEntity()->OCKCarePlan?{
+        guard let authorID = self.author?.uuid,
+            let authorUUID = UUID(uuidString: authorID),
+            let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+            return nil
+        }
             
-        }*/
+        let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(tempEntity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
         
+        //Create bare CareKit entity from json
+        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
+            let data = modifiedJson.data(using: .utf8) else{return nil}
+        let entity:OCKCarePlan!
+        do {
+            entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            return nil
+        }
+        return entity
     }
     
     open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){

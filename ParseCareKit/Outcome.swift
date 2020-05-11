@@ -611,13 +611,13 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         do {
             entity = try JSONDecoder().decode(OCKOutcome.self, from: data)
         }catch{
-            print("Error in \(parseClassName).convertToCareKit(). \(error)")
+            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
             return nil
         }
         return entity
     }
     
-    func getUUIDFromCareKit(_ entity: OCKOutcome)->String?{
+    open func getUUIDFromCareKit(_ entity: OCKOutcome)->String?{
         let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(entity)

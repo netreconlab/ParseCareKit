@@ -499,7 +499,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return task
     }
     
-    func createDeserializedEntity()->OCKTask?{
+    open func createDeserializedEntity()->OCKTask?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
@@ -526,7 +526,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         do {
             entity = try JSONDecoder().decode(OCKTask.self, from: data)
         }catch{
-            print("Error in \(parseClassName).convertToCareKit(). \(error)")
+            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
             return nil
         }
         

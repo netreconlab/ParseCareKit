@@ -501,9 +501,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKContact?{
-        let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        var contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
         
+        guard var contact = createDeserializedEntity() else{return nil}
         contact.role = self.role
         contact.title = self.title
         
@@ -581,6 +580,38 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         contact.carePlanUUID = carePlanUUID
         return contact
+    }
+    
+    open func createDeserializedEntity()->OCKContact?{
+        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+            return nil
+        }
+            
+        let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
+        let tempEntity = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(tempEntity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        
+        //Create bare CareKit entity from json
+        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
+            let data = modifiedJson.data(using: .utf8) else{return nil}
+        let entity:OCKContact!
+        do {
+            entity = try JSONDecoder().decode(OCKContact.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            return nil
+        }
+        return entity
     }
     
     open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){

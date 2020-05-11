@@ -202,7 +202,7 @@ public let kPCKNoteIdKey                                       = "uuid"
 
 //#Mark - CareKit UserInfo Database Keys
 //CarePlan Class
-public let kPCKCarePlanUserInfoPatientIDKey           = "patientId"
+public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientId"
 
 //Contact Element Class
 public let kPCKContactUserInfoAuthorUserIDKey         = "authorId" //The id of the User if there is one.

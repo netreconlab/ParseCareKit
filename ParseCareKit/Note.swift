@@ -41,6 +41,11 @@ open class Note: PFObject, PFSubclassing {
     
     open func copyCareKit(_ note: OCKNote, store: OCKAnyStoreProtocol, completion: @escaping(Note?) -> Void){
         
+        guard let uuid = getUUIDFromCareKit(note) else {
+            completion(nil)
+            return
+        }
+        
         //Every note should be created with an ID
         guard let authorUUID = note.author else{
             completion(nil)
@@ -61,7 +66,7 @@ open class Note: PFObject, PFSubclassing {
                 self.author = User()
                 self.author.copyCareKit(patient, store: store){
                     _ in
-                    
+                    self.uuid = uuid
                     self.entityId = id
                     self.groupIdentifier = note.groupIdentifier
                     self.tags = note.tags
@@ -124,9 +129,9 @@ open class Note: PFObject, PFSubclassing {
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKNote{
+    open func convertToCareKit()->OCKNote?{
         
-        var note = OCKNote(author: self.author.entityId, title: self.title, content: self.content)
+        guard var note = createDeserializedEntity() else{return nil}
         note.asset = self.asset
         note.groupIdentifier = self.groupIdentifier
         note.tags = self.tags
@@ -182,6 +187,65 @@ open class Note: PFObject, PFSubclassing {
                 }
             }
         }*/
+    }
+    
+    open func createDeserializedEntity()->OCKNote?{
+        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+            return nil
+        }
+            
+        let tempEntity = OCKNote(author: self.author.entityId, title: self.title, content: self.content)
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(tempEntity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        
+        //Create bare CareKit entity from json
+        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
+            let data = modifiedJson.data(using: .utf8) else{return nil}
+        let entity:OCKNote!
+        do {
+            entity = try JSONDecoder().decode(OCKNote.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            return nil
+        }
+        return entity
+    }
+    
+    open func getUUIDFromCareKit(_ entity: OCKNote)->String?{
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(entity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        let initialSplit = jsonString.split(separator: ",")
+        let uuids = initialSplit.compactMap{ splitString -> String? in
+            if splitString.contains("uuid"){
+                let secondSplit = splitString.split(separator: ":")
+                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
+            }else{
+                return nil
+            }
+        }
+        
+        if uuids.count == 0 {
+            print("Error in \(parseClassName).getUUIDFromCareKit(). The UUID is missing in \(jsonString!) for entity \(entity)")
+            return nil
+        }else if uuids.count > 1 {
+            print("Warning in \(parseClassName).getUUIDFromCareKit(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
+        }
+        return uuids.first
     }
     
     open class func convertCareKitArrayToParse(_ notes: [OCKNote]?, store: OCKAnyStoreProtocol, completion: @escaping([Note]?) -> Void){

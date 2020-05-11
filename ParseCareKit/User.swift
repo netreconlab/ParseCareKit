@@ -306,10 +306,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     }
     
     open func convertToCareKit()->OCKPatient?{
-        
-        let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        var patient = OCKPatient(id: self.entityId, name: nameComponents)
-        
+        guard var patient = createDeserializedEntity() else{return nil}
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
         patient.allergies = self.alergies
@@ -325,6 +322,38 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             patient.sex = OCKBiologicalSex(rawValue: sex)
         }
         return patient
+    }
+    
+    open func createDeserializedEntity()->OCKPatient?{
+        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+            return nil
+        }
+        
+        let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
+        let tempEntity = OCKPatient(id: self.entityId, name: nameComponents)
+        let jsonString:String!
+        do{
+            let jsonData = try JSONEncoder().encode(tempEntity)
+            jsonString = String(data: jsonData, encoding: .utf8)!
+        }catch{
+            print("Error \(error)")
+            return nil
+        }
+        
+        //Create bare CareKit entity from json
+        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
+            let data = modifiedJson.data(using: .utf8) else{return nil}
+        let entity:OCKPatient!
+        do {
+            entity = try JSONDecoder().decode(OCKPatient.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            return nil
+        }
+        return entity
     }
     
     open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
