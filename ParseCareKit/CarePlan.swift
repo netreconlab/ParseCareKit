@@ -199,6 +199,10 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    if !usingKnowledgeVector{
+                        self.clock = 0
+                    }
                     self.saveAndCheckRemoteID(store,completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
@@ -211,8 +215,11 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead
                 self.updateCloud(store, completion: completion)
-                
             }else{
+                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                if !usingKnowledgeVector{
+                    self.clock = 0
+                }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
         }
