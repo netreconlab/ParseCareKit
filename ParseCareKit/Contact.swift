@@ -299,7 +299,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.asset = contact.asset
         self.timezone = contact.timezone.abbreviation()!
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(contact.name)
-        
+        self.entityUUID = contact.uuid?.uuidString
         self.locallyUpdatedAt = contact.updatedDate
         
         //Only copy this over if the Local Version is older than the Parse version

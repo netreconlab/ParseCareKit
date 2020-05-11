@@ -282,7 +282,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
         self.locallyUpdatedAt = patient.updatedDate
-        
+        self.entityUUID = patient.uuid?.uuidString
         //Only copy this over if the Local Version is older than the Parse version
         if self.locallyCreatedAt == nil {
             self.locallyCreatedAt = patient.createdDate

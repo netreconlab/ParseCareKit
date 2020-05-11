@@ -283,7 +283,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.source = task.source
         self.asset = task.asset
         self.timezone = task.timezone.abbreviation()!
-    
+        self.entityUUID = task.uuid?.uuidString
         self.locallyUpdatedAt = task.updatedDate
         
         //Only copy this over if the Local Version is older than the Parse version
@@ -500,7 +500,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule.dailyAtTime(hour: 8, minutes: 0, start: Date(), end: nil, text: nil)//OCKSchedule(composing: careKitScheduleElements)
+        let schedule = OCKSchedule(composing: careKitScheduleElements)
         let tempEntity = OCKTask(id: self.uuid, title: self.title, carePlanUUID: nil, schedule: schedule)
         let jsonString:String!
         do{
@@ -515,15 +515,15 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         let insertValue = "\"uuid\":\"\(uuidForEntity)\""
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
-        let task:OCKTask!
+        let entity:OCKTask!
         do {
-            task = try JSONDecoder().decode(OCKTask.self, from: data)
+            entity = try JSONDecoder().decode(OCKTask.self, from: data)
         }catch{
             print("Error in \(parseClassName).convertToCareKit(). \(error)")
             return nil
         }
         
-        return task
+        return entity
     }
     
     open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
