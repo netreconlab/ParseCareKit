@@ -44,12 +44,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = User.current(),
-            let store = store as? OCKStore else{
+            let store = store as? OCKStore,
+            let entityUUID = self.entityUUID else{
             return
         }
         
         var careKitQuery = OCKOutcomeQuery()
-        careKitQuery.tags = [self.uuid]
+        careKitQuery.ids = [entityUUID]
+        //careKitQuery.tags = [self.uuid]
         careKitQuery.sortDescriptors = [.date(ascending: false)]
         store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
@@ -58,20 +60,18 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 guard let remoteID = outcome.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
-                    query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
+                    query.whereKey(kPCKOutcomeEntityUUIDKey, equalTo: entityUUID)
+                    //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
                     query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
-                        
                         guard let foundObject = objects?.first as? Outcome else{
                             completion(false,nil)
                             return
                         }
                         var mutableOutcome = outcome
                         mutableOutcome.remoteID = foundObject.objectId
-                        
                         self.compareUpdate(mutableOutcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
-                        
                     }
                     return
                 }
@@ -189,14 +189,16 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let entityUUID = self.entityUUID else{
             completion(false,nil)
             return
         }
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKOutcomeEntityUUIDKey, equalTo: entityUUID)
+        //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Outcome else{
@@ -245,14 +247,16 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let entityUUID = self.entityUUID else{
             completion(false,nil)
             return
         }
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKOutcomeEntityUUIDKey, equalTo: entityUUID)
+        //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
@@ -310,7 +314,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else {
+        guard let store = store as? OCKStore,
+            let entityUUID = self.entityUUID else {
             completion(false,nil)
             return
         }
@@ -325,7 +330,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 print("Successfully saved \(self) in Cloud.")
                 
                 var careKitQuery = OCKOutcomeQuery()
-                careKitQuery.tags = [self.uuid]
+                careKitQuery.ids = [entityUUID]
+                //careKitQuery.tags = [self.uuid]
                 store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{

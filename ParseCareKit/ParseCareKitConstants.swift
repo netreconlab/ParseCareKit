@@ -116,7 +116,7 @@ public let kPCKOutcomeClassKey                                 = "Outcome"
 // Field keys
 public let kPCKOutcomeTaskKey                                  = "task"
 public let kPCKOutcomeTaskIDKey                                = "taskId"
-public let kPCKOutcomeCareKitIdKey                                = "careKitId"
+public let kPCKOutcomeEntityUUIDKey                                = "entityUUID"
 public let kPCKOutcomeObjectIdKey                                 = "objectId"
 public let kPCKOutcomeUserUploadedToCloudKey                   = "userUploadedToCloud"
 public let kPCKOutcomeAssetKey                                 = "asset"
