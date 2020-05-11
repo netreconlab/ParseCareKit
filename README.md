@@ -50,9 +50,20 @@ Assuming you are already familiar with [CareKit](https://github.com/carekit-appl
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
+/*Use wall clock and OCKSynchronizedStoreManager to keep data synced. 
+This should only be used if there's 1 device per patient or
+if all of a patients devices are on the same clock or else they may get out-of-sync*/
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk)
 let dataStoreManager = OCKSynchronizedStoreManager(wrapping: dataStore)
 let cloudStoreManager = ParseSynchronizedStoreManager(dataStoreManager)
+
+/*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
+This works with 1 or many devices per patient. Currently this only syncs OCKTask and OCKOutcome*/
+let remoteStoreManager = ParseRemoteSynchronizationManager()
+let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
+remoteStoreManager.store = dataStore
+remoteStoreManager.delegate = self
+remoteStoreManager.automaticallySynchronizes = true
 ```
 
 During initialization of `ParseSynchronizedStoreManager`, all CareKit data that has `remoteID == nil` will automatically be synced to your parse-server, once synced, the `remoteID` for each entity will be replaced by the corresponding `objectId` on your parse-server.
