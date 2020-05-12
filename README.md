@@ -47,7 +47,7 @@ For details on how to setup parse-server, follow the directions [here](https://g
 ### Protecting Patients data in the Cloud using ACL's
 You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following in your AppDelegate:
 
-```
+```swift
 PFUser.enableRevocableSessionInBackground() //Allow sessions to be revovked from the cloud
 
 //Set default ACL for all Classes

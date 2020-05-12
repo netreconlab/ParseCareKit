@@ -18,9 +18,13 @@ public protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
     static func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void)
 }
 
+public protocol ParseRemoteSynchronizationDelegate{
+    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
+}
+
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
     public var delegate: OCKRemoteSynchronizationDelegate?
-    
+    public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate?
     public var automaticallySynchronizes: Bool
     public weak var store:OCKStore!
     
@@ -208,7 +212,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     }
     
     public func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
-        let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
-        completion(conflictPolicy)
+        if parseRemoteDelegate != nil{
+            parseRemoteDelegate!.chooseConflictResolutionPolicy(conflict, completion: completion)
+        }else{
+            let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
+            completion(conflictPolicy)
+        }
     }
 }
