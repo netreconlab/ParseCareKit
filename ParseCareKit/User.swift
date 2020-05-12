@@ -35,7 +35,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=true, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
@@ -58,7 +58,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                             completion(false,error)
                             return
                         }
-                        self.compareUpdate(patient, parse: foundObject, store: store, completion: completion)
+                        self.compareUpdate(patient, parse: foundObject, store: store, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
                     }
                     return
                 }
@@ -73,7 +73,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(patient, parse: foundObject, store: store, completion: completion)
+                    self.compareUpdate(patient, parse: foundObject, store: store, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
                 }
             case .failure(let error):
                 print("Error in Contact.addToCloud(). \(error)")
@@ -82,7 +82,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    func compareUpdate(_ careKit: OCKPatient, parse: User, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKPatient, parse: User, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             parse.copyCareKit(careKit, store: store){
@@ -102,7 +102,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             }
             return
         }
-        if cloudUpdatedAt < careKitLastUpdated{
+        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector && overwriteRemote)){
             parse.copyCareKit(careKit, store: store){
                 _ in
                 //An update may occur when Internet isn't available, try to update at some point
@@ -119,7 +119,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 
             }
             
-        }else if cloudUpdatedAt > careKitLastUpdated{
+        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote){
             //The cloud version is newer than local, update the local version instead
             guard let updatedPatientFromCloud = parse.convertToCareKit() else{
                 return
@@ -135,6 +135,8 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                     print("Error updating Patient \(updatedPatientFromCloud) from the Cloud to CareStore")
                 }
             }
+        }else{
+            completion(true,nil)
         }
     }
     
@@ -189,7 +191,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=true, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current() else{
             return
         }

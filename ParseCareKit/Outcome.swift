@@ -41,7 +41,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=true, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = User.current(),
             let store = store as? OCKStore else{
@@ -71,7 +71,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         }
                         var mutableOutcome = outcome
                         mutableOutcome.remoteID = foundObject.objectId
-                        self.compareUpdate(mutableOutcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
+                        self.compareUpdate(mutableOutcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
                     return
                 }
@@ -87,7 +87,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         return
                     }
                     
-                    self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
+                    self.compareUpdate(outcome, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     
                 }
             case .failure(let error):
@@ -143,14 +143,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         //}
     }
     
-    func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             completion(false,nil)
             return
         }
         
-        if ((cloudUpdatedAt < careKitLastUpdated) || usingKnowledgeVector){
+        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector && overwriteRemote)){
             deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
             parse.copyCareKit(careKit, store: store){_ in
                 //An update may occur when Internet isn't available, try to update at some point
@@ -166,7 +166,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }
             }
             
-        }else if cloudUpdatedAt > careKitLastUpdated {
+        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                 completion(false,nil)
                 return
@@ -247,7 +247,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=true, completion: @escaping(Bool,Error?) -> Void){
             
         guard let _ = User.current() else{
             completion(false,nil)
@@ -284,7 +284,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead of added
-                self.updateCloud(store, completion: completion)
+                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }else{
                 //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                 if !usingKnowledgeVector{
@@ -689,7 +689,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 guard let parse = copied as? Outcome else{return}
                 parse.clock = cloudClock //Stamp Entity
                 //if careKit.deletedDate == nil{
-                    parse.addToCloud(store, usingKnowledgeVector: true){
+                    parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in
                         if success{
                             completion(nil)
