@@ -226,34 +226,30 @@ open class ScheduleElement: PFObject, PFSubclassing {
     }
     
     class func convertCareKitArrayToParse(_ values: [OCKScheduleElement], store: OCKAnyStoreProtocol, completion: @escaping([ScheduleElement]) -> Void){
-        
         var returnValues = [ScheduleElement]()
-        
         if values.isEmpty{
             completion(returnValues)
             return
         }
-        
-        for (index,value) in values.enumerated(){
-    
-            let _ = ScheduleElement(careKitEntity: value, store: store){
+        var numberOfCopiedElements = 0
+        values.forEach{
+            let _ = ScheduleElement(careKitEntity: $0, store: store){
                 newElement in
-                
+                numberOfCopiedElements += 1
                 guard let newScheduleElement = newElement else{
                     return
                 }
-                newScheduleElement.copyCareKit(value, store: store){
-                    (valueCopied) in
-                
-                    returnValues.append(valueCopied)
-                    
+                let careKitElements = newScheduleElement.elements.compactMap{$0.convertToCareKit()}
+                ScheduleElement.convertCareKitArrayToParse(careKitElements, store: store){
+                    moreElements in
+                    newScheduleElement.elements = moreElements
+                    returnValues.append(newScheduleElement)
                     //copyCareKit is async, so we need it to tell us when it's finished
-                    if index == (values.count-1){
+                    if numberOfCopiedElements == (values.count){
                         completion(returnValues)
                     }
                 }
             }
-            
         }
     }
 }

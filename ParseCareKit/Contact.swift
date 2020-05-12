@@ -53,7 +53,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
@@ -77,7 +77,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             completion(false,error)
                             return
                         }
-                        self.compareUpdate(contact, parse: foundObject, store: store, completion: completion)
+                        self.compareUpdate(contact, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
                     return
                 }
@@ -94,7 +94,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(contact, parse: foundObject, store: store, completion: completion)
+                    self.compareUpdate(contact, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                 }
             case .failure(let error):
                 print("Error adding contact to cloud \(error)")
@@ -103,13 +103,13 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    func compareUpdate(_ careKit: OCKContact, parse: Contact, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKContact, parse: Contact, store: OCKAnyStoreProtocol, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             completion(false,nil)
             return
         }
-        if cloudUpdatedAt < careKitLastUpdated{
+        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
             parse.copyCareKit(careKit, store: store){_ in
                 //An update may occur when Internet isn't available, try to update at some point
                 parse.saveAndCheckRemoteID(store){
@@ -124,7 +124,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }
             }
             
-        }else if cloudUpdatedAt > careKitLastUpdated {
+        }else if ((cloudUpdatedAt > careKitLastUpdated) || overwriteRemote) {
             //The cloud version is newer than local, update the local version instead
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                 completion(false,nil)
@@ -141,6 +141,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     completion(false,error)
                 }
             }
+        }else{
+            completion(true,nil)
         }
     }
     
@@ -196,7 +198,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         //Check to see if already in the cloud
         let query = Contact.query()!
@@ -212,6 +214,10 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    if !usingKnowledgeVector{
+                        self.clock = 0
+                    }
                     self.saveAndCheckRemoteID(store, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
@@ -223,9 +229,12 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             //If object already in the Cloud, exit
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead
-                self.updateCloud(store, completion: completion)
-                
+                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }else{
+                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                if !usingKnowledgeVector{
+                    self.clock = 0
+                }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
         }
@@ -356,14 +365,14 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
-        guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorUserIDKey] else{
+        guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorUserEntityIdKey] else{
             return
         }
         var query = OCKPatientQuery(for: Date())
         query.ids = [authorID]
         
         var patientRelatedID:String? = nil
-        if let relatedID = contact.userInfo?[kPCKContactUserInfoRelatedUUIDKey] {
+        if let relatedID = contact.userInfo?[kPCKContactUserInfoRelatedEntityIdKey] {
             patientRelatedID = relatedID
             query.ids.append(relatedID)
         }
@@ -387,7 +396,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     }
                 }else{
                     let userQuery = User.query()!
-                    userQuery.whereKey(kPCKUserIdKey, equalTo: theAuthor.id)
+                    userQuery.whereKey(kPCKUserEntityIdKey, equalTo: theAuthor.id)
                     userQuery.findObjectsInBackground(){
                         (objects, error) in
                         
@@ -429,7 +438,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         guard let relatedRemoteId = patient.remoteID else{
             
             let query = User.query()!
-            query.whereKey(kPCKUserIdKey, equalTo: patient.id)
+            query.whereKey(kPCKUserEntityIdKey, equalTo: patient.id)
             query.findObjectsInBackground(){
                 (objects,error) in
                 
@@ -515,11 +524,11 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         contact.source = self.source
         
         var convertedUserInfo = [
-            kPCKContactUserInfoAuthorUserIDKey: self.author.uuid
+            kPCKContactUserInfoAuthorUserEntityIdKey: self.author.entityId
         ]
         
         if let relatedUser = self.user {
-            convertedUserInfo[kPCKContactUserInfoRelatedUUIDKey] = relatedUser.uuid
+            convertedUserInfo[kPCKContactUserInfoRelatedEntityIdKey] = relatedUser.entityId
         }
         
         contact.userInfo = convertedUserInfo

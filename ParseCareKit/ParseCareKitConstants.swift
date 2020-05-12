@@ -21,7 +21,7 @@ public let kPCKUserClassKey                                 = User.parseClassNam
 
 // Field keys
 public let kPCKUserObjectIdKey                                    = "objectId"
-public let kPCKUserIdKey                                          = "uuid"
+public let kPCKUserUUIDKey                                          = "uuid"
 public let kPCKUserPostedAtKey                                    = "postedAt"
 public let kPCKUserCreatedAtKey                                   = "createdAt"
 public let kPCKUserUpdatedAtKey                                     = "updatedAt"
@@ -35,7 +35,7 @@ public let kPCKUserSourceKey                                   = "source"
 public let kPCKUserTagsKey                                     = "tags"
 public let kPCKUserTimezoneKey                                 = "timezone"
 public let kPCKUserClockKey                                    = "clock"
-public let kPCKUsereEntityIdKey                                = "entityId"
+public let kPCKUserEntityIdKey                                = "entityId"
 
 
 //#Mark - CarePlan Class
@@ -143,7 +143,8 @@ public let kPCKOutcomeValueObjectIdKey                         = "objectId"
 public let kPCKOutcomeValueCreatedAtKey                           = "createdAt"
 public let kPCKOutcomeValueUpdatedAtKey                           = "updatedAt"
 public let kPCKOutcomeValuePostedAtKey                            = "postedAt"
-public let kPCKOutcomeValueIdKey                                  = "uuid"
+public let kPCKOutcomeValueEntityIdKey                                  = "entityId"
+public let kPCKOutcomeValueUUIDKey                                  = "uuid"
 public let kPCKOutcomeValueIndexKey                               = "index"
 public let kPCKOutcomeValueGroupIdentifierKey                  = "groupIdentifier"
 public let kPCKOutcomeValueKindKey                             = "kind"
@@ -205,8 +206,8 @@ public let kPCKNoteIdKey                                       = "uuid"
 public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientId"
 
 //Contact Element Class
-public let kPCKContactUserInfoAuthorUserIDKey         = "authorId" //The id of the User if there is one.
-public let kPCKContactUserInfoRelatedUUIDKey          = "relatedId" //The id of the User if there is one.
+public let kPCKContactUserInfoAuthorUserEntityIdKey         = "authorId" //The id of the User if there is one.
+public let kPCKContactUserInfoRelatedEntityIdKey          = "relatedId" //The id of the User if there is one.
 
 //Outcome Class
 public let kPCKOutcomeUserInfoEntityIdKey                   = "entityId"

@@ -45,7 +45,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
@@ -68,7 +68,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                             completion(false,error)
                             return
                         }
-                        self.compareUpdate(task, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
+                        self.compareUpdate(task, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
                     return
                 }
@@ -83,7 +83,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(task, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
+                    self.compareUpdate(task, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                 }
             case .failure(let error):
                 print("Error in Contact.addToCloud(). \(error)")
@@ -93,28 +93,55 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
        
     }
     
-    func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             completion(false,nil)
             return
         }
     
-        if ((cloudUpdatedAt < careKitLastUpdated) || usingKnowledgeVector){
-            parse.copyCareKit(careKit, store: store){_ in
-                //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(store){
+        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
+            //Delete schedule elements, they will be replaced by new ones that are copied
+            var scheduleElementsDeleted = 0
+            let scheduleElementCount = parse.elements.count
+            parse.elements.forEach{
+                $0.deleteInBackground{
                     (success,error) in
-                    
-                    if !success{
-                        print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                    }else{
-                        print("Successfully updated Task \(self) in the Cloud")
+                    scheduleElementsDeleted += 1
+                    if scheduleElementsDeleted == scheduleElementCount{
+                        parse.copyCareKit(careKit, store: store){_ in
+                            //An update may occur when Internet isn't available, try to update at some point
+                            parse.saveAndCheckRemoteID(store){
+                                (success,error) in
+                                
+                                if !success{
+                                    print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                                }else{
+                                    print("Successfully updated Task \(self) in the Cloud")
+                                }
+                                completion(success,nil)
+                            }
+                        }
                     }
-                    completion(success,nil)
                 }
             }
-        }else if cloudUpdatedAt > careKitLastUpdated {
+            //This is bootleg, but the uuid was removed for schedule elements
+            if scheduleElementCount == 0{
+                parse.copyCareKit(careKit, store: store){_ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                        }else{
+                            print("Successfully updated Task \(self) in the Cloud")
+                        }
+                        completion(success,nil)
+                    }
+                }
+            }
+        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
             //The cloud version is newer than local, update the local version instead
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                 completion(false,nil)
@@ -147,6 +174,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         //Get latest item from the Cloud to compare against
         let query = Task.query()!
         query.whereKey(kPCKTaskEntityIdKey, equalTo: self.entityId)
+        query.includeKeys([kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.getFirstObjectInBackground(){
             (objects, error) in
             guard let foundObject = objects as? Task else{
@@ -165,6 +193,12 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector){
+            parse.elements.forEach{
+                $0.deleteInBackground()
+            }
+            parse.notes?.forEach{
+                $0.deleteInBackground()
+            }
             parse.deleteInBackground{
                 (success, error) in
                 if !success{
@@ -195,7 +229,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current()else{
             completion(false,nil)
             return
@@ -218,6 +252,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    if !usingKnowledgeVector{
+                        self.clock = 0
+                    }
                     self.saveAndCheckRemoteID(store, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
@@ -229,9 +267,13 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             
             //If object already in the Cloud, exit
             if foundObjects.count > 0{
-                //Maybe this needs to be updated instead
-                self.updateCloud(store, completion: completion)
+                //Maybe this needs to be updated of instead
+                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }else{
+                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                if !usingKnowledgeVector{
+                    self.clock = 0
+                }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
         }
@@ -584,7 +626,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 guard let parse = copied as? Task else{return}
                 parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
-                    parse.addToCloud(store, usingKnowledgeVector: true){
+                    parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in
                         if success{
                             completion(nil)

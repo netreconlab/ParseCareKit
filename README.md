@@ -44,6 +44,21 @@ Follow the [guide](https://docs.parseplatform.org/ios/guide/) for directions on 
 ## Setup Parse Server
 For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default. 
 
+### Protecting Patients data in the Cloud using ACL's
+You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following in your AppDelegate:
+
+```swift
+PFUser.enableRevocableSessionInBackground() //Allow sessions to be revovked from the cloud
+
+//Set default ACL for all Classes
+let defaultACL = PFACL()
+defaultACL.hasPublicReadAccess = false
+defaultACL.hasPublicWriteAccess = false
+PFACL.setDefault(defaultACL, withAccessForCurrentUser:true)
+```
+
+When giving access to a CareTeam or other entities, special care should be taken when deciding the propper ACL or Role. Feel free to read more about [ACLs](https://docs.parseplatform.org/ios/guide/#security-for-user-objects) and [Role](https://docs.parseplatform.org/ios/guide/#roles) access in Parse.
+
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 

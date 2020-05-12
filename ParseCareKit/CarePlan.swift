@@ -43,7 +43,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
@@ -66,7 +66,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                             completion(false,nil)
                             return
                         }
-                        self.compareUpdate(carePlan, parse: foundObject, store: store, completion: completion)
+                        self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
                         
                     }
                     return
@@ -81,7 +81,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(carePlan, parse: foundObject, store: store, completion: completion)
+                    self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
                 }
             case .failure(let error):
                 print("Error in Contact.addToCloud(). \(error)")
@@ -90,12 +90,12 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         
     }
     
-    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = careKit.updatedDate,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
         }
-        if cloudUpdatedAt < careKitLastUpdated{
+        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
             parse.copyCareKit(careKit, store: store){_ in
                 
                 //An update may occur when Internet isn't available, try to update at some point
@@ -111,7 +111,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 }
             }
             
-        }else if cloudUpdatedAt > careKitLastUpdated {
+        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
             //The cloud version is newer than local, update the local version instead
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                 completion(false,nil)
@@ -128,6 +128,8 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     completion(false,error)
                 }
             }
+        }else{
+            completion(true,nil)
         }
     }
     
@@ -181,7 +183,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current() else{
             return
         }
@@ -199,6 +201,10 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    if !usingKnowledgeVector{
+                        self.clock = 0
+                    }
                     self.saveAndCheckRemoteID(store,completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
@@ -210,9 +216,12 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             //If object already in the Cloud, exit
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead
-                self.updateCloud(store, completion: completion)
-                
+                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }else{
+                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                if !usingKnowledgeVector{
+                    self.clock = 0
+                }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
         }
@@ -450,7 +459,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 guard let parse = copied as? CarePlan else{return}
                 parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
-                    parse.addToCloud(store, usingKnowledgeVector: true){
+                    parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in
                         if success{
                             completion(nil)
