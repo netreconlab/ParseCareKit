@@ -101,17 +101,44 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     
         if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
-            parse.copyCareKit(careKit, store: store){_ in
-                //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(store){
+            //Delete schedule elements, they will be replaced by new ones that are copied
+            var scheduleElementsDeleted = 0
+            let scheduleElementCount = parse.elements.count
+            parse.elements.forEach{
+                $0.deleteInBackground{
                     (success,error) in
-                    
-                    if !success{
-                        print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                    }else{
-                        print("Successfully updated Task \(self) in the Cloud")
+                    scheduleElementsDeleted += 1
+                    if scheduleElementsDeleted == scheduleElementCount{
+                        parse.copyCareKit(careKit, store: store){_ in
+                            //An update may occur when Internet isn't available, try to update at some point
+                            parse.saveAndCheckRemoteID(store){
+                                (success,error) in
+                                
+                                if !success{
+                                    print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                                }else{
+                                    print("Successfully updated Task \(self) in the Cloud")
+                                }
+                                completion(success,nil)
+                            }
+                        }
                     }
-                    completion(success,nil)
+                }
+            }
+            //This is bootleg, but the uuid was removed for schedule elements
+            if scheduleElementCount == 0{
+                parse.copyCareKit(careKit, store: store){_ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                        }else{
+                            print("Successfully updated Task \(self) in the Cloud")
+                        }
+                        completion(success,nil)
+                    }
                 }
             }
         }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
