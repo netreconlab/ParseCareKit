@@ -35,7 +35,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         self.copyCareKit(careKitEntity, store: store, completion: completion)
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=true, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
@@ -102,7 +102,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             }
             return
         }
-        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector && overwriteRemote)){
+        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
             parse.copyCareKit(careKit, store: store){
                 _ in
                 //An update may occur when Internet isn't available, try to update at some point
@@ -191,7 +191,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=true, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current() else{
             return
         }
