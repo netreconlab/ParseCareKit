@@ -200,7 +200,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
         query.whereKey(kPCKOutcomeEntityIdKey, equalTo: entityId)
-        //query.whereKey(kPCKOutcomeIdKey, equalTo: self.uuid)
+        query.includeKeys([kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Outcome else{
@@ -219,6 +219,12 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         
         if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector) {
+            parse.values.forEach{
+                $0.deleteInBackground()
+            }
+            parse.notes?.forEach{
+                $0.deleteInBackground()
+            }
             parse.deleteInBackground{
                 (success, error) in
                 if !success{

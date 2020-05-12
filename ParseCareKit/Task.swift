@@ -147,6 +147,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         //Get latest item from the Cloud to compare against
         let query = Task.query()!
         query.whereKey(kPCKTaskEntityIdKey, equalTo: self.entityId)
+        query.includeKeys([kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.getFirstObjectInBackground(){
             (objects, error) in
             guard let foundObject = objects as? Task else{
@@ -165,6 +166,12 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector){
+            parse.elements.forEach{
+                $0.deleteInBackground()
+            }
+            parse.notes?.forEach{
+                $0.deleteInBackground()
+            }
             parse.deleteInBackground{
                 (success, error) in
                 if !success{
