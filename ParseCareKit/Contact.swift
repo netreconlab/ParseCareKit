@@ -365,14 +365,14 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
-        guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorUserIDKey] else{
+        guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorUserEntityIdKey] else{
             return
         }
         var query = OCKPatientQuery(for: Date())
         query.ids = [authorID]
         
         var patientRelatedID:String? = nil
-        if let relatedID = contact.userInfo?[kPCKContactUserInfoRelatedUUIDKey] {
+        if let relatedID = contact.userInfo?[kPCKContactUserInfoRelatedEntityIdKey] {
             patientRelatedID = relatedID
             query.ids.append(relatedID)
         }
@@ -396,7 +396,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     }
                 }else{
                     let userQuery = User.query()!
-                    userQuery.whereKey(kPCKUserIdKey, equalTo: theAuthor.id)
+                    userQuery.whereKey(kPCKUserEntityIdKey, equalTo: theAuthor.id)
                     userQuery.findObjectsInBackground(){
                         (objects, error) in
                         
@@ -438,7 +438,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         guard let relatedRemoteId = patient.remoteID else{
             
             let query = User.query()!
-            query.whereKey(kPCKUserIdKey, equalTo: patient.id)
+            query.whereKey(kPCKUserEntityIdKey, equalTo: patient.id)
             query.findObjectsInBackground(){
                 (objects,error) in
                 
@@ -524,11 +524,11 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         contact.source = self.source
         
         var convertedUserInfo = [
-            kPCKContactUserInfoAuthorUserIDKey: self.author.uuid
+            kPCKContactUserInfoAuthorUserEntityIdKey: self.author.entityId
         ]
         
         if let relatedUser = self.user {
-            convertedUserInfo[kPCKContactUserInfoRelatedUUIDKey] = relatedUser.uuid
+            convertedUserInfo[kPCKContactUserInfoRelatedEntityIdKey] = relatedUser.entityId
         }
         
         contact.userInfo = convertedUserInfo

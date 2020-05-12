@@ -42,7 +42,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             return
         }
         
-        store.fetchPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
+        store.fetchPatient(withID: self.entityId, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let patient):
@@ -50,7 +50,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                     
                     //Check to see if this entity is already in the Cloud, but not paired locally
                     let query = User.query()!
-                    query.whereKey(kPCKUserIdKey, equalTo: patient.id)
+                    query.whereKey(kPCKUserEntityIdKey, equalTo: patient.id)
                     query.findObjectsInBackground{
                         (objects, error) in
                         
@@ -147,7 +147,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         
         //Get latest item from the Cloud to compare against
         let query = User.query()!
-        query.whereKey(kPCKUserIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKUserEntityIdKey, equalTo: self.entityId)
         query.getFirstObjectInBackground(){
             (objects, error) in
             
@@ -198,7 +198,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
         //Check to see if already in the cloud
         let query = User.query()!
-        query.whereKey(kPCKUserIdKey, equalTo: self.uuid)
+        query.whereKey(kPCKUserEntityIdKey, equalTo: self.entityId)
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{
@@ -242,7 +242,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Only save data back to CarePlanStore if it's never been saved before
-                store.fetchPatient(withID: self.uuid, callbackQueue: .global(qos: .background)){
+                store.fetchPatient(withID: self.entityId, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(var mutableEntity):
