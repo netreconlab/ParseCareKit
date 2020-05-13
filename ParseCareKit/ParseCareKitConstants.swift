@@ -214,6 +214,7 @@ public let kPCKOutcomeUserInfoEntityIdKey                   = "entityId"
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoEntityIdKey              = "entityId"
+public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"
 
 //Schedule Element Class
 public let kPCKScheduleElementUserInfoEntityIdKey           = "entityId"

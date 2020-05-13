@@ -398,6 +398,23 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                     continue
                                 }
                                 
+                                //Be sure outcomeValue has relation to outcome in userInfo (this will save when needed)
+                                if mutableOutcome.values[index].userInfo![kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey] == nil{
+                                    mutableOutcome.values[index].userInfo![kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey] = self.entityId
+                                    needToUpdate = true
+                                }
+                                
+                                //Tag associatied outcome with this outcomevalue
+                                if let outcomeValueTags = mutableOutcome.values[index].tags{
+                                    if !outcomeValueTags.contains(self.entityId){
+                                        mutableOutcome.values[index].tags!.append(self.entityId)
+                                        needToUpdate = true
+                                    }
+                                }else{
+                                    mutableOutcome.values[index].tags = [self.entityId]
+                                    needToUpdate = true
+                                }
+                                
                                 if mutableOutcome.values[index].remoteID == nil{
                                     mutableOutcome.values[index].remoteID = $0.objectId
                                     needToUpdate = true
