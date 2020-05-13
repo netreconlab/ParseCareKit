@@ -25,6 +25,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
     @NSManaged public var units:String?
     @NSManaged public var value:[String: Any]
     @NSManaged public var uuid:String
+    @NSManaged public var clock:Int
     
     //UserInfo fields on CareStore
     @NSManaged public var entityId:String
@@ -241,28 +242,53 @@ open class OutcomeValue: PFObject, PFSubclassing {
         }
     }
     
-    func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
-        guard let careKitLastUpdated = careKit.updatedDate,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
+    func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
+        
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = careKit.updatedDate,
+                let cloudUpdatedAt = parse.locallyUpdatedAt else{
+                return (nil)
+            }
+            if cloudUpdatedAt < careKitLastUpdated{
+                parse.copyCareKit(careKit, store: store){copiedCareKit in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    copiedCareKit?.clock = newClockValue //Stamp this OutcomeValue
+                    copiedCareKit?.saveInBackground{(success, error) in
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                        }
+                    }
+                }
+            }else if cloudUpdatedAt > careKitLastUpdated{
+                //Item from cloud is newer, no change needed in the cloud
+                return (parse.convertToCareKit())
+            }
+            
+            return nil //Items are the same, no need to do anything
+        }else{
+            if ((self.clock > parse.clock) || overwriteRemote){
+                parse.copyCareKit(careKit, store: store){copiedCareKit in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    copiedCareKit?.clock = newClockValue //Stamp this OutcomeValue
+                    copiedCareKit?.saveInBackground{(success, error) in
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                        }
+                    }
+                }
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+            }
             return nil
         }
         
-        if cloudUpdatedAt < careKitLastUpdated{
-            parse.copyCareKit(careKit, store: store){copiedCareKit in
-                //An update may occur when Internet isn't available, try to update at some point
-                copiedCareKit?.saveInBackground{(success, error) in
-                    if !success{
-                        print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
-                    }else{
-                        print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
-                    }
-                }
-            }
-        }else if cloudUpdatedAt > careKitLastUpdated {
-            return parse.convertToCareKit()
-        }
         
-        return nil
+        
     }
 }
 

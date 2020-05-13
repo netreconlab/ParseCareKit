@@ -144,49 +144,71 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = careKit.updatedDate,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            completion(false,nil)
-            return
-        }
-        
-        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
-            deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
-            parse.copyCareKit(careKit, store: store){_ in
-                //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values){
-                    (success,error) in
-                    
-                    if !success{
-                        print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
-                    }else{
-                        print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
-                    }
-                    completion(success,error)
-                }
-            }
-            
-        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = careKit.updatedDate,
+                let cloudUpdatedAt = parse.locallyUpdatedAt else{
                 completion(false,nil)
                 return
             }
-                
-            store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                
-                switch result{
-                    
-                case .success(_):
-                    print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            if cloudUpdatedAt < careKitLastUpdated{
+                deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
+                parse.copyCareKit(careKit, store: store){_ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
                 }
+                
+            }else if cloudUpdatedAt > careKitLastUpdated {
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                    completion(false,nil)
+                    return
+                }
+                    
+                store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    
+                    switch result{
+                        
+                    case .success(_):
+                        print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
+                }
+            }else{
+                completion(true,nil)
             }
         }else{
-            completion(true,nil)
+            if ((self.clock > parse.clock) || overwriteRemote){
+                deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
+                parse.copyCareKit(careKit, store: store){_ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
+                }
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                completion(false,nil)
+            }
         }
     }
     
@@ -279,7 +301,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     if !usingKnowledgeVector{
                         self.clock = 0
                     }
-                    self.saveAndCheckRemoteID(store, completion: completion)
+                    self.saveAndCheckRemoteID(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -297,7 +319,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     self.clock = 0
                 }
                 //This is the first object, make sure to save it
-                self.saveAndCheckRemoteID(store, completion: completion)
+                self.saveAndCheckRemoteID(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }
             
         }
@@ -327,7 +349,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         return mutableReturnValues
     }
     
-    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, completion: @escaping(Bool,Error?) -> Void){
+    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore else {
             completion(false,nil)
             return
@@ -363,14 +385,33 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         
                         //UUIDs are custom, make sure to add them as a tag for querying
                         if let outcomeTags = mutableOutcome.tags{
-                            if !outcomeTags.contains(self.uuid){
-                                mutableOutcome.tags!.append(self.uuid)
+                            if !outcomeTags.contains(self.entityId){
+                                mutableOutcome.tags!.append(self.entityId)
                                 needToUpdate = true
                             }
                         }else{
-                            mutableOutcome.tags = [self.uuid]
+                            mutableOutcome.tags = [self.entityId]
                             needToUpdate = true
                         }
+                        
+                        self.values.forEach{
+                            for (index,value) in mutableOutcome.values.enumerated(){
+                                guard let id = value.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
+                                    id == $0.uuid else{
+                                    continue
+                                }
+                                
+                                if mutableOutcome.values[index].remoteID == nil{
+                                    mutableOutcome.values[index].remoteID = $0.objectId
+                                    needToUpdate = true
+                                }
+                                
+                                guard let updatedValue = $0.compareUpdate(mutableOutcome.values[index], parse: $0, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, newClockValue: self.clock, store: store) else {continue}
+                                mutableOutcome.values[index] = updatedValue
+                                needToUpdate = true
+                            }
+                        }
+                        
                         if needToUpdate{
                             store.updateOutcome(mutableOutcome){
                                 result in
@@ -385,49 +426,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             }
                         }else{
                             completion(true,nil)
-                        }
-                        
-                        //These get handled and saved seperatly
-                        self.values.forEach{
-                            $0.fetchIfNeededInBackground(){
-                                (object,error) in
-                                
-                                guard let fetchedOutcomeValue = object as? OutcomeValue else{
-                                    if error != nil{
-                                        print("Error/Warning in Outcome.saveAndCheckRemoteID(). Couldn't fetch OutcomeValue. \(error!)")
-                                    }
-                                    return
-                                }
-                                
-                                var changedOutcomeValue = false
-                                for (index,value) in mutableOutcome.values.enumerated(){
-                                    guard let id = value.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
-                                        id == fetchedOutcomeValue.uuid else{
-                                        continue
-                                    }
-                                    
-                                    if mutableOutcome.values[index].remoteID == nil{
-                                        mutableOutcome.values[index].remoteID = fetchedOutcomeValue.objectId
-                                        changedOutcomeValue = true
-                                    }
-                                    
-                                    guard let updatedValue = fetchedOutcomeValue.compareUpdate(mutableOutcome.values[index], parse: fetchedOutcomeValue, store: store) else {continue}
-                                    mutableOutcome.values[index] = updatedValue
-                                    changedOutcomeValue = true
-                                }
-                                
-                                if changedOutcomeValue{
-                                    store.updateOutcome(mutableOutcome){
-                                        result in
-                                        switch result{
-                                        case .success(let updatedContact):
-                                            print("Updated remoteID of \(self.parseClassName): \(updatedContact)")
-                                        case .failure(let error):
-                                            print("Error updating remoteID. \(error)")
-                                        }
-                                    }
-                                }
-                            }
                         }
                     case .failure(let error):
                         print("Error in \(self.parseClassName).saveAndCheckRemoteID(). \(error)")

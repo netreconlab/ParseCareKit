@@ -94,75 +94,126 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = careKit.updatedDate,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            completion(false,nil)
-            return
-        }
-    
-        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
-            //Delete schedule elements, they will be replaced by new ones that are copied
-            var scheduleElementsDeleted = 0
-            let scheduleElementCount = parse.elements.count
-            parse.elements.forEach{
-                $0.deleteInBackground{
-                    (success,error) in
-                    scheduleElementsDeleted += 1
-                    if scheduleElementsDeleted == scheduleElementCount{
-                        parse.copyCareKit(careKit, store: store){_ in
-                            //An update may occur when Internet isn't available, try to update at some point
-                            parse.saveAndCheckRemoteID(store){
-                                (success,error) in
-                                
-                                if !success{
-                                    print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                                }else{
-                                    print("Successfully updated Task \(self) in the Cloud")
+        
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = careKit.updatedDate,
+                let cloudUpdatedAt = parse.locallyUpdatedAt else{
+                completion(false,nil)
+                return
+            }
+            if cloudUpdatedAt < careKitLastUpdated{
+                //Delete schedule elements, they will be replaced by new ones that are copied
+                var scheduleElementsDeleted = 0
+                let scheduleElementCount = parse.elements.count
+                parse.elements.forEach{
+                    $0.deleteInBackground{
+                        (success,error) in
+                        scheduleElementsDeleted += 1
+                        if scheduleElementsDeleted == scheduleElementCount{
+                            parse.copyCareKit(careKit, store: store){_ in
+                                //An update may occur when Internet isn't available, try to update at some point
+                                parse.saveAndCheckRemoteID(store){
+                                    (success,error) in
+                                    
+                                    if !success{
+                                        print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                                    }else{
+                                        print("Successfully updated Task \(self) in the Cloud")
+                                    }
+                                    completion(success,nil)
                                 }
-                                completion(success,nil)
                             }
                         }
                     }
                 }
-            }
-            //This is bootleg, but the uuid was removed for schedule elements
-            if scheduleElementCount == 0{
-                parse.copyCareKit(careKit, store: store){_ in
-                    //An update may occur when Internet isn't available, try to update at some point
-                    parse.saveAndCheckRemoteID(store){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                        }else{
-                            print("Successfully updated Task \(self) in the Cloud")
+                //This is bootleg, but the uuid was removed for schedule elements
+                if scheduleElementCount == 0{
+                    parse.copyCareKit(careKit, store: store){_ in
+                        //An update may occur when Internet isn't available, try to update at some point
+                        parse.saveAndCheckRemoteID(store){
+                            (success,error) in
+                            
+                            if !success{
+                                print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                            }else{
+                                print("Successfully updated Task \(self) in the Cloud")
+                            }
+                            completion(success,nil)
                         }
-                        completion(success,nil)
                     }
                 }
-            }
-        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
-            //The cloud version is newer than local, update the local version instead
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,nil)
-                return
-            }
-            store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                
-                switch result{
-                    
-                case .success(_):
-                    print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            }else if cloudUpdatedAt > careKitLastUpdated {
+                //The cloud version is newer than local, update the local version instead
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                    completion(false,nil)
+                    return
                 }
+                store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    
+                    switch result{
+                        
+                    case .success(_):
+                        print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
+                }
+            }else{
+                completion(true,nil)
             }
         }else{
-            completion(true,nil)
+            if ((self.clock > parse.clock) || overwriteRemote){
+               //Delete schedule elements, they will be replaced by new ones that are copied
+               var scheduleElementsDeleted = 0
+               let scheduleElementCount = parse.elements.count
+               parse.elements.forEach{
+                   $0.deleteInBackground{
+                       (success,error) in
+                       scheduleElementsDeleted += 1
+                       if scheduleElementsDeleted == scheduleElementCount{
+                           parse.copyCareKit(careKit, store: store){_ in
+                               //An update may occur when Internet isn't available, try to update at some point
+                               parse.saveAndCheckRemoteID(store){
+                                   (success,error) in
+                                   
+                                   if !success{
+                                       print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                                   }else{
+                                       print("Successfully updated Task \(self) in the Cloud")
+                                   }
+                                   completion(success,nil)
+                               }
+                           }
+                       }
+                   }
+               }
+               //This is bootleg, but the uuid was removed for schedule elements
+               if scheduleElementCount == 0{
+                   parse.copyCareKit(careKit, store: store){_ in
+                       //An update may occur when Internet isn't available, try to update at some point
+                       parse.saveAndCheckRemoteID(store){
+                           (success,error) in
+                           
+                           if !success{
+                               print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                           }else{
+                               print("Successfully updated Task \(self) in the Cloud")
+                           }
+                           completion(success,nil)
+                       }
+                   }
+               }
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                completion(false,nil)
+            }
         }
+        
+        
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
