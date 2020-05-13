@@ -383,7 +383,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             }
                         }
                         
-                        //UUIDs are custom, make sure to add them as a tag for querying
+                        //EntityIds are custom, make sure to add them as a tag for querying
                         if let outcomeTags = mutableOutcome.tags{
                             if !outcomeTags.contains(self.entityId){
                                 mutableOutcome.tags!.append(self.entityId)
@@ -397,7 +397,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         self.values.forEach{
                             for (index,value) in mutableOutcome.values.enumerated(){
                                 guard let id = value.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
-                                    id == $0.uuid else{
+                                    id == $0.entityId else{
                                     continue
                                 }
                                 
