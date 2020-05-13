@@ -118,29 +118,26 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func deleteOutcomeValueFromCloudIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue]){
-        /*fetchOutcomeValuesIfNeeded(parseValues){
-            finished in*/
-            var parseObjectIds = Set(parseValues.compactMap{$0.objectId})
-            let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
-            parseObjectIds.subtract(careKitRemoteIds)
-            
-            parseObjectIds.forEach{
-                let objectIdToDelete = $0
-                let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: objectIdToDelete)
-                outcomeValueToDelete.deleteInBackground{
-                    (success,error) in
-                    if success{
-                        print("Successfully deleted OutcomeValue from Cloud with objectId: \(objectIdToDelete)")
-                    }else{
-                        guard let error = error else{
-                            print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). Unknown error")
-                            return
-                        }
-                        print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). \(error)")
+        var parseObjectIds = Set(parseValues.compactMap{$0.objectId})
+        let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
+        parseObjectIds.subtract(careKitRemoteIds)
+        
+        parseObjectIds.forEach{
+            let objectIdToDelete = $0
+            let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: objectIdToDelete)
+            outcomeValueToDelete.deleteInBackground{
+                (success,error) in
+                if success{
+                    print("Successfully deleted OutcomeValue from Cloud with objectId: \(objectIdToDelete)")
+                }else{
+                    guard let error = error else{
+                        print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). Unknown error")
+                        return
                     }
+                    print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). \(error)")
                 }
             }
-        //}
+        }
     }
     
     func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
@@ -327,20 +324,20 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     func replaceOutcomeValuesWithReferences(_ parseValues: [OutcomeValue], careKitValues: [OCKOutcomeValue])->[OutcomeValue]{
         var replacedValues = [OutcomeValue]()
-        var uuids = [String]()
+        var entityIds = [String]()
         careKitValues.forEach{
-            guard let uuid = $0.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
+            guard let entityId = $0.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
                 let remoteId = $0.remoteID else{
                 return
             }
             replacedValues.append(OutcomeValue(withoutDataWithObjectId: remoteId))
-            uuids.append(uuid)
+            entityIds.append(entityId)
         }
         
         var mutableReturnValues = parseValues
-        for (index,uuid) in uuids.enumerated(){
+        for (index,entityId) in entityIds.enumerated(){
             for (returnIndex,value) in parseValues.enumerated(){
-                if uuid == value.uuid{
+                if entityId == value.entityId{
                     mutableReturnValues[returnIndex] = replacedValues[index]
                 }
             }
