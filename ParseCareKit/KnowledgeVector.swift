@@ -9,17 +9,17 @@
 import Parse
 import CareKitStore
 
-open class KnowledgeVector: PFObject, PFSubclassing {
+class KnowledgeVector: PFObject, PFSubclassing {
     //1 to 1 between Parse and CareStore
     @NSManaged public var user:User
     @NSManaged public var vector:String
     @NSManaged public var uuid:String
     
-    public static func parseClassName() -> String {
+    static func parseClassName() -> String {
         return kPCKKnowledgeVectorClassKey
     }
     
-    public convenience init(uuid:String) {
+    convenience init(uuid:String) {
         self.init()
         self.uuid = uuid
         self.vector = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
@@ -27,5 +27,62 @@ open class KnowledgeVector: PFObject, PFSubclassing {
             return
         }
         self.user = thisUser
+    }
+    
+    class func fetchFromCloud(user:User, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,UUID?)->Void){
+        
+        //Fetch KnowledgeVector from Cloud
+        let query = KnowledgeVector.query()!
+        query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
+        query.getFirstObjectInBackground{ (object,error) in
+            
+            guard let foundVector = object as? KnowledgeVector else{
+                if !createNewIfNeeded{
+                    completion(nil,nil,nil)
+                }else{
+                    //This is the first time the KnowledgeVector is being setup for this user
+                    let uuid = UUID()
+                    let newVector = KnowledgeVector(uuid: uuid.uuidString)
+                    newVector.decodeKnowledgeVector(){
+                        possiblyDecoded in
+                        completion(newVector,possiblyDecoded,uuid)
+                    }
+                }
+                return
+            }
+            foundVector.decodeKnowledgeVector(){
+                possiblyDecoded in
+                completion(foundVector,possiblyDecoded,UUID(uuidString: foundVector.uuid))
+            }
+        }
+    }
+    
+    func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
+        guard let data = self.vector.data(using: .utf8) else{
+            return
+        }
+        
+        let cloudVector:OCKRevisionRecord.KnowledgeVector?
+        do {
+            cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
+        }catch{
+            let error = error
+            print("Error in KnowledgeVector.decodeKnowledgeVector(). Couldn't decode vector \(data). Error: \(error)")
+            cloudVector = nil
+        }
+        completion(cloudVector)
+    }
+    
+    func encodeKnowledgeVector(_ knowledgeVector: OCKRevisionRecord.KnowledgeVector)->String?{
+        do{
+            let json = try JSONEncoder().encode(knowledgeVector)
+            let cloudVectorString = String(data: json, encoding: .utf8)!
+            self.vector = cloudVectorString
+            return self.vector
+        }catch{
+            let error = error
+            print("Error in KnowledgeVector.encodeKnowledgeVector(). Couldn't encode vector \(knowledgeVector). Error: \(error)")
+            return nil
+        }
     }
 }
