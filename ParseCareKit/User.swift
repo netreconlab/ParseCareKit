@@ -3,7 +3,7 @@
 //  ParseCareKit
 //
 //  Created by Corey Baker on 10/5/19.
-//  Copyright © 2019 NetReconLab. All rights reserved.
+//  Copyright © 2019 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Parse

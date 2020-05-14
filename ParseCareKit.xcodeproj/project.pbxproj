@@ -176,7 +176,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = "University of Kentucky";
+				ORGANIZATIONNAME = "Network Reconnaissance Lab";
 				TargetAttributes = {
 					9119D5EA245618D7001B7AA3 = {
 						CreatedOnToolsVersion = 11.4.1;

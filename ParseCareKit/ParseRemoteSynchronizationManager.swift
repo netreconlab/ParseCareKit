@@ -3,7 +3,7 @@
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/6/20.
-//  Copyright © 2020 University of Kentucky. All rights reserved.
+//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Foundation
