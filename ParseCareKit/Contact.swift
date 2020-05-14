@@ -533,7 +533,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKContact?{
         
-        guard var contact = createDeserializedEntity() else{return nil}
+        guard var contact = createDecodedEntity() else{return nil}
         contact.role = self.role
         contact.title = self.title
         
@@ -600,10 +600,10 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         return contact
     }
     
-    open func createDeserializedEntity()->OCKContact?{
+    open func createDecodedEntity()->OCKContact?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
             
@@ -619,14 +619,14 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKContact!
         do {
             entity = try JSONDecoder().decode(OCKContact.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
         return entity

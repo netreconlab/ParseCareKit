@@ -408,7 +408,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKTask?{
         
-        guard var task = createDeserializedEntity() else{return nil}
+        guard var task = createDecodedEntity() else{return nil}
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source
@@ -431,10 +431,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return task
     }
     
-    open func createDeserializedEntity()->OCKTask?{
+    open func createDecodedEntity()->OCKTask?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
         
@@ -458,7 +458,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         do {
             entity = try JSONDecoder().decode(OCKTask.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
         

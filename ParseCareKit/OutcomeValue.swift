@@ -50,7 +50,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
         }
         self.entityId = id
         self.userInfo = outcomeValue.userInfo
-        guard let uuid = getUUIDFromCareKit(outcomeValue) else{
+        guard let uuid = getUUIDFromCareKitEntity(outcomeValue) else{
             print("Error in \(parseClassName).copyCareKit(). doesn't contain a uuid")
             return nil
         }
@@ -108,7 +108,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
     
     open func convertToCareKit()->OCKOutcomeValue?{
         
-        guard var outcomeValue = createDeserializedEntity()else{return nil}
+        guard var outcomeValue = createDecodedEntity()else{return nil}
         //Can't set nil because of ObjC, make sure to guard against negative index when retreiving
         if self.index == -1 {
             outcomeValue.index = nil
@@ -125,10 +125,10 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return outcomeValue
     }
     
-    open func createDeserializedEntity()->OCKOutcomeValue?{
+    open func createDecodedEntity()->OCKOutcomeValue?{
         guard let underlyingType = OCKOutcomeValueType(rawValue: self.type), let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
             
@@ -178,13 +178,13 @@ open class OutcomeValue: PFObject, PFSubclassing {
         do {
             entity = try JSONDecoder().decode(OCKOutcomeValue.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
         return entity
     }
     
-    open func getUUIDFromCareKit(_ entity: OCKOutcomeValue)->String?{
+    open func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
         let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(entity)
@@ -204,10 +204,10 @@ open class OutcomeValue: PFObject, PFSubclassing {
         }
         
         if uuids.count == 0 {
-            print("Error in \(parseClassName).getUUIDFromCareKit(). The UUID is missing in \(jsonString!) for entity \(entity)")
+            print("Error in \(parseClassName).getUUIDFromCareKitEntity(). The UUID is missing in \(jsonString!) for entity \(entity)")
             return nil
         }else if uuids.count > 1 {
-            print("Warning in \(parseClassName).getUUIDFromCareKit(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
+            print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
         }
         return uuids.first
     }

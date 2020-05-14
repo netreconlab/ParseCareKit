@@ -331,7 +331,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             return OCKPatient(id: self.entityId, name: nameComponents)
         }
         
-        guard var patient = createDeserializedEntity() else{return nil}
+        guard var patient = createDecodedEntity() else{return nil}
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
         patient.allergies = self.alergies
@@ -350,10 +350,10 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         return patient
     }
     
-    open func createDeserializedEntity()->OCKPatient?{
+    open func createDecodedEntity()->OCKPatient?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
         
@@ -369,14 +369,14 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKPatient!
         do {
             entity = try JSONDecoder().decode(OCKPatient.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
         return entity

@@ -386,7 +386,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit()->OCKCarePlan?{
         
-        guard var carePlan = createDeserializedEntity() else{return nil}
+        guard var carePlan = createDecodedEntity() else{return nil}
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
         carePlan.source = self.source
@@ -401,12 +401,12 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         return carePlan
     }
     
-    open func createDeserializedEntity()->OCKCarePlan?{
+    open func createDecodedEntity()->OCKCarePlan?{
         guard let authorID = self.author?.uuid,
             let authorUUID = UUID(uuidString: authorID),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
             
@@ -421,14 +421,14 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.entityId)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKCarePlan!
         do {
             entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
         return entity
