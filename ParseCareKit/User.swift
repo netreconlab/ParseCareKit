@@ -325,13 +325,15 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     }
     
     open func convertToCareKit(firstTimeLoggingIn: Bool=false)->OCKPatient?{
-        
+        var patient:OCKPatient!
         if firstTimeLoggingIn{
             let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
-            return OCKPatient(id: self.entityId, name: nameComponents)
+            patient = OCKPatient(id: self.entityId, name: nameComponents)
+        }else{
+            guard let decodedPatient = createDecodedEntity() else{return nil}
+            patient = decodedPatient
         }
         
-        guard var patient = createDecodedEntity() else{return nil}
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
         patient.allergies = self.alergies
