@@ -418,6 +418,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                 if mutableOutcome.values[index].remoteID == nil{
                                     mutableOutcome.values[index].remoteID = $0.objectId
                                     needToUpdate = true
+                                }else if mutableOutcome.values[index].remoteID! != $0.objectId!{
+                                    mutableOutcome.values[index].remoteID = $0.objectId
+                                    needToUpdate = true
                                 }
                                 
                                 guard let updatedValue = $0.compareUpdate(mutableOutcome.values[index], parse: $0, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, newClockValue: self.clock, store: store) else {continue}
