@@ -374,7 +374,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             needToUpdate = true
                         }else{
                             if mutableOutcome.remoteID! != self.objectId!{
-                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal (self.objectId)")
+                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal \(self.objectId!)")
                                 completion(false,error)
                                 return
                             }
