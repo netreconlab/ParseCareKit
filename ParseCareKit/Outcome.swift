@@ -362,8 +362,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 print("Successfully saved \(self) in Cloud.")
                 
                 var careKitQuery = OCKOutcomeQuery()
-                careKitQuery.ids = [self.entityId]
-                //careKitQuery.tags = [self.uuid]
+                //careKitQuery.ids = [self.entityId] //Querying ids has a bug as noted here: https://github.com/carekit-apple/CareKit/issues/418#issuecomment-623724009
+                careKitQuery.tags = [self.entityId]
                 store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
