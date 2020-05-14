@@ -328,7 +328,7 @@ open class ParseSynchronizedStoreManager: NSObject{
         }
     }
     
-    public func patchAddUUIDsToOutcomes(){
+    public func patchAddEntityIdsToOutcomes(){
         guard let store = storeManager.store as? OCKStore else{return}
         let query = OCKOutcomeQuery()
         store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
@@ -340,21 +340,21 @@ open class ParseSynchronizedStoreManager: NSObject{
                     var outcomeUpdated = false
                     var mutableOutcome = $0
                     if mutableOutcome.userInfo == nil{
-                        let uuid = UUID.init().uuidString
-                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: uuid]
+                        let entityId = UUID.init().uuidString
+                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: entityId]
                         if mutableOutcome.tags == nil{
-                            mutableOutcome.tags = [uuid]
+                            mutableOutcome.tags = [entityId]
                         }else{
-                            mutableOutcome.tags!.append(uuid)
+                            mutableOutcome.tags!.append(entityId)
                         }
                         outcomeUpdated = true
                     }else if mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] == nil{
-                        let uuid = UUID.init().uuidString
-                        mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] = uuid
+                        let entityId = UUID.init().uuidString
+                        mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] = entityId
                         if mutableOutcome.tags == nil{
-                            mutableOutcome.tags = [uuid]
+                            mutableOutcome.tags = [entityId]
                         }else{
-                            mutableOutcome.tags!.append(uuid)
+                            mutableOutcome.tags!.append(entityId)
                         }
                         outcomeUpdated = true
                     }
@@ -362,22 +362,22 @@ open class ParseSynchronizedStoreManager: NSObject{
                     for (index,value) in mutableOutcome.values.enumerated(){
                         var mutableValue = value
                         if mutableValue.userInfo == nil{
-                            let uuid = UUID.init().uuidString
-                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoEntityIdKey: uuid]
+                            let entityId = UUID.init().uuidString
+                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoEntityIdKey: entityId]
                             if mutableValue.tags == nil{
-                                mutableValue.tags = [uuid]
+                                mutableValue.tags = [entityId]
                             }else{
-                                mutableValue.tags!.append(uuid)
+                                mutableValue.tags!.append(entityId)
                             }
                             mutableOutcome.values[index] = mutableValue
                             outcomeUpdated = true
                         }else if mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] == nil{
-                            let uuid = UUID.init().uuidString
-                            mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] = uuid
+                            let entityId = UUID.init().uuidString
+                            mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] = entityId
                             if mutableValue.tags == nil{
-                                mutableValue.tags = [uuid]
+                                mutableValue.tags = [entityId]
                             }else{
-                                mutableValue.tags!.append(uuid)
+                                mutableValue.tags!.append(entityId)
                             }
                             mutableOutcome.values[index] = mutableValue
                             outcomeUpdated = true
@@ -390,16 +390,16 @@ open class ParseSynchronizedStoreManager: NSObject{
                             switch results{
                                 
                             case .success(let outcome):
-                                print("ParseSynchronizedStoreManager.patchAddUUIDsToOutcomes() added UUID to \(outcome)")
+                                print("ParseSynchronizedStoreManager.patchAddEntityIdsToOutcomes() added UUID to \(outcome)")
                             case .failure(let error):
-                                print("Error saving updated outcome in ParseSynchronizedStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+                                print("Error saving updated outcome in ParseSynchronizedStoreManager.patchAddEntityIdsToOutcomes(). \(error)")
                             }
                         }
                     }
                     
                 }
             case .failure(let error):
-                print("Error fetching outcomes in ParseSynchronizedStoreManager.patchAddUUIDsToOutcomes(). \(error)")
+                print("Error fetching outcomes in ParseSynchronizedStoreManager.patchAddEntityIdsToOutcomes(). \(error)")
             }
         }
         

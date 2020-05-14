@@ -24,8 +24,6 @@ open class Note: PFObject, PFSubclassing {
     @NSManaged public var clock:Int
     @NSManaged public var userInfo:[String:String]?
     @NSManaged public var author:String?
-    //Not 1 to 1 UserInfo fields on CareStore
-    //@NSManaged public var entityId:String //Maps to userInfo?[kPCKNoteUserInfoEntityIdKey]
     
     //Not 1 to 1
     @NSManaged public var authorOfNote:User
