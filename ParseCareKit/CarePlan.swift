@@ -29,7 +29,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
     @NSManaged public var entityId:String
-    
+    @NSManaged public var userInfo:[String:String]?
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var patientId:String?
     @NSManaged public var clock:Int
@@ -40,7 +40,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, store: store, completion: completion)
+        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -91,46 +91,64 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = careKit.updatedDate,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            return
-        }
-        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
-            parse.copyCareKit(careKit, store: store){_ in
-                
-                //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(store){
-                    (success,error) in
-                    
-                    if !success{
-                        print("Error in CarePlan.updateCloud(). Couldn't update \(careKit)")
-                    }else{
-                        print("Successfully updated CarePlan \(self) in the Cloud")
-                    }
-                    completion(success,error)
-                }
-            }
-            
-        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
-            //The cloud version is newer than local, update the local version instead
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,nil)
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = careKit.updatedDate,
+                let cloudUpdatedAt = parse.locallyUpdatedAt else{
                 return
             }
-            store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(_):
-                    print("Successfully updated CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error updating CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        if !success{
+                            print("Error in CarePlan.updateCloud(). Couldn't update \(careKit)")
+                        }else{
+                            print("Successfully updated CarePlan \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
                 }
+            }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
+                //The cloud version is newer than local, update the local version instead
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                    completion(false,nil)
+                    return
+                }
+                store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(_):
+                        print("Successfully updated CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error updating CarePlan \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
+                }
+            }else{
+                completion(true,nil)
             }
         }else{
-            completion(true,nil)
+            if ((self.clock > parse.clock) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in CarePlan.updateCloud(). Couldn't update \(careKit)")
+                        }else{
+                            print("Successfully updated CarePlan \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
+                }
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                completion(false,nil)
+            }
         }
+        
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -275,10 +293,11 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
     }
     
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
         
         guard let _ = User.current(),
-            let carePlan = carePlanAny as? OCKCarePlan else{
+            let carePlan = carePlanAny as? OCKCarePlan,
+            let store = store as? OCKStore else{
             completion(nil)
             return
         }
@@ -296,78 +315,72 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.asset = carePlan.asset
         self.timezone = carePlan.timezone.abbreviation()!
         self.locallyUpdatedAt = carePlan.updatedDate
-        
-        
-        //Only copy this over if the Local Version is older than the Parse version
-        if self.locallyCreatedAt == nil {
+        self.userInfo = carePlan.userInfo
+        if clone{
             self.locallyCreatedAt = carePlan.createdDate
-        } else if self.locallyCreatedAt != nil && carePlan.createdDate != nil{
-            if carePlan.createdDate! < self.locallyCreatedAt!{
+            self.notes = carePlan.notes?.compactMap{Note(careKitEntity: $0)}
+        }else{
+            //Only copy this over if the Local Version is older than the Parse version
+            if self.locallyCreatedAt == nil {
                 self.locallyCreatedAt = carePlan.createdDate
-            }
-        }
-        
-        Note.convertCareKitArrayToParse(carePlan.notes, store: store){
-            copiedNotes in
-            self.notes = copiedNotes
-        
-            guard let authorID = carePlan.patientUUID else{
-                completion(self)
-                return
-            }
-            //ID's are the same for related Plans
-            var query = OCKPatientQuery()
-            query.uuids = [authorID]
-            store.fetchAnyPatients(query: query, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(let authors):
-                    //Should only be one patient returned
-                    guard let careKitAuthor = authors.first else{
-                        completion(nil)
-                        return
-                    }
-                    self.authorId = careKitAuthor.id
-                    guard let authorRemoteId = careKitAuthor.remoteID else{
-                        completion(nil)
-                        return
-                    }
-                    
-                    self.author = User(withoutDataWithObjectId: authorRemoteId)
-                    
-                    //Search for patient
-                    if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey]{
-                        self.patientId = patientIdToSearchFor
-                        var patientQuery = OCKPatientQuery()
-                        patientQuery.ids = [patientIdToSearchFor]
-                        store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
-                            result in
-                            switch result{
-                            case .success(let patients):
-                                guard let patient = patients.first,
-                                    let patientRemoteId = patient.remoteID else{
-                                        completion(nil)
-                                    return
-                                }
-                                self.patient = User(withoutDataWithObjectId: patientRemoteId)
-                            case .failure(_):
-                                completion(nil)
-                            }
-                        }
-                    }else{
-                        completion(self)
-                    }
-                    
-                    
-                    
-                    
-                case .failure(_):
-                    completion(nil)
+            } else if self.locallyCreatedAt != nil && carePlan.createdDate != nil{
+                if carePlan.createdDate! < self.locallyCreatedAt!{
+                    self.locallyCreatedAt = carePlan.createdDate
                 }
             }
-        
+            self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes, clock: self.clock)
         }
         
+        guard let authorID = carePlan.patientUUID else{
+            completion(self)
+            return
+        }
+        //ID's are the same for related Plans
+        var query = OCKPatientQuery()
+        query.uuids = [authorID]
+        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let authors):
+                //Should only be one patient returned
+                guard let careKitAuthor = authors.first else{
+                    completion(nil)
+                    return
+                }
+                self.authorId = careKitAuthor.id
+                guard let authorRemoteId = careKitAuthor.remoteID else{
+                    completion(nil)
+                    return
+                }
+                
+                self.author = User(withoutDataWithObjectId: authorRemoteId)
+                
+                //Search for patient
+                if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey]{
+                    self.patientId = patientIdToSearchFor
+                    var patientQuery = OCKPatientQuery()
+                    patientQuery.ids = [patientIdToSearchFor]
+                    store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
+                        result in
+                        switch result{
+                        case .success(let patients):
+                            guard let patient = patients.first,
+                                let patientRemoteId = patient.remoteID else{
+                                    completion(nil)
+                                return
+                            }
+                            self.patient = User(withoutDataWithObjectId: patientRemoteId)
+                        case .failure(_):
+                            completion(nil)
+                        }
+                    }
+                }else{
+                    completion(self)
+                }
+            case .failure(_):
+                completion(nil)
+            }
+        }
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
@@ -381,11 +394,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         carePlan.asset = self.asset
         carePlan.remoteID = self.objectId
         carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        
-        if let patientUsingCarePlan = self.patient?.objectId{
-            carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey] = patientUsingCarePlan
-        }
-        
+        carePlan.userInfo = self.userInfo
         if let timeZone = TimeZone(abbreviation: self.timezone){
             carePlan.timezone = timeZone
         }

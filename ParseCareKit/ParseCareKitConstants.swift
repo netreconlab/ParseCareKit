@@ -220,7 +220,8 @@ public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEn
 public let kPCKScheduleElementUserInfoEntityIdKey           = "entityId"
 
 //Note Class
-public let kPCKNoteUserInfoEntityIdKey                                 = "entityId"
+public let kPCKNoteUserInfoEntityIdKey                      = "entityId"
+public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "authorObjectId"
 
 
 //#Mark - Custom Enums

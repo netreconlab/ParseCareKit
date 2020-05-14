@@ -32,7 +32,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var tags:[String]?
     @NSManaged public var timezone:String
     @NSManaged public var title:String?
-    
+    @NSManaged public var userInfo:[String:String]?
     @NSManaged public var carePlan:CarePlan?
     @NSManaged public var carePlanId:String?
 
@@ -50,7 +50,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
 
     public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, store: store, completion: completion)
+        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -104,46 +104,67 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func compareUpdate(_ careKit: OCKContact, parse: Contact, store: OCKAnyStoreProtocol, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = careKit.updatedDate,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            completion(false,nil)
-            return
-        }
-        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
-            parse.copyCareKit(careKit, store: store){_ in
-                //An update may occur when Internet isn't available, try to update at some point
-                parse.saveAndCheckRemoteID(store){
-                    (success,error) in
-                    
-                    if !success{
-                        print("Error in \(self.parseClassName).updateCloud(). Couldn't update \(careKit)")
-                    }else{
-                        print("Successfully updated Contact \(parse) in the Cloud")
-                    }
-                    completion(success,error)
-                }
-            }
-            
-        }else if ((cloudUpdatedAt > careKitLastUpdated) || overwriteRemote) {
-            //The cloud version is newer than local, update the local version instead
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = careKit.updatedDate,
+                let cloudUpdatedAt = parse.locallyUpdatedAt else{
                 completion(false,nil)
                 return
             }
-            store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(_):
-                    print("Successfully updated Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error updating Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update \(careKit)")
+                        }else{
+                            print("Successfully updated Contact \(parse) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
                 }
+            }else if ((cloudUpdatedAt > careKitLastUpdated) || overwriteRemote) {
+                //The cloud version is newer than local, update the local version instead
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                    completion(false,nil)
+                    return
+                }
+                store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(_):
+                        print("Successfully updated Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error updating Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
+                }
+            }else{
+                completion(true,nil)
             }
         }else{
-            completion(true,nil)
+            if ((self.clock > parse.clock) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update \(careKit)")
+                        }else{
+                            print("Successfully updated Contact \(parse) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
+                }
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                completion(false,nil)
+            }
         }
+        
+        
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -288,7 +309,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    open func copyCareKit(_ contactAny: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(Contact?) -> Void){
+    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Contact?) -> Void){
         
         guard let _ = User.current(),
             let contact = contactAny as? OCKContact,
@@ -314,14 +335,21 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.timezone = contact.timezone.abbreviation()!
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(contact.name)
         self.locallyUpdatedAt = contact.updatedDate
+        self.userInfo = contact.userInfo
         
-        //Only copy this over if the Local Version is older than the Parse version
-        if self.locallyCreatedAt == nil {
+        if clone{
             self.locallyCreatedAt = contact.createdDate
-        } else if self.locallyCreatedAt != nil && contact.createdDate != nil{
-            if contact.createdDate! < self.locallyCreatedAt!{
+            self.notes = contact.notes?.compactMap{Note(careKitEntity: $0)}
+        }else{
+            //Only copy this over if the Local Version is older than the Parse version
+            if self.locallyCreatedAt == nil {
                 self.locallyCreatedAt = contact.createdDate
+            } else if self.locallyCreatedAt != nil && contact.createdDate != nil{
+                if contact.createdDate! < self.locallyCreatedAt!{
+                    self.locallyCreatedAt = contact.createdDate
+                }
             }
+            self.notes = Note.updateIfNeeded(self.notes, careKit: contact.notes, clock: self.clock)
         }
         
         if let emails = contact.emailAddresses{
@@ -388,9 +416,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 if let authorRemoteID = theAuthor.remoteID{
                     
                     self.author = User(withoutDataWithObjectId: authorRemoteID)
-                    
                     self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
-                        self.copyNotesAndCarePlan(contact, store: store){
+                        self.copyCarePlan(contact, store: store){
                             completion(self)
                         }
                     }
@@ -408,7 +435,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         self.author = authorFound
                         
                         self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
-                            self.copyNotesAndCarePlan(contact, store: store){
+                            self.copyCarePlan(contact, store: store){
                                 completion(self)
                             }
                         }
@@ -458,52 +485,47 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         completion()
     }
     
-    func copyNotesAndCarePlan(_ contact:OCKContact, store: OCKAnyStoreProtocol, completion: @escaping() -> Void){
+    func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping() -> Void){
         
-        Note.convertCareKitArrayToParse(contact.notes, store: store){
-            copiedNotes in
-            self.notes = copiedNotes
-            //contactInfoDictionary[kPCKContactNotes] = copiedNotes
-            guard let carePlanID = contact.carePlanUUID else{
-                completion()
-                return
-            }
-            //ID's are the same for related Plans
-            var query = OCKCarePlanQuery()
-            query.uuids = [carePlanID]
-            store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(let carePlans):
-                    guard let carePlan = carePlans.first else{
-                        completion()
-                        return
-                    }
-                    self.carePlanId = carePlan.id
-                    guard let carePlanRemoteID = carePlan.remoteID else{
-                        
-                        let carePlanQuery = CarePlan.query()!
-                        carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: carePlan.id)
-                        carePlanQuery.findObjectsInBackground(){
-                            (objects, error) in
-                            
-                            guard let carePlanFound = objects?.first as? CarePlan else{
-                                completion()
-                                return
-                            }
-                            
-                            self.carePlan = carePlanFound
-                            completion()
-                        }
-                        return
-                    }
-                    
-                    self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
+        //contactInfoDictionary[kPCKContactNotes] = copiedNotes
+        guard let carePlanID = contact.carePlanUUID else{
+            completion()
+            return
+        }
+        //ID's are the same for related Plans
+        var query = OCKCarePlanQuery()
+        query.uuids = [carePlanID]
+        store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let carePlans):
+                guard let carePlan = carePlans.first else{
                     completion()
-                    
-                case .failure(_):
-                    completion()
+                    return
                 }
+                self.carePlanId = carePlan.id
+                guard let carePlanRemoteID = carePlan.remoteID else{
+                    
+                    let carePlanQuery = CarePlan.query()!
+                    carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: carePlan.id)
+                    carePlanQuery.findObjectsInBackground(){
+                        (objects, error) in
+                        
+                        guard let carePlanFound = objects?.first as? CarePlan else{
+                            completion()
+                            return
+                        }
+                        
+                        self.carePlan = carePlanFound
+                        completion()
+                    }
+                    return
+                }
+                self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
+                completion()
+                
+            case .failure(_):
+                completion()
             }
         }
     }
@@ -522,16 +544,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         contact.groupIdentifier = self.groupIdentifier
         contact.tags = self.tags
         contact.source = self.source
-        
-        var convertedUserInfo = [
-            kPCKContactUserInfoAuthorUserEntityIdKey: self.author.entityId
-        ]
-        
-        if let relatedUser = self.user {
-            convertedUserInfo[kPCKContactUserInfoRelatedEntityIdKey] = relatedUser.entityId
-        }
-        
-        contact.userInfo = convertedUserInfo
+        contact.userInfo = self.userInfo
         
         contact.organization = self.organization
         contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
@@ -552,7 +565,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             for (key,value) in numbers{
                 numbersToSave.append(OCKLabeledValue(label: key, value: value))
             }
-            
             contact.phoneNumbers = numbersToSave
         }
         
@@ -561,7 +573,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             for (key,value) in numbers{
                 numbersToSave.append(OCKLabeledValue(label: key, value: value))
             }
-            
             contact.messagingNumbers = numbersToSave
         }
         
@@ -570,7 +581,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             for (key,value) in labeledValues{
                 labledValuesToSave.append(OCKLabeledValue(label: key, value: value))
             }
-            
             contact.emailAddresses = labledValuesToSave
         }
         
@@ -579,7 +589,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             for (key,value) in labeledValues{
                 labledValuesToSave.append(OCKLabeledValue(label: key, value: value))
             }
-            
             contact.otherContactInfo = labledValuesToSave
         }
         

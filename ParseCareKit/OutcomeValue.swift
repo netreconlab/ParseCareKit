@@ -26,7 +26,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
     @NSManaged public var value:[String: Any]
     @NSManaged public var uuid:String
     @NSManaged public var clock:Int
-    
+    @NSManaged public var userInfo:[String:String]?
     //UserInfo fields on CareStore
     @NSManaged public var entityId:String
     
@@ -37,23 +37,22 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return kPCKOutcomeValueClassKey
     }
     
-    public convenience init(careKitEntity:OCKOutcomeValue, store: OCKAnyStoreProtocol, completion: @escaping(PFObject?) -> Void) {
+    public convenience init(careKitEntity:OCKOutcomeValue) {
         self.init()
-        self.copyCareKit(careKitEntity, store: store, completion: completion)
+        _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, store: OCKAnyStoreProtocol, completion: @escaping(OutcomeValue?) -> Void){
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, clone: Bool) -> OutcomeValue? {
         
         guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey] else{
             print("Error in \(parseClassName).copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoEntityIdKey) in \(String(describing: outcomeValue.userInfo))")
-            completion(nil)
-            return
+            return nil
         }
         self.entityId = id
-        
+        self.userInfo = outcomeValue.userInfo
         guard let uuid = getUUIDFromCareKit(outcomeValue) else{
             print("Error in \(parseClassName).copyCareKit(). doesn't contain a uuid")
-            return
+            return nil
         }
         self.uuid = uuid
         
@@ -89,21 +88,22 @@ open class OutcomeValue: PFObject, PFSubclassing {
         self.source = outcomeValue.source
         self.locallyUpdatedAt = outcomeValue.updatedDate
         
-        //Only copy this over if the Local Version is older than the Parse version
-        if self.locallyCreatedAt == nil {
+        if clone{
             self.locallyCreatedAt = outcomeValue.createdDate
-        } else if self.locallyCreatedAt != nil && outcomeValue.createdDate != nil{
-            if outcomeValue.createdDate! < self.locallyCreatedAt!{
+            self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
+        }else{
+            //Only copy this over if the Local Version is older than the Parse version
+            if self.locallyCreatedAt == nil {
                 self.locallyCreatedAt = outcomeValue.createdDate
+            } else if self.locallyCreatedAt != nil && outcomeValue.createdDate != nil{
+                if outcomeValue.createdDate! < self.locallyCreatedAt!{
+                    self.locallyCreatedAt = outcomeValue.createdDate
+                }
             }
+            self.notes = Note.updateIfNeeded(self.notes, careKit: outcomeValue.notes, clock: self.clock)
         }
         
-        Note.convertCareKitArrayToParse(outcomeValue.notes, store: store){
-        copiedNotes in
-            self.notes = copiedNotes
-            completion(self)
-        }
-        
+        return self
     }
     
     open func convertToCareKit()->OCKOutcomeValue?{
@@ -121,13 +121,8 @@ open class OutcomeValue: PFObject, PFSubclassing {
         outcomeValue.source = self.source
         outcomeValue.notes = self.notes?.compactMap{$0.convertToCareKit()}
         outcomeValue.remoteID = self.objectId
-        
-        var convertedUserInfo = [String:String]()
-        convertedUserInfo[kPCKOutcomeValueUserInfoEntityIdKey] = self.entityId
-        outcomeValue.userInfo = convertedUserInfo
-        
+        outcomeValue.userInfo = self.userInfo
         return outcomeValue
-        
     }
     
     open func createDeserializedEntity()->OCKOutcomeValue?{
@@ -217,29 +212,23 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return uuids.first
     }
     
-    open class func convertCareKitArrayToParse(_ values: [OCKOutcomeValue], store: OCKAnyStoreProtocol, completion: @escaping([OutcomeValue]) -> Void){
-        
-        var returnValues = [OutcomeValue]()
-        
-        if values.isEmpty{
-            completion(returnValues)
-            return
-        }
-        
-        for (index,value) in values.enumerated(){
-    
-            let newOutcomeValue = OutcomeValue()
-            newOutcomeValue.copyCareKit(value, store: store){
-                (valueFound) in
-                if valueFound != nil{
-                    returnValues.append(valueFound!)
-                }
-                //copyCareKit is async, so we need it to tell us when it's finished
-                if index == (values.count-1){
-                    completion(returnValues)
-                }
+    open class func updateIfNeeded(_ parseValues:[OutcomeValue], careKit: [OCKOutcomeValue], clock: Int)->[OutcomeValue]{
+        let indexesToDelete = parseValues.count - careKit.count
+        if indexesToDelete > 0{
+            let stopIndex = parseValues.count - 1 - indexesToDelete
+            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
+                parseValues[index].deleteInBackground()
             }
         }
+        var updatedValues = [OutcomeValue]()
+        for (index,value) in careKit.enumerated(){
+            let updatedValue = parseValues[index].copyCareKit(value, clone: false)
+            if updatedValue != nil{
+                updatedValue!.clock = clock
+                updatedValues.append(updatedValue!)
+            }
+        }
+        return updatedValues
     }
     
     func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{

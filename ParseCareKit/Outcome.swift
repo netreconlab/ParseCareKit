@@ -27,6 +27,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var timezone:String
     @NSManaged public var source:String?
     @NSManaged public var values:[OutcomeValue]
+    @NSManaged public var userInfo:[String:String]?
     
     //Not 1 tot 1, UserInfo fields in CareStore
     @NSManaged public var uuid:String //maps to id
@@ -38,7 +39,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
 
     public convenience init(careKitEntity: OCKAnyOutcome, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, store: store, completion: completion)
+        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -117,69 +118,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    func updateOutcomeValuesIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue], store: OCKStore, completion: @escaping([OutcomeValue])->Void){
-        let indexesToDelete = parseValues.count - careKitValues.count
-        if indexesToDelete > 0{
-            let stopIndex = parseValues.count - 1 - indexesToDelete
-            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
-                parseValues[index].deleteInBackground()
-            }
-        }
-        var valuesUpdated = 0
-        var updatedValues = [OutcomeValue]()
-        if careKitValues.count == 0 {
-            completion(updatedValues)
-            return
-        }
-        for (index,value) in careKitValues.enumerated(){
-            parseValues[index].copyCareKit(value, store: store){
-                updatedValue in
-                if updatedValue != nil{
-                    updatedValue!.clock = self.clock
-                    updatedValues.append(updatedValue!)
-                }
-                valuesUpdated += 1
-                if valuesUpdated == careKitValues.count{
-                    completion(updatedValues)
-                }
-            }
-        }
-    }
-    
-    func updateNotesValuesIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?, store: OCKStore, completion: @escaping([Note]?)->Void){
-        guard let parse = parse,
-            let careKit = careKit else {
-            completion([Note()])
-            return
-        }
-        let indexesToDelete = parse.count - careKit.count
-        if indexesToDelete > 0{
-            let stopIndex = parse.count - 1 - indexesToDelete
-            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
-                parse[index].deleteInBackground()
-            }
-        }
-        var valuesUpdated = 0
-        var updatedNotes = [Note]()
-        if careKit.count == 0 {
-            completion(updatedNotes)
-            return
-        }
-        for (index,value) in careKit.enumerated(){
-            parse[index].copyCareKit(value, store: store){
-                updatedNote in
-                if updatedNote != nil{
-                    updatedNote!.clock = self.clock
-                    updatedNotes.append(updatedNote!)
-                }
-                valuesUpdated += 1
-                if valuesUpdated == careKit.count{
-                    completion(updatedNotes)
-                }
-            }
-        }
-    }
-    
     func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore else{return}
         if !usingKnowledgeVector{
@@ -188,8 +126,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 completion(false,nil)
                 return
             }
-            if cloudUpdatedAt < careKitLastUpdated{
-                parse.copyCareKit(careKit, replace: true, store: store){_ in
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
                     //An update may occur when Internet isn't available, try to update at some point
                     parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
                         (success,error) in
@@ -224,22 +162,20 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }
         }else{
             if ((self.clock > parse.clock) || overwriteRemote){
-                updateOutcomeValuesIfNeeded(parse.values, careKitValues: careKit.values, store: store){
-                    updatedValues in
-                    parse.copyCareKit(careKit, store: store){_ in
-                        //An update may occur when Internet isn't available, try to update at some point
-                        parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
-                            (success,error) in
-                            
-                            if !success{
-                                print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
-                            }else{
-                                print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
-                            }
-                            completion(success,error)
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
                         }
+                        completion(success,error)
                     }
                 }
+                
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
                 print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
@@ -541,7 +477,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
         
-    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, replace: Bool=false, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
         
         guard let _ = User.current(),
             let outcome = outcomeAny as? OCKOutcome,
@@ -555,6 +491,11 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             return
         }
         self.uuid = uuid
+        
+        if let id = outcome.userInfo?[kPCKOutcomeUserInfoEntityIdKey] {
+            self.entityId = id
+        }
+        
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
         self.tags = outcome.tags
@@ -562,86 +503,59 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.asset = outcome.asset
         self.timezone = outcome.timezone.abbreviation()!
         self.locallyUpdatedAt = outcome.updatedDate
+        self.userInfo = outcome.userInfo
         
-        guard let id = outcome.userInfo?[kPCKOutcomeUserInfoEntityIdKey] else{
-            print("Error in \(self.parseClassName).copyCareKit, missing \(kPCKOutcomeUserInfoEntityIdKey) in outcome.userInfo ")
-            return
-        }
-        self.entityId = id
-        
-        //Only copy this over if the Local Version is older than the Parse version
-        if self.locallyCreatedAt == nil {
+        if clone{
             self.locallyCreatedAt = outcome.createdDate
-        } else if self.locallyCreatedAt != nil && outcome.createdDate != nil{
-            if outcome.createdDate! < self.locallyCreatedAt!{
+            self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
+            self.values = outcome.values.compactMap{OutcomeValue(careKitEntity: $0)}
+        }else{
+            //Only copy this over if the Local Version is older than the Parse version
+            if self.locallyCreatedAt == nil {
                 self.locallyCreatedAt = outcome.createdDate
+            } else if self.locallyCreatedAt != nil && outcome.createdDate != nil{
+                if outcome.createdDate! < self.locallyCreatedAt!{
+                    self.locallyCreatedAt = outcome.createdDate
+                }
             }
+            self.notes = Note.updateIfNeeded(self.notes, careKit: outcome.notes, clock: self.clock)
+            self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values, clock: self.clock)
         }
         
-        if !replace{
-            Note.convertCareKitArrayToParse(outcome.notes, store: store){
-            copiedNotes in
-                self.notes = copiedNotes
+        //ID's are the same for related Plans
+        var query = OCKTaskQuery()
+        query.uuids = [outcome.taskUUID]
+        store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let anyTask):
                 
-                OutcomeValue.convertCareKitArrayToParse(outcome.values, store: store){
-                    copiedValues in
-                    self.values = copiedValues
-                    //ID's are the same for related Plans
-                    var query = OCKTaskQuery()
-                    query.uuids = [outcome.taskUUID]
-                    store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
-                        result in
-                        switch result{
-                        case .success(let anyTask):
-                            
-                            guard let task = anyTask.first else{
-                                completion(nil)
-                                return
-                            }
-                            
-                            self.taskId = task.id
-                            
-                            guard let taskRemoteID = task.remoteID else{
-                                
-                                let taskQuery = Task.query()!
-                                taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
-                                taskQuery.findObjectsInBackground(){
-                                    (objects, error) in
-                                    
-                                    guard let taskFound = objects?.first as? Task else{
-                                        completion(self)
-                                        return
-                                    }
-                                    
-                                    self.task = taskFound
-                                    completion(self)
-                                }
-                                return
-                            }
-                            
-                            self.task = Task(withoutDataWithObjectId: taskRemoteID)
-                            completion(self)
-                            
-                        case .failure(_):
-                            completion(nil)
-                        }
-                    }
-                    
+                guard let task = anyTask.first else{
+                    completion(nil)
+                    return
                 }
                 
-            }
-        }else{
-            
-            updateNotesValuesIfNeeded(self.notes, careKit: outcome.notes, store: store){
-                notes in
-                if let copiedNotes = notes {
-                    self.notes = copiedNotes
-                    self.updateOutcomeValuesIfNeeded(self.values, careKitValues: outcome.values, store: store){
-                        updatedValues in
-                        self.values = updatedValues
+                self.taskId = task.id
+                guard let taskRemoteID = task.remoteID else{
+                    let taskQuery = Task.query()!
+                    taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
+                    taskQuery.findObjectsInBackground(){
+                        (objects, error) in
+                        guard let taskFound = objects?.first as? Task else{
+                            completion(self)
+                            return
+                        }
+                        self.task = taskFound
                         completion(self)
                     }
+                    return
                 }
+                self.task = Task(withoutDataWithObjectId: taskRemoteID)
+                completion(self)
+                
+            case .failure(let error):
+                print("Error in \(self.parseClassName).copyCareKit(). \(error)")
+                completion(nil)
             }
         }
     }
@@ -652,7 +566,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         outcome.groupIdentifier = self.groupIdentifier
         outcome.tags = self.tags
         outcome.source = self.source
-        outcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: self.entityId] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
+        outcome.userInfo = self.userInfo
+        //outcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: self.entityId] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
         
         outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
         outcome.groupIdentifier = self.groupIdentifier
