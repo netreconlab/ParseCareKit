@@ -117,30 +117,36 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    func deleteOutcomeValueFromCloudIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue]){
-        var parseObjectIds = Set(parseValues.compactMap{$0.objectId})
-        let careKitRemoteIds = Set(careKitValues.compactMap{$0.remoteID})
-        parseObjectIds.subtract(careKitRemoteIds)
-        
-        parseObjectIds.forEach{
-            let objectIdToDelete = $0
-            let outcomeValueToDelete = OutcomeValue(withoutDataWithObjectId: objectIdToDelete)
-            outcomeValueToDelete.deleteInBackground{
-                (success,error) in
-                if success{
-                    print("Successfully deleted OutcomeValue from Cloud with objectId: \(objectIdToDelete)")
-                }else{
-                    guard let error = error else{
-                        print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). Unknown error")
-                        return
-                    }
-                    print("Error in Outcome.deleteOutcomeValueFromCloudIfNeeded(). \(error)")
+    func updateOutcomeValuesIfNeeded(_ parseValues:[OutcomeValue], careKitValues: [OCKOutcomeValue], store: OCKStore, completion: @escaping([OutcomeValue])->Void){
+        let indexesToDelete = parseValues.count - careKitValues.count
+        if indexesToDelete > 0{
+            let stopIndex = parseValues.count - 1 - indexesToDelete
+            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
+                parseValues[index].deleteInBackground()
+            }
+        }
+        var valuesUpdated = 0
+        var updatedValues = [OutcomeValue]()
+        if careKitValues.count == 0 {
+            completion(updatedValues)
+            return
+        }
+        for (index,value) in careKitValues.enumerated(){
+            parseValues[index].copyCareKit(value, store: store){
+                updatedValue in
+                if updatedValue != nil{
+                    updatedValues.append(updatedValue!)
+                }
+                valuesUpdated += 1
+                if valuesUpdated == careKitValues.count{
+                    completion(updatedValues)
                 }
             }
         }
     }
     
     func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+        guard let store = store as? OCKStore else{return}
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
@@ -148,21 +154,23 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 return
             }
             if cloudUpdatedAt < careKitLastUpdated{
-                deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
-                parse.copyCareKit(careKit, store: store){_ in
-                    //An update may occur when Internet isn't available, try to update at some point
-                    parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
-                        }else{
-                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                updateOutcomeValuesIfNeeded(parse.values, careKitValues: careKit.values, store: store){
+                    updatedValues in
+                    
+                    parse.copyCareKit(careKit, store: store){_ in
+                        //An update may occur when Internet isn't available, try to update at some point
+                        parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                            (success,error) in
+                            
+                            if !success{
+                                print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
+                            }else{
+                                print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                            }
+                            completion(success,error)
                         }
-                        completion(success,error)
                     }
                 }
-                
             }else if cloudUpdatedAt > careKitLastUpdated {
                 guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                     completion(false,nil)
@@ -171,9 +179,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     
                 store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
                     result in
-                    
                     switch result{
-                        
                     case .success(_):
                         print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                         completion(true,nil)
@@ -187,18 +193,20 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }
         }else{
             if ((self.clock > parse.clock) || overwriteRemote){
-                deleteOutcomeValueFromCloudIfNeeded(parse.values, careKitValues: careKit.values)
-                parse.copyCareKit(careKit, store: store){_ in
-                    //An update may occur when Internet isn't available, try to update at some point
-                    parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
-                        }else{
-                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                updateOutcomeValuesIfNeeded(parse.values, careKitValues: careKit.values, store: store){
+                    updatedValues in
+                    parse.copyCareKit(careKit, store: store){_ in
+                        //An update may occur when Internet isn't available, try to update at some point
+                        parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                            (success,error) in
+                            
+                            if !success{
+                                print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
+                            }else{
+                                print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
+                            }
+                            completion(success,error)
                         }
-                        completion(success,error)
                     }
                 }
             }else{
