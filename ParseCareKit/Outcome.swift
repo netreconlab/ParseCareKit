@@ -353,9 +353,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         
         //Check to see if some Outcomes are already in the Cloud, if so, need their references. This assumes OutcomeValues can't be updated, but instead are either "added" or "deleted"
-        /*if let values = outcomeValues{
+        if let values = outcomeValues{
             self.values = replaceOutcomeValuesWithReferences(self.values, careKitValues: values)
-        }*/
+        }
         
         self.saveInBackground{(success, error) in
             if success{
@@ -416,9 +416,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                                 }
                                 
                                 if mutableOutcome.values[index].remoteID == nil{
-                                    mutableOutcome.values[index].remoteID = $0.objectId
-                                    needToUpdate = true
-                                }else if mutableOutcome.values[index].remoteID! != $0.objectId!{
                                     mutableOutcome.values[index].remoteID = $0.objectId
                                     needToUpdate = true
                                 }
