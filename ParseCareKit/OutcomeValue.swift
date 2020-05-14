@@ -249,46 +249,19 @@ open class OutcomeValue: PFObject, PFSubclassing {
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
                 return (nil)
             }
-            if cloudUpdatedAt < careKitLastUpdated{
-                parse.copyCareKit(careKit, store: store){copiedCareKit in
-                    //An update may occur when Internet isn't available, try to update at some point
-                    copiedCareKit?.clock = newClockValue //Stamp this OutcomeValue
-                    copiedCareKit?.saveInBackground{(success, error) in
-                        if !success{
-                            print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
-                        }else{
-                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
-                        }
-                    }
-                }
-            }else if cloudUpdatedAt > careKitLastUpdated{
+            if cloudUpdatedAt > careKitLastUpdated{
                 //Item from cloud is newer, no change needed in the cloud
                 return (parse.convertToCareKit())
             }
             
             return nil //Items are the same, no need to do anything
         }else{
-            if ((self.clock > parse.clock) || overwriteRemote){
-                parse.copyCareKit(careKit, store: store){copiedCareKit in
-                    //An update may occur when Internet isn't available, try to update at some point
-                    copiedCareKit?.clock = newClockValue //Stamp this OutcomeValue
-                    copiedCareKit?.saveInBackground{(success, error) in
-                        if !success{
-                            print("Error in \(self.parseClassName).compareUpdate(). Couldn't update in cloud: \(careKit)")
-                        }else{
-                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
-                        }
-                    }
-                }
-            }else{
+            if ((self.clock <= parse.clock) && !overwriteRemote){
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
                 print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
             }
             return nil
         }
-        
-        
-        
     }
 }
 
