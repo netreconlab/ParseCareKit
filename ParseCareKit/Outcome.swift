@@ -154,21 +154,17 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 return
             }
             if cloudUpdatedAt < careKitLastUpdated{
-                updateOutcomeValuesIfNeeded(parse.values, careKitValues: careKit.values, store: store){
-                    updatedValues in
-                    
-                    parse.copyCareKit(careKit, store: store){_ in
-                        //An update may occur when Internet isn't available, try to update at some point
-                        parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
-                            (success,error) in
-                            
-                            if !success{
-                                print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
-                            }else{
-                                print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
-                            }
-                            completion(success,error)
+                parse.copyCareKit(careKit, replace: true, store: store){_ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully updated \(self.parseClassName) \(self) in the Cloud")
                         }
+                        completion(success,error)
                     }
                 }
             }else if cloudUpdatedAt > careKitLastUpdated {
@@ -510,7 +506,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
         
-    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, replace: Bool=false, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
         
         guard let _ = User.current(),
             let outcome = outcomeAny as? OCKOutcome,
@@ -547,56 +543,64 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }
         }
         
-        Note.convertCareKitArrayToParse(outcome.notes, store: store){
-        copiedNotes in
-            self.notes = copiedNotes
-            
-            OutcomeValue.convertCareKitArrayToParse(outcome.values, store: store){
-                copiedValues in
-                self.values = copiedValues
-                //ID's are the same for related Plans
-                var query = OCKTaskQuery()
-                query.uuids = [outcome.taskUUID]
-                store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(let anyTask):
-                        
-                        guard let task = anyTask.first else{
-                            completion(nil)
-                            return
-                        }
-                        
-                        self.taskId = task.id
-                        
-                        guard let taskRemoteID = task.remoteID else{
+        if !replace{
+            Note.convertCareKitArrayToParse(outcome.notes, store: store){
+            copiedNotes in
+                self.notes = copiedNotes
+                
+                OutcomeValue.convertCareKitArrayToParse(outcome.values, store: store){
+                    copiedValues in
+                    self.values = copiedValues
+                    //ID's are the same for related Plans
+                    var query = OCKTaskQuery()
+                    query.uuids = [outcome.taskUUID]
+                    store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
+                        result in
+                        switch result{
+                        case .success(let anyTask):
                             
-                            let taskQuery = Task.query()!
-                            taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
-                            taskQuery.findObjectsInBackground(){
-                                (objects, error) in
-                                
-                                guard let taskFound = objects?.first as? Task else{
-                                    completion(self)
-                                    return
-                                }
-                                
-                                self.task = taskFound
-                                completion(self)
+                            guard let task = anyTask.first else{
+                                completion(nil)
+                                return
                             }
-                            return
+                            
+                            self.taskId = task.id
+                            
+                            guard let taskRemoteID = task.remoteID else{
+                                
+                                let taskQuery = Task.query()!
+                                taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
+                                taskQuery.findObjectsInBackground(){
+                                    (objects, error) in
+                                    
+                                    guard let taskFound = objects?.first as? Task else{
+                                        completion(self)
+                                        return
+                                    }
+                                    
+                                    self.task = taskFound
+                                    completion(self)
+                                }
+                                return
+                            }
+                            
+                            self.task = Task(withoutDataWithObjectId: taskRemoteID)
+                            completion(self)
+                            
+                        case .failure(_):
+                            completion(nil)
                         }
-                        
-                        self.task = Task(withoutDataWithObjectId: taskRemoteID)
-                        completion(self)
-                        
-                    case .failure(_):
-                        completion(nil)
                     }
+                    
                 }
                 
             }
-            
+        }else{
+            updateOutcomeValuesIfNeeded(self.values, careKitValues: outcome.values, store: store){
+                updatedValues in
+                self.values = updatedValues
+                completion(self)
+            }
         }
     }
     
