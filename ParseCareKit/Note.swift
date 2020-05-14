@@ -21,6 +21,7 @@ open class Note: PFObject, PFSubclassing {
     @NSManaged public var timezone:String
     @NSManaged public var title:String
     @NSManaged public var uuid:String
+    @NSManaged public var clock:Int
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var entityId:String //Maps to userInfo?[kPCKNoteUserInfoEntityIdKey]

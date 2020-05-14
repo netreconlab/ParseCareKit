@@ -135,11 +135,46 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             parseValues[index].copyCareKit(value, store: store){
                 updatedValue in
                 if updatedValue != nil{
+                    updatedValue!.clock = self.clock
                     updatedValues.append(updatedValue!)
                 }
                 valuesUpdated += 1
                 if valuesUpdated == careKitValues.count{
                     completion(updatedValues)
+                }
+            }
+        }
+    }
+    
+    func updateNotesValuesIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?, store: OCKStore, completion: @escaping([Note]?)->Void){
+        guard let parse = parse,
+            let careKit = careKit else {
+            completion([Note()])
+            return
+        }
+        let indexesToDelete = parse.count - careKit.count
+        if indexesToDelete > 0{
+            let stopIndex = parse.count - 1 - indexesToDelete
+            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
+                parse[index].deleteInBackground()
+            }
+        }
+        var valuesUpdated = 0
+        var updatedNotes = [Note]()
+        if careKit.count == 0 {
+            completion(updatedNotes)
+            return
+        }
+        for (index,value) in careKit.enumerated(){
+            parse[index].copyCareKit(value, store: store){
+                updatedNote in
+                if updatedNote != nil{
+                    updatedNote!.clock = self.clock
+                    updatedNotes.append(updatedNote!)
+                }
+                valuesUpdated += 1
+                if valuesUpdated == careKit.count{
+                    completion(updatedNotes)
                 }
             }
         }
@@ -596,10 +631,17 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 
             }
         }else{
-            updateOutcomeValuesIfNeeded(self.values, careKitValues: outcome.values, store: store){
-                updatedValues in
-                self.values = updatedValues
-                completion(self)
+            
+            updateNotesValuesIfNeeded(self.notes, careKit: outcome.notes, store: store){
+                notes in
+                if let copiedNotes = notes {
+                    self.notes = copiedNotes
+                    self.updateOutcomeValuesIfNeeded(self.values, careKitValues: outcome.values, store: store){
+                        updatedValues in
+                        self.values = updatedValues
+                        completion(self)
+                    }
+                }
             }
         }
     }
