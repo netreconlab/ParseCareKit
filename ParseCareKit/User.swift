@@ -88,19 +88,23 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
-                //This occurs only on a User when they have logged in for the first time
-                //and CareKit and Parse isn't properly synced. Basically this is the first
-                //time the local dates are pushed to the cloud
-                parse.saveAndCheckRemoteID(store){
-                    (success,error) in
-                    if !success{
-                        print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                    }else{
-                        print("Successfully updated Patient \(self) in the Cloud")
+                    //This occurs only on a User when they have logged in for the first time
+                    //and CareKit and Parse isn't properly synced. Basically this is the first
+                    //time the local dates are pushed to the cloud
+                    guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
+                        completion(false,nil)
+                        return
                     }
-                    completion(success,error)
-                }
-                return
+                    updated.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                        }else{
+                            print("Successfully updated Patient \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
+                    return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
                 guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
