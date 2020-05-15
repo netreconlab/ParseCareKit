@@ -6,8 +6,8 @@ target 'ParseCareKit' do
   use_frameworks!
 
   # Pods for ParseCareKit
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
+  #pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
   pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
+  #pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
   pod 'Parse', '~>1.18'
 end
