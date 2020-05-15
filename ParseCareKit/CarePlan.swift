@@ -246,10 +246,9 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
     }
     
-    
     private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore else{return}
-        
+        stampRelationalEntities()
         self.saveInBackground{(success, error) in
             if success{
                 //Only save data back to CarePlanStore if it's never been saved before

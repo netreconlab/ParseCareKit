@@ -280,6 +280,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             completion(false,nil)
             return
         }
+        stampRelationalEntities()
         self.saveInBackground{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")

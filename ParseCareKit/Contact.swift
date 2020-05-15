@@ -267,6 +267,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             completion(false,nil)
             return
         }
+        stampRelationalEntities()
         self.saveInBackground{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
