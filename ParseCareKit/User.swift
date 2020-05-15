@@ -95,6 +95,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                         completion(false,nil)
                         return
                     }
+                    self.clock = 0 //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
                     updated.saveAndCheckRemoteID(store){
                         (success,error) in
                         if !success{
@@ -235,7 +236,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
                     if !usingKnowledgeVector{
                         self.clock = 0
                     }
