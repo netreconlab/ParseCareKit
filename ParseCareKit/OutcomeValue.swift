@@ -100,7 +100,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
                     self.locallyCreatedAt = outcomeValue.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: outcomeValue.notes, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: outcomeValue.notes)
         }
         
         return self
@@ -123,6 +123,13 @@ open class OutcomeValue: PFObject, PFSubclassing {
         outcomeValue.remoteID = self.objectId
         outcomeValue.userInfo = self.userInfo
         return outcomeValue
+    }
+    
+    func stamp(_ clock: Int){
+        self.clock = clock
+        self.notes?.forEach{
+            $0.clock = self.clock
+        }
     }
     
     open func createDecodedEntity()->OCKOutcomeValue?{
@@ -212,7 +219,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return uuids.first
     }
     
-    open class func updateIfNeeded(_ parseValues:[OutcomeValue], careKit: [OCKOutcomeValue], clock: Int)->[OutcomeValue]{
+    open class func updateIfNeeded(_ parseValues:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{
         let indexesToDelete = parseValues.count - careKit.count
         if indexesToDelete > 0{
             let stopIndex = parseValues.count - 1 - indexesToDelete
@@ -224,7 +231,6 @@ open class OutcomeValue: PFObject, PFSubclassing {
         for (index,value) in careKit.enumerated(){
             let updatedValue = parseValues[index].copyCareKit(value, clone: false)
             if updatedValue != nil{
-                updatedValue!.clock = clock
                 updatedValues.append(updatedValue!)
             }
         }
@@ -236,11 +242,11 @@ open class OutcomeValue: PFObject, PFSubclassing {
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
-                return (nil)
+                return nil
             }
             if cloudUpdatedAt > careKitLastUpdated{
                 //Item from cloud is newer, no change needed in the cloud
-                return (parse.convertToCareKit())
+                return parse.convertToCareKit()
             }
             
             return nil //Items are the same, no need to do anything

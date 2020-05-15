@@ -139,18 +139,19 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             }
         }else{
             if ((self.clock > parse.clock) || overwriteRemote){
-               parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                   //An update may occur when Internet isn't available, try to update at some point
-                   parse.saveAndCheckRemoteID(store){
-                       (success,error) in
-                       
-                       if !success{
-                           print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                       }else{
-                           print("Successfully updated Task \(self) in the Cloud")
-                       }
-                       completion(success,nil)
-                   }
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                        }else{
+                            print("Successfully updated Task \(self) in the Cloud")
+                        }
+                        completion(success,nil)
+                    }
                }
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
@@ -357,8 +358,8 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                     self.locallyCreatedAt = task.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: task.notes, clock: self.clock)
-            self.elements = ScheduleElement.updateIfNeeded(self.elements, careKit: task.schedule.elements, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: task.notes)
+            self.elements = ScheduleElement.updateIfNeeded(self.elements, careKit: task.schedule.elements)
         }
         
         //If no CarePlan, we are finished
@@ -465,7 +466,12 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return entity
     }
     
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.clock)}
+        self.elements.forEach{$0.stamp(self.clock)}
+    }
+    
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
         query.whereKey(kPCKTaskClockKey, greaterThanOrEqualTo: localClock)
@@ -491,7 +497,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
+    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .task(let careKit):
             let _ = Task(careKitEntity: careKit, store: store){

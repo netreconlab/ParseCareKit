@@ -146,6 +146,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }else{
             if ((self.clock > parse.clock) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
                     parse.saveAndCheckRemoteID(store){
                         (success,error) in
                         
@@ -349,7 +350,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     self.locallyCreatedAt = contact.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: contact.notes, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: contact.notes)
         }
         
         if let emails = contact.emailAddresses{
@@ -632,7 +633,11 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         return entity
     }
     
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.clock)}
+    }
+    
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Contact.query()!
         query.whereKey(kPCKContactClockKey, greaterThanOrEqualTo: localClock)
@@ -658,7 +663,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
+    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .contact(let careKit):
             let _ = Contact(careKitEntity: careKit, store: store){

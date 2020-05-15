@@ -163,7 +163,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }else{
             if ((self.clock > parse.clock) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
                     parse.saveAndCheckRemoteID(store, outcomeValues: careKit.values, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
                         (success,error) in
                         
@@ -293,32 +293,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 //This is the first object, make sure to save it
                 self.saveAndCheckRemoteID(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }
-            
         }
-    }
-    
-    func replaceOutcomeValuesWithReferences(_ parseValues: [OutcomeValue], careKitValues: [OCKOutcomeValue])->[OutcomeValue]{
-        var replacedValues = [OutcomeValue]()
-        var entityIds = [String]()
-        careKitValues.forEach{
-            guard let entityId = $0.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
-                let remoteId = $0.remoteID else{
-                return
-            }
-            replacedValues.append(OutcomeValue(withoutDataWithObjectId: remoteId))
-            entityIds.append(entityId)
-        }
-        
-        var mutableReturnValues = parseValues
-        for (index,entityId) in entityIds.enumerated(){
-            for (returnIndex,value) in parseValues.enumerated(){
-                if entityId == value.entityId{
-                    mutableReturnValues[returnIndex] = replacedValues[index]
-                }
-            }
-        }
-        
-        return mutableReturnValues
     }
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
@@ -326,12 +301,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             completion(false,nil)
             return
         }
-        
-        //Check to see if some Outcomes are already in the Cloud, if so, need their references. This assumes OutcomeValues can't be updated, but instead are either "added" or "deleted"
-        /*if let values = outcomeValues{
-            self.values = replaceOutcomeValuesWithReferences(self.values, careKitValues: values)
-        }*/
-        
         self.saveInBackground{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
@@ -518,8 +487,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     self.locallyCreatedAt = outcome.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: outcome.notes, clock: self.clock)
-            self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: outcome.notes)
+            self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values)
         }
         
         //ID's are the same for related Plans
@@ -559,7 +528,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }
         }
     }
-    
+        
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKOutcome?{
         guard var outcome = createDecodedEntity() else{return nil}
@@ -642,7 +611,12 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         return uuids.first
     }
     
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.clock)}
+        self.values.forEach{$0.stamp(self.clock)}
+    }
+    
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Outcome.query()!
         query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
@@ -668,7 +642,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
+    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .outcome(let careKit):
             let _ = Outcome(careKitEntity: careKit, store: store){

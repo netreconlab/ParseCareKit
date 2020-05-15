@@ -131,6 +131,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }else{
             if ((self.clock > parse.clock) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
                     parse.saveAndCheckRemoteID(store){
                         (success,error) in
                         
@@ -328,7 +329,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     self.locallyCreatedAt = carePlan.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
         }
         
         guard let authorID = carePlan.patientUUID else{
@@ -434,7 +435,11 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         return entity
     }
     
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.clock)}
+    }
+    
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = CarePlan.query()!
         query.whereKey(kPCKCarePlanClockKey, greaterThanOrEqualTo: localClock)
@@ -460,7 +465,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
+    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .carePlan(let careKit):
             let _ = CarePlan(careKitEntity: careKit, store: store){

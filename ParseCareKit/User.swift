@@ -149,6 +149,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                     completion(false,nil)
                     return
                 }
+                updated.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
                 //An update may occur when Internet isn't available, try to update at some point
                 updated.saveAndCheckRemoteID(store){
                     (success,error) in
@@ -336,7 +337,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                     self.locallyCreatedAt = patient.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: patient.notes, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: patient.notes)
         }
         return self
     }
@@ -401,7 +402,11 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         return entity
     }
     
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.clock)}
+    }
+    
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = User.query()!
         query.whereKey(kPCKUserClockKey, greaterThanOrEqualTo: localClock)
@@ -426,7 +431,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
+    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .patient(let careKit):
             let _ = User(careKitEntity: careKit, store: store){

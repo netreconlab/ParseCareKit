@@ -66,7 +66,7 @@ open class Note: PFObject, PFSubclassing {
                     self.locallyCreatedAt = note.createdDate
                 }
             }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: note.notes, clock: self.clock)
+            self.notes = Note.updateIfNeeded(self.notes, careKit: note.notes)
         }
         
         guard let authorObjectId = note.userInfo?[kPCKNoteUserInfoAuthorObjectIdKey] else{
@@ -95,6 +95,13 @@ open class Note: PFObject, PFSubclassing {
         
         note.notes = self.notes?.compactMap{$0.convertToCareKit()}
         return note
+    }
+    
+    func stamp(_ clock: Int){
+        self.clock = clock
+        self.notes?.forEach{
+            $0.clock = self.clock
+        }
     }
     
     open func createDecodedEntity()->OCKNote?{
@@ -156,7 +163,7 @@ open class Note: PFObject, PFSubclassing {
         return uuids.first
     }
     
-    open class func updateIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?, clock: Int)->[Note]?{
+    open class func updateIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?)->[Note]?{
         guard let parse = parse,
             let careKit = careKit else {
             return nil
@@ -172,7 +179,6 @@ open class Note: PFObject, PFSubclassing {
         for (index,value) in careKit.enumerated(){
             let updatedNote = parse[index].copyCareKit(value, clone: false)
             if updatedNote != nil{
-                updatedNote!.clock = clock
                 updatedNotes.append(updatedNote!)
             }
         }

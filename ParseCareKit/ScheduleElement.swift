@@ -52,7 +52,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
         return scheduleElement
     }
     
-    open class func updateIfNeeded(_ parseValues:[ScheduleElement], careKit: [OCKScheduleElement], clock: Int)->[ScheduleElement]{
+    open class func updateIfNeeded(_ parseValues:[ScheduleElement], careKit: [OCKScheduleElement])->[ScheduleElement]{
         let indexesToDelete = parseValues.count - careKit.count
         if indexesToDelete > 0{
             let stopIndex = parseValues.count - 1 - indexesToDelete
@@ -63,9 +63,15 @@ open class ScheduleElement: PFObject, PFSubclassing {
         var updatedValues = [ScheduleElement]()
         for (index,value) in careKit.enumerated(){
             let updatedValue = parseValues[index].copyCareKit(value)
-            updatedValue.clock = clock
             updatedValues.append(updatedValue)
         }
         return updatedValues
+    }
+    
+    func stamp(_ clock: Int){
+        self.clock = clock
+        self.elements.forEach{
+            $0.clock = self.clock
+        }
     }
 }
