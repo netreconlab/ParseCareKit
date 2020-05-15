@@ -58,7 +58,7 @@ class KnowledgeVector: PFObject, PFSubclassing {
         }
     }
     
-    class func fetchFromCloud(user:User, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,UUID?)->Void){
+    class func fetchFromCloud(user:User, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,UUID?,Error?)->Void){
         
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
@@ -67,21 +67,21 @@ class KnowledgeVector: PFObject, PFSubclassing {
             
             guard let foundVector = object as? KnowledgeVector else{
                 if !createNewIfNeeded{
-                    completion(nil,nil,nil)
+                    completion(nil,nil,nil,error)
                 }else{
                     //This is the first time the KnowledgeVector is being setup for this user
                     let uuid = UUID()
                     let newVector = KnowledgeVector(uuid: uuid)
                     newVector.decodeKnowledgeVector(){
                         possiblyDecoded in
-                        completion(newVector,possiblyDecoded,uuid)
+                        completion(newVector,possiblyDecoded,uuid,error)
                     }
                 }
                 return
             }
             foundVector.decodeKnowledgeVector(){
                 possiblyDecoded in
-                completion(foundVector,possiblyDecoded,UUID(uuidString: foundVector.uuid))
+                completion(foundVector,possiblyDecoded,UUID(uuidString: foundVector.uuid),error)
             }
         }
     }
