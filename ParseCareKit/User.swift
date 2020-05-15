@@ -84,7 +84,6 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     }
     
     func compareUpdate(_ careKit: OCKPatient, parse: User, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
@@ -165,6 +164,8 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
                 completion(false,nil)
             }
+        }else{
+            completion(true,nil)
         }
     }
     
