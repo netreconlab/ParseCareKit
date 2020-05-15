@@ -3,7 +3,7 @@
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/6/20.
-//  Copyright © 2020 University of Kentucky. All rights reserved.
+//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import Parse
 /**
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
-public protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
+protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
     static func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     static func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void)
 }
@@ -41,24 +41,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
         
         //Fetch KnowledgeVector from Cloud
-        let query = KnowledgeVector.query()!
-        query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
-        query.getFirstObjectInBackground{ (object,error) in
-            
-            guard let foundVector = object as? KnowledgeVector,
-                let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
-                let data = foundVector.vector.data(using: .utf8) else{
-                completion(nil)
-                return
-            }
-            let cloudVector:OCKRevisionRecord.KnowledgeVector!
-            do {
-                cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
-            }catch{
-                let error = error
-                print("Error in ParseRemoteSynchronizationManager.pullRevisions(). Couldn't decode vector \(data). Error: \(error)")
-                cloudVector = nil
-                completion(nil)
+        KnowledgeVector.fetchFromCloud(user: user, createNewIfNeeded: false){
+            (_, potentialCKKnowledgeVector, potentialUUID, error) in
+            guard let cloudVector = potentialCKKnowledgeVector,
+                let cloudVectorUUID = potentialUUID else{
+                completion(error)
                 return
             }
             
@@ -96,42 +83,39 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             return
         }
         //Fetch KnowledgeVector from Cloud
-        let query = KnowledgeVector.query()!
-        query.whereKey(kPCKKnowledgeVectorUserKey, equalTo: user)
-        query.getFirstObjectInBackground{ (object,error) in
-            
-            let foundVector:KnowledgeVector!
-            if object == nil{
-                //This is the first time the KnowledgeVector is being setup for this user
-                let uuid = UUID()
-                foundVector = KnowledgeVector(uuid: uuid.uuidString)
-            }else{
-                if let found = object as? KnowledgeVector{
-                    foundVector = found
-                }else{
-                    print("Error in ParseRemoteSynchronizationManager.pushRevisions(). Couldn't get KnowledgeVector correctly from Cloud")
-                    foundVector=nil
-                    completion(nil)
-                    return
-                }
-            }
-            
-            guard let cloudVectorUUID = UUID(uuidString: foundVector.uuid),
-                let data = foundVector.vector.data(using: .utf8) else{
+        KnowledgeVector.fetchFromCloud(user: user, createNewIfNeeded: true){
+            (potentialPCKKnowledgeVector, potentialCKKnowledgeVector, potentialUUID, error) in
+        
+            guard let cloudParseVector = potentialPCKKnowledgeVector,
+                let cloudCareKitVector = potentialCKKnowledgeVector,
+                let cloudVectorUUID = potentialUUID else{
+                    guard let error = error as NSError?,
+                        let errorDictionary = error.userInfo["error"] as? [String:Any],
+                        let reason = errorDictionary["routine"] as? String else {return}
+                    //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                    if reason == "errorMissingColumn"{
+                        //Saving the new item with the custom column should resolve the issue
+                        print("This table '\(KnowledgeVector.parseClassName())' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                        if potentialPCKKnowledgeVector != nil{
+                            potentialPCKKnowledgeVector!.saveInBackground{
+                                (success,_) in
+                                print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
+                                completion(error)
+                            }
+                        }else{
+                            completion(error)
+                        }
+                    }else{
+                        //There was a different issue that we don't know how to handle
+                        print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(error.localizedDescription)")
+                        completion(error)
+                    }
+                    
                 completion(nil)
                 return
             }
-            var cloudVector:OCKRevisionRecord.KnowledgeVector!
-            do {
-                cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
-            }catch{
-                print("Error in ParseRemoteSynchronizationManager.pushRevisions(). Couldn't decode vector \(data)")
-                cloudVector = nil
-                completion(nil)
-                return
-            }
             
-            let cloudVectorClock = cloudVector.clock(for: cloudVectorUUID)
+            let cloudVectorClock = cloudCareKitVector.clock(for: cloudVectorUUID)
             var revisionsCompletedCount = 0
             deviceRevision.entities.forEach{
                 let entity = $0
@@ -141,7 +125,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         error in
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
-                            self.completedRevisions(foundVector, cloudKnowledgeVector: cloudVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                            self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
                 case .carePlan(_):
@@ -149,7 +133,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ in
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
-                            self.completedRevisions(foundVector, cloudKnowledgeVector: cloudVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                            self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
                 case .contact(_):
@@ -157,7 +141,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ in
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
-                            self.completedRevisions(foundVector, cloudKnowledgeVector: cloudVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                            self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
                 case .task(_):
@@ -165,7 +149,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ in
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
-                            self.completedRevisions(foundVector, cloudKnowledgeVector: cloudVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                            self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
                 case .outcome(_):
@@ -173,7 +157,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ in
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
-                            self.completedRevisions(foundVector, cloudKnowledgeVector: cloudVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                            self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
                 }
@@ -181,7 +165,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
     }
     
-    func completedRevisions(_ parseKnowledgeVector: KnowledgeVector, cloudKnowledgeVector: OCKRevisionRecord.KnowledgeVector, localKnowledgeVector: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
+    func finishedRevisions(_ parseKnowledgeVector: KnowledgeVector, cloudKnowledgeVector: OCKRevisionRecord.KnowledgeVector, localKnowledgeVector: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
         
         guard let cloudVectorUUID = UUID(uuidString: parseKnowledgeVector.uuid) else{
             completion(nil)
@@ -189,25 +173,22 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
         
         var cloudVector = cloudKnowledgeVector
-        
         //Increment and merge Knowledge Vector
         cloudVector.increment(clockFor: cloudVectorUUID)
         cloudVector.merge(with: localKnowledgeVector)
-        do{
-            let json = try JSONEncoder().encode(cloudVector)
-            let cloudVectorString = String(data: json, encoding: .utf8)!
-            parseKnowledgeVector.vector = cloudVectorString
-            parseKnowledgeVector.saveInBackground{
-                (success,error) in
-                if !success{
-                    print("Error in ParseRemoteSynchronizationManager.completedRevisions(). \(String(describing: error))")
-                    completion(error)
-                    return
-                }
-                completion(nil)
+        
+        guard let _ = parseKnowledgeVector.encodeKnowledgeVector(cloudVector) else{
+            completion(nil)
+            return
+        }
+        parseKnowledgeVector.saveInBackground{
+            (success,error) in
+            if !success{
+                print("Error in ParseRemoteSynchronizationManager.finishedRevisions(). \(String(describing: error))")
+                completion(error)
+                return
             }
-        }catch{
-            completion(error)
+            completion(nil)
         }
     }
     

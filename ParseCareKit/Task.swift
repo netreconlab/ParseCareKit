@@ -3,7 +3,7 @@
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/17/20.
-//  Copyright © 2020 NetReconLab. All rights reserved.
+//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Parse
@@ -29,7 +29,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var title:String?
     @NSManaged public var uuid:String //maps to id
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
-    
+    @NSManaged public var userInfo:[String:String]?
     @NSManaged public var clock:Int
     
     //SOSDatabase info
@@ -42,7 +42,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     public convenience init(careKitEntity: OCKAnyTask, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, store: store, completion: completion)
+        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -94,40 +94,14 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = careKit.updatedDate,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
-            completion(false,nil)
-            return
-        }
-    
-        if ((cloudUpdatedAt < careKitLastUpdated) || (usingKnowledgeVector || overwriteRemote)){
-            //Delete schedule elements, they will be replaced by new ones that are copied
-            var scheduleElementsDeleted = 0
-            let scheduleElementCount = parse.elements.count
-            parse.elements.forEach{
-                $0.deleteInBackground{
-                    (success,error) in
-                    scheduleElementsDeleted += 1
-                    if scheduleElementsDeleted == scheduleElementCount{
-                        parse.copyCareKit(careKit, store: store){_ in
-                            //An update may occur when Internet isn't available, try to update at some point
-                            parse.saveAndCheckRemoteID(store){
-                                (success,error) in
-                                
-                                if !success{
-                                    print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                                }else{
-                                    print("Successfully updated Task \(self) in the Cloud")
-                                }
-                                completion(success,nil)
-                            }
-                        }
-                    }
-                }
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = careKit.updatedDate,
+                let cloudUpdatedAt = parse.locallyUpdatedAt else{
+                completion(false,nil)
+                return
             }
-            //This is bootleg, but the uuid was removed for schedule elements
-            if scheduleElementCount == 0{
-                parse.copyCareKit(careKit, store: store){_ in
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
                     //An update may occur when Internet isn't available, try to update at some point
                     parse.saveAndCheckRemoteID(store){
                         (success,error) in
@@ -140,28 +114,49 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                         completion(success,nil)
                     }
                 }
-            }
-        }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
-            //The cloud version is newer than local, update the local version instead
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,nil)
-                return
-            }
-            store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                
-                switch result{
-                    
-                case .success(_):
-                    print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            }else if cloudUpdatedAt > careKitLastUpdated {
+                //The cloud version is newer than local, update the local version instead
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                    completion(false,nil)
+                    return
                 }
+                store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    
+                    switch result{
+                        
+                    case .success(_):
+                        print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
+                }
+            }else{
+                completion(true,nil)
             }
         }else{
-            completion(true,nil)
+            if ((self.clock > parse.clock) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
+                    //An update may occur when Internet isn't available, try to update at some point
+                    parse.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                        }else{
+                            print("Successfully updated Task \(self) in the Cloud")
+                        }
+                        completion(success,nil)
+                    }
+               }
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                completion(false,nil)
+            }
         }
     }
     
@@ -284,6 +279,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             completion(false,nil)
             return
         }
+        stampRelationalEntities()
         self.saveInBackground{(success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
@@ -307,7 +303,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                             }
                         }else{
                             if mutableEntity.remoteID! != self.objectId{
-                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal (self.objectId)")
+                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(self.objectId!)")
                                 completion(false,error)
                             }else{
                                 completion(true,nil)
@@ -326,7 +322,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     }
     
-    open func copyCareKit(_ taskAny: OCKAnyTask, store: OCKAnyStoreProtocol, completion: @escaping(Task?) -> Void){
+    open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool, store: OCKAnyStoreProtocol, completion: @escaping(Task?) -> Void){
         
         guard let _ = User.current(),
             let task = taskAny as? OCKTask else{
@@ -348,194 +344,72 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.asset = task.asset
         self.timezone = task.timezone.abbreviation()!
         self.locallyUpdatedAt = task.updatedDate
-        
-        //Only copy this over if the Local Version is older than the Parse version
-        if self.locallyCreatedAt == nil {
+        self.userInfo = task.userInfo
+        if clone{
             self.locallyCreatedAt = task.createdDate
-        } else if self.locallyCreatedAt != nil && task.createdDate != nil{
-            if task.createdDate! < self.locallyCreatedAt!{
+            self.notes = task.notes?.compactMap{Note(careKitEntity: $0)}
+            self.elements = task.schedule.elements.compactMap{ScheduleElement(careKitEntity: $0)}
+        }else{
+            //Only copy this over if the Local Version is older than the Parse version
+            if self.locallyCreatedAt == nil {
                 self.locallyCreatedAt = task.createdDate
+            } else if self.locallyCreatedAt != nil && task.createdDate != nil{
+                if task.createdDate! < self.locallyCreatedAt!{
+                    self.locallyCreatedAt = task.createdDate
+                }
             }
+            self.notes = Note.updateIfNeeded(self.notes, careKit: task.notes)
+            self.elements = ScheduleElement.updateIfNeeded(self.elements, careKit: task.schedule.elements)
         }
         
-        Note.convertCareKitArrayToParse(task.notes, store: store){
-            copiedNotes in
-            self.notes = copiedNotes
-            //Elements don't have have id's and tags when initially created, need to add them
-            let elements = task.schedule.elements.map{(element) -> OCKScheduleElement in
-                let newElement = element
-                /*if newElement.userInfo == nil{
-                    newElement.userInfo = [kPCKScheduleElementUserInfoEntityIdKey: UUID.init().uuidString]
-                }else{
-                    if newElement.userInfo![kPCKScheduleElementUserInfoEntityIdKey] == nil{
-                        newElement.userInfo![kPCKScheduleElementUserInfoEntityIdKey] = UUID.init().uuidString
-                    }
-                }
-                if let tags = newElement.tags {
-                    if !tags.contains(task.id){
-                        newElement.tags!.append(task.id)
-                    }
-                }else{
-                    newElement.tags = [task.id]
-                }*/
-                return newElement
-            }
-            
-            ScheduleElement.convertCareKitArrayToParse(elements, store: store){
-                copiedScheduleElements in
-                self.elements = copiedScheduleElements
-                
-                guard let carePlanLocalID = task.carePlanUUID else{
-                    completion(self)
-                    return
-                }
-                
-                var query = OCKCarePlanQuery()
-                query.uuids = [carePlanLocalID]
-                store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
-                    result in
-                    
-                    switch result{
-                    case .success(let plan):
-                        
-                        guard let foundPlan = plan.first else{
-                            completion(nil)
-                            return
-                        }
-                        self.carePlanId = foundPlan.id
-                        guard let carePlanRemoteID = foundPlan.remoteID else{
-                            let carePlanQuery = CarePlan.query()!
-                            carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: foundPlan.id)
-                            carePlanQuery.findObjectsInBackground(){
-                                (objects, error) in
-                                
-                                guard let carePlanFound = objects?.first as? CarePlan else{
-                                    completion(self)
-                                    return
-                                }
-                                
-                                self.carePlan = carePlanFound
-                                completion(self)
-                            }
-                            return
-                        }
-                        
-                        self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
-                        completion(self)
-                        /*
-                        let copiedCarePlan = CarePlan()
-                        copiedCarePlan.copyCareKit(foundPlan){
-                            copied in
-                            
-                            guard let copiedCarePlan = copied else{
-                                completion(nil)
-                                return
-                            }
-                            
-                            self.carePlan = copiedCarePlan
-                            self.author = copiedCarePlan.author //If this task is tied to a carePlan, then the author of the CarePlan is the author of the task
-                            
-                            completion(self)
-                        }*/
-                    case .failure(_):
-                        print("")
-                        completion(nil)
-                    }
-                }
-                
-                completion(self)
-                
-            }
-        }
-        
-        
-        
-        
-        /*
-        guard let currentCarePlan = carePlan else{
-            
-            guard let carePlanLocalID = task.carePlanID else{
-                completion(self)
-                return
-            }
-            
-            let store = DataStoreManager.shared.store
-            
-            var query = OCKCarePlanQuery()
-            query.versionIDs = [carePlanLocalID]
-            
-            store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){
-                result in
-                
-                switch result{
-                case .success(let plan):
-                    
-                    guard let foundPlan = plan.first else{
-                        completion(nil)
-                        return
-                    }
-                    
-                    let copiedCarePlan = CarePlan()
-                    copiedCarePlan.copyCareKit(foundPlan){
-                        copied in
-                        
-                        guard let copiedCarePlan = copied else{
-                            completion(nil)
-                            return
-                        }
-                        
-                        self.carePlan = copiedCarePlan
-                        self.author = copiedCarePlan.author
-                        completion(self)
-                    }
-                case .failure(_):
-                    print("")
-                    completion(nil)
-                }
-            }
-            
+        //If no CarePlan, we are finished
+        guard let carePlanLocalID = task.carePlanUUID else{
             completion(self)
             return
         }
         
-        let copiedCarePlan = CarePlan()
-        copiedCarePlan.copyCareKit(currentCarePlan){
-            copied in
+        var query = OCKCarePlanQuery()
+        query.uuids = [carePlanLocalID]
+        store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
+            result in
             
-            guard let copiedCarePlan = copied else{
-                completion(nil)
-                return
-            }
-            
-            self.carePlan = copiedCarePlan
-            self.author = copiedCarePlan.author
-            completion(self)
-        }*/
-        
-        
-        /*
-        if let notes = task.notes {
-            var noteIDs = [String]()
-            notes.forEach{
-                //Ignore notes who don't have a ID
-                guard let noteID = $0.userInfo?[kPCKNoteUserInfoEntityIdKey] else{
+            switch result{
+            case .success(let plan):
+                guard let foundPlan = plan.first else{
+                    completion(nil)
                     return
                 }
-                
-                noteIDs.append(noteID)
+                self.carePlanId = foundPlan.id
+                //Attempt to link based off of local database
+                guard let carePlanRemoteID = foundPlan.remoteID else{
+                    //Local CarePlan hasn't been linked with it's Cloud version, see if we can link to Cloud version
+                    let carePlanQuery = CarePlan.query()!
+                    carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: foundPlan.id)
+                    carePlanQuery.findObjectsInBackground(){
+                        (objects, error) in
+                        guard let carePlanFound = objects?.first as? CarePlan else{
+                            completion(self)
+                            return
+                        }
+                        self.carePlan = carePlanFound
+                        completion(self)
+                    }
+                    return
+                }
+                //Link to Parse based on remoteId
+                self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
+                completion(self)
+            case .failure(_):
+                print("")
+                completion(nil)
             }
-        }*/
-        
-        //self.schedule = Schedule()
-        
-        //schedule!.co
-        
+        }
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit()->OCKTask?{
         
-        guard var task = createDeserializedEntity() else{return nil}
+        guard var task = createDecodedEntity() else{return nil}
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source
@@ -543,7 +417,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         task.impactsAdherence = self.impactsAdherence
         task.groupIdentifier = self.groupIdentifier
         task.asset = self.asset
-        
+        task.userInfo = self.userInfo
         if let timeZone = TimeZone(abbreviation: self.timezone){
             task.timezone = timeZone
         }
@@ -558,10 +432,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return task
     }
     
-    open func createDeserializedEntity()->OCKTask?{
+    open func createDecodedEntity()->OCKTask?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDeserializedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
         
@@ -585,14 +459,19 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         do {
             entity = try JSONDecoder().decode(OCKTask.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDeserializedEntity(). \(error)")
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
         
         return entity
     }
     
-    open class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.clock)}
+        self.elements.forEach{$0.stamp(self.clock)}
+    }
+    
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
         query.whereKey(kPCKTaskClockKey, greaterThanOrEqualTo: localClock)
@@ -618,7 +497,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     }
     
-    open class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
+    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .task(let careKit):
             let _ = Task(careKitEntity: careKit, store: store){

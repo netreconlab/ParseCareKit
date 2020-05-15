@@ -3,7 +3,7 @@
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/18/20.
-//  Copyright © 2020 NetReconLab. All rights reserved.
+//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Parse
@@ -12,26 +12,13 @@ import CareKitStore
 open class ScheduleElement: PFObject, PFSubclassing {
 
     //1 to 1 between Parse and CareStore
-    /*@NSManaged public var asset:String?
-    @NSManaged public var groupIdentifier:String?
-    
-    
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var notes:[Note]?
-    
-    @NSManaged public var source:String?
-    @NSManaged public var tags:[String]?
-    
-    @NSManaged public var timezone:String
-    
-    */
     @NSManaged public var elements:[ScheduleElement]
     @NSManaged public var end:Date?
     @NSManaged public var interval:[String:Any]
     @NSManaged public var start:Date
     @NSManaged public var text:String?
     @NSManaged public var targetValues:[OutcomeValue]
+    @NSManaged public var clock:Int
     
     //UserInfo fields on CareStore
     //@NSManaged public var uuid:String //maps to id
@@ -40,216 +27,51 @@ open class ScheduleElement: PFObject, PFSubclassing {
         return kAScheduleElementClassKey
     }
     
-    public convenience init(careKitEntity:OCKScheduleElement, store: OCKAnyStoreProtocol, completion: @escaping(ScheduleElement?) -> Void) {
+    public convenience init(careKitEntity:OCKScheduleElement) {
         self.init()
-        self.copyCareKit(careKitEntity, store: store, completion: completion)
+        _ = self.copyCareKit(careKitEntity)
     }
     
-    func copyCareKit(_ scheduleElement: OCKScheduleElement, store: OCKAnyStoreProtocol, completion: @escaping(ScheduleElement)->Void){
-        
+    func copyCareKit(_ scheduleElement: OCKScheduleElement)->ScheduleElement{
         self.text = scheduleElement.text
         self.interval = CareKitInterval.era.convertToDictionary(scheduleElement.interval)
         self.start = scheduleElement.start
         self.end = scheduleElement.end
-        
-        OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, store: store){
-            returnedValues in
-            
-            self.targetValues = returnedValues
-            completion(self)
-            /*
-            ScheduleElement.convertCareKitArrayToParse(scheduleElement.elements, store: store){ returnedElements in
-                self.elements = returnedElements
-                completion(self)
-            }*/
-            
-        }
-        
-        /*
-        if let id = scheduleElement.userInfo?[kPCKScheduleElementUserInfoEntityIdKey] {
-            self.entityId = id
-        }
-        self.groupIdentifier = scheduleElement.groupIdentifier
-        self.tags = scheduleElement.tags
-        self.source = scheduleElement.source
-        self.asset = scheduleElement.asset
-        self.timezone = scheduleElement.timezone.abbreviation()!
-        
-        self.locallyUpdatedAt = scheduleElement.updatedDate
-        
-        //Only copy this over if the Local Version is older than the Parse version
-        if self.locallyCreatedAt == nil {
-            self.locallyCreatedAt = scheduleElement.createdDate
-        } else if self.locallyCreatedAt != nil && scheduleElement.createdDate != nil{
-            if scheduleElement.createdDate! < self.locallyCreatedAt!{
-                self.locallyCreatedAt = scheduleElement.createdDate
-            }
-        }
-        
-        Note.convertCareKitArrayToParse(scheduleElement.notes, store: store){
-            copiedNotes in
-            self.notes = copiedNotes
-            
-            OutcomeValue.convertCareKitArrayToParse(scheduleElement.targetValues, store: store){
-                returnedValues in
-                
-                self.targetValues = returnedValues
-                completion(self)
-            }
-        }*/
-        
-        /*
-        if let notes = scheduleElement.notes {
-            
-            var noteIDs = [String]()
-            notes.forEach{
-                //Ignore notes who don't have a ID
-                guard let noteID = $0.userInfo?[kPCKNoteUserInfoEntityIdKey] else{
-                    return
-                }
-                
-                noteIDs.append(noteID)
-            }
-        }*/
-        
+        self.targetValues = scheduleElement.targetValues.compactMap{OutcomeValue(careKitEntity: $0)}
+        //self.elements = scheduleElement.elements.compactMap{ScheduleElement(careKitEntity: $0)}
+        return self
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit()->OCKScheduleElement{
-
         let interval = CareKitInterval.era.convertToDateComponents(self.interval)
-        
         var scheduleElement = OCKScheduleElement(start: self.start, end: self.end, interval: interval)
         scheduleElement.targetValues = self.targetValues.compactMap{$0.convertToCareKit()}
+        //scheduleElement.elements = self.elements.compactMap{$0.convertToCareKit()} //This is marked is get-only
         scheduleElement.text = self.text
-        /*
-        scheduleElement.groupIdentifier = self.groupIdentifier
-        scheduleElement.tags = self.tags
-        scheduleElement.source = self.source
-        //scheduleElement.userInfo?[kPCKCarePlanAuthorIDKey] = self.patient.id
-        scheduleElement.groupIdentifier = self.groupIdentifier
-        scheduleElement.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
-            scheduleElement.timezone = timeZone
-        }
-        
-        scheduleElement.remoteID = self.objectId
-        scheduleElement.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        */
         return scheduleElement
-        /*
-        guard let queryTarget = OutcomeValue.query()/*,
-            let queryElements = ScheduleElement.query()*/ else{
-                completion(nil)
-                return
-        }
-        
-        queryTarget.whereKey(kPCKOutcomeValueUserInfoEntityIdKey, containedIn: self.targetValues)
-        queryTarget.findObjectsInBackground{
-            (objects, error) in
-            
-            guard let values = objects as? [OutcomeValue] else{
-                completion(nil)
-                return
-            }
-            
-            scheduleElement.targetValues = values.compactMap{$0.convertToCareKit()}
-            
-            guard let noteIDs = self.notes,
-                let query = ScheduleElement.query() else{
-                completion(scheduleElement)
-                return
-            }
-            
-            query.whereKey(kAScheduleElementsNotesKey, containedIn: noteIDs)
-            query.findObjectsInBackground{
-            
-                (objects,error) in
-                
-                guard let parseNotes = objects as? [Note] else{
-                    completion(scheduleElement)
-                    return
-                }
-                
-                scheduleElement.notes = [OCKNote]()
-                
-                for (index,parseNote) in parseNotes.enumerated(){
-                    
-                    parseNote.convertToCareKit{
-                        (potentialCareKitNote) in
-                        
-                        guard let careKitNote = potentialCareKitNote else{
-                            if index == (parseNotes.count-1){
-                                completion(scheduleElement)
-                            }
-                            
-                            return
-                        }
-                        
-                        scheduleElement.notes!.append(careKitNote)
-                        
-                        if index == (parseNotes.count-1){
-                            completion(scheduleElement)
-                        }
-                    }
-                }
-            }*/
-            /*
-            queryTarget.whereKey(kPCKOutcomeValueUserInfoEntityIdKey, containedIn: self.elements)
-            queryTarget.findObjectsInBackground{
-                (elementObjects, error) in
-                
-                guard let elements = elementObjects as? [ScheduleElement] else{
-                    return
-                }
-                
-                for (index,element) in elements.enumerated(){
-                    
-                    element.convertToCareKit{
-                        (converted) in
-                        
-                        guard let convertedElement = converted else{
-                            return
-                        }
-                        
-                        scheduleElement.elements.append(convertedElement)
-                        
-                    }
-                    
-                    
-                }
-                
-            }
-            
-        }*/
-        
     }
     
-    class func convertCareKitArrayToParse(_ values: [OCKScheduleElement], store: OCKAnyStoreProtocol, completion: @escaping([ScheduleElement]) -> Void){
-        var returnValues = [ScheduleElement]()
-        if values.isEmpty{
-            completion(returnValues)
-            return
-        }
-        var numberOfCopiedElements = 0
-        values.forEach{
-            let _ = ScheduleElement(careKitEntity: $0, store: store){
-                newElement in
-                numberOfCopiedElements += 1
-                guard let newScheduleElement = newElement else{
-                    return
-                }
-                let careKitElements = newScheduleElement.elements.compactMap{$0.convertToCareKit()}
-                ScheduleElement.convertCareKitArrayToParse(careKitElements, store: store){
-                    moreElements in
-                    newScheduleElement.elements = moreElements
-                    returnValues.append(newScheduleElement)
-                    //copyCareKit is async, so we need it to tell us when it's finished
-                    if numberOfCopiedElements == (values.count){
-                        completion(returnValues)
-                    }
-                }
+    open class func updateIfNeeded(_ parseValues:[ScheduleElement], careKit: [OCKScheduleElement])->[ScheduleElement]{
+        let indexesToDelete = parseValues.count - careKit.count
+        if indexesToDelete > 0{
+            let stopIndex = parseValues.count - 1 - indexesToDelete
+            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
+                parseValues[index].deleteInBackground()
             }
+        }
+        var updatedValues = [ScheduleElement]()
+        for (index,value) in careKit.enumerated(){
+            let updatedValue = parseValues[index].copyCareKit(value)
+            updatedValues.append(updatedValue)
+        }
+        return updatedValues
+    }
+    
+    func stamp(_ clock: Int){
+        self.clock = clock
+        self.elements.forEach{
+            $0.clock = self.clock
         }
     }
 }

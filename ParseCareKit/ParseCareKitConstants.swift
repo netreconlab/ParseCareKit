@@ -3,7 +3,7 @@
 //  ParseCareKit
 //
 //  Created by Corey Baker on 4/26/20.
-//  Copyright © 2020 University of Kentucky. All rights reserved.
+//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Foundation
@@ -170,21 +170,6 @@ public let kPCKScheduleElementIntervalKey                         = "interval"
 public let kPCKScheduleElementTargetValuesKey                     = "targetValues"
 public let kPCKScheduleElementElementsKey                         = "elements"
 
-/*
-public let kPCKScheduleElementCreatedAtKey                           = "createdAt"
-public let kPCKScheduleElementUpdatedAtKey                           = "updatedAt"
-public let kPCKScheduleElementPostedAtKey                            = "postedAt"
-public let kPCKScheduleElementIdKey                                  = "uuid"
-public let kPCKScheduleElementGroupIdentifierKey                  = "groupIdentifier"
-public let kPCKScheduleElementNotesKey                            = "notes"
-public let kPCKScheduleElementSourceKey                           = "source"
-public let kPCKScheduleElementTagsKey                             = "tags"
-public let kPCKScheduleElementAssetKey                            = "asset"
-public let kPCKScheduleElementLocallyCreatedAtKey                    = "locallyCreatedAt"
-public let kPCKScheduleElementLocallyUpdatedAtKey                    = "locallyUpdatedAt"
-public let kPCKScheduleElementTimezoneKey                         = "timezone"
-*/
-
 //#Mark - Note Class
 public let kPCKNoteClassKey                                    = "Note"
 // Field keys
@@ -203,7 +188,7 @@ public let kPCKNoteIdKey                                       = "uuid"
 
 //#Mark - CareKit UserInfo Database Keys
 //CarePlan Class
-public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientId"
+public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientObjectId"
 
 //Contact Element Class
 public let kPCKContactUserInfoAuthorUserEntityIdKey         = "authorId" //The id of the User if there is one.
@@ -214,12 +199,10 @@ public let kPCKOutcomeUserInfoEntityIdKey                   = "entityId"
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoEntityIdKey              = "entityId"
-
-//Schedule Element Class
-public let kPCKScheduleElementUserInfoEntityIdKey           = "entityId"
+public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"
 
 //Note Class
-public let kPCKNoteUserInfoEntityIdKey                                 = "entityId"
+public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "authorObjectId"
 
 
 //#Mark - Custom Enums
