@@ -77,7 +77,8 @@ This works with 1 or many devices per patient. Currently this only syncs OCKTask
 let remoteStoreManager = ParseRemoteSynchronizationManager()
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.store = dataStore
-remoteStoreManager.delegate = self
+remoteStoreManager.delegate = self //Conform to this protocol to receive syncing status
+remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 remoteStoreManager.automaticallySynchronizes = true
 ```
 
@@ -188,24 +189,27 @@ class AppUser: User{
     @NSManaged public var primaryCondition:String?
     @NSManaged public var comorbidities:String?
     
-    override func copyCareKit(_ patientAny: OCKAnyPatient, storeManager: OCKSynchronizedStoreManager, completion: @escaping (User?) -> Void) {
+    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> User? {
         
         guard let patient = patientAny as? OCKPatient else{
             completion(nil)
             return
         }
-        
-        super.copyCareKit(patientAny, storeManager: storeManager){
-            _ in
-            self.primaryCondition = patient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
-            self.comorbidities = patient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
-            completion(self)
-        }
+        _ = super.copyCareKit(patient, clone: clone)
+        self.primaryCondition = patient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
+        self.comorbidities = patient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
+        return self
     }
     
     override func convertToCareKit(firstTimeLoggingIn: Bool=false) -> OCKPatient? {
-        var partiallyConvertedUser = super.convertToCareKit(firstTimeLoggingIn: firstTimeLoggingIn)
-        var userInfo = [String:String]()
+        guard var partiallyConvertedUser = super.convertToCareKit(firstTimeLoggingIn: firstTimeLoggingIn) else{return nil}
+        
+        var userInfo: [String:String]!
+        if partiallyConvertedUser.userInfo == nil{
+            userInfo = [String:String]()
+        }else{
+            userInfo = partiallyConvertedUser.userInfo!
+        }
         if let primaryCondition = self.primaryCondition{
             userInfo["CustomPatientUserInfoPrimaryConditionKey"] = primaryCondition
         }
