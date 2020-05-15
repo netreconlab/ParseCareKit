@@ -7,7 +7,7 @@ PODS:
     - Bolts/Tasks (= 1.9.1)
 
 DEPENDENCIES:
-  - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
+  - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod_tweek`)
   - Parse (~> 1.18)
 
 SPEC REPOS:
@@ -17,19 +17,19 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CareKitStore:
-    :branch: pod
+    :branch: pod_tweek
     :git: https://github.com/cbaker6/CareKit.git
 
 CHECKOUT OPTIONS:
   CareKitStore:
-    :commit: a83685d2b89bd31bbd588802b3b09992e89c52cf
+    :commit: dbc7f4e8ae0687fdc09c784f5d9c4d2e9a3b22d1
     :git: https://github.com/cbaker6/CareKit.git
 
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
-  CareKitStore: a0aeabb8c7dd7430c23ff537e7c45c8a6c829daa
+  CareKitStore: 949ab1c65b1c17c97e83580cd5a8a3cbc57210e0
   Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
 
-PODFILE CHECKSUM: fa137c60425e7d77ce4c8dd5c1b7502da131a8f0
+PODFILE CHECKSUM: ae2f12680d0d37151fc0f3c26f717631fea74e09
 
 COCOAPODS: 1.9.1

@@ -33,7 +33,7 @@ import Foundation
 /// An `OCKOutcome` represents the outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome will contain a single value representing
 /// the patient's tempature.
-public struct OCKOutcome: Codable, Equatable, Identifiable, OCKAnyOutcome, OCKObjectCompatible {
+public struct OCKOutcome: Codable, Equatable, /*Identifiable,*/ OCKAnyOutcome, OCKObjectCompatible {
 
     /// The version ID of the task to which this outcomes belongs.
     public var taskUUID: UUID

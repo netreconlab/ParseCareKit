@@ -31,7 +31,7 @@ import Foundation
 
 /// Any store from which a single type conforming to `OCKAnyCarePlan` can be queried is considered `OCKAnyReadOnlyCarePlanStore`.
 public protocol OCKReadableCarePlanStore: OCKAnyReadOnlyCarePlanStore {
-    associatedtype Plan: OCKAnyCarePlan & Equatable & Identifiable
+    associatedtype Plan: OCKAnyCarePlan & Equatable// & Identifiable
     associatedtype PlanQuery: OCKAnyCarePlanQuery
 
     /// `fetchCarePlans` asynchronously retrieves an array of care plans from the store.

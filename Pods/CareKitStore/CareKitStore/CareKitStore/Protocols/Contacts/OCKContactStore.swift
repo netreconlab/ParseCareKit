@@ -31,7 +31,7 @@ import Foundation
 
 /// Any store from which a single type conforming to `OCKAnyContact` can be queried is considered `OCKAReadableCarePlanStore`.
 public protocol OCKReadableContactStore: OCKAnyReadOnlyContactStore {
-    associatedtype Contact: OCKAnyContact & Equatable & Identifiable
+    associatedtype Contact: OCKAnyContact & Equatable// & Identifiable
     associatedtype ContactQuery: OCKAnyContactQuery
 
     /// `fetchContacts` asynchronously retrieves an array of contacts from the store.
