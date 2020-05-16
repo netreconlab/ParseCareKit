@@ -505,7 +505,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }
                 
                 self.taskId = task.id
-                let test = self.createDecodedEntity()
+                let test = Outcome()
+                test.uuid = ""
+                test.locallyCreatedAt = Date()
+                test.locallyUpdatedAt = Date()
+                test.taskOccurrenceIndex = self.taskOccurrenceIndex
+                test.values = self.values
+                test.createDecodedEntity()
+                
                 guard let taskRemoteID = task.remoteID else{
                     let taskQuery = Task.query()!
                     taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
@@ -552,7 +559,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     func createDecodedEntity()->OCKOutcome?{
         guard /*let task = self.task,*/
-            let taskID = UUID(uuidString: "49F2A0DD-CB70-45DD-8044-08F096771F5A"/*task.uuid*/),
+            let taskUUID = UUID(uuidString: "49F2A0DD-CB70-45DD-8044-08F096771F5A"/*task.uuid*/),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
@@ -560,7 +567,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
             
         let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
-        let tempEntity = OCKOutcome(taskUUID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+        let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
         guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid as AnyObject
         json["createdDate"] = createdDate as AnyObject
