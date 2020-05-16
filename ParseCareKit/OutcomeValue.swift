@@ -139,35 +139,51 @@ open class OutcomeValue: PFObject, PFSubclassing {
             return nil
         }
             
-        var outcomeValue:OCKOutcomeValue? = nil
+        var tempEntity:OCKOutcomeValue? = nil
         
         switch underlyingType {
         
         case .integer:
             if let value = self.value[self.type] as? Int{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .double:
             if let value = self.value[self.type] as? Double{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .boolean:
             if let value = self.value[self.type] as? Bool{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .text:
             if let value = self.value[self.type] as? String{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .binary:
             if let value = self.value[self.type] as? Data{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .date:
             if let value = self.value[self.type] as? Date{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         }
+        
+        guard tempEntity != nil,
+            var json = getEntityAsJSONDictionary(tempEntity!) else{return nil}
+        json["uuid"] = self.uuid as AnyObject
+        json["createdDate"] = createdDate as AnyObject
+        json["updatedDate"] = updatedDate as AnyObject
+        let entity:OCKOutcomeValue!
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            entity = try JSONDecoder().decode(OCKOutcomeValue.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
+            return nil
+        }
+        return entity
+        /*
         let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(outcomeValue)
@@ -188,35 +204,25 @@ open class OutcomeValue: PFObject, PFSubclassing {
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity
+        return entity*/
+    }
+    
+    open func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:AnyObject]?{
+        let jsonDictionary:[String:AnyObject]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
+        }catch{
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
     }
     
     open func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(entity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        let initialSplit = jsonString.split(separator: ",")
-        let uuids = initialSplit.compactMap{ splitString -> String? in
-            if splitString.contains("uuid"){
-                let secondSplit = splitString.split(separator: ":")
-                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
-            }else{
-                return nil
-            }
-        }
-        
-        if uuids.count == 0 {
-            print("Error in \(parseClassName).getUUIDFromCareKitEntity(). The UUID is missing in \(jsonString!) for entity \(entity)")
-            return nil
-        }else if uuids.count > 1 {
-            print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
-        }
-        return uuids.first
+        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+        return json["uuid"] as? String
     }
     
     open class func updateIfNeeded(_ parseValues:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{

@@ -561,7 +561,20 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             
         let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
         let tempEntity = OCKOutcome(taskUUID: taskID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
-        let jsonString:String!
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid as AnyObject
+        json["createdDate"] = createdDate as AnyObject
+        json["updatedDate"] = updatedDate as AnyObject
+        let entity:OCKOutcome!
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            entity = try JSONDecoder().decode(OCKOutcome.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
+            return nil
+        }
+        return entity
+        /*let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(tempEntity)
             jsonString = String(data: jsonData, encoding: .utf8)!
@@ -581,39 +594,25 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity
+        return entity*/
     }
     
-    open func getUUIDFromCareKitEntity(_ entity: OCKOutcome)->String?{
-        //let jsonString:String!
+    open func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:AnyObject]?{
         let jsonDictionary:[String:AnyObject]
         do{
             let data = try JSONEncoder().encode(entity)
-            //jsonString = String(data: data, encoding: .utf8)!
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
         }catch{
-            print("Error \(error)")
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
-        return jsonDictionary["uuid"] as? String
-        /*let initialSplit = jsonString.split(separator: ",")
-        let uuids = initialSplit.compactMap{ splitString -> String? in
-            if splitString.contains("uuid"){
-                let secondSplit = splitString.split(separator: ":")
-                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
-            }else{
-                return nil
-            }
-        }
-        
-        if uuids.count == 0 {
-            print("Error in \(parseClassName).getUUIDFromCareKitEntity(). The UUID is missing in \(jsonString!) for entity \(entity)")
-            return nil
-        }else if uuids.count > 1 {
-            print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
-        }
-        return uuids.first*/
+        return jsonDictionary
+    }
+    
+    open func getUUIDFromCareKitEntity(_ entity: OCKOutcome)->String?{
+        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+        return json["uuid"] as? String
     }
     
     func stampRelationalEntities(){

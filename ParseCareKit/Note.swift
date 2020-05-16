@@ -135,32 +135,22 @@ open class Note: PFObject, PFSubclassing {
         return entity
     }
     
-    open func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
-        let jsonString:String!
+    open func getEntityAsJSONDictionary(_ entity: OCKNote)->[String:AnyObject]?{
+        let jsonDictionary:[String:AnyObject]
         do{
-            let jsonData = try JSONEncoder().encode(entity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
         }catch{
-            print("Error \(error)")
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil
-        }
-        let initialSplit = jsonString.split(separator: ",")
-        let uuids = initialSplit.compactMap{ splitString -> String? in
-            if splitString.contains("uuid"){
-                let secondSplit = splitString.split(separator: ":")
-                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
-            }else{
-                return nil
-            }
         }
         
-        if uuids.count == 0 {
-            print("Error in \(parseClassName).getUUIDFromCareKitEntity(). The UUID is missing in \(jsonString!) for entity \(entity)")
-            return nil
-        }else if uuids.count > 1 {
-            print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
-        }
-        return uuids.first
+        return jsonDictionary
+    }
+    
+    open func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
+        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+        return json["uuid"] as? String
     }
     
     open class func updateIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?)->[Note]?{
