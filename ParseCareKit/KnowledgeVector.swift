@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKitStore
+import CareKit
 
 class KnowledgeVector: PFObject, PFSubclassing {
     //1 to 1 between Parse and CareStore

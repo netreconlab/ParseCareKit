@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CareKitStore
+import CareKit
 import Parse
 
 /**

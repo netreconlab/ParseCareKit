@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKitStore
+import CareKit
 
 
 open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {

@@ -7,7 +7,7 @@
 //
 
 import Parse
-import CareKitStore
+import CareKit
 
 open class Note: PFObject, PFSubclassing {
 

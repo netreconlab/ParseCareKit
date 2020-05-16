@@ -8,7 +8,7 @@
 
 import Foundation
 import Parse
-import CareKitStore
+import CareKit
 
 enum ParseCareKitError: Error {
     case userNotLoggedIn

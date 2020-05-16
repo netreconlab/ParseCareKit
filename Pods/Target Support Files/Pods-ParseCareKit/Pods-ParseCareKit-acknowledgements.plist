@@ -85,7 +85,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<key>License</key>
 			<string>BSD</string>
 			<key>Title</key>
-			<string>CareKitStore</string>
+			<string>CareKit</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
