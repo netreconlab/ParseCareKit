@@ -29,8 +29,8 @@ public class ParseCareKitUtility {
     public class func insertReadOnlyKeys(_ keyValueToInsert:String, json:String)->String?{
         var returnString = json
         let modifiedKeyValue = keyValueToInsert+","
-        guard let position = returnString.firstIndex(of: ",") else{return nil}
-        returnString.insert(contentsOf: modifiedKeyValue, at: returnString.index(after: position))
+        guard let position = returnString.firstIndex(of: "\\") else{return nil}
+        returnString.insert(contentsOf: modifiedKeyValue, at: returnString.index(before: position))
         return returnString
     }
 }
