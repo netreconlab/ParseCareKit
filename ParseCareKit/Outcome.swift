@@ -491,7 +491,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             self.notes = Note.updateIfNeeded(self.notes, careKit: outcome.notes)
             self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values)
         }
-        
+        let test = self.createDecodedEntity()
         //ID's are the same for related Plans
         var query = OCKTaskQuery()
         query.uuids = [outcome.taskUUID]
@@ -516,7 +516,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             return
                         }
                         self.task = taskFound
-                        let test = self.createDecodedEntity()
                         completion(self)
                     }
                     return
