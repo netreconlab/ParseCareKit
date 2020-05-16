@@ -611,6 +611,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         let jsonDictionary:[String:AnyObject]
         do{
             let data = try JSONEncoder().encode(entity)
+            let jsonString = String(data: data, encoding: .utf8)!
+            print(jsonString)
             let newEntity = try JSONDecoder().decode(OCKOutcome.self, from: data)
             print(newEntity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:AnyObject]
