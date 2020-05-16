@@ -516,6 +516,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             return
                         }
                         self.task = taskFound
+                        let test = self.createDecodedEntity()
                         completion(self)
                     }
                     return
