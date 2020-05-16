@@ -168,7 +168,8 @@ open class OutcomeValue: PFObject, PFSubclassing {
                 tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         }
-        
+        //Converting using dictionaries doesn't work because json conversion is having trouble
+        /*
         guard tempEntity != nil,
             var json = getEntityAsJSONDictionary(tempEntity!) else{return nil}
         json["uuid"] = self.uuid as AnyObject
@@ -182,11 +183,10 @@ open class OutcomeValue: PFObject, PFSubclassing {
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity
-        /*
+        return entity*/
         let jsonString:String!
         do{
-            let jsonData = try JSONEncoder().encode(outcomeValue)
+            let jsonData = try JSONEncoder().encode(tempEntity)
             jsonString = String(data: jsonData, encoding: .utf8)!
         }catch{
             print("Error \(error)")
@@ -204,7 +204,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity*/
+        return entity
     }
     
     open func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:AnyObject]?{

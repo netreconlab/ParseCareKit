@@ -512,7 +512,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 test.taskOccurrenceIndex = self.taskOccurrenceIndex
                 test.values = self.values
                 test.createDecodedEntity()
-                
                 guard let taskRemoteID = task.remoteID else{
                     let taskQuery = Task.query()!
                     taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
@@ -558,8 +557,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func createDecodedEntity()->OCKOutcome?{
-        guard /*let task = self.task,*/
-            let taskUUID = UUID(uuidString: "49F2A0DD-CB70-45DD-8044-08F096771F5A"/*task.uuid*/),
+        guard let task = self.task,
+            let taskUUID = UUID(uuidString: task.uuid),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
@@ -568,6 +567,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             
         let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
         let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+        //Converting using dictionaries doesn't work because json conversion is having trouble
+        /*
         guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid as AnyObject
         json["createdDate"] = createdDate as AnyObject
@@ -582,8 +583,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity
-        /*let jsonString:String!
+        return entity*/
+        let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(tempEntity)
             jsonString = String(data: jsonData, encoding: .utf8)!
@@ -603,7 +604,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity*/
+        return entity
     }
     
     open func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:AnyObject]?{
