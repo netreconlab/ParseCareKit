@@ -610,7 +610,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         let jsonDictionary:[String:AnyObject]
         do{
             let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:AnyObject]
         }catch{
             print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil
