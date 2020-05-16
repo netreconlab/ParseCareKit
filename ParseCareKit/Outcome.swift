@@ -585,15 +585,19 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     open func getUUIDFromCareKitEntity(_ entity: OCKOutcome)->String?{
-        let jsonString:String!
+        //let jsonString:String!
+        let jsonDictionary:[String:AnyObject]
         do{
-            let jsonData = try JSONEncoder().encode(entity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
+            let data = try JSONEncoder().encode(entity)
+            //jsonString = String(data: data, encoding: .utf8)!
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
         }catch{
             print("Error \(error)")
             return nil
         }
-        let initialSplit = jsonString.split(separator: ",")
+        
+        return jsonDictionary["uuid"] as? String
+        /*let initialSplit = jsonString.split(separator: ",")
         let uuids = initialSplit.compactMap{ splitString -> String? in
             if splitString.contains("uuid"){
                 let secondSplit = splitString.split(separator: ":")
@@ -609,7 +613,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }else if uuids.count > 1 {
             print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
         }
-        return uuids.first
+        return uuids.first*/
     }
     
     func stampRelationalEntities(){
