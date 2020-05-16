@@ -15,7 +15,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
     @NSManaged public var birthday:Date?
-    @NSManaged public var entityId:String
+    
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
@@ -26,9 +26,12 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     @NSManaged public var tags:[String]?
     @NSManaged public var timezone:String
     @NSManaged public var userInfo:[String:String]?
+    @NSManaged public var nextVersionUUID:String?
+    @NSManaged public var previousVersionUUID:String?
+    @NSManaged public var uuid:String
     
     //Not 1 to 1
-    @NSManaged public var uuid:String
+    @NSManaged public var entityId:String //maps to id
     @NSManaged public var clock:Int
 
     public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
@@ -83,7 +86,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    func compareUpdate(_ careKit: OCKPatient, parse: User, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKPatient, parse: User, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
@@ -123,7 +126,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 }
             }else if cloudUpdatedAt > careKitLastUpdated{
                 //The cloud version is newer than local, update the local version instead
-                guard let updatedPatientFromCloud = parse.convertToCareKit() else{
+                guard let updatedPatientFromCloud = parse.convertToCareKit(store) else{
                     completion(false,nil)
                     return
                 }
@@ -168,7 +171,8 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = store as? OCKStore else{
             return
         }
         
@@ -186,7 +190,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         }
     }
     
-    func compareDelete(_ parse: User, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: User, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
@@ -203,7 +207,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 completion(success,error)
             }
         }else {
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else {return}
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else {return}
             store.updateAnyPatient(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
                 result in
                 switch result{
@@ -318,6 +322,8 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             return nil
         }
         self.uuid = uuid
+        self.previousVersionUUID = patient.nextVersionUUID?.uuidString
+        self.nextVersionUUID = patient.previousVersionUUID?.uuidString
         self.entityId = patient.id
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
@@ -342,13 +348,13 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         return self
     }
     
-    open func convertToCareKit(firstTimeLoggingIn: Bool=false)->OCKPatient?{
+    open func convertToCareKit(_ store: OCKStore, firstTimeLoggingIn: Bool=false)->OCKPatient?{
         var patient:OCKPatient!
         if firstTimeLoggingIn{
             let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
             patient = OCKPatient(id: self.entityId, name: nameComponents)
         }else{
-            guard let decodedPatient = createDecodedEntity() else{return nil}
+            guard let decodedPatient = createDecodedEntity(store) else{return nil}
             patient = decodedPatient
         }
         
@@ -370,7 +376,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         return patient
     }
     
-    open func createDecodedEntity()->OCKPatient?{
+    open func createDecodedEntity(_ store: OCKStore)->OCKPatient?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
@@ -406,7 +412,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         self.notes?.forEach{$0.stamp(self.clock)}
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, store: OCKStore, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = User.query()!
         query.whereKey(kPCKUserClockKey, greaterThanOrEqualTo: localClock)
@@ -424,7 +430,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 mergeRevision(revision)
                 return
             }
-            let pulled = carePlans.compactMap{$0.convertToCareKit()}
+            let pulled = carePlans.compactMap{$0.convertToCareKit(store)}
             let entities = pulled.compactMap{OCKEntity.patient($0)}
             let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
             mergeRevision(revision)

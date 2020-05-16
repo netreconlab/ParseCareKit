@@ -26,11 +26,14 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     @NSManaged public var source:String?
     @NSManaged public var notes:[Note]?
     @NSManaged public var uuid:String
+    @NSManaged public var nextVersionUUID:String?
+    @NSManaged public var previousVersionUUID:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var entityId:String
     @NSManaged public var userInfo:[String:String]?
+    
     //Not 1 to 1 UserInfo fields on CareStore
+    @NSManaged public var entityId:String //maps to id
     @NSManaged public var patientId:String?
     @NSManaged public var clock:Int
     
@@ -90,7 +93,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         
     }
     
-    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
@@ -110,7 +113,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 }
             }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
                 //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else{
                     completion(false,nil)
                     return
                 }
@@ -152,7 +155,8 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = store as? OCKStore else{
             return
         }
        
@@ -169,7 +173,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
     }
     
-    func compareDelete(_ parse: CarePlan, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: CarePlan, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
@@ -186,7 +190,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 completion(success,error)
             }
         }else {
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else {return}
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else {return}
             store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
                 result in
                 switch result{
@@ -306,6 +310,8 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             return
         }
         self.uuid = uuid
+        self.previousVersionUUID = carePlan.nextVersionUUID?.uuidString
+        self.nextVersionUUID = carePlan.previousVersionUUID?.uuidString
         self.entityId = carePlan.id
         self.title = carePlan.title
         self.groupIdentifier = carePlan.groupIdentifier
@@ -383,9 +389,9 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit()->OCKCarePlan?{
+    open func convertToCareKit(_ store: OCKStore)->OCKCarePlan?{
         
-        guard var carePlan = createDecodedEntity() else{return nil}
+        guard var carePlan = createDecodedEntity(store) else{return nil}
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
         carePlan.source = self.source
@@ -400,7 +406,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         return carePlan
     }
     
-    open func createDecodedEntity()->OCKCarePlan?{
+    open func createDecodedEntity(_ store: OCKStore)->OCKCarePlan?{
         guard let authorID = self.author?.uuid,
             let authorUUID = UUID(uuidString: authorID),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
@@ -437,7 +443,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.notes?.forEach{$0.stamp(self.clock)}
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, store: OCKStore, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = CarePlan.query()!
         query.whereKey(kPCKCarePlanClockKey, greaterThanOrEqualTo: localClock)
@@ -456,7 +462,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 mergeRevision(revision)
                 return
             }
-            let pulled = carePlans.compactMap{$0.convertToCareKit()}
+            let pulled = carePlans.compactMap{$0.convertToCareKit(store)}
             let entities = pulled.compactMap{OCKEntity.carePlan($0)}
             let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
             mergeRevision(revision)

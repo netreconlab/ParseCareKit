@@ -141,21 +141,24 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     }
                 }
             }else if cloudUpdatedAt > careKitLastUpdated {
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                    completion(false,nil)
-                    return
-                }
-                    
-                store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(true,nil)
-                    case .failure(let error):
-                        print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(false,error)
+                parse.convertToCareKit(store){
+                    updatedCarePlanFromCloud in
+                    guard let updatedCarePlanFromCloud = updatedCarePlanFromCloud else{
+                        completion(false,nil)
+                        return
                     }
+                    store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                        result in
+                        switch result{
+                        case .success(_):
+                            print("Successfully updated \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                            completion(true,nil)
+                        case .failure(let error):
+                            print("Error updating \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                            completion(false,error)
+                        }
+                    }
+                    
                 }
             }else{
                 completion(true,nil)
@@ -186,7 +189,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = store as? OCKStore else{
             completion(false,nil)
             return
         }
@@ -205,7 +209,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    func compareDelete(_ parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: Outcome, store: OCKStore, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             completion(false,nil)
@@ -229,19 +233,22 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 completion(success,error)
             }
         }else {
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,nil)
-                return
-            }
-            store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(_):
-                    print("Successfully deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            parse.convertToCareKit(store){
+                updatedCarePlanFromCloud in
+                guard let updatedCarePlanFromCloud = updatedCarePlanFromCloud else{
+                    completion(false,nil)
+                    return
+                }
+                store.updateAnyOutcome(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(_):
+                        print("Successfully deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
                 }
             }
         }
@@ -511,7 +518,10 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 test.locallyUpdatedAt = Date()
                 test.taskOccurrenceIndex = self.taskOccurrenceIndex
                 test.values = self.values
-                test.createDecodedEntity()
+                test.createDecodedEntity(store){
+                    testing in
+                    print(testing)
+                }
                 guard let taskRemoteID = task.remoteID else{
                     let taskQuery = Task.query()!
                     taskQuery.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
@@ -537,53 +547,77 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKOutcome?{
-        guard var outcome = createDecodedEntity() else{return nil}
-        outcome.groupIdentifier = self.groupIdentifier
-        outcome.tags = self.tags
-        outcome.source = self.source
-        outcome.userInfo = self.userInfo
-        //outcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: self.entityId] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
-        
-        outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
-        outcome.groupIdentifier = self.groupIdentifier
-        outcome.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
-            outcome.timezone = timeZone
+    open func convertToCareKit(_ store: OCKStore, completion: @escaping(OCKOutcome?)->Void){
+        createDecodedEntity(store){
+            outcome in
+            guard var outcome = outcome else{
+                completion(nil)
+                return
+            }
+            
+            outcome.groupIdentifier = self.groupIdentifier
+            outcome.tags = self.tags
+            outcome.source = self.source
+            outcome.userInfo = self.userInfo
+            //outcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: self.entityId] //For some reason, outcome doesn't let you set the current one. Assuming this is a bug in the current CareKit
+            
+            outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
+            outcome.groupIdentifier = self.groupIdentifier
+            outcome.asset = self.asset
+            if let timeZone = TimeZone(abbreviation: self.timezone){
+                outcome.timezone = timeZone
+            }
+            outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
+            outcome.remoteID = self.objectId
+            outcome.values = self.values.compactMap{$0.convertToCareKit()}
+            completion(outcome)
+            return
         }
-        outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        outcome.remoteID = self.objectId
-        return outcome
+        
     }
     
-    func createDecodedEntity()->OCKOutcome?{
-        guard /*let task = self.task,*/
-            let taskUUID = UUID(uuidString: "49F2A0DD-CB70-45DD-8044-08F096771F5A"/*task.uuid*/),
+    func createDecodedEntity(_ store: OCKStore, completion: @escaping(OCKOutcome?)->Void){
+        guard let task = self.task,
+            let taskUUID = UUID(uuidString: task.uuid),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
-            return nil
+                completion(nil)
+                return
         }
-            
-        let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
-        let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
-        //Converting using dictionaries doesn't work because json conversion is having trouble
-        /*
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
-        json["uuid"] = self.uuid as AnyObject
-        json["createdDate"] = createdDate as AnyObject
-        json["updatedDate"] = updatedDate as AnyObject
-        let entity:OCKOutcome!
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let jsonString = String(data: data, encoding: .utf8)!
-            print(jsonString)
-            entity = try JSONDecoder().decode(OCKOutcome.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
+        
+        let query = OCKOutcomeQuery(for: Date())//Gey any entity
+        store.fetchOutcome(query: query, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let tempEntity):
+                guard var json = self.getEntityAsJSONDictionary(tempEntity) else{
+                    completion(nil)
+                    return
+                }
+                //Replace values
+                json["uuid"] = self.uuid as AnyObject
+                json["createdDate"] = createdDate as AnyObject
+                json["updatedDate"] = updatedDate as AnyObject
+                json["taskUUID"] = taskUUID as AnyObject
+                let entity:OCKOutcome!
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: json, options: [])
+                    let jsonString = String(data: data, encoding: .utf8)!
+                    print(jsonString)
+                    entity = try JSONDecoder().decode(OCKOutcome.self, from: data)
+                }catch{
+                    print("Error in \(self.parseClassName).createDecodedEntity(). \(error)")
+                    completion(nil)
+                    return
+                }
+                completion(entity)
+            case .failure(_):
+                completion(nil)
+            }
         }
-        return entity*/
+        
+        /*let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
         let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(tempEntity)
@@ -604,17 +638,13 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity
+        return entity*/
     }
     
     open func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:AnyObject]?{
         let jsonDictionary:[String:AnyObject]
         do{
             let data = try JSONEncoder().encode(entity)
-            let jsonString = String(data: data, encoding: .utf8)!
-            print(jsonString)
-            let newEntity = try JSONDecoder().decode(OCKOutcome.self, from: data)
-            print(newEntity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:AnyObject]
         }catch{
             print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
@@ -634,7 +664,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.values.forEach{$0.stamp(self.clock)}
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, store: OCKStore, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Outcome.query()!
         query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
@@ -653,10 +683,23 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 mergeRevision(revision)
                 return
             }
-            let pulled = outcomes.compactMap{$0.convertToCareKit()}
-            let entities = pulled.compactMap{OCKEntity.outcome($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
-            mergeRevision(revision)
+            var numberOfEntitiesConverted = 0
+            var entitiesConverted = [OCKOutcome]()
+            outcomes.forEach{
+                $0.convertToCareKit(store){
+                    outcome in
+                    if outcome != nil{
+                        entitiesConverted.append(outcome!)
+                    }
+                    numberOfEntitiesConverted += 1
+                    if numberOfEntitiesConverted == outcomes.count{
+                        let entities = entitiesConverted.compactMap{OCKEntity.outcome($0)}
+                        let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+                        mergeRevision(revision)
+                    }
+                }
+            }
+            
         }
     }
     
