@@ -577,8 +577,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func createDecodedEntity(_ store: OCKStore, completion: @escaping(OCKOutcome?)->Void){
-        guard let task = self.task,
-            let taskUUID = UUID(uuidString: task.uuid),
+        guard /*let task = self.task,*/
+            let taskUUID = UUID(uuidString: "3B93BBE7-1B74-4F05-83D0-C0339B5CBBA4"/*task.uuid*/),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
