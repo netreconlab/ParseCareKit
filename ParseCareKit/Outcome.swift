@@ -506,7 +506,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 
                 self.taskId = task.id
                 let test = Outcome()
-                test.uuid = ""
+                test.uuid = "49F2A0DD-CB70-45DD-8044-08F096771F5A"
                 test.locallyCreatedAt = Date()
                 test.locallyUpdatedAt = Date()
                 test.taskOccurrenceIndex = self.taskOccurrenceIndex
