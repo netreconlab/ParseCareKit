@@ -568,6 +568,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         let entity:OCKOutcome!
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let jsonString = String(data: data, encoding: .utf8)!
+            print(jsonString)
             entity = try JSONDecoder().decode(OCKOutcome.self, from: data)
         }catch{
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
