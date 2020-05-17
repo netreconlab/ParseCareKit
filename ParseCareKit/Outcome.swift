@@ -562,11 +562,11 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
         let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
         //Converting using dictionaries doesn't work because json conversion is having trouble
-        /*
+        
         guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
-        json["uuid"] = self.uuid as AnyObject
-        json["createdDate"] = createdDate as AnyObject
-        json["updatedDate"] = updatedDate as AnyObject
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
         let entity:OCKOutcome!
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
@@ -577,7 +577,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity*/
+        return entity/*
         let jsonString:String!
         do{
             let jsonData = try JSONEncoder().encode(tempEntity)
@@ -598,14 +598,14 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity
+        return entity*/
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:AnyObject]?{
-        let jsonDictionary:[String:AnyObject]
+    open func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:Any]?{
+        let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:AnyObject]
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
         }catch{
             print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil
