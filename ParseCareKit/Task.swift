@@ -461,7 +461,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         //Create bare CareKit entity from json
         let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
+            let data = insertValue.data(using: .utf8) else{return nil}
         let entity:OCKTask!
         do {
             entity = try JSONDecoder().decode(OCKTask.self, from: data)
