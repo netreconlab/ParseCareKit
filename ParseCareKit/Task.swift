@@ -439,6 +439,19 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return task
     }
     
+    open func getEntityAsJSONDictionary(_ entity: OCKTask)->[String:Any]?{
+        let jsonDictionary:[String:Any]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
+        }catch{
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
+    }
+    
     open func createDecodedEntity(_ store: OCKStore)->OCKTask?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
@@ -459,7 +472,22 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
+        let entity:OCKTask!
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let jsonString = String(data: data, encoding: .utf8)!
+            print(jsonString)
+            entity = try JSONDecoder().decode(OCKTask.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
+            return nil
+        }
+        return entity
+        /*let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
         guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
             let data = modifiedJson.data(using: .utf8) else{return nil}
         let entity:OCKTask!
@@ -470,7 +498,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return nil
         }
         
-        return entity
+        return entity*/
     }
     
     func stampRelationalEntities(){

@@ -561,7 +561,6 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             //Will need access to store, fetch outcome based on id, then replace stuff above
         let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
         let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
-        //Converting using dictionaries doesn't work because json conversion is having trouble
         
         guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
