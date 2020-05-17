@@ -596,7 +596,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     return
                 }
                 //Replace values
-                json["uuid"] = self.uuid as NSString
+                json["uuid"] = NSMutableString(utf8String: self.uuid)
                 json["createdDate"] = createdDate as AnyObject
                 json["updatedDate"] = updatedDate as AnyObject
                 json["taskUUID"] = taskUUID as AnyObject
