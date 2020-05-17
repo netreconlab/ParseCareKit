@@ -167,9 +167,15 @@ open class Note: PFObject, PFSubclassing {
         }
         var updatedNotes = [Note]()
         for (index,value) in careKit.enumerated(){
-            let updatedNote = parse[index].copyCareKit(value, clone: false)
-            if updatedNote != nil{
-                updatedNotes.append(updatedNote!)
+            let updated:Note?
+            //Replace if currently in cloud or create a new one
+            if index <= parse.count-1{
+                updated = parse[index].copyCareKit(value, clone: true)
+            }else{
+                updated = Note(careKitEntity: value)
+            }
+            if updated != nil{
+                updatedNotes.append(updated!)
             }
         }
         return updatedNotes

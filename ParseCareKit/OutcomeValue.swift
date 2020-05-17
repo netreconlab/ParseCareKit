@@ -225,19 +225,25 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return json["uuid"] as? String
     }
     
-    open class func updateIfNeeded(_ parseValues:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{
-        let indexesToDelete = parseValues.count - careKit.count
+    open class func updateIfNeeded(_ parse:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{
+        let indexesToDelete = parse.count - careKit.count
         if indexesToDelete > 0{
-            let stopIndex = parseValues.count - 1 - indexesToDelete
-            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
-                parseValues[index].deleteInBackground()
+            let stopIndex = parse.count - 1 - indexesToDelete
+            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
+                parse[index].deleteInBackground()
             }
         }
         var updatedValues = [OutcomeValue]()
         for (index,value) in careKit.enumerated(){
-            let updatedValue = parseValues[index].copyCareKit(value, clone: false)
-            if updatedValue != nil{
-                updatedValues.append(updatedValue!)
+            let updated:OutcomeValue?
+            //Replace if currently in cloud or create a new one
+            if index <= parse.count-1{
+                updated = parse[index].copyCareKit(value, clone: true)
+            }else{
+                updated = OutcomeValue(careKitEntity: value)
+            }
+            if updated != nil{
+                updatedValues.append(updated!)
             }
         }
         return updatedValues

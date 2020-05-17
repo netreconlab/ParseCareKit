@@ -476,6 +476,12 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        if let previous = self.previousVersionUUID{
+            json["previousVersionUUID"] = previous
+        }
+        if let next = self.nextVersionUUID{
+            json["nextVersionUUID"] = next
+        }
         let entity:OCKTask!
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
