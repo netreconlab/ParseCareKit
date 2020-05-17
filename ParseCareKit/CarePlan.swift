@@ -26,11 +26,14 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     @NSManaged public var source:String?
     @NSManaged public var notes:[Note]?
     @NSManaged public var uuid:String
+    @NSManaged public var nextVersionUUID:String?
+    @NSManaged public var previousVersionUUID:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var entityId:String
     @NSManaged public var userInfo:[String:String]?
+    
     //Not 1 to 1 UserInfo fields on CareStore
+    @NSManaged public var entityId:String //maps to id
     @NSManaged public var patientId:String?
     @NSManaged public var clock:Int
     
@@ -90,7 +93,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         
     }
     
-    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    private func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
@@ -152,7 +155,8 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current() else{
+        guard let _ = User.current(),
+            let store = store as? OCKStore else{
             return
         }
        
@@ -169,7 +173,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
     }
     
-    func compareDelete(_ parse: CarePlan, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: CarePlan, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
@@ -306,6 +310,8 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             return
         }
         self.uuid = uuid
+        self.previousVersionUUID = carePlan.nextVersionUUID?.uuidString
+        self.nextVersionUUID = carePlan.previousVersionUUID?.uuidString
         self.entityId = carePlan.id
         self.title = carePlan.title
         self.groupIdentifier = carePlan.groupIdentifier
@@ -400,6 +406,32 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         return carePlan
     }
     
+    open func getEntityAsJSONDictionary(_ entity: OCKContact)->[String:Any]?{
+        let jsonDictionary:[String:Any]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
+        }catch{
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
+    }
+    
+    open func getEntityAsJSONDictionary(_ entity: OCKCarePlan)->[String:Any]?{
+        let jsonDictionary:[String:Any]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
+        }catch{
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
+    }
+    
     open func createDecodedEntity()->OCKCarePlan?{
         guard let authorID = self.author?.uuid,
             let authorUUID = UUID(uuidString: authorID),
@@ -410,21 +442,22 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
             
         let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(tempEntity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
-        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
+        if let previous = self.previousVersionUUID{
+            json["previousVersionUUID"] = previous
+        }
+        if let next = self.nextVersionUUID{
+            json["nextVersionUUID"] = next
+        }
         let entity:OCKCarePlan!
         do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let jsonString = String(data: data, encoding: .utf8)!
+            print(jsonString)
             entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
         }catch{
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")

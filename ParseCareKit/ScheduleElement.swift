@@ -52,18 +52,24 @@ open class ScheduleElement: PFObject, PFSubclassing {
         return scheduleElement
     }
     
-    open class func updateIfNeeded(_ parseValues:[ScheduleElement], careKit: [OCKScheduleElement])->[ScheduleElement]{
-        let indexesToDelete = parseValues.count - careKit.count
+    open class func updateIfNeeded(_ parse:[ScheduleElement], careKit: [OCKScheduleElement])->[ScheduleElement]{
+        let indexesToDelete = parse.count - careKit.count
         if indexesToDelete > 0{
-            let stopIndex = parseValues.count - 1 - indexesToDelete
-            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
-                parseValues[index].deleteInBackground()
+            let stopIndex = parse.count - 1 - indexesToDelete
+            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
+                parse[index].deleteInBackground()
             }
         }
         var updatedValues = [ScheduleElement]()
         for (index,value) in careKit.enumerated(){
-            let updatedValue = parseValues[index].copyCareKit(value)
-            updatedValues.append(updatedValue)
+            let updated:ScheduleElement
+            //Replace if currently in cloud or create a new one
+            if index <= parse.count-1{
+                updated = parse[index].copyCareKit(value)
+            }else{
+                updated = ScheduleElement(careKitEntity: value)
+            }
+            updatedValues.append(updated)
         }
         return updatedValues
     }

@@ -139,50 +139,43 @@ open class OutcomeValue: PFObject, PFSubclassing {
             return nil
         }
             
-        var outcomeValue:OCKOutcomeValue? = nil
+        var tempEntity:OCKOutcomeValue = OCKOutcomeValue("")
         
         switch underlyingType {
         
         case .integer:
             if let value = self.value[self.type] as? Int{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .double:
             if let value = self.value[self.type] as? Double{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .boolean:
             if let value = self.value[self.type] as? Bool{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .text:
             if let value = self.value[self.type] as? String{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .binary:
             if let value = self.value[self.type] as? Data{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         case .date:
             if let value = self.value[self.type] as? Date{
-                outcomeValue = OCKOutcomeValue(value, units: self.units)
+                tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         }
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(outcomeValue)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
-        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
         let entity:OCKOutcomeValue!
         do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
             entity = try JSONDecoder().decode(OCKOutcomeValue.self, from: data)
         }catch{
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
@@ -191,47 +184,43 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return entity
     }
     
-    open func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
-        let jsonString:String!
+    open func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:Any]?{
+        let jsonDictionary:[String:Any]
         do{
-            let jsonData = try JSONEncoder().encode(entity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
         }catch{
-            print("Error \(error)")
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil
-        }
-        let initialSplit = jsonString.split(separator: ",")
-        let uuids = initialSplit.compactMap{ splitString -> String? in
-            if splitString.contains("uuid"){
-                let secondSplit = splitString.split(separator: ":")
-                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
-            }else{
-                return nil
-            }
         }
         
-        if uuids.count == 0 {
-            print("Error in \(parseClassName).getUUIDFromCareKitEntity(). The UUID is missing in \(jsonString!) for entity \(entity)")
-            return nil
-        }else if uuids.count > 1 {
-            print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
-        }
-        return uuids.first
+        return jsonDictionary
     }
     
-    open class func updateIfNeeded(_ parseValues:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{
-        let indexesToDelete = parseValues.count - careKit.count
+    open func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
+        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+        return json["uuid"] as? String
+    }
+    
+    open class func updateIfNeeded(_ parse:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{
+        let indexesToDelete = parse.count - careKit.count
         if indexesToDelete > 0{
-            let stopIndex = parseValues.count - 1 - indexesToDelete
-            for index in stride(from: parseValues.count-1, to: stopIndex, by: -1) {
-                parseValues[index].deleteInBackground()
+            let stopIndex = parse.count - 1 - indexesToDelete
+            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
+                parse[index].deleteInBackground()
             }
         }
         var updatedValues = [OutcomeValue]()
         for (index,value) in careKit.enumerated(){
-            let updatedValue = parseValues[index].copyCareKit(value, clone: false)
-            if updatedValue != nil{
-                updatedValues.append(updatedValue!)
+            let updated:OutcomeValue?
+            //Replace if currently in cloud or create a new one
+            if index <= parse.count-1{
+                updated = parse[index].copyCareKit(value, clone: true)
+            }else{
+                updated = OutcomeValue(careKitEntity: value)
+            }
+            if updated != nil{
+                updatedValues.append(updated!)
             }
         }
         return updatedValues

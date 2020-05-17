@@ -112,21 +112,14 @@ open class Note: PFObject, PFSubclassing {
         }
             
         let tempEntity = OCKNote(author: self.author, title: self.title, content: self.content)
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(tempEntity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
-        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
         let entity:OCKNote!
         do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
             entity = try JSONDecoder().decode(OCKNote.self, from: data)
         }catch{
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
@@ -135,32 +128,22 @@ open class Note: PFObject, PFSubclassing {
         return entity
     }
     
-    open func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
-        let jsonString:String!
+    open func getEntityAsJSONDictionary(_ entity: OCKNote)->[String:Any]?{
+        let jsonDictionary:[String:Any]
         do{
-            let jsonData = try JSONEncoder().encode(entity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
         }catch{
-            print("Error \(error)")
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil
-        }
-        let initialSplit = jsonString.split(separator: ",")
-        let uuids = initialSplit.compactMap{ splitString -> String? in
-            if splitString.contains("uuid"){
-                let secondSplit = splitString.split(separator: ":")
-                return String(secondSplit[1]).replacingOccurrences(of: "\"", with: "")
-            }else{
-                return nil
-            }
         }
         
-        if uuids.count == 0 {
-            print("Error in \(parseClassName).getUUIDFromCareKitEntity(). The UUID is missing in \(jsonString!) for entity \(entity)")
-            return nil
-        }else if uuids.count > 1 {
-            print("Warning in \(parseClassName).getUUIDFromCareKitEntity(). Found multiple UUID's, using first one in \(jsonString!) for entity \(entity)")
-        }
-        return uuids.first
+        return jsonDictionary
+    }
+    
+    open func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
+        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+        return json["uuid"] as? String
     }
     
     open class func updateIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?)->[Note]?{
@@ -177,9 +160,15 @@ open class Note: PFObject, PFSubclassing {
         }
         var updatedNotes = [Note]()
         for (index,value) in careKit.enumerated(){
-            let updatedNote = parse[index].copyCareKit(value, clone: false)
-            if updatedNote != nil{
-                updatedNotes.append(updatedNote!)
+            let updated:Note?
+            //Replace if currently in cloud or create a new one
+            if index <= parse.count-1{
+                updated = parse[index].copyCareKit(value, clone: true)
+            }else{
+                updated = Note(careKitEntity: value)
+            }
+            if updated != nil{
+                updatedNotes.append(updated!)
             }
         }
         return updatedNotes

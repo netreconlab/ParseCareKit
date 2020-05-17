@@ -45,7 +45,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             (_, potentialCKKnowledgeVector, potentialUUID, error) in
             guard let cloudVector = potentialCKKnowledgeVector,
                 let cloudVectorUUID = potentialUUID else{
-                completion(error)
+                completion(nil)
                 return
             }
             
