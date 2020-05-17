@@ -139,7 +139,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
             return nil
         }
             
-        var tempEntity:OCKOutcomeValue? = nil
+        var tempEntity:OCKOutcomeValue = OCKOutcomeValue("")
         
         switch underlyingType {
         
@@ -168,13 +168,11 @@ open class OutcomeValue: PFObject, PFSubclassing {
                 tempEntity = OCKOutcomeValue(value, units: self.units)
             }
         }
-        //Converting using dictionaries doesn't work because json conversion is having trouble
-        /*
-        guard tempEntity != nil,
-            var json = getEntityAsJSONDictionary(tempEntity!) else{return nil}
-        json["uuid"] = self.uuid as AnyObject
-        json["createdDate"] = createdDate as AnyObject
-        json["updatedDate"] = updatedDate as AnyObject
+        //Create bare CareKit entity from json
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
         let entity:OCKOutcomeValue!
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
@@ -183,35 +181,14 @@ open class OutcomeValue: PFObject, PFSubclassing {
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
             return nil
         }
-        return entity*/
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(tempEntity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        
-        //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
-        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
-        let entity:OCKOutcomeValue!
-        do {
-            entity = try JSONDecoder().decode(OCKOutcomeValue.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
-        }
         return entity
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:AnyObject]?{
-        let jsonDictionary:[String:AnyObject]
+    open func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:Any]?{
+        let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
         }catch{
             print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
             return nil

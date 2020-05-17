@@ -14,7 +14,7 @@ import Parse
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
 protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
-    static func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, store: OCKStore, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
+    static func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     static func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void)
 }
 
@@ -51,7 +51,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: cloudVectorUUID)
-            Task.pullRevisions(localClock, cloudVector: cloudVector, store: self.store){
+            Task.pullRevisions(localClock, cloudVector: cloudVector){
                 taskRevision in
                 mergeRevision(taskRevision){
                     error in
@@ -59,7 +59,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         completion(error!)
                         return
                     }
-                    Outcome.pullRevisions(localClock, cloudVector: cloudVector, store: self.store){
+                    Outcome.pullRevisions(localClock, cloudVector: cloudVector){
                         outcomeRevision in
                         mergeRevision(outcomeRevision){
                             error in

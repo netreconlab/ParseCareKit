@@ -113,7 +113,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 }
             }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
                 //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else{
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                     completion(false,nil)
                     return
                 }
@@ -190,7 +190,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 completion(success,error)
             }
         }else {
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else {return}
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else {return}
             store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
                 result in
                 switch result{
@@ -389,9 +389,9 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit(_ store: OCKStore)->OCKCarePlan?{
+    open func convertToCareKit()->OCKCarePlan?{
         
-        guard var carePlan = createDecodedEntity(store) else{return nil}
+        guard var carePlan = createDecodedEntity() else{return nil}
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
         carePlan.source = self.source
@@ -406,7 +406,33 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         return carePlan
     }
     
-    open func createDecodedEntity(_ store: OCKStore)->OCKCarePlan?{
+    open func getEntityAsJSONDictionary(_ entity: OCKContact)->[String:Any]?{
+        let jsonDictionary:[String:Any]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
+        }catch{
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
+    }
+    
+    open func getEntityAsJSONDictionary(_ entity: OCKCarePlan)->[String:Any]?{
+        let jsonDictionary:[String:Any]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
+        }catch{
+            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
+    }
+    
+    open func createDecodedEntity()->OCKCarePlan?{
         guard let authorID = self.author?.uuid,
             let authorUUID = UUID(uuidString: authorID),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
@@ -416,21 +442,22 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
             
         let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(tempEntity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
-        
         //Create bare CareKit entity from json
-        let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
-        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
+        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
+        if let previous = self.previousVersionUUID{
+            json["previousVersionUUID"] = previous
+        }
+        if let next = self.nextVersionUUID{
+            json["nextVersionUUID"] = next
+        }
         let entity:OCKCarePlan!
         do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let jsonString = String(data: data, encoding: .utf8)!
+            print(jsonString)
             entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
         }catch{
             print("Error in \(parseClassName).createDecodedEntity(). \(error)")
@@ -443,7 +470,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.notes?.forEach{$0.stamp(self.clock)}
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, store: OCKStore, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = CarePlan.query()!
         query.whereKey(kPCKCarePlanClockKey, greaterThanOrEqualTo: localClock)
@@ -462,7 +489,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 mergeRevision(revision)
                 return
             }
-            let pulled = carePlans.compactMap{$0.convertToCareKit(store)}
+            let pulled = carePlans.compactMap{$0.convertToCareKit()}
             let entities = pulled.compactMap{OCKEntity.carePlan($0)}
             let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
             mergeRevision(revision)

@@ -120,7 +120,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 }
             }else if cloudUpdatedAt > careKitLastUpdated {
                 //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else{
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                     completion(false,nil)
                     return
                 }
@@ -211,7 +211,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             }
         }else {
             //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit(store) else{
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                 completion(false,nil)
                 return
             }
@@ -414,9 +414,9 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(_ store: OCKStore)->OCKTask?{
+    open func convertToCareKit()->OCKTask?{
         
-        guard var task = createDecodedEntity(store) else{return nil}
+        guard var task = createDecodedEntity() else{return nil}
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.source = self.source
@@ -452,7 +452,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return jsonDictionary
     }
     
-    open func createDecodedEntity(_ store: OCKStore)->OCKTask?{
+    open func createDecodedEntity()->OCKTask?{
         guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
@@ -462,14 +462,6 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
         let schedule = OCKSchedule(composing: careKitScheduleElements)
         let tempEntity = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
-        let jsonString:String!
-        do{
-            let jsonData = try JSONEncoder().encode(tempEntity)
-            jsonString = String(data: jsonData, encoding: .utf8)!
-        }catch{
-            print("Error \(error)")
-            return nil
-        }
         
         //Create bare CareKit entity from json
         guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
@@ -493,18 +485,6 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return nil
         }
         return entity
-        /*let insertValue = "\"uuid\":\"\(self.uuid)\",\"createdDate\":\(createdDate),\"updatedDate\":\(updatedDate)"
-        guard let modifiedJson = ParseCareKitUtility.insertReadOnlyKeys(insertValue, json: jsonString),
-            let data = modifiedJson.data(using: .utf8) else{return nil}
-        let entity:OCKTask!
-        do {
-            entity = try JSONDecoder().decode(OCKTask.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
-        }
-        
-        return entity*/
     }
     
     func stampRelationalEntities(){
@@ -512,7 +492,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.elements.forEach{$0.stamp(self.clock)}
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, store: OCKStore, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
         query.whereKey(kPCKTaskClockKey, greaterThanOrEqualTo: localClock)
@@ -531,7 +511,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 mergeRevision(revision)
                 return
             }
-            let pulled = tasks.compactMap{$0.convertToCareKit(store)}
+            let pulled = tasks.compactMap{$0.convertToCareKit()}
             let entities = pulled.compactMap{OCKEntity.task($0)}
             let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
             mergeRevision(revision)
