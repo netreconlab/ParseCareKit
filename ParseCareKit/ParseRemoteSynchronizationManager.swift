@@ -51,7 +51,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: cloudVectorUUID)
-            User.pullRevisions(localClock, cloudVector: cloudVector){
+            /*User.pullRevisions(localClock, cloudVector: cloudVector){
                 userRevision in
                 mergeRevision(userRevision){
                     error in
@@ -74,7 +74,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                     if error != nil {
                                         completion(error!)
                                         return
-                                    }
+                                    }*/
                                     Task.pullRevisions(localClock, cloudVector: cloudVector){
                                         taskRevision in
                                         mergeRevision(taskRevision){
@@ -96,12 +96,12 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                             }
                                         }
                                     }
-                                }
+                                /*}
                             }
                         }
                     }
                 }
-            }
+            }*/
         }
     }
     
