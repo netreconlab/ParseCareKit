@@ -51,23 +51,53 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: cloudVectorUUID)
-            Task.pullRevisions(localClock, cloudVector: cloudVector){
-                taskRevision in
-                mergeRevision(taskRevision){
+            User.pullRevisions(localClock, cloudVector: cloudVector){
+                userRevision in
+                mergeRevision(userRevision){
                     error in
                     if error != nil {
                         completion(error!)
                         return
                     }
-                    Outcome.pullRevisions(localClock, cloudVector: cloudVector){
-                        outcomeRevision in
-                        mergeRevision(outcomeRevision){
+                    CarePlan.pullRevisions(localClock, cloudVector: cloudVector){
+                        carePlanRevision in
+                        mergeRevision(carePlanRevision){
                             error in
                             if error != nil {
                                 completion(error!)
+                                return
                             }
-                            completion(nil)
-                            return
+                            Contact.pullRevisions(localClock, cloudVector: cloudVector){
+                                contactPlanRevision in
+                                mergeRevision(contactPlanRevision){
+                                    error in
+                                    if error != nil {
+                                        completion(error!)
+                                        return
+                                    }
+                                    Task.pullRevisions(localClock, cloudVector: cloudVector){
+                                        taskRevision in
+                                        mergeRevision(taskRevision){
+                                            error in
+                                            if error != nil {
+                                                completion(error!)
+                                                return
+                                            }
+                                            Outcome.pullRevisions(localClock, cloudVector: cloudVector){
+                                                outcomeRevision in
+                                                mergeRevision(outcomeRevision){
+                                                    error in
+                                                    if error != nil {
+                                                        completion(error!)
+                                                    }
+                                                    completion(nil)
+                                                    return
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

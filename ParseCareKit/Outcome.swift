@@ -632,7 +632,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 copied in
                 guard let parse = copied as? Outcome else{return}
                 parse.clock = cloudClock //Stamp Entity
-                //if careKit.deletedDate == nil{
+                if careKit.deletedDate == nil{
                     parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in
                         if success{
@@ -641,7 +641,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             completion(error)
                         }
                     }
-                /*}else{
+                }else{
                     parse.deleteFromCloud(store, usingKnowledgeVector: true){
                         (success,error) in
                         if success{
@@ -650,7 +650,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                             completion(error)
                         }
                     }
-                }*/
+                }
             }
         default:
             print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
