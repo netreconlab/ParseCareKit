@@ -12,7 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - CareKit (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
-  - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
+  - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod_vector`)
   - CareKitUI (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
   - Parse (~> 1.18)
 
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
     :branch: pod
     :git: https://github.com/cbaker6/CareKit.git
   CareKitStore:
-    :branch: pod
+    :branch: pod_vector
     :git: https://github.com/cbaker6/CareKit.git
   CareKitUI:
     :branch: pod
@@ -34,13 +34,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CareKit:
-    :commit: a83685d2b89bd31bbd588802b3b09992e89c52cf
+    :commit: 7dfe6d7f6e6e827080780cf1f3d53b487acdce39
     :git: https://github.com/cbaker6/CareKit.git
   CareKitStore:
-    :commit: a83685d2b89bd31bbd588802b3b09992e89c52cf
+    :commit: b8799f9b125b9c4b43758663a1f260ced978f090
     :git: https://github.com/cbaker6/CareKit.git
   CareKitUI:
-    :commit: a83685d2b89bd31bbd588802b3b09992e89c52cf
+    :commit: 7dfe6d7f6e6e827080780cf1f3d53b487acdce39
     :git: https://github.com/cbaker6/CareKit.git
 
 SPEC CHECKSUMS:
@@ -50,6 +50,6 @@ SPEC CHECKSUMS:
   CareKitUI: a8b24291173ea37c22466c4003d908abb962bcb4
   Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
 
-PODFILE CHECKSUM: c8d760c55bd1b2d5eef4380ce8906f78667f020c
+PODFILE CHECKSUM: eb0841df9f7d5d4bb17dbc86b76bce6ff2ca2bf9
 
 COCOAPODS: 1.9.1
