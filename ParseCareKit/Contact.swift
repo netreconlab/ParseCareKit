@@ -688,7 +688,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 guard let parse = copied as? Contact else{return}
                 parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
-                    parse.addToCloud(store, usingKnowledgeVector: true){
+                    parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in
                         if success{
                             completion(nil)
