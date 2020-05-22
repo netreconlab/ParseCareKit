@@ -37,7 +37,7 @@ CHECKOUT OPTIONS:
     :commit: d1078974e32df3dbe31a848786fe24daccbbfb53
     :git: https://github.com/cbaker6/CareKit.git
   CareKitStore:
-    :commit: 63f493aeeb28ad7f15ec123fc698e7684e5d6576
+    :commit: f6e3917ffcd31d309b3e746a1828e23c2b5b4320
     :git: https://github.com/cbaker6/CareKit.git
   CareKitUI:
     :commit: d1078974e32df3dbe31a848786fe24daccbbfb53

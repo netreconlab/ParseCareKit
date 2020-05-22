@@ -26,11 +26,23 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public var delegate: OCKRemoteSynchronizationDelegate?
     public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate?
     public var automaticallySynchronizes: Bool
-    public weak var store:OCKStore!
+    private weak var store:OCKStore!
     
     public override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
         super.init()
+    }
+    
+    public func startSynchronizing(_ store: OCKStore, auto: Bool=true){
+        self.store = store
+        self.automaticallySynchronizes = auto
+        if self.automaticallySynchronizes{
+            self.store.synchronize { error in
+                print(error?.localizedDescription ?? "ParseCareKit auto synchronizing has started...")
+            }
+        }else{
+            print("ParseCareKit set to manual synchronization. Trigger synchronization manually if needed")
+        }
     }
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
