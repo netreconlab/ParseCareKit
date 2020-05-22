@@ -146,7 +146,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
                 completion(true,nil)
             }
         }else{
-            if ((self.clock > parse.clock) || (parse.clock == 0) || overwriteRemote){
+            if ((self.clock > parse.clock) || overwriteRemote){
                 guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
                     completion(false,nil)
                     return
