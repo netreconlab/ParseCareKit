@@ -240,10 +240,19 @@ extension OCKStore {
             let beforePredicate = NSPredicate(format: "%K < %@", #keyPath(OCKCDOutcome.date), interval.end as NSDate)
             predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, afterPredicate, beforePredicate])
         }
+        
+        if !query.uuids.isEmpty {
+            let versionPredicate = NSPredicate(format: "%K IN %@", #keyPath(OCKCDObject.uuid), query.uuids)
+            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, versionPredicate])
+        }
 
+        if !query.uuids.isEmpty {
+            let objectPredicate = NSPredicate(format: "%K IN %@", #keyPath(OCKCDObject.uuid), query.uuids)
+            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, objectPredicate])
+        }
+     
         if !query.remoteIDs.isEmpty {
-            let remotePredicate = NSPredicate(format: "%K IN %@", #keyPath(OCKCDVersionedObject.remoteID), query.remoteIDs)
-            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, remotePredicate])
+            predicate = predicate.including(query.remoteIDs, for: #keyPath(OCKCDObject.remoteID))
         }
 
         if !query.taskIDs.isEmpty {
@@ -262,7 +271,9 @@ extension OCKStore {
         }
 
         if !query.groupIdentifiers.isEmpty {
-            predicate = predicate.including(groupIdentifiers: query.groupIdentifiers)
+            predicate = predicate.including(
+                query.groupIdentifiers,
+                for: #keyPath(OCKCDObject.groupIdentifier))
         }
 
         return predicate

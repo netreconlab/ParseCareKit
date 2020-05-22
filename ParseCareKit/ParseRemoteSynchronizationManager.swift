@@ -26,11 +26,23 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public var delegate: OCKRemoteSynchronizationDelegate?
     public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate?
     public var automaticallySynchronizes: Bool
-    public weak var store:OCKStore!
+    private weak var store:OCKStore!
     
     public override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
         super.init()
+    }
+    
+    public func startSynchronizing(_ store: OCKStore, auto: Bool=true){
+        self.store = store
+        self.automaticallySynchronizes = auto
+        if self.automaticallySynchronizes{
+            self.store.synchronize { error in
+                print(error?.localizedDescription ?? "ParseCareKit auto synchronizing has started...")
+            }
+        }else{
+            print("ParseCareKit set to manual synchronization. Trigger synchronization manually if needed")
+        }
     }
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
@@ -51,23 +63,53 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: cloudVectorUUID)
-            Task.pullRevisions(localClock, cloudVector: cloudVector){
-                taskRevision in
-                mergeRevision(taskRevision){
+            User.pullRevisions(localClock, cloudVector: cloudVector){
+                userRevision in
+                mergeRevision(userRevision){
                     error in
                     if error != nil {
                         completion(error!)
                         return
                     }
-                    Outcome.pullRevisions(localClock, cloudVector: cloudVector){
-                        outcomeRevision in
-                        mergeRevision(outcomeRevision){
+                    CarePlan.pullRevisions(localClock, cloudVector: cloudVector){
+                        carePlanRevision in
+                        mergeRevision(carePlanRevision){
                             error in
                             if error != nil {
                                 completion(error!)
+                                return
                             }
-                            completion(nil)
-                            return
+                            Contact.pullRevisions(localClock, cloudVector: cloudVector){
+                                contactPlanRevision in
+                                mergeRevision(contactPlanRevision){
+                                    error in
+                                    if error != nil {
+                                        completion(error!)
+                                        return
+                                    }
+                                    Task.pullRevisions(localClock, cloudVector: cloudVector){
+                                        taskRevision in
+                                        mergeRevision(taskRevision){
+                                            error in
+                                            if error != nil {
+                                                completion(error!)
+                                                return
+                                            }
+                                            Outcome.pullRevisions(localClock, cloudVector: cloudVector){
+                                                outcomeRevision in
+                                                mergeRevision(outcomeRevision){
+                                                    error in
+                                                    if error != nil {
+                                                        completion(error!)
+                                                    }
+                                                    completion(nil)
+                                                    return
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -124,7 +166,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     User.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         error in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -132,7 +174,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     CarePlan.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -140,7 +182,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     Contact.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -148,7 +190,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     Task.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -156,7 +198,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     Outcome.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
