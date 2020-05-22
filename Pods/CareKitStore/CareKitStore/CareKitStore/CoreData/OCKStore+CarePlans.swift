@@ -71,6 +71,7 @@ extension OCKStore {
         context.perform {
             do {
                 let addedPlans = try self.createCarePlansWithoutCommitting(plans)
+                try self.context.save()
                 callbackQueue.async {
                     self.carePlanDelegate?.carePlanStore(self, didAddCarePlans: addedPlans)
                     self.autoSynchronizeIfRequired()
@@ -225,8 +226,7 @@ extension OCKStore {
         }
 
         if !query.remoteIDs.isEmpty {
-            let remotePredicate = NSPredicate(format: "%K IN %@", #keyPath(OCKCDObject.remoteID), query.remoteIDs)
-            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, remotePredicate])
+            predicate = predicate.including(query.remoteIDs, for: #keyPath(OCKCDObject.remoteID))
         }
 
         if !query.patientIDs.isEmpty {
@@ -245,7 +245,9 @@ extension OCKStore {
         }
 
         if !query.groupIdentifiers.isEmpty {
-            predicate = predicate.including(groupIdentifiers: query.groupIdentifiers)
+            predicate = predicate.including(
+                query.groupIdentifiers,
+                for: #keyPath(OCKCDObject.groupIdentifier))
         }
 
         return predicate
