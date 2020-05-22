@@ -166,7 +166,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     User.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         error in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -174,7 +174,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     CarePlan.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -182,7 +182,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     Contact.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -190,7 +190,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     Task.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
@@ -198,7 +198,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     Outcome.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock, careKitEntity: entity){
                         _ in
                         revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
+                        if revisionsCompletedCount == deviceRevision.entities.count-1{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                     }
