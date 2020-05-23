@@ -5,6 +5,12 @@
 
 This framework is an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.0+ data with [parse-server](https://github.com/parse-community/parse-server). Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance. Look at hipaa-mongo and [hipaa_mongo](https://github.com/netreconlab/hipaa_mongodb) and [hipaa-postges]()(will post soon) to get started with HIPAA compliant databases that can be configured with pare-server. An example of how to use parse-server with [postgres](https://www.postgresql.org) and [parse-dashboard](https://github.com/parse-community/parse-dashboard) can be found at [parse-postgres](https://github.com/netreconlab/parse-postgres). 
 
+## What version of ParseCareKit Suits Your Needs?
+- (Most cases) Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [master](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details.
+- Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you created your own store conforming to the `OCKAnyStoreProtocol`) within your app? You should use the [master](https://github.com/netreconlab/ParseCareKit) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You should use `ParseSynchronizedStoreManager()` see [below](#synchronizing-your-data) more details.
+- Need to use ParseCareKit for iOS11+ and will be using [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. The limitation here is that CareKit and CareKitUI can't be use because they require iOS13.
+- Need to use ParseCareKit for iOS13+ and will be using [CareKit <= 2.0.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore` or conforming to `OCKAnyStoreProtocol`) within your app? You should use the [carekit_2.0.1](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You should use `ParseSynchronizedStoreManager()` see [below](#synchronizing-your-data) more details.
+
 ## Install ParseCareKit
 The framework currently isn't SPM compatible yet as it's depedendent on [Parse](https://github.com/parse-community/Parse-SDK-iOS-OSX) which is currently only compatible with cocoapods. 
 
@@ -18,10 +24,10 @@ target 'MyApp' do #Change to your app name
   use_frameworks!
 
   # All of these are required to run ParseCareKit
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
+  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.0.1'
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.0.1'
+  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.0.1'
+  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'carekit_2.0.1'
   
   # Add the rest of your pods below
 end
@@ -43,6 +49,21 @@ Follow the [guide](https://docs.parseplatform.org/ios/guide/) for directions on 
 
 ## Setup Parse Server
 For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default. 
+
+### Protecting Patients data in the Cloud using ACL's
+You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following in your AppDelegate:
+
+```swift
+PFUser.enableRevocableSessionInBackground() //Allow sessions to be revovked from the cloud
+
+//Set default ACL for all Classes
+let defaultACL = PFACL()
+defaultACL.hasPublicReadAccess = false
+defaultACL.hasPublicWriteAccess = false
+PFACL.setDefault(defaultACL, withAccessForCurrentUser:true)
+```
+
+When giving access to a CareTeam or other entities, special care should be taken when deciding the propper ACL or Role. Feel free to read more about [ACLs](https://docs.parseplatform.org/ios/guide/#security-for-user-objects) and [Role](https://docs.parseplatform.org/ios/guide/#roles) access in Parse.
 
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
@@ -91,7 +112,7 @@ guard let careKitCarePlan = parseCarePlan.convertToCareKit() else{
   return
 }
 
-dataStoreManager.store.addAnyCarePlan(patient, callbackQueue: .main){
+dataStoreManager.store.addAnyCarePlan(careKitCarePlan, callbackQueue: .main){
     result in
 
     switch result{
@@ -125,30 +146,54 @@ newParsePatient.signUpInBackground{
         }
         
         //... fill in the rest of the signedInPatient attributes
-        var nameComponents = PersonNameComponents()
+                
+        /* This is mandatory as it's used for querying the CareStore and linking to Parse
+            The entityId (Parse) shares a 1 to 1 relationship with id (CareKit)
+        */
+        signedInPatient.entityId = UUID().uuidString 
+        
+        //How to add names
+        var nameComponents = PersonNameComponents() 
         nameComponents.givenName = firstName
         nameComponents.familyName = lastName
         let name = CareKitParsonNameComponents.familyName.convertToDictionary(nameComponents)
         signedInPatient.name = name
         
-        signedInPatient.uuid = UUID().uuidString
-        signedInPatient.tags = [signedInPatient.uuid]
+        //This is suggested so you can query if needed
+        signedInPatient.tags = [signedInPatient.entityId] 
         
-        guard let careKitPatient = signedInPatient.convertToCareKit() else{
-          print("Error converting to CareKit object")
-          return
-        }
-        
-        dataStoreManager.store.addAnyPatient(careKitPatient, callbackQueue: .main){
-        result in
+        /*Save the updated info to Parse, after, you should make all changes and saves to the CareStore
+        and let ParseCareKit sync instead of saving to Parse directly
+        */
+        signedInPatient.saveInBackground(){
+            (success,error) in
+            if !success{
+                if error != nil{
+                    print("Error saving to Parse: \(error!)")
+                }else{
+                    print("Error saving to Parse: Error unknown")
+                }
+            }else{
+                //Conver Parse to CareKit
+                guard let careKitPatient = signedInPatient.convertToCareKit() else{
+                  print("Error converting to CareKit object")
+                  return
+                }
+                
+                //Save the CareKit user to the CareStore
+                dataStoreManager.store.addAnyPatient(careKitPatient, callbackQueue: .main){
+                    result in
 
-        switch result{
-        case .success(let savedCareKitPatient):
-            print("Your new patient \(savedCareKitPatient) is saved to OCKStore locally and synced to your Parse Server")
-        case .failure(let error):
-            print("Error savinf OCKCarePlan. \(error)")
+                    switch result{
+                    case .success(let savedCareKitPatient):
+                        print("Your new patient \(savedCareKitPatient) is saved to OCKStore locally and synced to your Parse Server")
+                        case .failure(let error):
+                        print("Error savinf OCKCarePlan. \(error)")
+                    }
+                }
+            }
         }
-    else{
+    }else{
         print("Parse had trouble signing in user with error: \(error)")
     }    
 }
