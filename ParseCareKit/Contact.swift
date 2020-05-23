@@ -434,7 +434,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     
                     self.author = User(withoutDataWithObjectId: authorRemoteID)
                     self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
+                        _ in
                         self.copyCarePlan(contact, store: store){
+                            _ in
                             completion(self)
                         }
                     }
@@ -452,7 +454,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         self.author = authorFound
                         
                         self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
+                            _ in
                             self.copyCarePlan(contact, store: store){
+                                _ in
                                 completion(self)
                             }
                         }
