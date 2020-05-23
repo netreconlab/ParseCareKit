@@ -499,15 +499,18 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let tasks = objects as? [Task] else{
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {return}
+                    let reason = errorDictionary["routine"] as? String else {
+                        mergeRevision(revision)
+                        return
+                }
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("Warning, table Task either doesn't exist or is missing the column \(kPCKTaskClockKey). It should be fixed during the first sync of a Task...")
                 }
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision)
                 return
             }

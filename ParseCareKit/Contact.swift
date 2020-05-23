@@ -172,6 +172,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = User.current(),
             let store = store as? OCKStore else{
+                completion(false,nil)
             return
         }
         
@@ -181,15 +182,17 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         query.findObjectsInBackground{
             (objects, error) in
             guard let foundObject = objects?.first as? Contact else{
+                completion(false,nil)
                 return
             }
-            self.compareDelete(foundObject, store: store)
+            self.compareDelete(foundObject, store: store, completion: completion)
         }
     }
     
-    func compareDelete(_ parse: Contact, store: OCKStore){
+    func compareDelete(_ parse: Contact, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
+                completion(false,nil)
             return
         }
         
@@ -202,10 +205,12 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }else{
                     print("Successfully deleted Contact \(self) in the Cloud")
                 }
+                completion(success,error)
             }
         }else {
             //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                completion(false,nil)
                 return
             }
             store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -215,8 +220,10 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     
                 case .success(_):
                     print("Successfully deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                case .failure(_):
+                    completion(true,nil)
+                case .failure(let error):
                     print("Error deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    completion(false,error)
                 }
             }
         }
@@ -229,11 +236,14 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         query.whereKey(kPCKContactEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
-            (objects, error) in
+            (objects, parseError) in
             guard let foundObjects = objects else{
-                guard let error = error as NSError?,
+                guard let error = parseError as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {return}
+                    let reason = errorDictionary["routine"] as? String else {
+                        completion(false,parseError)
+                        return
+                }
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
@@ -400,6 +410,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
         guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorUserEntityIdKey] else{
+            completion(self)
             return
         }
         var query = OCKPatientQuery(for: Date())
@@ -423,7 +434,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     
                     self.author = User(withoutDataWithObjectId: authorRemoteID)
                     self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
+                        _ in
                         self.copyCarePlan(contact, store: store){
+                            _ in
                             completion(self)
                         }
                     }
@@ -441,7 +454,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         self.author = authorFound
                         
                         self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
+                            _ in
                             self.copyCarePlan(contact, store: store){
+                                _ in
                                 completion(self)
                             }
                         }
@@ -451,20 +466,19 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 completion(nil)
             }
         }
-        
     }
     
-    func copyRelatedPatient(_ relatedPatientID:String?, patients:[OCKPatient], completion: @escaping() -> Void){
+    func copyRelatedPatient(_ relatedPatientID:String?, patients:[OCKPatient], completion: @escaping(User?) -> Void){
         
         guard let id = relatedPatientID else{
-            completion()
+            completion(nil)
             return
         }
         
         let relatedPatient = patients.filter{$0.id == id}.first
         
         guard let patient = relatedPatient else{
-            completion()
+            completion(nil)
             return
         }
         
@@ -476,26 +490,27 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 (objects,error) in
                 
                 guard let found = objects?.first as? User else{
+                    completion(nil)
                     return
                 }
                 
                 self.user = found
                 
-                completion()
+                completion(self.user)
                 return
             }
             return
         }
             
         self.user = User.init(withoutDataWithObjectId: relatedRemoteId)
-        completion()
+        completion(self.user)
     }
     
-    func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping() -> Void){
+    func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
         
         //contactInfoDictionary[kPCKContactNotes] = copiedNotes
         guard let carePlanID = contact.carePlanUUID else{
-            completion()
+            completion(nil)
             return
         }
         //ID's are the same for related Plans
@@ -506,7 +521,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             switch result{
             case .success(let carePlans):
                 guard let carePlan = carePlans.first else{
-                    completion()
+                    completion(nil)
                     return
                 }
                 self.carePlanId = carePlan.id
@@ -518,20 +533,21 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         (objects, error) in
                         
                         guard let carePlanFound = objects?.first as? CarePlan else{
-                            completion()
+                            completion(nil)
                             return
                         }
                         
                         self.carePlan = carePlanFound
-                        completion()
+                        completion(carePlanFound)
                     }
                     return
                 }
                 self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
-                completion()
+                completion(self.carePlan)
                 
-            case .failure(_):
-                completion()
+            case .failure(let error):
+                print("Error in Contact.copyCarePlan(). \(error)")
+                completion(nil)
             }
         }
     }
@@ -661,15 +677,18 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {return}
+                    let reason = errorDictionary["routine"] as? String else {
+                        mergeRevision(revision)
+                        return
+                }
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
                     print("Warning, table Contact either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
                 }
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision)
                 return
             }
@@ -685,7 +704,10 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         case .contact(let careKit):
             let _ = Contact(careKitEntity: careKit, store: store){
                 copied in
-                guard let parse = copied as? Contact else{return}
+                guard let parse = copied as? Contact else{
+                    completion(nil)
+                    return
+                }
                 parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
