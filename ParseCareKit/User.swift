@@ -15,11 +15,11 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
     @NSManaged public var birthday:Date?
-    
+    @NSManaged public var deletedDate:Date?
+    @NSManaged public var effectiveDate:Date
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var effectiveDate:Date
     @NSManaged public var name:[String:String]
     @NSManaged public var notes:[Note]?
     @NSManaged public var sex:String?
@@ -333,6 +333,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
         self.effectiveDate = patient.effectiveDate
+        self.deletedDate = patient.deletedDate
         self.locallyUpdatedAt = patient.updatedDate
         self.timezone = patient.timezone.abbreviation()!
         self.userInfo = patient.userInfo
@@ -408,6 +409,9 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
+            json["deletedDate"] = deletedDate
+        }
         if let previous = self.previousVersionUUID{
             json["previousVersionUUID"] = previous
         }

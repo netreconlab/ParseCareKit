@@ -16,6 +16,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var asset:String?
     @NSManaged public var carePlan:CarePlan?
     @NSManaged public var carePlanId: String?
+    @NSManaged public var deletedDate:Date?
     @NSManaged public var effectiveDate:Date
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var impactsAdherence:Bool
@@ -344,6 +345,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.previousVersionUUID = task.nextVersionUUID?.uuidString
         self.nextVersionUUID = task.previousVersionUUID?.uuidString
         self.entityId = task.id
+        self.deletedDate = task.deletedDate
         self.groupIdentifier = task.groupIdentifier
         self.title = task.title
         self.impactsAdherence = task.impactsAdherence
@@ -471,6 +473,9 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
+            json["deletedDate"] = deletedDate
+        }
         if let previous = self.previousVersionUUID{
             json["previousVersionUUID"] = previous
         }

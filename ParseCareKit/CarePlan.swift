@@ -19,6 +19,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var title:String
+    @NSManaged public var deletedDate:Date?
     @NSManaged public var effectiveDate:Date
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var tags:[String]?
@@ -328,6 +329,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.previousVersionUUID = carePlan.nextVersionUUID?.uuidString
         self.nextVersionUUID = carePlan.previousVersionUUID?.uuidString
         self.entityId = carePlan.id
+        self.deletedDate = carePlan.deletedDate
         self.title = carePlan.title
         self.groupIdentifier = carePlan.groupIdentifier
         self.tags = carePlan.tags
@@ -452,6 +454,9 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
+            json["deletedDate"] = deletedDate
+        }
         if let previous = self.previousVersionUUID{
             json["previousVersionUUID"] = previous
         }

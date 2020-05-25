@@ -16,6 +16,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var address:[String:String]?
     @NSManaged public var asset:String?
     @NSManaged public var category:String?
+    @NSManaged public var deletedDate:Date?
     @NSManaged public var effectiveDate:Date
     @NSManaged public var emailAddresses:[String:String]?
     @NSManaged public var groupIdentifier:String?
@@ -341,6 +342,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.previousVersionUUID = contact.nextVersionUUID?.uuidString
         self.nextVersionUUID = contact.previousVersionUUID?.uuidString
         self.entityId = contact.id
+        self.deletedDate = contact.deletedDate
         self.groupIdentifier = contact.groupIdentifier
         self.tags = contact.tags
         self.source = contact.source
@@ -650,6 +652,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
+            json["deletedDate"] = deletedDate
+        }
         if let previous = self.previousVersionUUID{
             json["previousVersionUUID"] = previous
         }
