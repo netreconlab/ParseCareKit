@@ -333,7 +333,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.previousVersionUUID = patient.nextVersionUUID?.uuidString
         self.nextVersionUUID = patient.previousVersionUUID?.uuidString
         self.entityId = patient.id
-        self.name = CareKitParsonNameComponents.familyName.convertToDictionary(patient.name)
+        self.name = CareKitPersonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
         self.effectiveDate = patient.effectiveDate
@@ -361,7 +361,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     open func convertToCareKit(firstTimeLoggingIn: Bool=false)->OCKPatient?{
         var patient:OCKPatient!
         if firstTimeLoggingIn{
-            let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
+            let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
             patient = OCKPatient(id: self.entityId, name: nameComponents)
         }else{
             guard let decodedPatient = createDecodedEntity() else{return nil}
@@ -406,7 +406,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             return nil
         }
         
-        let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
+        let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
         let tempEntity = OCKPatient(id: self.entityId, name: nameComponents)
         //Create bare CareKit entity from json
         guard var json = Being.getEntityAsJSONDictionary(tempEntity) else{return nil}

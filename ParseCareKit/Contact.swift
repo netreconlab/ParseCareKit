@@ -352,7 +352,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.category = contact.category?.rawValue
         self.asset = contact.asset
         self.timezone = contact.timezone.abbreviation()!
-        self.name = CareKitParsonNameComponents.familyName.convertToDictionary(contact.name)
+        self.name = CareKitPersonNameComponents.familyName.convertToDictionary(contact.name)
         self.locallyUpdatedAt = contact.updatedDate
         self.userInfo = contact.userInfo
         
@@ -645,7 +645,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             return nil
         }
             
-        let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
+        let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
         let tempEntity = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
         //Create bare CareKit entity from json
         guard var json = Contact.getEntityAsJSONDictionary(tempEntity) else{return nil}

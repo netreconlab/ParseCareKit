@@ -201,7 +201,7 @@ public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "
 
 
 //#Mark - Custom Enums
-public enum CareKitParsonNameComponents:String{
+public enum CareKitPersonNameComponents:String{
  
     case familyName = "familyName"
     case givenName = "givenName"
@@ -215,27 +215,27 @@ public enum CareKitParsonNameComponents:String{
         var returnDictionary = [String:String]()
         
         if let name = components.familyName{
-            returnDictionary[CareKitParsonNameComponents.familyName.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.familyName.rawValue] = name
         }
         
         if let name = components.givenName{
-            returnDictionary[CareKitParsonNameComponents.givenName.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.givenName.rawValue] = name
         }
         
         if let name = components.middleName{
-            returnDictionary[CareKitParsonNameComponents.middleName.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.middleName.rawValue] = name
         }
         
         if let name = components.namePrefix{
-            returnDictionary[CareKitParsonNameComponents.namePrefix.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.namePrefix.rawValue] = name
         }
         
         if let name = components.nameSuffix{
-            returnDictionary[CareKitParsonNameComponents.nameSuffix.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.nameSuffix.rawValue] = name
         }
         
         if let name = components.nickname{
-            returnDictionary[CareKitParsonNameComponents.nickname.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.nickname.rawValue] = name
         }
         
         return returnDictionary
@@ -247,7 +247,7 @@ public enum CareKitParsonNameComponents:String{
         
         for (key,value) in dictionary{
             
-            guard let componentType = CareKitParsonNameComponents(rawValue: key) else{
+            guard let componentType = CareKitPersonNameComponents(rawValue: key) else{
                 continue
             }
             
@@ -269,9 +269,7 @@ public enum CareKitParsonNameComponents:String{
             }
             
         }
-    
         return components
-        
     }
     
 }
