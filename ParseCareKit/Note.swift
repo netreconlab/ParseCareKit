@@ -41,7 +41,7 @@ open class Note: PFObject, PFSubclassing {
     
     open func copyCareKit(_ note: OCKNote, clone:Bool) -> Note?{
         
-        guard let uuid = getUUIDFromCareKitEntity(note) else {
+        guard let uuid = Note.getUUIDFromCareKitEntity(note) else {
             return nil
         }
         
@@ -113,7 +113,7 @@ open class Note: PFObject, PFSubclassing {
             
         let tempEntity = OCKNote(author: self.author, title: self.title, content: self.content)
         //Create bare CareKit entity from json
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = Note.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
@@ -128,21 +128,21 @@ open class Note: PFObject, PFSubclassing {
         return entity
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKNote)->[String:Any]?{
+    open class func getEntityAsJSONDictionary(_ entity: OCKNote)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
         }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            print("Error in Note.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
         return jsonDictionary
     }
     
-    open func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
-        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+    open class func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
+        guard let json = Note.getEntityAsJSONDictionary(entity) else{return nil}
         return json["uuid"] as? String
     }
     

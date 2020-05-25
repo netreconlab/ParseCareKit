@@ -317,8 +317,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         
                         self.values.forEach{
                             for (index,value) in mutableOutcome.values.enumerated(){
-                                guard let id = value.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey],
-                                    id == $0.entityId else{
+                                guard let uuid = OutcomeValue.getUUIDFromCareKitEntity(value),
+                                    uuid == $0.uuid else{
                                     continue
                                 }
                                 

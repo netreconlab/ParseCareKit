@@ -194,7 +194,7 @@ public let kPCKContactUserInfoAuthorUserEntityIdKey         = "authorId" //The i
 public let kPCKContactUserInfoRelatedEntityIdKey          = "relatedId" //The id of the User if there is one.
 
 //OutcomeValue Class
-public let kPCKOutcomeValueUserInfoEntityIdKey              = "entityId"
+public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
 public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"
 
 //Note Class

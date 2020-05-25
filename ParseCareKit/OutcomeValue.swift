@@ -27,8 +27,6 @@ open class OutcomeValue: PFObject, PFSubclassing {
     @NSManaged public var uuid:String
     @NSManaged public var clock:Int
     @NSManaged public var userInfo:[String:String]?
-    //UserInfo fields on CareStore
-    @NSManaged public var entityId:String
     
     //SOSDatabase info
     @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
@@ -44,19 +42,14 @@ open class OutcomeValue: PFObject, PFSubclassing {
     
     open func copyCareKit(_ outcomeValue: OCKOutcomeValue, clone: Bool) -> OutcomeValue? {
         
-        guard let id = outcomeValue.userInfo?[kPCKOutcomeValueUserInfoEntityIdKey] else{
-            print("Error in \(parseClassName).copyCareKit(). doesn't contain \(kPCKOutcomeValueUserInfoEntityIdKey) in \(String(describing: outcomeValue.userInfo))")
-            return nil
-        }
-        self.entityId = id
-        self.userInfo = outcomeValue.userInfo
-        guard let uuid = getUUIDFromCareKitEntity(outcomeValue) else{
+        
+        guard let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) else{
             print("Error in \(parseClassName).copyCareKit(). doesn't contain a uuid")
             return nil
         }
         self.uuid = uuid
+        self.userInfo = outcomeValue.userInfo
         
-        //self.associatedID = associatedOutcome.id
         self.kind = outcomeValue.kind
         if let index = outcomeValue.index{
             self.index = index
@@ -169,7 +162,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
             }
         }
         //Create bare CareKit entity from json
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = OutcomeValue.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
@@ -184,21 +177,21 @@ open class OutcomeValue: PFObject, PFSubclassing {
         return entity
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:Any]?{
+    open class func getEntityAsJSONDictionary(_ entity: OCKOutcomeValue)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
         }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            print("Error in OutcomeValue.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
         return jsonDictionary
     }
     
-    open func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
-        guard let json = getEntityAsJSONDictionary(entity) else{return nil}
+    open class func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
+        guard let json = OutcomeValue.getEntityAsJSONDictionary(entity) else{return nil}
         return json["uuid"] as? String
     }
     
