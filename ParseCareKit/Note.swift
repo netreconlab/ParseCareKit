@@ -26,7 +26,7 @@ open class Note: PFObject, PFSubclassing {
     @NSManaged public var author:String?
     
     //Not 1 to 1
-    @NSManaged public var authorOfNote:User
+    @NSManaged public var authorOfNote:Being
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
     
@@ -72,7 +72,7 @@ open class Note: PFObject, PFSubclassing {
         guard let authorObjectId = note.userInfo?[kPCKNoteUserInfoAuthorObjectIdKey] else{
             return nil
         }
-        self.authorOfNote = User(withoutDataWithObjectId: authorObjectId)
+        self.authorOfNote = Being(withoutDataWithObjectId: authorObjectId)
         return self
     }
     

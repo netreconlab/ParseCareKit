@@ -16,26 +16,26 @@ enum ParseCareKitError: Error {
 
 //#Mark - Parse Database Keys
 
-//#Mark - User Class
-public let kPCKUserClassKey                                 = User.parseClassName()
+//#Mark - Being Class
+public let kPCKBeingClassKey                                 = Being.parseClassName()
 
 // Field keys
-public let kPCKUserObjectIdKey                                    = "objectId"
-public let kPCKUserUUIDKey                                          = "uuid"
-public let kPCKUserPostedAtKey                                    = "postedAt"
-public let kPCKUserCreatedAtKey                                   = "createdAt"
-public let kPCKUserUpdatedAtKey                                     = "updatedAt"
-public let kPCKUserAllergiesKey                                     = "alergies"
-public let kPCKUserAssetKey                                         = "asset"
-public let kPCKUserBirthdayKey                                      = "birthday"
-public let kPCKUserGroupIdentifierKey                          = "groupIdentifier"
-public let kPCKUserNotesKey                                    = "notes"
-public let kPCKUserSexKey                                      = "sex"
-public let kPCKUserSourceKey                                   = "source"
-public let kPCKUserTagsKey                                     = "tags"
-public let kPCKUserTimezoneKey                                 = "timezone"
-public let kPCKUserClockKey                                    = "clock"
-public let kPCKUserEntityIdKey                                = "entityId"
+public let kPCKBeingObjectIdKey                                    = "objectId"
+public let kPCKBeingUUIDKey                                          = "uuid"
+public let kPCKBeingPostedAtKey                                    = "postedAt"
+public let kPCKBeingCreatedAtKey                                   = "createdAt"
+public let kPCKBeingUpdatedAtKey                                     = "updatedAt"
+public let kPCKBeingAllergiesKey                                     = "alergies"
+public let kPCKBeingAssetKey                                         = "asset"
+public let kPCKBeingBirthdayKey                                      = "birthday"
+public let kPCKBeingGroupIdentifierKey                          = "groupIdentifier"
+public let kPCKBeingNotesKey                                    = "notes"
+public let kPCKBeingSexKey                                      = "sex"
+public let kPCKBeingSourceKey                                   = "source"
+public let kPCKBeingTagsKey                                     = "tags"
+public let kPCKBeingTimezoneKey                                 = "timezone"
+public let kPCKBeingClockKey                                    = "clock"
+public let kPCKBeingEntityIdKey                                = "entityId"
 
 
 //#Mark - CarePlan Class
@@ -82,7 +82,7 @@ public let kPCKTaskEntityIdKey                                = "entityId"
 //#Mark - KnowledgeVector Class
 public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
 // Field keys
-public let kPCKKnowledgeVectorUserKey                          = "user"
+public let kPCKKnowledgeVectorBeingTypeUUIDKey                          = "beingTypeUUID"
 public let kPCKKnowledgeVectorVectorKey                        = "vector"
 
 //#Mark - Contact Class
@@ -101,7 +101,7 @@ public let kPCKContactCategoryKey                                 = "category"
 public let kPCKContactAssetKey                                    = "asset"
 public let kPCKContactNameKey                                     = "name"
 public let kPCKContactAuthorKey                                   = "author"
-public let kPCKContactUserKey                                     = "user"
+public let kPCKContactBeingKey                                     = "being"
 public let kPCKContactEmailAddressesKey                           = "emailAddresses"
 public let kPCKContactAddressKey                                  = "address"
 public let kPCKContactNotesKey                                    = "notes"
@@ -121,7 +121,6 @@ public let kPCKOutcomeClassKey                                    = "Outcome"
 public let kPCKOutcomeTaskKey                                     = "task"
 public let kPCKOutcomeEntityIdKey                                = "entityId"
 public let kPCKOutcomeObjectIdKey                                 = "objectId"
-public let kPCKOutcomeUserUploadedToCloudKey                   = "userUploadedToCloud"
 public let kPCKOutcomeAssetKey                                 = "asset"
 public let kPCKOutcomeGroupIdentifierKey                       = "groupIdentifier"
 public let kPCKOutcomeLocallyCreatedAtKey                      = "locallyCreatedAt"
@@ -190,7 +189,7 @@ public let kPCKNoteIdKey                                       = "uuid"
 public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientObjectId"
 
 //Contact Element Class
-public let kPCKContactUserInfoAuthorUserEntityIdKey         = "authorId" //The id of the User if there is one.
+public let kPCKContactUserInfoAuthorEntityIdKey         = "authorId" //The id of the User if there is one.
 public let kPCKContactUserInfoRelatedEntityIdKey          = "relatedId" //The id of the User if there is one.
 
 //OutcomeValue Class

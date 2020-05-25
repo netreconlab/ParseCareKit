@@ -13,8 +13,8 @@ import CareKitStore
 open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
     //Parse only
-    @NSManaged public var patient:User?
-    @NSManaged public var author:User?
+    @NSManaged public var patient:Being?
+    @NSManaged public var author:Being?
     @NSManaged public var authorId:String?
     
     //1 to 1 between Parse and CareStore
@@ -49,7 +49,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
             return
@@ -159,7 +159,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
                 completion(false,nil)
             return
@@ -215,7 +215,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current() else{
+        guard let _ = PFUser.current() else{
             completion(false,nil)
             return
         }
@@ -314,7 +314,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
         
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let carePlan = carePlanAny as? OCKCarePlan,
             let store = store as? OCKStore else{
             completion(nil)
@@ -376,7 +376,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     return
                 }
                 
-                self.author = User(withoutDataWithObjectId: authorRemoteId)
+                self.author = Being(withoutDataWithObjectId: authorRemoteId)
                 
                 //Search for patient
                 if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey]{
@@ -392,7 +392,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                                     completion(nil)
                                 return
                             }
-                            self.patient = User(withoutDataWithObjectId: patientRemoteId)
+                            self.patient = Being(withoutDataWithObjectId: patientRemoteId)
                             completion(self)
                         case .failure(_):
                             completion(nil)

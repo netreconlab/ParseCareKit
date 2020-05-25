@@ -41,7 +41,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let entityUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
@@ -161,7 +161,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let entityUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
@@ -226,7 +226,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let entityUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
@@ -377,7 +377,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Outcome?) -> Void){
         
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let outcome = outcomeAny as? OCKOutcome,
             let store = store as? OCKStore,
             let uuid = outcome.uuid?.uuidString else{

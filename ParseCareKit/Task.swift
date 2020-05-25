@@ -52,7 +52,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
             return
@@ -167,7 +167,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
             return
@@ -232,7 +232,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current()else{
+        guard let _ = PFUser.current()else{
             completion(false,nil)
             return
         }
@@ -331,7 +331,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool, store: OCKAnyStoreProtocol, completion: @escaping(Task?) -> Void){
         
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let task = taskAny as? OCKTask else{
             completion(nil)
             return

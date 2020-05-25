@@ -42,8 +42,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
 
     //Not 1 to 1
     @NSManaged public var entityId:String //maps to id
-    @NSManaged public var user:User?
-    @NSManaged public var author:User
+    @NSManaged public var being:Being?
+    @NSManaged public var author:Being
     @NSManaged public var clock:Int
     
     //UserInfo fields on CareStore
@@ -59,7 +59,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
             completion(false,nil)
             return
@@ -74,7 +74,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
                     query.whereKey(kPCKContactEntityIdKey, equalTo: contact.id)
-                    query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+                    query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                     query.findObjectsInBackground{
                         (objects, error) in
                         
@@ -90,7 +90,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 //Get latest item from the Cloud to compare against
                 let query = Contact.query()!
                 query.whereKey(kPCKContactObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+                query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                 query.includeKey(kPCKContactAuthorKey)
                 query.findObjectsInBackground{
                     (objects, error) in
@@ -172,7 +172,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
                 completion(false,nil)
             return
@@ -236,7 +236,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         //Check to see if already in the cloud
         let query = Contact.query()!
         query.whereKey(kPCKContactEntityIdKey, equalTo: self.entityId)
-        query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -327,7 +327,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Contact?) -> Void){
         
-        guard let _ = User.current(),
+        guard let _ = PFUser.current(),
             let contact = contactAny as? OCKContact,
             let store = store as? OCKStore else{
             completion(nil)
@@ -412,7 +412,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
-        guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorUserEntityIdKey] else{
+        guard let authorID = contact.userInfo?[kPCKContactUserInfoAuthorEntityIdKey] else{
             completion(self)
             return
         }
@@ -435,7 +435,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 
                 if let authorRemoteID = theAuthor.remoteID{
                     
-                    self.author = User(withoutDataWithObjectId: authorRemoteID)
+                    self.author = Being(withoutDataWithObjectId: authorRemoteID)
                     self.copyRelatedPatient(patientRelatedID, patients: patientsFound){
                         _ in
                         self.copyCarePlan(contact, store: store){
@@ -444,12 +444,12 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         }
                     }
                 }else{
-                    let userQuery = User.query()!
-                    userQuery.whereKey(kPCKUserEntityIdKey, equalTo: theAuthor.id)
+                    let userQuery = Being.query()!
+                    userQuery.whereKey(kPCKBeingEntityIdKey, equalTo: theAuthor.id)
                     userQuery.findObjectsInBackground(){
                         (objects, error) in
                         
-                        guard let authorFound = objects?.first as? User else{
+                        guard let authorFound = objects?.first as? Being else{
                             completion(self)
                             return
                         }
@@ -471,7 +471,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    func copyRelatedPatient(_ relatedPatientID:String?, patients:[OCKPatient], completion: @escaping(User?) -> Void){
+    func copyRelatedPatient(_ relatedPatientID:String?, patients:[OCKPatient], completion: @escaping(Being?) -> Void){
         
         guard let id = relatedPatientID else{
             completion(nil)
@@ -487,26 +487,26 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         guard let relatedRemoteId = patient.remoteID else{
             
-            let query = User.query()!
-            query.whereKey(kPCKUserEntityIdKey, equalTo: patient.id)
+            let query = Being.query()!
+            query.whereKey(kPCKBeingEntityIdKey, equalTo: patient.id)
             query.findObjectsInBackground(){
                 (objects,error) in
                 
-                guard let found = objects?.first as? User else{
+                guard let found = objects?.first as? Being else{
                     completion(nil)
                     return
                 }
                 
-                self.user = found
+                self.being = found
                 
-                completion(self.user)
+                completion(self.being)
                 return
             }
             return
         }
             
-        self.user = User.init(withoutDataWithObjectId: relatedRemoteId)
-        completion(self.user)
+        self.being = Being.init(withoutDataWithObjectId: relatedRemoteId)
+        completion(self.being)
     }
     
     func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
@@ -680,7 +680,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         let query = Contact.query()!
         query.whereKey(kPCKContactClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKContactAuthorKey,kPCKContactUserKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
