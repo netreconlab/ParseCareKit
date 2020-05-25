@@ -193,9 +193,6 @@ public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientObjectId"
 public let kPCKContactUserInfoAuthorUserEntityIdKey         = "authorId" //The id of the User if there is one.
 public let kPCKContactUserInfoRelatedEntityIdKey          = "relatedId" //The id of the User if there is one.
 
-//Outcome Class
-public let kPCKOutcomeUserInfoEntityIdKey                   = "entityId"
-
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoEntityIdKey              = "entityId"
 public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"

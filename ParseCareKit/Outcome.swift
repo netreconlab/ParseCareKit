@@ -14,8 +14,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var asset:String?
-    @NSManaged public var careKitId:String //maps to id
-    @NSManaged public var entityId:String
+    @NSManaged public var entityId:String //maps to id
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
@@ -27,9 +26,8 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var source:String?
     @NSManaged public var values:[OutcomeValue]
     @NSManaged public var userInfo:[String:String]?
+    @NSManaged public var uuid:String
     
-    //Not 1 tot 1, UserInfo fields in CareStore
-    @NSManaged public var uuid:String //maps to id
     @NSManaged public var clock:Int
     
     public static func parseClassName() -> String {
@@ -387,10 +385,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             return
         }
         self.uuid = uuid
-        
-        if let id = outcome.userInfo?[kPCKOutcomeUserInfoEntityIdKey] {
-            self.entityId = id
-        }
+        self.entityId = outcome.id
         
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
