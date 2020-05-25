@@ -46,24 +46,32 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore else{
+            let store = store as? OCKStore,
+            let beingUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
         
-        store.fetchPatient(withID: self.entityId, callbackQueue: .global(qos: .background)){
+        var careKitQuery = OCKPatientQuery()
+        careKitQuery.uuids = [beingUUID]
+        
+        store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let patient):
+            case .success(let patients):
+                guard let patient = patients.first else{
+                    completion(false,nil)
+                    return
+                }
                 guard let remoteID = patient.remoteID else{
                     
                     //Check to see if this entity is already in the Cloud, but not paired locally
                     let query = Being.query()!
-                    query.whereKey(kPCKBeingEntityIdKey, equalTo: patient.id)
-                    query.findObjectsInBackground{
-                        (objects, error) in
+                    query.whereKey(kPCKBeingUUIDKey, equalTo: beingUUID.uuidString)
+                    query.getFirstObjectInBackground(){
+                        (object, error) in
                         
-                        guard let foundObject = objects?.first as? Being else{
+                        guard let foundObject = object as? Being else{
                             completion(false,error)
                             return
                         }
@@ -75,10 +83,10 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 //Get latest item from the Cloud to compare against
                 let query = Being.query()!
                 query.whereKey(kPCKBeingObjectIdKey, equalTo: remoteID)
-                query.findObjectsInBackground{
-                    (objects, error) in
+                query.getFirstObjectInBackground(){
+                    (object, error) in
                     
-                    guard let foundObject = objects?.first as? Being else{
+                    guard let foundObject = object as? Being else{
                         completion(false,error)
                         return
                     }
@@ -177,13 +185,14 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore else{
+            let store = store as? OCKStore,
+            let beingUUID = UUID(uuidString: self.uuid) else{
             return
         }
         
         //Get latest item from the Cloud to compare against
         let query = Being.query()!
-        query.whereKey(kPCKBeingEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKBeingUUIDKey, equalTo: beingUUID)
         query.getFirstObjectInBackground(){
             (objects, error) in
             
@@ -228,13 +237,14 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = PFUser.current() else{
+        guard let _ = PFUser.current(),
+            let beingUUID = UUID(uuidString: self.uuid) else{
             return
         }
 
         //Check to see if already in the cloud
         let query = Being.query()!
-        query.whereKey(kPCKBeingEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKBeingUUIDKey, equalTo: beingUUID.uuidString)
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{

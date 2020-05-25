@@ -114,6 +114,7 @@ public let kPCKContactLocallyCreatedAtKey                         = "locallyCrea
 public let kPCKContactLocallyUpdatedAtKey                         = "locallyUpdatedAt"
 public let kPCKContactClockKey                                    = "clock"
 public let kPCKContactEntityIdKey                                = "entityId"
+public let kPCKContactBeingUUIDKey                                = "beingUUID"
 
 //#Mark -Outcome Class
 public let kPCKOutcomeClassKey                                    = "Outcome"
@@ -186,18 +187,18 @@ public let kPCKNoteIdKey                                       = "uuid"
 
 //#Mark - CareKit UserInfo Database Keys
 //CarePlan Class
-public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientObjectId"
+public let kPCKCarePlanUserInfoBeingUUIDKey           = "beingUUID"
 
 //Contact Element Class
-public let kPCKContactUserInfoAuthorEntityIdKey         = "authorId" //The id of the User if there is one.
-public let kPCKContactUserInfoRelatedEntityIdKey          = "relatedId" //The id of the User if there is one.
+public let kPCKContactUserInfoAuthorUUIDKey         = "authorUUID" //The id of the User if there is one.
+public let kPCKContactUserInfoRelatedUUIDKey          = "relatedUUID" //The id of the User if there is one.
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
 public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"
 
 //Note Class
-public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "authorObjectId"
+public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "beingUUID"
 
 
 //#Mark - Custom Enums

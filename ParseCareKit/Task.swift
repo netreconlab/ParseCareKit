@@ -53,24 +53,32 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore else{
+            let store = store as? OCKStore,
+            let taskUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
         
-        store.fetchTask(withID: self.entityId, callbackQueue: .global(qos: .background)){
+        var careKitQuery = OCKTaskQuery()
+        careKitQuery.uuids = [taskUUID]
+        
+        store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let task):
+            case .success(let tasks):
+                guard let task = tasks.first else{
+                    completion(false,nil)
+                    return
+                }
                 guard let remoteID = task.remoteID else{
                            
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Task.query()!
-                    query.whereKey(kPCKTaskEntityIdKey, equalTo: task.id)
+                    query.whereKey(kPCKTaskUUIDKey, equalTo: taskUUID.uuidString)
                     query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
-                    query.findObjectsInBackground{
+                    query.getFirstObjectInBackground{
                         (objects, error) in
-                        guard let foundObject = objects?.first as? Task else{
+                        guard let foundObject = objects as? Task else{
                             completion(false,error)
                             return
                         }
@@ -83,9 +91,9 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 let query = Task.query()!
                 query.whereKey(kPCKTaskObjectIdKey, equalTo: remoteID)
                 query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
-                query.findObjectsInBackground{
-                    (objects, error) in
-                    guard let foundObject = objects?.first as? Task else{
+                query.getFirstObjectInBackground(){
+                    (object, error) in
+                    guard let foundObject = object as? Task else{
                         completion(false,error)
                         return
                     }
@@ -168,14 +176,15 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore else{
+            let store = store as? OCKStore,
+            let taskUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
         
         //Get latest item from the Cloud to compare against
         let query = Task.query()!
-        query.whereKey(kPCKTaskEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKTaskUUIDKey, equalTo: taskUUID.uuidString)
         query.includeKeys([kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.getFirstObjectInBackground(){
             (objects, error) in
@@ -232,14 +241,15 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = PFUser.current()else{
+        guard let _ = PFUser.current(),
+            let taskUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
         
         //Check to see if already in the cloud
         let query = Task.query()!
-        query.whereKey(kPCKTaskEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKTaskUUIDKey, equalTo: taskUUID.uuidString)
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
@@ -374,13 +384,13 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
         
         //If no CarePlan, we are finished
-        guard let carePlanLocalID = task.carePlanUUID else{
+        guard let carePlanLocalUUID = task.carePlanUUID else{
             completion(self)
             return
         }
         
         var query = OCKCarePlanQuery()
-        query.uuids = [carePlanLocalID]
+        query.uuids = [carePlanLocalUUID]
         store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
             result in
             
@@ -395,10 +405,10 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 guard let carePlanRemoteID = foundPlan.remoteID else{
                     //Local CarePlan hasn't been linked with it's Cloud version, see if we can link to Cloud version
                     let carePlanQuery = CarePlan.query()!
-                    carePlanQuery.whereKey(kPCKCarePlanEntityIdKey, equalTo: foundPlan.id)
-                    carePlanQuery.findObjectsInBackground(){
-                        (objects, error) in
-                        guard let carePlanFound = objects?.first as? CarePlan else{
+                    carePlanQuery.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanLocalUUID.uuidString)
+                    carePlanQuery.getFirstObjectInBackground(){
+                        (object, error) in
+                        guard let carePlanFound = object as? CarePlan else{
                             completion(self)
                             return
                         }

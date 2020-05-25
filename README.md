@@ -163,7 +163,7 @@ newParsePatient.signUpInBackground{
         var nameComponents = PersonNameComponents() 
         nameComponents.givenName = firstName
         nameComponents.familyName = lastName
-        let name = CareKitParsonNameComponents.familyName.convertToDictionary(nameComponents)
+        let name = CareKitPersonNameComponents.familyName.convertToDictionary(nameComponents)
         signedInPatient.name = name
         
         //This is suggested so you can query if needed

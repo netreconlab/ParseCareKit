@@ -13,9 +13,8 @@ import CareKitStore
 open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
     //Parse only
-    @NSManaged public var patient:Being?
+    @NSManaged public var being:Being?
     @NSManaged public var author:Being?
-    @NSManaged public var authorId:String?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var title:String
@@ -36,7 +35,6 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var entityId:String //maps to id
-    @NSManaged public var patientId:String?
     @NSManaged public var clock:Int
     
     public static func parseClassName() -> String {
@@ -50,24 +48,33 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore else{
+            let store = store as? OCKStore,
+            let carePlanUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
+        var careKitQuery = OCKCarePlanQuery()
+        careKitQuery.uuids = [carePlanUUID]
         
-        store.fetchCarePlan(withID: self.entityId, callbackQueue: .global(qos: .background)){
+        store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
-            case .success(let carePlan):
+            case .success(let carePlans):
+                
+                guard let carePlan = carePlans.first else{
+                    completion(false,nil)
+                    return
+                }
+                
                 //Check to see if already in the cloud
                 guard let remoteID = carePlan.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
-                    query.whereKey(kPCKCarePlanEntityIdKey, equalTo: carePlan.id)
+                    query.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanUUID.uuidString)
                     query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
-                    query.findObjectsInBackground{
-                        (objects, error) in
-                        guard let foundObject = objects?.first as? CarePlan else{
+                    query.getFirstObjectInBackground(){
+                        (object, error) in
+                        guard let foundObject = object as? CarePlan else{
                             completion(false,nil)
                             return
                         }
@@ -80,9 +87,9 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 let query = CarePlan.query()!
                 query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
                 query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
-                query.findObjectsInBackground{
-                    (objects, error) in
-                    guard let foundObject = objects?.first as? CarePlan else{
+                query.getFirstObjectInBackground(){
+                    (object, error) in
+                    guard let foundObject = object as? CarePlan else{
                         completion(false,error)
                         return
                     }
@@ -167,7 +174,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
        
         //Get latest item from the Cloud to compare against
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKCarePlanUUIDKey, equalTo: self.uuid)
         query.getFirstObjectInBackground{
             (object, error) in
             guard let foundObject = object as? CarePlan else{
@@ -221,7 +228,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         }
         
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKCarePlanUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
@@ -370,7 +377,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     completion(nil)
                     return
                 }
-                self.authorId = careKitAuthor.id
+                
                 guard let authorRemoteId = careKitAuthor.remoteID else{
                     completion(nil)
                     return
@@ -378,11 +385,16 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 
                 self.author = Being(withoutDataWithObjectId: authorRemoteId)
                 
-                //Search for patient
-                if let patientIdToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientObjectIdKey]{
-                    self.patientId = patientIdToSearchFor
+                //Search for being
+                if let patientUUIDToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoBeingUUIDKey]{
+                   
+                    guard let potentialBeingUUID = UUID(uuidString: patientUUIDToSearchFor) else{
+                        completion(self)
+                        return
+                    }
+                    
                     var patientQuery = OCKPatientQuery()
-                    patientQuery.ids = [patientIdToSearchFor]
+                    patientQuery.uuids = [potentialBeingUUID]
                     store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
                         result in
                         switch result{
@@ -392,7 +404,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                                     completion(nil)
                                 return
                             }
-                            self.patient = Being(withoutDataWithObjectId: patientRemoteId)
+                            self.being = Being(withoutDataWithObjectId: patientRemoteId)
                             completion(self)
                         case .failure(_):
                             completion(nil)

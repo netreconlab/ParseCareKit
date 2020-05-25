@@ -59,9 +59,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     let query = Outcome.query()!
                     query.whereKey(kPCKOutcomeUUIDKey, equalTo: self.uuid)
                     query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
-                    query.findObjectsInBackground{
-                        (objects, error) in
-                        guard let foundObject = objects?.first as? Outcome else{
+                    query.getFirstObjectInBackground(){
+                        (object, error) in
+                        guard let foundObject = object as? Outcome else{
                             completion(false,nil)
                             return
                         }
@@ -76,9 +76,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 let query = Outcome.query()!
                 query.whereKey(kPCKOutcomeObjectIdKey, equalTo: remoteID)
                 query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
-                query.findObjectsInBackground{
-                    (objects, error) in
-                    guard let foundObject = objects?.first as? Outcome else{
+                query.getFirstObjectInBackground(){
+                    (object, error) in
+                    guard let foundObject = object as? Outcome else{
                         completion(false,nil)
                         return
                     }
@@ -172,9 +172,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         let query = Outcome.query()!
         query.whereKey(kPCKOutcomeUUIDKey, equalTo: entityUUID)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
-        query.findObjectsInBackground{
-            (objects, error) in
-            guard let foundObject = objects?.first as? Outcome else{
+        query.getFirstObjectInBackground(){
+            (object, error) in
+            guard let foundObject = object as? Outcome else{
                 completion(false,nil)
                 return
             }
@@ -428,9 +428,9 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 guard let taskRemoteID = task.remoteID else{
                     let taskQuery = Task.query()!
                     taskQuery.whereKey(kPCKTaskUUIDKey, equalTo: outcome.taskUUID.uuidString)
-                    taskQuery.findObjectsInBackground(){
-                        (objects, error) in
-                        guard let taskFound = objects?.first as? Task else{
+                    taskQuery.getFirstObjectInBackground(){
+                        (object, error) in
+                        guard let taskFound = object as? Task else{
                             completion(self)
                             return
                         }

@@ -27,7 +27,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate?
     public var automaticallySynchronizes: Bool
     public internal(set) var beingTypeUUID:UUID!
-    public internal(set) var storeVersioned:Bool!
     public internal(set) weak var store:OCKStore!
     
     public override init(){
@@ -35,11 +34,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         super.init()
     }
     
-    public func startSynchronizing(_ store: OCKStore, uuid:UUID, auto: Bool=true, storeVersionedDataInCloud: Bool=true){
+    public func startSynchronizing(_ store: OCKStore, uuid:UUID, auto: Bool=true){
         self.store = store
         self.beingTypeUUID = uuid
         self.automaticallySynchronizes = auto
-        self.storeVersioned = storeVersionedDataInCloud
         if self.automaticallySynchronizes{
             self.store.synchronize { error in
                 print(error?.localizedDescription ?? "ParseCareKit auto synchronizing has started...")
