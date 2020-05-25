@@ -439,13 +439,13 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return task
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKTask)->[String:Any]?{
+    open class func getEntityAsJSONDictionary(_ entity: OCKTask)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
         }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            print("Error in Task.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
@@ -464,7 +464,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         let tempEntity = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
         
         //Create bare CareKit entity from json
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = Task.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate

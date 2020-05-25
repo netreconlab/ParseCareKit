@@ -467,13 +467,13 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         return outcome
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:Any]?{
+    open class func getEntityAsJSONDictionary(_ entity: OCKOutcome)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
         }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            print("Error in Outcome.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
@@ -491,7 +491,7 @@ open class Outcome: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
         let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
         //Create bare CareKit entity from json
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = Outcome.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate

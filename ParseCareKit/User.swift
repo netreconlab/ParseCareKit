@@ -379,13 +379,13 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         return patient
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKPatient)->[String:Any]?{
+    open class func getEntityAsJSONDictionary(_ entity: OCKPatient)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
         }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            print("Error in User.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
@@ -402,7 +402,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         let nameComponents = CareKitParsonNameComponents.familyName.convertToPersonNameComponents(self.name)
         let tempEntity = OCKPatient(id: self.entityId, name: nameComponents)
         //Create bare CareKit entity from json
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = User.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate

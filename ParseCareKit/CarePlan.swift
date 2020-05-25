@@ -421,26 +421,13 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         return carePlan
     }
     
-    open func getEntityAsJSONDictionary(_ entity: OCKContact)->[String:Any]?{
+    open class func getEntityAsJSONDictionary(_ entity: OCKCarePlan)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
         }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
-            return nil
-        }
-        
-        return jsonDictionary
-    }
-    
-    open func getEntityAsJSONDictionary(_ entity: OCKCarePlan)->[String:Any]?{
-        let jsonDictionary:[String:Any]
-        do{
-            let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
-        }catch{
-            print("Error in \(parseClassName).getEntityAsJSONDictionary(). \(error)")
+            print("Error in CarePlan.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
@@ -458,7 +445,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             
         let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
         //Create bare CareKit entity from json
-        guard var json = getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = CarePlan.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
