@@ -119,7 +119,6 @@ public let kPCKContactEntityIdKey                                = "entityId"
 public let kPCKOutcomeClassKey                                    = "Outcome"
 // Field keys
 public let kPCKOutcomeTaskKey                                     = "task"
-public let kPCKOutcomeTaskUUIDKey                                = "taskUUID"
 public let kPCKOutcomeEntityIdKey                                = "entityId"
 public let kPCKOutcomeObjectIdKey                                 = "objectId"
 public let kPCKOutcomeUserUploadedToCloudKey                   = "userUploadedToCloud"
