@@ -19,6 +19,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
+    @NSManaged public var effectiveDate:Date
     @NSManaged public var name:[String:String]
     @NSManaged public var notes:[Note]?
     @NSManaged public var sex:String?
@@ -331,6 +332,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
         self.name = CareKitParsonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
+        self.effectiveDate = patient.effectiveDate
         self.locallyUpdatedAt = patient.updatedDate
         self.timezone = patient.timezone.abbreviation()!
         self.userInfo = patient.userInfo
@@ -360,7 +362,7 @@ open class User: PFUser, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
             guard let decodedPatient = createDecodedEntity() else{return nil}
             patient = decodedPatient
         }
-        
+        patient.effectiveDate = self.effectiveDate
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
         patient.allergies = self.alergies

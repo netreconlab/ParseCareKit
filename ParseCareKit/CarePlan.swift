@@ -19,6 +19,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var title:String
+    @NSManaged public var effectiveDate:Date
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var tags:[String]?
     @NSManaged public var timezone:String
@@ -333,6 +334,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.source = carePlan.source
         self.asset = carePlan.asset
         self.timezone = carePlan.timezone.abbreviation()!
+        self.effectiveDate = carePlan.effectiveDate
         self.locallyUpdatedAt = carePlan.updatedDate
         self.userInfo = carePlan.userInfo
         if clone{
@@ -409,6 +411,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         guard var carePlan = createDecodedEntity() else{return nil}
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
+        carePlan.effectiveDate = self.effectiveDate
         carePlan.source = self.source
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.asset = self.asset

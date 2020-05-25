@@ -16,6 +16,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var asset:String?
     @NSManaged public var carePlan:CarePlan?
     @NSManaged public var carePlanId: String?
+    @NSManaged public var effectiveDate:Date
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var impactsAdherence:Bool
     @NSManaged public var instructions:String?
@@ -350,6 +351,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         self.source = task.source
         self.asset = task.asset
         self.timezone = task.timezone.abbreviation()!
+        self.effectiveDate = task.effectiveDate
         self.locallyUpdatedAt = task.updatedDate
         self.userInfo = task.userInfo
         if clone{
@@ -419,6 +421,7 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         guard var task = createDecodedEntity() else{return nil}
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
+        task.effectiveDate = self.effectiveDate
         task.source = self.source
         task.instructions = self.instructions
         task.impactsAdherence = self.impactsAdherence
