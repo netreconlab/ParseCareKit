@@ -26,7 +26,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public var delegate: OCKRemoteSynchronizationDelegate?
     public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate?
     public var automaticallySynchronizes: Bool
-    public internal(set) var patientTypeUUID:UUID!
+    public internal(set) var userTypeUUID:UUID!
     public internal(set) weak var store:OCKStore!
     
     public override init(){
@@ -36,7 +36,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func startSynchronizing(_ store: OCKStore, uuid:UUID, auto: Bool=true){
         self.store = store
-        self.patientTypeUUID = uuid
+        self.userTypeUUID = uuid
         self.automaticallySynchronizes = auto
         if self.automaticallySynchronizes{
             self.store.synchronize { error in
@@ -55,7 +55,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
         
         //Fetch KnowledgeVector from Cloud
-        KnowledgeVector.fetchFromCloud(patientTypeUUID: patientTypeUUID, createNewIfNeeded: false){
+        KnowledgeVector.fetchFromCloud(userTypeUUID: userTypeUUID, createNewIfNeeded: false){
             (_, potentialCKKnowledgeVector, error) in
             guard let cloudVector = potentialCKKnowledgeVector else{
                 completion(nil)
@@ -63,7 +63,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }
             
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
-            let localClock = knowledgeVector.clock(for: self.patientTypeUUID)
+            let localClock = knowledgeVector.clock(for: self.userTypeUUID)
             Patient.pullRevisions(localClock, cloudVector: cloudVector){
                 userRevision in
                 mergeRevision(userRevision){
@@ -126,7 +126,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             return
         }
         //Fetch KnowledgeVector from Cloud
-        KnowledgeVector.fetchFromCloud(patientTypeUUID: patientTypeUUID, createNewIfNeeded: true){
+        KnowledgeVector.fetchFromCloud(userTypeUUID: userTypeUUID, createNewIfNeeded: true){
             (potentialPCKKnowledgeVector, potentialCKKnowledgeVector, error) in
         
             guard let cloudParseVector = potentialPCKKnowledgeVector,
@@ -157,7 +157,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 return
             }
             
-            let cloudVectorClock = cloudCareKitVector.clock(for: self.patientTypeUUID)
+            let cloudVectorClock = cloudCareKitVector.clock(for: self.userTypeUUID)
             var revisionsCompletedCount = 0
             deviceRevision.entities.forEach{
                 let entity = $0
@@ -211,7 +211,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         
         var cloudVector = cloudKnowledgeVector
         //Increment and merge Knowledge Vector
-        cloudVector.increment(clockFor: patientTypeUUID)
+        cloudVector.increment(clockFor: userTypeUUID)
         cloudVector.merge(with: localKnowledgeVector)
         
         guard let _ = parseKnowledgeVector.encodeKnowledgeVector(cloudVector) else{

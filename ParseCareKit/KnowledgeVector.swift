@@ -10,17 +10,17 @@ import Parse
 import CareKitStore
 
 class KnowledgeVector: PFObject, PFSubclassing {
-    @NSManaged public var patientTypeUUID:String
+    @NSManaged public var userTypeUUID:String
     @NSManaged public var vector:String
     
     static func parseClassName() -> String {
         return kPCKKnowledgeVectorClassKey
     }
     
-    convenience init(patientTypeUUID: UUID) {
+    convenience init(userTypeUUID: UUID) {
         self.init()
-        self.patientTypeUUID = patientTypeUUID.uuidString
-        self.vector = "{\"processes\":[{\"id\":\"\(self.patientTypeUUID)\",\"clock\":0}]}"
+        self.userTypeUUID = userTypeUUID.uuidString
+        self.vector = "{\"processes\":[{\"id\":\"\(self.userTypeUUID)\",\"clock\":0}]}"
     }
     
     func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
@@ -52,19 +52,19 @@ class KnowledgeVector: PFObject, PFSubclassing {
         }
     }
     
-    class func fetchFromCloud(patientTypeUUID:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,Error?)->Void){
+    class func fetchFromCloud(userTypeUUID:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,Error?)->Void){
         
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
-        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: patientTypeUUID)
+        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: userTypeUUID)
         query.getFirstObjectInBackground{ (object,error) in
             
             guard let foundVector = object as? KnowledgeVector else{
                 if !createNewIfNeeded{
                     completion(nil,nil,error)
                 }else{
-                    //This is the first time the KnowledgeVector is patient setup for this patient
-                    let newVector = KnowledgeVector(patientTypeUUID: patientTypeUUID)
+                    //This is the first time the KnowledgeVector is user setup for this user
+                    let newVector = KnowledgeVector(userTypeUUID: userTypeUUID)
                     newVector.decodeKnowledgeVector(){
                         possiblyDecoded in
                         completion(newVector,possiblyDecoded,error)
