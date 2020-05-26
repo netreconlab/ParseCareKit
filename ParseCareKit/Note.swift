@@ -24,9 +24,6 @@ open class Note: PFObject, PFSubclassing {
     @NSManaged public var clock:Int
     @NSManaged public var userInfo:[String:String]?
     @NSManaged public var author:String?
-    
-    //Not 1 to 1
-    @NSManaged public var authorOfNote:Patient
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
     
@@ -68,11 +65,6 @@ open class Note: PFObject, PFSubclassing {
             }
             self.notes = Note.updateIfNeeded(self.notes, careKit: note.notes)
         }
-        
-        guard let authorObjectId = note.userInfo?[kPCKNoteUserInfoAuthorObjectIdKey] else{
-            return nil
-        }
-        self.authorOfNote = Patient(withoutDataWithObjectId: authorObjectId)
         return self
     }
     

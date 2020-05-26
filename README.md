@@ -87,7 +87,7 @@ During initialization of `ParseSynchronizedStoreManager`, all CareKit data that 
 ** Note that only the latest state of an OCK entity is synchronized to parse-server. The parse-server doesn't maintain the versioned data like the local OCKStore. If you want this functionality, you will have to develop it as the framework doesn't support it, and parse-server queries are not setup for this. **
 
 The mapping from CareKit -> Parse tables/classes are as follows:
-* OCKPatient <-> User - Note that by default of this framework, any "user" (doctor, patient, caregiver, etc.) is an `OCKPatient` and will have a corresponding record in your Parse `User` table.
+* OCKPatient <-> Patient - Note that by default of this framework, any "user" (doctor, patient, caregiver, etc.) is an `OCKPatient` and will have a corresponding record in your Parse `User` table.
 * OCKCarePlan <-> CarePlan
 * OCKTask <-> Task
 * OCKContact <-> Contact

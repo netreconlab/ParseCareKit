@@ -41,9 +41,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var entityId:String //maps to id
     
     //Not 1 to 1
-    @NSManaged public var patient:Patient?
-    @NSManaged public var patientEntityId:String?
-    @NSManaged public var author:Patient
     @NSManaged public var clock:Int
     
 
@@ -433,104 +430,10 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
-        guard let authorUUIDString = contact.userInfo?[kPCKContactUserInfoAuthorUUIDKey],
-            let authorUUID = UUID(uuidString: authorUUIDString) else{
+        self.copyCarePlan(contact, store: store){
+            _ in
             completion(self)
-            return
         }
-        var query = OCKPatientQuery(for: Date())
-        query.uuids = [authorUUID]
-        
-        var patientRelatedUUID:UUID? = nil
-        if let relatedPatientUUIDString = contact.userInfo?[kPCKContactUserInfoRelatedUUIDKey] {
-            if let relatedPatientUUID = UUID(uuidString: relatedPatientUUIDString){
-                patientRelatedUUID = relatedPatientUUID
-                query.uuids.append(relatedPatientUUID)
-            }
-        }
-        
-        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
-            result in
-            
-            switch result{
-            case .success(let patientsFound):
-                let foundAuthor = patientsFound.filter{$0.uuid == authorUUID}.first
-                guard let theAuthor = foundAuthor else{return}
-                
-                if let authorRemoteID = theAuthor.remoteID{
-                    
-                    self.author = Patient(withoutDataWithObjectId: authorRemoteID)
-                    self.copyRelatedPatient(patientRelatedUUID, patients: patientsFound){
-                        _ in
-                        self.copyCarePlan(contact, store: store){
-                            _ in
-                            completion(self)
-                        }
-                    }
-                }else{
-                    let userQuery = Patient.query()!
-                    userQuery.whereKey(kPCKPatientUUIDKey, equalTo: authorUUID)
-                    userQuery.getFirstObjectInBackground(){
-                        (object, error) in
-                        
-                        guard let authorFound = object as? Patient else{
-                            completion(self)
-                            return
-                        }
-                        
-                        self.author = authorFound
-                        
-                        self.copyRelatedPatient(patientRelatedUUID, patients: patientsFound){
-                            _ in
-                            self.copyCarePlan(contact, store: store){
-                                _ in
-                                completion(self)
-                            }
-                        }
-                    }
-                }
-            case .failure(_):
-                completion(nil)
-            }
-        }
-    }
-    
-    func copyRelatedPatient(_ relatedPatientUUID:UUID?, patients:[OCKPatient], completion: @escaping(Patient?) -> Void){
-        
-        guard let uuid = relatedPatientUUID else{
-            completion(nil)
-            return
-        }
-        
-        let relatedPatient = patients.filter{$0.uuid == uuid}.first
-        
-        guard let patient = relatedPatient else{
-            completion(nil)
-            return
-        }
-        
-        guard let relatedRemoteId = patient.remoteID else{
-            
-            let query = Patient.query()!
-            query.whereKey(kPCKPatientUUIDKey, equalTo: uuid.uuidString)
-            query.getFirstObjectInBackground(){
-                (object,error) in
-                
-                guard let found = object as? Patient else{
-                    completion(nil)
-                    return
-                }
-                
-                self.patient = found
-                
-                completion(self.patient)
-                return
-            }
-            return
-        }
-            
-        self.patient = Patient.init(withoutDataWithObjectId: relatedRemoteId)
-        completion(self.patient)
     }
     
     func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
