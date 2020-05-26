@@ -28,9 +28,6 @@ open class OutcomeValue: PFObject, PFSubclassing {
     @NSManaged public var clock:Int
     @NSManaged public var userInfo:[String:String]?
     
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
-    
     public static func parseClassName() -> String {
         return kPCKOutcomeValueClassKey
     }

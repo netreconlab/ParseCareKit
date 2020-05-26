@@ -38,10 +38,6 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var entityId:String //maps to id
     @NSManaged public var clock:Int
     
-    //SOSDatabase info
-    @NSManaged public var sosDeliveredToDestinationAt:Date? //When was the outcome posted D2D
-    
-    
     public static func parseClassName() -> String {
         return kPCKTaskClassKey
     }

@@ -35,7 +35,6 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var title:String?
     @NSManaged public var userInfo:[String:String]?
     @NSManaged public var carePlan:CarePlan?
-    @NSManaged public var carePlanId:String?
     @NSManaged public var uuid:String
     @NSManaged public var nextVersionUUID:String?
     @NSManaged public var previousVersionUUID:String?
@@ -43,12 +42,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     
     //Not 1 to 1
     @NSManaged public var being:Being?
-    @NSManaged public var beingEntityId:Being?
     @NSManaged public var author:Being
     @NSManaged public var clock:Int
-    
-    //UserInfo fields on CareStore
-    
 
     public static func parseClassName() -> String {
         return kPCKContactClassKey
@@ -550,12 +545,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             result in
             switch result{
             case .success(let carePlans):
-                guard let carePlan = carePlans.first else{
-                    completion(nil)
-                    return
-                }
-                self.carePlanId = carePlan.id
-                guard let carePlanRemoteID = carePlan.remoteID else{
+                guard let carePlan = carePlans.first,
+                    let carePlanRemoteID = carePlan.remoteID else{
                     
                     let carePlanQuery = CarePlan.query()!
                     carePlanQuery.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanUUID.uuidString)

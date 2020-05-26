@@ -10,7 +10,6 @@ import Parse
 import CareKitStore
 
 class KnowledgeVector: PFObject, PFSubclassing {
-    //1 to 1 between Parse and CareStore
     @NSManaged public var beingTypeUUID:String
     @NSManaged public var vector:String
     

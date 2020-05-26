@@ -20,9 +20,6 @@ open class ScheduleElement: PFObject, PFSubclassing {
     @NSManaged public var targetValues:[OutcomeValue]
     @NSManaged public var clock:Int
     
-    //UserInfo fields on CareStore
-    //@NSManaged public var uuid:String //maps to id
-    
     public static func parseClassName() -> String {
         return kAScheduleElementClassKey
     }
