@@ -217,9 +217,9 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudPatients(_ patients: [OCKAnyPatient]){
         
         patients.forEach{
-            let _ = Being(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
-                guard let patient = copiedPatient as? Being else{return}
+                guard let patient = copiedPatient as? Patient else{return}
                 patient.updateCloud(self.storeManager.store){(_,_) in}
             }
         }
@@ -227,9 +227,9 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func deleteCloudPatients(_ patients: [OCKAnyPatient]){
         patients.forEach{
-            let _ = Being(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
-                guard let patient = copiedPatient as? Being else{return}
+                guard let patient = copiedPatient as? Patient else{return}
                 patient.deleteFromCloud(self.storeManager.store){(_,_) in}
             }
         }
@@ -237,9 +237,9 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func addCloudPatients(_ patients: [OCKAnyPatient]) {
         patients.forEach{
-            let _ = Being(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
-                guard let patient = copiedPatient as? Being else{return}
+                guard let patient = copiedPatient as? Patient else{return}
                 patient.addToCloud(self.storeManager.store){(_,_) in}
             }
         }

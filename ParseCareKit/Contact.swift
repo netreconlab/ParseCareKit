@@ -41,9 +41,11 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     @NSManaged public var entityId:String //maps to id
     
     //Not 1 to 1
-    @NSManaged public var being:Being?
-    @NSManaged public var author:Being
+    @NSManaged public var patient:Patient?
+    @NSManaged public var patientEntityId:String?
+    @NSManaged public var author:Patient
     @NSManaged public var clock:Int
+    
 
     public static func parseClassName() -> String {
         return kPCKContactClassKey
@@ -80,7 +82,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
                     query.whereKey(kPCKContactUUIDKey, equalTo: contactUUID.uuidString)
-                    query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+                    query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         
@@ -96,7 +98,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 //Get latest item from the Cloud to compare against
                 let query = Contact.query()!
                 query.whereKey(kPCKContactObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+                query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
                 query.includeKey(kPCKContactAuthorKey)
                 query.getFirstObjectInBackground(){
                     (object, error) in
@@ -248,7 +250,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         //Check to see if already in the cloud
         let query = Contact.query()!
         query.whereKey(kPCKContactUUIDKey, equalTo: contactUUID.uuidString)
-        query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -439,11 +441,11 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         var query = OCKPatientQuery(for: Date())
         query.uuids = [authorUUID]
         
-        var beingRelatedUUID:UUID? = nil
-        if let relatedBeingUUIDString = contact.userInfo?[kPCKContactUserInfoRelatedUUIDKey] {
-            if let relatedBeingUUID = UUID(uuidString: relatedBeingUUIDString){
-                beingRelatedUUID = relatedBeingUUID
-                query.uuids.append(relatedBeingUUID)
+        var patientRelatedUUID:UUID? = nil
+        if let relatedPatientUUIDString = contact.userInfo?[kPCKContactUserInfoRelatedUUIDKey] {
+            if let relatedPatientUUID = UUID(uuidString: relatedPatientUUIDString){
+                patientRelatedUUID = relatedPatientUUID
+                query.uuids.append(relatedPatientUUID)
             }
         }
         
@@ -457,8 +459,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 
                 if let authorRemoteID = theAuthor.remoteID{
                     
-                    self.author = Being(withoutDataWithObjectId: authorRemoteID)
-                    self.copyRelatedPatient(beingRelatedUUID, patients: patientsFound){
+                    self.author = Patient(withoutDataWithObjectId: authorRemoteID)
+                    self.copyRelatedPatient(patientRelatedUUID, patients: patientsFound){
                         _ in
                         self.copyCarePlan(contact, store: store){
                             _ in
@@ -466,19 +468,19 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         }
                     }
                 }else{
-                    let userQuery = Being.query()!
-                    userQuery.whereKey(kPCKBeingUUIDKey, equalTo: authorUUID)
+                    let userQuery = Patient.query()!
+                    userQuery.whereKey(kPCKPatientUUIDKey, equalTo: authorUUID)
                     userQuery.getFirstObjectInBackground(){
                         (object, error) in
                         
-                        guard let authorFound = object as? Being else{
+                        guard let authorFound = object as? Patient else{
                             completion(self)
                             return
                         }
                         
                         self.author = authorFound
                         
-                        self.copyRelatedPatient(beingRelatedUUID, patients: patientsFound){
+                        self.copyRelatedPatient(patientRelatedUUID, patients: patientsFound){
                             _ in
                             self.copyCarePlan(contact, store: store){
                                 _ in
@@ -493,9 +495,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
     }
     
-    func copyRelatedPatient(_ relatedBeingUUID:UUID?, patients:[OCKPatient], completion: @escaping(Being?) -> Void){
+    func copyRelatedPatient(_ relatedPatientUUID:UUID?, patients:[OCKPatient], completion: @escaping(Patient?) -> Void){
         
-        guard let uuid = relatedBeingUUID else{
+        guard let uuid = relatedPatientUUID else{
             completion(nil)
             return
         }
@@ -509,26 +511,26 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         guard let relatedRemoteId = patient.remoteID else{
             
-            let query = Being.query()!
-            query.whereKey(kPCKBeingUUIDKey, equalTo: uuid.uuidString)
+            let query = Patient.query()!
+            query.whereKey(kPCKPatientUUIDKey, equalTo: uuid.uuidString)
             query.getFirstObjectInBackground(){
                 (object,error) in
                 
-                guard let found = object as? Being else{
+                guard let found = object as? Patient else{
                     completion(nil)
                     return
                 }
                 
-                self.being = found
+                self.patient = found
                 
-                completion(self.being)
+                completion(self.patient)
                 return
             }
             return
         }
             
-        self.being = Being.init(withoutDataWithObjectId: relatedRemoteId)
-        completion(self.being)
+        self.patient = Patient.init(withoutDataWithObjectId: relatedRemoteId)
+        completion(self.patient)
     }
     
     func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
@@ -698,7 +700,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         
         let query = Contact.query()!
         query.whereKey(kPCKContactClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKContactAuthorKey,kPCKContactBeingKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())

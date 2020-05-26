@@ -13,8 +13,8 @@ import CareKitStore
 open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
 
     //Parse only
-    @NSManaged public var being:Being?
-    @NSManaged public var author:Being?
+    @NSManaged public var patient:Patient?
+    @NSManaged public var author:Patient?
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var title:String
@@ -390,18 +390,18 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     return
                 }
                 
-                self.author = Being(withoutDataWithObjectId: authorRemoteId)
+                self.author = Patient(withoutDataWithObjectId: authorRemoteId)
                 
-                //Search for being
-                if let patientUUIDToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoBeingUUIDKey]{
+                //Search for patient
+                if let patientUUIDToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientUUIDKey]{
                    
-                    guard let potentialBeingUUID = UUID(uuidString: patientUUIDToSearchFor) else{
+                    guard let potentialPatientUUID = UUID(uuidString: patientUUIDToSearchFor) else{
                         completion(self)
                         return
                     }
                     
                     var patientQuery = OCKPatientQuery()
-                    patientQuery.uuids = [potentialBeingUUID]
+                    patientQuery.uuids = [potentialPatientUUID]
                     store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
                         result in
                         switch result{
@@ -411,7 +411,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                                     completion(nil)
                                 return
                             }
-                            self.being = Being(withoutDataWithObjectId: patientRemoteId)
+                            self.patient = Patient(withoutDataWithObjectId: patientRemoteId)
                             completion(self)
                         case .failure(_):
                             completion(nil)

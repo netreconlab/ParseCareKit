@@ -12,7 +12,7 @@
 		9119D60124561A28001B7AA3 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F824561A28001B7AA3 /* Contact.swift */; };
 		9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F924561A28001B7AA3 /* ScheduleElement.swift */; };
 		9119D60324561A28001B7AA3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FA24561A28001B7AA3 /* Task.swift */; };
-		9119D60424561A28001B7AA3 /* Being.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Being.swift */; };
+		9119D60424561A28001B7AA3 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Patient.swift */; };
 		9119D60624561A28001B7AA3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FD24561A28001B7AA3 /* Note.swift */; };
 		9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FE24561A28001B7AA3 /* CarePlan.swift */; };
 		9119D60824561A28001B7AA3 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FF24561A28001B7AA3 /* Outcome.swift */; };
@@ -51,7 +51,7 @@
 		9119D5F824561A28001B7AA3 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9119D5F924561A28001B7AA3 /* ScheduleElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleElement.swift; sourceTree = "<group>"; };
 		9119D5FA24561A28001B7AA3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		9119D5FB24561A28001B7AA3 /* Being.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Being.swift; sourceTree = "<group>"; };
+		9119D5FB24561A28001B7AA3 /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		9119D5FD24561A28001B7AA3 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		9119D5FE24561A28001B7AA3 /* CarePlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarePlan.swift; sourceTree = "<group>"; };
 		9119D5FF24561A28001B7AA3 /* Outcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 				9119D5F924561A28001B7AA3 /* ScheduleElement.swift */,
 				9119D5FA24561A28001B7AA3 /* Task.swift */,
 				91AA07222466F0CD00B39452 /* KnowledgeVector.swift */,
-				9119D5FB24561A28001B7AA3 /* Being.swift */,
+				9119D5FB24561A28001B7AA3 /* Patient.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D5EF245618D7001B7AA3 /* Info.plist */,
 			);
@@ -254,7 +254,7 @@
 				9119D60124561A28001B7AA3 /* Contact.swift in Sources */,
 				91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */,
 				9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */,
-				9119D60424561A28001B7AA3 /* Being.swift in Sources */,
+				9119D60424561A28001B7AA3 /* Patient.swift in Sources */,
 				9119D5F724561A00001B7AA3 /* ParseSynchronizedStoreManager.swift in Sources */,
 				916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */,
 				9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */,

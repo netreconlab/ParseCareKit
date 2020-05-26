@@ -1,5 +1,5 @@
 //
-//  Beings.swift
+//  Patients.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 10/5/19.
@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
+open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
     //1 to 1 between Parse and CareStore
     @NSManaged public var alergies:[String]?
     @NSManaged public var asset:String?
@@ -36,7 +36,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     @NSManaged public var clock:Int
 
     public static func parseClassName() -> String {
-        return kPCKBeingClassKey
+        return kPCKPatientClassKey
     }
     
     public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
@@ -47,13 +47,13 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
-            let beingUUID = UUID(uuidString: self.uuid) else{
+            let patientUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
         
         var careKitQuery = OCKPatientQuery()
-        careKitQuery.uuids = [beingUUID]
+        careKitQuery.uuids = [patientUUID]
         
         store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
@@ -66,12 +66,12 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 guard let remoteID = patient.remoteID else{
                     
                     //Check to see if this entity is already in the Cloud, but not paired locally
-                    let query = Being.query()!
-                    query.whereKey(kPCKBeingUUIDKey, equalTo: beingUUID.uuidString)
+                    let query = Patient.query()!
+                    query.whereKey(kPCKPatientUUIDKey, equalTo: patientUUID.uuidString)
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         
-                        guard let foundObject = object as? Being else{
+                        guard let foundObject = object as? Patient else{
                             completion(false,error)
                             return
                         }
@@ -81,12 +81,12 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 }
                 
                 //Get latest item from the Cloud to compare against
-                let query = Being.query()!
-                query.whereKey(kPCKBeingObjectIdKey, equalTo: remoteID)
+                let query = Patient.query()!
+                query.whereKey(kPCKPatientObjectIdKey, equalTo: remoteID)
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     
-                    guard let foundObject = object as? Being else{
+                    guard let foundObject = object as? Patient else{
                         completion(false,error)
                         return
                     }
@@ -99,11 +99,11 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     }
     
-    func compareUpdate(_ careKit: OCKPatient, parse: Being, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKPatient, parse: Patient, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.locallyUpdatedAt else{
-                    //This occurs only on a Being when they have logged in for the first time
+                    //This occurs only on a Patient when they have logged in for the first time
                     //and CareKit and Parse isn't properly synced. Basically this is the first
                     //time the local dates are pushed to the cloud
                     guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
@@ -186,17 +186,17 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
-            let beingUUID = UUID(uuidString: self.uuid) else{
+            let patientUUID = UUID(uuidString: self.uuid) else{
             return
         }
         
         //Get latest item from the Cloud to compare against
-        let query = Being.query()!
-        query.whereKey(kPCKBeingUUIDKey, equalTo: beingUUID)
+        let query = Patient.query()!
+        query.whereKey(kPCKPatientUUIDKey, equalTo: patientUUID)
         query.getFirstObjectInBackground(){
             (objects, error) in
             
-            guard let foundObject = objects as? Being else{
+            guard let foundObject = objects as? Patient else{
                 completion(false,error)
                 return
             }
@@ -204,7 +204,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         }
     }
     
-    func compareDelete(_ parse: Being, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: Patient, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.locallyUpdatedAt,
             let cloudUpdatedAt = parse.locallyUpdatedAt else{
             return
@@ -214,9 +214,9 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             parse.deleteInBackground{
                 (success, error) in
                 if !success{
-                    print("Error in Being.deleteFromCloud(). \(String(describing: error))")
+                    print("Error in Patient.deleteFromCloud(). \(String(describing: error))")
                 }else{
-                    print("Successfully deleted Being \(self) in the Cloud")
+                    print("Successfully deleted Patient \(self) in the Cloud")
                 }
                 completion(success,error)
             }
@@ -226,10 +226,10 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 result in
                 switch result{
                 case .success(_):
-                    print("Successfully deleting Being \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    print("Successfully deleting Patient \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                     completion(true,nil)
                 case .failure(let error):
-                    print("Error deleting Being \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                    print("Error deleting Patient \(updatedCarePlanFromCloud) from the Cloud to CareStore")
                     completion(false,error)
                 }
             }
@@ -238,13 +238,13 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let beingUUID = UUID(uuidString: self.uuid) else{
+            let patientUUID = UUID(uuidString: self.uuid) else{
             return
         }
 
         //Check to see if already in the cloud
-        let query = Being.query()!
-        query.whereKey(kPCKBeingUUIDKey, equalTo: beingUUID.uuidString)
+        let query = Patient.query()!
+        query.whereKey(kPCKPatientUUIDKey, equalTo: patientUUID.uuidString)
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -286,7 +286,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore,
-            let beingUUID = UUID(uuidString: self.uuid) else{
+            let patientUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
@@ -297,7 +297,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 print("Successfully saved \(self) in Cloud.")
                 //Only save data back to CarePlanStore if it's never been saved before
                 var careKitQuery = OCKPatientQuery()
-                careKitQuery.uuids = [beingUUID]
+                careKitQuery.uuids = [patientUUID]
                 store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
@@ -333,13 +333,13 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                     }
                 }
             }else{
-                print("Error in Being.addToCloud(). \(String(describing: error))")
+                print("Error in Patient.addToCloud(). \(String(describing: error))")
                 completion(false,error)
             }
         }
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> Being?{
+    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> Patient?{
         
         guard let _ = PFUser.current(),
             let patient = patientAny as? OCKPatient else{
@@ -405,7 +405,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             let data = try JSONEncoder().encode(entity)
             jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
         }catch{
-            print("Error in Being.getEntityAsJSONDictionary(). \(error)")
+            print("Error in Patient.getEntityAsJSONDictionary(). \(error)")
             return nil
         }
         
@@ -422,7 +422,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
         let tempEntity = OCKPatient(id: self.entityId, name: nameComponents)
         //Create bare CareKit entity from json
-        guard var json = Being.getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = Patient.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
@@ -454,10 +454,10 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Being.query()!
-        query.whereKey(kPCKBeingClockKey, greaterThanOrEqualTo: localClock)
+        let query = Patient.query()!
+        query.whereKey(kPCKPatientClockKey, greaterThanOrEqualTo: localClock)
         query.findObjectsInBackground{ (objects,error) in
-            guard let carePlans = objects as? [Being] else{
+            guard let carePlans = objects as? [Patient] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
@@ -468,7 +468,7 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Being either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table Patient either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
                 }
                 mergeRevision(revision)
                 return
@@ -483,9 +483,9 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
         switch careKitEntity {
         case .patient(let careKit):
-            let _ = Being(careKitEntity: careKit, store: store){
+            let _ = Patient(careKitEntity: careKit, store: store){
                 copied in
-                guard let parse = copied as? Being else{return}
+                guard let parse = copied as? Patient else{return}
                 parse.clock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
