@@ -285,17 +285,27 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else{return}
+        guard let store = store as? OCKStore,
+            let beingUUID = UUID(uuidString: self.uuid) else{
+            completion(false,nil)
+            return
+        }
         stampRelationalEntities()
         self.saveInBackground{
             (success, error) in
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Only save data back to CarePlanStore if it's never been saved before
-                store.fetchPatient(withID: self.entityId, callbackQueue: .global(qos: .background)){
+                var careKitQuery = OCKPatientQuery()
+                careKitQuery.uuids = [beingUUID]
+                store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(var mutableEntity):
+                    case .success(let entities):
+                        guard var mutableEntity = entities.first else{
+                            completion(false,nil)
+                            return
+                        }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
@@ -368,15 +378,8 @@ open class Being: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
         return self
     }
     
-    open func convertToCareKit(firstTimeLoggingIn: Bool=false)->OCKPatient?{
-        var patient:OCKPatient!
-        if firstTimeLoggingIn{
-            let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
-            patient = OCKPatient(id: self.entityId, name: nameComponents)
-        }else{
-            guard let decodedPatient = createDecodedEntity() else{return nil}
-            patient = decodedPatient
-        }
+    open func convertToCareKit()->OCKPatient?{
+        guard var patient = createDecodedEntity() else{return nil}
         patient.effectiveDate = self.effectiveDate
         patient.birthday = self.birthday
         patient.remoteID = self.objectId

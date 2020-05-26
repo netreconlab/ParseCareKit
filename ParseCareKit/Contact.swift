@@ -294,7 +294,8 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else{
+        guard let store = store as? OCKStore,
+            let contactUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
@@ -303,10 +304,16 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
-                store.fetchContact(withID: self.entityId, callbackQueue: .global(qos: .background)){
+                var careKitQuery = OCKContactQuery()
+                careKitQuery.uuids = [contactUUID]
+                store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(var mutableEntity):
+                    case .success(let entities):
+                        guard var mutableEntity = entities.first else{
+                            completion(false,nil)
+                            return
+                        }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             store.updateAnyContact(mutableEntity){

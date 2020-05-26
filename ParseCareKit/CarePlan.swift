@@ -270,7 +270,8 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else{
+        guard let store = store as? OCKStore,
+            let carePlanUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
@@ -278,10 +279,16 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.saveInBackground{(success, error) in
             if success{
                 //Only save data back to CarePlanStore if it's never been saved before
-                store.fetchCarePlan(withID: self.entityId, callbackQueue: .global(qos: .background)){
+                var careKitQuery = OCKCarePlanQuery()
+                careKitQuery.uuids = [carePlanUUID]
+                store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(var mutableEntity):
+                    case .success(let entities):
+                        guard var mutableEntity = entities.first else{
+                            completion(false, nil)
+                            return
+                        }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){

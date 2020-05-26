@@ -292,7 +292,8 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
     }
     
     private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else{
+        guard let store = store as? OCKStore,
+            let taskUUID = UUID(uuidString: self.uuid) else{
             completion(false,nil)
             return
         }
@@ -301,10 +302,16 @@ open class Task : PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynch
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
-                store.fetchTask(withID: self.entityId, callbackQueue: .global(qos: .background)){
+                var careKitQuery = OCKTaskQuery()
+                careKitQuery.uuids = [taskUUID]
+                store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
-                    case .success(var mutableEntity):
+                    case .success(let entities):
+                        guard var mutableEntity = entities.first else{
+                            completion(false,nil)
+                            return
+                        }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = self.objectId
                             store.updateAnyTask(mutableEntity){
