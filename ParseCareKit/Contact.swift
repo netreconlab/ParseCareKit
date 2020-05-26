@@ -15,15 +15,35 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
     @NSManaged public var category:String?
-    @NSManaged public var emailAddresses:[String:String]?
-    @NSManaged public var messagingNumbers:[String:String]?
     @NSManaged public var name:[String:String]
     @NSManaged public var organization:String?
-    @NSManaged public var otherContactInfo:[String:String]?
-    @NSManaged public var phoneNumbers:[String:String]?
+    @NSManaged public var emailAddressesDictionary:[String:String]?
+    @NSManaged public var messagingNumbersDictionary:[String:String]?
+    @NSManaged public var otherContactInfoDictionary:[String:String]?
+    @NSManaged public var phoneNumbersDictionary:[String:String]?
     @NSManaged public var role:String?
     @NSManaged public var title:String?
     @NSManaged public var carePlan:CarePlan?
+    
+    var messagingNumbers: [OCKLabeledValue]? {
+        get { messagingNumbersDictionary?.asLabeledValues() }
+        set { messagingNumbersDictionary = newValue?.asDictionary() }
+    }
+
+    var emailAddresses: [OCKLabeledValue]? {
+        get { emailAddressesDictionary?.asLabeledValues() }
+        set { emailAddressesDictionary = newValue?.asDictionary() }
+    }
+
+    var phoneNumbers: [OCKLabeledValue]? {
+        get { phoneNumbersDictionary?.asLabeledValues() }
+        set { phoneNumbersDictionary = newValue?.asDictionary() }
+    }
+
+    var otherContactInfo: [OCKLabeledValue]? {
+        get { otherContactInfoDictionary?.asLabeledValues() }
+        set { otherContactInfoDictionary = newValue?.asDictionary() }
+    }
     
     public static func parseClassName() -> String {
         return kPCKContactClassKey
@@ -59,8 +79,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                     
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
-                    query.whereKey(kPCKContactUUIDKey, equalTo: contactUUID.uuidString)
-                    query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+                    query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
+                    query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         
@@ -75,9 +95,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 
                 //Get latest item from the Cloud to compare against
                 let query = Contact.query()!
-                query.whereKey(kPCKContactObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
-                query.includeKey(kPCKContactAuthorKey)
+                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     
@@ -167,7 +186,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Get latest item from the Cloud to compare against
         let query = Contact.query()!
-        query.whereKey(kPCKContactUUIDKey, equalTo: contactUUID.uuidString)
+        query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
         query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Contact else{
@@ -227,8 +246,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Check to see if already in the cloud
         let query = Contact.query()!
-        query.whereKey(kPCKContactUUIDKey, equalTo: contactUUID.uuidString)
-        query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -370,45 +389,10 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             self.notes = Note.updateIfNeeded(self.notes, careKit: contact.notes)
         }
         
-        if let emails = contact.emailAddresses{
-            var emailAddresses = [String:String]()
-            
-            for email in emails{
-                emailAddresses[email.label] = email.value
-            }
-            
-            self.emailAddresses = emailAddresses
-        }
-        
-        if let others = contact.otherContactInfo{
-            
-            var otherContactInfo = [String:String]()
-            
-            for other in others{
-                otherContactInfo[other.label] = other.value
-            }
-           
-            self.otherContactInfo = otherContactInfo
-        }
-        
-        if let numbers = contact.phoneNumbers{
-            var phoneNumbers = [String:String]()
-            for number in numbers{
-                phoneNumbers[number.label] = number.value
-            }
-            
-            self.phoneNumbers = phoneNumbers
-        }
-        
-        if let numbers = contact.messagingNumbers{
-            var messagingNumbers = [String:String]()
-            for number in numbers{
-                messagingNumbers[number.label] = number.value
-            }
-            
-            self.messagingNumbers = messagingNumbers
-        }
-        
+        self.emailAddresses = contact.emailAddresses
+        self.otherContactInfo = contact.otherContactInfo
+        self.phoneNumbers = contact.phoneNumbers
+        self.messagingNumbers = contact.messagingNumbers
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
         self.copyCarePlan(contact, store: store){
@@ -435,7 +419,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                     let carePlanRemoteID = carePlan.remoteID else{
                     
                     let carePlanQuery = CarePlan.query()!
-                    carePlanQuery.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanUUID.uuidString)
+                    carePlanQuery.whereKey(kPCKEntityUUIDKey, equalTo: carePlanUUID.uuidString)
                     carePlanQuery.getFirstObjectInBackground(){
                         (object, error) in
                         
@@ -485,41 +469,13 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
             contact.timezone = timeZone
         }
-        //contact.effectiveDate = self.effectiveDate
+        
         contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
         contact.remoteID = self.objectId
-        
-        if let numbers = self.phoneNumbers{
-            var numbersToSave = [OCKLabeledValue]()
-            for (key,value) in numbers{
-                numbersToSave.append(OCKLabeledValue(label: key, value: value))
-            }
-            contact.phoneNumbers = numbersToSave
-        }
-        
-        if let numbers = self.messagingNumbers{
-            var numbersToSave = [OCKLabeledValue]()
-            for (key,value) in numbers{
-                numbersToSave.append(OCKLabeledValue(label: key, value: value))
-            }
-            contact.messagingNumbers = numbersToSave
-        }
-        
-        if let labeledValues = self.emailAddresses{
-            var labledValuesToSave = [OCKLabeledValue]()
-            for (key,value) in labeledValues{
-                labledValuesToSave.append(OCKLabeledValue(label: key, value: value))
-            }
-            contact.emailAddresses = labledValuesToSave
-        }
-        
-        if let labeledValues = self.otherContactInfo{
-            var labledValuesToSave = [OCKLabeledValue]()
-            for (key,value) in labeledValues{
-                labledValuesToSave.append(OCKLabeledValue(label: key, value: value))
-            }
-            contact.otherContactInfo = labledValuesToSave
-        }
+        contact.phoneNumbers = self.phoneNumbers
+        contact.messagingNumbers = self.messagingNumbers
+        contact.emailAddresses = self.emailAddresses
+        contact.otherContactInfo = self.otherContactInfo
         
         guard let carePlanID = self.carePlan?.uuid,
             let carePlanUUID = UUID(uuidString: carePlanID) else{
@@ -583,8 +539,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Contact.query()!
-        query.whereKey(kPCKContactClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKContactAuthorKey,kPCKContactPatientKey,kPCKContactCarePlanKey,kPCKCarePlanNotesKey])
+        query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -597,7 +553,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKEntityClockKey). It should be fixed during the first sync of an Outcome...")
                 }
                 mergeRevision(revision)
                 return
@@ -643,6 +599,24 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
             completion(nil)
         }
+    }
+}
+
+
+private extension Dictionary where Key == String, Value == String {
+    func asLabeledValues() -> [OCKLabeledValue] {
+        let sortedKeys = keys.sorted()
+        return sortedKeys.map { OCKLabeledValue(label: $0, value: self[$0]!) }
+    }
+}
+
+private extension Array where Element == OCKLabeledValue {
+    func asDictionary() -> [String: String] {
+        var dictionary = [String: String]()
+        for labeldValue in self {
+            dictionary[labeldValue.label] = labeldValue.value
+        }
+        return dictionary
     }
 }
 

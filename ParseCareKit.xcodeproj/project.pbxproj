@@ -23,6 +23,8 @@
 		9119D62024562933001B7AA3 /* Pods_ParseCareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9119D69A245689DA001B7AA3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9119D699245689D9001B7AA3 /* README.md */; };
 		916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */; };
+		918F07EE247D66C800C3A205 /* PCKEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKEntity.swift */; };
+		918F07F0247D66E100C3A205 /* PCKVersionedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07EF247D66E100C3A205 /* PCKVersionedEntity.swift */; };
 		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,8 @@
 		9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitUtility.swift; sourceTree = "<group>"; };
 		9119D699245689D9001B7AA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemoteSynchronizationManager.swift; sourceTree = "<group>"; };
+		918F07ED247D66C800C3A205 /* PCKEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKEntity.swift; sourceTree = "<group>"; };
+		918F07EF247D66E100C3A205 /* PCKVersionedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKVersionedEntity.swift; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +113,8 @@
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
 				9119D5F624561A00001B7AA3 /* ParseSynchronizedStoreManager.swift */,
+				918F07ED247D66C800C3A205 /* PCKEntity.swift */,
+				918F07EF247D66E100C3A205 /* PCKVersionedEntity.swift */,
 				916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */,
 				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
 				9119D5F824561A28001B7AA3 /* Contact.swift */,
@@ -249,7 +255,9 @@
 				9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */,
 				9119D60324561A28001B7AA3 /* Task.swift in Sources */,
 				9119D60824561A28001B7AA3 /* Outcome.swift in Sources */,
+				918F07F0247D66E100C3A205 /* PCKVersionedEntity.swift in Sources */,
 				9119D60624561A28001B7AA3 /* Note.swift in Sources */,
+				918F07EE247D66C800C3A205 /* PCKEntity.swift in Sources */,
 				9119D60924561A28001B7AA3 /* OutcomeValue.swift in Sources */,
 				9119D60124561A28001B7AA3 /* Contact.swift in Sources */,
 				91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */,

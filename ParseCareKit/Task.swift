@@ -14,7 +14,6 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var carePlan:CarePlan?
-    @NSManaged public var carePlanId: String?
     @NSManaged public var impactsAdherence:Bool
     @NSManaged public var instructions:String?
     @NSManaged public var title:String?
@@ -52,8 +51,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
                            
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Task.query()!
-                    query.whereKey(kPCKTaskUUIDKey, equalTo: taskUUID.uuidString)
-                    query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
+                    query.whereKey(kPCKEntityUUIDKey, equalTo: taskUUID.uuidString)
+                    query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKEntityNotesKey])
                     query.getFirstObjectInBackground{
                         (objects, error) in
                         guard let foundObject = objects as? Task else{
@@ -67,8 +66,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
                        
                 //Get latest item from the Cloud to compare against
                 let query = Task.query()!
-                query.whereKey(kPCKTaskObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
+                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKEntityNotesKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     guard let foundObject = object as? Task else{
@@ -162,8 +161,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Get latest item from the Cloud to compare against
         let query = Task.query()!
-        query.whereKey(kPCKTaskUUIDKey, equalTo: taskUUID.uuidString)
-        query.includeKeys([kPCKTaskElementsKey,kPCKTaskNotesKey])
+        query.whereKey(kPCKEntityUUIDKey, equalTo: taskUUID.uuidString)
+        query.includeKeys([kPCKTaskElementsKey,kPCKEntityNotesKey])
         query.getFirstObjectInBackground(){
             (objects, error) in
             guard let foundObject = objects as? Task else{
@@ -227,8 +226,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Check to see if already in the cloud
         let query = Task.query()!
-        query.whereKey(kPCKTaskUUIDKey, equalTo: taskUUID.uuidString)
-        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
+        query.whereKey(kPCKEntityUUIDKey, equalTo: taskUUID.uuidString)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKEntityNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{
@@ -385,12 +384,11 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
                     completion(nil)
                     return
                 }
-                self.carePlanId = foundPlan.id
-                //Attempt to link based off of local database
+                //Attempt to link based if entity is in the Cloud
                 guard let carePlanRemoteID = foundPlan.remoteID else{
                     //Local CarePlan hasn't been linked with it's Cloud version, see if we can link to Cloud version
                     let carePlanQuery = CarePlan.query()!
-                    carePlanQuery.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanLocalUUID.uuidString)
+                    carePlanQuery.whereKey(kPCKEntityUUIDKey, equalTo: carePlanLocalUUID.uuidString)
                     carePlanQuery.getFirstObjectInBackground(){
                         (object, error) in
                         guard let carePlanFound = object as? CarePlan else{
@@ -498,8 +496,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
-        query.whereKey(kPCKTaskClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKTaskNotesKey])
+        query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKEntityNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let tasks = objects as? [Task] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -512,7 +510,7 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Task either doesn't exist or is missing the column \(kPCKTaskClockKey). It should be fixed during the first sync of a Task...")
+                    print("Warning, table Task either doesn't exist or is missing the column \(kPCKEntityClockKey). It should be fixed during the first sync of a Task...")
                 }
                 mergeRevision(revision)
                 return

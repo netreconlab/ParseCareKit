@@ -16,7 +16,6 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
     @NSManaged public var patient:Patient?
     @NSManaged public var title:String
     
-    
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey
     }
@@ -50,8 +49,8 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 guard let remoteID = carePlan.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
-                    query.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanUUID.uuidString)
-                    query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+                    query.whereKey(kPCKEntityUUIDKey, equalTo: carePlanUUID.uuidString)
+                    query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         guard let foundObject = object as? CarePlan else{
@@ -65,8 +64,8 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 }
                 //Get latest item from the Cloud to compare against
                 let query = CarePlan.query()!
-                query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     guard let foundObject = object as? CarePlan else{
@@ -154,7 +153,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
        
         //Get latest item from the Cloud to compare against
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanUUIDKey, equalTo: self.uuid)
+        query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
         query.getFirstObjectInBackground{
             (object, error) in
             guard let foundObject = object as? CarePlan else{
@@ -208,8 +207,8 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         }
         
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanUUIDKey, equalTo: self.uuid)
-        query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+        query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -453,8 +452,8 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = CarePlan.query()!
-        query.whereKey(kPCKCarePlanClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+        query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [CarePlan] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -467,7 +466,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKEntityClockKey). It should be fixed during the first sync of an Outcome...")
                 }
                 mergeRevision(revision)
                 return

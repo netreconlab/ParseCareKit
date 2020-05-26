@@ -45,8 +45,8 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 guard let remoteID = outcome.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
-                    query.whereKey(kPCKOutcomeUUIDKey, equalTo: self.uuid)
-                    query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+                    query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
+                    query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         guard let foundObject = object as? Outcome else{
@@ -62,8 +62,8 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 
                 //Get latest item from the Cloud to compare against
                 let query = Outcome.query()!
-                query.whereKey(kPCKOutcomeObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
+                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     guard let foundObject = object as? Outcome else{
@@ -158,8 +158,8 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeUUIDKey, equalTo: entityUUID)
-        query.includeKeys([kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+        query.whereKey(kPCKEntityUUIDKey, equalTo: entityUUID)
+        query.includeKeys([kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Outcome else{
@@ -222,8 +222,8 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeUUIDKey, equalTo: entityUUID)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+        query.whereKey(kPCKEntityUUIDKey, equalTo: entityUUID)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
             guard let foundObjects = objects else{
@@ -415,7 +415,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 
                 guard let taskRemoteID = task.remoteID else{
                     let taskQuery = Task.query()!
-                    taskQuery.whereKey(kPCKTaskUUIDKey, equalTo: outcome.taskUUID.uuidString)
+                    taskQuery.whereKey(kPCKEntityUUIDKey, equalTo: outcome.taskUUID.uuidString)
                     taskQuery.getFirstObjectInBackground(){
                         (object, error) in
                         guard let taskFound = object as? Task else{
@@ -502,8 +502,8 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Outcome.query()!
-        query.whereKey(kPCKOutcomeClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKOutcomeNotesKey])
+        query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let outcomes = objects as? [Outcome] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -516,7 +516,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Outcome either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table Outcome either doesn't exist or is missing the column \(kPCKEntityClockKey). It should be fixed during the first sync of an Outcome...")
                 }
                 mergeRevision(revision)
                 return

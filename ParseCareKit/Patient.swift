@@ -50,7 +50,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
                     
                     //Check to see if this entity is already in the Cloud, but not paired locally
                     let query = Patient.query()!
-                    query.whereKey(kPCKPatientUUIDKey, equalTo: patientUUID.uuidString)
+                    query.whereKey(kPCKEntityUUIDKey, equalTo: patientUUID.uuidString)
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         
@@ -65,7 +65,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
                 
                 //Get latest item from the Cloud to compare against
                 let query = Patient.query()!
-                query.whereKey(kPCKPatientObjectIdKey, equalTo: remoteID)
+                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     
@@ -175,7 +175,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Get latest item from the Cloud to compare against
         let query = Patient.query()!
-        query.whereKey(kPCKPatientUUIDKey, equalTo: patientUUID)
+        query.whereKey(kPCKEntityUUIDKey, equalTo: patientUUID)
         query.getFirstObjectInBackground(){
             (objects, error) in
             
@@ -227,7 +227,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
 
         //Check to see if already in the cloud
         let query = Patient.query()!
-        query.whereKey(kPCKPatientUUIDKey, equalTo: patientUUID.uuidString)
+        query.whereKey(kPCKEntityUUIDKey, equalTo: patientUUID.uuidString)
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -438,7 +438,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Patient.query()!
-        query.whereKey(kPCKPatientClockKey, greaterThanOrEqualTo: localClock)
+        query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Patient] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -451,7 +451,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Patient either doesn't exist or is missing the column \(kPCKOutcomeClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table Patient either doesn't exist or is missing the column \(kPCKEntityClockKey). It should be fixed during the first sync of an Outcome...")
                 }
                 mergeRevision(revision)
                 return

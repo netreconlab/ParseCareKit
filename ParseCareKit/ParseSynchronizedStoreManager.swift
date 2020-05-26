@@ -20,42 +20,6 @@ public protocol PCKSynchronized: PFObject, PFSubclassing {
     func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
 }
 
-open class PCKEntity: PFObject {
-    @NSManaged public var uuid: String
-    @NSManaged public var entityId:String
-    @NSManaged public var logicalClock: Int
-    @NSManaged public var createdDate: Date?
-    @NSManaged public var updatedDate: Date?
-    @NSManaged public var userInfo: [String: String]?
-    @NSManaged public var groupIdentifier: String?
-    @NSManaged public var tags: [String]?
-    @NSManaged public var source: String?
-    @NSManaged public var asset: String?
-    @NSManaged public var notes: [Note]?
-    @NSManaged public var timezoneIdentifier: String
-}
-
-open class PCKVersionedEntity: PCKEntity {
-    @NSManaged public var effectiveDate: Date
-    @NSManaged public var deletedDate: Date?
-    @NSManaged public var nextVersionUUID:String?
-    @NSManaged public var previousVersionUUID:String?
-    /*
-    public override class func query() -> PFQuery<PFObject>? {
-        <#code#>
-    }*/
-    
-    public class func query(for date: Date) -> PFQuery<PFObject>? {
-        let query = self.query()
-        
-        let startOfDay = Calendar.current.startOfDay(for: date)
-        let endOfDay = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
-        
-        return self.query()
-    }
-}
-
-
 open class ParseSynchronizedStoreManager: NSObject{
     
     private var storeManager: OCKSynchronizedStoreManager!

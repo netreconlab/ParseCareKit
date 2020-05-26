@@ -16,150 +16,76 @@ enum ParseCareKitError: Error {
 
 //#Mark - Parse Database Keys
 
+
+public let kPCKParseObjectIdKey                                     = "objectId"
+public let kPCKParseCreatedAtKey                                    = "createdAt"
+public let kPCKParseUpdatedAtKey                                    = "updatedAt"
+
+public let kPCKEntityUUIDKey                                        = "uuid"
+public let kPCKEntityEntityIdKey                                    = "entityId"
+public let kPCKEntityAssetKey                                       = "asset"
+public let kPCKEntityGroupIdentifierKey                             = "groupIdentifier"
+public let kPCKEntityNotesKey                                       = "notes"
+public let kPCKEntityTimezoneKey                                    = "timezoneIdentifier"
+public let kPCKEntityClockKey                                       = "logicalClock"
+public let kPCKEntityCreatedDateKey                                 = "createdDate"
+public let kPCKEntityUpdatedDateKey                                 = "updatedDate"
+public let kPCKEntityTagsKey                                        = "tags"
+public let kPCKEntityUserInfoKey                                    = "userInfo"
+public let kPCKEntitySourceKey                                      = "source"
+
+public let kPCKVersionedEntityEffectiveDateKey                      = "effectiveDate"
+public let kPCKVersionedEntityDeletedDateKey                        = "deletedDate"
+public let kPCKVersionedEntityNextVersionUUIDKey                    = "nextVersionUUID"
+public let kPCKVersionedEntityPreviousVersionUUIDKey                = "previousVersionUUID"
+
 //#Mark - Patient Class
 public let kPCKPatientClassKey                                 = Patient.parseClassName()
 
 // Field keys
-public let kPCKPatientObjectIdKey                                    = "objectId"
-public let kPCKPatientUUIDKey                                          = "uuid"
-public let kPCKPatientPostedAtKey                                    = "postedAt"
-public let kPCKPatientCreatedAtKey                                   = "createdAt"
-public let kPCKPatientUpdatedAtKey                                     = "updatedAt"
-public let kPCKPatientAllergiesKey                                     = "alergies"
-public let kPCKPatientAssetKey                                         = "asset"
-public let kPCKPatientBirthdayKey                                      = "birthday"
-public let kPCKPatientGroupIdentifierKey                          = "groupIdentifier"
-public let kPCKPatientNotesKey                                    = "notes"
-public let kPCKPatientSexKey                                      = "sex"
-public let kPCKPatientSourceKey                                   = "source"
-public let kPCKPatientTagsKey                                     = "tags"
-public let kPCKPatientTimezoneKey                                 = "timezone"
-public let kPCKPatientClockKey                                    = "logicalClock"
-public let kPCKPatientEntityIdKey                                = "entityId"
-
+public let kPCKPatientAllergiesKey                                  = "alergies"
+public let kPCKPatientBirthdayKey                                   = "birthday"
+public let kPCKPatientSexKey                                        = "sex"
+public let kPCKPatientNameKey                                       = "name"
 
 //#Mark - CarePlan Class
 public let kPCKCarePlanClassKey                                = "CarePlan"
+
 // Field keys
-public let kPCKCarePlanUUIDKey                                   = "uuid"
-public let kPCKCarePlanObjectIdKey                                = "objectId"
-public let kPCKCarePlanCreatedAtKey                               = "createdAt"
-public let kPCKCarePlanUpdatedAtKey                               = "updatedAt"
-public let kPCKCarePlanLocallyCreatedAtKey                        = "createdDate"
-public let kPCKCarePlanLocallyUpdatedAtKey                        = "updatedDate"
 public let kPCKCarePlanPatientKey                                 = "patient"
 public let kPCKCarePlanPatientUUIDKey                             = "patientUUID"
 public let kPCKCarePlanTitleKey                                   = "title"
-public let kPCKCarePlanGroupIdentifierKey                      = "groupIdentifier"
-public let kPCKCarePlanNotesKey                                = "notes"
-public let kPCKCarePlanSourceKey                               = "source"
-public let kPCKCarePlanTagsKey                                 = "tags"
-public let kPCKCarePlanClockKey                                    = "logicalClock"
-public let kPCKCarePlanEntityIdKey                                = "entityId"
-
-//#Mark - Task Class
-public let kPCKTaskClassKey                                    = "Task"
-// Field keys
-public let kPCKTaskUUIDKey                                          = "uuid"
-public let kPCKTaskObjectIdKey                                    = "objectId"
-public let kPCKTaskTitleKey                                       = "title"
-public let kPCKTaskCarePlanKey                                    = "carePlan"
-public let kPCKTaskCarePlanUUIDKey                                  = "carePlanUUID"
-public let kPCKTaskGroupIdentifierKey                          = "groupIdentifier"
-public let kPCKTaskImpactsAdherenceKey                         = "impactsAdherence"
-public let kPCKTaskInstructionsKey                             = "instructions"
-public let kPCKTaskNotesKey                                    = "notes"
-public let kPCKTaskSourceKey                                   = "source"
-public let kPCKTaskTagsKey                                     = "tags"
-public let kPCKTaskAssetKey                                    = "asset"
-public let kPCKTaskTimezoneKey                                 = "timezone"
-public let kPCKTaskElementsKey                                 = "elements"
-public let kPCKTaskClockKey                                    = "logicalClock"
-public let kPCKTaskEntityIdKey                                = "entityId"
-
-//#Mark - KnowledgeVector Class
-public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
-// Field keys
-public let kPCKKnowledgeVectorPatientTypeUUIDKey                          = "patientTypeUUID"
-public let kPCKKnowledgeVectorVectorKey                        = "vector"
 
 //#Mark - Contact Class
 public let kPCKContactClassKey                                 = "Contact"
+
 // Field keys
-public let kPCKContactUUIDKey                                       = "uuid"
-public let kPCKContactObjectIdKey                                 = "objectId"
-public let kPCKContactGroupIdKey                                  = "groupIdentifier"
-public let kPCKContactTagsKey                                     = "tags"
-public let kPCKContactSourceKey                                   = "source"
+public let kPCKContactCarePlanKey                                 = "carePlan"
 public let kPCKContactTitleKey                                    = "title"
-public let kPCKContactTimezoneKey                                 = "timezone"
 public let kPCKContactRoleKey                                     = "role"
 public let kPCKContactOrganizationKey                             = "organization"
 public let kPCKContactCategoryKey                                 = "category"
-public let kPCKContactAssetKey                                    = "asset"
 public let kPCKContactNameKey                                     = "name"
-public let kPCKContactAuthorKey                                   = "author"
-public let kPCKContactPatientKey                                     = "patient"
-public let kPCKContactEmailAddressesKey                           = "emailAddresses"
 public let kPCKContactAddressKey                                  = "address"
-public let kPCKContactNotesKey                                    = "notes"
-public let kPCKContactCarePlanKey                                 = "carePlan"
-public let kPCKContactCarePlanUUIDKey                               = "carePlanUUID"
-public let kPCKContactPhoneNumbersKey                             = "phoneNumbers"
-public let kPCKContactMessagingNumbersKey                         = "messagingNumbers"
-public let kPCKContactOtherContactInfoKey                         = "otherContactInfo"
-public let kPCKContactLocallyCreatedAtKey                         = "createdDate"
-public let kPCKContactLocallyUpdatedAtKey                         = "updatedDate"
-public let kPCKContactClockKey                                    = "logicalClock"
-public let kPCKContactEntityIdKey                                = "entityId"
-public let kPCKContactPatientUUIDKey                                = "patientUUID"
+public let kPCKContactEmailAddressesKey                           = "emailAddressesDictionary"
+public let kPCKContactPhoneNumbersKey                             = "phoneNumbersDictionary"
+public let kPCKContactMessagingNumbersKey                         = "messagingNumbersDictionary"
+public let kPCKContactOtherContactInfoKey                         = "otherContactInfoDictionary"
 
-//#Mark -Outcome Class
-public let kPCKOutcomeClassKey                                    = "Outcome"
+
+//#Mark - Task Class
+public let kPCKTaskClassKey                                    = "Task"
+
 // Field keys
-public let kPCKOutcomeTaskKey                                     = "task"
-public let kPCKOutcomeEntityIdKey                                = "entityId"
-public let kPCKOutcomeObjectIdKey                                 = "objectId"
-public let kPCKOutcomeAssetKey                                 = "asset"
-public let kPCKOutcomeGroupIdentifierKey                       = "groupIdentifier"
-public let kPCKOutcomeLocallyCreatedAtKey                      = "createdDate"
-public let kPCKOutcomeLocallyUpdatedAtKey                      = "updatedDate"
-public let kPCKOutcomeNotesKey                                 = "notes"
-public let kPCKOutcomeTagsKey                                  = "tags"
-public let kPCKOutcomeTaskOccurrenceIndexKey                   = "taskOccurrenceIndex"
-public let kPCKOutcomeTimezoneKey                              = "timezone"
-public let kPCKOutcomeSourceKey                                = "source"
-public let kPCKOutcomeValuesKey                                = "values"
-public let kPCKOutcomeUUIDKey                                       = "uuid"
-public let kPCKOutcomeClockKey                                    = "logicalClock"
-
-//#Mark - OutcomeValue Class
-public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
-// Field keys
-public let kPCKOutcomeValueObjectIdKey                         = "objectId"
-public let kPCKOutcomeValueCreatedAtKey                           = "createdAt"
-public let kPCKOutcomeValueUpdatedAtKey                           = "updatedAt"
-public let kPCKOutcomeValuePostedAtKey                            = "postedAt"
-public let kPCKOutcomeValueEntityIdKey                                  = "entityId"
-public let kPCKOutcomeValueUUIDKey                                  = "uuid"
-public let kPCKOutcomeValueIndexKey                               = "index"
-public let kPCKOutcomeValueGroupIdentifierKey                  = "groupIdentifier"
-public let kPCKOutcomeValueKindKey                             = "kind"
-public let kPCKOutcomeValueNotesKey                            = "notes"
-public let kPCKOutcomeValueSourceKey                           = "source"
-public let kPCKOutcomeValueTagsKey                             = "tags"
-public let kPCKOutcomeValueTypeKey                             = "type"
-public let kPCKOutcomeValueUnitsKey                            = "units"
-public let kPCKOutcomeValueValueKey                            = "value"
-public let kPCKOutcomeValueLocallyCreatedAtKey                    = "createdDate"
-public let kPCKOutcomeValueLocallyUpdatedAtKey                    = "updatedDate"
-
-
+public let kPCKTaskTitleKey                                       = "title"
+public let kPCKTaskCarePlanKey                                    = "carePlan"
+public let kPCKTaskImpactsAdherenceKey                         = "impactsAdherence"
+public let kPCKTaskInstructionsKey                             = "instructions"
+public let kPCKTaskElementsKey                                 = "elements"
 
 //#Mark - Schedule Element Class
 public let kAScheduleElementClassKey                           = "ScheduleElement"
 // Field keys
-public let kPCKScheduleElementObjectIdKey                         = "objectId"
 public let kPCKScheduleElementTextKey                             = "text"
 public let kPCKScheduleElementStartKey                            = "start"
 public let kPCKScheduleElementEndKey                              = "end"
@@ -167,21 +93,43 @@ public let kPCKScheduleElementIntervalKey                         = "interval"
 public let kPCKScheduleElementTargetValuesKey                     = "targetValues"
 public let kPCKScheduleElementElementsKey                         = "elements"
 
+//#Mark - Outcome Class
+public let kPCKOutcomeClassKey                                    = "Outcome"
+
+// Field keys
+public let kPCKOutcomeTaskKey                                     = "task"
+public let kPCKOutcomeTaskOccurrenceIndexKey                   = "taskOccurrenceIndex"
+public let kPCKOutcomeValuesKey                                = "values"
+
+
+//#Mark - OutcomeValue Class
+public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
+
+// Field keys
+public let kPCKOutcomeValueIndexKey                               = "index"
+public let kPCKOutcomeValueKindKey                             = "kind"
+public let kPCKOutcomeValueUnitsKey                            = "units"
+public let kPCKOutcomeValueValueKey                            = "textValue"
+public let kPCKOutcomeValueBinaryValueKey                            = "binaryValue"
+public let kPCKOutcomeValueBooleanValueKey                            = "booleanValue"
+public let kPCKOutcomeValueIntegerValueKey                            = "integerValue"
+public let kPCKOutcomeValueDoubleValueKey                            = "doubleValue"
+public let kPCKOutcomeValueDateValueKey                            = "dateValue"
+
+
 //#Mark - Note Class
 public let kPCKNoteClassKey                                    = "Note"
 // Field keys
 public let kPCKNoteContentKey                                  = "content"
-public let kPCKNoteSourceKey                                   = "source"
-public let kPCKNoteTagsKey                                     = "tags"
-public let kPCKNoteAssetKey                                    = "asset"
-public let kPCKNoteNotesKey                                    = "notes"
-public let kPCKNoteCreatedAtKey                                = "createdAt"
-public let kPCKNoteUpdatedAtKey                                = "updatedAt"
-public let kPCKNoteLocallyCreatedAtKey                         = "createdDate"
-public let kPCKNoteLocallyUpdatedAtKey                         = "updatedDate"
-public let kPCKNoteLocallyTimezoneKey                          = "timezone"
 public let kPCKNoteTitleKey                                    = "title"
-public let kPCKNoteIdKey                                       = "uuid"
+public let kPCKNoteAuthorKey                                   = "author"
+
+//#Mark - KnowledgeVector Class
+public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
+// Field keys
+public let kPCKKnowledgeVectorPatientTypeUUIDKey               = "patientTypeUUID"
+public let kPCKKnowledgeVectorVectorKey                        = "vector"
+
 
 //#Mark - CareKit UserInfo Database Keys
 
