@@ -247,4 +247,4 @@ class AppUser: User{
 ```
 Of course, you can custimize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
 
-If you have a custom store, and have created your own entities, you simply need to conform to the `PCKSynchronizedEntity` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to the `PCKEntity` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 

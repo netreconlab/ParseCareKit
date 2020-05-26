@@ -10,23 +10,100 @@ import Parse
 import CareKitStore
 
 
-open class OutcomeValue: PFObject, PFSubclassing {
+open class OutcomeValue: PCKEntity {
 
     //1 to 1 between Parse and CareStore
-    @NSManaged public var index:Int
-    @NSManaged public var groupIdentifier:String?
+    @NSManaged public var index:NSNumber?
     @NSManaged public var kind:String?
+    //@NSManaged public var type:String
+    @NSManaged public var units:String?
+    //@NSManaged var index: NSNumber?
+    
+    @NSManaged private var typeString: String
+    var type: OCKOutcomeValueType {
+        get { return OCKOutcomeValueType(rawValue: typeString)! }
+        set { typeString = newValue.rawValue }
+    }
+
+    @NSManaged var textValue: String?
+    @NSManaged var binaryValue: Data?
+    @NSManaged var booleanValue: Bool
+    @NSManaged var integerValue: Int64
+    @NSManaged var doubleValue: Double
+    @NSManaged var dateValue: Date?
+
+    var value: OCKOutcomeValueUnderlyingType {
+        get {
+            switch type {
+            case .integer: return Int(integerValue)
+            case .double: return doubleValue
+            case .boolean: return booleanValue
+            case .text: return textValue!
+            case .binary: return binaryValue!
+            case .date: return dateValue!
+            }
+        }
+
+        set {
+            switch newValue {
+            case let int as Int:
+                reset()
+                integerValue = Int64(int)
+                type = .integer
+
+            case let double as Double:
+                reset()
+                doubleValue = double
+                type = .double
+
+            case let bool as Bool:
+                reset()
+                booleanValue = bool
+                type = .boolean
+
+            case let text as String:
+                reset()
+                textValue = text
+                type = .text
+
+            case let binary as Data:
+                reset()
+                binaryValue = binary
+                type = .binary
+
+            case let date as Date:
+                reset()
+                dateValue = date
+                type = .date
+
+            default: fatalError("Unexpected type!")
+            }
+        }
+    }
+
+    private func reset() {
+        textValue = nil
+        binaryValue = nil
+        booleanValue = false
+        integerValue = 0
+        doubleValue = 0
+        dateValue = nil
+        index = nil
+    }
+    
+    
+    /*
+     @NSManaged public var value:[String: Any]
+    @NSManaged public var groupIdentifier:String?
     @NSManaged public var locallyCreatedAt:Date?
     @NSManaged public var locallyUpdatedAt:Date?
     @NSManaged public var notes:[Note]?
     @NSManaged public var source:String?
     @NSManaged public var tags:[String]?
-    @NSManaged public var type:String
-    @NSManaged public var units:String?
-    @NSManaged public var value:[String: Any]
     @NSManaged public var uuid:String
-    @NSManaged public var clock:Int
+    @NSManaged public var logicalClock:Int
     @NSManaged public var userInfo:[String:String]?
+    */
     
     public static func parseClassName() -> String {
         return kPCKOutcomeValueClassKey
@@ -48,29 +125,16 @@ open class OutcomeValue: PFObject, PFSubclassing {
         self.userInfo = outcomeValue.userInfo
         
         self.kind = outcomeValue.kind
+        
         if let index = outcomeValue.index{
-            self.index = index
+            self.index = NSNumber(value: index)
         }else{
             //Can't set nil because of ObjC, make sure to guard against negative index when retreiving
-            self.index = -1
+            self.index = nil
         }
         
-        self.type = outcomeValue.type.rawValue
-        switch outcomeValue.type {
-        case .binary:
-            self.value = [outcomeValue.type.rawValue: outcomeValue.dataValue!]
-        case .boolean:
-            self.value = [outcomeValue.type.rawValue: outcomeValue.booleanValue!]
-        case .integer:
-            self.value = [outcomeValue.type.rawValue: outcomeValue.integerValue!]
-        case .double:
-            self.value = [outcomeValue.type.rawValue: outcomeValue.doubleValue!]
-        case .text:
-            self.value = [outcomeValue.type.rawValue: outcomeValue.stringValue!]
-        case .date:
-            self.value = [outcomeValue.type.rawValue: outcomeValue.dateValue!]
-        }
-        
+        self.typeString = outcomeValue.type.rawValue
+        self.value = outcomeValue.value
         self.units = outcomeValue.units
         
         self.groupIdentifier = outcomeValue.groupIdentifier
@@ -99,12 +163,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
     open func convertToCareKit()->OCKOutcomeValue?{
         
         guard var outcomeValue = createDecodedEntity()else{return nil}
-        //Can't set nil because of ObjC, make sure to guard against negative index when retreiving
-        if self.index == -1 {
-            outcomeValue.index = nil
-        }else{
-            outcomeValue.index = self.index
-        }
+        outcomeValue.index = self.index as? Int
         outcomeValue.kind = self.kind
         outcomeValue.groupIdentifier = self.groupIdentifier
         outcomeValue.tags = self.tags
@@ -116,21 +175,21 @@ open class OutcomeValue: PFObject, PFSubclassing {
     }
     
     func stamp(_ clock: Int){
-        self.clock = clock
+        self.logicalClock = clock
         self.notes?.forEach{
-            $0.clock = self.clock
+            $0.logicalClock = self.logicalClock
         }
     }
     
     open func createDecodedEntity()->OCKOutcomeValue?{
-        guard let underlyingType = OCKOutcomeValueType(rawValue: self.type), let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
+        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
             
-        var tempEntity:OCKOutcomeValue = OCKOutcomeValue("")
-        
+        let tempEntity:OCKOutcomeValue = OCKOutcomeValue(self.value, units: self.units)
+        /*
         switch underlyingType {
         
         case .integer:
@@ -157,7 +216,7 @@ open class OutcomeValue: PFObject, PFSubclassing {
             if let value = self.value[self.type] as? Date{
                 tempEntity = OCKOutcomeValue(value, units: self.units)
             }
-        }
+        }*/
         //Create bare CareKit entity from json
         guard var json = OutcomeValue.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
@@ -230,9 +289,9 @@ open class OutcomeValue: PFObject, PFSubclassing {
             
             return nil //Items are the same, no need to do anything
         }else{
-            if ((self.clock <= parse.clock) && !overwriteRemote){
+            if ((self.logicalClock <= parse.logicalClock) && !overwriteRemote){
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
             }
             return nil
         }

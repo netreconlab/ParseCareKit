@@ -9,23 +9,26 @@
 import Parse
 import CareKitStore
 
-open class Note: PFObject, PFSubclassing {
+open class Note: PCKEntity {
 
     //1 to 1 between Parse and CareStore
-    @NSManaged public var asset:String?
+    
     @NSManaged public var content:String
+    @NSManaged public var title:String
+    @NSManaged public var author:String?
+    
+    /*
+    @NSManaged public var timezone:String
+    @NSManaged public var asset:String?
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var notes:[Note]?
     @NSManaged public var source:String?
     @NSManaged public var tags:[String]?
-    @NSManaged public var timezone:String
-    @NSManaged public var title:String
     @NSManaged public var uuid:String
-    @NSManaged public var clock:Int
+    @NSManaged public var logicalClock:Int
     @NSManaged public var userInfo:[String:String]?
-    @NSManaged public var author:String?
     @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
+    @NSManaged public var locallyUpdatedAt:Date?*/
     
     public static func parseClassName() -> String {
         return kPCKNoteClassKey
@@ -47,7 +50,7 @@ open class Note: PFObject, PFSubclassing {
         self.tags = note.tags
         self.source = note.source
         self.asset = note.asset
-        self.timezone = note.timezone.abbreviation()!
+        self.timezoneIdentifier = note.timezone.abbreviation()!
         self.author = note.author
         self.userInfo = note.userInfo
         self.locallyUpdatedAt = note.updatedDate
@@ -81,7 +84,7 @@ open class Note: PFObject, PFSubclassing {
         note.remoteID = self.objectId
         note.groupIdentifier = self.groupIdentifier
         note.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
             note.timezone = timeZone
         }
         
@@ -90,9 +93,9 @@ open class Note: PFObject, PFSubclassing {
     }
     
     func stamp(_ clock: Int){
-        self.clock = clock
+        self.logicalClock = clock
         self.notes?.forEach{
-            $0.clock = self.clock
+            $0.logicalClock = self.logicalClock
         }
     }
     

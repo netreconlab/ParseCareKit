@@ -13,7 +13,7 @@ import Parse
 /**
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
-protocol PCKRemoteSynchronizedEntity: PFObject, PFSubclassing {
+protocol PCKRemoteSynchronized: PCKSynchronized {
     static func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     static func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void)
 }

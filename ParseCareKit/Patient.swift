@@ -10,36 +10,37 @@ import Parse
 import CareKitStore
 
 
-open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
+open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
+    
     //1 to 1 between Parse and CareStore
     @NSManaged public var alergies:[String]?
-    @NSManaged public var asset:String?
     @NSManaged public var birthday:Date?
-    @NSManaged public var deletedDate:Date?
-    @NSManaged public var effectiveDate:Date
-    @NSManaged public var groupIdentifier:String?
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
     @NSManaged public var name:[String:String]
-    @NSManaged public var notes:[Note]?
     @NSManaged public var sex:String?
-    @NSManaged public var source:String?
-    @NSManaged public var tags:[String]?
-    @NSManaged public var timezone:String
-    @NSManaged public var userInfo:[String:String]?
-    @NSManaged public var nextVersionUUID:String?
-    @NSManaged public var previousVersionUUID:String?
-    @NSManaged public var uuid:String
-    
+    //@NSManaged public var nextVersionUUID:String?
+    //@NSManaged public var previousVersionUUID:String?
+    //@NSManaged public var asset:String?
+    //@NSManaged public var deletedDate:Date?
+    //@NSManaged public var effectiveDate:Date
+    //@NSManaged public var groupIdentifier:String?
+    //@NSManaged public var locallyCreatedAt:Date?
+    //@NSManaged public var locallyUpdatedAt:Date?
+    //@NSManaged public var notes:[Note]?
+    //@NSManaged public var source:String?
+    //@NSManaged public var tags:[String]?
+    //@NSManaged public var userInfo:[String:String]?
+    //@NSManaged public var uuid:String
+    //@NSManaged public var timezone:String
     //Not 1 to 1
-    @NSManaged public var entityId:String //maps to id
-    @NSManaged public var clock:Int
+    //@NSManaged public var entityId:String //maps to id
+    //@NSManaged public var logicalClock:Int
 
+    
     public static func parseClassName() -> String {
         return kPCKPatientClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
         completion(self.copyCareKit(careKitEntity, clone: true))
     }
@@ -110,7 +111,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                         completion(false,nil)
                         return
                     }
-                    self.clock = 0 //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    self.logicalClock = 0 //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
                     updated.saveAndCheckRemoteID(store){
                         (success,error) in
                         if !success{
@@ -159,12 +160,12 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 completion(true,nil)
             }
         }else{
-            if ((self.clock > parse.clock) || overwriteRemote){
+            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
                 guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
                     completion(false,nil)
                     return
                 }
-                updated.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
+                updated.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
                 //An update may occur when Internet isn't available, try to update at some point
                 updated.saveAndCheckRemoteID(store){
                     (success,error) in
@@ -177,7 +178,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
                 completion(false,nil)
             }
         }
@@ -260,7 +261,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
                     //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
                     if !usingKnowledgeVector{
-                        self.clock = 0
+                        self.logicalClock = 0
                     }
                     self.saveAndCheckRemoteID(store, completion: completion)
                 }else{
@@ -277,7 +278,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }else{
                 //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                 if !usingKnowledgeVector{
-                    self.clock = 0
+                    self.logicalClock = 0
                 }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
@@ -359,7 +360,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.effectiveDate = patient.effectiveDate
         self.deletedDate = patient.deletedDate
         self.locallyUpdatedAt = patient.updatedDate
-        self.timezone = patient.timezone.abbreviation()!
+        self.timezoneIdentifier = patient.timezone.abbreviation()!
         self.userInfo = patient.userInfo
         if clone{
             self.locallyCreatedAt = patient.createdDate
@@ -390,7 +391,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         patient.asset = self.asset
         patient.userInfo = self.userInfo
         patient.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
             patient.timezone = timeZone
         }
         if let sex = self.sex{
@@ -449,7 +450,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func stampRelationalEntities(){
-        self.notes?.forEach{$0.stamp(self.clock)}
+        self.notes?.forEach{$0.stamp(self.logicalClock)}
     }
     
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -486,7 +487,7 @@ open class Patient: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             let _ = Patient(careKitEntity: careKit, store: store){
                 copied in
                 guard let parse = copied as? Patient else{return}
-                parse.clock = cloudClock //Stamp Entity
+                parse.logicalClock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in

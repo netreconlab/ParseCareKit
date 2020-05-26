@@ -34,7 +34,7 @@ public let kPCKPatientSexKey                                      = "sex"
 public let kPCKPatientSourceKey                                   = "source"
 public let kPCKPatientTagsKey                                     = "tags"
 public let kPCKPatientTimezoneKey                                 = "timezone"
-public let kPCKPatientClockKey                                    = "clock"
+public let kPCKPatientClockKey                                    = "logicalClock"
 public let kPCKPatientEntityIdKey                                = "entityId"
 
 
@@ -48,15 +48,13 @@ public let kPCKCarePlanUpdatedAtKey                               = "updatedAt"
 public let kPCKCarePlanLocallyCreatedAtKey                        = "locallyCreatedAt"
 public let kPCKCarePlanLocallyUpdatedAtKey                        = "locallyUpdatedAt"
 public let kPCKCarePlanPatientKey                                 = "patient"
-public let kPCKCarePlanAuthorKey                                  = "author"
-public let kPCKCarePlanAuthorIdKey                                = "authorId"
 public let kPCKCarePlanPatientUUIDKey                             = "patientUUID"
 public let kPCKCarePlanTitleKey                                   = "title"
 public let kPCKCarePlanGroupIdentifierKey                      = "groupIdentifier"
 public let kPCKCarePlanNotesKey                                = "notes"
 public let kPCKCarePlanSourceKey                               = "source"
 public let kPCKCarePlanTagsKey                                 = "tags"
-public let kPCKCarePlanClockKey                                    = "clock"
+public let kPCKCarePlanClockKey                                    = "logicalClock"
 public let kPCKCarePlanEntityIdKey                                = "entityId"
 
 //#Mark - Task Class
@@ -76,7 +74,7 @@ public let kPCKTaskTagsKey                                     = "tags"
 public let kPCKTaskAssetKey                                    = "asset"
 public let kPCKTaskTimezoneKey                                 = "timezone"
 public let kPCKTaskElementsKey                                 = "elements"
-public let kPCKTaskClockKey                                    = "clock"
+public let kPCKTaskClockKey                                    = "logicalClock"
 public let kPCKTaskEntityIdKey                                = "entityId"
 
 //#Mark - KnowledgeVector Class
@@ -112,7 +110,7 @@ public let kPCKContactMessagingNumbersKey                         = "messagingNu
 public let kPCKContactOtherContactInfoKey                         = "otherContactInfo"
 public let kPCKContactLocallyCreatedAtKey                         = "locallyCreatedAt"
 public let kPCKContactLocallyUpdatedAtKey                         = "locallyUpdatedAt"
-public let kPCKContactClockKey                                    = "clock"
+public let kPCKContactClockKey                                    = "logicalClock"
 public let kPCKContactEntityIdKey                                = "entityId"
 public let kPCKContactPatientUUIDKey                                = "patientUUID"
 
@@ -133,7 +131,7 @@ public let kPCKOutcomeTimezoneKey                              = "timezone"
 public let kPCKOutcomeSourceKey                                = "source"
 public let kPCKOutcomeValuesKey                                = "values"
 public let kPCKOutcomeUUIDKey                                       = "uuid"
-public let kPCKOutcomeClockKey                                    = "clock"
+public let kPCKOutcomeClockKey                                    = "logicalClock"
 
 //#Mark - OutcomeValue Class
 public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
@@ -186,12 +184,7 @@ public let kPCKNoteTitleKey                                    = "title"
 public let kPCKNoteIdKey                                       = "uuid"
 
 //#Mark - CareKit UserInfo Database Keys
-//CarePlan Class
-public let kPCKCarePlanUserInfoPatientUUIDKey           = "patientUUID"
 
-//Contact Element Class
-public let kPCKContactUserInfoAuthorUUIDKey         = "authorUUID" //The id of the User if there is one.
-public let kPCKContactUserInfoRelatedUUIDKey          = "relatedUUID" //The id of the User if there is one.
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"

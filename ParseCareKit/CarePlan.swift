@@ -10,38 +10,34 @@ import Parse
 import CareKitStore
 
 
-open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
+open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
 
     //Parse only
     @NSManaged public var patient:Patient?
-    @NSManaged public var author:Patient?
-    
-    //1 to 1 between Parse and CareStore
     @NSManaged public var title:String
+    //1 to 1 between Parse and CareStore
+    
+    //Not 1 to 1 UserInfo fields on CareStore
+    /*@NSManaged public var asset:String?
+    @NSManaged public var source:String?
+    @NSManaged public var notes:[Note]?
+    @NSManaged public var uuid:String
+    @NSManaged public var locallyCreatedAt:Date?
+    @NSManaged public var locallyUpdatedAt:Date?
     @NSManaged public var deletedDate:Date?
     @NSManaged public var effectiveDate:Date
     @NSManaged public var groupIdentifier:String?
     @NSManaged public var tags:[String]?
-    @NSManaged public var timezone:String
-    @NSManaged public var asset:String?
-    @NSManaged public var source:String?
-    @NSManaged public var notes:[Note]?
-    @NSManaged public var uuid:String
-    @NSManaged public var nextVersionUUID:String?
-    @NSManaged public var previousVersionUUID:String?
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var userInfo:[String:String]?
-    
-    //Not 1 to 1 UserInfo fields on CareStore
     @NSManaged public var entityId:String //maps to id
-    @NSManaged public var clock:Int
-    
+    @NSManaged public var logicalClock:Int
+    @NSManaged public var userInfo:[String:String]?
+     @NSManaged public var timezone:String
+    */
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
@@ -71,7 +67,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
                     query.whereKey(kPCKCarePlanUUIDKey, equalTo: carePlanUUID.uuidString)
-                    query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+                    query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         guard let foundObject = object as? CarePlan else{
@@ -86,7 +82,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 //Get latest item from the Cloud to compare against
                 let query = CarePlan.query()!
                 query.whereKey(kPCKCarePlanObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+                query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     guard let foundObject = object as? CarePlan else{
@@ -143,9 +139,9 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 completion(true,nil)
             }
         }else{
-            if ((self.clock > parse.clock) || overwriteRemote){
+            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
+                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
                     parse.saveAndCheckRemoteID(store){
                         (success,error) in
                         
@@ -159,7 +155,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                 }
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
                 completion(false,nil)
             }
         }
@@ -229,7 +225,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         
         let query = CarePlan.query()!
         query.whereKey(kPCKCarePlanUUIDKey, equalTo: self.uuid)
-        query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -245,7 +241,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
                     //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                     if !usingKnowledgeVector{
-                        self.clock = 0
+                        self.logicalClock = 0
                     }
                     self.saveAndCheckRemoteID(store,completion: completion)
                 }else{
@@ -262,7 +258,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             }else{
                 //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                 if !usingKnowledgeVector{
-                    self.clock = 0
+                    self.logicalClock = 0
                 }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
@@ -349,7 +345,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         self.tags = carePlan.tags
         self.source = carePlan.source
         self.asset = carePlan.asset
-        self.timezone = carePlan.timezone.abbreviation()!
+        self.timezoneIdentifier = carePlan.timezone.abbreviation()!
         self.effectiveDate = carePlan.effectiveDate
         self.locallyUpdatedAt = carePlan.updatedDate
         self.userInfo = carePlan.userInfo
@@ -368,58 +364,29 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
             self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
         }
         
-        guard let authorID = carePlan.patientUUID else{
+        guard let patientUUID = carePlan.patientUUID else{
             completion(self)
             return
         }
         //ID's are the same for related Plans
         var query = OCKPatientQuery()
-        query.uuids = [authorID]
+        query.uuids = [patientUUID]
         store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let authors):
                 //Should only be one patient returned
-                guard let careKitAuthor = authors.first else{
+                guard let careKitPatient = authors.first else{
                     completion(nil)
                     return
                 }
                 
-                guard let authorRemoteId = careKitAuthor.remoteID else{
+                guard let authorRemoteId = careKitPatient.remoteID else{
                     completion(nil)
                     return
                 }
                 
-                self.author = Patient(withoutDataWithObjectId: authorRemoteId)
-                
-                //Search for patient
-                if let patientUUIDToSearchFor = carePlan.userInfo?[kPCKCarePlanUserInfoPatientUUIDKey]{
-                   
-                    guard let potentialPatientUUID = UUID(uuidString: patientUUIDToSearchFor) else{
-                        completion(self)
-                        return
-                    }
-                    
-                    var patientQuery = OCKPatientQuery()
-                    patientQuery.uuids = [potentialPatientUUID]
-                    store.fetchAnyPatients(query: patientQuery, callbackQueue: .global(qos: .background)){
-                        result in
-                        switch result{
-                        case .success(let patients):
-                            guard let patient = patients.first,
-                                let patientRemoteId = patient.remoteID else{
-                                    completion(nil)
-                                return
-                            }
-                            self.patient = Patient(withoutDataWithObjectId: patientRemoteId)
-                            completion(self)
-                        case .failure(_):
-                            completion(nil)
-                        }
-                    }
-                }else{
-                    completion(self)
-                }
+                self.patient = Patient(withoutDataWithObjectId: authorRemoteId)
             case .failure(_):
                 completion(nil)
             }
@@ -439,7 +406,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
         carePlan.remoteID = self.objectId
         carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
         carePlan.userInfo = self.userInfo
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
             carePlan.timezone = timeZone
         }
         return carePlan
@@ -459,15 +426,15 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     open func createDecodedEntity()->OCKCarePlan?{
-        guard let authorID = self.author?.uuid,
-            let authorUUID = UUID(uuidString: authorID),
+        guard let patientUUIDString = self.patient?.uuid,
+            let patientUUID = UUID(uuidString: patientUUIDString),
             let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
             let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
                 print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
             return nil
         }
             
-        let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: authorUUID)
+        let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
         //Create bare CareKit entity from json
         guard var json = CarePlan.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid
@@ -496,14 +463,14 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
     }
     
     func stampRelationalEntities(){
-        self.notes?.forEach{$0.stamp(self.clock)}
+        self.notes?.forEach{$0.stamp(self.logicalClock)}
     }
     
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = CarePlan.query()!
         query.whereKey(kPCKCarePlanClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKCarePlanAuthorKey,kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKCarePlanNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [CarePlan] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -537,7 +504,7 @@ open class CarePlan: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSy
                     completion(nil)
                     return
                 }
-                parse.clock = cloudClock //Stamp Entity
+                parse.logicalClock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in

@@ -10,45 +10,47 @@ import Parse
 import CareKitStore
 
 
-open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSynchronizedEntity {
+open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
-    @NSManaged public var asset:String?
     @NSManaged public var category:String?
-    @NSManaged public var deletedDate:Date?
-    @NSManaged public var effectiveDate:Date
     @NSManaged public var emailAddresses:[String:String]?
-    @NSManaged public var groupIdentifier:String?
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
     @NSManaged public var messagingNumbers:[String:String]?
     @NSManaged public var name:[String:String]
-    @NSManaged public var notes:[Note]?
     @NSManaged public var organization:String?
     @NSManaged public var otherContactInfo:[String:String]?
     @NSManaged public var phoneNumbers:[String:String]?
     @NSManaged public var role:String?
+    @NSManaged public var title:String?
+    @NSManaged public var carePlan:CarePlan?
+    
+    /*
+     @NSManaged public var timezone:String
+    @NSManaged public var asset:String?
+    @NSManaged public var deletedDate:Date?
+    @NSManaged public var effectiveDate:Date
+    @NSManaged public var groupIdentifier:String?
+    @NSManaged public var locallyCreatedAt:Date?
+    @NSManaged public var locallyUpdatedAt:Date?
+    @NSManaged public var notes:[Note]?
     @NSManaged public var source:String?
     @NSManaged public var tags:[String]?
-    @NSManaged public var timezone:String
-    @NSManaged public var title:String?
     @NSManaged public var userInfo:[String:String]?
-    @NSManaged public var carePlan:CarePlan?
     @NSManaged public var uuid:String
     @NSManaged public var nextVersionUUID:String?
     @NSManaged public var previousVersionUUID:String?
     @NSManaged public var entityId:String //maps to id
     
     //Not 1 to 1
-    @NSManaged public var clock:Int
-    
+    @NSManaged public var logicalClock:Int
+    */
 
     public static func parseClassName() -> String {
         return kPCKContactClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronizedEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
@@ -154,9 +156,9 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 completion(true,nil)
             }
         }else{
-            if ((self.clock > parse.clock) || overwriteRemote){
+            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    parse.clock = self.clock //Place stamp on this entity since it's correctly linked to Parse
+                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
                     parse.saveAndCheckRemoteID(store){
                         (success,error) in
                         
@@ -170,7 +172,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                 }
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.clock) >= \(self.clock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
                 completion(false,nil)
             }
         }
@@ -263,7 +265,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
                     //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                     if !usingKnowledgeVector{
-                        self.clock = 0
+                        self.logicalClock = 0
                     }
                     self.saveAndCheckRemoteID(store, completion: completion)
                 }else{
@@ -280,7 +282,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
             }else{
                 //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                 if !usingKnowledgeVector{
-                    self.clock = 0
+                    self.logicalClock = 0
                 }
                 self.saveAndCheckRemoteID(store, completion: completion)
             }
@@ -369,7 +371,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         self.organization = contact.organization
         self.category = contact.category?.rawValue
         self.asset = contact.asset
-        self.timezone = contact.timezone.abbreviation()!
+        self.timezoneIdentifier = contact.timezone.abbreviation()!
         self.name = CareKitPersonNameComponents.familyName.convertToDictionary(contact.name)
         self.locallyUpdatedAt = contact.updatedDate
         self.userInfo = contact.userInfo
@@ -501,7 +503,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
         }
         contact.groupIdentifier = self.groupIdentifier
         contact.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
             contact.timezone = timeZone
         }
         //contact.effectiveDate = self.effectiveDate
@@ -596,7 +598,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
     }
     
     func stampRelationalEntities(){
-        self.notes?.forEach{$0.stamp(self.clock)}
+        self.notes?.forEach{$0.stamp(self.logicalClock)}
     }
     
     class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -637,7 +639,7 @@ open class Contact: PFObject, PFSubclassing, PCKSynchronizedEntity, PCKRemoteSyn
                     completion(nil)
                     return
                 }
-                parse.clock = cloudClock //Stamp Entity
+                parse.logicalClock = cloudClock //Stamp Entity
                 if careKit.deletedDate == nil{
                     parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
                         (success,error) in
