@@ -25,6 +25,190 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
+        
+        guard let _ = PFUser.current(),
+            let carePlan = carePlanAny as? OCKCarePlan,
+            let store = store as? OCKStore else{
+            completion(nil)
+            return
+        }
+        guard let uuid = carePlan.uuid?.uuidString else{
+            print("Error in \(parseClassName). Entity missing uuid: \(carePlan)")
+            completion(nil)
+            return
+        }
+        self.uuid = uuid
+        self.entityId = carePlan.id
+        self.deletedDate = carePlan.deletedDate
+        self.title = carePlan.title
+        self.groupIdentifier = carePlan.groupIdentifier
+        self.tags = carePlan.tags
+        self.source = carePlan.source
+        self.asset = carePlan.asset
+        self.timezoneIdentifier = carePlan.timezone.abbreviation()!
+        self.effectiveDate = carePlan.effectiveDate
+        self.updatedDate = carePlan.updatedDate
+        self.userInfo = carePlan.userInfo
+        if clone{
+            self.createdDate = carePlan.createdDate
+            self.notes = carePlan.notes?.compactMap{Note(careKitEntity: $0)}
+        }else{
+            //Only copy this over if the Local Version is older than the Parse version
+            if self.createdDate == nil {
+                self.createdDate = carePlan.createdDate
+            } else if self.createdDate != nil && carePlan.createdDate != nil{
+                if carePlan.createdDate! < self.createdDate!{
+                    self.createdDate = carePlan.createdDate
+                }
+            }
+            self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
+        }
+        
+        //Setting up CarePlan query
+        var uuidsToQuery = [UUID]()
+        if let previousUUID = carePlan.previousVersionUUID{
+            uuidsToQuery.append(previousUUID)
+        }
+        if let nextUUID = carePlan.nextVersionUUID{
+            uuidsToQuery.append(nextUUID)
+        }
+        
+        if uuidsToQuery.isEmpty{
+            self.previous = nil
+            self.next = nil
+            self.fetchRelatedPatient(carePlan, store: store){
+                patient in
+                self.patient = patient
+                completion(self)
+            }
+        }else{
+            var query = OCKCarePlanQuery()
+            query.uuids = uuidsToQuery
+            store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){
+                results in
+                switch results{
+                    
+                case .success(let entities):
+                    let previousRemoteId = entities.filter{$0.uuid == carePlan.previousVersionUUID}.first?.remoteID
+                    let nextRemoteId = entities.filter{$0.uuid == carePlan.nextVersionUUID}.first?.remoteID
+                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
+                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                case .failure(let error):
+                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
+                    self.previous = nil
+                    self.next = nil
+                }
+                self.fetchRelatedPatient(carePlan, store: store){
+                    patient in
+                    self.patient = patient
+                    completion(self)
+                }
+            }
+        }
+    }
+    
+    func fetchRelatedPatient(_ carePlan:OCKCarePlan, store: OCKStore, completion: @escaping(Patient?)->Void){
+        guard let patientUUID = carePlan.patientUUID else{
+            completion(nil)
+            return
+        }
+        
+        //ID's are the same for related Plans
+        var query = OCKPatientQuery()
+        query.uuids = [patientUUID]
+        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
+            result in
+            switch result{
+            case .success(let authors):
+                //Should only be one patient returned
+                guard let careKitPatient = authors.first else{
+                    completion(nil)
+                    return
+                }
+                
+                guard let authorRemoteId = careKitPatient.remoteID else{
+                    completion(nil)
+                    return
+                }
+                
+                completion(Patient(withoutDataWithObjectId: authorRemoteId))
+                
+            case .failure(_):
+                completion(nil)
+            }
+        }
+    }
+    
+    //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
+    open func convertToCareKit()->OCKCarePlan?{
+        
+        guard var carePlan = createDecodedEntity() else{return nil}
+        carePlan.groupIdentifier = self.groupIdentifier
+        carePlan.tags = self.tags
+        carePlan.effectiveDate = self.effectiveDate
+        carePlan.source = self.source
+        carePlan.groupIdentifier = self.groupIdentifier
+        carePlan.asset = self.asset
+        carePlan.remoteID = self.objectId
+        carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
+        carePlan.userInfo = self.userInfo
+        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+            carePlan.timezone = timeZone
+        }
+        return carePlan
+    }
+    
+    open class func getEntityAsJSONDictionary(_ entity: OCKCarePlan)->[String:Any]?{
+        let jsonDictionary:[String:Any]
+        do{
+            let data = try JSONEncoder().encode(entity)
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
+        }catch{
+            print("Error in CarePlan.getEntityAsJSONDictionary(). \(error)")
+            return nil
+        }
+        
+        return jsonDictionary
+    }
+    
+    open func createDecodedEntity()->OCKCarePlan?{
+        guard let patientUUIDString = self.patient?.uuid,
+            let patientUUID = UUID(uuidString: patientUUIDString),
+            let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+            return nil
+        }
+            
+        let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
+        //Create bare CareKit entity from json
+        guard var json = CarePlan.getEntityAsJSONDictionary(tempEntity) else{return nil}
+        json["uuid"] = self.uuid
+        json["createdDate"] = createdDate
+        json["updatedDate"] = updatedDate
+        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
+            json["deletedDate"] = deletedDate
+        }
+        if let previous = self.previousVersionUUID{
+            json["previousVersionUUID"] = previous
+        }
+        if let next = self.nextVersionUUID{
+            json["nextVersionUUID"] = next
+        }
+        let entity:OCKCarePlan!
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let jsonString = String(data: data, encoding: .utf8)!
+            print(jsonString)
+            entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
+        }catch{
+            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
+            return nil
+        }
+        return entity
+    }
+    
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
@@ -303,146 +487,6 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 completion(false, error)
             }
         }
-    }
-    
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
-        
-        guard let _ = PFUser.current(),
-            let carePlan = carePlanAny as? OCKCarePlan,
-            let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        guard let uuid = carePlan.uuid?.uuidString else{
-            print("Error in \(parseClassName). Entity missing uuid: \(carePlan)")
-            completion(nil)
-            return
-        }
-        self.uuid = uuid
-        self.previousVersionUUID = carePlan.nextVersionUUID?.uuidString
-        self.nextVersionUUID = carePlan.previousVersionUUID?.uuidString
-        self.entityId = carePlan.id
-        self.deletedDate = carePlan.deletedDate
-        self.title = carePlan.title
-        self.groupIdentifier = carePlan.groupIdentifier
-        self.tags = carePlan.tags
-        self.source = carePlan.source
-        self.asset = carePlan.asset
-        self.timezoneIdentifier = carePlan.timezone.abbreviation()!
-        self.effectiveDate = carePlan.effectiveDate
-        self.updatedDate = carePlan.updatedDate
-        self.userInfo = carePlan.userInfo
-        if clone{
-            self.createdDate = carePlan.createdDate
-            self.notes = carePlan.notes?.compactMap{Note(careKitEntity: $0)}
-        }else{
-            //Only copy this over if the Local Version is older than the Parse version
-            if self.createdDate == nil {
-                self.createdDate = carePlan.createdDate
-            } else if self.createdDate != nil && carePlan.createdDate != nil{
-                if carePlan.createdDate! < self.createdDate!{
-                    self.createdDate = carePlan.createdDate
-                }
-            }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
-        }
-        
-        guard let patientUUID = carePlan.patientUUID else{
-            completion(self)
-            return
-        }
-        //ID's are the same for related Plans
-        var query = OCKPatientQuery()
-        query.uuids = [patientUUID]
-        store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let authors):
-                //Should only be one patient returned
-                guard let careKitPatient = authors.first else{
-                    completion(nil)
-                    return
-                }
-                
-                guard let authorRemoteId = careKitPatient.remoteID else{
-                    completion(nil)
-                    return
-                }
-                
-                self.patient = Patient(withoutDataWithObjectId: authorRemoteId)
-            case .failure(_):
-                completion(nil)
-            }
-        }
-    }
-    
-    //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit()->OCKCarePlan?{
-        
-        guard var carePlan = createDecodedEntity() else{return nil}
-        carePlan.groupIdentifier = self.groupIdentifier
-        carePlan.tags = self.tags
-        carePlan.effectiveDate = self.effectiveDate
-        carePlan.source = self.source
-        carePlan.groupIdentifier = self.groupIdentifier
-        carePlan.asset = self.asset
-        carePlan.remoteID = self.objectId
-        carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        carePlan.userInfo = self.userInfo
-        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
-            carePlan.timezone = timeZone
-        }
-        return carePlan
-    }
-    
-    open class func getEntityAsJSONDictionary(_ entity: OCKCarePlan)->[String:Any]?{
-        let jsonDictionary:[String:Any]
-        do{
-            let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
-        }catch{
-            print("Error in CarePlan.getEntityAsJSONDictionary(). \(error)")
-            return nil
-        }
-        
-        return jsonDictionary
-    }
-    
-    open func createDecodedEntity()->OCKCarePlan?{
-        guard let patientUUIDString = self.patient?.uuid,
-            let patientUUID = UUID(uuidString: patientUUIDString),
-            let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
-            return nil
-        }
-            
-        let tempEntity = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
-        //Create bare CareKit entity from json
-        guard var json = CarePlan.getEntityAsJSONDictionary(tempEntity) else{return nil}
-        json["uuid"] = self.uuid
-        json["createdDate"] = createdDate
-        json["updatedDate"] = updatedDate
-        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
-            json["deletedDate"] = deletedDate
-        }
-        if let previous = self.previousVersionUUID{
-            json["previousVersionUUID"] = previous
-        }
-        if let next = self.nextVersionUUID{
-            json["nextVersionUUID"] = next
-        }
-        let entity:OCKCarePlan!
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let jsonString = String(data: data, encoding: .utf8)!
-            print(jsonString)
-            entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
-        }
-        return entity
     }
     
     func stampRelationalEntities(){

@@ -357,8 +357,6 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             return
         }
         self.uuid = uuid
-        self.previousVersionUUID = contact.nextVersionUUID?.uuidString
-        self.nextVersionUUID = contact.previousVersionUUID?.uuidString
         self.entityId = contact.id
         self.deletedDate = contact.deletedDate
         self.groupIdentifier = contact.groupIdentifier
@@ -395,13 +393,50 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         self.messagingNumbers = contact.messagingNumbers
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
-        self.copyCarePlan(contact, store: store){
-            _ in
-            completion(self)
+        //Setting up CarePlan query
+        var uuidsToQuery = [UUID]()
+        if let previousUUID = contact.previousVersionUUID{
+            uuidsToQuery.append(previousUUID)
+        }
+        if let nextUUID = contact.nextVersionUUID{
+            uuidsToQuery.append(nextUUID)
+        }
+        
+        if uuidsToQuery.isEmpty{
+            self.previous = nil
+            self.next = nil
+            self.fetchRelatedCarePlan(contact, store: store){
+                carePlan in
+                self.carePlan = carePlan
+                completion(self)
+            }
+        }else{
+            var query = OCKContactQuery()
+            query.uuids = uuidsToQuery
+            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
+                results in
+                switch results{
+                    
+                case .success(let entities):
+                    let previousRemoteId = entities.filter{$0.uuid == contact.previousVersionUUID}.first?.remoteID
+                    let nextRemoteId = entities.filter{$0.uuid == contact.nextVersionUUID}.first?.remoteID
+                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
+                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                case .failure(let error):
+                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
+                    self.previous = nil
+                    self.next = nil
+                }
+                self.fetchRelatedCarePlan(contact, store: store){
+                    carePlan in
+                    self.carePlan = carePlan
+                    completion(self)
+                }
+            }
         }
     }
     
-    func copyCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
+    func fetchRelatedCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
         
         //contactInfoDictionary[kPCKContactNotes] = copiedNotes
         guard let carePlanUUID = contact.carePlanUUID else{
@@ -417,24 +452,10 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             case .success(let carePlans):
                 guard let carePlan = carePlans.first,
                     let carePlanRemoteID = carePlan.remoteID else{
-                    
-                    let carePlanQuery = CarePlan.query()!
-                    carePlanQuery.whereKey(kPCKEntityUUIDKey, equalTo: carePlanUUID.uuidString)
-                    carePlanQuery.getFirstObjectInBackground(){
-                        (object, error) in
-                        
-                        guard let carePlanFound = object as? CarePlan else{
-                            completion(nil)
-                            return
-                        }
-                        
-                        self.carePlan = carePlanFound
-                        completion(carePlanFound)
-                    }
+                    completion(nil)
                     return
                 }
-                self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
-                completion(self.carePlan)
+                completion(CarePlan(withoutDataWithObjectId: carePlanRemoteID))
                 
             case .failure(let error):
                 print("Error in Contact.copyCarePlan(). \(error)")

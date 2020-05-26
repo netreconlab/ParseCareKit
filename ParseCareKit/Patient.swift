@@ -24,7 +24,7 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
         self.init()
-        completion(self.copyCareKit(careKitEntity, clone: true))
+        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
@@ -89,36 +89,33 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
                     //This occurs only on a Patient when they have logged in for the first time
                     //and CareKit and Parse isn't properly synced. Basically this is the first
                     //time the local dates are pushed to the cloud
-                    guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
-                        completion(false,nil)
-                        return
+                    parse.copyCareKit(careKit, clone: overwriteRemote, store: store){
+                        _ in
+                        self.saveAndCheckRemoteID(store){
+                            (success,error) in
+                            if !success{
+                                print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                            }else{
+                                print("Successfully updated Patient \(self) in the Cloud")
+                            }
+                            completion(success,error)
+                        }
+                        
                     }
-                    self.logicalClock = 0 //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
-                    updated.saveAndCheckRemoteID(store){
+                    return
+            }
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){ _ in
+                    //An update may occur when Internet isn't available, try to update at some point
+                    self.saveAndCheckRemoteID(store){
                         (success,error) in
                         if !success{
-                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
+                            print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
                         }else{
                             print("Successfully updated Patient \(self) in the Cloud")
                         }
                         completion(success,error)
                     }
-                    return
-            }
-            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
-                    completion(false,nil)
-                    return
-                }
-                //An update may occur when Internet isn't available, try to update at some point
-                updated.saveAndCheckRemoteID(store){
-                    (success,error) in
-                    if !success{
-                        print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
-                    }else{
-                        print("Successfully updated Patient \(self) in the Cloud")
-                    }
-                    completion(success,error)
                 }
             }else if cloudUpdatedAt > careKitLastUpdated{
                 //The cloud version is newer than local, update the local version instead
@@ -143,20 +140,18 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                guard let updated = parse.copyCareKit(careKit, clone: overwriteRemote) else{
-                    completion(false,nil)
-                    return
-                }
-                updated.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                //An update may occur when Internet isn't available, try to update at some point
-                updated.saveAndCheckRemoteID(store){
-                    (success,error) in
-                    if !success{
-                        print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
-                    }else{
-                        print("Successfully updated Patient \(self) in the Cloud")
+                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){ _ in
+                    self.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
+                    //An update may occur when Internet isn't available, try to update at some point
+                    self.saveAndCheckRemoteID(store){
+                        (success,error) in
+                        if !success{
+                            print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
+                        }else{
+                            print("Successfully updated Patient \(self) in the Cloud")
+                        }
+                        completion(success,error)
                     }
-                    completion(success,error)
                 }
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
@@ -322,19 +317,20 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
         }
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> Patient?{
+    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, store: OCKAnyStoreProtocol, completion: @escaping(Patient?) -> Void){
         
         guard let _ = PFUser.current(),
-            let patient = patientAny as? OCKPatient else{
-            return nil
+            let patient = patientAny as? OCKPatient,
+            let store = store as? OCKStore else{
+                completion(nil)
+            return
         }
         guard let uuid = patient.uuid?.uuidString else{
             print("Error in \(parseClassName). Entity missing uuid: \(patient)")
-            return nil
+            completion(nil)
+            return
         }
         self.uuid = uuid
-        self.previousVersionUUID = patient.nextVersionUUID?.uuidString
-        self.nextVersionUUID = patient.previousVersionUUID?.uuidString
         self.entityId = patient.id
         self.name = CareKitPersonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
@@ -358,7 +354,40 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
             }
             self.notes = Note.updateIfNeeded(self.notes, careKit: patient.notes)
         }
-        return self
+        
+        //Setting up CarePlan query
+        var uuidsToQuery = [UUID]()
+        if let previousUUID = patient.previousVersionUUID{
+            uuidsToQuery.append(previousUUID)
+        }
+        if let nextUUID = patient.nextVersionUUID{
+            uuidsToQuery.append(nextUUID)
+        }
+        
+        if uuidsToQuery.isEmpty{
+            self.previous = nil
+            self.next = nil
+            completion(self)
+        }else{
+            var query = OCKContactQuery()
+            query.uuids = uuidsToQuery
+            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
+                results in
+                switch results{
+                    
+                case .success(let entities):
+                    let previousRemoteId = entities.filter{$0.uuid == patient.previousVersionUUID}.first?.remoteID
+                    let nextRemoteId = entities.filter{$0.uuid == patient.nextVersionUUID}.first?.remoteID
+                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
+                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                case .failure(let error):
+                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
+                    self.previous = nil
+                    self.next = nil
+                }
+                completion(self)
+            }
+        }
     }
     
     open func convertToCareKit()->OCKPatient?{

@@ -36,8 +36,8 @@ public let kPCKEntitySourceKey                                      = "source"
 
 public let kPCKVersionedEntityEffectiveDateKey                      = "effectiveDate"
 public let kPCKVersionedEntityDeletedDateKey                        = "deletedDate"
-public let kPCKVersionedEntityNextVersionUUIDKey                    = "nextVersionUUID"
-public let kPCKVersionedEntityPreviousVersionUUIDKey                = "previousVersionUUID"
+public let kPCKVersionedEntityNextKey                               = "next"
+public let kPCKVersionedEntityPreviousKey                           = "previous"
 
 //#Mark - Patient Class
 public let kPCKPatientClassKey                                 = Patient.parseClassName()

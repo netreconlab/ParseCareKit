@@ -326,7 +326,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
     open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool, store: OCKAnyStoreProtocol, completion: @escaping(Task?) -> Void){
         
         guard let _ = PFUser.current(),
-            let task = taskAny as? OCKTask else{
+            let task = taskAny as? OCKTask,
+            let store = store as? OCKStore else{
             completion(nil)
             return
         }
@@ -336,8 +337,6 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
             return
         }
         self.uuid = uuid
-        self.previousVersionUUID = task.nextVersionUUID?.uuidString
-        self.nextVersionUUID = task.previousVersionUUID?.uuidString
         self.entityId = task.id
         self.deletedDate = task.deletedDate
         self.groupIdentifier = task.groupIdentifier
@@ -367,9 +366,54 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
             self.elements = ScheduleElement.updateIfNeeded(self.elements, careKit: task.schedule.elements)
         }
         
+        //Setting up CarePlan query
+        var uuidsToQuery = [UUID]()
+        if let previousUUID = task.previousVersionUUID{
+            uuidsToQuery.append(previousUUID)
+        }
+        if let nextUUID = task.nextVersionUUID{
+            uuidsToQuery.append(nextUUID)
+        }
+        
+        if uuidsToQuery.isEmpty{
+            self.previous = nil
+            self.next = nil
+            self.fetchRelatedCarePlan(task, store: store){
+                carePlan in
+                self.carePlan = carePlan
+                completion(self)
+            }
+        }else{
+            var query = OCKContactQuery()
+            query.uuids = uuidsToQuery
+            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
+                results in
+                switch results{
+                    
+                case .success(let entities):
+                    let previousRemoteId = entities.filter{$0.uuid == task.previousVersionUUID}.first?.remoteID
+                    let nextRemoteId = entities.filter{$0.uuid == task.nextVersionUUID}.first?.remoteID
+                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
+                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                case .failure(let error):
+                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
+                    self.previous = nil
+                    self.next = nil
+                }
+                self.fetchRelatedCarePlan(task, store: store){
+                    carePlan in
+                    self.carePlan = carePlan
+                    completion(self)
+                }
+            }
+        }
+        
+    }
+    
+    func fetchRelatedCarePlan(_ task:OCKTask, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
         //If no CarePlan, we are finished
         guard let carePlanLocalUUID = task.carePlanUUID else{
-            completion(self)
+            completion(nil)
             return
         }
         
@@ -380,31 +424,17 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
             
             switch result{
             case .success(let plan):
-                guard let foundPlan = plan.first else{
-                    completion(nil)
-                    return
-                }
+                
                 //Attempt to link based if entity is in the Cloud
-                guard let carePlanRemoteID = foundPlan.remoteID else{
+                guard let foundPlan = plan.first,
+                    let carePlanRemoteID = foundPlan.remoteID else{
                     //Local CarePlan hasn't been linked with it's Cloud version, see if we can link to Cloud version
-                    let carePlanQuery = CarePlan.query()!
-                    carePlanQuery.whereKey(kPCKEntityUUIDKey, equalTo: carePlanLocalUUID.uuidString)
-                    carePlanQuery.getFirstObjectInBackground(){
-                        (object, error) in
-                        guard let carePlanFound = object as? CarePlan else{
-                            completion(self)
-                            return
-                        }
-                        self.carePlan = carePlanFound
-                        completion(self)
-                    }
-                    return
+                        completion(nil)
+                        return
                 }
-                //Link to Parse based on remoteId
-                self.carePlan = CarePlan(withoutDataWithObjectId: carePlanRemoteID)
-                completion(self)
-            case .failure(_):
-                print("")
+                completion(CarePlan(withoutDataWithObjectId: carePlanRemoteID))
+            case .failure(let error):
+                print("Error in \(self.parseClassName).fetchRelatedCarePlan(). Error \(error)")
                 completion(nil)
             }
         }

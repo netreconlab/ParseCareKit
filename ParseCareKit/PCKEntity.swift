@@ -24,5 +24,4 @@ open class PCKEntity: PFObject {
     @NSManaged public var notes: [Note]?
     @NSManaged public var timezoneIdentifier: String
     
-    
 }
