@@ -17,19 +17,6 @@ open class Note: PCKEntity {
     @NSManaged public var title:String
     @NSManaged public var author:String?
     
-    /*
-    @NSManaged public var timezone:String
-    @NSManaged public var asset:String?
-    @NSManaged public var groupIdentifier:String?
-    @NSManaged public var notes:[Note]?
-    @NSManaged public var source:String?
-    @NSManaged public var tags:[String]?
-    @NSManaged public var uuid:String
-    @NSManaged public var logicalClock:Int
-    @NSManaged public var userInfo:[String:String]?
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?*/
-    
     public static func parseClassName() -> String {
         return kPCKNoteClassKey
     }
@@ -53,17 +40,17 @@ open class Note: PCKEntity {
         self.timezoneIdentifier = note.timezone.abbreviation()!
         self.author = note.author
         self.userInfo = note.userInfo
-        self.locallyUpdatedAt = note.updatedDate
+        self.updatedDate = note.updatedDate
         if clone{
-            self.locallyCreatedAt = note.createdDate
+            self.createdDate = note.createdDate
             self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}
         }else{
             //Only copy this over if the Local Version is older than the Parse version
-            if self.locallyCreatedAt == nil {
-                self.locallyCreatedAt = note.createdDate
-            } else if self.locallyCreatedAt != nil && note.createdDate != nil{
-                if note.createdDate! < self.locallyCreatedAt!{
-                    self.locallyCreatedAt = note.createdDate
+            if self.createdDate == nil {
+                self.createdDate = note.createdDate
+            } else if self.createdDate != nil && note.createdDate != nil{
+                if note.createdDate! < self.createdDate!{
+                    self.createdDate = note.createdDate
                 }
             }
             self.notes = Note.updateIfNeeded(self.notes, careKit: note.notes)
@@ -100,9 +87,9 @@ open class Note: PCKEntity {
     }
     
     open func createDecodedEntity()->OCKNote?{
-        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
             

@@ -20,27 +20,6 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
     @NSManaged public var title:String?
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
    
-    
-    //Not 1 to 1
-    /*
-    @NSManaged public var entityId:String //maps to id
-    @NSManaged public var logicalClock:Int
-    @NSManaged public var userInfo:[String:String]?
-    @NSManaged public var uuid:String
-    @NSManaged public var nextVersionUUID:String?
-    @NSManaged public var previousVersionUUID:String?
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var notes:[Note]?
-    @NSManaged public var source:String?
-    @NSManaged public var tags:[String]?
-    @NSManaged public var deletedDate:Date?
-    @NSManaged public var effectiveDate:Date
-    @NSManaged public var groupIdentifier:String?
-    @NSManaged public var asset:String?
-    @NSManaged public var timezone:String
-    */
-    
     public static func parseClassName() -> String {
         return kPCKTaskClassKey
     }
@@ -109,7 +88,7 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
     func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
-                let cloudUpdatedAt = parse.locallyUpdatedAt else{
+                let cloudUpdatedAt = parse.updatedDate else{
                 completion(false,nil)
                 return
             }
@@ -196,8 +175,8 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
     }
     
     func compareDelete(_ parse: Task, store: OCKStore, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = self.locallyUpdatedAt,
-            let cloudUpdatedAt = parse.locallyUpdatedAt else{
+        guard let careKitLastUpdated = self.updatedDate,
+            let cloudUpdatedAt = parse.updatedDate else{
             completion(false,nil)
             return
         }
@@ -370,19 +349,19 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
         self.asset = task.asset
         self.timezoneIdentifier = task.timezone.abbreviation()!
         self.effectiveDate = task.effectiveDate
-        self.locallyUpdatedAt = task.updatedDate
+        self.updatedDate = task.updatedDate
         self.userInfo = task.userInfo
         if clone{
-            self.locallyCreatedAt = task.createdDate
+            self.createdDate = task.createdDate
             self.notes = task.notes?.compactMap{Note(careKitEntity: $0)}
             self.elements = task.schedule.elements.compactMap{ScheduleElement(careKitEntity: $0)}
         }else{
             //Only copy this over if the Local Version is older than the Parse version
-            if self.locallyCreatedAt == nil {
-                self.locallyCreatedAt = task.createdDate
-            } else if self.locallyCreatedAt != nil && task.createdDate != nil{
-                if task.createdDate! < self.locallyCreatedAt!{
-                    self.locallyCreatedAt = task.createdDate
+            if self.createdDate == nil {
+                self.createdDate = task.createdDate
+            } else if self.createdDate != nil && task.createdDate != nil{
+                if task.createdDate! < self.createdDate!{
+                    self.createdDate = task.createdDate
                 }
             }
             self.notes = Note.updateIfNeeded(self.notes, careKit: task.notes)
@@ -474,9 +453,9 @@ open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
     }
     
     open func createDecodedEntity()->OCKTask?{
-        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
         

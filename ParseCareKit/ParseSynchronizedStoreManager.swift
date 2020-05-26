@@ -24,8 +24,8 @@ open class PCKEntity: PFObject {
     @NSManaged public var uuid: String
     @NSManaged public var entityId:String
     @NSManaged public var logicalClock: Int
-    @NSManaged public var locallyCreatedAt: Date?
-    @NSManaged public var locallyUpdatedAt: Date?
+    @NSManaged public var createdDate: Date?
+    @NSManaged public var updatedDate: Date?
     @NSManaged public var userInfo: [String: String]?
     @NSManaged public var groupIdentifier: String?
     @NSManaged public var tags: [String]?

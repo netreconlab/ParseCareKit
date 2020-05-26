@@ -15,9 +15,7 @@ open class OutcomeValue: PCKEntity {
     //1 to 1 between Parse and CareStore
     @NSManaged public var index:NSNumber?
     @NSManaged public var kind:String?
-    //@NSManaged public var type:String
     @NSManaged public var units:String?
-    //@NSManaged var index: NSNumber?
     
     @NSManaged private var typeString: String
     var type: OCKOutcomeValueType {
@@ -91,20 +89,6 @@ open class OutcomeValue: PCKEntity {
         index = nil
     }
     
-    
-    /*
-     @NSManaged public var value:[String: Any]
-    @NSManaged public var groupIdentifier:String?
-    @NSManaged public var locallyCreatedAt:Date?
-    @NSManaged public var locallyUpdatedAt:Date?
-    @NSManaged public var notes:[Note]?
-    @NSManaged public var source:String?
-    @NSManaged public var tags:[String]?
-    @NSManaged public var uuid:String
-    @NSManaged public var logicalClock:Int
-    @NSManaged public var userInfo:[String:String]?
-    */
-    
     public static func parseClassName() -> String {
         return kPCKOutcomeValueClassKey
     }
@@ -140,18 +124,18 @@ open class OutcomeValue: PCKEntity {
         self.groupIdentifier = outcomeValue.groupIdentifier
         self.tags = outcomeValue.tags
         self.source = outcomeValue.source
-        self.locallyUpdatedAt = outcomeValue.updatedDate
+        self.updatedDate = outcomeValue.updatedDate
         
         if clone{
-            self.locallyCreatedAt = outcomeValue.createdDate
+            self.createdDate = outcomeValue.createdDate
             self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
         }else{
             //Only copy this over if the Local Version is older than the Parse version
-            if self.locallyCreatedAt == nil {
-                self.locallyCreatedAt = outcomeValue.createdDate
-            } else if self.locallyCreatedAt != nil && outcomeValue.createdDate != nil{
-                if outcomeValue.createdDate! < self.locallyCreatedAt!{
-                    self.locallyCreatedAt = outcomeValue.createdDate
+            if self.createdDate == nil {
+                self.createdDate = outcomeValue.createdDate
+            } else if self.createdDate != nil && outcomeValue.createdDate != nil{
+                if outcomeValue.createdDate! < self.createdDate!{
+                    self.createdDate = outcomeValue.createdDate
                 }
             }
             self.notes = Note.updateIfNeeded(self.notes, careKit: outcomeValue.notes)
@@ -182,9 +166,9 @@ open class OutcomeValue: PCKEntity {
     }
     
     open func createDecodedEntity()->OCKOutcomeValue?{
-        guard let createdDate = self.locallyCreatedAt?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.locallyUpdatedAt?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either locallyCreatedAt \(String(describing: locallyCreatedAt)) or locallyUpdatedAt \(String(describing: locallyUpdatedAt))")
+        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
+            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
+                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
             
@@ -279,7 +263,7 @@ open class OutcomeValue: PCKEntity {
         
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
-                let cloudUpdatedAt = parse.locallyUpdatedAt else{
+                let cloudUpdatedAt = parse.updatedDate else{
                 return nil
             }
             if cloudUpdatedAt > careKitLastUpdated{
