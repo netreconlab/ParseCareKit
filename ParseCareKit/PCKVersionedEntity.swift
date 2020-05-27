@@ -23,16 +23,32 @@ open class PCKVersionedEntity: PCKEntity {
     
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public class func query(_ className: String, for date: Date) -> PFQuery<PFObject> {
-        return self.queryVersionByDate(className, for: date)
+        let query1 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNoNextVersion(className))
+        let query2 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNextVersionGreaterThanEqualToDate(className, for: date))
+        return PFQuery.orQuery(withSubqueries: [query1,query2])
     }
     
-    private class func queryVersionByDate(_ className: String, for date: Date)-> PFQuery<PFObject>{
-        let query = self.queryWhereNoNextVersion(className)
+    private class func queryVersionByDate(_ className: String, for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
+        //let query = self.queryWhereNoNextVersion(className)
         let interval = createCurrentDateInterval(for: date)
         
-        query.whereKeyDoesNotExist(kPCKVersionedEntityDeletedDateKey) //Only consider non deleted keys
-        query.whereKey(kPCKVersionedEntityEffectiveDateKey, lessThan: interval.end)
-        query.includeKey(kPCKVersionedEntityNextKey)
+        queryToAndWith.whereKeyDoesNotExist(kPCKVersionedEntityDeletedDateKey) //Only consider non deleted keys
+        queryToAndWith.whereKey(kPCKVersionedEntityEffectiveDateKey, lessThan: interval.end)
+        queryToAndWith.includeKey(kPCKVersionedEntityNextKey)
+        return queryToAndWith
+    }
+    
+    private class func queryWhereNoNextVersion(_ className: String)-> PFQuery<PFObject>{
+        let query = PFQuery(className: className)
+        query.whereKeyDoesNotExist(kPCKVersionedEntityNextKey)
+        return query
+    }
+    
+    private class func queryWhereNextVersionGreaterThanEqualToDate(_ className: String, for date: Date)-> PFQuery<PFObject>{
+        let query = PFQuery(className: className)
+        let interval = createCurrentDateInterval(for: date)
+        query.whereKeyExists(kPCKVersionedEntityPreviousKey)
+        query.whereKey(kPCKVersionedEntityNextKey, greaterThan: interval.end)
         return query
     }
     
@@ -42,16 +58,9 @@ open class PCKVersionedEntity: PCKEntity {
         return DateInterval(start: startOfDay, end: endOfDay)
     }
     
-    private class func queryWhereNoNextVersion(_ className: String)-> PFQuery<PFObject>{
-        let query = PFQuery(className: className)
-        query.whereKeyDoesNotExist(kPCKVersionedEntityNextKey)
-        return query
-    }
-    
     open func find(for date: Date) throws -> [PCKVersionedEntity] {
-        let interval = PCKVersionedEntity.createCurrentDateInterval(for: date)
         let query = PCKVersionedEntity.query(parseClassName, for: date)
-        let entities = try (query.findObjects() as! [PCKVersionedEntity]).filter{$0.effectiveDate >= interval.end}
+        let entities = try (query.findObjects() as! [PCKVersionedEntity])
         return entities
     }
     
@@ -63,8 +72,7 @@ open class PCKVersionedEntity: PCKEntity {
                 completion(nil,error)
                 return
             }
-            let interval = PCKVersionedEntity.createCurrentDateInterval(for: date)
-            completion(entities.filter{$0.effectiveDate >= interval.end},error)
+            completion(entities,error)
         }
     }
 }
