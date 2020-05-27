@@ -82,9 +82,13 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         var uuidsToQuery = [UUID]()
         if let previousUUID = carePlan.previousVersionUUID{
             uuidsToQuery.append(previousUUID)
+        }else{
+            self.previous = nil
         }
         if let nextUUID = carePlan.nextVersionUUID{
             uuidsToQuery.append(nextUUID)
+        }else{
+            self.next = nil
         }
         
         if uuidsToQuery.isEmpty{
@@ -276,7 +280,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = CarePlan.query()!
                     query.whereKey(kPCKEntityUUIDKey, equalTo: carePlanUUID.uuidString)
-                    query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
+                    query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         guard let foundObject = object as? CarePlan else{
@@ -291,7 +295,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 //Get latest item from the Cloud to compare against
                 let query = CarePlan.query()!
                 query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
+                query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     guard let foundObject = object as? CarePlan else{
@@ -434,7 +438,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         
         let query = CarePlan.query()!
         query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
-        query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -539,7 +543,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         
         let query = CarePlan.query()!
         query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey])
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [CarePlan] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())

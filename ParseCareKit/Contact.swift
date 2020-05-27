@@ -93,7 +93,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
                     query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
-                    query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
+                    query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         
@@ -109,7 +109,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 //Get latest item from the Cloud to compare against
                 let query = Contact.query()!
                 query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
+                query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     
@@ -260,7 +260,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         //Check to see if already in the cloud
         let query = Contact.query()!
         query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
-        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
+        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -411,9 +411,13 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         var uuidsToQuery = [UUID]()
         if let previousUUID = contact.previousVersionUUID{
             uuidsToQuery.append(previousUUID)
+        }else{
+            self.previous = nil
         }
         if let nextUUID = contact.nextVersionUUID{
             uuidsToQuery.append(nextUUID)
+        }else{
+            self.next = nil
         }
         
         if uuidsToQuery.isEmpty{
@@ -586,7 +590,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         
         let query = Contact.query()!
         query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey])
+        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())

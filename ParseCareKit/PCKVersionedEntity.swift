@@ -25,7 +25,9 @@ open class PCKVersionedEntity: PCKEntity {
     public class func query(_ className: String, for date: Date) -> PFQuery<PFObject> {
         let query1 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNoNextVersion(className))
         let query2 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNextVersionGreaterThanEqualToDate(className, for: date))
-        return PFQuery.orQuery(withSubqueries: [query1,query2])
+        let query = PFQuery.orQuery(withSubqueries: [query1,query2])
+        query.includeKeys([kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
+        return query
     }
     
     private class func queryVersionByDate(_ className: String, for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
@@ -34,7 +36,6 @@ open class PCKVersionedEntity: PCKEntity {
         
         queryToAndWith.whereKeyDoesNotExist(kPCKVersionedEntityDeletedDateKey) //Only consider non deleted keys
         queryToAndWith.whereKey(kPCKVersionedEntityEffectiveDateKey, lessThan: interval.end)
-        queryToAndWith.includeKey(kPCKVersionedEntityNextKey)
         return queryToAndWith
     }
     
