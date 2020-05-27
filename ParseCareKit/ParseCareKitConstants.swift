@@ -40,7 +40,7 @@ public let kPCKVersionedEntityNextKey                               = "next"
 public let kPCKVersionedEntityPreviousKey                           = "previous"
 
 //#Mark - Patient Class
-public let kPCKPatientClassKey                                 = Patient.parseClassName()
+public let kPCKPatientClassKey                                 = "Patient"
 
 // Field keys
 public let kPCKPatientAllergiesKey                                  = "alergies"

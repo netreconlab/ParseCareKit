@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Task : PCKVersionedEntity, PCKRemoteSynchronized {
+open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var carePlan:CarePlan?

@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized, PFSubclassing {
+open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
 
     //Parse only
     @NSManaged public var patient:Patient?

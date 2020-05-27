@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Outcome: PCKEntity, PCKRemoteSynchronized, PFSubclassing {
+open class Outcome: PCKEntity, PCKRemoteSynchronized {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var task:Task?
