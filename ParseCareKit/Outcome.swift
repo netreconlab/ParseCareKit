@@ -27,7 +27,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
-    public func createNewClass() -> PCKSynchronized {
+    public func createNewClass() -> PCKRemoteSynchronized {
         return CarePlan()
     }
     

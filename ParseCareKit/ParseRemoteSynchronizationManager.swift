@@ -16,7 +16,7 @@ import Parse
 public protocol PCKRemoteSynchronized: PCKSynchronized {
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
-    func createNewClass()->PCKSynchronized
+    func createNewClass()->PCKRemoteSynchronized
     func createNewClass(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void)
 }
 
@@ -133,7 +133,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     completion(nil)
                     return
             }
-            customClass.pullRevisions(localClock, cloudVector: cloudVector){
+            customClass.createNewClass().pullRevisions(localClock, cloudVector: cloudVector){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
