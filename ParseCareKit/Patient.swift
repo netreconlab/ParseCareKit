@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
+open class Patient: PCKVersionedEntity, PCKRemoteSynchronized, PFSubclassing {
     
     //1 to 1 between Parse and CareStore
     @NSManaged public var alergies:[String]?

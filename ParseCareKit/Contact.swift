@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
+open class Contact: PCKVersionedEntity, PCKRemoteSynchronized, PFSubclassing {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
