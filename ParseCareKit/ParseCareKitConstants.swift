@@ -54,7 +54,6 @@ public let kPCKCarePlanClassKey                                = "CarePlan"
 
 // Field keys
 public let kPCKCarePlanPatientKey                                 = "patient"
-public let kPCKCarePlanPatientUUIDKey                             = "patientUUID"
 public let kPCKCarePlanTitleKey                                   = "title"
 
 //#Mark - Contact Class

@@ -145,6 +145,8 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 }
                 self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
             }
+        }else{
+            completion(nil)
         }
     }
     
@@ -195,7 +197,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 case .patient(let patient):
                     
                     if let customClassName = patient.userInfo?[kPCKCustomClassKey] {
-                        self.pushCustomRevision(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                        self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
@@ -220,7 +222,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
                 case .carePlan(let carePlan):
                     if let customClassName = carePlan.userInfo?[kPCKCustomClassKey] {
-                        self.pushCustomRevision(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                        self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
@@ -244,7 +246,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     }
                 case .contact(let contact):
                     if let customClassName = contact.userInfo?[kPCKCustomClassKey] {
-                        self.pushCustomRevision(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                        self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
@@ -267,7 +269,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     }
                 case .task(let task):
                     if let customClassName = task.userInfo?[kPCKCustomClassKey] {
-                        self.pushCustomRevision(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                        self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
@@ -290,7 +292,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     }
                 case .outcome(let outcome):
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
-                        self.pushCustomRevision(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                        self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
@@ -316,7 +318,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
     }
     
-    func pushCustomRevision(_ entity: OCKEntity, className: String, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         guard let customClass = self.customEntities?[className] else{
             completion(nil)
             return
