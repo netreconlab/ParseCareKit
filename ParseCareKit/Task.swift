@@ -472,7 +472,9 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
         
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
-        task.effectiveDate = self.effectiveDate
+        if let effectiveDate = self.effectiveDate{
+            task.effectiveDate = effectiveDate
+        }
         task.source = self.source
         task.instructions = self.instructions
         task.impactsAdherence = self.impactsAdherence

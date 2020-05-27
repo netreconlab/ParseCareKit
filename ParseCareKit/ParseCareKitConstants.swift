@@ -139,10 +139,6 @@ public let kPCKKnowledgeVectorVectorKey                        = "vector"
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
 public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"
 
-//Note Class
-public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "patientUUID"
-
-
 //#Mark - Custom Enums
 public enum CareKitPersonNameComponents:String{
  

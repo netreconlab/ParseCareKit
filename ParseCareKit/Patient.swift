@@ -418,7 +418,9 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
             patient = OCKPatient(id: self.entityId, name: nameComponents)
         }
         
-        patient.effectiveDate = self.effectiveDate
+        if let effectiveDate = self.effectiveDate{
+            patient.effectiveDate = effectiveDate
+        }
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
         patient.allergies = self.alergies

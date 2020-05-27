@@ -10,7 +10,7 @@ import Foundation
 import Parse
 
 open class PCKVersionedEntity: PCKEntity {
-    @NSManaged public var effectiveDate: Date
+    @NSManaged public var effectiveDate: Date?
     @NSManaged public var previous: PCKVersionedEntity?
     @NSManaged public var next: PCKVersionedEntity?
     var nextVersionUUID: String? {

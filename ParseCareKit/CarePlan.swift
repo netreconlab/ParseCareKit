@@ -178,7 +178,9 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
-        carePlan.effectiveDate = self.effectiveDate
+        if let effectiveDate = self.effectiveDate{
+            carePlan.effectiveDate = effectiveDate
+        }
         carePlan.source = self.source
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.asset = self.asset
