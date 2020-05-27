@@ -56,7 +56,7 @@ class KnowledgeVector: PFObject, PFSubclassing {
         
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
-        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: userTypeUUID)
+        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: userTypeUUID.uuidString)
         query.getFirstObjectInBackground{ (object,error) in
             
             guard let foundVector = object as? KnowledgeVector else{
