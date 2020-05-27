@@ -14,8 +14,9 @@ enum ParseCareKitError: Error {
     case userNotLoggedIn
 }
 
-//#Mark - Parse Database Keys
+public let kPCKCustomClassKey                                       = "customClass"
 
+//#Mark - Parse Database Keys
 
 public let kPCKParseObjectIdKey                                     = "objectId"
 public let kPCKParseCreatedAtKey                                    = "createdAt"

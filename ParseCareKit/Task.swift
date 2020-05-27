@@ -28,6 +28,19 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
+    public func createNewClass() -> PCKSynchronized {
+        return CarePlan()
+    }
+    
+    public func createNewClass(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+        switch careKitEntity {
+        case .task(let entity):
+            self.copyCareKit(entity, clone: true, store: store, completion: completion)
+        default:
+            print("Error in \(parseClassName).createNewClass(with:). The wrong type of entity was passed \(careKitEntity)")
+        }
+    }
+    
     open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
@@ -536,7 +549,7 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
         self.elements.forEach{$0.stamp(self.logicalClock)}
     }
     
-    class func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
         query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
@@ -565,37 +578,29 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
         }
     }
     
-    class func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, careKitEntity:OCKEntity, completion: @escaping (Error?) -> Void){
-        switch careKitEntity {
-        case .task(let careKit):
-            let _ = Task(careKitEntity: careKit, store: store){
-                copied in
-                guard let parse = copied as? Task else{return}
-                parse.logicalClock = cloudClock //Stamp Entity
-                if careKit.deletedDate == nil{
-                    parse.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
-                        (success,error) in
-                        if success{
-                            completion(nil)
-                        }else{
-                            completion(error)
-                        }
-                    }
+    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+        
+        self.logicalClock = cloudClock //Stamp Entity
+        if self.deletedDate == nil{
+            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
+                (success,error) in
+                if success{
+                    completion(nil)
                 }else{
-                    parse.deleteFromCloud(store, usingKnowledgeVector: true){
-                        (success,error) in
-                        if success{
-                            completion(nil)
-                        }else{
-                            completion(error)
-                        }
-                    }
+                    completion(error)
                 }
             }
-        default:
-            print("Error in Contact.pushRevision(). Received wrong type \(careKitEntity)")
-            completion(nil)
+        }else{
+            self.deleteFromCloud(store, usingKnowledgeVector: true){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
+                }
+            }
         }
+            
     }
 }
 

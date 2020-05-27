@@ -11,7 +11,6 @@ import Parse
 
 open class PCKVersionedEntity: PCKEntity {
     @NSManaged public var effectiveDate: Date
-    @NSManaged public var deletedDate: Date?
     @NSManaged public var previous: PCKVersionedEntity?
     @NSManaged public var next: PCKVersionedEntity?
     var nextVersionUUID: String? {

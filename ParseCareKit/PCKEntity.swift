@@ -16,6 +16,7 @@ open class PCKEntity: PFObject {
     @NSManaged public var logicalClock: Int
     @NSManaged public var createdDate: Date?
     @NSManaged public var updatedDate: Date?
+    @NSManaged public var deletedDate: Date?
     @NSManaged public var userInfo: [String: String]?
     @NSManaged public var groupIdentifier: String?
     @NSManaged public var tags: [String]?
