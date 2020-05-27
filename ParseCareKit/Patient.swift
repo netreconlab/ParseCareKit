@@ -338,12 +338,12 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
                 completion(nil)
             return
         }
-        guard let uuid = patient.uuid?.uuidString else{
-            print("Error in \(parseClassName). Entity missing uuid: \(patient)")
-            completion(nil)
-            return
+        
+        if let uuid = patient.uuid?.uuidString {
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName). Entity missing uuid: \(patient)")
         }
-        self.uuid = uuid
         self.entityId = patient.id
         self.name = CareKitPersonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday

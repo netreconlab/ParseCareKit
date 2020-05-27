@@ -364,12 +364,13 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             completion(nil)
             return
         }
-        guard let uuid = contact.uuid?.uuidString else{
-            print("Error in \(parseClassName). Entity missing uuid: \(contact)")
-            completion(nil)
-            return
+        
+        if let uuid = contact.uuid?.uuidString{
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(contact)")
         }
-        self.uuid = uuid
+        
         self.entityId = contact.id
         self.deletedDate = contact.deletedDate
         self.groupIdentifier = contact.groupIdentifier

@@ -28,11 +28,12 @@ open class Note: PCKEntity, PFSubclassing {
     
     open func copyCareKit(_ note: OCKNote, clone:Bool) -> Note?{
         
-        guard let uuid = Note.getUUIDFromCareKitEntity(note) else {
-            return nil
+        if let uuid = Note.getUUIDFromCareKitEntity(note){
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(note)")
         }
         
-        self.uuid = uuid
         self.groupIdentifier = note.groupIdentifier
         self.tags = note.tags
         self.source = note.source

@@ -46,12 +46,12 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
             completion(nil)
             return
         }
-        guard let uuid = carePlan.uuid?.uuidString else{
-            print("Error in \(parseClassName). Entity missing uuid: \(carePlan)")
-            completion(nil)
-            return
+        
+        if let uuid = carePlan.uuid?.uuidString{
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName). Entity missing uuid: \(carePlan)")
         }
-        self.uuid = uuid
         self.entityId = carePlan.id
         self.deletedDate = carePlan.deletedDate
         self.title = carePlan.title

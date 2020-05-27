@@ -344,12 +344,12 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
             completion(nil)
             return
         }
-        guard let uuid = task.uuid?.uuidString else{
-            print("Error in \(parseClassName). Entity missing uuid: \(task)")
-            completion(nil)
-            return
+        
+        if let uuid = task.uuid?.uuidString{
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName). Entity missing uuid: \(task)")
         }
-        self.uuid = uuid
         self.entityId = task.id
         self.deletedDate = task.deletedDate
         self.groupIdentifier = task.groupIdentifier

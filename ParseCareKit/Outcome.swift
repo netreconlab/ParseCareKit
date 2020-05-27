@@ -380,12 +380,17 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
         
         guard let _ = PFUser.current(),
             let outcome = outcomeAny as? OCKOutcome,
-            let store = store as? OCKStore,
-            let uuid = outcome.uuid?.uuidString else{
+            let store = store as? OCKStore else{
             completion(nil)
             return
         }
-        self.uuid = uuid
+        
+        if let uuid = outcome.uuid?.uuidString{
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
+        }
+        
         self.entityId = outcome.id
         
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex

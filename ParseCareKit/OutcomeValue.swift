@@ -100,14 +100,12 @@ open class OutcomeValue: PCKEntity, PFSubclassing {
     
     open func copyCareKit(_ outcomeValue: OCKOutcomeValue, clone: Bool) -> OutcomeValue? {
         
-        
-        guard let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) else{
-            print("Error in \(parseClassName).copyCareKit(). doesn't contain a uuid")
-            return nil
+        if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
+            self.uuid = uuid
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcomeValue)")
         }
-        self.uuid = uuid
         self.userInfo = outcomeValue.userInfo
-        
         self.kind = outcomeValue.kind
         
         if let index = outcomeValue.index{
