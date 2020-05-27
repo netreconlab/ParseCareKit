@@ -144,9 +144,20 @@ open class OutcomeValue: PCKEntity, PFSubclassing {
         return self
     }
     
-    open func convertToCareKit()->OCKOutcomeValue?{
+    open func convertToCareKit(fromCloud:Bool=true)->OCKOutcomeValue?{
         
-        guard var outcomeValue = createDecodedEntity()else{return nil}
+        var outcomeValue:OCKOutcomeValue!
+        if fromCloud{
+            guard let decodedOutcomeValue = createDecodedEntity()else{
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            outcomeValue = decodedOutcomeValue
+        }else{
+            //Create bare Entity and replace contents with Parse contents
+            outcomeValue = OCKOutcomeValue(self.value, units: self.units)
+        }
+        
         outcomeValue.index = self.index as? Int
         outcomeValue.kind = self.kind
         outcomeValue.groupIdentifier = self.groupIdentifier
@@ -172,35 +183,8 @@ open class OutcomeValue: PCKEntity, PFSubclassing {
             return nil
         }
             
-        let tempEntity:OCKOutcomeValue = OCKOutcomeValue(self.value, units: self.units)
-        /*
-        switch underlyingType {
+        let tempEntity = OCKOutcomeValue(self.value, units: self.units)
         
-        case .integer:
-            if let value = self.value[self.type] as? Int{
-                tempEntity = OCKOutcomeValue(value, units: self.units)
-            }
-        case .double:
-            if let value = self.value[self.type] as? Double{
-                tempEntity = OCKOutcomeValue(value, units: self.units)
-            }
-        case .boolean:
-            if let value = self.value[self.type] as? Bool{
-                tempEntity = OCKOutcomeValue(value, units: self.units)
-            }
-        case .text:
-            if let value = self.value[self.type] as? String{
-                tempEntity = OCKOutcomeValue(value, units: self.units)
-            }
-        case .binary:
-            if let value = self.value[self.type] as? Data{
-                tempEntity = OCKOutcomeValue(value, units: self.units)
-            }
-        case .date:
-            if let value = self.value[self.type] as? Date{
-                tempEntity = OCKOutcomeValue(value, units: self.units)
-            }
-        }*/
         //Create bare CareKit entity from json
         guard var json = OutcomeValue.getEntityAsJSONDictionary(tempEntity) else{return nil}
         json["uuid"] = self.uuid

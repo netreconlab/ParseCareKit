@@ -441,9 +441,22 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKTask?{
+    open func convertToCareKit(fromCloud:Bool=true)->OCKTask?{
         
-        guard var task = createDecodedEntity() else{return nil}
+        var task:OCKTask!
+        if fromCloud{
+            guard let decodedTask = createDecodedEntity() else{
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            task = decodedTask
+        }else{
+            //Create bare Entity and replace contents with Parse contents
+            let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
+            let schedule = OCKSchedule(composing: careKitScheduleElements)
+            task = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
+        }
+        
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         task.effectiveDate = self.effectiveDate

@@ -438,8 +438,27 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKOutcome?{
-        guard var outcome = createDecodedEntity() else{return nil}
+    open func convertToCareKit(fromCloud:Bool=true)->OCKOutcome?{
+        
+        guard let task = self.task,
+            let taskUUID = UUID(uuidString: task.uuid) else{
+                print("Error in \(parseClassName). Must contain task with a uuid in \(self)")
+                return nil
+        }
+        
+        var outcome:OCKOutcome!
+        if fromCloud{
+            guard let decodedOutcome = createDecodedEntity() else{
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            outcome = decodedOutcome
+        }else{
+            //Create bare Entity and replace contents with Parse contents
+            let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
+            outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+        }
+        
         outcome.groupIdentifier = self.groupIdentifier
         outcome.tags = self.tags
         outcome.source = self.source

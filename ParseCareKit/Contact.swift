@@ -465,9 +465,20 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKContact?{
+    open func convertToCareKit(fromCloud:Bool=true)->OCKContact?{
         
-        guard var contact = createDecodedEntity() else{return nil}
+        var contact:OCKContact!
+        if fromCloud{
+            guard let decodedContact = createDecodedEntity() else{
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            contact = decodedContact
+        }else{
+            //Create bare Entity and replace contents with Parse contents
+            let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
+            contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
+        }
         contact.role = self.role
         contact.title = self.title
         

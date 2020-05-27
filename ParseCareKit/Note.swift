@@ -59,9 +59,20 @@ open class Note: PCKEntity, PFSubclassing {
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit()->OCKNote?{
+    open func convertToCareKit(fromCloud:Bool=true)->OCKNote?{
         
-        guard var note = createDecodedEntity() else{return nil}
+        var note: OCKNote!
+        if fromCloud{
+            guard let decodedNote = createDecodedEntity() else{
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            note = decodedNote
+        }else{
+            //Create bare Entity and replace contents with Parse contents
+            note = OCKNote(author: self.author, title: self.title, content: self.content)
+        }
+        
         note.asset = self.asset
         note.groupIdentifier = self.groupIdentifier
         note.tags = self.tags

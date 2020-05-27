@@ -390,8 +390,21 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
         }
     }
     
-    open func convertToCareKit()->OCKPatient?{
-        guard var patient = createDecodedEntity() else{return nil}
+    open func convertToCareKit(fromCloud:Bool=true)->OCKPatient?{
+        
+        var patient:OCKPatient!
+        if fromCloud{
+            guard let decodedPatient = createDecodedEntity() else{
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            patient = decodedPatient
+        }else{
+            //Create bare Entity and replace contents with Parse contents
+            let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
+            patient = OCKPatient(id: self.entityId, name: nameComponents)
+        }
+        
         patient.effectiveDate = self.effectiveDate
         patient.birthday = self.birthday
         patient.remoteID = self.objectId
