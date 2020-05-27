@@ -163,15 +163,14 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore,
-            let entityUUID = UUID(uuidString: self.uuid) else{
+            let store = store as? OCKStore else{
             completion(false,nil)
             return
         }
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKEntityUUIDKey, equalTo: entityUUID)
+        query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
@@ -227,15 +226,14 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
-        guard let _ = PFUser.current(),
-            let entityUUID = UUID(uuidString: self.uuid) else{
+        guard let _ = PFUser.current() else{
             completion(false,nil)
             return
         }
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKEntityUUIDKey, equalTo: entityUUID)
+        query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in

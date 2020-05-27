@@ -128,7 +128,7 @@ public let kPCKNoteAuthorKey                                   = "author"
 //#Mark - KnowledgeVector Class
 public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
 // Field keys
-public let kPCKKnowledgeVectorPatientTypeUUIDKey               = "patientTypeUUID"
+public let kPCKKnowledgeVectorPatientTypeUUIDKey               = "userTypeUUID"
 public let kPCKKnowledgeVectorVectorKey                        = "vector"
 
 
