@@ -430,17 +430,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 }
                 
                 guard let taskRemoteID = task.remoteID else{
-                    let taskQuery = Task.query()!
-                    taskQuery.whereKey(kPCKEntityUUIDKey, equalTo: outcome.taskUUID.uuidString)
-                    taskQuery.getFirstObjectInBackground(){
-                        (object, error) in
-                        guard let taskFound = object as? Task else{
-                            completion(self)
-                            return
-                        }
-                        self.task = taskFound
-                        completion(self)
-                    }
+                    completion(nil)
                     return
                 }
                 self.task = Task(withoutDataWithObjectId: taskRemoteID)

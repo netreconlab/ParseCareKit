@@ -82,13 +82,9 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         var uuidsToQuery = [UUID]()
         if let previousUUID = carePlan.previousVersionUUID{
             uuidsToQuery.append(previousUUID)
-        }else{
-            self.previous = nil
         }
         if let nextUUID = carePlan.nextVersionUUID{
             uuidsToQuery.append(nextUUID)
-        }else{
-            self.next = nil
         }
         
         if uuidsToQuery.isEmpty{
@@ -96,8 +92,14 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
             self.next = nil
             self.fetchRelatedPatient(carePlan, store: store){
                 patient in
-                self.patient = patient
-                completion(self)
+                if patient != nil && carePlan.patientUUID != nil{
+                    self.patient = patient
+                    completion(self)
+                }else if patient == nil && carePlan.patientUUID == nil{
+                    completion(self)
+                }else{
+                    completion(nil)
+                }
             }
         }else{
             var query = OCKCarePlanQuery()
@@ -108,9 +110,19 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                     
                 case .success(let entities):
                     let previousRemoteId = entities.filter{$0.uuid == carePlan.previousVersionUUID}.first?.remoteID
+                    if previousRemoteId != nil && carePlan.previousVersionUUID != nil{
+                        self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId!)
+                    }else if previousRemoteId == nil && carePlan.previousVersionUUID == nil{
+                        self.previous = nil
+                    }else{
+                        completion(nil)
+                        return
+                    }
+                    
                     let nextRemoteId = entities.filter{$0.uuid == carePlan.nextVersionUUID}.first?.remoteID
-                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
-                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                    if nextRemoteId != nil{
+                        self.next = CarePlan(withoutDataWithObjectId: nextRemoteId!)
+                    }
                 case .failure(let error):
                     print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
                     self.previous = nil
@@ -118,8 +130,14 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 }
                 self.fetchRelatedPatient(carePlan, store: store){
                     patient in
-                    self.patient = patient
-                    completion(self)
+                    if patient != nil && carePlan.patientUUID != nil{
+                        self.patient = patient
+                        completion(self)
+                    }else if patient == nil && carePlan.patientUUID == nil{
+                        completion(self)
+                    }else{
+                        completion(nil)
+                    }
                 }
             }
         }

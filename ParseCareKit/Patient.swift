@@ -376,13 +376,9 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
         var uuidsToQuery = [UUID]()
         if let previousUUID = patient.previousVersionUUID{
             uuidsToQuery.append(previousUUID)
-        }else{
-            self.previous = nil
         }
         if let nextUUID = patient.nextVersionUUID{
             uuidsToQuery.append(nextUUID)
-        }else{
-            self.next = nil
         }
         
         if uuidsToQuery.isEmpty{
@@ -390,17 +386,27 @@ open class Patient: PCKVersionedEntity, PCKRemoteSynchronized {
             self.next = nil
             completion(self)
         }else{
-            var query = OCKContactQuery()
+            var query = OCKPatientQuery()
             query.uuids = uuidsToQuery
-            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
+            store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
                 results in
                 switch results{
                     
                 case .success(let entities):
                     let previousRemoteId = entities.filter{$0.uuid == patient.previousVersionUUID}.first?.remoteID
+                    if previousRemoteId != nil && patient.previousVersionUUID != nil{
+                        self.previous = Patient(withoutDataWithObjectId: previousRemoteId!)
+                    }else if previousRemoteId == nil && patient.previousVersionUUID == nil{
+                        self.previous = nil
+                    }else{
+                        completion(nil)
+                        return
+                    }
+                    
                     let nextRemoteId = entities.filter{$0.uuid == patient.nextVersionUUID}.first?.remoteID
-                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
-                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                    if nextRemoteId != nil{
+                        self.next = Patient(withoutDataWithObjectId: nextRemoteId!)
+                    }
                 case .failure(let error):
                     print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
                     self.previous = nil

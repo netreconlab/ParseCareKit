@@ -425,8 +425,14 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             self.next = nil
             self.fetchRelatedCarePlan(contact, store: store){
                 carePlan in
-                self.carePlan = carePlan
-                completion(self)
+                if carePlan != nil && contact.carePlanUUID != nil{
+                    self.carePlan = carePlan
+                    completion(self)
+                }else if carePlan == nil && contact.carePlanUUID == nil{
+                    completion(self)
+                }else{
+                    completion(nil)
+                }
             }
         }else{
             var query = OCKContactQuery()
@@ -437,9 +443,19 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                     
                 case .success(let entities):
                     let previousRemoteId = entities.filter{$0.uuid == contact.previousVersionUUID}.first?.remoteID
+                    if previousRemoteId != nil && contact.previousVersionUUID != nil{
+                        self.previous = Contact(withoutDataWithObjectId: previousRemoteId!)
+                    }else if previousRemoteId == nil && contact.previousVersionUUID == nil{
+                        self.previous = nil
+                    }else{
+                        completion(nil)
+                        return
+                    }
+                    
                     let nextRemoteId = entities.filter{$0.uuid == contact.nextVersionUUID}.first?.remoteID
-                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
-                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                    if nextRemoteId != nil{
+                        self.next = Contact(withoutDataWithObjectId: nextRemoteId!)
+                    }
                 case .failure(let error):
                     print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
                     self.previous = nil
@@ -447,8 +463,14 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 }
                 self.fetchRelatedCarePlan(contact, store: store){
                     carePlan in
-                    self.carePlan = carePlan
-                    completion(self)
+                    if carePlan != nil && contact.carePlanUUID != nil{
+                        self.carePlan = carePlan
+                        completion(self)
+                    }else if carePlan == nil && contact.carePlanUUID == nil{
+                        completion(self)
+                    }else{
+                        completion(nil)
+                    }
                 }
             }
         }
@@ -476,7 +498,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 completion(CarePlan(withoutDataWithObjectId: carePlanRemoteID))
                 
             case .failure(let error):
-                print("Error in Contact.copyCarePlan(). \(error)")
+                print("Error in Contact.fetchRelatedCarePlan(). \(error)")
                 completion(nil)
             }
         }

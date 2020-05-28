@@ -383,13 +383,9 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
         var uuidsToQuery = [UUID]()
         if let previousUUID = task.previousVersionUUID{
             uuidsToQuery.append(previousUUID)
-        }else{
-            self.previous = nil
         }
         if let nextUUID = task.nextVersionUUID{
             uuidsToQuery.append(nextUUID)
-        }else{
-            self.next = nil
         }
         
         if uuidsToQuery.isEmpty{
@@ -397,21 +393,38 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
             self.next = nil
             self.fetchRelatedCarePlan(task, store: store){
                 carePlan in
-                self.carePlan = carePlan
-                completion(self)
+                if carePlan != nil && task.carePlanUUID != nil{
+                    self.carePlan = carePlan
+                    completion(self)
+                }else if carePlan == nil && task.carePlanUUID == nil{
+                    completion(self)
+                }else{
+                    completion(nil)
+                }
             }
         }else{
-            var query = OCKContactQuery()
+            var query = OCKTaskQuery()
             query.uuids = uuidsToQuery
-            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
+            store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){
                 results in
                 switch results{
                     
                 case .success(let entities):
                     let previousRemoteId = entities.filter{$0.uuid == task.previousVersionUUID}.first?.remoteID
+                    if previousRemoteId != nil && task.previousVersionUUID != nil{
+                        self.previous = Task(withoutDataWithObjectId: previousRemoteId!)
+                    }else if previousRemoteId == nil && task.previousVersionUUID == nil{
+                        self.previous = nil
+                    }else{
+                        completion(nil)
+                        return
+                    }
+                    
                     let nextRemoteId = entities.filter{$0.uuid == task.nextVersionUUID}.first?.remoteID
-                    self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId)
-                    self.next = CarePlan(withoutDataWithObjectId: nextRemoteId)
+                    if nextRemoteId != nil{
+                        self.next = Task(withoutDataWithObjectId: nextRemoteId!)
+                    }
+                    
                 case .failure(let error):
                     print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
                     self.previous = nil
@@ -419,8 +432,14 @@ open class Task: PCKVersionedEntity, PCKRemoteSynchronized {
                 }
                 self.fetchRelatedCarePlan(task, store: store){
                     carePlan in
-                    self.carePlan = carePlan
-                    completion(self)
+                    if carePlan != nil && task.carePlanUUID != nil{
+                        self.carePlan = carePlan
+                        completion(self)
+                    }else if carePlan == nil && task.carePlanUUID == nil{
+                        completion(self)
+                    }else{
+                        completion(nil)
+                    }
                 }
             }
         }
