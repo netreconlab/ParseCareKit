@@ -9,10 +9,8 @@
 import Parse
 import CareKitStore
 
-open class Note: PCKEntity, PFSubclassing {
+open class Note: PCKObject, PFSubclassing {
 
-    //1 to 1 between Parse and CareStore
-    
     @NSManaged public var content:String
     @NSManaged public var title:String
     @NSManaged public var author:String?

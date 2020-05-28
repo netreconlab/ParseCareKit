@@ -1,5 +1,5 @@
 //
-//  PCKEntity.swift
+//  PCKObject.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/26/20.
@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-open class PCKEntity: PFObject {
+open class PCKObject: PFObject {
     
     @NSManaged public var uuid: String
     @NSManaged public var entityId:String

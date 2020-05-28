@@ -10,9 +10,8 @@ import Parse
 import CareKitStore
 
 
-open class OutcomeValue: PCKEntity, PFSubclassing {
+open class OutcomeValue: PCKObject, PFSubclassing {
 
-    //1 to 1 between Parse and CareStore
     @NSManaged public var index:NSNumber?
     @NSManaged public var kind:String?
     @NSManaged public var units:String?

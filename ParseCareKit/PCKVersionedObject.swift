@@ -1,5 +1,5 @@
 //
-//  PCKVersionedEntity.swift
+//  PCKVersionedObject.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/26/20.
@@ -9,10 +9,10 @@
 import Foundation
 import Parse
 
-open class PCKVersionedEntity: PCKEntity {
+open class PCKVersionedObject: PCKObject {
     @NSManaged public var effectiveDate: Date?
-    @NSManaged public var previous: PCKVersionedEntity?
-    @NSManaged public var next: PCKVersionedEntity?
+    @NSManaged public var previous: PCKVersionedObject?
+    @NSManaged public var next: PCKVersionedObject?
     var nextVersionUUID: String? {
         return next?.uuid
     }
@@ -26,30 +26,29 @@ open class PCKVersionedEntity: PCKEntity {
         let query1 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNoNextVersion(className))
         let query2 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNextVersionGreaterThanEqualToDate(className, for: date))
         let query = PFQuery.orQuery(withSubqueries: [query1,query2])
-        query.includeKeys([kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
+        query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         return query
     }
     
     private class func queryVersionByDate(_ className: String, for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
-        //let query = self.queryWhereNoNextVersion(className)
         let interval = createCurrentDateInterval(for: date)
         
-        queryToAndWith.whereKeyDoesNotExist(kPCKVersionedEntityDeletedDateKey) //Only consider non deleted keys
-        queryToAndWith.whereKey(kPCKVersionedEntityEffectiveDateKey, lessThan: interval.end)
+        queryToAndWith.whereKeyDoesNotExist(kPCKVersionedObjectDeletedDateKey) //Only consider non deleted keys
+        queryToAndWith.whereKey(kPCKVersionedObjectEffectiveDateKey, lessThan: interval.end)
         return queryToAndWith
     }
     
     private class func queryWhereNoNextVersion(_ className: String)-> PFQuery<PFObject>{
         let query = PFQuery(className: className)
-        query.whereKeyDoesNotExist(kPCKVersionedEntityNextKey)
+        query.whereKeyDoesNotExist(kPCKVersionedObjectNextKey)
         return query
     }
     
     private class func queryWhereNextVersionGreaterThanEqualToDate(_ className: String, for date: Date)-> PFQuery<PFObject>{
-        let query = PFQuery(className: className)
         let interval = createCurrentDateInterval(for: date)
-        query.whereKeyExists(kPCKVersionedEntityPreviousKey)
-        query.whereKey(kPCKVersionedEntityNextKey, greaterThan: interval.end)
+        let query = PFQuery(className: className)
+        query.whereKeyExists(kPCKVersionedObjectPreviousKey)
+        query.whereKey(kPCKVersionedObjectNextKey, greaterThan: interval.end)
         return query
     }
     
@@ -59,17 +58,17 @@ open class PCKVersionedEntity: PCKEntity {
         return DateInterval(start: startOfDay, end: endOfDay)
     }
     
-    open func find(for date: Date) throws -> [PCKVersionedEntity] {
-        let query = PCKVersionedEntity.query(parseClassName, for: date)
-        let entities = try (query.findObjects() as! [PCKVersionedEntity])
+    open func find(for date: Date) throws -> [PCKVersionedObject] {
+        let query = PCKVersionedObject.query(parseClassName, for: date)
+        let entities = try (query.findObjects() as! [PCKVersionedObject])
         return entities
     }
     
-    open func findInBackground(for date: Date, completion: @escaping([PCKVersionedEntity]?,Error?)->Void) {
-        let query = PCKVersionedEntity.query(parseClassName, for: date)
+    open func findInBackground(for date: Date, completion: @escaping([PCKVersionedObject]?,Error?)->Void) {
+        let query = PCKVersionedObject.query(parseClassName, for: date)
         query.findObjectsInBackground{
             (objects,error) in
-            guard let entities = objects as? [PCKVersionedEntity] else{
+            guard let entities = objects as? [PCKVersionedObject] else{
                 completion(nil,error)
                 return
             }

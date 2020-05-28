@@ -10,7 +10,7 @@ import Parse
 import CareKitStore
 
 
-open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
+open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
 
     //1 to 1 between Parse and CareStore
     @NSManaged public var address:[String:String]?
@@ -49,7 +49,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         return kPCKContactClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKEntity?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
         self.init()
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
@@ -92,8 +92,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                     
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Contact.query()!
-                    query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
-                    query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
+                    query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
+                    query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         
@@ -109,7 +109,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 //Get latest item from the Cloud to compare against
                 let query = Contact.query()!
                 query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
+                query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
                 query.getFirstObjectInBackground(){
                     (object, error) in
                     
@@ -205,7 +205,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Get latest item from the Cloud to compare against
         let query = Contact.query()!
-        query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
+        query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
         query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Contact else{
@@ -265,8 +265,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         
         //Check to see if already in the cloud
         let query = Contact.query()!
-        query.whereKey(kPCKEntityUUIDKey, equalTo: contactUUID.uuidString)
-        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
+        query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground(){
             (objects, parseError) in
             guard let foundObjects = objects else{
@@ -617,8 +617,8 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Contact.query()!
-        query.whereKey(kPCKEntityClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKContactCarePlanKey,kPCKEntityNotesKey,kPCKVersionedEntityPreviousKey,kPCKVersionedEntityNextKey])
+        query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -631,7 +631,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKEntityClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome...")
                 }
                 mergeRevision(revision)
                 return
