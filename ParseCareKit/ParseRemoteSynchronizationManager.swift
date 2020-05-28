@@ -16,8 +16,8 @@ import Parse
 public protocol PCKRemoteSynchronized: PCKSynchronized {
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
-    func createNewClass()->PCKRemoteSynchronized
-    func createNewClass(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void)
+    func new()->PCKRemoteSynchronized
+    func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void)
 }
 
 public protocol ParseRemoteSynchronizationDelegate{
@@ -135,7 +135,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     return
             }
             var currentError = previousError
-            customClass.createNewClass().pullRevisions(localClock, cloudVector: cloudVector){
+            customClass.new().pullRevisions(localClock, cloudVector: cloudVector){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
@@ -333,7 +333,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             return
         }
         
-        customClass.createNewClass(with: entity, store: self.store){
+        customClass.new(with: entity, store: self.store){
             parse in
             
             guard let parse = parse else{

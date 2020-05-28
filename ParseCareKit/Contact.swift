@@ -54,16 +54,16 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
-    public func createNewClass() -> PCKRemoteSynchronized {
+    public func new() -> PCKRemoteSynchronized {
         return CarePlan()
     }
     
-    public func createNewClass(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    public func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
         switch careKitEntity {
         case .contact(let entity):
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
         default:
-            print("Error in \(parseClassName).createNewClass(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
         }
     }
     
@@ -608,10 +608,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             return nil
         }
         return entity
-    }
-    
-    func stampRelationalEntities(){
-        self.notes?.forEach{$0.stamp(self.logicalClock)}
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){

@@ -25,4 +25,7 @@ open class PCKObject: PFObject {
     @NSManaged public var notes: [Note]?
     @NSManaged public var timezoneIdentifier: String
     
+    open func stampRelationalEntities(){
+        self.notes?.forEach{$0.stamp(self.logicalClock)}
+    }
 }

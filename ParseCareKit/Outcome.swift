@@ -26,16 +26,16 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
-    public func createNewClass() -> PCKRemoteSynchronized {
+    public func new() -> PCKRemoteSynchronized {
         return CarePlan()
     }
     
-    public func createNewClass(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    public func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
         switch careKitEntity {
         case .outcome(let entity):
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
         default:
-            print("Error in \(parseClassName).createNewClass(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
         }
     }
     
@@ -542,8 +542,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         return entity
     }
     
-    func stampRelationalEntities(){
-        self.notes?.forEach{$0.stamp(self.logicalClock)}
+    open override func stampRelationalEntities(){
+        super.stampRelationalEntities()
         self.values.forEach{$0.stamp(self.logicalClock)}
     }
     
