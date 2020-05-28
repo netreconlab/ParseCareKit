@@ -62,7 +62,8 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         KnowledgeVector.fetchFromCloud(userTypeUUID: userTypeUUID, createNewIfNeeded: false){
             (_, potentialCKKnowledgeVector, error) in
             guard let cloudVector = potentialCKKnowledgeVector else{
-                completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
+                //Okay to return nil here to let pushRevisions fix KnowledgeVector
+                completion(nil)
                 return
             }
             var returnError:Error? = nil
