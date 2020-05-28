@@ -54,7 +54,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
         guard let _ = PFUser.current() else{
-            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
+            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -153,11 +153,17 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pushRevisions(deviceRevision: OCKRevisionRecord, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
         
-        guard let _ = PFUser.current(),
-            deviceRevision.entities.count > 0 else{
-            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
+        guard let _ = PFUser.current() else{
+            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
+        
+        guard deviceRevision.entities.count > 0 else{
+            //No revisions need to be pushed
+            completion(nil)
+            return
+        }
+        
         //Fetch KnowledgeVector from Cloud
         KnowledgeVector.fetchFromCloud(userTypeUUID: userTypeUUID, createNewIfNeeded: true){
             (potentialPCKKnowledgeVector, potentialCKKnowledgeVector, error) in
@@ -322,7 +328,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         guard let customClass = self.customEntities?[className] else{
-            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
+            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
