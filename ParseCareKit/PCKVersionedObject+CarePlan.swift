@@ -52,7 +52,12 @@ extension PCKVersionedObject{
         if uuidsToQuery.isEmpty{
             newCarePlan.previous = nil
             newCarePlan.next = nil
-            newCarePlan.fetchRelatedPatient(carePlan, store: store){
+            
+            guard let carePlanUUID = carePlan.uuid else{
+                completion(newCarePlan)
+                return
+            }
+            newCarePlan.fetchRelatedPatient(carePlanUUID, store: store){
                 patient in
                 if patient != nil && carePlan.patientUUID != nil{
                     newCarePlan.patient = patient
@@ -90,7 +95,12 @@ extension PCKVersionedObject{
                     newCarePlan.previous = nil
                     newCarePlan.next = nil
                 }
-                newCarePlan.fetchRelatedPatient(carePlan, store: store){
+                
+                guard let carePlanUUID = carePlan.uuid else{
+                    completion(newCarePlan)
+                    return
+                }
+                newCarePlan.fetchRelatedPatient(carePlanUUID, store: store){
                     patient in
                     if patient != nil && carePlan.patientUUID != nil{
                         newCarePlan.patient = patient
@@ -105,26 +115,15 @@ extension PCKVersionedObject{
         }
     }
     
-    public func createDecodedEntity(_ patient: Patient?, title: String)->OCKCarePlan?{
+    public func decodedCareKitObject(_ bareCareKitObject: OCKCarePlan)->OCKCarePlan?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+                print("Error in \(parseClassName).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
         
-        let patientUUID:UUID?
-        if let patientUUIDString = patient?.uuid{
-            patientUUID = UUID(uuidString: patientUUIDString)
-            if patientUUID == nil{
-                print("Warning in \(parseClassName).createDecodedEntity. Couldn't make UUID from \(patientUUIDString). Attempted to decode anyways...")
-            }
-        }else{
-            patientUUID = nil
-        }
-        
-        let tempEntity = OCKCarePlan(id: entityId, title: title, patientUUID: patientUUID)
         //Create bare CareKit entity from json
-        guard var json = CarePlan.getEntityAsJSONDictionary(tempEntity) else{return nil}
+        guard var json = CarePlan.encodeCareKitToDictionary(bareCareKitObject) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
@@ -144,7 +143,7 @@ extension PCKVersionedObject{
             print(jsonString)
             entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
         }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
+            print("Error in \(parseClassName).decodedCareKitObject(). \(error)")
             return nil
         }
         return entity

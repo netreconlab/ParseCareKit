@@ -117,7 +117,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
-                        self.compareUpdate(carePlan, parse: foundObject, patient: self.patient, title: self.title, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
+                        self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
                         
                     }
                     return
@@ -132,7 +132,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(carePlan, parse: foundObject, patient: self.patient, title: self.title, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
+                    self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
                 }
             case .failure(let error):
                 print("Error in Contact.addToCloud(). \(error)")
@@ -158,7 +158,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 completion(false,error)
                 return
             }
-            self.compareDelete(foundObject, patient: self.patient, title: self.title, store: store, completion: completion)
+            self.compareDelete(foundObject, store: store, completion: completion)
         }
     }
     
@@ -266,7 +266,12 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         if uuidsToQuery.isEmpty{
             self.previous = nil
             self.next = nil
-            self.fetchRelatedPatient(carePlan, store: store){
+            
+            guard let carePlanUUID = carePlan.uuid else{
+                completion(self)
+                return
+            }
+            self.fetchRelatedPatient(carePlanUUID, store: store){
                 patient in
                 if patient != nil && carePlan.patientUUID != nil{
                     self.patient = patient
@@ -304,7 +309,12 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                     self.previous = nil
                     self.next = nil
                 }
-                self.fetchRelatedPatient(carePlan, store: store){
+                
+                guard let carePlanUUID = carePlan.uuid else{
+                    completion(self)
+                    return
+                }
+                self.fetchRelatedPatient(carePlanUUID, store: store){
                     patient in
                     if patient != nil && carePlan.patientUUID != nil{
                         self.patient = patient
@@ -321,25 +331,25 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKCarePlan?{
-        var carePlan:OCKCarePlan!
+        
+        let patientUUID:UUID?
+        if let patientUUIDString = patient?.uuid{
+            patientUUID = UUID(uuidString: patientUUIDString)
+            if patientUUID == nil{
+                print("Warning in \(parseClassName).convertToCareKit. Couldn't make UUID from \(patientUUIDString). Attempted to convert anyways...")
+            }
+        }else{
+            patientUUID = nil
+        }
+        //Create bare Entity and replace contents with Parse contents
+        var carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
+        
         if fromCloud{
-            guard let decodedCarePlan = createDecodedEntity(self.patient, title: self.title) else {
+            guard let decodedCarePlan = decodedCareKitObject(carePlan) else {
                 print("Error in \(parseClassName). Couldn't decode entity \(self)")
                 return nil
             }
             carePlan = decodedCarePlan
-        }else{
-            let patientUUID:UUID?
-            if let patientUUIDString = patient?.uuid{
-                patientUUID = UUID(uuidString: patientUUIDString)
-                if patientUUID == nil{
-                    print("Warning in \(parseClassName).convertToCareKit. Couldn't make UUID from \(patientUUIDString). Attempted to convert anyways...")
-                }
-            }else{
-                patientUUID = nil
-            }
-            //Create bare Entity and replace contents with Parse contents
-            carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
         }
         
         carePlan.groupIdentifier = self.groupIdentifier

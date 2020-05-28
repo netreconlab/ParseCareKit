@@ -27,6 +27,15 @@
 		918F07F0247D66E100C3A205 /* PCKVersionedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */; };
 		918F07F6247FFF7900C3A205 /* PCKObject+CarePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07F5247FFF7900C3A205 /* PCKObject+CarePlan.swift */; };
 		918F07F82480000800C3A205 /* PCKVersionedObject+CarePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */; };
+		918F07FA248006E000C3A205 /* PCKVersionedObject+Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07F9248006E000C3A205 /* PCKVersionedObject+Contact.swift */; };
+		918F07FC248006FE00C3A205 /* PCKVersionedObject+Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07FB248006FE00C3A205 /* PCKVersionedObject+Patient.swift */; };
+		918F07FE2480070D00C3A205 /* PCKVersionedObject+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07FD2480070D00C3A205 /* PCKVersionedObject+Task.swift */; };
+		918F080024800B9D00C3A205 /* PCKObject+Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07FF24800B9D00C3A205 /* PCKObject+Contact.swift */; };
+		918F080224800BAE00C3A205 /* PCKObject+Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080124800BAE00C3A205 /* PCKObject+Note.swift */; };
+		918F080424800BC600C3A205 /* PCKObject+Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080324800BC600C3A205 /* PCKObject+Outcome.swift */; };
+		918F080624800BD800C3A205 /* PCKObject+OutcomeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080524800BD800C3A205 /* PCKObject+OutcomeValue.swift */; };
+		918F080824800BF000C3A205 /* PCKObject+Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080724800BF000C3A205 /* PCKObject+Patient.swift */; };
+		918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080924800BFF00C3A205 /* PCKObject+Task.swift */; };
 		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +77,15 @@
 		918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKVersionedObject.swift; sourceTree = "<group>"; };
 		918F07F5247FFF7900C3A205 /* PCKObject+CarePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+CarePlan.swift"; sourceTree = "<group>"; };
 		918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionedObject+CarePlan.swift"; sourceTree = "<group>"; };
+		918F07F9248006E000C3A205 /* PCKVersionedObject+Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionedObject+Contact.swift"; sourceTree = "<group>"; };
+		918F07FB248006FE00C3A205 /* PCKVersionedObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionedObject+Patient.swift"; sourceTree = "<group>"; };
+		918F07FD2480070D00C3A205 /* PCKVersionedObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionedObject+Task.swift"; sourceTree = "<group>"; };
+		918F07FF24800B9D00C3A205 /* PCKObject+Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Contact.swift"; sourceTree = "<group>"; };
+		918F080124800BAE00C3A205 /* PCKObject+Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Note.swift"; sourceTree = "<group>"; };
+		918F080324800BC600C3A205 /* PCKObject+Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Outcome.swift"; sourceTree = "<group>"; };
+		918F080524800BD800C3A205 /* PCKObject+OutcomeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+OutcomeValue.swift"; sourceTree = "<group>"; };
+		918F080724800BF000C3A205 /* PCKObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Patient.swift"; sourceTree = "<group>"; };
+		918F080924800BFF00C3A205 /* PCKObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Task.swift"; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,12 +143,21 @@
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
 				916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */,
-				918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */,
 				9119D5F624561A00001B7AA3 /* ParseSynchronizedStoreManager.swift */,
 				9119D5FB24561A28001B7AA3 /* Patient.swift */,
 				918F07ED247D66C800C3A205 /* PCKObject.swift */,
 				918F07F5247FFF7900C3A205 /* PCKObject+CarePlan.swift */,
+				918F07FF24800B9D00C3A205 /* PCKObject+Contact.swift */,
+				918F080124800BAE00C3A205 /* PCKObject+Note.swift */,
+				918F080324800BC600C3A205 /* PCKObject+Outcome.swift */,
+				918F080524800BD800C3A205 /* PCKObject+OutcomeValue.swift */,
+				918F080724800BF000C3A205 /* PCKObject+Patient.swift */,
+				918F080924800BFF00C3A205 /* PCKObject+Task.swift */,
 				918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */,
+				918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */,
+				918F07F9248006E000C3A205 /* PCKVersionedObject+Contact.swift */,
+				918F07FB248006FE00C3A205 /* PCKVersionedObject+Patient.swift */,
+				918F07FD2480070D00C3A205 /* PCKVersionedObject+Task.swift */,
 				9119D5F924561A28001B7AA3 /* ScheduleElement.swift */,
 				9119D5FA24561A28001B7AA3 /* Task.swift */,
 			);
@@ -259,17 +286,26 @@
 			files = (
 				9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */,
 				9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */,
+				918F07FE2480070D00C3A205 /* PCKVersionedObject+Task.swift in Sources */,
+				918F07FA248006E000C3A205 /* PCKVersionedObject+Contact.swift in Sources */,
 				9119D60324561A28001B7AA3 /* Task.swift in Sources */,
 				9119D60824561A28001B7AA3 /* Outcome.swift in Sources */,
 				918F07F0247D66E100C3A205 /* PCKVersionedObject.swift in Sources */,
+				918F07FC248006FE00C3A205 /* PCKVersionedObject+Patient.swift in Sources */,
+				918F080624800BD800C3A205 /* PCKObject+OutcomeValue.swift in Sources */,
 				9119D60624561A28001B7AA3 /* Note.swift in Sources */,
 				918F07EE247D66C800C3A205 /* PCKObject.swift in Sources */,
+				918F080024800B9D00C3A205 /* PCKObject+Contact.swift in Sources */,
 				9119D60924561A28001B7AA3 /* OutcomeValue.swift in Sources */,
+				918F080424800BC600C3A205 /* PCKObject+Outcome.swift in Sources */,
 				9119D60124561A28001B7AA3 /* Contact.swift in Sources */,
+				918F080824800BF000C3A205 /* PCKObject+Patient.swift in Sources */,
 				918F07F6247FFF7900C3A205 /* PCKObject+CarePlan.swift in Sources */,
 				918F07F82480000800C3A205 /* PCKVersionedObject+CarePlan.swift in Sources */,
+				918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */,
 				91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */,
 				9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */,
+				918F080224800BAE00C3A205 /* PCKObject+Note.swift in Sources */,
 				9119D60424561A28001B7AA3 /* Patient.swift in Sources */,
 				9119D5F724561A00001B7AA3 /* ParseSynchronizedStoreManager.swift in Sources */,
 				916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */,

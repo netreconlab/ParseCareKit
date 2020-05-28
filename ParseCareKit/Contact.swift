@@ -67,7 +67,57 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        
+        guard let contactUUID = UUID(uuidString: self.uuid) else{
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            return
+        }
+        
+        //Check to see if already in the cloud
+        let query = Contact.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.findObjectsInBackground(){
+            (objects, parseError) in
+            guard let foundObjects = objects else{
+                guard let error = parseError as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {
+                        completion(false,parseError)
+                        return
+                }
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    if !usingKnowledgeVector{
+                        self.logicalClock = 0
+                    }
+                    PCKObject.saveAndCheckRemoteID(self, store: store, completion: completion)
+                }else{
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
+                    completion(false,error)
+                }
+                return
+            }
+            //If object already in the Cloud, exit
+            if foundObjects.count > 0{
+                //Maybe this needs to be updated instead
+                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            }else{
+                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                if !usingKnowledgeVector{
+                    self.logicalClock = 0
+                }
+                PCKObject.saveAndCheckRemoteID(self, store: store, completion: completion)
+            }
+        }
+    }
+    
+    public func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
@@ -126,76 +176,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    func compareUpdate(_ careKit: OCKContact, parse: Contact, store: OCKStore, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        if !usingKnowledgeVector{
-            guard let careKitLastUpdated = careKit.updatedDate,
-                let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    parse.saveAndCheckRemoteID(store){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update \(careKit)")
-                        }else{
-                            print("Successfully updated Contact \(parse) in the Cloud")
-                        }
-                        completion(success,error)
-                    }
-                }
-            }else if ((cloudUpdatedAt > careKitLastUpdated) || overwriteRemote) {
-                //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully updated Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(true,nil)
-                    case .failure(let error):
-                        print("Error updating Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(false,error)
-                    }
-                }
-            }else{
-                completion(true,nil)
-            }
-        }else{
-            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    parse.saveAndCheckRemoteID(store){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update \(careKit)")
-                        }else{
-                            print("Successfully updated Contact \(parse) in the Cloud")
-                        }
-                        completion(success,error)
-                    }
-                }
-            }else if self.logicalClock == parse.logicalClock{
-               
-                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) == \(self.logicalClock). This means the data is already synced. Local: \(self)... Cloud: \(parse)")
-                completion(true,nil)
-                
-            }else{
-                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) > \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
-                completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
-            }
-        }
-    }
-    
-    open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
@@ -216,152 +197,59 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    func compareDelete(_ parse: Contact, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = self.updatedDate,
-            let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
+    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        if cloudUpdatedAt <= careKitLastUpdated{
-            parse.deleteInBackground{
-                (success, error) in
-                if !success{
-                    guard let error = error else{return}
-                    print("Error in Contact.deleteFromCloud(). \(error)")
-                }else{
-                    print("Successfully deleted Contact \(self) in the Cloud")
-                }
-                completion(success,error)
-            }
-        }else {
-            //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                
-                switch result{
-                    
-                case .success(_):
-                    print("Successfully deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error deleting Contact \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
-                }
-            }
-        }
-    }
-    
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        
-        guard let contactUUID = UUID(uuidString: self.uuid) else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        
-        //Check to see if already in the cloud
         let query = Contact.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
+        query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
         query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
-            (objects, parseError) in
-            guard let foundObjects = objects else{
-                guard let error = parseError as NSError?,
+        query.findObjectsInBackground{ (objects,error) in
+            guard let carePlans = objects as? [Contact] else{
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
-                        completion(false,parseError)
+                        mergeRevision(revision)
                         return
                 }
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                    if !usingKnowledgeVector{
-                        self.logicalClock = 0
-                    }
-                    self.saveAndCheckRemoteID(store, completion: completion)
-                }else{
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
-                    completion(false,error)
+                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome...")
                 }
+                mergeRevision(revision)
                 return
             }
-            //If object already in the Cloud, exit
-            if foundObjects.count > 0{
-                //Maybe this needs to be updated instead
-                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }else{
-                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                if !usingKnowledgeVector{
-                    self.logicalClock = 0
+            let pulled = carePlans.compactMap{$0.convertToCareKit()}
+            let entities = pulled.compactMap{OCKEntity.contact($0)}
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
+        }
+    }
+    
+    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+        self.logicalClock = cloudClock //Stamp Entity
+        if self.deletedDate == nil{
+            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
                 }
-                self.saveAndCheckRemoteID(store, completion: completion)
+            }
+        }else{
+            self.deleteFromCloud(store, usingKnowledgeVector: true){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
+                }
             }
         }
     }
     
-    func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let contactUUID = UUID(uuidString: self.uuid) else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        stampRelationalEntities()
-        self.saveInBackground{(success, error) in
-            if success{
-                print("Successfully saved \(self) in Cloud.")
-                //Need to save remoteId for this and all relational data
-                var careKitQuery = OCKContactQuery()
-                careKitQuery.uuids = [contactUUID]
-                store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(let entities):
-                        guard var mutableEntity = entities.first else{
-                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                            return
-                        }
-                        if mutableEntity.remoteID == nil{
-                            mutableEntity.remoteID = self.objectId
-                            store.updateAnyContact(mutableEntity){
-                                result in
-                                switch result{
-                                case .success(let updatedContact):
-                                    print("Updated remoteID of Contact \(updatedContact)")
-                                    completion(true,nil)
-                                case .failure(let error):
-                                    print("Error in Contact.saveAndCheckRemoteID() updating remoteID of Contact. \(error)")
-                                    completion(false,error)
-                                }
-                            }
-                        }else{
-                            if mutableEntity.remoteID! != self.objectId{
-                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(self.objectId!)")
-                                completion(false,ParseCareKitError.objectIdDoesntMatchRemoteId)
-                            }else{
-                                completion(true,nil)
-                            }
-                        }
-                        
-                    case .failure(let error):
-                        print("Error adding contact to cloud \(error)")
-                        completion(false,error)
-                    }
-                }
-                
-            }else{
-                print("Error in Contact.saveAndCheckRemoteID(). \(String(describing: error))")
-                completion(false,error)
-            }
-        }
-    }
-    
+
     open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Contact?) -> Void){
         
         guard let _ = PFUser.current(),
@@ -429,7 +317,12 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         if uuidsToQuery.isEmpty{
             self.previous = nil
             self.next = nil
-            self.fetchRelatedCarePlan(contact, store: store){
+            
+            guard let carePlanUUID = contact.uuid else{
+                completion(self)
+                return
+            }
+            self.fetchRelatedCarePlan(carePlanUUID, store: store){
                 carePlan in
                 if carePlan != nil && contact.carePlanUUID != nil{
                     self.carePlan = carePlan
@@ -467,7 +360,12 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     self.previous = nil
                     self.next = nil
                 }
-                self.fetchRelatedCarePlan(contact, store: store){
+                
+                guard let carePlanUUID = contact.uuid else{
+                    completion(self)
+                    return
+                }
+                self.fetchRelatedCarePlan(carePlanUUID, store: store){
                     carePlan in
                     if carePlan != nil && contact.carePlanUUID != nil{
                         self.carePlan = carePlan
@@ -482,49 +380,22 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    func fetchRelatedCarePlan(_ contact:OCKContact, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
-        
-        //contactInfoDictionary[kPCKContactNotes] = copiedNotes
-        guard let carePlanUUID = contact.carePlanUUID else{
-            completion(nil)
-            return
-        }
-        //ID's are the same for related Plans
-        var query = OCKCarePlanQuery()
-        query.uuids = [carePlanUUID]
-        store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let carePlans):
-                guard let carePlan = carePlans.first,
-                    let carePlanRemoteID = carePlan.remoteID else{
-                    completion(nil)
-                    return
-                }
-                completion(CarePlan(withoutDataWithObjectId: carePlanRemoteID))
-                
-            case .failure(let error):
-                print("Error in Contact.fetchRelatedCarePlan(). \(error)")
-                completion(nil)
-            }
-        }
-    }
-
+    
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKContact?{
         
-        var contact:OCKContact!
+        //Create bare Entity and replace contents with Parse contents
+        let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
+        var contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
+        
         if fromCloud{
-            guard let decodedContact = createDecodedEntity() else{
+            guard let decodedContact = decodedCareKitObject(contact) else{
                 print("Error in \(parseClassName). Couldn't decode entity \(self)")
                 return nil
             }
             contact = decodedContact
-        }else{
-            //Create bare Entity and replace contents with Parse contents
-            let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
-            contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
         }
+        
         contact.role = self.role
         contact.title = self.title
         
@@ -561,105 +432,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
         contact.carePlanUUID = carePlanUUID
         return contact
-    }
-    
-    open class func getEntityAsJSONDictionary(_ entity: OCKContact)->[String:Any]?{
-        let jsonDictionary:[String:Any]
-        do{
-            let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
-        }catch{
-            print("Error in Contact.getEntityAsJSONDictionary(). \(error)")
-            return nil
-        }
-        
-        return jsonDictionary
-    }
-    
-    open func createDecodedEntity()->OCKContact?{
-        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
-            return nil
-        }
-            
-        let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        let tempEntity = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
-        //Create bare CareKit entity from json
-        guard var json = Contact.getEntityAsJSONDictionary(tempEntity) else{return nil}
-        json["uuid"] = self.uuid
-        json["createdDate"] = createdDate
-        json["updatedDate"] = updatedDate
-        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
-            json["deletedDate"] = deletedDate
-        }
-        if let previous = self.previousVersionUUID{
-            json["previousVersionUUID"] = previous
-        }
-        if let next = self.nextVersionUUID{
-            json["nextVersionUUID"] = next
-        }
-        let entity:OCKContact!
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            entity = try JSONDecoder().decode(OCKContact.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
-        }
-        return entity
-    }
-    
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
-        
-        let query = Contact.query()!
-        query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground{ (objects,error) in
-            guard let carePlans = objects as? [Contact] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                guard let error = error as NSError?,
-                    let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {
-                        mergeRevision(revision)
-                        return
-                }
-                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                if reason == "errorMissingColumn"{
-                    //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Contact either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome...")
-                }
-                mergeRevision(revision)
-                return
-            }
-            let pulled = carePlans.compactMap{$0.convertToCareKit()}
-            let entities = pulled.compactMap{OCKEntity.contact($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
-            mergeRevision(revision)
-        }
-    }
-    
-    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
-        self.logicalClock = cloudClock //Stamp Entity
-        if self.deletedDate == nil{
-            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }else{
-            self.deleteFromCloud(store, usingKnowledgeVector: true){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }
     }
 }
 

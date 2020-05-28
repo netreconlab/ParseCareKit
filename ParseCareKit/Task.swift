@@ -40,7 +40,58 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        guard let _ = PFUser.current(),
+            let taskUUID = UUID(uuidString: self.uuid) else{
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            return
+        }
+        
+        //Check to see if already in the cloud
+        let query = Task.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.findObjectsInBackground(){
+            (objects, error) in
+            guard let foundObjects = objects else{
+                guard let error = error as NSError?,
+                    let errorDictionary = error.userInfo["error"] as? [String:Any],
+                    let reason = errorDictionary["routine"] as? String else {
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                    return
+                }
+                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
+                if reason == "errorMissingColumn"{
+                    //Saving the new item with the custom column should resolve the issue
+                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
+                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                    if !usingKnowledgeVector{
+                        self.logicalClock = 0
+                    }
+                    Task.saveAndCheckRemoteID(self, store: store, completion: completion)
+                }else{
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
+                    completion(false,error)
+                }
+                return
+            }
+            
+            //If object already in the Cloud, exit
+            if foundObjects.count > 0{
+                //Maybe this needs to be updated of instead
+                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            }else{
+                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
+                if !usingKnowledgeVector{
+                    self.logicalClock = 0
+                }
+                Task.saveAndCheckRemoteID(self, store: store, completion: completion)
+            }
+        }
+    }
+    
+    public func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let taskUUID = UUID(uuidString: self.uuid) else{
@@ -96,80 +147,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
        
     }
     
-    func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        if !usingKnowledgeVector{
-            guard let careKitLastUpdated = careKit.updatedDate,
-                let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    //An update may occur when Internet isn't available, try to update at some point
-                    parse.saveAndCheckRemoteID(store){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                        }else{
-                            print("Successfully updated Task \(self) in the Cloud")
-                        }
-                        completion(success,nil)
-                    }
-                }
-            }else if cloudUpdatedAt > careKitLastUpdated {
-                //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    
-                    switch result{
-                        
-                    case .success(_):
-                        print("Successfully updated Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(true,nil)
-                    case .failure(let error):
-                        print("Error updating Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(false,error)
-                    }
-                }
-            }else{
-                completion(true,nil)
-            }
-        }else{
-            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    //An update may occur when Internet isn't available, try to update at some point
-                    parse.saveAndCheckRemoteID(store){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                        }else{
-                            print("Successfully updated Task \(self) in the Cloud")
-                        }
-                        completion(success,nil)
-                    }
-               }
-            }else if self.logicalClock == parse.logicalClock{
-               
-                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) == \(self.logicalClock). This means the data is already synced. Local: \(self)... Cloud: \(parse)")
-                completion(true,nil)
-                
-            }else{
-                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) > \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
-                completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
-            }
-        }
-    }
-    
-    open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let taskUUID = UUID(uuidString: self.uuid) else{
@@ -191,155 +169,60 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    func compareDelete(_ parse: Task, store: OCKStore, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = self.updatedDate,
-            let cloudUpdatedAt = parse.updatedDate else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
+    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector){
-            parse.elements.forEach{
-                $0.deleteInBackground()
-            }
-            parse.notes?.forEach{
-                $0.deleteInBackground()
-            }
-            parse.deleteInBackground{
-                (success, error) in
-                if !success{
-                    guard let error = error else{return}
-                    print("Error in Task.deleteFromCloud(). \(error)")
-                }else{
-                    print("Successfully deleted Task \(self) in the Cloud")
-                }
-                completion(success,error)
-            }
-        }else {
-            //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(_):
-                    print("Successfully deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
-                }
-            }
-        }
-    }
-    
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = PFUser.current(),
-            let taskUUID = UUID(uuidString: self.uuid) else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        
-        //Check to see if already in the cloud
         let query = Task.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
+        query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
-            (objects, error) in
-            guard let foundObjects = objects else{
+        query.findObjectsInBackground{ (objects,error) in
+            guard let tasks = objects as? [Task] else{
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
+                        mergeRevision(revision)
+                        return
                 }
                 //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                 if reason == "errorMissingColumn"{
                     //Saving the new item with the custom column should resolve the issue
-                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                    if !usingKnowledgeVector{
-                        self.logicalClock = 0
-                    }
-                    self.saveAndCheckRemoteID(store, completion: completion)
-                }else{
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
-                    completion(false,error)
+                    print("Warning, table Task either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of a Task...")
                 }
+                mergeRevision(revision)
                 return
             }
-            
-            //If object already in the Cloud, exit
-            if foundObjects.count > 0{
-                //Maybe this needs to be updated of instead
-                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }else{
-                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                if !usingKnowledgeVector{
-                    self.logicalClock = 0
-                }
-                self.saveAndCheckRemoteID(store, completion: completion)
-            }
+            let pulled = tasks.compactMap{$0.convertToCareKit()}
+            let entities = pulled.compactMap{OCKEntity.task($0)}
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            mergeRevision(revision)
         }
     }
     
-    private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let taskUUID = UUID(uuidString: self.uuid) else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        stampRelationalEntities()
-        self.saveInBackground{(success, error) in
-            if success{
-                print("Successfully saved \(self) in Cloud.")
-                //Need to save remoteId for this and all relational data
-                var careKitQuery = OCKTaskQuery()
-                careKitQuery.uuids = [taskUUID]
-                store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(let entities):
-                        guard var mutableEntity = entities.first else{
-                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                            return
-                        }
-                        if mutableEntity.remoteID == nil{
-                            mutableEntity.remoteID = self.objectId
-                            store.updateAnyTask(mutableEntity){
-                                result in
-                                switch result{
-                                case .success(let updatedTask):
-                                    print("Updated remoteID of task \(updatedTask)")
-                                    completion(true, nil)
-                                case .failure(let error):
-                                    print("Error in \(self.parseClassName).addToCloud() updating remoteID. \(error)")
-                                    completion(false,error)
-                                }
-                            }
-                        }else{
-                            if mutableEntity.remoteID! != self.objectId{
-                                print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(self.objectId!)")
-                                completion(false,error)
-                            }else{
-                                completion(true,nil)
-                            }
-                            return
-                        }
-                    case .failure(let error):
-                        print("Error in Contact.addToCloud(). \(error)")
-                        completion(false,error)
-                    }
+    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+        
+        self.logicalClock = cloudClock //Stamp Entity
+        if self.deletedDate == nil{
+            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
                 }
-            }else{
-                print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error))")
-                completion(false,error)
+            }
+        }else{
+            self.deleteFromCloud(store, usingKnowledgeVector: true){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
+                }
             }
         }
+            
     }
+    
     
     open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool, store: OCKAnyStoreProtocol, completion: @escaping(Task?) -> Void){
         
@@ -396,7 +279,13 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         if uuidsToQuery.isEmpty{
             self.previous = nil
             self.next = nil
-            self.fetchRelatedCarePlan(task, store: store){
+            
+            guard let carePlanUUID = task.carePlanUUID else{
+                completion(self)
+                return
+            }
+            
+            self.fetchRelatedCarePlan(carePlanUUID, store: store){
                 carePlan in
                 if carePlan != nil && task.carePlanUUID != nil{
                     self.carePlan = carePlan
@@ -435,7 +324,12 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     self.previous = nil
                     self.next = nil
                 }
-                self.fetchRelatedCarePlan(task, store: store){
+                
+                guard let carePlanUUID = task.carePlanUUID else{
+                    completion(self)
+                    return
+                }
+                self.fetchRelatedCarePlan(carePlanUUID, store: store){
                     carePlan in
                     if carePlan != nil && task.carePlanUUID != nil{
                         self.carePlan = carePlan
@@ -451,51 +345,21 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         
     }
     
-    func fetchRelatedCarePlan(_ task:OCKTask, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
-        //If no CarePlan, we are finished
-        guard let carePlanLocalUUID = task.carePlanUUID else{
-            completion(nil)
-            return
-        }
-        
-        var query = OCKCarePlanQuery()
-        query.uuids = [carePlanLocalUUID]
-        store.fetchAnyCarePlans(query: query, callbackQueue: .global(qos: .background)){
-            result in
-            
-            switch result{
-            case .success(let plan):
-                
-                //Attempt to link based if entity is in the Cloud
-                guard let foundPlan = plan.first,
-                    let carePlanRemoteID = foundPlan.remoteID else{
-                    //Local CarePlan hasn't been linked with it's Cloud version, see if we can link to Cloud version
-                        completion(nil)
-                        return
-                }
-                completion(CarePlan(withoutDataWithObjectId: carePlanRemoteID))
-            case .failure(let error):
-                print("Error in \(self.parseClassName).fetchRelatedCarePlan(). Error \(error)")
-                completion(nil)
-            }
-        }
-    }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKTask?{
         
-        var task:OCKTask!
+        //Create bare Entity and replace contents with Parse contents
+        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
+        let schedule = OCKSchedule(composing: careKitScheduleElements)
+        var task = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
+        
         if fromCloud{
-            guard let decodedTask = createDecodedEntity() else{
+            guard let decodedTask = decodedCareKitObject(task) else{
                 print("Error in \(parseClassName). Couldn't decode entity \(self)")
                 return nil
             }
             task = decodedTask
-        }else{
-            //Create bare Entity and replace contents with Parse contents
-            let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-            let schedule = OCKSchedule(composing: careKitScheduleElements)
-            task = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
         }
         
         task.groupIdentifier = self.groupIdentifier
@@ -523,114 +387,9 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         return task
     }
     
-    open class func getEntityAsJSONDictionary(_ entity: OCKTask)->[String:Any]?{
-        let jsonDictionary:[String:Any]
-        do{
-            let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [.mutableContainers,.mutableLeaves]) as! [String:Any]
-        }catch{
-            print("Error in Task.getEntityAsJSONDictionary(). \(error)")
-            return nil
-        }
-        
-        return jsonDictionary
-    }
-    
-    open func createDecodedEntity()->OCKTask?{
-        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
-            return nil
-        }
-        
-        let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule(composing: careKitScheduleElements)
-        let tempEntity = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
-        
-        //Create bare CareKit entity from json
-        guard var json = Task.getEntityAsJSONDictionary(tempEntity) else{return nil}
-        json["uuid"] = self.uuid
-        json["createdDate"] = createdDate
-        json["updatedDate"] = updatedDate
-        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
-            json["deletedDate"] = deletedDate
-        }
-        if let previous = self.previousVersionUUID{
-            json["previousVersionUUID"] = previous
-        }
-        if let next = self.nextVersionUUID{
-            json["nextVersionUUID"] = next
-        }
-        let entity:OCKTask!
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let jsonString = String(data: data, encoding: .utf8)!
-            print(jsonString)
-            entity = try JSONDecoder().decode(OCKTask.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
-        }
-        return entity
-    }
-    
     open override func stampRelationalEntities(){
         super.stampRelationalEntities()
         self.elements.forEach{$0.stamp(self.logicalClock)}
-    }
-    
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
-        
-        let query = Task.query()!
-        query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
-        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground{ (objects,error) in
-            guard let tasks = objects as? [Task] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                guard let error = error as NSError?,
-                    let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {
-                        mergeRevision(revision)
-                        return
-                }
-                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                if reason == "errorMissingColumn"{
-                    //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Task either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of a Task...")
-                }
-                mergeRevision(revision)
-                return
-            }
-            let pulled = tasks.compactMap{$0.convertToCareKit()}
-            let entities = pulled.compactMap{OCKEntity.task($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
-            mergeRevision(revision)
-        }
-    }
-    
-    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
-        
-        self.logicalClock = cloudClock //Stamp Entity
-        if self.deletedDate == nil{
-            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }else{
-            self.deleteFromCloud(store, usingKnowledgeVector: true){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }
-            
     }
 }
 

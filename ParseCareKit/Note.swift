@@ -62,7 +62,7 @@ open class Note: PCKObject, PFSubclassing {
         
         var note: OCKNote!
         if fromCloud{
-            guard let decodedNote = createDecodedEntity() else{
+            guard let decodedNote = decodedCareKitObject(self.author, title: self.title, content: self.content) else{
                 print("Error in \(parseClassName). Couldn't decode entity \(self)")
                 return nil
             }
@@ -94,48 +94,6 @@ open class Note: PCKObject, PFSubclassing {
         self.notes?.forEach{
             $0.logicalClock = self.logicalClock
         }
-    }
-    
-    open func createDecodedEntity()->OCKNote?{
-        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
-            let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).createDecodedEntity(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
-            return nil
-        }
-            
-        let tempEntity = OCKNote(author: self.author, title: self.title, content: self.content)
-        //Create bare CareKit entity from json
-        guard var json = Note.getEntityAsJSONDictionary(tempEntity) else{return nil}
-        json["uuid"] = self.uuid
-        json["createdDate"] = createdDate
-        json["updatedDate"] = updatedDate
-        let entity:OCKNote!
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            entity = try JSONDecoder().decode(OCKNote.self, from: data)
-        }catch{
-            print("Error in \(parseClassName).createDecodedEntity(). \(error)")
-            return nil
-        }
-        return entity
-    }
-    
-    open class func getEntityAsJSONDictionary(_ entity: OCKNote)->[String:Any]?{
-        let jsonDictionary:[String:Any]
-        do{
-            let data = try JSONEncoder().encode(entity)
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
-        }catch{
-            print("Error in Note.getEntityAsJSONDictionary(). \(error)")
-            return nil
-        }
-        
-        return jsonDictionary
-    }
-    
-    open class func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
-        guard let json = Note.getEntityAsJSONDictionary(entity) else{return nil}
-        return json["uuid"] as? String
     }
     
     open class func updateIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?)->[Note]?{
