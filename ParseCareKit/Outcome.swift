@@ -391,7 +391,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
         }
         
-        self.entityId = entityId
+        self.entityId = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
         self.tags = outcome.tags
