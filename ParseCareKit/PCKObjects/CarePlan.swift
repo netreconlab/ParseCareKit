@@ -34,6 +34,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            completion(nil)
         }
     }
     
@@ -63,7 +64,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    PCKObject.saveAndCheckRemoteID(self, store: store, completion: completion)
+                    CarePlan.saveAndCheckRemoteID(self, store: store, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")

@@ -37,6 +37,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            completion(nil)
         }
     }
     
@@ -162,7 +163,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         query.getFirstObjectInBackground(){
             (objects, error) in
             guard let foundObject = objects as? Task else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                completion(false,error)
                 return
             }
             self.compareDelete(foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
@@ -287,8 +288,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             
             self.fetchRelatedCarePlan(carePlanUUID, store: store){
                 carePlan in
+                self.carePlan = carePlan
                 if carePlan != nil && task.carePlanUUID != nil{
-                    self.carePlan = carePlan
                     completion(self)
                 }else if carePlan == nil && task.carePlanUUID == nil{
                     completion(self)
@@ -331,8 +332,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 }
                 self.fetchRelatedCarePlan(carePlanUUID, store: store){
                     carePlan in
+                    self.carePlan = carePlan
                     if carePlan != nil && task.carePlanUUID != nil{
-                        self.carePlan = carePlan
                         completion(self)
                     }else if carePlan == nil && task.carePlanUUID == nil{
                         completion(self)

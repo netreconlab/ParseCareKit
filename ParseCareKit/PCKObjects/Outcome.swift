@@ -36,6 +36,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            completion(nil)
         }
     }
     

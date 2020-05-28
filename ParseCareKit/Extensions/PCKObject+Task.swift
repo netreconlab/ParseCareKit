@@ -85,7 +85,7 @@ extension PCKObject{
                         }else{
                             print("Successfully updated Task \(self) in the Cloud")
                         }
-                        completion(success,nil)
+                        completion(success,error)
                     }
                 }
             }else if cloudUpdatedAt > careKitLastUpdated {
