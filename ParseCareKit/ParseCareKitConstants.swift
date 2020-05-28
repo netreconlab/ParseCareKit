@@ -12,6 +12,31 @@ import CareKitStore
 
 enum ParseCareKitError: Error {
     case userNotLoggedIn
+    case relatedEntityNotInCloud
+    case requiredValueCantBeUnwrapped
+    case objectIdDoesntMatchRemoteId
+    case cloudClockLargerThanLocalWhilePushRevisions
+    case couldntUnwrapKnowledgeVector
+}
+
+extension ParseCareKitError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .userNotLoggedIn:
+            return NSLocalizedString("ParseCareKit: Parse User isn't logged in.", comment: "Login error")
+        case .relatedEntityNotInCloud:
+            return NSLocalizedString("ParseCareKit: Related entity isn't in cloud.", comment: "Related entity error")
+        case .requiredValueCantBeUnwrapped:
+            return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
+        case .couldntUnwrapKnowledgeVector:
+            return NSLocalizedString("ParseCareKit: KnowledgeVector can't be unwrapped.", comment: "KnowledgeVector Unwrapping error")
+        case .objectIdDoesntMatchRemoteId:
+            return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
+        case .cloudClockLargerThanLocalWhilePushRevisions:
+            return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing", comment: "Knowledge vector larger in Cloud")
+            
+        }
+    }
 }
 
 public let kPCKCustomClassKey                                       = "customClass"

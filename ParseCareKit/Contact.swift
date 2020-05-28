@@ -71,7 +71,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
-            completion(false,nil)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -84,7 +84,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             case .success(let contacts):
                 
                 guard let contact = contacts.first else{
-                    completion(false,nil)
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
                     
@@ -130,7 +130,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
@@ -149,7 +149,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             }else if ((cloudUpdatedAt > careKitLastUpdated) || overwriteRemote) {
                 //The cloud version is newer than local, update the local version instead
                 guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                    completion(false,nil)
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
                 store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -184,7 +184,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
                 print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
-                completion(false,nil)
+                completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }
     }
@@ -193,7 +193,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -203,7 +203,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Contact else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
             self.compareDelete(foundObject, store: store, completion: completion)
@@ -213,7 +213,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     func compareDelete(_ parse: Contact, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -231,7 +231,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
         }else {
             //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
             store.updateAnyContact(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -253,7 +253,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let contactUUID = UUID(uuidString: self.uuid) else{
-            completion(false,nil)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -303,7 +303,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
-            completion(false,nil)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         stampRelationalEntities()
@@ -318,7 +318,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                     switch result{
                     case .success(let entities):
                         guard var mutableEntity = entities.first else{
-                            completion(false,nil)
+                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
                         if mutableEntity.remoteID == nil{
@@ -337,7 +337,7 @@ open class Contact: PCKVersionedEntity, PCKRemoteSynchronized {
                         }else{
                             if mutableEntity.remoteID! != self.objectId{
                                 print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(self.objectId!)")
-                                completion(false,nil)
+                                completion(false,ParseCareKitError.objectIdDoesntMatchRemoteId)
                             }else{
                                 completion(true,nil)
                             }

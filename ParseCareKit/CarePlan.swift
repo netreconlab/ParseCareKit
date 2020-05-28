@@ -259,7 +259,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
             let carePlanUUID = UUID(uuidString: self.uuid) else{
-            completion(false,nil)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         var careKitQuery = OCKCarePlanQuery()
@@ -271,7 +271,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
             case .success(let carePlans):
                 
                 guard let carePlan = carePlans.first else{
-                    completion(false,nil)
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
                 
@@ -284,7 +284,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                     query.getFirstObjectInBackground(){
                         (object, error) in
                         guard let foundObject = object as? CarePlan else{
-                            completion(false,nil)
+                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
                         self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, store: store, completion: completion)
@@ -316,7 +316,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
-                    completion(false,nil)
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
@@ -334,7 +334,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
             }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
                 //The cloud version is newer than local, update the local version instead
                 guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                    completion(false,nil)
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
                 store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -369,7 +369,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
                 print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
-                completion(false,nil)
+                completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }
     }
@@ -377,7 +377,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
     open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let store = store as? OCKStore else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
        
@@ -397,7 +397,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
     func compareDelete(_ parse: CarePlan, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -413,7 +413,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
             }
         }else {
             guard let updatedCarePlanFromCloud = parse.convertToCareKit() else {
-                completion(false,nil)
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
             store.updateAnyCarePlan(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
@@ -432,7 +432,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
     
     open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current() else{
-            completion(false,nil)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
@@ -460,7 +460,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
-                    completion(false,nil)
+                    completion(false,error)
                 }
                 return
             }
@@ -481,7 +481,7 @@ open class CarePlan: PCKVersionedEntity, PCKRemoteSynchronized {
     private func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore,
             let carePlanUUID = UUID(uuidString: self.uuid) else{
-            completion(false,nil)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         stampRelationalEntities()

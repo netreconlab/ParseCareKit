@@ -54,7 +54,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
         guard let _ = PFUser.current() else{
-            completion(nil)
+            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
             return
         }
         
@@ -62,10 +62,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         KnowledgeVector.fetchFromCloud(userTypeUUID: userTypeUUID, createNewIfNeeded: false){
             (_, potentialCKKnowledgeVector, error) in
             guard let cloudVector = potentialCKKnowledgeVector else{
-                completion(nil)
+                completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
                 return
             }
-            
+            var returnError:Error? = nil
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: self.userTypeUUID)
             Patient().pullRevisions(localClock, cloudVector: cloudVector){
@@ -81,7 +81,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         mergeRevision(carePlanRevision){
                             error in
                             if error != nil {
-                                completion(error!)
+                                returnError = error
                                 return
                             }
                             Contact().pullRevisions(localClock, cloudVector: cloudVector){
@@ -89,7 +89,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 mergeRevision(contactPlanRevision){
                                     error in
                                     if error != nil {
-                                        completion(error!)
+                                        returnError = error
                                         return
                                     }
                                     Task().pullRevisions(localClock, cloudVector: cloudVector){
@@ -97,7 +97,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                         mergeRevision(taskRevision){
                                             error in
                                             if error != nil {
-                                                completion(error!)
+                                                returnError = error
                                                 return
                                             }
                                             Outcome().pullRevisions(localClock, cloudVector: cloudVector){
@@ -105,12 +105,12 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                                 mergeRevision(outcomeRevision){
                                                     error in
                                                     if error != nil {
-                                                        completion(error!)
+                                                        returnError = error
                                                     }
                                                     
                                                     return
                                                 }
-                                                self.pullRevisionsForCustomClasses(localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
+                                                self.pullRevisionsForCustomClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
                                             }
                                         }
                                     }
@@ -123,30 +123,31 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
     }
     
-    func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
+    func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
         if let customEntities = self.customEntities{
             let classNames = customEntities.keys.sorted()
             
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customEntities[classNames[customClassesAlreadyPulled]] else{
                     print("Finished pulling custom revision classes")
-                    completion(nil)
+                    completion(previousError)
                     return
             }
+            var currentError = previousError
             customClass.createNewClass().pullRevisions(localClock, cloudVector: cloudVector){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
                     if error != nil {
-                        completion(error!)
+                        currentError = error!
                     }
                     completion(nil)
                     return
                 }
-                self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
+                self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
             }
         }else{
-            completion(nil)
+            completion(previousError)
         }
     }
     
@@ -154,7 +155,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         
         guard let _ = PFUser.current(),
             deviceRevision.entities.count > 0 else{
-            completion(nil)
+            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
             return
         }
         //Fetch KnowledgeVector from Cloud
@@ -165,14 +166,17 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 let cloudCareKitVector = potentialCKKnowledgeVector else{
                     guard let error = error as NSError?,
                         let errorDictionary = error.userInfo["error"] as? [String:Any],
-                        let reason = errorDictionary["routine"] as? String else {return}
+                        let reason = errorDictionary["routine"] as? String else {
+                            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
+                            return
+                    }
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     if reason == "errorMissingColumn"{
                         //Saving the new item with the custom column should resolve the issue
                         print("This table '\(KnowledgeVector.parseClassName())' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
                         if potentialPCKKnowledgeVector != nil{
                             potentialPCKKnowledgeVector!.saveInBackground{
-                                (success,_) in
+                                (success,error) in
                                 print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
                                 completion(error)
                             }
@@ -184,8 +188,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(error.localizedDescription)")
                         completion(error)
                     }
-                    
-                completion(nil)
                 return
             }
             
@@ -320,17 +322,20 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         guard let customClass = self.customEntities?[className] else{
-            completion(nil)
+            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
             return
         }
         
         customClass.createNewClass(with: entity, store: self.store){
             parse in
             
-            guard let parse = parse else{return}
+            guard let parse = parse else{
+                completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                return
+            }
             parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudClock){
                 error in
-                completion(nil)
+                completion(error)
             }
         }
     }
@@ -343,7 +348,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         cloudVector.merge(with: localKnowledgeVector)
         
         guard let _ = parseKnowledgeVector.encodeKnowledgeVector(cloudVector) else{
-            completion(nil)
+            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
             return
         }
         parseKnowledgeVector.saveInBackground{
