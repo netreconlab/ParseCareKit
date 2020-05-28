@@ -318,4 +318,44 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             }
         }
     }
+    
+    //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
+    open func convertToCareKit(fromCloud:Bool=true, patient: Patient?, title: String)->OCKCarePlan?{
+        var carePlan:OCKCarePlan!
+        if fromCloud{
+            guard let decodedCarePlan = createDecodedEntity(patient, title: title) else {
+                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                return nil
+            }
+            carePlan = decodedCarePlan
+        }else{
+            let patientUUID:UUID?
+            if let patientUUIDString = patient?.uuid{
+                patientUUID = UUID(uuidString: patientUUIDString)
+                if patientUUID == nil{
+                    print("Warning in \(parseClassName).convertToCareKit. Couldn't make UUID from \(patientUUIDString). Attempted to convert anyways...")
+                }
+            }else{
+                patientUUID = nil
+            }
+            //Create bare Entity and replace contents with Parse contents
+            carePlan = OCKCarePlan(id: self.entityId, title: title, patientUUID: patientUUID)
+        }
+        
+        carePlan.groupIdentifier = self.groupIdentifier
+        carePlan.tags = self.tags
+        if let effectiveDate = self.effectiveDate{
+            carePlan.effectiveDate = effectiveDate
+        }
+        carePlan.source = self.source
+        carePlan.groupIdentifier = self.groupIdentifier
+        carePlan.asset = self.asset
+        carePlan.remoteID = self.objectId
+        carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
+        carePlan.userInfo = self.userInfo
+        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+            carePlan.timezone = timeZone
+        }
+        return carePlan
+    }
 }
