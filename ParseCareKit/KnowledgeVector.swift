@@ -25,6 +25,7 @@ class KnowledgeVector: PFObject, PFSubclassing {
     
     func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
         guard let data = self.vector.data(using: .utf8) else{
+            print("Error in KnowlegeVector. Couldn't get data as utf8")
             return
         }
         

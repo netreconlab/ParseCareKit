@@ -17,32 +17,84 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var category:String?
     @NSManaged public var name:[String:String]
     @NSManaged public var organization:String?
-    @NSManaged public var emailAddressesDictionary:[String:String]?
-    @NSManaged public var messagingNumbersDictionary:[String:String]?
-    @NSManaged public var otherContactInfoDictionary:[String:String]?
-    @NSManaged public var phoneNumbersDictionary:[String:String]?
+    @NSManaged public var emailAddressesArray:[String]?
+    @NSManaged public var messagingNumbersArray:[String]?
+    @NSManaged public var otherContactInfoArray:[String]?
+    @NSManaged public var phoneNumbersArray:[String]?
     @NSManaged public var role:String?
     @NSManaged public var title:String?
     @NSManaged public var carePlan:CarePlan?
     
     var messagingNumbers: [OCKLabeledValue]? {
-        get { messagingNumbersDictionary?.asLabeledValues() }
-        set { messagingNumbersDictionary = newValue?.asDictionary() }
+        get {
+            do{
+                return try messagingNumbersArray?.asDecodedLabeledValues()
+            }
+            catch{
+                return nil
+            }
+        }
+        set {
+            do {
+                try messagingNumbersArray = newValue?.asEncodedStringArray()
+            }catch{
+                print(error)
+            }
+        }
     }
 
     var emailAddresses: [OCKLabeledValue]? {
-        get { emailAddressesDictionary?.asLabeledValues() }
-        set { emailAddressesDictionary = newValue?.asDictionary() }
+        get {
+            do{
+                return try emailAddressesArray?.asDecodedLabeledValues()
+            }
+            catch{
+                return nil
+            }
+        }
+        set {
+            do {
+                try emailAddressesArray = newValue?.asEncodedStringArray()
+            }catch{
+                print(error)
+            }
+        }
     }
 
     var phoneNumbers: [OCKLabeledValue]? {
-        get { phoneNumbersDictionary?.asLabeledValues() }
-        set { phoneNumbersDictionary = newValue?.asDictionary() }
+        get {
+            do{
+                return try phoneNumbersArray?.asDecodedLabeledValues()
+            }
+            catch{
+                return nil
+            }
+        }
+        set {
+            do {
+                try phoneNumbersArray = newValue?.asEncodedStringArray()
+            }catch{
+                print(error)
+            }
+        }
     }
 
     var otherContactInfo: [OCKLabeledValue]? {
-        get { otherContactInfoDictionary?.asLabeledValues() }
-        set { otherContactInfoDictionary = newValue?.asDictionary() }
+        get {
+            do{
+                return try otherContactInfoArray?.asDecodedLabeledValues()
+            }
+            catch{
+                return nil
+            }
+        }
+        set {
+            do {
+                try otherContactInfoArray = newValue?.asEncodedStringArray()
+            }catch{
+                print(error)
+            }
+        }
     }
     
     public static func parseClassName() -> String {
@@ -443,13 +495,41 @@ private extension Dictionary where Key == String, Value == String {
     }
 }
 
-private extension Array where Element == OCKLabeledValue {
+public extension Array where Element == String {
+    func asDecodedLabeledValues() throws -> [OCKLabeledValue]{
+        var labeled = [OCKLabeledValue]()
+        try self.forEach{
+            guard let data = $0.data(using: .utf8) else{
+                print("Error in asDecodedLabeledValues(). Coudn't get string as utf8. \($0)")
+                return
+            }
+            labeled.append(try JSONDecoder().decode(OCKLabeledValue.self, from: data))
+        }
+        return labeled
+    }
+}
+
+public extension Array where Element == OCKLabeledValue {
     func asDictionary() -> [String: String] {
         var dictionary = [String: String]()
-        for labeldValue in self {
-            dictionary[labeldValue.label] = labeldValue.value
+        for labeledValue in self {
+            dictionary[labeledValue.label] = labeledValue.value
         }
         return dictionary
+    }
+    
+    func asEncodedStringArray() throws -> [String] {
+        var stringArray = [String]()
+        try self.forEach{
+            let data = try JSONEncoder().encode($0)
+            guard let string = String(data: data, encoding: .utf8) else{
+                print("Error in asEncodedStringArray(). Coudn't encode as utf8. \($0)")
+                return
+            }
+            stringArray.append(string)
+        }
+        
+        return stringArray
     }
 }
 

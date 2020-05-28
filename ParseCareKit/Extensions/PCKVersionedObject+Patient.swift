@@ -35,8 +35,6 @@ extension PCKVersionedObject{
         let entity:OCKPatient!
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let jsonString = String(data: data, encoding: .utf8)!
-            print(jsonString)
             entity = try JSONDecoder().decode(OCKPatient.self, from: data)
         }catch{
             print("Error in \(parseClassName).decodedCareKitObject(). \(error)")
