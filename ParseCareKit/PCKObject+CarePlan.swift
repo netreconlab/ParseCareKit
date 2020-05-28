@@ -90,7 +90,7 @@ extension PCKObject{
                 }
             }else if ((cloudUpdatedAt > careKitLastUpdated) || !overwriteRemote) {
                 //The cloud version is newer than local, update the local version instead
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit(patient: patient, title: title) else{
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
                     completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
@@ -155,7 +155,7 @@ extension PCKObject{
                 completion(success,error)
             }
         }else {
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit(patient: patient, title: title) else {
+            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else {
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }

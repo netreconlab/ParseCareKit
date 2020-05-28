@@ -184,7 +184,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 mergeRevision(revision)
                 return
             }
-            let pulled = carePlans.compactMap{$0.convertToCareKit(patient: self.patient, title: self.title)}
+            let pulled = carePlans.compactMap{$0.convertToCareKit()}
             let entities = pulled.compactMap{OCKEntity.carePlan($0)}
             let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
             mergeRevision(revision)
@@ -320,10 +320,10 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit(fromCloud:Bool=true, patient: Patient?, title: String)->OCKCarePlan?{
+    open func convertToCareKit(fromCloud:Bool=true)->OCKCarePlan?{
         var carePlan:OCKCarePlan!
         if fromCloud{
-            guard let decodedCarePlan = createDecodedEntity(patient, title: title) else {
+            guard let decodedCarePlan = createDecodedEntity(self.patient, title: self.title) else {
                 print("Error in \(parseClassName). Couldn't decode entity \(self)")
                 return nil
             }
@@ -339,7 +339,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 patientUUID = nil
             }
             //Create bare Entity and replace contents with Parse contents
-            carePlan = OCKCarePlan(id: self.entityId, title: title, patientUUID: patientUUID)
+            carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
         }
         
         carePlan.groupIdentifier = self.groupIdentifier
