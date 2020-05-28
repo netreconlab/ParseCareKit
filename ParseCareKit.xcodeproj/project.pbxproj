@@ -132,20 +132,39 @@
 		9119D5ED245618D7001B7AA3 /* ParseCareKit */ = {
 			isa = PBXGroup;
 			children = (
-				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
-				9119D5F824561A28001B7AA3 /* Contact.swift */,
+				918F080C2480411300C3A205 /* Extensions */,
+				918F080B248040AA00C3A205 /* PCKObjects */,
 				9119D5EF245618D7001B7AA3 /* Info.plist */,
 				91AA07222466F0CD00B39452 /* KnowledgeVector.swift */,
-				9119D5FD24561A28001B7AA3 /* Note.swift */,
-				9119D5FF24561A28001B7AA3 /* Outcome.swift */,
-				9119D60024561A28001B7AA3 /* OutcomeValue.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
 				916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */,
 				9119D5F624561A00001B7AA3 /* ParseSynchronizedStoreManager.swift */,
+			);
+			path = ParseCareKit;
+			sourceTree = "<group>";
+		};
+		918F080B248040AA00C3A205 /* PCKObjects */ = {
+			isa = PBXGroup;
+			children = (
+				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
+				9119D5F824561A28001B7AA3 /* Contact.swift */,
+				9119D5FD24561A28001B7AA3 /* Note.swift */,
+				9119D5FF24561A28001B7AA3 /* Outcome.swift */,
+				9119D60024561A28001B7AA3 /* OutcomeValue.swift */,
 				9119D5FB24561A28001B7AA3 /* Patient.swift */,
 				918F07ED247D66C800C3A205 /* PCKObject.swift */,
+				918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */,
+				9119D5F924561A28001B7AA3 /* ScheduleElement.swift */,
+				9119D5FA24561A28001B7AA3 /* Task.swift */,
+			);
+			path = PCKObjects;
+			sourceTree = "<group>";
+		};
+		918F080C2480411300C3A205 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
 				918F07F5247FFF7900C3A205 /* PCKObject+CarePlan.swift */,
 				918F07FF24800B9D00C3A205 /* PCKObject+Contact.swift */,
 				918F080124800BAE00C3A205 /* PCKObject+Note.swift */,
@@ -153,15 +172,12 @@
 				918F080524800BD800C3A205 /* PCKObject+OutcomeValue.swift */,
 				918F080724800BF000C3A205 /* PCKObject+Patient.swift */,
 				918F080924800BFF00C3A205 /* PCKObject+Task.swift */,
-				918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */,
 				918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */,
 				918F07F9248006E000C3A205 /* PCKVersionedObject+Contact.swift */,
 				918F07FB248006FE00C3A205 /* PCKVersionedObject+Patient.swift */,
 				918F07FD2480070D00C3A205 /* PCKVersionedObject+Task.swift */,
-				9119D5F924561A28001B7AA3 /* ScheduleElement.swift */,
-				9119D5FA24561A28001B7AA3 /* Task.swift */,
 			);
-			path = ParseCareKit;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A8989C8300B16B02AF1BC395 /* Frameworks */ = {
