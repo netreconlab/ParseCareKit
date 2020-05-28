@@ -44,13 +44,14 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
         
         guard let _ = PFUser.current(),
             let store = store as? OCKStore,
-            let entityUUID = UUID(uuidString: self.uuid) else{
+            let _ = UUID(uuidString: self.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         var careKitQuery = OCKOutcomeQuery()
-        careKitQuery.uuids = [entityUUID]
+        careKitQuery.tags = [self.entityId]
+        //careKitQuery.uuids = [entityUUID]
         store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
@@ -58,7 +59,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 guard let remoteID = outcome.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
-                    query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
+                    query.whereKey(kPCKEntityEntityIdKey, equalTo: self.entityId)
                     query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
@@ -170,7 +171,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
+        query.whereKey(kPCKEntityEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
@@ -233,7 +234,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKEntityUUIDKey, equalTo: self.uuid)
+        query.whereKey(kPCKEntityEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKEntityNotesKey])
         query.findObjectsInBackground(){
             (objects, error) in
@@ -274,7 +275,7 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
     
     func saveAndCheckRemoteID(_ store: OCKAnyStoreProtocol, outcomeValues:[OCKOutcomeValue]?=nil, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let store = store as? OCKStore,
-            let entityUUID = UUID(uuidString: self.uuid) else {
+            let _ = UUID(uuidString: self.uuid) else {
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
@@ -284,7 +285,8 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                 print("Successfully saved \(self) in Cloud.")
                 
                 var careKitQuery = OCKOutcomeQuery()
-                careKitQuery.uuids = [entityUUID]
+                careKitQuery.tags = [self.entityId]
+                //careKitQuery.uuids = [entityUUID]
                 store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
@@ -294,9 +296,9 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
                             mutableOutcome.remoteID = self.objectId
                             needToUpdate = true
                         }else if mutableOutcome.remoteID! != self.objectId!{
-                            print("Error in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal \(self.objectId!)")
-                            completion(false,error)
-                            return
+                            print("Warning in \(self.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal \(self.objectId!). Updating it since this isn't versioned, but this shouldn't occur")
+                            mutableOutcome.remoteID = self.objectId
+                            needToUpdate = true
                         }
                         
                         //EntityIds are custom, make sure to add them as a tag for querying
@@ -389,11 +391,15 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
         }
         
-        self.entityId = outcome.id
-        
+        self.entityId = entityId
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
         self.tags = outcome.tags
+        if self.tags == nil{
+            self.tags = [self.entityId]
+        }else if !self.tags!.contains(self.entityId){
+            self.tags!.append(self.entityId)
+        }
         self.source = outcome.source
         self.asset = outcome.asset
         self.timezoneIdentifier = outcome.timezone.abbreviation()!
@@ -467,8 +473,20 @@ open class Outcome: PCKEntity, PCKRemoteSynchronized {
         
         outcome.groupIdentifier = self.groupIdentifier
         outcome.tags = self.tags
+        //Fix querying issue
+        if outcome.tags == nil{
+            outcome.tags = [self.entityId]
+        }else if !outcome.tags!.contains(self.entityId){
+            outcome.tags?.append(self.entityId)
+        }
+        
         outcome.source = self.source
         outcome.userInfo = self.userInfo
+        if outcome.userInfo == nil{
+            outcome.userInfo = [kPCKOutcomUserInfoEntityIdKey: self.entityId]
+        } else if self.userInfo![kPCKOutcomUserInfoEntityIdKey] == nil{
+            self.userInfo![kPCKOutcomUserInfoEntityIdKey] = self.entityId
+        }
         outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
         outcome.groupIdentifier = self.groupIdentifier
         outcome.asset = self.asset

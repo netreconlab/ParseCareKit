@@ -158,6 +158,8 @@ public let kPCKKnowledgeVectorVectorKey                        = "vector"
 
 //#Mark - CareKit UserInfo Database Keys
 
+//Outcome Class (keep this as Outcome has had issues querying multiple times)
+public let kPCKOutcomUserInfoEntityIdKey              = "entityId"
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
