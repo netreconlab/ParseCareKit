@@ -216,6 +216,28 @@ extension PCKObject{
         return jsonDictionary
     }
     
+    public func findCarePlan(_ uuid:UUID?, completion: @escaping(CarePlan?) -> Void){
+       
+        guard let _ = PFUser.current(),
+        let uuidString = uuid?.uuidString else{
+            completion(nil)
+            return
+        }
+        
+        let query = CarePlan.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
+            
+            guard let foundObject = object as? CarePlan else{
+                completion(nil)
+                return
+            }
+            completion(foundObject)
+        }
+    }
+    
     public func fetchRelatedPatient(_ patientUUID: UUID, completion: @escaping(Patient?)->Void){
         
         //ID's are the same for related Plans

@@ -235,4 +235,26 @@ extension PCKObject{
         
         return jsonDictionary
     }
+    
+    public func findPatient(_ uuid:UUID?, completion: @escaping(Patient?) -> Void){
+       
+        guard let _ = PFUser.current(),
+            let uuidString = uuid?.uuidString else{
+            completion(nil)
+            return
+        }
+        
+        let query = Patient.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
+            
+            guard let foundObject = object as? Patient else{
+                completion(nil)
+                return
+            }
+            completion(foundObject)
+        }
+    }
 }

@@ -19,7 +19,34 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var organization:String?
     @NSManaged public var role:String?
     @NSManaged public var title:String?
-    @NSManaged public var carePlan:CarePlan?
+    @NSManaged var carePlan:CarePlan?
+    @NSManaged var carePlanUUIDString:String?
+    
+    public var carePlanUUID:UUID? {
+        get {
+            if carePlan != nil{
+                return UUID(uuidString: carePlan!.uuid)
+            }else if carePlanUUIDString != nil {
+                return UUID(uuidString: carePlanUUIDString!)
+            }else{
+                return nil
+            }
+        }
+        set{
+            carePlanUUIDString = newValue?.uuidString
+        }
+    }
+    
+    public var currentCarePlan: CarePlan?{
+        get{
+            return carePlan
+        }
+        set{
+            carePlan = newValue
+            carePlanUUIDString = newValue?.uuid
+        }
+    }
+    
     @NSManaged var emailAddressesArray:[String]?
     @NSManaged var messagingNumbersArray:[String]?
     @NSManaged var otherContactInfoArray:[String]?
@@ -338,8 +365,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Contact?) -> Void){
         
         guard let _ = PFUser.current(),
-            let contact = contactAny as? OCKContact,
-            let store = store as? OCKStore else{
+            let contact = contactAny as? OCKContact else{
             completion(nil)
             return
         }
@@ -386,86 +412,57 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.messagingNumbers = contact.messagingNumbers
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         
-        //Setting up CarePlan query
-        var uuidsToQuery = [UUID]()
-        if let previousUUID = contact.previousVersionUUID{
-            uuidsToQuery.append(previousUUID)
-        }else{
-            self.previous = nil
-        }
-        if let nextUUID = contact.nextVersionUUID{
-            uuidsToQuery.append(nextUUID)
-        }else{
-            self.next = nil
-        }
-        
-        if uuidsToQuery.isEmpty{
-            self.previous = nil
-            self.next = nil
+        //Link versions and related classes
+        self.findContact(self.previousVersionUUID){ [weak self]
+            previousContact in
             
-            guard let carePlanUUID = contact.uuid else{
-                completion(self)
+            guard let self = self else{
+                completion(nil)
                 return
             }
-            self.fetchRelatedCarePlan(carePlanUUID){
-                carePlan in
-                if carePlan != nil && contact.carePlanUUID != nil{
-                    self.carePlan = carePlan
-                    completion(self)
-                }else if carePlan == nil && contact.carePlanUUID == nil{
-                    completion(self)
-                }else{
-                    completion(nil)
+            
+            self.previousVersion = previousContact
+            
+            //Fix doubly linked list if it's broken in the cloud
+            if self.previousVersion != nil{
+                if self.previousVersion!.nextVersion == nil{
+                    self.previousVersion!.nextVersion = self
                 }
             }
-        }else{
-            var query = OCKContactQuery()
-            query.uuids = uuidsToQuery
-            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){ [weak self]
-                results in
+            
+            self.findContact(self.nextVersionUUID){ [weak self]
+                nextContact in
                 
                 guard let self = self else{
                     completion(nil)
                     return
                 }
                 
-                switch results{
+                self.nextVersion = nextContact
+                
+                //Fix doubly linked list if it's broken in the cloud
+                if self.nextVersion != nil{
+                    if self.nextVersion!.previousVersion == nil{
+                        self.nextVersion!.previousVersion = self
+                    }
+                }
+                
+                guard let carePlanUUID = self.carePlanUUID else{
+                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                    completion(self)
+                    return
+                }
+                
+                self.findCarePlan(carePlanUUID){ [weak self]
+                    carePlan in
                     
-                case .success(let entities):
-                    let previousRemoteId = entities.filter{$0.uuid == contact.previousVersionUUID}.first?.remoteID
-                    if previousRemoteId != nil && contact.previousVersionUUID != nil{
-                        self.previous = Contact(withoutDataWithObjectId: previousRemoteId!)
-                    }else if previousRemoteId == nil && contact.previousVersionUUID == nil{
-                        self.previous = nil
-                    }else{
+                    guard let self = self else{
                         completion(nil)
                         return
                     }
                     
-                    let nextRemoteId = entities.filter{$0.uuid == contact.nextVersionUUID}.first?.remoteID
-                    if nextRemoteId != nil{
-                        self.next = Contact(withoutDataWithObjectId: nextRemoteId!)
-                    }
-                case .failure(let error):
-                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
-                    self.previous = nil
-                    self.next = nil
-                }
-                
-                guard let carePlanUUID = contact.uuid else{
+                    self.currentCarePlan = carePlan
                     completion(self)
-                    return
-                }
-                self.fetchRelatedCarePlan(carePlanUUID){
-                    carePlan in
-                    if carePlan != nil && contact.carePlanUUID != nil{
-                        self.carePlan = carePlan
-                        completion(self)
-                    }else if carePlan == nil && contact.carePlanUUID == nil{
-                        completion(self)
-                    }else{
-                        completion(nil)
-                    }
                 }
             }
         }

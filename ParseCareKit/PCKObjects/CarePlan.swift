@@ -12,7 +12,7 @@ import CareKitStore
 
 open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
 
-    @NSManaged public var patient:Patient?
+    @NSManaged var patient:Patient?
     @NSManaged var patientUUIDString:String?
     @NSManaged public var title:String
     
@@ -28,6 +28,16 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         }
         set{
             patientUUIDString = newValue?.uuidString
+        }
+    }
+    
+    public var currentPatient: Patient?{
+        get{
+            return patient
+        }
+        set{
+            patient = newValue
+            patientUUIDString = newValue?.uuid
         }
     }
     
@@ -302,88 +312,57 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
         }
         
-        //Setting up CarePlan query
-        var uuidsToQuery = [UUID]()
-        if let previousUUID = carePlan.previousVersionUUID{
-            uuidsToQuery.append(previousUUID)
-        }
-        if let nextUUID = carePlan.nextVersionUUID{
-            uuidsToQuery.append(nextUUID)
-        }
-        
-        if uuidsToQuery.isEmpty{
-            self.previous = nil
-            self.next = nil
+        //Link versions and related classes
+        self.findCarePlan(self.previousVersionUUID){ [weak self]
+            previousCarePlan in
             
-            guard let carePlanUUID = carePlan.uuid else{
-                completion(self)
+            guard let self = self else{
+                completion(nil)
                 return
             }
-            self.fetchRelatedPatient(carePlanUUID){ [weak self]
-                patient in
-                
-                guard let self = self else{
-                    completion(nil)
-                    return
-                }
-                
-                if patient != nil && carePlan.patientUUID != nil{
-                    self.patient = patient
-                    completion(self)
-                }else if patient == nil && carePlan.patientUUID == nil{
-                    completion(self)
-                }else{
-                    completion(nil)
+            
+            self.previousVersion = previousCarePlan
+            
+            //Fix doubly linked list if it's broken in the cloud
+            if self.previousVersion != nil{
+                if self.previousVersion!.nextVersion == nil{
+                    self.previousVersion!.nextVersion = self
                 }
             }
-        }else{
-            var query = OCKCarePlanQuery()
-            query.uuids = uuidsToQuery
-            store.fetchCarePlans(query: query, callbackQueue: .global(qos: .background)){ [weak self]
-                results in
+            
+            self.findCarePlan(self.nextVersionUUID){ [weak self]
+                nextCarePlan in
                 
                 guard let self = self else{
                     completion(nil)
                     return
                 }
                 
-                switch results{
+                self.nextVersion = nextCarePlan
+                
+                //Fix doubly linked list if it's broken in the cloud
+                if self.nextVersion != nil{
+                    if self.nextVersion!.previousVersion == nil{
+                        self.nextVersion!.previousVersion = self
+                    }
+                }
+                
+                guard let patientUUID = self.patientUUID else{
+                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                    completion(self)
+                    return
+                }
+                
+                self.findPatient(patientUUID){ [weak self]
+                    patient in
                     
-                case .success(let entities):
-                    let previousRemoteId = entities.filter{$0.uuid == carePlan.previousVersionUUID}.first?.remoteID
-                    if previousRemoteId != nil && carePlan.previousVersionUUID != nil{
-                        self.previous = CarePlan(withoutDataWithObjectId: previousRemoteId!)
-                    }else if previousRemoteId == nil && carePlan.previousVersionUUID == nil{
-                        self.previous = nil
-                    }else{
+                    guard let self = self else{
                         completion(nil)
                         return
                     }
                     
-                    let nextRemoteId = entities.filter{$0.uuid == carePlan.nextVersionUUID}.first?.remoteID
-                    if nextRemoteId != nil{
-                        self.next = CarePlan(withoutDataWithObjectId: nextRemoteId!)
-                    }
-                case .failure(let error):
-                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
-                    self.previous = nil
-                    self.next = nil
-                }
-                
-                guard let carePlanUUID = carePlan.uuid else{
+                    self.currentPatient = patient
                     completion(self)
-                    return
-                }
-                self.fetchRelatedPatient(carePlanUUID){
-                    patient in
-                    if patient != nil && carePlan.patientUUID != nil{
-                        self.patient = patient
-                        completion(self)
-                    }else if patient == nil && carePlan.patientUUID == nil{
-                        completion(self)
-                    }else{
-                        completion(nil)
-                    }
                 }
             }
         }

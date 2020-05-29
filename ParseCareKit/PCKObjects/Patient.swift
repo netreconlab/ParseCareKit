@@ -295,42 +295,39 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             uuidsToQuery.append(nextUUID)
         }
         
-        if uuidsToQuery.isEmpty{
-            self.previous = nil
-            self.next = nil
-            completion(self)
-        }else{
-            var query = OCKPatientQuery()
-            query.uuids = uuidsToQuery
-            store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){ [weak self]
-                results in
+        //Link versions and related classes
+        self.findPatient(self.previousVersionUUID){ [weak self]
+            previousPatient in
+            
+            guard let self = self else{
+                completion(nil)
+                return
+            }
+            
+            self.previousVersion = previousPatient
+            
+            //Fix doubly linked list if it's broken in the cloud
+            if self.previousVersion != nil{
+                if self.previousVersion!.nextVersion == nil{
+                    self.previousVersion!.nextVersion = self
+                }
+            }
+            
+            self.findPatient(self.nextVersionUUID){ [weak self]
+                nextPatient in
                 
                 guard let self = self else{
                     completion(nil)
                     return
                 }
                 
-                switch results{
-                    
-                case .success(let entities):
-                    let previousRemoteId = entities.filter{$0.uuid == patient.previousVersionUUID}.first?.remoteID
-                    if previousRemoteId != nil && patient.previousVersionUUID != nil{
-                        self.previous = Patient(withoutDataWithObjectId: previousRemoteId!)
-                    }else if previousRemoteId == nil && patient.previousVersionUUID == nil{
-                        self.previous = nil
-                    }else{
-                        completion(nil)
-                        return
+                self.nextVersion = nextPatient
+                
+                //Fix doubly linked list if it's broken in the cloud
+                if self.nextVersion != nil{
+                    if self.nextVersion!.previousVersion == nil{
+                        self.nextVersion!.previousVersion = self
                     }
-                    
-                    let nextRemoteId = entities.filter{$0.uuid == patient.nextVersionUUID}.first?.remoteID
-                    if nextRemoteId != nil{
-                        self.next = Patient(withoutDataWithObjectId: nextRemoteId!)
-                    }
-                case .failure(let error):
-                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
-                    self.previous = nil
-                    self.next = nil
                 }
                 completion(self)
             }

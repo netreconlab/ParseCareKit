@@ -289,6 +289,28 @@ extension PCKObject{
         return entity
     }
     
+    public func findOutcome(_ uuid:UUID?, completion: @escaping(Outcome?) -> Void){
+       
+        guard let _ = PFUser.current(),
+            let uuidString = uuid?.uuidString else{
+            completion(nil)
+            return
+        }
+        
+        let query = Outcome.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
+            
+            guard let foundObject = object as? Outcome else{
+                completion(nil)
+                return
+            }
+            completion(foundObject)
+        }
+    }
+    
     public func fetchRelatedTask(_ taskUUID:UUID, completion: @escaping(Task?) -> Void){
         var query = OCKTaskQuery()
         query.uuids = [taskUUID]

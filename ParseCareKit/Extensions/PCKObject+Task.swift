@@ -212,6 +212,29 @@ extension PCKObject{
         }
     }
     
+    public func findTask(_ uuid:UUID?, completion: @escaping(Task?) -> Void){
+       
+        guard let _ = PFUser.current(),
+            let uuidString = uuid?.uuidString else{
+            completion(nil)
+            return
+        }
+        
+        let query = Task.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
+            
+            guard let foundObject = object as? Task else{
+                completion(nil)
+                return
+            }
+            completion(foundObject)
+        }
+    }
+        
+    
     public func fetchRelatedCarePlan(_ carePlanUUID:UUID, completion: @escaping(CarePlan?) -> Void){
        
         var query = OCKCarePlanQuery()

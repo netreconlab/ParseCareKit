@@ -12,10 +12,35 @@ import CareKitStore
 
 open class Outcome: PCKObject, PCKRemoteSynchronized {
 
-    @NSManaged public var task:Task?
     @NSManaged public var taskOccurrenceIndex:Int
     @NSManaged public var values:[OutcomeValue]
+    @NSManaged var task:Task?
+    @NSManaged var taskUUIDString:String?
     
+    public var taskUUID:UUID? {
+        get {
+            if task != nil{
+                return UUID(uuidString: task!.uuid)
+            }else if taskUUIDString != nil {
+                return UUID(uuidString: taskUUIDString!)
+            }else{
+                return nil
+            }
+        }
+        set{
+            taskUUIDString = newValue?.uuidString
+        }
+    }
+    
+    public var currentTask: Task?{
+        get{
+            return task
+        }
+        set{
+            task = newValue
+            taskUUIDString = newValue?.uuid
+        }
+    }
     
     public static func parseClassName() -> String {
         return kPCKOutcomeClassKey
@@ -260,6 +285,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.timezoneIdentifier = outcome.timezone.abbreviation()!
         self.updatedDate = outcome.updatedDate
         self.userInfo = outcome.userInfo
+        self.taskUUID = outcome.taskUUID
         
         if clone{
             self.createdDate = outcome.createdDate
@@ -278,13 +304,21 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values)
         }
         
-        self.fetchRelatedTask(outcome.taskUUID){
-            relatedTask in
-            guard let relatedTask = relatedTask else{
+        guard let taskUUID = self.taskUUID else{
+            //Finished if there's no Task, otherwise see if it's in the cloud
+            completion(self)
+            return
+        }
+        
+        self.findTask(taskUUID){ [weak self]
+            task in
+            
+            guard let self = self else{
                 completion(nil)
                 return
             }
-            self.task = relatedTask
+            
+            self.currentTask = task
             completion(self)
         }
     }

@@ -12,11 +12,37 @@ import CareKitStore
 
 open class Task: PCKVersionedObject, PCKRemoteSynchronized {
 
-    @NSManaged public var carePlan:CarePlan?
     @NSManaged public var impactsAdherence:Bool
     @NSManaged public var instructions:String?
     @NSManaged public var title:String?
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
+    @NSManaged var carePlan:CarePlan?
+    @NSManaged var carePlanUUIDString:String?
+    
+    public var carePlanUUID:UUID? {
+        get {
+            if carePlan != nil{
+                return UUID(uuidString: carePlan!.uuid)
+            }else if carePlanUUIDString != nil {
+                return UUID(uuidString: carePlanUUIDString!)
+            }else{
+                return nil
+            }
+        }
+        set{
+            carePlanUUIDString = newValue?.uuidString
+        }
+    }
+    
+    public var currentCarePlan: CarePlan?{
+        get{
+            return carePlan
+        }
+        set{
+            carePlan = newValue
+            carePlanUUIDString = newValue?.uuid
+        }
+    }
    
     public static func parseClassName() -> String {
         return kPCKTaskClassKey
@@ -304,81 +330,52 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             self.elements = ScheduleElement.updateIfNeeded(self.elements, careKit: task.schedule.elements)
         }
         
-        //Setting up CarePlan query
-        var uuidsToQuery = [UUID]()
-        if let previousUUID = task.previousVersionUUID{
-            uuidsToQuery.append(previousUUID)
-        }
-        if let nextUUID = task.nextVersionUUID{
-            uuidsToQuery.append(nextUUID)
-        }
+        self.previousVersionUUID = task.previousVersionUUID
+        self.nextVersionUUID = task.nextVersionUUID
+        self.carePlanUUID = task.carePlanUUID
         
-        if uuidsToQuery.isEmpty{
-            self.previous = nil
-            self.next = nil
+        //Link versions and related classes
+        self.findTask(self.previousVersionUUID){ [weak self]
+            previousTask in
             
-            guard let carePlanUUID = task.carePlanUUID else{
-                completion(self)
+            guard let self = self else{
+                completion(nil)
                 return
             }
             
-            self.fetchRelatedCarePlan(carePlanUUID){ [weak self]
-                carePlan in
-                
-                guard let self = self else{
-                    completion(nil)
-                    return
-                }
-                
-                self.carePlan = carePlan
-                if carePlan != nil && task.carePlanUUID != nil{
-                    completion(self)
-                }else if carePlan == nil && task.carePlanUUID == nil{
-                    completion(self)
-                }else{
-                    completion(nil)
+            self.previousVersion = previousTask
+            
+            //Fix doubly linked list if it's broken in the cloud
+            if self.previousVersion != nil{
+                if self.previousVersion!.nextVersion == nil{
+                    self.previousVersion!.nextVersion = self
                 }
             }
-        }else{
-            var query = OCKTaskQuery()
-            query.uuids = uuidsToQuery
-            store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){ [weak self]
-                results in
+            
+            self.findTask(self.nextVersionUUID){ [weak self]
+                nextTask in
                 
                 guard let self = self else{
                     completion(nil)
                     return
                 }
                 
-                switch results{
-                    
-                case .success(let entities):
-                    let previousRemoteId = entities.filter{$0.uuid == task.previousVersionUUID}.first?.remoteID
-                    if previousRemoteId != nil && task.previousVersionUUID != nil{
-                        self.previous = Task(withoutDataWithObjectId: previousRemoteId!)
-                    }else if previousRemoteId == nil && task.previousVersionUUID == nil{
-                        self.previous = nil
-                    }else{
-                        completion(nil)
-                        return
+                self.nextVersion = nextTask
+                
+                //Fix doubly linked list if it's broken in the cloud
+                if self.nextVersion != nil{
+                    if self.nextVersion!.previousVersion == nil{
+                        self.nextVersion!.previousVersion = self
                     }
-                    
-                    let nextRemoteId = entities.filter{$0.uuid == task.nextVersionUUID}.first?.remoteID
-                    if nextRemoteId != nil{
-                        self.next = Task(withoutDataWithObjectId: nextRemoteId!)
-                    }
-                    
-                case .failure(let error):
-                    print("Error in \(self.parseClassName).copyCareKit(). Error \(error)")
-                    self.previous = nil
-                    self.next = nil
                 }
                 
-                guard let carePlanUUID = task.carePlanUUID else{
+                guard let carePlanUUID = self.carePlanUUID else{
+                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
                     completion(self)
                     return
                 }
-                self.fetchRelatedCarePlan(carePlanUUID){ [weak self]
+                
+                self.findCarePlan(carePlanUUID){ [weak self]
                     carePlan in
                     
                     guard let self = self else{
@@ -386,18 +383,11 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                         return
                     }
                     
-                    self.carePlan = carePlan
-                    if carePlan != nil && task.carePlanUUID != nil{
-                        completion(self)
-                    }else if carePlan == nil && task.carePlanUUID == nil{
-                        completion(self)
-                    }else{
-                        completion(nil)
-                    }
+                    self.currentCarePlan = carePlan
+                    completion(self)
                 }
             }
         }
-        
     }
     
     

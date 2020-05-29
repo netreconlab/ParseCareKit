@@ -200,4 +200,26 @@ extension PCKObject{
         return jsonDictionary
     }
     
+    public func findContact(_ uuid:UUID?, completion: @escaping(Contact?) -> Void){
+       
+        guard let _ = PFUser.current(),
+            let uuidString = uuid?.uuidString else{
+            completion(nil)
+            return
+        }
+        
+        let query = Contact.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
+            
+            guard let foundObject = object as? Contact else{
+                completion(nil)
+                return
+            }
+            completion(foundObject)
+        }
+    }
+    
 }
