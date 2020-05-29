@@ -129,16 +129,15 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     currentError = error!
                     print("Error in ParseCareKit.pullRevisionsForConcreteClasses(). \(currentError!)")
                 }
-                completion(nil)
-                return
+                
+                guard let self = self else{
+                    completion(ParseCareKitError.cantUnwrapSelf)
+                    return
+                }
+                
+                self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
+                
             }
-            
-            guard let self = self else{
-                completion(ParseCareKitError.cantUnwrapSelf)
-                return
-            }
-            
-            self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
         }
     }
     
@@ -162,16 +161,14 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         currentError = error!
                         print("Error in ParseCareKit.pullRevisionsForCustomClasses(). \(currentError!)")
                     }
-                    completion(nil)
-                    return
+                    
+                    guard let self = self else{
+                        completion(ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
+                    self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
                 }
-                
-                guard let self = self else{
-                    completion(ParseCareKitError.cantUnwrapSelf)
-                    return
-                }
-                
-                self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
             }
         }else{
             completion(previousError)
