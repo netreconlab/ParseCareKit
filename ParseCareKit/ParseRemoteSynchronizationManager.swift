@@ -109,59 +109,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     
                 self.pullRevisionsForCustomClasses(previousError: previosError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
             }
-            
-            /*Patient().pullRevisions(localClock, cloudVector: cloudVector){
-                userRevision in
-                mergeRevision(userRevision){
-                    error in
-                    if error != nil {
-                        completion(error!)
-                        return
-                    }
-                    CarePlan().pullRevisions(localClock, cloudVector: cloudVector){
-                        carePlanRevision in
-                        mergeRevision(carePlanRevision){
-                            error in
-                            if error != nil {
-                                returnError = error
-                                return
-                            }
-                            Contact().pullRevisions(localClock, cloudVector: cloudVector){
-                                contactPlanRevision in
-                                mergeRevision(contactPlanRevision){
-                                    error in
-                                    if error != nil {
-                                        returnError = error
-                                        return
-                                    }
-                                    Task().pullRevisions(localClock, cloudVector: cloudVector){
-                                        taskRevision in
-                                        mergeRevision(taskRevision){
-                                            error in
-                                            if error != nil {
-                                                returnError = error
-                                                return
-                                            }
-                                            Outcome().pullRevisions(localClock, cloudVector: cloudVector){
-                                                outcomeRevision in
-                                                mergeRevision(outcomeRevision){
-                                                    error in
-                                                    if error != nil {
-                                                        returnError = error
-                                                    }
-                                                    
-                                                    return
-                                                }
-                                                self.pullRevisionsForCustomClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }*/
         }
     }
     
@@ -272,7 +219,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 let entity = $0
                 switch entity{
                 case .patient(let patient):
-                    
+                    guard let _ = patient.uuid else{
+                        revisionsCompletedCount += 1
+                        print("******* patient")
+                        return
+                    }
                     if let customClassName = patient.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
@@ -298,6 +249,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     }
                 
                 case .carePlan(let carePlan):
+                    guard let _ = carePlan.uuid else{
+                        revisionsCompletedCount += 1
+                        print("******* carePlan")
+                        return
+                    }
                     if let customClassName = carePlan.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
@@ -322,6 +278,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }
                 case .contact(let contact):
+                    guard let _ = contact.uuid else{
+                        revisionsCompletedCount += 1
+                        print("******* contact")
+                        return
+                    }
                     if let customClassName = contact.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
@@ -345,6 +306,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }
                 case .task(let task):
+                    guard let _ = task.uuid else{
+                        revisionsCompletedCount += 1
+                        print("******* task")
+                        return
+                    }
                     if let customClassName = task.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
@@ -368,6 +334,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }
                 case .outcome(let outcome):
+                    guard let _ = outcome.uuid else{
+                        revisionsCompletedCount += 1
+                        print("******* outcome")
+                        return
+                    }
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                             _ in
