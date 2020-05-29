@@ -426,6 +426,9 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
+                    if self.previousVersion!.store == nil{
+                        self.previousVersion!.store = self.store
+                    }
                     self.previousVersion!.nextVersion = self
                 }
             }
@@ -443,6 +446,9 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
+                        if self.nextVersion!.store == nil{
+                            self.nextVersion!.store = self.store
+                        }
                         self.nextVersion!.previousVersion = self
                     }
                 }
@@ -462,6 +468,13 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     }
                     
                     self.currentCarePlan = carePlan
+                    guard let carePlan = self.currentCarePlan else{
+                        completion(self)
+                        return
+                    }
+                    if carePlan.store == nil{
+                        carePlan.store = self.store
+                    }
                     completion(self)
                 }
             }

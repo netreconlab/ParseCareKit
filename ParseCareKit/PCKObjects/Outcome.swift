@@ -319,6 +319,13 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             }
             
             self.currentTask = task
+            guard let task = self.currentTask else{
+                completion(self)
+                return
+            }
+            if task.store == nil{
+                task.store = self.store
+            }
             completion(self)
         }
     }

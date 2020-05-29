@@ -26,7 +26,7 @@ open class PCKObject: PFObject {
     @NSManaged public var asset: String?
     @NSManaged public var notes: [Note]?
     
-    public weak var store:OCKStore!
+    weak var store:OCKStore!
     
     open func stampRelationalEntities(){
         self.notes?.forEach{$0.stamp(self.logicalClock)}

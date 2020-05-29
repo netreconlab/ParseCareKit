@@ -105,6 +105,7 @@ open class PCKVersionedObject: PCKObject {
     open func find(for date: Date) throws -> [PCKVersionedObject] {
         let query = PCKVersionedObject.query(parseClassName, for: date)
         let entities = try (query.findObjects() as! [PCKVersionedObject])
+        entities.forEach{$0.store = self.store} //Add store just incase we need to do anything
         return entities
     }
     
@@ -116,6 +117,7 @@ open class PCKVersionedObject: PCKObject {
                 completion(nil,error)
                 return
             }
+            entities.forEach{$0.store = self.store} //Add store just incase we need to do anything
             completion(entities,error)
         }
     }
