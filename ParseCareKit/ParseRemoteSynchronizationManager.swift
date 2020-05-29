@@ -22,7 +22,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var userTypeUUID:UUID!
     public internal(set) weak var store:OCKStore!
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
-    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronized]!
+    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
     
     override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
@@ -32,22 +32,22 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     convenience public init(uuid:UUID) {
         self.init()
         self.userTypeUUID = uuid
-        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getDefaults()
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronized]) {
+    convenience public init(uuid:UUID, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
         self.init()
         self.userTypeUUID = uuid
-        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses)
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
+    convenience public init(uuid:UUID, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
         self.init()
         self.userTypeUUID = uuid
         if replacePCKStoreClasses != nil{
-            self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses!)
+            self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
         }else{
             self.pckStoreClassesToSynchronize = nil
         }
@@ -91,36 +91,37 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: self.userTypeUUID)
             
-            self.pullRevisionsForDefaultClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){ previosError in
+            self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){ previosError in
                     
                 self.pullRevisionsForCustomClasses(previousError: previosError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
             }
         }
     }
     
-    func pullRevisionsForDefaultClasses(concreteClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
+    func pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
         
         let classNames = PCKStoreClass.patient.orderedArray()
         
         guard concreteClassesAlreadyPulled < classNames.count,
-            let defaultClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else{
+            let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]],
+            let newConcreteClass = concreteClass.new() as? PCKRemoteSynchronized else{
                 print("Finished pulling default revision classes")
                 completion(previousError)
                 return
         }
         var currentError = previousError
-        defaultClass.new().pullRevisions(localClock, cloudVector: cloudVector){
+        newConcreteClass.pullRevisions(localClock, cloudVector: cloudVector){
             customRevision in
             mergeRevision(customRevision){
                 error in
                 if error != nil {
                     currentError = error!
-                    print("Error in ParseCareKit.pullRevisionsForDefaultClasses(). \(currentError!)")
+                    print("Error in ParseCareKit.pullRevisionsForConcreteClasses(). \(currentError!)")
                 }
                 completion(nil)
                 return
             }
-            self.pullRevisionsForDefaultClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
+            self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
         }
     }
     
@@ -129,13 +130,14 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             let classNames = customClassesToSynchronize.keys.sorted()
             
             guard customClassesAlreadyPulled < classNames.count,
-                let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else{
+                let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]],
+                let newCustomClass = customClass.new() as? PCKRemoteSynchronized else{
                     print("Finished pulling custom revision classes")
                     completion(previousError)
                     return
             }
             var currentError = previousError
-            customClass.new().pullRevisions(localClock, cloudVector: cloudVector){
+            newCustomClass.pullRevisions(localClock, cloudVector: cloudVector){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
@@ -219,7 +221,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ = self.pckStoreClassesToSynchronize[.patient]!.new(with: entity, store: self.store){
                             parse in
                             
-                            guard let parse = parse else{return}
+                            guard let parse = parse as? PCKRemoteSynchronized else{return}
                             parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 error in
                                 revisionsCompletedCount += 1
@@ -244,7 +246,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ = self.pckStoreClassesToSynchronize[.carePlan]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse else{return}
+                            guard let parse = parse as? PCKRemoteSynchronized else{return}
                             parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -267,7 +269,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ = self.pckStoreClassesToSynchronize[.contact]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse else{return}
+                            guard let parse = parse as? PCKRemoteSynchronized else{return}
                             parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -290,7 +292,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ = self.pckStoreClassesToSynchronize[.task]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse else{return}
+                            guard let parse = parse as? PCKRemoteSynchronized else{return}
                             parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -313,7 +315,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         _ = self.pckStoreClassesToSynchronize[.outcome]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse else{return}
+                            guard let parse = parse as? PCKRemoteSynchronized else{return}
                             parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -337,7 +339,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         customClass.new(with: entity, store: self.store){
             parse in
             
-            guard let parse = parse else{
+            guard let parse = parse as? PCKRemoteSynchronized else{
                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }

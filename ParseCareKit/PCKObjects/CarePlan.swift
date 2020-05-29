@@ -13,7 +13,23 @@ import CareKitStore
 open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
 
     @NSManaged public var patient:Patient?
+    @NSManaged var patientUUIDString:String?
     @NSManaged public var title:String
+    
+    public var patientUUID:UUID? {
+        get {
+            if next != nil{
+                return UUID(uuidString: patient!.uuid)
+            }else if patientUUIDString != nil {
+                return UUID(uuidString: patientUUIDString!)
+            }else{
+                return nil
+            }
+        }
+        set{
+            patientUUIDString = newValue?.uuidString
+        }
+    }
     
     public static func parseClassName() -> String {
         return kPCKCarePlanClassKey
@@ -29,11 +45,11 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
-    open func new() -> PCKRemoteSynchronized {
+    open func new() -> PCKSynchronized {
         return CarePlan()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
         guard let store = store as? OCKStore else{
             completion(nil)
             return

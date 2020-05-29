@@ -197,7 +197,5 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         }
         return updatedValues
     }
-    
-    
 }
 

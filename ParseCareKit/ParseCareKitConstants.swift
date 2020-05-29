@@ -68,7 +68,41 @@ public enum PCKStoreClass {
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
     
-    func getDefaults() -> [PCKStoreClass: PCKSynchronized]?{
+    func getRemoteConcrete() -> [PCKStoreClass: PCKRemoteSynchronized]?{
+        var remoteClasses = [PCKStoreClass: PCKRemoteSynchronized]()
+        
+        guard let regularClasses = getConcrete() else{return nil}
+        
+        for (key,value) in regularClasses{
+            guard let remoteClass = value as? PCKRemoteSynchronized else{
+                continue
+            }
+            remoteClasses[key] = remoteClass
+        }
+        
+        //Ensure all default classes are created
+        guard remoteClasses.count == orderedArray().count else{
+            return nil
+        }
+        
+        return remoteClasses
+    }
+    
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKRemoteSynchronized]) -> [PCKStoreClass: PCKRemoteSynchronized]?{
+        guard var updatedClasses = getRemoteConcrete() else{
+            return nil
+        }
+        for (key,value) in newClasses{
+            if isCorrectType(key, check: value){
+                updatedClasses[key] = value
+            }else{
+                print("**** Warning in PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> \(value)")
+            }
+        }
+        return updatedClasses
+    }
+    
+    func getConcrete() -> [PCKStoreClass: PCKSynchronized]?{
         
         var concreteClasses: [PCKStoreClass: PCKSynchronized] = [
             .carePlan: PCKStoreClass.carePlan.getDefault(),
@@ -93,7 +127,7 @@ public enum PCKStoreClass {
     }
     
     func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronized]) -> [PCKStoreClass: PCKSynchronized]?{
-        guard var updatedClasses = getDefaults() else{
+        guard var updatedClasses = getConcrete() else{
             return nil
         }
         for (key,value) in newClasses{

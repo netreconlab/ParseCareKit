@@ -31,11 +31,11 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
-    public func new() -> PCKRemoteSynchronized {
+    public func new() -> PCKSynchronized {
         return CarePlan()
     }
     
-    public func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    public func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
         guard let store = store as? OCKStore else{
             completion(nil)
             return

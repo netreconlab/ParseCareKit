@@ -32,11 +32,11 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
-    open func new() -> PCKRemoteSynchronized {
+    open func new() -> PCKSynchronized {
         return CarePlan()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
         guard let store = store as? OCKStore else{
             completion(nil)
             return

@@ -12,32 +12,56 @@ import Parse
 open class PCKVersionedObject: PCKObject {
     @NSManaged public var effectiveDate: Date?
     @NSManaged var previous: PCKVersionedObject?
-    @NSManaged var previousUUID: String?
+    @NSManaged var previousVersionUUIDString: String?
     @NSManaged var next: PCKVersionedObject?
-    @NSManaged var nextUUID: String?
-    var nextVersionUUID:String? {
+    @NSManaged var nextVersionUUIDString: String?
+    public internal(set) var nextVersionUUID:UUID? {
         get {
             if next != nil{
-                return next!.uuid
+                return UUID(uuidString: next!.uuid)
+            }else if nextVersionUUIDString != nil {
+                return UUID(uuidString: nextVersionUUIDString!)
             }else{
-                return nextUUID
+                return nil
             }
         }
         set{
-            nextUUID = newValue
+            nextVersionUUIDString = newValue?.uuidString
+        }
+    }
+    
+    var nextVersion: PCKVersionedObject?{
+        get{
+            return next
+        }
+        set{
+            next = newValue
+            nextVersionUUIDString = newValue?.uuid
         }
     }
 
-    var previousVersionUUID: String? {
+    public internal(set) var previousVersionUUID: UUID? {
         get {
             if previous != nil{
-                return previous!.uuid
+                return UUID(uuidString: previous!.uuid)
+            }else if previousVersionUUIDString != nil{
+                return UUID(uuidString: previousVersionUUIDString!)
             }else{
-                return previousUUID
+                return nil
             }
         }
         set{
-            previousUUID = newValue
+            previousVersionUUIDString = newValue?.uuidString
+        }
+    }
+    
+    var previousVersion: PCKVersionedObject?{
+        get{
+            return previous
+        }
+        set{
+            previous = newValue
+            previousVersionUUIDString = newValue?.uuid
         }
     }
     
