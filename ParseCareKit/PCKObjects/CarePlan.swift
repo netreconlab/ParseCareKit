@@ -65,9 +65,15 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             return
         }
         self.store = store
+        
         switch careKitEntity {
         case .carePlan(let entity):
-            self.copyCareKit(entity, clone: true, completion: completion)
+            let newClass = CarePlan()
+            newClass.store = self.store
+            newClass.copyCareKit(entity, clone: true){
+                _ in
+                completion(newClass)
+            }
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
@@ -137,7 +143,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKCarePlanQuery()
         careKitQuery.uuids = [carePlanUUID]
         
-        store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
+        self.store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
             result in
             
             guard let self = self else{
