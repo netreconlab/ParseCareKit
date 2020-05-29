@@ -135,11 +135,11 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             return
         }
         self.store = store
-        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
+        self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
     open func new() -> PCKSynchronized {
-        return CarePlan()
+        return Contact()
     }
     
     open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
@@ -148,9 +148,15 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             return
         }
         self.store = store
+        
         switch careKitEntity {
         case .contact(let entity):
-            self.copyCareKit(entity, clone: true, store: store, completion: completion)
+            let newClass = Contact()
+            newClass.store = self.store
+            newClass.copyCareKit(entity, clone: true){
+                _ in
+                completion(newClass)
+            }
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
@@ -362,7 +368,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
 
-    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, store: OCKAnyStoreProtocol, completion: @escaping(Contact?) -> Void){
+    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, completion: @escaping(Contact?) -> Void){
         
         guard let _ = PFUser.current(),
             let contact = contactAny as? OCKContact else{

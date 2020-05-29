@@ -86,7 +86,7 @@ extension PCKObject{
                 return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){_ in
                     self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         
@@ -120,7 +120,7 @@ extension PCKObject{
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){_ in
                     parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
                     self.saveAndCheckRemoteID(parse){
                         (success,error) in

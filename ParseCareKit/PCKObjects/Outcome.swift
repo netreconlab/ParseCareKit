@@ -57,7 +57,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     }
     
     public func new() -> PCKSynchronized {
-        return CarePlan()
+        return Outcome()
     }
     
     public func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
@@ -66,9 +66,15 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             return
         }
         self.store = store
+        
         switch careKitEntity {
         case .outcome(let entity):
-            self.copyCareKit(entity, clone: true, completion: completion)
+            let newClass = Outcome()
+            newClass.store = self.store
+            newClass.copyCareKit(entity, clone: true){
+                _ in
+                completion(newClass)
+            }
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)

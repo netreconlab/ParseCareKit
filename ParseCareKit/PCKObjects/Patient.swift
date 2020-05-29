@@ -32,7 +32,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     open func new() -> PCKSynchronized {
-        return CarePlan()
+        return Patient()
     }
     
     open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
@@ -43,7 +43,12 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.store = store
         switch careKitEntity {
         case .patient(let entity):
-            self.copyCareKit(entity, clone: true, completion: completion)
+            let newClass = Patient()
+            newClass.store = self.store
+            newClass.copyCareKit(entity, clone: true){
+                _ in
+                completion(newClass)
+            }
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
@@ -309,6 +314,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
+                    if self.previousVersion!.store == nil{
+                        self.previousVersion!.store = self.store
+                    }
                     self.previousVersion!.nextVersion = self
                 }
             }
@@ -326,6 +334,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
+                        if self.nextVersion!.store == nil{
+                            self.nextVersion!.store = self.store
+                        }
                         self.nextVersion!.previousVersion = self
                     }
                 }

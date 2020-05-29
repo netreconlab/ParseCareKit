@@ -11,7 +11,7 @@ import Parse
 import CareKitStore
 
 extension PCKVersionedObject{
-    
+    /*
     class func cloneCareKit(_ carePlanAny: OCKAnyCarePlan, carePlanToCopy: CarePlan?, store: OCKAnyStoreProtocol, completion: @escaping(CarePlan?) -> Void){
         
         guard let _ = PFUser.current(),
@@ -113,7 +113,7 @@ extension PCKVersionedObject{
                 }
             }
         }
-    }
+    }*/
     
     public func decodedCareKitObject(_ bareCareKitObject: OCKCarePlan)->OCKCarePlan?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
