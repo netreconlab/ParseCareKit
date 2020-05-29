@@ -174,7 +174,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     
     
-    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let patientUUID = UUID(uuidString: self.uuid) else{
             return
@@ -197,7 +197,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.compareDelete(foundObject, completion: completion)
+            self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     

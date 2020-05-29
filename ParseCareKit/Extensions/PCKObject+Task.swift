@@ -168,46 +168,94 @@ extension PCKObject{
         }
     }
     
-    func compareDelete(_ parse: Task, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let careKitLastUpdated = self.updatedDate,
-            let cloudUpdatedAt = parse.updatedDate else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
+    func compareDelete(_ local: Task, parse: Task, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         
-        if ((cloudUpdatedAt <= careKitLastUpdated) || usingKnowledgeVector){
-            parse.elements.forEach{
-                $0.deleteInBackground()
-            }
-            parse.notes?.forEach{
-                $0.deleteInBackground()
-            }
-            parse.deleteInBackground{
-                (success, error) in
-                if !success{
-                    guard let error = error else{return}
-                    print("Error in Task.deleteFromCloud(). \(error)")
-                }else{
-                    print("Successfully deleted Task \(self) in the Cloud")
-                }
-                completion(success,error)
-            }
-        }else {
-            //The updated version in the cloud is newer, local delete has already occured, so updated the device with the newer one from the cloud
-            guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+        if !usingKnowledgeVector{
+            guard let careKitLastUpdated = self.updatedDate,
+                let cloudUpdatedAt = parse.updatedDate else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
-            store.updateAnyTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                result in
-                switch result{
-                case .success(_):
-                    print("Successfully deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(true,nil)
-                case .failure(let error):
-                    print("Error deleting Task \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                    completion(false,error)
+            
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                guard let careKit = local.convertToCareKit() else{
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                    return
                 }
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
+                    //An update may occur when Internet isn't available, try to update at some point
+                    self.saveAndCheckRemoteID(parse){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).compareDelete(). Couldn't delete in cloud: \(careKit)")
+                        }else{
+                            print("Successfully deleted \(self.parseClassName) \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
+                }
+            }else if cloudUpdatedAt > careKitLastUpdated {
+                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                    return
+                }
+                    
+                store.updateTask(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
+                    result in
+                    switch result{
+                    case .success(_):
+                        print("Successfully deleted \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(true,nil)
+                    case .failure(let error):
+                        print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
+                        completion(false,error)
+                    }
+                }
+            }else{
+                completion(true,nil)
+            }
+        }else{
+            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
+                guard let careKit = local.convertToCareKit() else{
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                    return
+                }
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
+                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
+                    self.saveAndCheckRemoteID(parse){
+                        (success,error) in
+                        
+                        if !success{
+                            print("Error in \(self.parseClassName).compareDelete(). Couldn't update in cloud: \(careKit)")
+                        }else{
+                            print("Successfully deleted \(self.parseClassName) \(self) in the Cloud")
+                        }
+                        completion(success,error)
+                    }
+                }
+                
+            }else if self.logicalClock == parse.logicalClock{
+               
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareDelete(). KnowledgeVector in Cloud \(parse.logicalClock) == \(self.logicalClock). This means the data is already synced. Local: \(self)... Cloud: \(parse)")
+                completion(true,nil)
+                
+            }else{
+                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
+                print("Warning in \(self.parseClassName).compareDelete(). KnowledgeVector in Cloud \(parse.logicalClock) > \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }
     }

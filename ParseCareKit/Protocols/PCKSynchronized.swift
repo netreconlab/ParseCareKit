@@ -16,7 +16,7 @@ import CareKitStore
 public protocol PCKSynchronized: PFObject, PFSubclassing {
     func addToCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func updateCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func deleteFromCloud(_ usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
+    func deleteFromCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func new()->PCKSynchronized
     func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void)
 }

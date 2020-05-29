@@ -90,7 +90,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         //Check to see if already in the cloud
         let query = Outcome.query()!
-        query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.findObjectsInBackground(){ [weak self]
             (objects, error) in
@@ -153,7 +154,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 guard let remoteID = outcome.remoteID else{
                     //Check to see if this entity is already in the Cloud, but not matched locally
                     let query = Outcome.query()!
-                    query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+                    query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
+                    //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
                     query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
                     query.getFirstObjectInBackground(){
                         (object, error) in
@@ -189,7 +191,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }
     
-    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -198,7 +200,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
@@ -206,7 +209,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
-            self.compareDelete(foundObject, usingKnowledgeVector: usingKnowledgeVector, completion: completion)
+            self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
@@ -252,7 +255,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
             }
         }else{
-            self.deleteFromCloud(true){
+            self.deleteFromCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
                     completion(nil)
@@ -276,7 +279,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
         }
-        
+        //self.fixTag(outcome)
         self.entityId = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
