@@ -24,11 +24,11 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
-    public func new() -> PCKRemoteSynchronized {
+    open func new() -> PCKRemoteSynchronized {
         return CarePlan()
     }
     
-    public func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
         switch careKitEntity {
         case .carePlan(let entity):
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
