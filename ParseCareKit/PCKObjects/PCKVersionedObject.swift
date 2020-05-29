@@ -11,14 +11,34 @@ import Parse
 
 open class PCKVersionedObject: PCKObject {
     @NSManaged public var effectiveDate: Date?
-    @NSManaged public var previous: PCKVersionedObject?
-    @NSManaged public var next: PCKVersionedObject?
-    var nextVersionUUID: String? {
-        return next?.uuid
+    @NSManaged var previous: PCKVersionedObject?
+    @NSManaged var previousUUID: String?
+    @NSManaged var next: PCKVersionedObject?
+    @NSManaged var nextUUID: String?
+    var nextVersionUUID:String? {
+        get {
+            if next != nil{
+                return next!.uuid
+            }else{
+                return nextUUID
+            }
+        }
+        set{
+            nextUUID = newValue
+        }
     }
 
     var previousVersionUUID: String? {
-        return previous?.uuid
+        get {
+            if previous != nil{
+                return previous!.uuid
+            }else{
+                return previousUUID
+            }
+        }
+        set{
+            previousUUID = newValue
+        }
     }
     
     //This query doesn't filter nextVersion effectiveDate >= interval.end

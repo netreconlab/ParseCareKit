@@ -12,22 +12,33 @@ import CareKitStore
 
 extension PCKObject{
 
-    public class func saveAndCheckRemoteID(_ outcome: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let _ = UUID(uuidString: outcome.uuid) else {
+    public func saveAndCheckRemoteID(_ outcome: Outcome, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+        guard let _ = UUID(uuidString: outcome.uuid) else {
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         outcome.stampRelationalEntities()
-        outcome.saveInBackground{(success, error) in
+        outcome.saveInBackground{ [weak self] (success, error) in
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 
                 var careKitQuery = OCKOutcomeQuery()
                 careKitQuery.tags = [outcome.entityId]
                 //careKitQuery.uuids = [entityUUID]
-                store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                self.store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
                     result in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     switch result{
                     case .success(var mutableOutcome):
                         var needToUpdate = false
@@ -81,14 +92,14 @@ extension PCKObject{
                                     needToUpdate = true
                                 }
                                 
-                                guard let updatedValue = $0.compareUpdate(mutableOutcome.values[index], parse: $0, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, newClockValue: outcome.logicalClock, store: store) else {continue}
+                                guard let updatedValue = $0.compareUpdate(mutableOutcome.values[index], parse: $0, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, newClockValue: outcome.logicalClock, store: self.store) else {continue}
                                 mutableOutcome.values[index] = updatedValue
                                 needToUpdate = true
                             }
                         }
                         
                         if needToUpdate{
-                            store.updateOutcome(mutableOutcome){
+                            self.store.updateOutcome(mutableOutcome){
                                 result in
                                 switch result{
                                 case .success(let updatedContact):
@@ -114,8 +125,8 @@ extension PCKObject{
         }
     }
     
-    public func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore else{return}
+    public func compareUpdate(_ careKit: OCKOutcome, parse: Outcome, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+        
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
@@ -123,9 +134,15 @@ extension PCKObject{
                 return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     //An update may occur when Internet isn't available, try to update at some point
-                    PCKObject.saveAndCheckRemoteID(parse, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                    self.saveAndCheckRemoteID(parse, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
                         (success,error) in
                         
                         if !success{
@@ -158,9 +175,14 @@ extension PCKObject{
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    PCKObject.saveAndCheckRemoteID(parse, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
+                    self.saveAndCheckRemoteID(parse, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote){
                         (success,error) in
                         
                         if !success{
@@ -186,7 +208,7 @@ extension PCKObject{
         }
     }
     
-    public func compareDelete(_ parse: Outcome, store: OCKStore, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
+    public func compareDelete(_ parse: Outcome, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -267,7 +289,7 @@ extension PCKObject{
         return entity
     }
     
-    public func fetchRelatedTask(_ taskUUID:UUID, store: OCKStore, completion: @escaping(Task?) -> Void){
+    public func fetchRelatedTask(_ taskUUID:UUID, completion: @escaping(Task?) -> Void){
         var query = OCKTaskQuery()
         query.uuids = [taskUUID]
         store.fetchTasks(query: query, callbackQueue: .global(qos: .background)){

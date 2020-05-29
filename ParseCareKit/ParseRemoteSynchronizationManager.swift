@@ -10,24 +10,6 @@ import Foundation
 import CareKitStore
 import Parse
 
-/**
- Protocol that defines the properties and methods for parse carekit entities that are synchronized using a wall clock.
- */
-public protocol PCKSynchronized: PFObject, PFSubclassing {
-    func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
-    func new()->PCKRemoteSynchronized
-    func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void)
-}
-
-/**
- Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
- */
-public protocol PCKRemoteSynchronized: PCKSynchronized {
-    func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
-    func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
-}
 
 public protocol ParseRemoteSynchronizationDelegate{
     func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
@@ -40,7 +22,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var userTypeUUID:UUID!
     public internal(set) weak var store:OCKStore!
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
-    public internal(set) var classesToSynchronize: [PCKClass: PCKSynchronized]!
+    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronized]!
     
     override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
@@ -50,32 +32,36 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     convenience public init(uuid:UUID) {
         self.init()
         self.userTypeUUID = uuid
-        self.classesToSynchronize = PCKClass.patient.getDefaults()
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getDefaults()
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, classesToOverideDefaults: [PCKClass: PCKSynchronized]) {
+    convenience public init(uuid:UUID, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronized]) {
         self.init()
         self.userTypeUUID = uuid
-        self.classesToSynchronize = PCKClass.patient.replaceDefaultClasses(classesToOverideDefaults)
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, classesToOverideDefaults: [PCKClass: PCKSynchronized]?, customClassesToSynchronize: [String:PCKRemoteSynchronized]){
+    convenience public init(uuid:UUID, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
         self.init()
         self.userTypeUUID = uuid
-        if classesToOverideDefaults != nil{
-            self.classesToSynchronize = PCKClass.patient.replaceDefaultClasses(classesToOverideDefaults!)
+        if replacePCKStoreClasses != nil{
+            self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses!)
         }else{
-            self.classesToSynchronize = nil
+            self.pckStoreClassesToSynchronize = nil
         }
          
-        self.customClassesToSynchronize = customClassesToSynchronize
+        self.customClassesToSynchronize = customClasses
     }
     
     public func startSynchronizing(_ store: OCKStore, auto: Bool=true){
         self.store = store
         self.automaticallySynchronizes = auto
+        
+        guard self.pckStoreClassesToSynchronize != nil else {
+            fatalError("ParseRemoteSynchronize.startSynchronizing() cannot start synchronzing because something is wrong with replacePCKStoreClasses.")
+        }
     
         if self.automaticallySynchronizes{
             self.store.synchronize { error in
@@ -112,12 +98,12 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
     }
     
-    func pullRevisionsForDefaultClasses(defaultClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
+    func pullRevisionsForDefaultClasses(concreteClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
         
-        let classNames = PCKClass.patient.orderedArray()
+        let classNames = PCKStoreClass.patient.orderedArray()
         
-        guard defaultClassesAlreadyPulled < classNames.count,
-            let defaultClass = self.classesToSynchronize[classNames[defaultClassesAlreadyPulled]] else{
+        guard concreteClassesAlreadyPulled < classNames.count,
+            let defaultClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else{
                 print("Finished pulling default revision classes")
                 completion(previousError)
                 return
@@ -134,7 +120,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(nil)
                 return
             }
-            self.pullRevisionsForDefaultClasses(defaultClassesAlreadyPulled: defaultClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
+            self.pullRevisionsForDefaultClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
         }
     }
     
@@ -230,11 +216,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }else{
                         
-                        _ = self.classesToSynchronize[.patient]!.new(with: entity, store: self.store){
+                        _ = self.pckStoreClassesToSynchronize[.patient]!.new(with: entity, store: self.store){
                             parse in
                             
                             guard let parse = parse else{return}
-                            parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 error in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -255,11 +241,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }else{
                         
-                        _ = self.classesToSynchronize[.carePlan]!.new(with: entity, store: self.store){
+                        _ = self.pckStoreClassesToSynchronize[.carePlan]!.new(with: entity, store: self.store){
                         parse in
                         
                             guard let parse = parse else{return}
-                            parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -278,11 +264,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        _ = self.classesToSynchronize[.contact]!.new(with: entity, store: self.store){
+                        _ = self.pckStoreClassesToSynchronize[.contact]!.new(with: entity, store: self.store){
                         parse in
                         
                             guard let parse = parse else{return}
-                            parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -301,11 +287,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        _ = self.classesToSynchronize[.task]!.new(with: entity, store: self.store){
+                        _ = self.pckStoreClassesToSynchronize[.task]!.new(with: entity, store: self.store){
                         parse in
                         
                             guard let parse = parse else{return}
-                            parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -324,11 +310,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        _ = self.classesToSynchronize[.outcome]!.new(with: entity, store: self.store){
+                        _ = self.pckStoreClassesToSynchronize[.outcome]!.new(with: entity, store: self.store){
                         parse in
                         
                             guard let parse = parse else{return}
-                            parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -355,7 +341,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
-            parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudClock){
+            parse.pushRevision(overwriteRemote, cloudClock: cloudClock){
                 error in
                 completion(error)
             }

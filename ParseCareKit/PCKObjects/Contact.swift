@@ -17,13 +17,13 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var category:String?
     @NSManaged public var name:[String:String]
     @NSManaged public var organization:String?
-    @NSManaged public var emailAddressesArray:[String]?
-    @NSManaged public var messagingNumbersArray:[String]?
-    @NSManaged public var otherContactInfoArray:[String]?
-    @NSManaged public var phoneNumbersArray:[String]?
     @NSManaged public var role:String?
     @NSManaged public var title:String?
     @NSManaged public var carePlan:CarePlan?
+    @NSManaged var emailAddressesArray:[String]?
+    @NSManaged var messagingNumbersArray:[String]?
+    @NSManaged var otherContactInfoArray:[String]?
+    @NSManaged var phoneNumbersArray:[String]?
     
     var messagingNumbers: [OCKLabeledValue]? {
         get {
@@ -103,6 +103,11 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
 
     public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
         self.init()
+        guard let store = store as? OCKStore else{
+            completion(nil)
+            return
+        }
+        self.store = store
         self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
     }
     
@@ -110,7 +115,12 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         return CarePlan()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+        guard let store = store as? OCKStore else{
+            completion(nil)
+            return
+        }
+        self.store = store
         switch careKitEntity {
         case .contact(let entity):
             self.copyCareKit(entity, clone: true, store: store, completion: completion)
@@ -120,7 +130,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let contactUUID = UUID(uuidString: self.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -131,8 +141,14 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Contact.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
         query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
+        query.findObjectsInBackground(){ [weak self]
             (objects, parseError) in
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
             guard let foundObjects = objects else{
                 guard let error = parseError as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
@@ -148,7 +164,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    PCKObject.saveAndCheckRemoteID(self, store: store, completion: completion)
+                    self.saveAndCheckRemoteID(self, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -159,20 +175,19 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             //If object already in the Cloud, exit
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead
-                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+                self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }else{
                 //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                 if !usingKnowledgeVector{
                     self.logicalClock = 0
                 }
-                PCKObject.saveAndCheckRemoteID(self, store: store, completion: completion)
+                self.saveAndCheckRemoteID(self, completion: completion)
             }
         }
     }
     
-    public func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -181,7 +196,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKContactQuery()
         careKitQuery.uuids = [contactUUID]
         
-        store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
+        store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
             result in
             switch result{
             case .success(let contacts):
@@ -204,7 +219,13 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                             completion(false,error)
                             return
                         }
-                        self.compareUpdate(contact, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+                        
+                        guard let self = self else{
+                            completion(false,ParseCareKitError.cantUnwrapSelf)
+                            return
+                        }
+                        
+                        self.compareUpdate(contact, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
                     return
                 }
@@ -220,7 +241,13 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(contact, parse: foundObject, store: store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
+                    self.compareUpdate(contact, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                 }
             case .failure(let error):
                 print("Error adding contact to cloud \(error)")
@@ -229,9 +256,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore,
             let contactUUID = UUID(uuidString: self.uuid) else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -240,13 +266,19 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         //Get latest item from the Cloud to compare against
         let query = Contact.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
-        query.getFirstObjectInBackground(){
+        query.getFirstObjectInBackground(){ [weak self]
             (object, error) in
             guard let foundObject = object as? Contact else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
-            self.compareDelete(foundObject, store: store, completion: completion)
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
+            self.compareDelete(foundObject, completion: completion)
         }
     }
     
@@ -279,10 +311,10 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         self.logicalClock = cloudClock //Stamp Entity
         if self.deletedDate == nil{
-            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
+            self.addToCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
                     completion(nil)
@@ -291,7 +323,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 }
             }
         }else{
-            self.deleteFromCloud(store, usingKnowledgeVector: true){
+            self.deleteFromCloud(true){
                 (success,error) in
                 if success{
                     completion(nil)
@@ -375,7 +407,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 completion(self)
                 return
             }
-            self.fetchRelatedCarePlan(carePlanUUID, store: store){
+            self.fetchRelatedCarePlan(carePlanUUID){
                 carePlan in
                 if carePlan != nil && contact.carePlanUUID != nil{
                     self.carePlan = carePlan
@@ -389,8 +421,14 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             var query = OCKContactQuery()
             query.uuids = uuidsToQuery
-            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){
+            store.fetchContacts(query: query, callbackQueue: .global(qos: .background)){ [weak self]
                 results in
+                
+                guard let self = self else{
+                    completion(nil)
+                    return
+                }
+                
                 switch results{
                     
                 case .success(let entities):
@@ -418,7 +456,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     completion(self)
                     return
                 }
-                self.fetchRelatedCarePlan(carePlanUUID, store: store){
+                self.fetchRelatedCarePlan(carePlanUUID){
                     carePlan in
                     if carePlan != nil && contact.carePlanUUID != nil{
                         self.carePlan = carePlan

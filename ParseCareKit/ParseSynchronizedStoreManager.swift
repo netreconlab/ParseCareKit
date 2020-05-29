@@ -88,7 +88,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.updateCloud(self.storeManager.store){(_,_) in}
+                contact.updateCloud(){(_,_) in}
             }
         }
     }
@@ -98,7 +98,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.deleteFromCloud(self.storeManager.store){(_,_) in}
+                contact.deleteFromCloud(){(_,_) in}
             }
         }
     }
@@ -108,7 +108,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.addToCloud(self.storeManager.store){(_,_) in}
+                contact.addToCloud(){(_,_) in}
             }
         }
     }
@@ -119,7 +119,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Outcome(careKitEntity: outcome, store: storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.updateCloud(self.storeManager.store){(_,_) in}
+                outcome.updateCloud(){(_,_) in}
             }
         }
     }
@@ -130,7 +130,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Outcome(careKitEntity: careKitEntity, store: self.storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.deleteFromCloud(self.storeManager.store){(_,_) in}
+                outcome.deleteFromCloud(){(_,_) in}
             }
         }
     }
@@ -140,7 +140,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Outcome(careKitEntity: $0, store: self.storeManager.store){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.addToCloud(self.storeManager.store){(_,_) in}
+                outcome.addToCloud(){(_,_) in}
             }
         }
     }
@@ -150,7 +150,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Task(careKitEntity: $0, store: self.storeManager.store){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.updateCloud(self.storeManager.store){(_,_) in}
+                task.updateCloud(){(_,_) in}
             }
         }
     }
@@ -160,7 +160,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Task(careKitEntity: $0, store: self.storeManager.store){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.deleteFromCloud(self.storeManager.store){(_,_) in}
+                task.deleteFromCloud(){(_,_) in}
             }
         }
     }
@@ -170,7 +170,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Task(careKitEntity: $0, store: self.storeManager.store){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.addToCloud(self.storeManager.store){(_,_) in}
+                task.addToCloud(){(_,_) in}
             }
         }
     }
@@ -180,7 +180,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.updateCloud(self.storeManager.store){(_,_) in}
+                carePlan.updateCloud(){(_,_) in}
             }
         }
     }
@@ -190,7 +190,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.deleteFromCloud(self.storeManager.store){(_,_) in}
+                carePlan.deleteFromCloud(){(_,_) in}
             }
         }
     }
@@ -200,7 +200,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.addToCloud(self.storeManager.store){(_,_) in}
+                carePlan.addToCloud(){(_,_) in}
             }
         }
     }
@@ -211,7 +211,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Patient(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
                 guard let patient = copiedPatient as? Patient else{return}
-                patient.updateCloud(self.storeManager.store){(_,_) in}
+                patient.updateCloud(){(_,_) in}
             }
         }
     }
@@ -221,7 +221,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Patient(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
                 guard let patient = copiedPatient as? Patient else{return}
-                patient.deleteFromCloud(self.storeManager.store){(_,_) in}
+                patient.deleteFromCloud(){(_,_) in}
             }
         }
     }
@@ -231,7 +231,7 @@ open class ParseSynchronizedStoreManager: NSObject{
             let _ = Patient(careKitEntity: $0, store: storeManager.store){
                 copiedPatient in
                 guard let patient = copiedPatient as? Patient else{return}
-                patient.addToCloud(self.storeManager.store){(_,_) in}
+                patient.addToCloud(){(_,_) in}
             }
         }
     }

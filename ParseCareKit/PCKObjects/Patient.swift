@@ -23,24 +23,34 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyPatient, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true, store: store, completion: completion)
+        guard let store = store as? OCKStore else{
+            completion(nil)
+            return
+        }
+        self.store = store
+        self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
     open func new() -> PCKRemoteSynchronized {
         return CarePlan()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKRemoteSynchronized?)-> Void){
+        guard let store = store as? OCKStore else{
+            completion(nil)
+            return
+        }
+        self.store = store
         switch careKitEntity {
         case .patient(let entity):
-            self.copyCareKit(entity, clone: true, store: store, completion: completion)
+            self.copyCareKit(entity, clone: true, completion: completion)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
         }
     }
     
-    open func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let patientUUID = UUID(uuidString: self.uuid) else{
             return
@@ -50,8 +60,14 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Patient.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: patientUUID.uuidString)
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
+        query.findObjectsInBackground(){ [weak self]
             (objects, parseError) in
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
             guard let foundObjects = objects else{
                 guard let error = parseError as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
@@ -67,7 +83,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    Patient.saveAndCheckRemoteID(self, store: store, completion: completion)
+                    self.saveAndCheckRemoteID(self, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -78,20 +94,19 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             //If object already in the Cloud, exit
             if foundObjects.count > 0{
                 //Maybe this needs to be updated instead
-                self.updateCloud(store, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+                self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
             }else{
                 //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
                 if !usingKnowledgeVector{
                     self.logicalClock = 0
                 }
-                Patient.saveAndCheckRemoteID(self, store: store, completion: completion)
+                self.saveAndCheckRemoteID(self, completion: completion)
             }
         }
     }
     
-    open func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore,
             let patientUUID = UUID(uuidString: self.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -100,8 +115,14 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKPatientQuery()
         careKitQuery.uuids = [patientUUID]
         
-        store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
+        store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
             result in
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
             switch result{
             case .success(let patients):
                 guard let patient = patients.first else{
@@ -121,7 +142,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                             completion(false,error)
                             return
                         }
-                        self.compareUpdate(patient, parse: foundObject, store: store, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
+                        self.compareUpdate(patient, parse: foundObject, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
                     }
                     return
                 }
@@ -137,7 +158,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                         completion(false,error)
                         return
                     }
-                    self.compareUpdate(patient, parse: foundObject, store: store, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
+                    self.compareUpdate(patient, parse: foundObject, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
                 }
             case .failure(let error):
                 print("Error in Contact.addToCloud(). \(error)")
@@ -148,9 +169,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     
     
-    open func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let store = store as? OCKStore,
             let patientUUID = UUID(uuidString: self.uuid) else{
             return
         }
@@ -159,14 +179,20 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Patient.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: patientUUID)
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.getFirstObjectInBackground(){
+        query.getFirstObjectInBackground(){ [weak self]
             (objects, error) in
             
             guard let foundObject = objects as? Patient else{
                 completion(false,error)
                 return
             }
-            self.compareDelete(foundObject, store: store, completion: completion)
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
+            self.compareDelete(foundObject, completion: completion)
         }
     }
     
@@ -199,11 +225,11 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         
         self.logicalClock = cloudClock //Stamp Entity
         if self.deletedDate == nil{
-            self.addToCloud(store, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
+            self.addToCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
                     completion(nil)
@@ -212,7 +238,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                 }
             }
         }else{
-            self.deleteFromCloud(store, usingKnowledgeVector: true){
+            self.deleteFromCloud(true){
                 (success,error) in
                 if success{
                     completion(nil)
@@ -223,11 +249,10 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, store: OCKAnyStoreProtocol, completion: @escaping(Patient?) -> Void){
+    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, completion: @escaping(Patient?) -> Void){
         
         guard let _ = PFUser.current(),
-            let patient = patientAny as? OCKPatient,
-            let store = store as? OCKStore else{
+            let patient = patientAny as? OCKPatient else{
                 completion(nil)
             return
         }
@@ -277,8 +302,14 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             var query = OCKPatientQuery()
             query.uuids = uuidsToQuery
-            store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){
+            store.fetchPatients(query: query, callbackQueue: .global(qos: .background)){ [weak self]
                 results in
+                
+                guard let self = self else{
+                    completion(nil)
+                    return
+                }
+                
                 switch results{
                     
                 case .success(let entities):

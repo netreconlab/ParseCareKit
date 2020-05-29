@@ -57,7 +57,7 @@ extension PCKVersionedObject{
                 completion(newCarePlan)
                 return
             }
-            newCarePlan.fetchRelatedPatient(carePlanUUID, store: store){
+            newCarePlan.fetchRelatedPatient(carePlanUUID){
                 patient in
                 if patient != nil && carePlan.patientUUID != nil{
                     newCarePlan.patient = patient
@@ -100,7 +100,7 @@ extension PCKVersionedObject{
                     completion(newCarePlan)
                     return
                 }
-                newCarePlan.fetchRelatedPatient(carePlanUUID, store: store){
+                newCarePlan.fetchRelatedPatient(carePlanUUID){
                     patient in
                     if patient != nil && carePlan.patientUUID != nil{
                         newCarePlan.patient = patient

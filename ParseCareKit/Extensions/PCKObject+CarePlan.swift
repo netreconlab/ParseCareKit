@@ -12,20 +12,31 @@ import CareKitStore
 
 extension PCKObject{
     
-    public class func saveAndCheckRemoteID(_ carePlan: CarePlan, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let carePlanUUID = UUID(uuidString: carePlan.uuid) else{
+    public func saveAndCheckRemoteID(_ carePlan: CarePlan, completion: @escaping(Bool,Error?) -> Void){
+        guard let carePlanUUID = UUID(uuidString: carePlan.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         carePlan.stampRelationalEntities()
-        carePlan.saveInBackground{(success, error) in
+        carePlan.saveInBackground{[weak self] (success, error) in
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
             if success{
                 //Only save data back to CarePlanStore if it's never been saved before
                 var careKitQuery = OCKCarePlanQuery()
                 careKitQuery.uuids = [carePlanUUID]
-                store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                self.store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
                     result in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     switch result{
                     case .success(let entities):
                         guard var mutableEntity = entities.first else{
@@ -34,7 +45,7 @@ extension PCKObject{
                         }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = carePlan.objectId
-                            store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
+                            self.store.updateCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
                                 result in
                                 switch result{
                                 case .success(let updatedEntity):
@@ -49,7 +60,7 @@ extension PCKObject{
                             if mutableEntity.remoteID! != carePlan.objectId{
                                 //Neesd to update remoteId
                                 mutableEntity.remoteID = carePlan.objectId
-                                store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
+                                self.store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
                                     result in
                                     switch result{
                                     case .success(let updatedEntity):
@@ -80,7 +91,7 @@ extension PCKObject{
         }
     }
     
-    public func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool,  store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
+    public func compareUpdate(_ careKit: OCKCarePlan, parse: CarePlan, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
@@ -88,11 +99,15 @@ extension PCKObject{
                 return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    PCKObject.saveAndCheckRemoteID(parse, store: store){
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Couldn't update \(careKit)")
+                            print("Error in CarePlan.updateCloud(). Couldn't update \(careKit)")
                         }else{
                             print("Successfully updated CarePlan \(self) in the Cloud")
                         }
@@ -121,9 +136,13 @@ extension PCKObject{
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
                     parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    PCKObject.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         
                         if !success{
@@ -148,7 +167,7 @@ extension PCKObject{
         }
     }
     
-    public func compareDelete(_ parse: CarePlan, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
+    public func compareDelete(_ parse: CarePlan, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -197,7 +216,7 @@ extension PCKObject{
         return jsonDictionary
     }
     
-    public func fetchRelatedPatient(_ patientUUID: UUID, store: OCKStore, completion: @escaping(Patient?)->Void){
+    public func fetchRelatedPatient(_ patientUUID: UUID, completion: @escaping(Patient?)->Void){
         
         //ID's are the same for related Plans
         var query = OCKPatientQuery()

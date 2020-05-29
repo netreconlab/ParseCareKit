@@ -12,22 +12,33 @@ import CareKitStore
 
 extension PCKObject{
     
-    class func saveAndCheckRemoteID(_ patient: Patient, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let patientUUID = UUID(uuidString: patient.uuid) else{
+    public func saveAndCheckRemoteID(_ patient: Patient, completion: @escaping(Bool,Error?) -> Void){
+        guard let patientUUID = UUID(uuidString: patient.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         patient.stampRelationalEntities()
-        patient.saveInBackground{
+        patient.saveInBackground{ [weak self]
             (success, error) in
+            
+            guard let self = self else{
+                completion(false,ParseCareKitError.cantUnwrapSelf)
+                return
+            }
+            
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 //Only save data back to CarePlanStore if it's never been saved before
                 var careKitQuery = OCKPatientQuery()
                 careKitQuery.uuids = [patientUUID]
-                store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                self.store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
                     result in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     switch result{
                     case .success(let entities):
                         guard var mutableEntity = entities.first else{
@@ -36,7 +47,7 @@ extension PCKObject{
                         }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = patient.objectId
-                            store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
+                            self.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
                                 result in
                                 switch result{
                                 case .success(let updatedObject):
@@ -50,7 +61,7 @@ extension PCKObject{
                         }else{
                             if mutableEntity.remoteID! != patient.objectId{
                                 mutableEntity.remoteID = patient.objectId
-                                store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
+                                self.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
                                     result in
                                     switch result{
                                     case .success(let updatedObject):
@@ -77,16 +88,22 @@ extension PCKObject{
         }
     }
     
-    func compareUpdate(_ careKit: OCKPatient, parse: Patient, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ careKit: OCKPatient, parse: Patient, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
                     //This occurs only on a Patient when they have logged in for the first time
                     //and CareKit and Parse isn't properly synced. Basically this is the first
                     //time the local dates are pushed to the cloud
-                    parse.copyCareKit(careKit, clone: overwriteRemote, store: store){
+                    parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self]
                         _ in
-                        Patient.saveAndCheckRemoteID(parse, store: store){
+                        
+                        guard let self = self else{
+                            completion(false,ParseCareKitError.cantUnwrapSelf)
+                            return
+                        }
+                        
+                        self.saveAndCheckRemoteID(parse){
                             (success,error) in
                             if !success{
                                 print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
@@ -100,9 +117,15 @@ extension PCKObject{
                     return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){ _ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self] _ in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     //An update may occur when Internet isn't available, try to update at some point
-                    Patient.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         if !success{
                             print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
@@ -135,10 +158,16 @@ extension PCKObject{
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){ _ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self] _ in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
                     //An update may occur when Internet isn't available, try to update at some point
-                    Patient.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         if !success{
                             print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
@@ -162,7 +191,7 @@ extension PCKObject{
         }
     }
     
-    func compareDelete(_ parse: Patient, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: Patient, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
             return

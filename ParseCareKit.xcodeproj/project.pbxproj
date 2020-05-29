@@ -37,6 +37,7 @@
 		918F080824800BF000C3A205 /* PCKObject+Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080724800BF000C3A205 /* PCKObject+Patient.swift */; };
 		918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080924800BFF00C3A205 /* PCKObject+Task.swift */; };
 		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
+		91D5287A24813AF70022292B /* PCKSynchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D5287924813AF70022292B /* PCKSynchronized.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -87,6 +88,7 @@
 		918F080724800BF000C3A205 /* PCKObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Patient.swift"; sourceTree = "<group>"; };
 		918F080924800BFF00C3A205 /* PCKObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Task.swift"; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
+		91D5287924813AF70022292B /* PCKSynchronized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKSynchronized.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			children = (
 				918F080C2480411300C3A205 /* Extensions */,
 				918F080B248040AA00C3A205 /* PCKObjects */,
+				91D52878248128700022292B /* Protocols */,
 				9119D5EF245618D7001B7AA3 /* Info.plist */,
 				91AA07222466F0CD00B39452 /* KnowledgeVector.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
@@ -178,6 +181,14 @@
 				918F07FD2480070D00C3A205 /* PCKVersionedObject+Task.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		91D52878248128700022292B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				91D5287924813AF70022292B /* PCKSynchronized.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A8989C8300B16B02AF1BC395 /* Frameworks */ = {
@@ -324,6 +335,7 @@
 				918F080224800BAE00C3A205 /* PCKObject+Note.swift in Sources */,
 				9119D60424561A28001B7AA3 /* Patient.swift in Sources */,
 				9119D5F724561A00001B7AA3 /* ParseSynchronizedStoreManager.swift in Sources */,
+				91D5287A24813AF70022292B /* PCKSynchronized.swift in Sources */,
 				916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */,
 				9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */,
 			);

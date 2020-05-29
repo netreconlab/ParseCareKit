@@ -17,6 +17,7 @@ enum ParseCareKitError: Error {
     case objectIdDoesntMatchRemoteId
     case cloudClockLargerThanLocalWhilePushRevisions
     case couldntUnwrapKnowledgeVector
+    case cantUnwrapSelf
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -34,12 +35,14 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
         case .cloudClockLargerThanLocalWhilePushRevisions:
             return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing", comment: "Knowledge vector larger in Cloud")
+        case .cantUnwrapSelf:
+            return NSLocalizedString("Can't unwrap self. This class has already been deallocated", comment: "Can't unwrap self, class deallocated")
             
         }
     }
 }
 
-public enum PCKClass {
+public enum PCKStoreClass {
     case carePlan
     case contact
     case outcome
@@ -61,26 +64,76 @@ public enum PCKClass {
         }
     }
     
-    func orderedArray() -> [PCKClass]{
+    func orderedArray() -> [PCKStoreClass]{
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
     
-    func getDefaults() -> [PCKClass: PCKSynchronized]{
-        return [
-            .carePlan: PCKClass.carePlan.getDefault(),
-            .contact: PCKClass.contact.getDefault(),
-            .outcome: PCKClass.outcome.getDefault(),
-            .patient: PCKClass.patient.getDefault(),
-            .task: PCKClass.task.getDefault()
+    func getDefaults() -> [PCKStoreClass: PCKSynchronized]?{
+        
+        var concreteClasses: [PCKStoreClass: PCKSynchronized] = [
+            .carePlan: PCKStoreClass.carePlan.getDefault(),
+            .contact: PCKStoreClass.contact.getDefault(),
+            .outcome: PCKStoreClass.outcome.getDefault(),
+            .patient: PCKStoreClass.patient.getDefault(),
+            .task: PCKStoreClass.task.getDefault()
         ]
+        
+        for (key,value) in concreteClasses{
+            if !isCorrectType(key, check: value){
+                concreteClasses.removeValue(forKey: key)
+            }
+        }
+        
+        //Ensure all default classes are created
+        guard concreteClasses.count == orderedArray().count else{
+            return nil
+        }
+        
+        return concreteClasses
     }
     
-    func replaceDefaultClasses(_ newClasses: [PCKClass: PCKSynchronized]) -> [PCKClass: PCKSynchronized]{
-        var updatedClasses = getDefaults()
+    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronized]) -> [PCKStoreClass: PCKSynchronized]?{
+        guard var updatedClasses = getDefaults() else{
+            return nil
+        }
         for (key,value) in newClasses{
-            updatedClasses[key] = value
+            if isCorrectType(key, check: value){
+                updatedClasses[key] = value
+            }else{
+                print("**** Warning in PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> \(value)")
+            }
         }
         return updatedClasses
+    }
+    
+    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronized) -> Bool{
+        switch type {
+        case .carePlan:
+            guard let _ = check as? CarePlan else{
+                return false
+            }
+            return true
+        case .contact:
+            guard let _ = check as? Contact else{
+                return false
+            }
+            return true
+        case .outcome:
+            guard let _ = check as? Outcome else{
+                return false
+            }
+            return true
+        case .patient:
+            guard let _ = check as? Patient else{
+                return false
+            }
+            return true
+        case .task:
+            guard let _ = check as? Task else{
+                return false
+            }
+            return true
+        }
     }
 }
 

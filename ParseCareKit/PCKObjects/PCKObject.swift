@@ -8,22 +8,25 @@
 
 import Foundation
 import Parse
+import CareKitStore
 
 open class PCKObject: PFObject {
     
-    @NSManaged public var uuid: String
-    @NSManaged public var entityId:String
-    @NSManaged public var logicalClock: Int
-    @NSManaged public var createdDate: Date?
-    @NSManaged public var updatedDate: Date?
-    @NSManaged public var deletedDate: Date?
+    @NSManaged public internal(set) var uuid: String
+    @NSManaged public internal(set) var entityId:String
+    @NSManaged var logicalClock: Int
+    @NSManaged public internal(set) var createdDate: Date?
+    @NSManaged public internal(set) var updatedDate: Date?
+    @NSManaged public internal(set) var deletedDate: Date?
+    @NSManaged public internal(set) var timezoneIdentifier: String
     @NSManaged public var userInfo: [String: String]?
     @NSManaged public var groupIdentifier: String?
     @NSManaged public var tags: [String]?
     @NSManaged public var source: String?
     @NSManaged public var asset: String?
     @NSManaged public var notes: [Note]?
-    @NSManaged public var timezoneIdentifier: String
+    
+    weak var store:OCKStore!
     
     open func stampRelationalEntities(){
         self.notes?.forEach{$0.stamp(self.logicalClock)}

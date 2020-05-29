@@ -12,12 +12,13 @@ import CareKitStore
 
 extension PCKObject{
 
-    public class func saveAndCheckRemoteID(_ contact: Contact, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let contactUUID = UUID(uuidString: contact.uuid) else{
+    public func saveAndCheckRemoteID(_ contact: Contact, completion: @escaping(Bool,Error?) -> Void){
+        
+        guard let contactUUID = UUID(uuidString: contact.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
+        
         contact.stampRelationalEntities()
         contact.saveInBackground{(success, error) in
             if success{
@@ -25,7 +26,7 @@ extension PCKObject{
                 //Need to save remoteId for this and all relational data
                 var careKitQuery = OCKContactQuery()
                 careKitQuery.uuids = [contactUUID]
-                store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                self.store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(let entities):
@@ -35,7 +36,7 @@ extension PCKObject{
                         }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = contact.objectId
-                            store.updateAnyContact(mutableEntity){
+                            self.store.updateAnyContact(mutableEntity){
                                 result in
                                 switch result{
                                 case .success(let updatedContact):
@@ -49,7 +50,7 @@ extension PCKObject{
                         }else{
                             if mutableEntity.remoteID! != contact.objectId{
                                 mutableEntity.remoteID = contact.objectId
-                                store.updateAnyContact(mutableEntity){
+                                self.store.updateAnyContact(mutableEntity){
                                     result in
                                     switch result{
                                     case .success(let updatedContact):
@@ -77,7 +78,7 @@ extension PCKObject{
         }
     }
     
-    public func compareUpdate(_ careKit: OCKContact, parse: Contact, store: OCKStore, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+    public func compareUpdate(_ careKit: OCKContact, parse: Contact, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
@@ -86,7 +87,7 @@ extension PCKObject{
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
-                    Contact.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         
                         if !success{
@@ -121,7 +122,7 @@ extension PCKObject{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
                 parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
                     parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    Contact.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         
                         if !success{
@@ -146,7 +147,7 @@ extension PCKObject{
         }
     }
     
-    public func compareDelete(_ parse: Contact, store: OCKStore, completion: @escaping(Bool,Error?) -> Void){
+    public func compareDelete(_ parse: Contact, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)

@@ -12,20 +12,26 @@ import CareKitStore
 
 extension PCKObject{
 
-    public class func saveAndCheckRemoteID(_ task: Task, store: OCKAnyStoreProtocol, completion: @escaping(Bool,Error?) -> Void){
-        guard let store = store as? OCKStore,
-            let taskUUID = UUID(uuidString: task.uuid) else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+    public func saveAndCheckRemoteID(_ task: Task, completion: @escaping(Bool,Error?) -> Void){
+        guard let taskUUID = UUID(uuidString: task.uuid) else{
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         task.stampRelationalEntities()
-        task.saveInBackground{(success, error) in
+        task.saveInBackground{[weak self] (success, error) in
+        
             if success{
+                
+                guard let self = self else{
+                    completion(false,ParseCareKitError.cantUnwrapSelf)
+                    return
+                }
+                
                 print("Successfully saved \(self) in Cloud.")
                 //Need to save remoteId for this and all relational data
                 var careKitQuery = OCKTaskQuery()
                 careKitQuery.uuids = [taskUUID]
-                store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
+                self.store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
                     result in
                     switch result{
                     case .success(let entities):
@@ -35,7 +41,7 @@ extension PCKObject{
                         }
                         if mutableEntity.remoteID == nil{
                             mutableEntity.remoteID = task.objectId
-                            store.updateAnyTask(mutableEntity){
+                            self.store.updateAnyTask(mutableEntity){
                                 result in
                                 switch result{
                                 case .success(let updatedTask):
@@ -49,7 +55,7 @@ extension PCKObject{
                         }else{
                             if mutableEntity.remoteID! != task.objectId{
                                 mutableEntity.remoteID = task.objectId
-                                store.updateAnyTask(mutableEntity){
+                                self.store.updateAnyTask(mutableEntity){
                                     result in
                                     switch result{
                                     case .success(let updatedTask):
@@ -77,7 +83,7 @@ extension PCKObject{
         }
     }
     
-    public func compareUpdate(_ careKit: OCKTask, parse: Task, store: OCKStore, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+    public func compareUpdate(_ careKit: OCKTask, parse: Task, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
@@ -85,9 +91,15 @@ extension PCKObject{
                 return
             }
             if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self] _ in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     //An update may occur when Internet isn't available, try to update at some point
-                    Task.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         
                         if !success{
@@ -122,10 +134,16 @@ extension PCKObject{
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote, store: store){_ in
+                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
+                    
+                    guard let self = self else{
+                        completion(false,ParseCareKitError.cantUnwrapSelf)
+                        return
+                    }
+                    
                     parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
                     //An update may occur when Internet isn't available, try to update at some point
-                    Task.saveAndCheckRemoteID(parse, store: store){
+                    self.saveAndCheckRemoteID(parse){
                         (success,error) in
                         
                         if !success{
@@ -150,7 +168,7 @@ extension PCKObject{
         }
     }
     
-    func compareDelete(_ parse: Task, store: OCKStore, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareDelete(_ parse: Task, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void){
         guard let careKitLastUpdated = self.updatedDate,
             let cloudUpdatedAt = parse.updatedDate else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -194,7 +212,7 @@ extension PCKObject{
         }
     }
     
-    public func fetchRelatedCarePlan(_ carePlanUUID:UUID, store: OCKStore, completion: @escaping(CarePlan?) -> Void){
+    public func fetchRelatedCarePlan(_ carePlanUUID:UUID, completion: @escaping(CarePlan?) -> Void){
        
         var query = OCKCarePlanQuery()
         query.uuids = [carePlanUUID]
