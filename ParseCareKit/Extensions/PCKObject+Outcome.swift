@@ -35,7 +35,6 @@ extension PCKObject{
                             mutableOutcome.remoteID = outcome.objectId
                             needToUpdate = true
                         }else if mutableOutcome.remoteID! != outcome.objectId!{
-                            print("Warning in Outcome.saveAndCheckRemoteID(). remoteId \(mutableOutcome.remoteID!) should equal \(outcome.objectId!). Updating it since this isn't versioned, but this shouldn't occur")
                             mutableOutcome.remoteID = outcome.objectId
                             needToUpdate = true
                         }

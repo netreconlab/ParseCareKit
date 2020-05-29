@@ -39,8 +39,8 @@ extension PCKObject{
                             store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
                                 result in
                                 switch result{
-                                case .success(_):
-                                    print("Successfully added Patient \(mutableEntity) to Cloud")
+                                case .success(let updatedObject):
+                                    print("Successfully added Patient \(updatedObject) to Cloud")
                                     completion(true, nil)
                                 case .failure(let error):
                                     print("Error in \(patient.parseClassName).addToCloud() adding Patient \(mutableEntity) to Cloud. \(error)")
@@ -49,8 +49,18 @@ extension PCKObject{
                             }
                         }else{
                             if mutableEntity.remoteID! != patient.objectId{
-                                print("Error in \(patient.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(patient.objectId!)")
-                                completion(false,ParseCareKitError.objectIdDoesntMatchRemoteId)
+                                mutableEntity.remoteID = patient.objectId
+                                store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
+                                    result in
+                                    switch result{
+                                    case .success(let updatedObject):
+                                        print("Successfully added Patient \(updatedObject) to Cloud")
+                                        completion(true, nil)
+                                    case .failure(let error):
+                                        print("Error in \(patient.parseClassName).addToCloud() adding Patient \(mutableEntity) to Cloud. \(error)")
+                                        completion(false,error)
+                                    }
+                                }
                             }else{
                                 completion(true,nil)
                             }

@@ -37,18 +37,29 @@ extension PCKObject{
                             store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
                                 result in
                                 switch result{
-                                case .success(_):
-                                    print("Successfully added CarePlan \(mutableEntity) to Cloud")
+                                case .success(let updatedEntity):
+                                    print("Successfully added CarePlan \(updatedEntity) to Cloud")
                                     completion(true, nil)
-                                case .failure(_):
+                                case .failure(let error):
                                     print("Error in CarePlan.saveAndCheckRemoteID() adding CarePlan \(mutableEntity) to Cloud")
                                     completion(false, error)
                                 }
                             }
                         }else{
                             if mutableEntity.remoteID! != carePlan.objectId{
-                                print("Error in CarePlan.saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(carePlan.objectId!)")
-                                completion(false, error)
+                                //Neesd to update remoteId
+                                mutableEntity.remoteID = carePlan.objectId
+                                store.updateAnyCarePlan(mutableEntity, callbackQueue: .global(qos: .background)){
+                                    result in
+                                    switch result{
+                                    case .success(let updatedEntity):
+                                        print("Successfully added CarePlan \(updatedEntity) to Cloud")
+                                        completion(true, nil)
+                                    case .failure(let error):
+                                        print("Error in CarePlan.saveAndCheckRemoteID() adding CarePlan \(mutableEntity) to Cloud")
+                                        completion(false, error)
+                                    }
+                                }
                             }else{
                                 completion(true, nil)
                             }

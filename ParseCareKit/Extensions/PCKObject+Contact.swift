@@ -48,13 +48,22 @@ extension PCKObject{
                             }
                         }else{
                             if mutableEntity.remoteID! != contact.objectId{
-                                print("Error in Contact.saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(contact.objectId!)")
-                                completion(false,ParseCareKitError.objectIdDoesntMatchRemoteId)
+                                mutableEntity.remoteID = contact.objectId
+                                store.updateAnyContact(mutableEntity){
+                                    result in
+                                    switch result{
+                                    case .success(let updatedContact):
+                                        print("Updated remoteID of Contact \(updatedContact)")
+                                        completion(true,nil)
+                                    case .failure(let error):
+                                        print("Error in Contact.saveAndCheckRemoteID() updating remoteID of Contact. \(error)")
+                                        completion(false,error)
+                                    }
+                                }
                             }else{
                                 completion(true,nil)
                             }
                         }
-                        
                     case .failure(let error):
                         print("Error adding contact to cloud \(error)")
                         completion(false,error)

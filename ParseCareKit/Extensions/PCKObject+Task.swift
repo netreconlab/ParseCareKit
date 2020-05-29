@@ -48,8 +48,18 @@ extension PCKObject{
                             }
                         }else{
                             if mutableEntity.remoteID! != task.objectId{
-                                print("Error in \(task.parseClassName).saveAndCheckRemoteID(). remoteId \(mutableEntity.remoteID!) should equal \(task.objectId!)")
-                                completion(false,error)
+                                mutableEntity.remoteID = task.objectId
+                                store.updateAnyTask(mutableEntity){
+                                    result in
+                                    switch result{
+                                    case .success(let updatedTask):
+                                        print("Updated remoteID of task \(updatedTask)")
+                                        completion(true, nil)
+                                    case .failure(let error):
+                                        print("Error in \(task.parseClassName).addToCloud() updating remoteID. \(error)")
+                                        completion(false,error)
+                                    }
+                                }
                             }else{
                                 completion(true,nil)
                             }
