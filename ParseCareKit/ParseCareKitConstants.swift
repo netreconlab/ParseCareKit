@@ -39,6 +39,51 @@ extension ParseCareKitError: LocalizedError {
     }
 }
 
+public enum PCKClass {
+    case carePlan
+    case contact
+    case outcome
+    case patient
+    case task
+    
+    func getDefault() -> PCKSynchronized{
+        switch self {
+        case .carePlan:
+            return CarePlan()
+        case .contact:
+            return Contact()
+        case .outcome:
+            return Outcome()
+        case .patient:
+            return Patient()
+        case .task:
+            return Task()
+        }
+    }
+    
+    func orderedArray() -> [PCKClass]{
+        return [.patient, .carePlan, .contact, .task, .outcome]
+    }
+    
+    func getDefaults() -> [PCKClass: PCKSynchronized]{
+        return [
+            .carePlan: PCKClass.carePlan.getDefault(),
+            .contact: PCKClass.contact.getDefault(),
+            .outcome: PCKClass.outcome.getDefault(),
+            .patient: PCKClass.patient.getDefault(),
+            .task: PCKClass.task.getDefault()
+        ]
+    }
+    
+    func replaceDefaultClasses(_ newClasses: [PCKClass: PCKSynchronized]) -> [PCKClass: PCKSynchronized]{
+        var updatedClasses = getDefaults()
+        for (key,value) in newClasses{
+            updatedClasses[key] = value
+        }
+        return updatedClasses
+    }
+}
+
 public let kPCKCustomClassKey                                       = "customClass"
 
 //#Mark - Parse Database Keys

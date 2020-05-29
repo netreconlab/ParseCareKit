@@ -11,13 +11,22 @@ import CareKitStore
 import Parse
 
 /**
+ Protocol that defines the properties and methods for parse carekit entities that are synchronized using a wall clock.
+ */
+public protocol PCKSynchronized: PFObject, PFSubclassing {
+    func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
+    func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
+    func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
+    func new()->PCKRemoteSynchronized
+    func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void)
+}
+
+/**
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
 public protocol PCKRemoteSynchronized: PCKSynchronized {
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     func pushRevision(_ store: OCKStore, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
-    func new()->PCKRemoteSynchronized
-    func new(with careKitEntity: OCKEntity, store: OCKStore, completion: @escaping(PCKRemoteSynchronized?)-> Void)
 }
 
 public protocol ParseRemoteSynchronizationDelegate{
@@ -30,18 +39,44 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public var automaticallySynchronizes: Bool
     public internal(set) var userTypeUUID:UUID!
     public internal(set) weak var store:OCKStore!
-    public internal(set) var customEntities:[String:PCKRemoteSynchronized]?
+    public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
+    public internal(set) var classesToSynchronize: [PCKClass: PCKSynchronized]!
     
-    public override init(){
+    override init(){
         self.automaticallySynchronizes = false //Don't start until OCKStore is available
         super.init()
     }
     
-    public func startSynchronizing(_ store: OCKStore, uuid:UUID, auto: Bool=true, customParseEntities: [String:PCKRemoteSynchronized]?=nil){
-        self.store = store
+    convenience public init(uuid:UUID) {
+        self.init()
         self.userTypeUUID = uuid
+        self.classesToSynchronize = PCKClass.patient.getDefaults()
+        self.customClassesToSynchronize = nil
+    }
+    
+    convenience public init(uuid:UUID, classesToOverideDefaults: [PCKClass: PCKSynchronized]) {
+        self.init()
+        self.userTypeUUID = uuid
+        self.classesToSynchronize = PCKClass.patient.replaceDefaultClasses(classesToOverideDefaults)
+        self.customClassesToSynchronize = nil
+    }
+    
+    convenience public init(uuid:UUID, classesToOverideDefaults: [PCKClass: PCKSynchronized]?, customClassesToSynchronize: [String:PCKRemoteSynchronized]){
+        self.init()
+        self.userTypeUUID = uuid
+        if classesToOverideDefaults != nil{
+            self.classesToSynchronize = PCKClass.patient.replaceDefaultClasses(classesToOverideDefaults!)
+        }else{
+            self.classesToSynchronize = nil
+        }
+         
+        self.customClassesToSynchronize = customClassesToSynchronize
+    }
+    
+    public func startSynchronizing(_ store: OCKStore, auto: Bool=true){
+        self.store = store
         self.automaticallySynchronizes = auto
-        self.customEntities = nil
+    
         if self.automaticallySynchronizes{
             self.store.synchronize { error in
                 print(error?.localizedDescription ?? "ParseCareKit auto synchronizing has started...")
@@ -66,10 +101,16 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(nil)
                 return
             }
-            var returnError:Error? = nil
+            let returnError:Error? = nil
             //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: self.userTypeUUID)
-            Patient().pullRevisions(localClock, cloudVector: cloudVector){
+            
+            self.pullRevisionsForDefaultClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){ previosError in
+                    
+                self.pullRevisionsForCustomClasses(previousError: previosError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
+            }
+            
+            /*Patient().pullRevisions(localClock, cloudVector: cloudVector){
                 userRevision in
                 mergeRevision(userRevision){
                     error in
@@ -120,16 +161,42 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }
                 }
+            }*/
+        }
+    }
+    
+    func pullRevisionsForDefaultClasses(defaultClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
+        
+        let classNames = PCKClass.patient.orderedArray()
+        
+        guard defaultClassesAlreadyPulled < classNames.count,
+            let defaultClass = self.classesToSynchronize[classNames[defaultClassesAlreadyPulled]] else{
+                print("Finished pulling default revision classes")
+                completion(previousError)
+                return
+        }
+        var currentError = previousError
+        defaultClass.new().pullRevisions(localClock, cloudVector: cloudVector){
+            customRevision in
+            mergeRevision(customRevision){
+                error in
+                if error != nil {
+                    currentError = error!
+                    print("Error in ParseCareKit.pullRevisionsForDefaultClasses(). \(currentError!)")
+                }
+                completion(nil)
+                return
             }
+            self.pullRevisionsForDefaultClasses(defaultClassesAlreadyPulled: defaultClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision, completion: completion)
         }
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
-        if let customEntities = self.customEntities{
-            let classNames = customEntities.keys.sorted()
+        if let customClassesToSynchronize = self.customClassesToSynchronize{
+            let classNames = customClassesToSynchronize.keys.sorted()
             
             guard customClassesAlreadyPulled < classNames.count,
-                let customClass = customEntities[classNames[customClassesAlreadyPulled]] else{
+                let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else{
                     print("Finished pulling custom revision classes")
                     completion(previousError)
                     return
@@ -141,6 +208,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     error in
                     if error != nil {
                         currentError = error!
+                        print("Error in ParseCareKit.pullRevisionsForCustomClasses(). \(currentError!)")
                     }
                     completion(nil)
                     return
@@ -215,10 +283,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }else{
                         
-                        _ = Patient(careKitEntity: patient, store: self.store){
+                        _ = self.classesToSynchronize[.patient]!.new(with: entity, store: self.store){
                             parse in
                             
-                            guard let parse = parse as? PCKRemoteSynchronized else{return}
+                            guard let parse = parse else{return}
                             parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 error in
                                 revisionsCompletedCount += 1
@@ -240,10 +308,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }else{
                         
-                        _ = CarePlan(careKitEntity: carePlan, store: self.store){
+                        _ = self.classesToSynchronize[.carePlan]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse as? PCKRemoteSynchronized else{return}
+                            guard let parse = parse else{return}
                             parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -263,10 +331,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        _ = Contact(careKitEntity: contact, store: self.store){
+                        _ = self.classesToSynchronize[.contact]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse as? PCKRemoteSynchronized else{return}
+                            guard let parse = parse else{return}
                             parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -286,10 +354,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        _ = Task(careKitEntity: task, store: self.store){
+                        _ = self.classesToSynchronize[.task]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse as? PCKRemoteSynchronized else{return}
+                            guard let parse = parse else{return}
                             parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -309,10 +377,10 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        _ = Outcome(careKitEntity: outcome, store: self.store){
+                        _ = self.classesToSynchronize[.outcome]!.new(with: entity, store: self.store){
                         parse in
                         
-                            guard let parse = parse as? PCKRemoteSynchronized else{return}
+                            guard let parse = parse else{return}
                             parse.pushRevision(self.store, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
@@ -328,7 +396,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     }
     
     func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
-        guard let customClass = self.customEntities?[className] else{
+        guard let customClass = self.customClassesToSynchronize?[className] else{
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
