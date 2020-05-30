@@ -89,13 +89,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         let query = CarePlan.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){ [weak self]
+        query.findObjectsInBackground(){
             (objects, parseError) in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             guard let foundObjects = objects else{
                 guard let error = parseError as NSError?,
@@ -211,15 +206,10 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         //Get latest item from the Cloud to compare against
         let query = CarePlan.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        query.getFirstObjectInBackground{ [weak self]
+        query.getFirstObjectInBackground{
             (object, error) in
             guard let foundObject = object as? CarePlan else{
                 completion(false,error)
-                return
-            }
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
                 return
             }
             
