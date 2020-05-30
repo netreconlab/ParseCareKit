@@ -65,14 +65,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Patient.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: patientUUID.uuidString)
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){ [weak self]
+        query.findObjectsInBackground(){
             (objects, parseError) in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
-            
+           
             guard let foundObjects = objects else{
                 guard let error = parseError as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],

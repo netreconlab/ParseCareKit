@@ -174,13 +174,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Contact.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
         query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){ [weak self]
+        query.findObjectsInBackground(){
             (objects, parseError) in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             guard let foundObjects = objects else{
                 guard let error = parseError as NSError?,

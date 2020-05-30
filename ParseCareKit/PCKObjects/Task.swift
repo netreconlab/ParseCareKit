@@ -95,13 +95,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Task.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){ [weak self]
+        query.findObjectsInBackground(){
             (objects, error) in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             guard let foundObjects = objects else{
                 guard let error = error as NSError?,

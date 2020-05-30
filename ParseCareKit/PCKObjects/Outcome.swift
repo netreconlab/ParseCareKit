@@ -93,13 +93,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        query.findObjectsInBackground(){ [weak self]
+        query.findObjectsInBackground(){
             (objects, error) in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             guard let foundObjects = objects else{
                 guard let error = error as NSError?,
