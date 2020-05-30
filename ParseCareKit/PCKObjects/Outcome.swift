@@ -303,7 +303,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
         }
-        //self.fixTag(outcome)
+        
         self.entityId = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier

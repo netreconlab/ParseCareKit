@@ -35,50 +35,34 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         super.init()
     }
     
-    convenience public init(uuid:UUID, auto: Bool=true) {
+    convenience public init(uuid:UUID, auto: Bool) {
         self.init()
         self.userTypeUUID = uuid
+        self.automaticallySynchronizes = auto
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
-        self.automaticallySynchronizes = auto
     }
     
     
-    convenience public init(uuid:UUID, auto: Bool=true, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
         self.init()
         self.userTypeUUID = uuid
+        self.automaticallySynchronizes = auto
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool=true, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
         self.init()
         self.userTypeUUID = uuid
+        self.automaticallySynchronizes = auto
         if replacePCKStoreClasses != nil{
             self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
         }else{
             self.pckStoreClassesToSynchronize = nil
         }
-         
         self.customClassesToSynchronize = customClasses
     }
-    
-    /*
-    public func startSynchronizing(_ store: OCKStore, auto: Bool=true){
-        
-        
-        guard self.pckStoreClassesToSynchronize != nil else {
-            fatalError("ParseRemoteSynchronize.startSynchronizing() cannot start synchronzing because something is wrong with replacePCKStoreClasses.")
-        }
-    
-        if self.automaticallySynchronizes{
-            self.store.synchronize { error in
-                print(error?.localizedDescription ?? "ParseCareKit auto synchronizing has started...")
-            }
-        }else{
-            print("ParseCareKit set to manual synchronization. Trigger synchronization manually if needed")
-        }
-    }*/
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
