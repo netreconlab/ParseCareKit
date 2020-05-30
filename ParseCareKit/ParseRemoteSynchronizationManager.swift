@@ -249,7 +249,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(entity, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 error in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -285,7 +285,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(entity, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -319,7 +319,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){[weak self]
+                            parse.pushRevision(entity, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){[weak self]
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -353,7 +353,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){[weak self]
+                            parse.pushRevision(entity, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){[weak self]
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -383,7 +383,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
+                            parse.pushRevision(entity, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
                                 _ in
                                 revisionsCompletedCount += 1
                                 if revisionsCompletedCount == deviceRevision.entities.count{
@@ -414,7 +414,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
-            parse.pushRevision(overwriteRemote, cloudClock: cloudClock){
+            parse.pushRevision(entity, overwriteRemote: overwriteRemote, cloudClock: cloudClock){
                 error in
                 completion(error)
             }

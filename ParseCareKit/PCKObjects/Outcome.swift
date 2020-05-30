@@ -203,10 +203,20 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Outcome else{
+                //This was tombstoned, but never reached the cloud, no need to do anything
+                completion(true,nil)
+                return
+            }
+            guard let local = self.convertToCareKit() else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }
-            self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            
+            foundObject.copyCareKit(local, clone: true){
+                tombstoned in
+                tombstoned?.saveInBackground(block: completion)
+            }
+            //self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
@@ -239,7 +249,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ careKitEntity: OCKEntity, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         
         self.logicalClock = cloudClock //Stamp Entity
         if self.deletedDate == nil{
@@ -252,15 +262,49 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
             }
         }else{
-            self.deleteFromCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
+            switch careKitEntity {
+            case .outcome(let outcome):
+                self.tombstsone(outcome, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
+                    (success,error) in
+                    if success{
+                        completion(nil)
+                    }else{
+                        completion(error)
+                    }
                 }
+            default:
+                completion(nil)
             }
         }
+    }
+    
+    public func tombstsone(_ outcome: OCKOutcome, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        
+        guard let _ = PFUser.current() else{
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            return
+        }
+                
+        //Get latest item from the Cloud to compare against
+        let query = Outcome.query()!
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
+        query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        query.getFirstObjectInBackground(){
+            (object, error) in
+            guard let foundObject = object as? Outcome else{
+                //This was tombstoned, but never reached the cloud, no need to do anything
+                completion(true,nil)
+                return
+            }
+            
+            foundObject.copyCareKit(outcome, clone: true){
+                _ in
+                foundObject.saveInBackground(block: completion)
+            }
+            //self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+        }
+        
     }
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool, completion: @escaping(Outcome?) -> Void){
