@@ -56,27 +56,22 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         query.whereKey(kPCKObjectUUIDKey, equalTo: patientUUID.uuidString)
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.getFirstObjectInBackground(){
-            (object, parseError) in
+            (object, error) in
            
             guard let foundObject = object as? Patient else{
-                guard let error = parseError as NSError?,
-                    let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {
-                        completion(false,parseError)
-                        return
-                }
-                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                if reason == "errorMissingColumn"{
-                    //Saving the new item with the custom column should resolve the issue
-                    print("This table '\(self.parseClassName)' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                    //Make wallclock entities compatible with KnowledgeVector by setting it's initial clock to 0
-                    if !usingKnowledgeVector{
-                        self.logicalClock = 0
-                    }
-                    self.save(self, completion: completion)
-                }else{
+                guard let parseError = error as NSError? else{
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
+                    print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
+                    completion(false,error)
+                    return
+                }
+                
+                switch parseError.code{
+                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
+                        self.save(self, completion: completion)
+                default:
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
                     completion(false,error)
                 }
                 return
@@ -102,7 +97,21 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             (object, error) in
             
             guard let foundObject = object as? Patient else{
-                completion(false,error)
+                guard let parseError = error as NSError? else{
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
+                    completion(false,error)
+                    return
+                }
+                
+                switch parseError.code{
+                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
+                        self.save(self, completion: completion)
+                default:
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
+                    completion(false,error)
+                }
                 return
             }
             
