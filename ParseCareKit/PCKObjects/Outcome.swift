@@ -308,11 +308,6 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
         self.tags = outcome.tags
-        if self.tags == nil{
-            self.tags = [self.entityId]
-        }else if !self.tags!.contains(self.entityId){
-            self.tags!.append(self.entityId)
-        }
         self.source = outcome.source
         self.asset = outcome.asset
         self.timezoneIdentifier = outcome.timezone.abbreviation()!
@@ -381,20 +376,9 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         outcome.groupIdentifier = self.groupIdentifier
         outcome.tags = self.tags
-        //Fix querying issue
-        if outcome.tags == nil{
-            outcome.tags = [self.entityId]
-        }else if !outcome.tags!.contains(self.entityId){
-            outcome.tags?.append(self.entityId)
-        }
         outcome.remoteID = self.remoteID
         outcome.source = self.source
         outcome.userInfo = self.userInfo
-        if outcome.userInfo == nil{
-            outcome.userInfo = [kPCKOutcomUserInfoEntityIdKey: self.entityId]
-        } else if self.userInfo![kPCKOutcomUserInfoEntityIdKey] == nil{
-            self.userInfo![kPCKOutcomUserInfoEntityIdKey] = self.entityId
-        }
         outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
         outcome.groupIdentifier = self.groupIdentifier
         outcome.asset = self.asset
