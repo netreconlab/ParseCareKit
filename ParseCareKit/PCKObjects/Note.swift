@@ -24,6 +24,14 @@ open class Note: PCKObject, PFSubclassing {
         _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
+    open override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? Note else{return}
+        self.content = parse.content
+        self.author = parse.author
+        self.title = parse.title
+    }
+    
     open func copyCareKit(_ note: OCKNote, clone:Bool) -> Note?{
         
         if let uuid = Note.getUUIDFromCareKitEntity(note){
@@ -40,6 +48,7 @@ open class Note: PCKObject, PFSubclassing {
         self.author = note.author
         self.userInfo = note.userInfo
         self.updatedDate = note.updatedDate
+        self.remoteID = note.remoteID
         if clone{
             self.createdDate = note.createdDate
             self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}
@@ -71,14 +80,14 @@ open class Note: PCKObject, PFSubclassing {
             //Create bare Entity and replace contents with Parse contents
             note = OCKNote(author: self.author, title: self.title, content: self.content)
         }
-        
+        note.remoteID = self.remoteID
         note.asset = self.asset
         note.groupIdentifier = self.groupIdentifier
         note.tags = self.tags
         note.source = self.source
         note.userInfo = self.userInfo
         note.author = self.author
-        note.remoteID = self.objectId
+        note.remoteID = self.remoteID
         note.groupIdentifier = self.groupIdentifier
         note.asset = self.asset
         if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){

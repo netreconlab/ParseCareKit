@@ -25,10 +25,24 @@ open class PCKObject: PFObject {
     @NSManaged public var source: String?
     @NSManaged public var asset: String?
     @NSManaged public var notes: [Note]?
+    @NSManaged public var remoteID: String?
     
-    public weak var store:OCKStore!
+    //public weak var store:OCKStore!
     
     open func stampRelationalEntities(){
         self.notes?.forEach{$0.stamp(self.logicalClock)}
+    }
+    
+    func copy(_ parse: PCKObject){
+        self.uuid = parse.uuid
+        self.entityId = parse.entityId
+        self.deletedDate = parse.deletedDate
+        self.updatedDate = parse.updatedDate
+        self.timezoneIdentifier = parse.timezoneIdentifier
+        self.userInfo = parse.userInfo
+        self.remoteID = parse.remoteID
+        self.createdDate = parse.createdDate
+        self.notes = parse.notes
+        self.logicalClock = parse.logicalClock
     }
 }

@@ -85,7 +85,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudContacts(_ contacts: [OCKAnyContact]){
 
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Contact(careKitEntity: $0){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
                 contact.updateCloud(){(_,_) in}
@@ -95,7 +95,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func deleteCloudContacts(_ contacts: [OCKAnyContact]){
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Contact(careKitEntity: $0){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
                 contact.deleteFromCloud(){(_,_) in}
@@ -105,7 +105,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func addCloudContacts(_ contacts: [OCKAnyContact]) {
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Contact(careKitEntity: $0){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
                 contact.addToCloud(){(_,_) in}
@@ -116,7 +116,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
             let outcome = $0
-            let _ = Outcome(careKitEntity: outcome, store: storeManager.store){
+            let _ = Outcome(careKitEntity: outcome){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
                 outcome.updateCloud(){(_,_) in}
@@ -127,7 +127,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func deleteCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
             let careKitEntity = $0
-            let _ = Outcome(careKitEntity: careKitEntity, store: self.storeManager.store){
+            let _ = Outcome(careKitEntity: careKitEntity){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
                 outcome.deleteFromCloud(){(_,_) in}
@@ -137,7 +137,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func addCloudOutcomes(_ outcomes: [OCKAnyOutcome]) {
         outcomes.forEach{
-            let _ = Outcome(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Outcome(careKitEntity: $0){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
                 outcome.addToCloud(){(_,_) in}
@@ -147,7 +147,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func updateCloudTasks(_ tasks: [OCKAnyTask]){
         tasks.forEach{
-            let _ = Task(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Task(careKitEntity: $0){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
                 task.updateCloud(){(_,_) in}
@@ -157,7 +157,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func deleteCloudTasks(_ tasks: [OCKAnyTask]){
         tasks.forEach{
-            let _ = Task(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Task(careKitEntity: $0){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
                 task.deleteFromCloud(){(_,_) in}
@@ -167,7 +167,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func addCloudTasks(_ tasks: [OCKAnyTask]) {
         tasks.forEach{
-            let _ = Task(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Task(careKitEntity: $0){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
                 task.addToCloud(){(_,_) in}
@@ -177,7 +177,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func updateCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
+            let _ = CarePlan(careKitEntity: $0){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
                 carePlan.updateCloud(){(_,_) in}
@@ -187,7 +187,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func deleteCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
+            let _ = CarePlan(careKitEntity: $0){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
                 carePlan.deleteFromCloud(){(_,_) in}
@@ -197,7 +197,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func addCloudCarePlans(_ carePlans: [OCKAnyCarePlan]) {
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
+            let _ = CarePlan(careKitEntity: $0){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
                 carePlan.addToCloud(){(_,_) in}
@@ -208,7 +208,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudPatients(_ patients: [OCKAnyPatient]){
         
         patients.forEach{
-            let _ = Patient(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0){
                 copiedPatient in
                 guard let patient = copiedPatient as? Patient else{return}
                 patient.updateCloud(){(_,_) in}
@@ -218,7 +218,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func deleteCloudPatients(_ patients: [OCKAnyPatient]){
         patients.forEach{
-            let _ = Patient(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0){
                 copiedPatient in
                 guard let patient = copiedPatient as? Patient else{return}
                 patient.deleteFromCloud(){(_,_) in}
@@ -228,7 +228,7 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private func addCloudPatients(_ patients: [OCKAnyPatient]) {
         patients.forEach{
-            let _ = Patient(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0){
                 copiedPatient in
                 guard let patient = copiedPatient as? Patient else{return}
                 patient.addToCloud(){(_,_) in}

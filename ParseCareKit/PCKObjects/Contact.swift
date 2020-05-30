@@ -128,13 +128,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKContactClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyContact, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyContact, completion: @escaping(PCKObject?) -> Void) {
         self.init()
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
@@ -142,17 +137,11 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         return Contact()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
+    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
         
         switch careKitEntity {
         case .contact(let entity):
             let newClass = Contact()
-            newClass.store = self.store
             newClass.copyCareKit(entity, clone: true){
                 _ in
                 completion(newClass)
@@ -174,10 +163,10 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Contact.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
         query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
-            (objects, parseError) in
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
             
-            guard let foundObjects = objects else{
+            guard let foundObject = object as? Contact else{
                 guard let error = parseError as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
@@ -192,7 +181,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    self.saveAndCheckRemoteID(self, completion: completion)
+                    self.save(self, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -200,17 +189,9 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 }
                 return
             }
-            //If object already in the Cloud, exit
-            if foundObjects.count > 0{
-                //Maybe this needs to be updated instead
-                self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }else{
-                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                if !usingKnowledgeVector{
-                    self.logicalClock = 0
-                }
-                self.saveAndCheckRemoteID(self, completion: completion)
-            }
+            
+            //Maybe this needs to be updated instead
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
@@ -221,63 +202,26 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             return
         }
         
-        var careKitQuery = OCKContactQuery()
-        careKitQuery.uuids = [contactUUID]
-        
-        store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let contacts):
-                
-                guard let contact = contacts.first else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                    
-                guard let remoteID = contact.remoteID else{
-                    
-                    //Check to see if this entity is already in the Cloud, but not matched locally
-                    let query = Contact.query()!
-                    query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
-                    query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                    query.getFirstObjectInBackground(){
-                        (object, error) in
-                        
-                        guard let foundObject = object as? Contact else{
-                            completion(false,error)
-                            return
-                        }
-                        //Update remoteId since it's missing
-                        var mutableEntity = contact
-                        mutableEntity.remoteID = foundObject.objectId
-                        self.store.updateContacts([mutableEntity])
-                        self.compareUpdate(contact, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                    }
-                    return
-                }
-                
-                //Get latest item from the Cloud to compare against
-                let query = Contact.query()!
-                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                query.getFirstObjectInBackground(){
-                    (object, error) in
-                    
-                    guard let foundObject = object as? Contact else{
-                        completion(false,error)
-                        return
-                    }
-                    
-                    self.compareUpdate(contact, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                }
-            case .failure(let error):
-                print("Error adding contact to cloud \(error)")
+        //Check to see if this entity is already in the Cloud, but not matched locally
+        let query = Contact.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
+        query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground(){
+            (object, error) in
+            
+            guard let foundObject = object as? Contact else{
                 completion(false,error)
+                return
             }
+            
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        //Handled with update, marked for deletion
+        completion(true,nil)
+        /*
         guard let _ = PFUser.current(),
             let contactUUID = UUID(uuidString: self.uuid) else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -295,7 +239,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             }
             
             self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }
+        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -327,29 +271,32 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ careKitEntity: OCKEntity, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+        
         self.logicalClock = cloudClock //Stamp Entity
-        if self.deletedDate == nil{
-            self.addToCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }else{
-            self.deleteFromCloud(true){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
+        
+        self.addToCloud(true, overwriteRemote: overwriteRemote){
+            (success,error) in
+            if success{
+                completion(nil)
+            }else{
+                completion(error)
             }
         }
     }
     
+    open override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? Contact else{return}
+        self.address = parse.address
+        self.category = parse.category
+        self.title = parse.title
+        self.name = parse.name
+        self.organization = parse.organization
+        self.role = parse.role
+        self.carePlan = parse.carePlan
+        self.carePlanUUIDString = parse.carePlanUUIDString
+    }
 
     open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, completion: @escaping(Contact?) -> Void){
         
@@ -400,7 +347,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.phoneNumbers = contact.phoneNumbers
         self.messagingNumbers = contact.messagingNumbers
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
-        
+        self.remoteID = contact.remoteID
         //Link versions and related classes
         self.findContact(self.previousVersionUUID){ [weak self]
             previousContact in
@@ -415,9 +362,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
-                    if self.previousVersion!.store == nil{
-                        self.previousVersion!.store = self.store
-                    }
                     self.previousVersion!.nextVersion = self
                 }
             }
@@ -435,9 +379,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
-                        if self.nextVersion!.store == nil{
-                            self.nextVersion!.store = self.store
-                        }
                         self.nextVersion!.previousVersion = self
                     }
                 }
@@ -457,13 +398,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     }
                     
                     self.currentCarePlan = carePlan
-                    guard let carePlan = self.currentCarePlan else{
-                        completion(self)
-                        return
-                    }
-                    if carePlan.store == nil{
-                        carePlan.store = self.store
-                    }
                     completion(self)
                 }
             }
@@ -497,7 +431,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         contact.tags = self.tags
         contact.source = self.source
         contact.userInfo = self.userInfo
-        
+        contact.remoteID = self.remoteID
         contact.organization = self.organization
         contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
         if let parseCategory = self.category{
@@ -510,7 +444,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
         
         contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
-        contact.remoteID = self.objectId
         contact.phoneNumbers = self.phoneNumbers
         contact.messagingNumbers = self.messagingNumbers
         contact.emailAddresses = self.emailAddresses

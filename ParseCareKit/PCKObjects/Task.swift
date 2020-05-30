@@ -48,13 +48,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKTaskClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyTask, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyTask, completion: @escaping(PCKObject?) -> Void) {
         self.init()
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
@@ -62,18 +57,11 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         return Task()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
-        
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
+    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
         
         switch careKitEntity {
         case .task(let entity):
             let newClass = Task()
-            newClass.store = self.store
             newClass.copyCareKit(entity, clone: true){
                 _ in
                 completion(newClass)
@@ -95,10 +83,10 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Task.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
-            (objects, error) in
+        query.getFirstObjectInBackground(){
+            (object, error) in
             
-            guard let foundObjects = objects else{
+            guard let foundObject = object as? Task else{
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
@@ -113,7 +101,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    self.saveAndCheckRemoteID(self, completion: completion)
+                    self.save(self, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -122,17 +110,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            //If object already in the Cloud, exit
-            if foundObjects.count > 0{
-                //Maybe this needs to be updated of instead
-                self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }else{
-                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                if !usingKnowledgeVector{
-                    self.logicalClock = 0
-                }
-                self.saveAndCheckRemoteID(self, completion: completion)
-            }
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
@@ -143,63 +121,25 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             return
         }
         
-        var careKitQuery = OCKTaskQuery()
-        careKitQuery.uuids = [taskUUID]
-        
-        store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
-            result in
-            
-            switch result{
-            case .success(let tasks):
-                guard let task = tasks.first else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                guard let remoteID = task.remoteID else{
-                           
-                    //Check to see if this entity is already in the Cloud, but not matched locally
-                    let query = Task.query()!
-                    query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
-                    query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                    query.getFirstObjectInBackground{
-                        (objects, error) in
-                        guard let foundObject = objects as? Task else{
-                            completion(false,error)
-                            return
-                        }
-                        
-                        //Update remoteId since it's missing
-                        var mutableEntity = task
-                        mutableEntity.remoteID = foundObject.objectId
-                        self.store.updateTask(mutableEntity)
-                        
-                        self.compareUpdate(task, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                    }
-                    return
-                }
-                       
-                //Get latest item from the Cloud to compare against
-                let query = Task.query()!
-                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                query.getFirstObjectInBackground(){
-                    (object, error) in
-                    guard let foundObject = object as? Task else{
-                        completion(false,error)
-                        return
-                    }
-                    
-                    self.compareUpdate(task, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                }
-            case .failure(let error):
-                print("Error in Contact.addToCloud(). \(error)")
+        //Check to see if this entity is already in the Cloud, but not matched locally
+        let query = Task.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
+        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground{
+            (objects, error) in
+            guard let foundObject = objects as? Task else{
                 completion(false,error)
+                return
             }
+            
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
-       
     }
     
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        //Handled with update, marked for deletion
+        completion(true,nil)
+        /*
         guard let _ = PFUser.current(),
             let taskUUID = UUID(uuidString: self.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -217,8 +157,9 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
+        */
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -250,29 +191,29 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ careKitEntity: OCKEntity, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         
         self.logicalClock = cloudClock //Stamp Entity
-        if self.deletedDate == nil{
-            self.addToCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }else{
-            self.deleteFromCloud(true){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
+        
+        self.addToCloud(true, overwriteRemote: overwriteRemote){
+            (success,error) in
+            if success{
+                completion(nil)
+            }else{
+                completion(error)
             }
         }
-            
+    }
+    
+    open override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? Task else{return}
+        self.impactsAdherence = parse.impactsAdherence
+        self.instructions = parse.instructions
+        self.title = parse.title
+        self.elements = parse.elements
+        self.carePlan = parse.carePlan
+        self.carePlanUUIDString = parse.carePlanUUIDString
     }
     
     
@@ -301,6 +242,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.effectiveDate = task.effectiveDate
         self.updatedDate = task.updatedDate
         self.userInfo = task.userInfo
+        self.remoteID = task.remoteID
         if clone{
             self.createdDate = task.createdDate
             self.notes = task.notes?.compactMap{Note(careKitEntity: $0)}
@@ -336,9 +278,6 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
-                    if self.previousVersion!.store == nil{
-                        self.previousVersion!.store = self.store
-                    }
                     self.previousVersion!.nextVersion = self
                 }
             }
@@ -356,9 +295,6 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
-                        if self.nextVersion!.store == nil{
-                            self.nextVersion!.store = self.store
-                        }
                         self.nextVersion!.previousVersion = self
                     }
                 }
@@ -378,13 +314,6 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     }
                     
                     self.currentCarePlan = carePlan
-                    guard let carePlan = self.currentCarePlan else{
-                        completion(self)
-                        return
-                    }
-                    if carePlan.store == nil{
-                        carePlan.store = self.store
-                    }
                     completion(self)
                 }
             }
@@ -407,7 +336,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             }
             task = decodedTask
         }
-        
+        task.remoteID = self.remoteID
         task.groupIdentifier = self.groupIdentifier
         task.tags = self.tags
         if let effectiveDate = self.effectiveDate{
@@ -423,7 +352,6 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             task.timezone = timeZone
         }
         task.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        task.remoteID = self.objectId
         
         guard let parseCarePlan = self.carePlan,
             let carePlanUUID = UUID(uuidString: parseCarePlan.uuid) else{

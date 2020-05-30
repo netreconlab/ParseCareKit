@@ -18,6 +18,7 @@ enum ParseCareKitError: Error {
     case cloudClockLargerThanLocalWhilePushRevisions
     case couldntUnwrapKnowledgeVector
     case cantUnwrapSelf
+    case cloudVersionNewerThanLocal
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -37,6 +38,8 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing", comment: "Knowledge vector larger in Cloud")
         case .cantUnwrapSelf:
             return NSLocalizedString("Can't unwrap self. This class has already been deallocated", comment: "Can't unwrap self, class deallocated")
+        case .cloudVersionNewerThanLocal:
+            return NSLocalizedString("Can't sync, the Cloud version newere than local version", comment: "Cloud version newer than local version")
             
         }
     }
@@ -191,6 +194,7 @@ public let kPCKObjectUpdatedDateKey                                 = "updatedDa
 public let kPCKObjectTagsKey                                        = "tags"
 public let kPCKObjectUserInfoKey                                    = "userInfo"
 public let kPCKObjectSourceKey                                      = "source"
+public let kPCKRemoteIDKey                                          = "remoteID"
 
 public let kPCKVersionedObjectEffectiveDateKey                      = "effectiveDate"
 public let kPCKVersionedObjectDeletedDateKey                        = "deletedDate"

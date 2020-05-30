@@ -12,170 +12,73 @@ import CareKitStore
 
 extension PCKObject{
     
-    public func saveAndCheckRemoteID(_ patient: Patient, completion: @escaping(Bool,Error?) -> Void){
-        guard let patientUUID = UUID(uuidString: patient.uuid) else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
+    public func save(_ patient: Patient, completion: @escaping(Bool,Error?) -> Void){
+        
         patient.stampRelationalEntities()
-        patient.saveInBackground{ [weak self]
+        patient.saveInBackground{
             (success, error) in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
-            
+        
             if success{
-                print("Successfully saved \(self) in Cloud.")
-                //Only save data back to CarePlanStore if it's never been saved before
-                var careKitQuery = OCKPatientQuery()
-                careKitQuery.uuids = [patientUUID]
-                self.store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
-                    result in
-                    
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
-                    }
-                    
-                    switch result{
-                    case .success(let entities):
-                        guard var mutableEntity = entities.first else{
-                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                            return
-                        }
-                        if mutableEntity.remoteID == nil{
-                            mutableEntity.remoteID = patient.objectId
-                            self.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
-                                result in
-                                switch result{
-                                case .success(let updatedObject):
-                                    print("Successfully added Patient \(updatedObject) to Cloud")
-                                    completion(true, nil)
-                                case .failure(let error):
-                                    print("Error in \(patient.parseClassName).addToCloud() adding Patient \(mutableEntity) to Cloud. \(error)")
-                                    completion(false,error)
-                                }
-                            }
-                        }else{
-                            if mutableEntity.remoteID! != patient.objectId{
-                                mutableEntity.remoteID = patient.objectId
-                                self.store.updateAnyPatient(mutableEntity, callbackQueue: .global(qos: .background)){
-                                    result in
-                                    switch result{
-                                    case .success(let updatedObject):
-                                        print("Successfully added Patient \(updatedObject) to Cloud")
-                                        completion(true, nil)
-                                    case .failure(let error):
-                                        print("Error in \(patient.parseClassName).addToCloud() adding Patient \(mutableEntity) to Cloud. \(error)")
-                                        completion(false,error)
-                                    }
-                                }
-                            }else{
-                                completion(true,nil)
-                            }
-                        }
-                    case .failure(let error):
-                        print("Error in Contact.addToCloud(). \(error)")
-                        completion(false,error)
-                    }
-                }
+                print("Successfully saved \(patient) in Cloud.")
             }else{
                 print("Error in Patient.addToCloud(). \(String(describing: error))")
-                completion(false,error)
+                
             }
+            completion(success,error)
         }
     }
     
-    func compareUpdate(_ careKit: OCKPatient, parse: Patient, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
+    func compareUpdate(_ parse: Patient, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
-            guard let careKitLastUpdated = careKit.updatedDate,
+            
+            guard let careKitLastUpdated = self.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
                     //This occurs only on a Patient when they have logged in for the first time
                     //and CareKit and Parse isn't properly synced. Basically this is the first
                     //time the local dates are pushed to the cloud
-                    parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self]
-                        _ in
-                        
-                        guard let self = self else{
-                            completion(false,ParseCareKitError.cantUnwrapSelf)
-                            return
-                        }
-                        
-                        self.saveAndCheckRemoteID(parse){
-                            (success,error) in
-                            if !success{
-                                print("Error in \(self.parseClassName).compareUpdate(). Error updating \(careKit)")
-                            }else{
-                                print("Successfully updated Patient \(self) in the Cloud")
-                            }
-                            completion(success,error)
-                        }
-                        
-                    }
-                    return
-            }
-            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self] _ in
-                    
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
-                    }
-                    
-                    //An update may occur when Internet isn't available, try to update at some point
-                    self.saveAndCheckRemoteID(parse){
+                    /*parse.copy(self)
+                    self.save(parse){
                         (success,error) in
                         if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
+                            print("Error in \(parse.parseClassName).compareUpdate(). Error updating \(self)")
                         }else{
-                            print("Successfully updated Patient \(self) in the Cloud")
+                            print("Successfully updated Patient \(parse) in the Cloud")
                         }
                         completion(success,error)
+                    }*/
+                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                return
+            }
+            
+            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
+                parse.copy(self)
+                self.save(parse){
+                    (success,error) in
+                    if !success{
+                        print("Error in \(parse.parseClassName).compareUpdate(). Error updating \(self)")
+                    }else{
+                        print("Successfully updated Patient \(parse) in the Cloud")
                     }
+                    completion(success,error)
                 }
             }else if cloudUpdatedAt > careKitLastUpdated{
                 //The cloud version is newer than local, update the local version instead
-                guard let updatedPatientFromCloud = parse.convertToCareKit() else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                store.updateAnyPatient(updatedPatientFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    
-                    switch result{
-                    case .success(_):
-                        print("Successfully updated Patient \(updatedPatientFromCloud) from the Cloud to CareStore")
-                        completion(true,nil)
-                    case .failure(let error):
-                        print("Error updating Patient \(updatedPatientFromCloud) from the Cloud to CareStore")
-                        completion(false,error)
-                    }
-                }
+                print("Error updating \(self) from the Cloud to CareStore")
+                completion(false,ParseCareKitError.cloudVersionNewerThanLocal)
             }else{
                 completion(true,nil)
             }
         }else{
             if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                parse.copyCareKit(careKit, clone: overwriteRemote){ [weak self] _ in
-                    
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
+                parse.copy(self)
+                self.save(parse){
+                    (success,error) in
+                    if !success{
+                        print("Error in \(parse.parseClassName).compareUpdate(). Error updating \(self)")
+                    }else{
+                        print("Successfully updated Patient \(parse) in the Cloud")
                     }
-                    
-                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    //An update may occur when Internet isn't available, try to update at some point
-                    self.saveAndCheckRemoteID(parse){
-                        (success,error) in
-                        if !success{
-                            print("Error in \(self.parseClassName).updateCloud(). Error updating \(careKit)")
-                        }else{
-                            print("Successfully updated Patient \(self) in the Cloud")
-                        }
-                        completion(success,error)
-                    }
+                    completion(success,error)
                 }
             }else if self.logicalClock == parse.logicalClock{
                
@@ -186,98 +89,6 @@ extension PCKObject{
             }else{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
                 print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) > \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
-                completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
-            }
-        }
-    }
-    
-    func compareDelete(_ local: Patient, parse: Patient, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        
-        if !usingKnowledgeVector{
-            guard let careKitLastUpdated = self.updatedDate,
-                let cloudUpdatedAt = parse.updatedDate else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            
-            if ((cloudUpdatedAt < careKitLastUpdated) || overwriteRemote){
-                guard let careKit = local.convertToCareKit() else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
-                    
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
-                    }
-                    
-                    //An update may occur when Internet isn't available, try to update at some point
-                    self.saveAndCheckRemoteID(parse){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).compareDelete(). Couldn't delete in cloud: \(careKit)")
-                        }else{
-                            print("Successfully deleted \(self.parseClassName) \(self) in the Cloud")
-                        }
-                        completion(success,error)
-                    }
-                }
-            }else if cloudUpdatedAt > careKitLastUpdated {
-                guard let updatedCarePlanFromCloud = parse.convertToCareKit() else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                    
-                store.updatePatient(updatedCarePlanFromCloud, callbackQueue: .global(qos: .background)){
-                    result in
-                    switch result{
-                    case .success(_):
-                        print("Successfully deleted \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(true,nil)
-                    case .failure(let error):
-                        print("Error deleting \(self.parseClassName) \(updatedCarePlanFromCloud) from the Cloud to CareStore")
-                        completion(false,error)
-                    }
-                }
-            }else{
-                completion(true,nil)
-            }
-        }else{
-            if ((self.logicalClock > parse.logicalClock) || overwriteRemote){
-                guard let careKit = local.convertToCareKit() else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                parse.copyCareKit(careKit, clone: overwriteRemote){[weak self] _ in
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
-                    }
-                    
-                    parse.logicalClock = self.logicalClock //Place stamp on this entity since it's correctly linked to Parse
-                    self.saveAndCheckRemoteID(parse){
-                        (success,error) in
-                        
-                        if !success{
-                            print("Error in \(self.parseClassName).compareDelete(). Couldn't update in cloud: \(careKit)")
-                        }else{
-                            print("Successfully deleted \(self.parseClassName) \(self) in the Cloud")
-                        }
-                        completion(success,error)
-                    }
-                }
-                
-            }else if self.logicalClock == parse.logicalClock{
-               
-                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareDelete(). KnowledgeVector in Cloud \(parse.logicalClock) == \(self.logicalClock). This means the data is already synced. Local: \(self)... Cloud: \(parse)")
-                completion(true,nil)
-                
-            }else{
-                //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareDelete(). KnowledgeVector in Cloud \(parse.logicalClock) > \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
                 completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }

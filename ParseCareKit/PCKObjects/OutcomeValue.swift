@@ -97,6 +97,21 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
+    open override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? OutcomeValue else{return}
+        self.index = parse.index
+        self.kind = parse.kind
+        self.units = parse.units
+        self.typeString = parse.typeString
+        self.textValue = parse.textValue
+        self.binaryValue = parse.binaryValue
+        self.booleanValue = parse.booleanValue
+        self.integerValue = parse.integerValue
+        self.doubleValue = parse.doubleValue
+        self.dateValue = parse.dateValue
+    }
+    
     open func copyCareKit(_ outcomeValue: OCKOutcomeValue, clone: Bool) -> OutcomeValue? {
         
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
@@ -122,7 +137,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         self.tags = outcomeValue.tags
         self.source = outcomeValue.source
         self.updatedDate = outcomeValue.updatedDate
-        
+        self.remoteID = outcomeValue.remoteID
         if clone{
             self.createdDate = outcomeValue.createdDate
             self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
@@ -154,14 +169,14 @@ open class OutcomeValue: PCKObject, PFSubclassing {
             //Create bare Entity and replace contents with Parse contents
             outcomeValue = OCKOutcomeValue(self.value, units: self.units)
         }
-        
+        outcomeValue.remoteID = self.remoteID
         outcomeValue.index = self.index as? Int
         outcomeValue.kind = self.kind
         outcomeValue.groupIdentifier = self.groupIdentifier
         outcomeValue.tags = self.tags
         outcomeValue.source = self.source
         outcomeValue.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        outcomeValue.remoteID = self.objectId
+        outcomeValue.remoteID = self.remoteID
         outcomeValue.userInfo = self.userInfo
         return outcomeValue
     }

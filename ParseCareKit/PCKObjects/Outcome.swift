@@ -46,13 +46,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         return kPCKOutcomeClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyOutcome, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyOutcome, completion: @escaping(PCKObject?) -> Void) {
         self.init()
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
@@ -60,17 +55,11 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         return Outcome()
     }
     
-    public func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
+    public func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
         
         switch careKitEntity {
         case .outcome(let entity):
             let newClass = Outcome()
-            newClass.store = self.store
             newClass.copyCareKit(entity, clone: true){
                 _ in
                 completion(newClass)
@@ -93,10 +82,10 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        query.findObjectsInBackground(){
-            (objects, error) in
+        query.getFirstObjectInBackground(){
+            (object, error) in
             
-            guard let foundObjects = objects else{
+            guard let foundObject = object as? Outcome else{
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {return}
@@ -108,7 +97,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    self.saveAndCheckRemoteID(self, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+                    self.save(self, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -117,79 +106,37 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 return
             }
             
-            if foundObjects.count > 0{
-                //Maybe this needs to be updated instead of added
-                self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }else{
-                //Make wall.logicalClock level entities compatible with KnowledgeVector by setting it's initial .logicalClock to 0
-                if !usingKnowledgeVector{
-                    self.logicalClock = 0
-                }
-                //This is the first object, make sure to save it
-                self.saveAndCheckRemoteID(self, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
     open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = PFUser.current(),
-            let entityUUID = UUID(uuidString: self.uuid) else{
+        guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
-        var careKitQuery = OCKOutcomeQuery()
-        //careKitQuery.tags = [self.entityId]
-        careKitQuery.uuids = [entityUUID]
-        store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
-            result in
-            switch result{
-            case .success(let outcome):
-                guard let remoteID = outcome.remoteID else{
-                    //Check to see if this entity is already in the Cloud, but not matched locally
-                    let query = Outcome.query()!
-                    query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-                    //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
-                    query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-                    query.getFirstObjectInBackground(){
-                        (object, error) in
-                        guard let foundObject = object as? Outcome else{
-                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                            return
-                        }
-                        //Update remoteId since it's missing
-                        var mutableOutcome = outcome
-                        mutableOutcome.remoteID = foundObject.objectId
-                        self.store.updateOutcomes([mutableOutcome])
-                        self.compareUpdate(mutableOutcome, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                    }
-                    return
-                }
-                
-                //Get latest item from the Cloud to compare against
-                let query = Outcome.query()!
-                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-                query.getFirstObjectInBackground(){
-                    (object, error) in
-                    guard let foundObject = object as? Outcome else{
-                        completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                        return
-                    }
-                    
-                    self.compareUpdate(outcome, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                    
-                }
-            case .failure(let error):
-                print("Error in \(self.parseClassName).updateCloud(). \(error)")
-                completion(false,error)
+        //Check to see if this entity is already in the Cloud, but not matched locally
+        let query = Outcome.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        query.getFirstObjectInBackground(){
+            (object, error) in
+            guard let foundObject = object as? Outcome else{
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                return
             }
+            
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
     open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        
+        //Handled with update, marked for deletion
+        completion(true,nil)
+        /*
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -216,8 +163,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 tombstoned in
                 tombstoned?.saveInBackground(block: completion)
             }
-            //self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }
+            //self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -249,10 +196,11 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ careKitEntity: OCKEntity, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         
         self.logicalClock = cloudClock //Stamp Entity
-        if self.deletedDate == nil{
+        
+        if self.createdDate != nil && self.updatedDate != nil{
             self.addToCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
@@ -262,23 +210,18 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
             }
         }else{
-            switch careKitEntity {
-            case .outcome(let outcome):
-                self.tombstsone(outcome, usingKnowledgeVector: true, overwriteRemote: overwriteRemote){
-                    (success,error) in
-                    if success{
-                        completion(nil)
-                    }else{
-                        completion(error)
-                    }
+            self.tombstsone(){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
                 }
-            default:
-                completion(nil)
             }
         }
     }
     
-    public func tombstsone(_ outcome: OCKOutcome, usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func tombstsone(_ completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -293,18 +236,25 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Outcome else{
-                //This was tombstoned, but never reached the cloud, no need to do anything
+                //This was tombstoned, but never reached the cloud, upload it now
+                self.saveInBackground(block: completion)
                 completion(true,nil)
                 return
             }
             
-            foundObject.copyCareKit(outcome, clone: true){
-                _ in
-                foundObject.saveInBackground(block: completion)
-            }
-            //self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            foundObject.copy(self)
+            foundObject.saveInBackground(block: completion)
         }
         
+    }
+    
+    open override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? Outcome else{return}
+        self.taskOccurrenceIndex = parse.taskOccurrenceIndex
+        self.values = parse.values
+        self.task = parse.task
+        self.taskUUIDString = parse.taskUUIDString
     }
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool, completion: @escaping(Outcome?) -> Void){
@@ -337,6 +287,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.userInfo = outcome.userInfo
         self.taskUUID = outcome.taskUUID
         self.deletedDate = outcome.deletedDate
+        self.remoteID = outcome.remoteID
         if clone{
             self.createdDate = outcome.createdDate
             self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
@@ -369,13 +320,6 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             }
             
             self.currentTask = task
-            guard let task = self.currentTask else{
-                completion(self)
-                return
-            }
-            if task.store == nil{
-                task.store = self.store
-            }
             completion(self)
         }
     }
@@ -410,7 +354,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }else if !outcome.tags!.contains(self.entityId){
             outcome.tags?.append(self.entityId)
         }
-        
+        outcome.remoteID = self.remoteID
         outcome.source = self.source
         outcome.userInfo = self.userInfo
         if outcome.userInfo == nil{
@@ -425,8 +369,29 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             outcome.timezone = timeZone
         }
         outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        outcome.remoteID = self.objectId
         return outcome
+    }
+    
+    public class func tagWithId(_ outcome: OCKOutcome)-> OCKOutcome?{
+        
+        //If this object has a createdDate, it's been stored locally before
+        guard outcome.uuid != nil else{
+            return nil
+        }
+        
+        var mutableOutcome = outcome
+       
+        if mutableOutcome.tags != nil{
+            if !mutableOutcome.tags!.contains(mutableOutcome.id){
+                mutableOutcome.tags!.append(mutableOutcome.id)
+                return mutableOutcome
+            }
+        }else{
+            mutableOutcome.tags = [mutableOutcome.id]
+            return mutableOutcome
+        }
+        
+        return nil
     }
     
     open override func stampRelationalEntities(){

@@ -18,7 +18,7 @@ public protocol PCKSynchronized: PFObject, PFSubclassing {
     func updateCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func deleteFromCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func new()->PCKSynchronized
-    func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void)
+    func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void)
 }
 
 /**
@@ -26,5 +26,5 @@ public protocol PCKSynchronized: PFObject, PFSubclassing {
  */
 public protocol PCKRemoteSynchronized: PCKSynchronized {
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
-    func pushRevision(_ careKitEntity: OCKEntity, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
+    func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
 }

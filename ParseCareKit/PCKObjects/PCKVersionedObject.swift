@@ -65,6 +65,16 @@ open class PCKVersionedObject: PCKObject {
         }
     }
     
+    override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? PCKVersionedObject else{return}
+        self.effectiveDate = parse.effectiveDate
+        self.previous = parse.previous
+        self.previousVersionUUIDString = parse.previousVersionUUIDString
+        self.next = parse.next
+        self.nextVersionUUIDString = parse.nextVersionUUIDString
+    }
+    
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public class func query(_ className: String, for date: Date) -> PFQuery<PFObject> {
         let query1 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNoNextVersion(className))
@@ -105,7 +115,6 @@ open class PCKVersionedObject: PCKObject {
     open func find(for date: Date) throws -> [PCKVersionedObject] {
         let query = PCKVersionedObject.query(parseClassName, for: date)
         let entities = try (query.findObjects() as! [PCKVersionedObject])
-        entities.forEach{$0.store = self.store} //Add store just incase we need to do anything
         return entities
     }
     
@@ -117,7 +126,6 @@ open class PCKVersionedObject: PCKObject {
                 completion(nil,error)
                 return
             }
-            entities.forEach{$0.store = self.store} //Add store just incase we need to do anything
             completion(entities,error)
         }
     }

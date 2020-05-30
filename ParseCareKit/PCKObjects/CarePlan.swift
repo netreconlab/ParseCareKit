@@ -45,13 +45,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKCarePlanClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyCarePlan, store: OCKAnyStoreProtocol, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyCarePlan, completion: @escaping(PCKObject?) -> Void) {
         self.init()
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
         self.copyCareKit(careKitEntity, clone: true, completion: completion)
     }
     
@@ -59,17 +54,11 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         return CarePlan()
     }
     
-    open func new(with careKitEntity: OCKEntity, store: OCKAnyStoreProtocol, completion: @escaping(PCKSynchronized?)-> Void){
-        guard let store = store as? OCKStore else{
-            completion(nil)
-            return
-        }
-        self.store = store
+    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
         
         switch careKitEntity {
         case .carePlan(let entity):
             let newClass = CarePlan()
-            newClass.store = self.store
             newClass.copyCareKit(entity, clone: true){
                 _ in
                 completion(newClass)
@@ -89,10 +78,10 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         let query = CarePlan.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.findObjectsInBackground(){
-            (objects, parseError) in
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
             
-            guard let foundObjects = objects else{
+            guard let _ = object else{
                 guard let error = parseError as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
@@ -107,7 +96,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                     if !usingKnowledgeVector{
                         self.logicalClock = 0
                     }
-                    self.saveAndCheckRemoteID(self, completion: completion)
+                    self.save(self, completion: completion)
                 }else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(error.localizedDescription)")
@@ -116,16 +105,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            if foundObjects.count > 0{
-                //Maybe this needs to be updated instead
-                self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-            }else{
-                //Make wallclock level entities compatible with KnowledgeVector by setting it's initial clock to 0
-                if !usingKnowledgeVector{
-                    self.logicalClock = 0
-                }
-                self.saveAndCheckRemoteID(self, completion: completion)
-            }
+            //Maybe this needs to be updated instead
+            self.updateCloud(usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
         }
     }
     
@@ -135,61 +116,28 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
-        var careKitQuery = OCKCarePlanQuery()
-        careKitQuery.uuids = [carePlanUUID]
         
-        self.store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){
-            result in
-            
-            switch result{
-            case .success(let carePlans):
-                
-                guard let carePlan = carePlans.first else{
-                    completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                    return
-                }
-                
-                //Check to see if already in the cloud
-                guard let remoteID = carePlan.remoteID else{
-                    //Check to see if this entity is already in the Cloud, but not matched locally
-                    let query = CarePlan.query()!
-                    query.whereKey(kPCKObjectUUIDKey, equalTo: carePlanUUID.uuidString)
-                    query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                    query.getFirstObjectInBackground(){
-                        (object, error) in
-                        guard let foundObject = object as? CarePlan else{
-                            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                            return
-                        }
-                        self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                        
-                    }
-                    return
-                }
-                //Get latest item from the Cloud to compare against
-                let query = CarePlan.query()!
-                query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
-                query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                query.getFirstObjectInBackground(){
-                    (object, error) in
-                    
-                    guard let foundObject = object as? CarePlan else{
-                        completion(false,error)
-                        return
-                    }
-                    self.compareUpdate(carePlan, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-                }
-            case .failure(let error):
-                print("Error in Contact.addToCloud(). \(error)")
-                completion(false,error)
+        //Check to see if this entity is already in the Cloud, but not matched locally
+        let query = CarePlan.query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: carePlanUUID.uuidString)
+        query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.getFirstObjectInBackground(){
+            (object, error) in
+            guard let foundObject = object as? CarePlan else{
+                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+                return
             }
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            
         }
-        
     }
     
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+        //Handled with update, marked for deletion
+        completion(true,nil)
+        /*
         guard let _ = PFUser.current() else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
        
@@ -203,8 +151,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }
+            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -236,27 +184,25 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func pushRevision(_ careKitEntity: OCKEntity, overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
         self.logicalClock = cloudClock //Stamp Entity
-        if self.deletedDate == nil{
-            self.addToCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
-            }
-        }else{
-            self.deleteFromCloud(true){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
+        
+        self.addToCloud(true, overwriteRemote: overwriteRemote){
+            (success,error) in
+            if success{
+                completion(nil)
+            }else{
+                completion(error)
             }
         }
+    }
+    
+    open override func copy(_ parse: PCKObject){
+        super.copy(parse)
+        guard let parse = parse as? CarePlan else{return}
+        self.patient = parse.patient
+        self.patientUUIDString = parse.patientUUIDString
+        self.title = parse.title
     }
     
     open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool, completion: @escaping(CarePlan?) -> Void){
@@ -297,7 +243,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             }
             self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
         }
-        
+        self.remoteID = carePlan.remoteID
         //Link versions and related classes
         self.findCarePlan(self.previousVersionUUID){ [weak self]
             previousCarePlan in
@@ -312,9 +258,6 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
-                    if self.previousVersion!.store == nil{
-                        self.previousVersion!.store = self.store
-                    }
                     self.previousVersion!.nextVersion = self
                 }
             }
@@ -332,9 +275,6 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
-                        if self.nextVersion!.store == nil{
-                            self.nextVersion!.store = self.store
-                        }
                         self.nextVersion!.previousVersion = self
                     }
                 }
@@ -354,13 +294,6 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                     }
                     
                     self.currentPatient = patient
-                    guard let patient = self.currentPatient else{
-                        completion(self)
-                        return
-                    }
-                    if patient.store == nil{
-                        patient.store = self.store
-                    }
                     completion(self)
                 }
             }
@@ -389,7 +322,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             }
             carePlan = decodedCarePlan
         }
-        
+        carePlan.remoteID = self.remoteID
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.tags = self.tags
         if let effectiveDate = self.effectiveDate{
@@ -398,7 +331,6 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         carePlan.source = self.source
         carePlan.groupIdentifier = self.groupIdentifier
         carePlan.asset = self.asset
-        carePlan.remoteID = self.objectId
         carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
         carePlan.userInfo = self.userInfo
         if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
