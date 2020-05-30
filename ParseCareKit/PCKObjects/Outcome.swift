@@ -292,7 +292,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.updatedDate = outcome.updatedDate
         self.userInfo = outcome.userInfo
         self.taskUUID = outcome.taskUUID
-        
+        self.deletedDate = outcome.deletedDate
         if clone{
             self.createdDate = outcome.createdDate
             self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
