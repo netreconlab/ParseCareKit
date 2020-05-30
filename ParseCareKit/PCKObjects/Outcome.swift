@@ -99,10 +99,12 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
                 
                 switch parseError.code{
-                    case 101:
+                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
                         self.save(self, completion: completion)
                 default:
-                    print("")
+                    //There was a different issue that we don't know how to handle
+                    print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
+                    completion(false,error)
                 }
                 
                 /*
