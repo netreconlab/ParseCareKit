@@ -134,14 +134,14 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = PFUser.current(),
-            let _ = UUID(uuidString: self.uuid) else{
+            let entityUUID = UUID(uuidString: self.uuid) else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         var careKitQuery = OCKOutcomeQuery()
-        careKitQuery.tags = [self.entityId]
-        //careKitQuery.uuids = [entityUUID]
+        //careKitQuery.tags = [self.entityId]
+        careKitQuery.uuids = [entityUUID]
         store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{

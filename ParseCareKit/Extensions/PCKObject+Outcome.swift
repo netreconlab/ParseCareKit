@@ -13,7 +13,7 @@ import CareKitStore
 extension PCKObject{
 
     public func saveAndCheckRemoteID(_ outcome: Outcome, usingKnowledgeVector: Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = UUID(uuidString: outcome.uuid) else {
+        guard let entityUUID = UUID(uuidString: outcome.uuid) else {
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
@@ -29,8 +29,8 @@ extension PCKObject{
                 print("Successfully saved \(self) in Cloud.")
                 
                 var careKitQuery = OCKOutcomeQuery()
-                careKitQuery.tags = [outcome.entityId]
-                //careKitQuery.uuids = [entityUUID]
+                //careKitQuery.tags = [outcome.entityId]
+                careKitQuery.uuids = [entityUUID]
                 self.store.fetchOutcome(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
                     result in
                     
