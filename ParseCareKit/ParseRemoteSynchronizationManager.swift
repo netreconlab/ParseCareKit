@@ -13,13 +13,19 @@ import Parse
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
 */
-public protocol ParseRemoteSynchronizationDelegate{
-    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
+public protocol ParseSynchronizationDelegate{
     func storeUpdatedOutcome(_ outcome: OCKOutcome)
     func storeUpdatedCarePlan(_ carePlan: OCKCarePlan)
     func storeUpdatedContact(_ contact: OCKContact)
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
+}
+
+/**
+Protocol that defines the properties to conform to when updates a needed and conflict resolution.
+*/
+public protocol ParseRemoteSynchronizationDelegate: ParseSynchronizationDelegate{
+    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -29,33 +35,24 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var userTypeUUID:UUID!
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
+
     
-    override init(){
-        self.automaticallySynchronizes = false //Don't start until OCKStore is available
-        super.init()
-    }
-    
-    convenience public init(uuid:UUID, auto: Bool) {
-        self.init()
+    public init(uuid:UUID, auto: Bool) {
         self.userTypeUUID = uuid
         self.automaticallySynchronizes = auto
+        super.init()
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
     }
     
-    
     convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
-        self.init()
-        self.userTypeUUID = uuid
-        self.automaticallySynchronizes = auto
+        self.init(uuid: uuid, auto: auto)
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
     convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
-        self.init()
-        self.userTypeUUID = uuid
-        self.automaticallySynchronizes = auto
+        self.init(uuid: uuid, auto: auto)
         if replacePCKStoreClasses != nil{
             self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
         }else{
@@ -187,28 +184,27 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         
             guard let cloudParseVector = potentialPCKKnowledgeVector,
                 let cloudCareKitVector = potentialCKKnowledgeVector else{
-                    guard let error = error as NSError?,
-                        let errorDictionary = error.userInfo["error"] as? [String:Any],
-                        let reason = errorDictionary["routine"] as? String else {
-                            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
-                            return
+                    
+                    guard let parseError = error as NSError? else{
+                        //There was a different issue that we don't know how to handle
+                        print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(String(describing: error?.localizedDescription))")
+                        return
                     }
-                    //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                    if reason == "errorMissingColumn"{
-                        //Saving the new item with the custom column should resolve the issue
-                        print("This table '\(KnowledgeVector.parseClassName())' either doesn't exist or is missing a column. Attempting to create the table and add new data to it...")
-                        if potentialPCKKnowledgeVector != nil{
-                            potentialPCKKnowledgeVector!.saveInBackground{
-                                (success,error) in
-                                print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
+                    
+                    switch parseError.code{
+                        case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
+                            if potentialPCKKnowledgeVector != nil{
+                                potentialPCKKnowledgeVector!.saveInBackground{
+                                    (success,error) in
+                                    print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
+                                    completion(error)
+                                }
+                            }else{
                                 completion(error)
                             }
-                        }else{
-                            completion(error)
-                        }
-                    }else{
+                    default:
                         //There was a different issue that we don't know how to handle
-                        print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(error.localizedDescription)")
+                        print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(String(describing: error?.localizedDescription))")
                         completion(error)
                     }
                 return

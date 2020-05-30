@@ -33,19 +33,6 @@ extension PCKObject{
             
             guard let careKitLastUpdated = self.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
-                    //This occurs only on a Patient when they have logged in for the first time
-                    //and CareKit and Parse isn't properly synced. Basically this is the first
-                    //time the local dates are pushed to the cloud
-                    /*parse.copy(self)
-                    self.save(parse){
-                        (success,error) in
-                        if !success{
-                            print("Error in \(parse.parseClassName).compareUpdate(). Error updating \(self)")
-                        }else{
-                            print("Successfully updated Patient \(parse) in the Cloud")
-                        }
-                        completion(success,error)
-                    }*/
                     completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                 return
             }

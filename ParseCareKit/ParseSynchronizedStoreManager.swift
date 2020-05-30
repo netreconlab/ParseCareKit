@@ -15,10 +15,14 @@ open class ParseSynchronizedStoreManager: NSObject{
     
     private var storeManager: OCKSynchronizedStoreManager!
     private var cancellable:AnyCancellable!
+    public var delegate: ParseRemoteSynchronizationDelegate?
+    public internal(set) var customClassesToSynchronize:[String:PCKSynchronized]?
+    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronized]!
     
-    public init(_ synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool=true) {
+    public init(synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool) {
         super.init()
-        
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getConcrete()
+        self.customClassesToSynchronize = nil
         storeManager = synchronizedStore
         cancellable = storeManager.notificationPublisher.sink { notification in
 
@@ -40,6 +44,22 @@ open class ParseSynchronizedStoreManager: NSObject{
         if synchCareStoreDataNow{
             synchonizeAllDataToCloud()
         }
+    }
+    
+    convenience public init(synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
+        self.init(synchronizedStore: synchronizedStore, synchCareStoreDataNow: synchCareStoreDataNow)
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses)
+        self.customClassesToSynchronize = nil
+    }
+    
+    convenience public init(synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKSynchronized]) {
+        self.init(synchronizedStore: synchronizedStore, synchCareStoreDataNow: synchCareStoreDataNow)
+        if replacePCKStoreClasses != nil{
+            self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses!)
+        }else{
+            self.pckStoreClassesToSynchronize = nil
+        }
+        self.customClassesToSynchronize = customClasses
     }
     
     open func handlePatientNotification(_ notification: OCKPatientNotification) {

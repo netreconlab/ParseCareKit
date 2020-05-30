@@ -67,12 +67,11 @@ ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKSynchroniz
 ```swift
 /*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient. Currently this only syncs OCKTask and OCKOutcome*/
-let remoteStoreManager = ParseRemoteSynchronizationManager()
+let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
-remoteStoreManager.startSynchronizing(dataStore) //Required to pass in the OCKStore, this autosyncs
-//remoteStoreManager.startSynchronizing(dataStore, auto: false) //Use this if you want to manually control synchs
+
 
 /*Use wall clock and OCKSynchronizedStoreManager to keep data synced. Useful if you are using CareKit 2.0.1 or below
 This should only be used if there's 1 device per patient or
@@ -101,7 +100,7 @@ To create a Parse object from a CareKit object:
 
 ```swift
 let newCarePlan = OCKCarePlan(id: "uniqueId", title: "New Care Plan", patientID: nil)
-let _ = User(careKitEntity: newCarePlan, storeManager: dataStoreManager){
+let _ = CarePlan(careKitEntity: newCarePlan){
     copiedToParseObject in
                     
     guard let parseCarePlan = copiedToParseObject else{
@@ -133,106 +132,56 @@ dataStoreManager.store.addAnyCarePlan(careKitCarePlan, callbackQueue: .main){
 }
 ```
 
-Signing up a `User` and then using them as an `OCKPatient` is a slightly different process due to you needing to let Parse properly sign in the user (verifying credentials, creating tokens, etc) before saving them to the `OCKStore`. An example is below:
+There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below `new()`,  `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->Patient:
 
 ```swift
-let newParsePatient = User()
-newParsePatient.username = uniqueUsername
-newParsePatient.password = "strongPassword"
-newParsePatient.email = "email@netreconlab.cs.uky.edu"
-
-newParsePatient.signUpInBackground{
-    (success, error)->Void in
-    if (success == true){
-        print("Sign Up successfull")
-    
-        guard let signedInPatient = User.current() else{
-            //Something went wrong with signing up this user
-            print(Error signing in \(error))
-            return
-        }
-        
-        //... fill in the rest of the signedInPatient attributes
-        
-        /* This is mandatory as it's used for querying the CareStore and linking to Parse
-            The entityId (Parse) shares a 1 to 1 relationship with id (CareKit)
-        */
-        signedInPatient.entityId = UUID().uuidString 
-        
-        //How to add names
-        var nameComponents = PersonNameComponents() 
-        nameComponents.givenName = firstName
-        nameComponents.familyName = lastName
-        let name = CareKitPersonNameComponents.familyName.convertToDictionary(nameComponents)
-        signedInPatient.name = name
-        
-        //This is suggested so you can query if needed
-        signedInPatient.tags = [signedInPatient.entityId] 
-        
-        /*Save the updated info to Parse, after, you should make all changes and saves to the CareStore
-        and let ParseCareKit sync instead of saving to Parse directly
-        */
-        signedInPatient.saveInBackground(){
-            (success,error) in
-            if !success{
-                if error != nil{
-                    print("Error saving to Parse: \(error!)")
-                }else{
-                    print("Error saving to Parse: Error unknown")
-                }
-            }else{
-                //Conver Parse to CareKit
-                guard let careKitPatient = signedInPatient.convertToCareKit(firstTimeLoggingIn: true) else{
-                  print("Error converting to CareKit object")
-                  return
-                }
-                
-                //Save the CareKit user to the CareStore
-                dataStoreManager.store.addAnyPatient(careKitPatient, callbackQueue: .main){
-                    result in
-
-                    switch result{
-                    case .success(let savedCareKitPatient):
-                        print("Your new patient \(savedCareKitPatient) is saved to OCKStore locally and synced to your Parse Server")
-                        case .failure(let error):
-                        print("Error savinf OCKCarePlan. \(error)")
-                    }
-                }
-            }
-        }
-    }else{
-        print("Parse had trouble signing in user with error: \(error)")
-    }    
-}
-```
-
-There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override methods such as `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->User:
-
-```swift
-class AppUser: User{
+class CancerPatient: Patient{
     @NSManaged public var primaryCondition:String?
     @NSManaged public var comorbidities:String?
     
-    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> User? {
+    override func new() -> PCKSynchronized {
+        return CancerPatient()
+    }
+    
+    override func new(with careKitEntity: OCKEntity, completion: @escaping (PCKSynchronized?) -> Void) {
         
-        guard let patient = patientAny as? OCKPatient else{
+        switch careKitEntity {
+        case .patient(let entity):
+            let newClass = CancerPatient()
+            newClass.copyCareKit(entity, clone: true){
+                _ in
+                completion(newClass)
+            }
+        default:
+            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            completion(nil)
+        }
+    }
+    
+    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, completion: @escaping (Patient?) -> Void) {
+        
+        guard let cancerPatient = patientAny as? OCKPatient else{
             completion(nil)
             return
         }
-        _ = super.copyCareKit(patient, clone: clone)
-        self.primaryCondition = patient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
-        self.comorbidities = patient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
-        return self
+        
+        super.copyCareKit(cancerPatient, clone: clone){
+        _ in
+            
+            self.primaryCondition = cancerPatient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
+            self.comorbidities = cancerPatient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
+            completion(self)
+        }
     }
     
-    override func convertToCareKit(firstTimeLoggingIn: Bool=false) -> OCKPatient? {
-        guard var partiallyConvertedUser = super.convertToCareKit(firstTimeLoggingIn: firstTimeLoggingIn) else{return nil}
+    override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
+        guard var partiallyConvertedPatient = super.convertToCareKit(fromCloud: fromCloud) else{return nil}
         
         var userInfo: [String:String]!
-        if partiallyConvertedUser.userInfo == nil{
+        if partiallyConvertedPatient.userInfo == nil{
             userInfo = [String:String]()
         }else{
-            userInfo = partiallyConvertedUser.userInfo!
+            userInfo = partiallyConvertedPatient.userInfo!
         }
         if let primaryCondition = self.primaryCondition{
             userInfo["CustomPatientUserInfoPrimaryConditionKey"] = primaryCondition
@@ -240,11 +189,136 @@ class AppUser: User{
         if let comorbidities = self.comorbidities{
             userInfo["CustomPatientUserInfoComorbiditiesKey"] = comorbidities
         }
-        partiallyConvertedUser?.userInfo = userInfo
-        return partiallyConvertedUser
+        partiallyConvertedPatient?.userInfo = userInfo
+        return partiallyConvertedPatient
     }
 }
 ```
-Of course, you can custimize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
+
+Then you need to pass your custom class when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
+
+```
+let updatedConcreteClasses: [PCKStoreClass: PCKRemoteSynchronized] = [
+    .patient: CancerPatient()
+]
+
+remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
+dataStore = OCKStore(name: storeName, type: .onDisk, remote: remoteStoreManager)
+remoteStoreManager.delegate = self
+remoteStoreManager.parseRemoteDelegate = self
+```
+
+
+Of course, you can customize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
+
+
+You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.parseClassName()` as the value. See below:
+
+```swift
+class Doctor: Patient{
+    @NSManaged public var type:String?
+    
+    override func new() -> PCKSynchronized {
+        return Doctor()
+    }
+    
+    override func new(with careKitEntity: OCKEntity, completion: @escaping (PCKSynchronized?) -> Void) {
+        
+        switch careKitEntity {
+        case .patient(let entity):
+            let newClass = Doctor()
+            newClass.copyCareKit(entity, clone: true){
+                _ in
+                completion(newClass)
+            }
+        default:
+            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            completion(nil)
+        }
+    }
+    
+    //Add a convienience initializer to to ensure that that the doctor class is always created correctly
+    convenience init(careKitEntity: OCKAnyPatient, completion: @escaping(PCKObject?) -> Void) {
+        self.init()
+        self.copyCareKit(careKitEntity, clone: true){
+            _ in
+            self.userInfo = [kPCKCustomClassKey: self.parseClassName]
+        }
+    }
+    
+    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, completion: @escaping (Patient?) -> Void) {
+        
+        guard let doctor = patientAny as? OCKPatient else{
+            completion(nil)
+            return
+        }
+        
+        super.copyCareKit(doctor, clone: clone){
+        _ in
+            
+            self.type = cancerPatient.userInfo?["CustomDoctorUserInfoTypeKey"]
+            completion(self)
+        }
+    }
+    
+    override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
+        guard var partiallyConvertedDoctor = super.convertToCareKit(fromCloud: fromCloud) else{return nil}
+        
+        var userInfo: [String:String]!
+        if partiallyConvertedDoctor.userInfo == nil{
+            userInfo = [String:String]()
+        }else{
+            userInfo = partiallyConvertedDoctor.userInfo!
+        }
+        if let type = self.type{
+            userInfo["CustomDoctorUserInfoTypeKey"] = type
+        }
+        
+        partiallyConvertedDoctor?.userInfo = userInfo
+        return partiallyConvertedPatient
+    }
+}
+```
+
+You should never save changes to ParseCareKit classes directly to Parse as it may cause your data to get out-of-sync. Instead, user the `convertToCareKit` methods from each class and use the `add` or `update` methods for the CareStore. For example, the process below is recommended when creating new items to sync between CareKit and ParseCareKit
+
+```swift
+//Create doctor using CareKit
+let newCareKitDoctor = OCKPatient(id: "drJohnson", givenName: "Jane", familyName: "Johnson")
+
+//Initialize new Parse doctor with the CareKit one
+_ = Doctor(careKitEntity: newCareKitDoctor){
+   doctor in
+   
+   //Make sure the Doctor was created as Parse doctor
+   guard let newParseDoctor = doctor as? Doctor else{
+       return
+   }
+   
+   //Make any edits you need to the new doctor
+   newParseDoctor.type = "Cancer" //This was a custom value added in the Doctor class 
+   newParseDoctor.sex = "Female" //This default from OCKPatient, Doctor has all defaults of it's CareKit counterpart
+   
+   
+   guard let updatedCareKitDoctor = newParseDoctor.convertToCareKit(fromCloud: false) else {
+       completion(nil,nil)
+       return
+   }
+   
+   store.addPatient(updatedCareKitDoctor, callbackQueue: .main){
+       result in
+       
+       switch result{
+       
+       case .success(let doctor):
+           print("Successfully add the doctor to the CareStore \(updatedCareKitDoctor)")
+           print("CareKit and ParseCareKit will automatically handle syncing this data to the Parse Server")
+       case .failure(let error):
+           print("Error, couldn't save doctor. \(error)")
+       }
+   }
+}
+
+```
 
 If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObject` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
