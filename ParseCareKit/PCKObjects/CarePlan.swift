@@ -138,13 +138,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKCarePlanQuery()
         careKitQuery.uuids = [carePlanUUID]
         
-        self.store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
+        self.store.fetchCarePlans(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             switch result{
             case .success(let carePlans):
@@ -175,13 +170,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 let query = CarePlan.query()!
                 query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
                 query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                query.getFirstObjectInBackground(){ [weak self]
+                query.getFirstObjectInBackground(){
                     (object, error) in
-                    
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
-                    }
                     
                     guard let foundObject = object as? CarePlan else{
                         completion(false,error)

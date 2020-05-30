@@ -115,13 +115,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKPatientQuery()
         careKitQuery.uuids = [patientUUID]
         
-        store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
+        store.fetchPatients(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             switch result{
             case .success(let patients):
@@ -142,6 +137,10 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                             completion(false,error)
                             return
                         }
+                        //Update remoteId since it's missing
+                        var mutableEntity = patient
+                        mutableEntity.remoteID = foundObject.objectId
+                        self.store.updatePatients([mutableEntity])
                         self.compareUpdate(patient, parse: foundObject, usingKnowledgeVector:usingKnowledgeVector, overwriteRemote:overwriteRemote, completion: completion)
                     }
                     return
@@ -179,16 +178,11 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Patient.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: patientUUID)
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.getFirstObjectInBackground(){ [weak self]
+        query.getFirstObjectInBackground(){
             (objects, error) in
             
             guard let foundObject = objects as? Patient else{
                 completion(false,error)
-                return
-            }
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
                 return
             }
             

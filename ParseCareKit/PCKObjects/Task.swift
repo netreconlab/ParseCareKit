@@ -146,13 +146,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKTaskQuery()
         careKitQuery.uuids = [taskUUID]
         
-        store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
+        store.fetchTasks(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
-                return
-            }
             
             switch result{
             case .success(let tasks):
@@ -166,17 +161,17 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     let query = Task.query()!
                     query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
                     query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                    query.getFirstObjectInBackground{ [weak self]
+                    query.getFirstObjectInBackground{
                         (objects, error) in
                         guard let foundObject = objects as? Task else{
                             completion(false,error)
                             return
                         }
                         
-                        guard let self = self else{
-                            completion(false,ParseCareKitError.cantUnwrapSelf)
-                            return
-                        }
+                        //Update remoteId since it's missing
+                        var mutableEntity = task
+                        mutableEntity.remoteID = foundObject.objectId
+                        self.store.updateTask(mutableEntity)
                         
                         self.compareUpdate(task, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
@@ -187,17 +182,13 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 let query = Task.query()!
                 query.whereKey(kPCKParseObjectIdKey, equalTo: remoteID)
                 query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-                query.getFirstObjectInBackground(){ [weak self]
+                query.getFirstObjectInBackground(){
                     (object, error) in
                     guard let foundObject = object as? Task else{
                         completion(false,error)
                         return
                     }
                     
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
-                        return
-                    }
                     self.compareUpdate(task, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                 }
             case .failure(let error):
@@ -219,15 +210,10 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Task.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
         query.includeKeys([kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.getFirstObjectInBackground(){ [weak self]
+        query.getFirstObjectInBackground(){
             (objects, error) in
             guard let foundObject = objects as? Task else{
                 completion(false,error)
-                return
-            }
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
                 return
             }
             

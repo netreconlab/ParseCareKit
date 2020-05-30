@@ -224,7 +224,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         var careKitQuery = OCKContactQuery()
         careKitQuery.uuids = [contactUUID]
         
-        store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){ [weak self]
+        store.fetchContacts(query: careKitQuery, callbackQueue: .global(qos: .background)){
             result in
             switch result{
             case .success(let contacts):
@@ -247,12 +247,10 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                             completion(false,error)
                             return
                         }
-                        
-                        guard let self = self else{
-                            completion(false,ParseCareKitError.cantUnwrapSelf)
-                            return
-                        }
-                        
+                        //Update remoteId since it's missing
+                        var mutableEntity = contact
+                        mutableEntity.remoteID = foundObject.objectId
+                        self.store.updateContacts([mutableEntity])
                         self.compareUpdate(contact, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
                     return
@@ -267,11 +265,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     
                     guard let foundObject = object as? Contact else{
                         completion(false,error)
-                        return
-                    }
-                    
-                    guard let self = self else{
-                        completion(false,ParseCareKitError.cantUnwrapSelf)
                         return
                     }
                     
@@ -294,15 +287,10 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         //Get latest item from the Cloud to compare against
         let query = Contact.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
-        query.getFirstObjectInBackground(){ [weak self]
+        query.getFirstObjectInBackground(){
             (object, error) in
             guard let foundObject = object as? Contact else{
                 completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            
-            guard let self = self else{
-                completion(false,ParseCareKitError.cantUnwrapSelf)
                 return
             }
             

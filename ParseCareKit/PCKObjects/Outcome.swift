@@ -158,8 +158,10 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
+                        //Update remoteId since it's missing
                         var mutableOutcome = outcome
                         mutableOutcome.remoteID = foundObject.objectId
+                        self.store.updateOutcomes([mutableOutcome])
                         self.compareUpdate(mutableOutcome, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
                     }
                     return
