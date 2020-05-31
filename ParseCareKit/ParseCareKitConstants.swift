@@ -12,157 +12,241 @@ import CareKitStore
 
 enum ParseCareKitError: Error {
     case userNotLoggedIn
+    case relatedEntityNotInCloud
+    case requiredValueCantBeUnwrapped
+    case objectIdDoesntMatchRemoteId
+    case cloudClockLargerThanLocalWhilePushRevisions
+    case couldntUnwrapKnowledgeVector
+    case cantUnwrapSelf
+    case cloudVersionNewerThanLocal
 }
+
+extension ParseCareKitError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .userNotLoggedIn:
+            return NSLocalizedString("ParseCareKit: Parse User isn't logged in.", comment: "Login error")
+        case .relatedEntityNotInCloud:
+            return NSLocalizedString("ParseCareKit: Related entity isn't in cloud.", comment: "Related entity error")
+        case .requiredValueCantBeUnwrapped:
+            return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
+        case .couldntUnwrapKnowledgeVector:
+            return NSLocalizedString("ParseCareKit: KnowledgeVector can't be unwrapped.", comment: "KnowledgeVector Unwrapping error")
+        case .objectIdDoesntMatchRemoteId:
+            return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
+        case .cloudClockLargerThanLocalWhilePushRevisions:
+            return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing", comment: "Knowledge vector larger in Cloud")
+        case .cantUnwrapSelf:
+            return NSLocalizedString("Can't unwrap self. This class has already been deallocated", comment: "Can't unwrap self, class deallocated")
+        case .cloudVersionNewerThanLocal:
+            return NSLocalizedString("Can't sync, the Cloud version newere than local version", comment: "Cloud version newer than local version")
+            
+        }
+    }
+}
+
+public enum PCKStoreClass {
+    case carePlan
+    case contact
+    case outcome
+    case patient
+    case task
+    
+    func getDefault() -> PCKSynchronized{
+        switch self {
+        case .carePlan:
+            return CarePlan()
+        case .contact:
+            return Contact()
+        case .outcome:
+            return Outcome()
+        case .patient:
+            return Patient()
+        case .task:
+            return Task()
+        }
+    }
+    
+    func orderedArray() -> [PCKStoreClass]{
+        return [.patient, .carePlan, .contact, .task, .outcome]
+    }
+    
+    func getRemoteConcrete() -> [PCKStoreClass: PCKRemoteSynchronized]?{
+        var remoteClasses = [PCKStoreClass: PCKRemoteSynchronized]()
+        
+        guard let regularClasses = getConcrete() else{return nil}
+        
+        for (key,value) in regularClasses{
+            guard let remoteClass = value as? PCKRemoteSynchronized else{
+                continue
+            }
+            remoteClasses[key] = remoteClass
+        }
+        
+        //Ensure all default classes are created
+        guard remoteClasses.count == orderedArray().count else{
+            return nil
+        }
+        
+        return remoteClasses
+    }
+    
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKRemoteSynchronized]) -> [PCKStoreClass: PCKRemoteSynchronized]?{
+        guard var updatedClasses = getRemoteConcrete() else{
+            return nil
+        }
+        for (key,value) in newClasses{
+            if isCorrectType(key, check: value){
+                updatedClasses[key] = value
+            }else{
+                print("**** Warning in PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> \(value)")
+            }
+        }
+        return updatedClasses
+    }
+    
+    func getConcrete() -> [PCKStoreClass: PCKSynchronized]?{
+        
+        var concreteClasses: [PCKStoreClass: PCKSynchronized] = [
+            .carePlan: PCKStoreClass.carePlan.getDefault(),
+            .contact: PCKStoreClass.contact.getDefault(),
+            .outcome: PCKStoreClass.outcome.getDefault(),
+            .patient: PCKStoreClass.patient.getDefault(),
+            .task: PCKStoreClass.task.getDefault()
+        ]
+        
+        for (key,value) in concreteClasses{
+            if !isCorrectType(key, check: value){
+                concreteClasses.removeValue(forKey: key)
+            }
+        }
+        
+        //Ensure all default classes are created
+        guard concreteClasses.count == orderedArray().count else{
+            return nil
+        }
+        
+        return concreteClasses
+    }
+    
+    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronized]) -> [PCKStoreClass: PCKSynchronized]?{
+        guard var updatedClasses = getConcrete() else{
+            return nil
+        }
+        for (key,value) in newClasses{
+            if isCorrectType(key, check: value){
+                updatedClasses[key] = value
+            }else{
+                print("**** Warning in PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> \(value)")
+            }
+        }
+        return updatedClasses
+    }
+    
+    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronized) -> Bool{
+        switch type {
+        case .carePlan:
+            guard let _ = check as? CarePlan else{
+                return false
+            }
+            return true
+        case .contact:
+            guard let _ = check as? Contact else{
+                return false
+            }
+            return true
+        case .outcome:
+            guard let _ = check as? Outcome else{
+                return false
+            }
+            return true
+        case .patient:
+            guard let _ = check as? Patient else{
+                return false
+            }
+            return true
+        case .task:
+            guard let _ = check as? Task else{
+                return false
+            }
+            return true
+        }
+    }
+}
+
+public let kPCKCustomClassKey                                       = "customClass"
 
 //#Mark - Parse Database Keys
 
-//#Mark - User Class
-public let kPCKUserClassKey                                 = User.parseClassName()
+public let kPCKParseObjectIdKey                                     = "objectId"
+public let kPCKParseCreatedAtKey                                    = "createdAt"
+public let kPCKParseUpdatedAtKey                                    = "updatedAt"
+
+public let kPCKObjectUUIDKey                                        = "uuid"
+public let kPCKObjectEntityIdKey                                    = "entityId"
+public let kPCKObjectAssetKey                                       = "asset"
+public let kPCKObjectGroupIdentifierKey                             = "groupIdentifier"
+public let kPCKObjectNotesKey                                       = "notes"
+public let kPCKObjectTimezoneKey                                    = "timezoneIdentifier"
+public let kPCKObjectClockKey                                       = "logicalClock"
+public let kPCKObjectCreatedDateKey                                 = "createdDate"
+public let kPCKObjectUpdatedDateKey                                 = "updatedDate"
+public let kPCKObjectTagsKey                                        = "tags"
+public let kPCKObjectUserInfoKey                                    = "userInfo"
+public let kPCKObjectSourceKey                                      = "source"
+public let kPCKRemoteIDKey                                          = "remoteID"
+
+public let kPCKVersionedObjectEffectiveDateKey                      = "effectiveDate"
+public let kPCKVersionedObjectDeletedDateKey                        = "deletedDate"
+public let kPCKVersionedObjectNextKey                               = "next"
+public let kPCKVersionedObjectPreviousKey                           = "previous"
+
+//#Mark - Patient Class
+public let kPCKPatientClassKey                                 = "Patient"
 
 // Field keys
-public let kPCKUserObjectIdKey                                    = "objectId"
-public let kPCKUserUUIDKey                                          = "uuid"
-public let kPCKUserPostedAtKey                                    = "postedAt"
-public let kPCKUserCreatedAtKey                                   = "createdAt"
-public let kPCKUserUpdatedAtKey                                     = "updatedAt"
-public let kPCKUserAllergiesKey                                     = "alergies"
-public let kPCKUserAssetKey                                         = "asset"
-public let kPCKUserBirthdayKey                                      = "birthday"
-public let kPCKUserGroupIdentifierKey                          = "groupIdentifier"
-public let kPCKUserNotesKey                                    = "notes"
-public let kPCKUserSexKey                                      = "sex"
-public let kPCKUserSourceKey                                   = "source"
-public let kPCKUserTagsKey                                     = "tags"
-public let kPCKUserTimezoneKey                                 = "timezone"
-public let kPCKUserClockKey                                    = "clock"
-public let kPCKUserEntityIdKey                                = "entityId"
-
+public let kPCKPatientAllergiesKey                                  = "alergies"
+public let kPCKPatientBirthdayKey                                   = "birthday"
+public let kPCKPatientSexKey                                        = "sex"
+public let kPCKPatientNameKey                                       = "name"
 
 //#Mark - CarePlan Class
 public let kPCKCarePlanClassKey                                = "CarePlan"
+
 // Field keys
-public let kPCKCarePlanUUIDKey                                   = "uuid"
-public let kPCKCarePlanObjectIdKey                                = "objectId"
-public let kPCKCarePlanCreatedAtKey                               = "createdAt"
-public let kPCKCarePlanUpdatedAtKey                               = "updatedAt"
-public let kPCKCarePlanLocallyCreatedAtKey                        = "locallyCreatedAt"
-public let kPCKCarePlanLocallyUpdatedAtKey                        = "locallyUpdatedAt"
 public let kPCKCarePlanPatientKey                                 = "patient"
-public let kPCKCarePlanAuthorKey                                  = "author"
-public let kPCKCarePlanAuthorIdKey                                = "authorId"
-public let kPCKCarePlanPatientUUIDKey                             = "patientUUID"
 public let kPCKCarePlanTitleKey                                   = "title"
-public let kPCKCarePlanGroupIdentifierKey                      = "groupIdentifier"
-public let kPCKCarePlanNotesKey                                = "notes"
-public let kPCKCarePlanSourceKey                               = "source"
-public let kPCKCarePlanTagsKey                                 = "tags"
-public let kPCKCarePlanClockKey                                    = "clock"
-public let kPCKCarePlanEntityIdKey                                = "entityId"
-
-//#Mark - Task Class
-public let kPCKTaskClassKey                                    = "Task"
-// Field keys
-public let kPCKTaskUUIDKey                                          = "uuid"
-public let kPCKTaskObjectIdKey                                    = "objectId"
-public let kPCKTaskTitleKey                                       = "title"
-public let kPCKTaskCarePlanKey                                    = "carePlan"
-public let kPCKTaskCarePlanUUIDKey                                  = "carePlanUUID"
-public let kPCKTaskGroupIdentifierKey                          = "groupIdentifier"
-public let kPCKTaskImpactsAdherenceKey                         = "impactsAdherence"
-public let kPCKTaskInstructionsKey                             = "instructions"
-public let kPCKTaskNotesKey                                    = "notes"
-public let kPCKTaskSourceKey                                   = "source"
-public let kPCKTaskTagsKey                                     = "tags"
-public let kPCKTaskAssetKey                                    = "asset"
-public let kPCKTaskTimezoneKey                                 = "timezone"
-public let kPCKTaskElementsKey                                 = "elements"
-public let kPCKTaskClockKey                                    = "clock"
-public let kPCKTaskEntityIdKey                                = "entityId"
-
-//#Mark - KnowledgeVector Class
-public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
-// Field keys
-public let kPCKKnowledgeVectorUserKey                          = "user"
-public let kPCKKnowledgeVectorVectorKey                        = "vector"
 
 //#Mark - Contact Class
 public let kPCKContactClassKey                                 = "Contact"
+
 // Field keys
-public let kPCKContactUUIDKey                                       = "uuid"
-public let kPCKContactObjectIdKey                                 = "objectId"
-public let kPCKContactGroupIdKey                                  = "groupIdentifier"
-public let kPCKContactTagsKey                                     = "tags"
-public let kPCKContactSourceKey                                   = "source"
+public let kPCKContactCarePlanKey                                 = "carePlan"
 public let kPCKContactTitleKey                                    = "title"
-public let kPCKContactTimezoneKey                                 = "timezone"
 public let kPCKContactRoleKey                                     = "role"
 public let kPCKContactOrganizationKey                             = "organization"
 public let kPCKContactCategoryKey                                 = "category"
-public let kPCKContactAssetKey                                    = "asset"
 public let kPCKContactNameKey                                     = "name"
-public let kPCKContactAuthorKey                                   = "author"
-public let kPCKContactUserKey                                     = "user"
-public let kPCKContactEmailAddressesKey                           = "emailAddresses"
 public let kPCKContactAddressKey                                  = "address"
-public let kPCKContactNotesKey                                    = "notes"
-public let kPCKContactCarePlanKey                                 = "carePlan"
-public let kPCKContactCarePlanUUIDKey                               = "carePlanUUID"
-public let kPCKContactPhoneNumbersKey                             = "phoneNumbers"
-public let kPCKContactMessagingNumbersKey                         = "messagingNumbers"
-public let kPCKContactOtherContactInfoKey                         = "otherContactInfo"
-public let kPCKContactLocallyCreatedAtKey                         = "locallyCreatedAt"
-public let kPCKContactLocallyUpdatedAtKey                         = "locallyUpdatedAt"
-public let kPCKContactClockKey                                    = "clock"
-public let kPCKContactEntityIdKey                                = "entityId"
+public let kPCKContactEmailAddressesKey                           = "emailAddressesDictionary"
+public let kPCKContactPhoneNumbersKey                             = "phoneNumbersDictionary"
+public let kPCKContactMessagingNumbersKey                         = "messagingNumbersDictionary"
+public let kPCKContactOtherContactInfoKey                         = "otherContactInfoDictionary"
 
-//#Mark -Outcome Class
-public let kPCKOutcomeClassKey                                    = "Outcome"
+
+//#Mark - Task Class
+public let kPCKTaskClassKey                                    = "Task"
+
 // Field keys
-public let kPCKOutcomeTaskKey                                     = "task"
-public let kPCKOutcomeTaskUUIDKey                                = "taskUUID"
-public let kPCKOutcomeEntityIdKey                                = "entityId"
-public let kPCKOutcomeObjectIdKey                                 = "objectId"
-public let kPCKOutcomeUserUploadedToCloudKey                   = "userUploadedToCloud"
-public let kPCKOutcomeAssetKey                                 = "asset"
-public let kPCKOutcomeGroupIdentifierKey                       = "groupIdentifier"
-public let kPCKOutcomeLocallyCreatedAtKey                      = "locallyCreatedAt"
-public let kPCKOutcomeLocallyUpdatedAtKey                      = "locallyUpdatedAt"
-public let kPCKOutcomeNotesKey                                 = "notes"
-public let kPCKOutcomeTagsKey                                  = "tags"
-public let kPCKOutcomeTaskOccurrenceIndexKey                   = "taskOccurrenceIndex"
-public let kPCKOutcomeTimezoneKey                              = "timezone"
-public let kPCKOutcomeSourceKey                                = "source"
-public let kPCKOutcomeValuesKey                                = "values"
-public let kPCKOutcomeUUIDKey                                       = "uuid"
-public let kPCKOutcomeClockKey                                    = "clock"
-
-//#Mark - OutcomeValue Class
-public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
-// Field keys
-public let kPCKOutcomeValueObjectIdKey                         = "objectId"
-public let kPCKOutcomeValueCreatedAtKey                           = "createdAt"
-public let kPCKOutcomeValueUpdatedAtKey                           = "updatedAt"
-public let kPCKOutcomeValuePostedAtKey                            = "postedAt"
-public let kPCKOutcomeValueEntityIdKey                                  = "entityId"
-public let kPCKOutcomeValueUUIDKey                                  = "uuid"
-public let kPCKOutcomeValueIndexKey                               = "index"
-public let kPCKOutcomeValueGroupIdentifierKey                  = "groupIdentifier"
-public let kPCKOutcomeValueKindKey                             = "kind"
-public let kPCKOutcomeValueNotesKey                            = "notes"
-public let kPCKOutcomeValueSourceKey                           = "source"
-public let kPCKOutcomeValueTagsKey                             = "tags"
-public let kPCKOutcomeValueTypeKey                             = "type"
-public let kPCKOutcomeValueUnitsKey                            = "units"
-public let kPCKOutcomeValueValueKey                            = "value"
-public let kPCKOutcomeValueLocallyCreatedAtKey                    = "locallyCreatedAt"
-public let kPCKOutcomeValueLocallyUpdatedAtKey                    = "locallyUpdatedAt"
-
-
+public let kPCKTaskTitleKey                                       = "title"
+public let kPCKTaskCarePlanKey                                    = "carePlan"
+public let kPCKTaskImpactsAdherenceKey                         = "impactsAdherence"
+public let kPCKTaskInstructionsKey                             = "instructions"
+public let kPCKTaskElementsKey                                 = "elements"
 
 //#Mark - Schedule Element Class
 public let kAScheduleElementClassKey                           = "ScheduleElement"
 // Field keys
-public let kPCKScheduleElementObjectIdKey                         = "objectId"
 public let kPCKScheduleElementTextKey                             = "text"
 public let kPCKScheduleElementStartKey                            = "start"
 public let kPCKScheduleElementEndKey                              = "end"
@@ -170,43 +254,55 @@ public let kPCKScheduleElementIntervalKey                         = "interval"
 public let kPCKScheduleElementTargetValuesKey                     = "targetValues"
 public let kPCKScheduleElementElementsKey                         = "elements"
 
+//#Mark - Outcome Class
+public let kPCKOutcomeClassKey                                    = "Outcome"
+
+// Field keys
+public let kPCKOutcomeTaskKey                                     = "task"
+public let kPCKOutcomeTaskOccurrenceIndexKey                   = "taskOccurrenceIndex"
+public let kPCKOutcomeValuesKey                                = "values"
+
+
+//#Mark - OutcomeValue Class
+public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
+
+// Field keys
+public let kPCKOutcomeValueIndexKey                               = "index"
+public let kPCKOutcomeValueKindKey                             = "kind"
+public let kPCKOutcomeValueUnitsKey                            = "units"
+public let kPCKOutcomeValueValueKey                            = "textValue"
+public let kPCKOutcomeValueBinaryValueKey                            = "binaryValue"
+public let kPCKOutcomeValueBooleanValueKey                            = "booleanValue"
+public let kPCKOutcomeValueIntegerValueKey                            = "integerValue"
+public let kPCKOutcomeValueDoubleValueKey                            = "doubleValue"
+public let kPCKOutcomeValueDateValueKey                            = "dateValue"
+
+
 //#Mark - Note Class
 public let kPCKNoteClassKey                                    = "Note"
 // Field keys
 public let kPCKNoteContentKey                                  = "content"
-public let kPCKNoteSourceKey                                   = "source"
-public let kPCKNoteTagsKey                                     = "tags"
-public let kPCKNoteAssetKey                                    = "asset"
-public let kPCKNoteNotesKey                                    = "notes"
-public let kPCKNoteCreatedAtKey                                = "createdAt"
-public let kPCKNoteUpdatedAtKey                                = "updatedAt"
-public let kPCKNoteLocallyCreatedAtKey                         = "locallyCreatedAt"
-public let kPCKNoteLocallyUpdatedAtKey                         = "locallyUpdatedAt"
-public let kPCKNoteLocallyTimezoneKey                          = "timezone"
 public let kPCKNoteTitleKey                                    = "title"
-public let kPCKNoteIdKey                                       = "uuid"
+public let kPCKNoteAuthorKey                                   = "author"
+
+//#Mark - KnowledgeVector Class
+public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
+// Field keys
+public let kPCKKnowledgeVectorPatientTypeUUIDKey               = "uuid"
+public let kPCKKnowledgeVectorVectorKey                        = "vector"
+
 
 //#Mark - CareKit UserInfo Database Keys
-//CarePlan Class
-public let kPCKCarePlanUserInfoPatientObjectIdKey           = "patientObjectId"
 
-//Contact Element Class
-public let kPCKContactUserInfoAuthorUserEntityIdKey         = "authorId" //The id of the User if there is one.
-public let kPCKContactUserInfoRelatedEntityIdKey          = "relatedId" //The id of the User if there is one.
-
-//Outcome Class
-public let kPCKOutcomeUserInfoEntityIdKey                   = "entityId"
+//Outcome Class (keep this as Outcome has had issues querying multiple times)
+public let kPCKOutcomUserInfoIDKey              = "entityId"
 
 //OutcomeValue Class
-public let kPCKOutcomeValueUserInfoEntityIdKey              = "entityId"
-public let kPCKOutcomeValueUserInfoRelatedOutcomeEntityIdKey = "relatedOutcomeEntityId"
-
-//Note Class
-public let kPCKNoteUserInfoAuthorObjectIdKey                                 = "authorObjectId"
-
+public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
+public let kPCKOutcomeValueUserInfoRelatedOutcomeIDKey = "relatedOutcomeID"
 
 //#Mark - Custom Enums
-public enum CareKitParsonNameComponents:String{
+public enum CareKitPersonNameComponents:String{
  
     case familyName = "familyName"
     case givenName = "givenName"
@@ -220,27 +316,27 @@ public enum CareKitParsonNameComponents:String{
         var returnDictionary = [String:String]()
         
         if let name = components.familyName{
-            returnDictionary[CareKitParsonNameComponents.familyName.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.familyName.rawValue] = name
         }
         
         if let name = components.givenName{
-            returnDictionary[CareKitParsonNameComponents.givenName.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.givenName.rawValue] = name
         }
         
         if let name = components.middleName{
-            returnDictionary[CareKitParsonNameComponents.middleName.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.middleName.rawValue] = name
         }
         
         if let name = components.namePrefix{
-            returnDictionary[CareKitParsonNameComponents.namePrefix.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.namePrefix.rawValue] = name
         }
         
         if let name = components.nameSuffix{
-            returnDictionary[CareKitParsonNameComponents.nameSuffix.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.nameSuffix.rawValue] = name
         }
         
         if let name = components.nickname{
-            returnDictionary[CareKitParsonNameComponents.nickname.rawValue] = name
+            returnDictionary[CareKitPersonNameComponents.nickname.rawValue] = name
         }
         
         return returnDictionary
@@ -252,7 +348,7 @@ public enum CareKitParsonNameComponents:String{
         
         for (key,value) in dictionary{
             
-            guard let componentType = CareKitParsonNameComponents(rawValue: key) else{
+            guard let componentType = CareKitPersonNameComponents(rawValue: key) else{
                 continue
             }
             
@@ -274,9 +370,7 @@ public enum CareKitParsonNameComponents:String{
             }
             
         }
-    
         return components
-        
     }
     
 }

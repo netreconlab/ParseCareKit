@@ -11,23 +11,18 @@ import CareKit
 import Combine
 import Parse
 
-/**
- Protocol that defines the properties and methods for parse carekit entities that are synchronized using a wall clock.
- */
-public protocol PCKSynchronizedEntity: PFObject, PFSubclassing {
-    func addToCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func updateCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func deleteFromCloud(_ store: OCKAnyStoreProtocol, usingKnowledgeVector:Bool, completion: @escaping(Bool,Error?) -> Void)
-}
-
 open class ParseSynchronizedStoreManager: NSObject{
     
     private var storeManager: OCKSynchronizedStoreManager!
     private var cancellable:AnyCancellable!
+    public var delegate: ParseRemoteSynchronizationDelegate?
+    public internal(set) var customClassesToSynchronize:[String:PCKSynchronized]?
+    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronized]!
     
-    public init(_ synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool=true) {
+    public init(synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool) {
         super.init()
-        
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getConcrete()
+        self.customClassesToSynchronize = nil
         storeManager = synchronizedStore
         cancellable = storeManager.notificationPublisher.sink { notification in
 
@@ -49,6 +44,22 @@ open class ParseSynchronizedStoreManager: NSObject{
         if synchCareStoreDataNow{
             synchonizeAllDataToCloud()
         }
+    }
+    
+    convenience public init(synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
+        self.init(synchronizedStore: synchronizedStore, synchCareStoreDataNow: synchCareStoreDataNow)
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses)
+        self.customClassesToSynchronize = nil
+    }
+    
+    convenience public init(synchronizedStore: OCKSynchronizedStoreManager, synchCareStoreDataNow: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKSynchronized]) {
+        self.init(synchronizedStore: synchronizedStore, synchCareStoreDataNow: synchCareStoreDataNow)
+        if replacePCKStoreClasses != nil{
+            self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceConcreteClasses(replacePCKStoreClasses!)
+        }else{
+            self.pckStoreClassesToSynchronize = nil
+        }
+        self.customClassesToSynchronize = customClasses
     }
     
     open func handlePatientNotification(_ notification: OCKPatientNotification) {
@@ -94,30 +105,30 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudContacts(_ contacts: [OCKAnyContact]){
 
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Contact(careKitEntity: $0){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.updateCloud(self.storeManager.store){(_,_) in}
+                contact.updateCloud(){(_,_) in}
             }
         }
     }
     
     private func deleteCloudContacts(_ contacts: [OCKAnyContact]){
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Contact(careKitEntity: $0){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.deleteFromCloud(self.storeManager.store){(_,_) in}
+                contact.deleteFromCloud(){(_,_) in}
             }
         }
     }
     
     private func addCloudContacts(_ contacts: [OCKAnyContact]) {
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Contact(careKitEntity: $0){
                 copiedContact in
                 guard let contact = copiedContact as? Contact else{return}
-                contact.addToCloud(self.storeManager.store){(_,_) in}
+                contact.addToCloud(){(_,_) in}
             }
         }
     }
@@ -125,10 +136,10 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
             let outcome = $0
-            let _ = Outcome(careKitEntity: outcome, store: storeManager.store){
+            let _ = Outcome(careKitEntity: outcome){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.updateCloud(self.storeManager.store){(_,_) in}
+                outcome.updateCloud(){(_,_) in}
             }
         }
     }
@@ -136,80 +147,80 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func deleteCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
             let careKitEntity = $0
-            let _ = Outcome(careKitEntity: careKitEntity, store: self.storeManager.store){
+            let _ = Outcome(careKitEntity: careKitEntity){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.deleteFromCloud(self.storeManager.store){(_,_) in}
+                outcome.deleteFromCloud(){(_,_) in}
             }
         }
     }
     
     private func addCloudOutcomes(_ outcomes: [OCKAnyOutcome]) {
         outcomes.forEach{
-            let _ = Outcome(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Outcome(careKitEntity: $0){
                 copiedOutcome in
                 guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.addToCloud(self.storeManager.store){(_,_) in}
+                outcome.addToCloud(){(_,_) in}
             }
         }
     }
     
     private func updateCloudTasks(_ tasks: [OCKAnyTask]){
         tasks.forEach{
-            let _ = Task(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Task(careKitEntity: $0){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.updateCloud(self.storeManager.store){(_,_) in}
+                task.updateCloud(){(_,_) in}
             }
         }
     }
     
     private func deleteCloudTasks(_ tasks: [OCKAnyTask]){
         tasks.forEach{
-            let _ = Task(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Task(careKitEntity: $0){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.deleteFromCloud(self.storeManager.store){(_,_) in}
+                task.deleteFromCloud(){(_,_) in}
             }
         }
     }
     
     private func addCloudTasks(_ tasks: [OCKAnyTask]) {
         tasks.forEach{
-            let _ = Task(careKitEntity: $0, store: self.storeManager.store){
+            let _ = Task(careKitEntity: $0){
                 copiedTask in
                 guard let task = copiedTask as? Task else{return}
-                task.addToCloud(self.storeManager.store){(_,_) in}
+                task.addToCloud(){(_,_) in}
             }
         }
     }
     
     private func updateCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
+            let _ = CarePlan(careKitEntity: $0){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.updateCloud(self.storeManager.store){(_,_) in}
+                carePlan.updateCloud(){(_,_) in}
             }
         }
     }
     
     private func deleteCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
+            let _ = CarePlan(careKitEntity: $0){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.deleteFromCloud(self.storeManager.store){(_,_) in}
+                carePlan.deleteFromCloud(){(_,_) in}
             }
         }
     }
     
     private func addCloudCarePlans(_ carePlans: [OCKAnyCarePlan]) {
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0, store: self.storeManager.store){
+            let _ = CarePlan(careKitEntity: $0){
                 copiedCarePlan in
                 guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.addToCloud(self.storeManager.store){(_,_) in}
+                carePlan.addToCloud(){(_,_) in}
             }
         }
     }
@@ -217,30 +228,30 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudPatients(_ patients: [OCKAnyPatient]){
         
         patients.forEach{
-            let _ = User(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0){
                 copiedPatient in
-                guard let patient = copiedPatient as? User else{return}
-                patient.updateCloud(self.storeManager.store){(_,_) in}
+                guard let patient = copiedPatient as? Patient else{return}
+                patient.updateCloud(){(_,_) in}
             }
         }
     }
     
     private func deleteCloudPatients(_ patients: [OCKAnyPatient]){
         patients.forEach{
-            let _ = User(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0){
                 copiedPatient in
-                guard let patient = copiedPatient as? User else{return}
-                patient.deleteFromCloud(self.storeManager.store){(_,_) in}
+                guard let patient = copiedPatient as? Patient else{return}
+                patient.deleteFromCloud(){(_,_) in}
             }
         }
     }
     
     private func addCloudPatients(_ patients: [OCKAnyPatient]) {
         patients.forEach{
-            let _ = User(careKitEntity: $0, store: storeManager.store){
+            let _ = Patient(careKitEntity: $0){
                 copiedPatient in
-                guard let patient = copiedPatient as? User else{return}
-                patient.addToCloud(self.storeManager.store){(_,_) in}
+                guard let patient = copiedPatient as? Patient else{return}
+                patient.addToCloud(){(_,_) in}
             }
         }
     }
@@ -326,82 +337,5 @@ open class ParseSynchronizedStoreManager: NSObject{
                 print("Error in ParseSynchronizedStoreManager.synchronizeContacts(). \(error)")
             }
         }
-    }
-    
-    public func patchAddEntityIdsToOutcomes(){
-        guard let store = storeManager.store as? OCKStore else{return}
-        let query = OCKOutcomeQuery()
-        store.fetchOutcomes(query: query, callbackQueue: .global(qos: .background)){
-            results in
-            switch results{
-                
-            case .success(let outcomes):
-                outcomes.forEach{
-                    var outcomeUpdated = false
-                    var mutableOutcome = $0
-                    if mutableOutcome.userInfo == nil{
-                        let entityId = UUID.init().uuidString
-                        mutableOutcome.userInfo = [kPCKOutcomeUserInfoEntityIdKey: entityId]
-                        if mutableOutcome.tags == nil{
-                            mutableOutcome.tags = [entityId]
-                        }else{
-                            mutableOutcome.tags!.append(entityId)
-                        }
-                        outcomeUpdated = true
-                    }else if mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] == nil{
-                        let entityId = UUID.init().uuidString
-                        mutableOutcome.userInfo![kPCKOutcomeUserInfoEntityIdKey] = entityId
-                        if mutableOutcome.tags == nil{
-                            mutableOutcome.tags = [entityId]
-                        }else{
-                            mutableOutcome.tags!.append(entityId)
-                        }
-                        outcomeUpdated = true
-                    }
-                    
-                    for (index,value) in mutableOutcome.values.enumerated(){
-                        var mutableValue = value
-                        if mutableValue.userInfo == nil{
-                            let entityId = UUID.init().uuidString
-                            mutableValue.userInfo = [kPCKOutcomeValueUserInfoEntityIdKey: entityId]
-                            if mutableValue.tags == nil{
-                                mutableValue.tags = [entityId]
-                            }else{
-                                mutableValue.tags!.append(entityId)
-                            }
-                            mutableOutcome.values[index] = mutableValue
-                            outcomeUpdated = true
-                        }else if mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] == nil{
-                            let entityId = UUID.init().uuidString
-                            mutableValue.userInfo![kPCKOutcomeValueUserInfoEntityIdKey] = entityId
-                            if mutableValue.tags == nil{
-                                mutableValue.tags = [entityId]
-                            }else{
-                                mutableValue.tags!.append(entityId)
-                            }
-                            mutableOutcome.values[index] = mutableValue
-                            outcomeUpdated = true
-                        }
-                    }
-                    
-                    if outcomeUpdated{
-                        store.updateOutcome(mutableOutcome, callbackQueue: .global(qos: .background)){
-                            results in
-                            switch results{
-                                
-                            case .success(let outcome):
-                                print("ParseSynchronizedStoreManager.patchAddEntityIdsToOutcomes() added UUID to \(outcome)")
-                            case .failure(let error):
-                                print("Error saving updated outcome in ParseSynchronizedStoreManager.patchAddEntityIdsToOutcomes(). \(error)")
-                            }
-                        }
-                    }
-                    
-                }
-            case .failure(let error):
-                print("Error fetching outcomes in ParseSynchronizedStoreManager.patchAddEntityIdsToOutcomes(). \(error)")
-            }
-        }
-        
     }
 }

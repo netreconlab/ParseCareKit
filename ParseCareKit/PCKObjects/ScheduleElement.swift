@@ -18,10 +18,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
     @NSManaged public var start:Date
     @NSManaged public var text:String?
     @NSManaged public var targetValues:[OutcomeValue]
-    @NSManaged public var clock:Int
-    
-    //UserInfo fields on CareStore
-    //@NSManaged public var uuid:String //maps to id
+    @NSManaged public var logicalClock:Int
     
     public static func parseClassName() -> String {
         return kAScheduleElementClassKey
@@ -75,9 +72,9 @@ open class ScheduleElement: PFObject, PFSubclassing {
     }
     
     func stamp(_ clock: Int){
-        self.clock = clock
+        self.logicalClock = clock
         self.elements.forEach{
-            $0.clock = self.clock
+            $0.logicalClock = self.logicalClock
         }
     }
 }
