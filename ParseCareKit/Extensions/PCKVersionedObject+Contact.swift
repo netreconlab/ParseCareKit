@@ -56,14 +56,22 @@ extension PCKVersionedObject{
                         return
                     }
                     versionFixed.previous = previousFound
-                    versionFixed.saveInBackground()
-                    
-                    if previousFound.next == nil{
-                        previousFound.next = versionFixed
-                        previousFound.saveInBackground()
+                    versionFixed.saveInBackground(){
+                        (success,_) in
+                        if success{
+                            if previousFound.next == nil{
+                                previousFound.next = versionFixed
+                                previousFound.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        self.fixVersionLinkedList(previousFound, backwards: backwards)
+                                    }
+                                }
+                            }else{
+                                self.fixVersionLinkedList(previousFound, backwards: backwards)
+                            }
+                        }
                     }
-                    
-                    self.fixVersionLinkedList(previousFound, backwards: backwards)
                 }
             }
             //We are done fixing
@@ -77,14 +85,22 @@ extension PCKVersionedObject{
                         return
                     }
                     versionFixed.next = nextFound
-                    versionFixed.saveInBackground()
-                    
-                    if nextFound.previous == nil{
-                        nextFound.previous = versionFixed
-                        nextFound.saveInBackground()
+                    versionFixed.saveInBackground(){
+                        (success,_) in
+                        if success{
+                            if nextFound.previous == nil{
+                                nextFound.previous = versionFixed
+                                nextFound.saveInBackground(){
+                                (success,_) in
+                                    if success{
+                                        self.fixVersionLinkedList(nextFound, backwards: backwards)
+                                    }
+                                }
+                            }else{
+                                self.fixVersionLinkedList(nextFound, backwards: backwards)
+                            }
+                        }
                     }
-                    
-                    self.fixVersionLinkedList(nextFound, backwards: backwards)
                 }
             }
             //We are done fixing
