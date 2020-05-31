@@ -246,32 +246,10 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             
             self.previous = previousPatient
             
-            //Fix doubly linked list if it's broken in the cloud
-            if self.previousVersion != nil{
-                if self.previousVersion!.nextVersion == nil{
-                    self.previousVersion!.nextVersion = self
-                    self.previousVersion!.nextVersion!.saveInBackground()
-                    if let needsFixing = self.previousVersion!.nextVersion as? Patient{
-                        self.fixVersionLinkedList(needsFixing, backwards: true)
-                    }
-                }
-            }
-            
             self.findPatient(self.nextVersionUUID){
                 nextPatient in
                
                 self.next = nextPatient
-                
-                //Fix doubly linked list if it's broken in the cloud
-                if self.nextVersion != nil{
-                    if self.nextVersion!.previousVersion == nil{
-                        self.nextVersion!.previousVersion = self
-                        self.nextVersion!.previousVersion!.saveInBackground()
-                        if let needsFixing = self.nextVersion!.previousVersion as? Patient{
-                            self.fixVersionLinkedList(needsFixing, backwards: false)
-                        }
-                    }
-                }
                 completion(self)
             }
         }
