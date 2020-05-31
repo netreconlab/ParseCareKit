@@ -271,6 +271,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
                     self.previousVersion!.nextVersion = self
+                    self.previousVersion!.nextVersion!.saveInBackground()
                     if let needsFixing = self.previousVersion!.nextVersion as? CarePlan{
                         self.fixVersionLinkedList(needsFixing, backwards: true)
                     }
@@ -286,6 +287,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
                         self.nextVersion!.previousVersion = self
+                        self.nextVersion!.previousVersion!.saveInBackground()
                         if let needsFixing = self.nextVersion!.previousVersion as? CarePlan{
                             self.fixVersionLinkedList(needsFixing, backwards: false)
                         }
