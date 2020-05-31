@@ -243,7 +243,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName). Entity missing uuid: \(task)")
         }
-        self.id = task.id
+        self.entityId = task.id
         self.deletedDate = task.deletedDate
         self.groupIdentifier = task.groupIdentifier
         self.title = task.title
@@ -340,7 +340,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         //Create bare Entity and replace contents with Parse contents
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
         let schedule = OCKSchedule(composing: careKitScheduleElements)
-        var task = OCKTask(id: self.id, title: self.title, carePlanUUID: self.carePlanUUID, schedule: schedule)
+        var task = OCKTask(id: self.entityId, title: self.title, carePlanUUID: self.carePlanUUID, schedule: schedule)
         
         if fromCloud{
             guard let decodedTask = decodedCareKitObject(task) else{

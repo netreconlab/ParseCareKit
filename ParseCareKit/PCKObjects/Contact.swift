@@ -324,7 +324,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(contact)")
         }
         
-        self.id = contact.id
+        self.entityId = contact.id
         self.deletedDate = contact.deletedDate
         self.groupIdentifier = contact.groupIdentifier
         self.tags = contact.tags
@@ -414,7 +414,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         //Create bare Entity and replace contents with Parse contents
         let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
         
-        var contact = OCKContact(id: self.id, name: nameComponents, carePlanUUID: self.carePlanUUID)
+        var contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: self.carePlanUUID)
         
         if fromCloud{
             guard let decodedContact = decodedCareKitObject(contact) else{

@@ -211,7 +211,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName). Entity missing uuid: \(patient)")
         }
-        self.id = patient.id
+        self.entityId = patient.id
         self.name = CareKitPersonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday
         self.sex = patient.sex?.rawValue
@@ -281,7 +281,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     open func convertToCareKit(fromCloud:Bool=true)->OCKPatient?{
         
         let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(name)
-        var patient = OCKPatient(id: self.id, name: nameComponents)
+        var patient = OCKPatient(id: self.entityId, name: nameComponents)
 
         if fromCloud{
             guard let decodedPatient = decodedCareKitObject(patient) else{

@@ -183,7 +183,7 @@ public let kPCKParseCreatedAtKey                                    = "createdAt
 public let kPCKParseUpdatedAtKey                                    = "updatedAt"
 
 public let kPCKObjectUUIDKey                                        = "uuid"
-public let kPCKObjectEntityIdKey                                    = "id"
+public let kPCKObjectEntityIdKey                                    = "entityId"
 public let kPCKObjectAssetKey                                       = "asset"
 public let kPCKObjectGroupIdentifierKey                             = "groupIdentifier"
 public let kPCKObjectNotesKey                                       = "notes"
@@ -295,7 +295,7 @@ public let kPCKKnowledgeVectorVectorKey                        = "vector"
 //#Mark - CareKit UserInfo Database Keys
 
 //Outcome Class (keep this as Outcome has had issues querying multiple times)
-public let kPCKOutcomUserInfoIDKey              = "id"
+public let kPCKOutcomUserInfoIDKey              = "entityId"
 
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"

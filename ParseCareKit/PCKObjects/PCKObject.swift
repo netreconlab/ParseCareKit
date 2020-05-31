@@ -13,7 +13,7 @@ import CareKitStore
 open class PCKObject: PFObject {
     
     @NSManaged public internal(set) var uuid: String
-    @NSManaged public internal(set) var id:String
+    @NSManaged public internal(set) var entityId:String
     @NSManaged var logicalClock: Int
     @NSManaged public internal(set) var createdDate: Date?
     @NSManaged public internal(set) var updatedDate: Date?
@@ -35,7 +35,7 @@ open class PCKObject: PFObject {
     
     func copy(_ parse: PCKObject){
         self.uuid = parse.uuid
-        self.id = parse.id
+        self.entityId = parse.entityId
         self.deletedDate = parse.deletedDate
         self.updatedDate = parse.updatedDate
         self.timezoneIdentifier = parse.timezoneIdentifier
