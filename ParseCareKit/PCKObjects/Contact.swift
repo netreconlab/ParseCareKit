@@ -372,32 +372,10 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             
             self.previous = previousContact
             
-            //Fix doubly linked list if it's broken in the cloud
-            if self.previousVersion != nil{
-                if self.previousVersion!.nextVersion == nil{
-                    self.previousVersion!.nextVersion = self
-                    self.previousVersion!.nextVersion!.saveInBackground()
-                    if let needsFixing = self.previousVersion!.nextVersion as? Contact{
-                        self.fixVersionLinkedList(needsFixing, backwards: true)
-                    }
-                }
-            }
-            
             self.findContact(self.nextVersionUUID){
                 nextContact in
                 
                 self.next = nextContact
-                
-                //Fix doubly linked list if it's broken in the cloud
-                if self.nextVersion != nil{
-                    if self.nextVersion!.previousVersion == nil{
-                        self.nextVersion!.previousVersion = self
-                        self.nextVersion!.previousVersion!.saveInBackground()
-                        if let needsFixing = self.nextVersion!.previousVersion as? Contact{
-                            self.fixVersionLinkedList(needsFixing, backwards: false)
-                        }
-                    }
-                }
                 
                 guard let carePlanUUID = self.carePlanUUID else{
                     //Finished if there's no CarePlan, otherwise see if it's in the cloud
