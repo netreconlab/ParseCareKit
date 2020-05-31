@@ -10,17 +10,17 @@ import Parse
 import CareKitStore
 
 class KnowledgeVector: PFObject, PFSubclassing {
-    @NSManaged public var userTypeUUID:String
+    @NSManaged public var uuid:String
     @NSManaged public var vector:String
     
     static func parseClassName() -> String {
         return kPCKKnowledgeVectorClassKey
     }
     
-    convenience init(userTypeUUID: UUID) {
+    convenience init(uuid: UUID) {
         self.init()
-        self.userTypeUUID = userTypeUUID.uuidString
-        self.vector = "{\"processes\":[{\"id\":\"\(self.userTypeUUID)\",\"clock\":0}]}"
+        self.uuid = uuid.uuidString
+        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid)\",\"clock\":0}]}"
     }
     
     func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
@@ -53,11 +53,11 @@ class KnowledgeVector: PFObject, PFSubclassing {
         }
     }
     
-    class func fetchFromCloud(userTypeUUID:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,Error?)->Void){
+    class func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,Error?)->Void){
         
         //Fetch KnowledgeVector from Cloud
         let query = KnowledgeVector.query()!
-        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: userTypeUUID.uuidString)
+        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: uuid.uuidString)
         query.getFirstObjectInBackground{ (object,error) in
             
             guard let foundVector = object as? KnowledgeVector else{
@@ -65,7 +65,7 @@ class KnowledgeVector: PFObject, PFSubclassing {
                     completion(nil,nil,error)
                 }else{
                     //This is the first time the KnowledgeVector is user setup for this user
-                    let newVector = KnowledgeVector(userTypeUUID: userTypeUUID)
+                    let newVector = KnowledgeVector(uuid: uuid)
                     newVector.decodeKnowledgeVector(){
                         possiblyDecoded in
                         completion(newVector,possiblyDecoded,error)
