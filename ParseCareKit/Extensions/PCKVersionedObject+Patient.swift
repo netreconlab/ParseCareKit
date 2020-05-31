@@ -44,7 +44,6 @@ extension PCKVersionedObject{
     }
     
     func fixVersionLinkedList(_ versionFixed: Patient, backwards:Bool){
-        versionFixed.saveInBackground()
         
         if backwards{
             if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
@@ -55,7 +54,14 @@ extension PCKVersionedObject{
                         //Previous version not found, stop fixing
                         return
                     }
-                    previousFound.next = versionFixed
+                    versionFixed.previous = previousFound
+                    versionFixed.saveInBackground()
+                    
+                    if previousFound.next == nil{
+                        previousFound.next = versionFixed
+                        previousFound.saveInBackground()
+                    }
+                    
                     self.fixVersionLinkedList(previousFound, backwards: backwards)
                 }
             }
@@ -69,7 +75,14 @@ extension PCKVersionedObject{
                         //Next version not found, stop fixing
                         return
                     }
-                    nextFound.next = versionFixed
+                    versionFixed.next = nextFound
+                    versionFixed.saveInBackground()
+                    
+                    if nextFound.previous == nil{
+                        nextFound.previous = versionFixed
+                        nextFound.saveInBackground()
+                    }
+                    
                     self.fixVersionLinkedList(nextFound, backwards: backwards)
                 }
             }
