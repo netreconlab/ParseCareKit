@@ -287,6 +287,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
                     self.previousVersion!.nextVersion = self
+                    self.previousVersion!.saveInBackground()
                 }
             }
             
@@ -299,6 +300,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
                         self.nextVersion!.previousVersion = self
+                        self.nextVersion!.saveInBackground()
                     }
                 }
                 
