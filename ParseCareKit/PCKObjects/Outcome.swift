@@ -89,7 +89,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         //Check to see if already in the cloud
         let query = Outcome.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.id)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
@@ -127,7 +127,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Outcome.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.id)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
@@ -166,7 +166,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.id)
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
@@ -252,7 +252,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.id)
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
@@ -308,7 +308,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
         }
         
-        self.entityId = outcome.id
+        self.id = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
         self.tags = outcome.tags

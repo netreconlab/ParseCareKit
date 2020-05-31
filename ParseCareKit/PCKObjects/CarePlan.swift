@@ -230,7 +230,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName). Entity missing uuid: \(carePlan)")
         }
-        self.entityId = carePlan.id
+        self.id = carePlan.id
         self.deletedDate = carePlan.deletedDate
         self.title = carePlan.title
         self.groupIdentifier = carePlan.groupIdentifier
@@ -306,7 +306,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     open func convertToCareKit(fromCloud:Bool=true)->OCKCarePlan?{
         
         //Create bare Entity and replace contents with Parse contents
-        var carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: self.patientUUID)
+        var carePlan = OCKCarePlan(id: self.id, title: self.title, patientUUID: self.patientUUID)
         
         if fromCloud{
             guard let decodedCarePlan = decodedCareKitObject(carePlan) else {
