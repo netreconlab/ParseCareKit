@@ -265,24 +265,26 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.findCarePlan(self.previousVersionUUID){
             previousCarePlan in
             
-            self.previousVersion = previousCarePlan
+            self.previous = previousCarePlan
             
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
                     self.previousVersion!.nextVersion = self
+                    self.previousVersion!.saveInBackground()
                 }
             }
             
             self.findCarePlan(self.nextVersionUUID){
                 nextCarePlan in
                 
-                self.nextVersion = nextCarePlan
+                self.next = nextCarePlan
                 
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
                         self.nextVersion!.previousVersion = self
+                        self.nextVersion!.saveInBackground()
                     }
                 }
                 
@@ -295,7 +297,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 self.findPatient(patientUUID){
                     patient in
                     
-                    self.currentPatient = patient
+                    self.patient = patient
                     completion(self)
                 }
             }
