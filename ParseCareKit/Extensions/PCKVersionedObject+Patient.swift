@@ -27,10 +27,10 @@ extension PCKVersionedObject{
             json["deletedDate"] = deletedDate
         }
         if let previous = self.previousVersionUUID{
-            json["previousVersionUUID"] = previous
+            json["previousVersionUUID"] = previous.uuidString
         }
         if let next = self.nextVersionUUID{
-            json["nextVersionUUID"] = next
+            json["nextVersionUUID"] = next.uuidString
         }
         let entity:OCKPatient!
         do {

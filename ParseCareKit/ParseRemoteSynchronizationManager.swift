@@ -13,19 +13,13 @@ import Parse
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
 */
-public protocol ParseSynchronizationDelegate{
+public protocol ParseRemoteSynchronizationDelegate {
+    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
     func storeUpdatedOutcome(_ outcome: OCKOutcome)
     func storeUpdatedCarePlan(_ carePlan: OCKCarePlan)
     func storeUpdatedContact(_ contact: OCKContact)
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
-}
-
-/**
-Protocol that defines the properties to conform to when updates a needed and conflict resolution.
-*/
-public protocol ParseRemoteSynchronizationDelegate: ParseSynchronizationDelegate{
-    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {

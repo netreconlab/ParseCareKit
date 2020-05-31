@@ -16,8 +16,9 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     @NSManaged public var values:[OutcomeValue]
     @NSManaged var task:Task?
     @NSManaged var taskUUIDString:String?
+    @NSManaged var date:Date?
     
-    public var taskUUID:UUID? {
+    public internal(set) var taskUUID:UUID? {
         get {
             if task != nil{
                 return UUID(uuidString: task!.uuid)
@@ -29,6 +30,9 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
         set{
             taskUUIDString = newValue?.uuidString
+            if newValue?.uuidString != task?.uuid{
+                task = nil
+            }
         }
     }
     
@@ -286,8 +290,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         guard let parse = parse as? Outcome else{return}
         self.taskOccurrenceIndex = parse.taskOccurrenceIndex
         self.values = parse.values
-        self.task = parse.task
-        self.taskUUIDString = parse.taskUUIDString
+        self.currentTask = parse.currentTask
+        self.taskUUID = parse.taskUUID
     }
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool, completion: @escaping(Outcome?) -> Void){
@@ -339,15 +343,20 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             return
         }
         
-        self.findTask(taskUUID){ [weak self]
+        self.findTask(taskUUID){
             task in
             
-            guard let self = self else{
-                completion(nil)
+            self.currentTask = task
+            
+            guard let task = self.currentTask else{
+                self.date = nil
+                completion(self)
                 return
             }
             
-            self.currentTask = task
+            let schedule = task.makeSchedule()
+            self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
+            
             completion(self)
         }
     }
@@ -355,23 +364,21 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKOutcome?{
         
-        guard let task = self.task,
-            let taskUUID = UUID(uuidString: task.uuid) else{
-                print("Error in \(parseClassName). Must contain task with a uuid in \(self)")
-                return nil
+        guard let taskUUID = self.taskUUID else{
+            print("Error in \(parseClassName).convertToCareKit(). Must contain task with a uuid in \(self)")
+            return nil
         }
         
-        var outcome:OCKOutcome!
+        //Create bare Entity and replace contents with Parse contents
+        let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
+        var outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+        
         if fromCloud{
-            guard let decodedOutcome = decodedCareKitObject(self.task, taskOccurrenceIndex: self.taskOccurrenceIndex, values: self.values) else{
+            guard let decodedOutcome = decodedCareKitObject(outcome) else{
                 print("Error in \(parseClassName). Couldn't decode entity \(self)")
                 return nil
             }
             outcome = decodedOutcome
-        }else{
-            //Create bare Entity and replace contents with Parse contents
-            let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
-            outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
         }
         
         outcome.groupIdentifier = self.groupIdentifier

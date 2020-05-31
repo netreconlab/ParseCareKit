@@ -95,18 +95,15 @@ extension PCKObject{
         return jsonDictionary
     }
     
-    public func decodedCareKitObject(_ task: Task?, taskOccurrenceIndex: Int, values: [OutcomeValue])->OCKOutcome?{
-        guard let relatedTask = task,
-            let taskUUID = UUID(uuidString: relatedTask.uuid),
-            let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
+    public func decodedCareKitObject(_ bareCareKitObject: OCKOutcome)->OCKOutcome?{
+        guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).decodedCareKitObject(). Missing either task \(String(describing: task)), createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+                print("Error in \(parseClassName).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
-        let outcomeValues = values.compactMap{$0.convertToCareKit()}
-        let tempEntity = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: taskOccurrenceIndex, values: outcomeValues)
+        
         //Create bare CareKit entity from json
-        guard var json = Outcome.encodeCareKitToDictionary(tempEntity) else{return nil}
+        guard var json = Outcome.encodeCareKitToDictionary(bareCareKitObject) else{return nil}
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate

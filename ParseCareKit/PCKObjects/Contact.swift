@@ -19,8 +19,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var organization:String?
     @NSManaged public var role:String?
     @NSManaged public var title:String?
-    @NSManaged var carePlan:CarePlan?
-    @NSManaged var carePlanUUIDString:String?
+    @NSManaged private var carePlan:CarePlan?
+    @NSManaged private var carePlanUUIDString:String?
     
     public var carePlanUUID:UUID? {
         get {
@@ -34,6 +34,9 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
         set{
             carePlanUUIDString = newValue?.uuidString
+            if newValue?.uuidString != carePlan?.uuid{
+                carePlan = nil
+            }
         }
     }
     
@@ -303,8 +306,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.name = parse.name
         self.organization = parse.organization
         self.role = parse.role
-        self.carePlan = parse.carePlan
-        self.carePlanUUIDString = parse.carePlanUUIDString
+        self.currentCarePlan = parse.currentCarePlan
+        self.carePlanUUID = parse.carePlanUUID
     }
 
     open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, completion: @escaping(Contact?) -> Void){
@@ -336,6 +339,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.updatedDate = contact.updatedDate
         self.userInfo = contact.userInfo
         
+        
         if clone{
             self.createdDate = contact.createdDate
             self.notes = contact.notes?.compactMap{Note(careKitEntity: $0)}
@@ -357,14 +361,14 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.messagingNumbers = contact.messagingNumbers
         self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
         self.remoteID = contact.remoteID
+        
+        self.carePlanUUID = contact.carePlanUUID
+        self.previousVersionUUID = contact.previousVersionUUID
+        self.nextVersionUUID = contact.nextVersionUUID
+        
         //Link versions and related classes
-        self.findContact(self.previousVersionUUID){ [weak self]
+        self.findContact(self.previousVersionUUID){
             previousContact in
-            
-            guard let self = self else{
-                completion(nil)
-                return
-            }
             
             self.previousVersion = previousContact
             
@@ -375,13 +379,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 }
             }
             
-            self.findContact(self.nextVersionUUID){ [weak self]
+            self.findContact(self.nextVersionUUID){
                 nextContact in
-                
-                guard let self = self else{
-                    completion(nil)
-                    return
-                }
                 
                 self.nextVersion = nextContact
                 
@@ -398,13 +397,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     return
                 }
                 
-                self.findCarePlan(carePlanUUID){ [weak self]
+                self.findCarePlan(carePlanUUID){
                     carePlan in
-                    
-                    guard let self = self else{
-                        completion(nil)
-                        return
-                    }
                     
                     self.currentCarePlan = carePlan
                     completion(self)
@@ -419,7 +413,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         
         //Create bare Entity and replace contents with Parse contents
         let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(self.name)
-        var contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: nil)
+        
+        var contact = OCKContact(id: self.entityId, name: nameComponents, carePlanUUID: self.carePlanUUID)
         
         if fromCloud{
             guard let decodedContact = decodedCareKitObject(contact) else{
@@ -451,18 +446,14 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
             contact.timezone = timeZone
         }
-        
         contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
         contact.phoneNumbers = self.phoneNumbers
         contact.messagingNumbers = self.messagingNumbers
         contact.emailAddresses = self.emailAddresses
         contact.otherContactInfo = self.otherContactInfo
-        
-        guard let carePlanID = self.carePlan?.uuid,
-            let carePlanUUID = UUID(uuidString: carePlanID) else{
-            return contact
+        if let effectiveDate = self.effectiveDate{
+            contact.effectiveDate = effectiveDate
         }
-        contact.carePlanUUID = carePlanUUID
         return contact
     }
 }

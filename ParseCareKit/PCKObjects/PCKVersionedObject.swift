@@ -11,10 +11,11 @@ import Parse
 
 open class PCKVersionedObject: PCKObject {
     @NSManaged public var effectiveDate: Date?
-    @NSManaged var previous: PCKVersionedObject?
-    @NSManaged var previousVersionUUIDString: String?
-    @NSManaged var next: PCKVersionedObject?
-    @NSManaged var nextVersionUUIDString: String?
+    @NSManaged private var previous: PCKVersionedObject?
+    @NSManaged private var previousVersionUUIDString: String?
+    @NSManaged private var next: PCKVersionedObject?
+    @NSManaged private var nextVersionUUIDString: String?
+    
     public internal(set) var nextVersionUUID:UUID? {
         get {
             if next != nil{
@@ -27,6 +28,9 @@ open class PCKVersionedObject: PCKObject {
         }
         set{
             nextVersionUUIDString = newValue?.uuidString
+            if newValue?.uuidString != next?.uuid{
+                next = nil
+            }
         }
     }
     
@@ -52,6 +56,9 @@ open class PCKVersionedObject: PCKObject {
         }
         set{
             previousVersionUUIDString = newValue?.uuidString
+            if newValue?.uuidString != previous?.uuid{
+                previous = nil
+            }
         }
     }
     

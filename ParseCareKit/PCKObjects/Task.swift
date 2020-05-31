@@ -16,8 +16,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var instructions:String?
     @NSManaged public var title:String?
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
-    @NSManaged var carePlan:CarePlan?
-    @NSManaged var carePlanUUIDString:String?
+    @NSManaged private var carePlan:CarePlan?
+    @NSManaged private var carePlanUUIDString:String?
     
     public var carePlanUUID:UUID? {
         get {
@@ -31,6 +31,9 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
         set{
             carePlanUUIDString = newValue?.uuidString
+            if newValue?.uuidString != carePlan?.uuid{
+                carePlan = nil
+            }
         }
     }
     
@@ -222,8 +225,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.instructions = parse.instructions
         self.title = parse.title
         self.elements = parse.elements
-        self.carePlan = parse.carePlan
-        self.carePlanUUIDString = parse.carePlanUUIDString
+        self.currentCarePlan = parse.currentCarePlan
+        self.carePlanUUID = parse.carePlanUUID
     }
     
     
@@ -337,7 +340,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         //Create bare Entity and replace contents with Parse contents
         let careKitScheduleElements = self.elements.compactMap{$0.convertToCareKit()}
         let schedule = OCKSchedule(composing: careKitScheduleElements)
-        var task = OCKTask(id: self.entityId, title: self.title, carePlanUUID: nil, schedule: schedule)
+        var task = OCKTask(id: self.entityId, title: self.title, carePlanUUID: self.carePlanUUID, schedule: schedule)
         
         if fromCloud{
             guard let decodedTask = decodedCareKitObject(task) else{
@@ -363,12 +366,11 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
         task.notes = self.notes?.compactMap{$0.convertToCareKit()}
         
-        guard let parseCarePlan = self.carePlan,
-            let carePlanUUID = UUID(uuidString: parseCarePlan.uuid) else{
-            return task
-        }
-        task.carePlanUUID = carePlanUUID
         return task
+    }
+    
+    func makeSchedule() -> OCKSchedule {
+        return OCKSchedule(composing: self.elements.compactMap{$0.convertToCareKit()})
     }
     
     open override func stampRelationalEntities(){

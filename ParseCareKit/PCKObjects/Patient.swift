@@ -246,6 +246,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             uuidsToQuery.append(nextUUID)
         }
         
+        self.previousVersionUUID = patient.previousVersionUUID
+        self.nextVersionUUID = patient.nextVersionUUID
+        
         //Link versions and related classes
         self.findPatient(self.previousVersionUUID){
             previousPatient in

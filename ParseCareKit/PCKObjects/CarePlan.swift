@@ -12,13 +12,13 @@ import CareKitStore
 
 open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
 
-    @NSManaged var patient:Patient?
-    @NSManaged var patientUUIDString:String?
+    @NSManaged private var patient:Patient?
+    @NSManaged private var patientUUIDString:String?
     @NSManaged public var title:String
     
     public var patientUUID:UUID? {
         get {
-            if next != nil{
+            if patient != nil{
                 return UUID(uuidString: patient!.uuid)
             }else if patientUUIDString != nil {
                 return UUID(uuidString: patientUUIDString!)
@@ -28,6 +28,9 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         }
         set{
             patientUUIDString = newValue?.uuidString
+            if newValue?.uuidString != patient?.uuid{
+                patient = nil
+            }
         }
     }
     
@@ -209,8 +212,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     open override func copy(_ parse: PCKObject){
         super.copy(parse)
         guard let parse = parse as? CarePlan else{return}
-        self.patient = parse.patient
-        self.patientUUIDString = parse.patientUUIDString
+        self.currentPatient = parse.currentPatient
+        self.patientUUID = parse.patientUUID
         self.title = parse.title
     }
     
@@ -253,14 +256,14 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             self.notes = Note.updateIfNeeded(self.notes, careKit: carePlan.notes)
         }
         self.remoteID = carePlan.remoteID
+        
+        self.patientUUID = carePlan.patientUUID
+        self.previousVersionUUID = carePlan.previousVersionUUID
+        self.nextVersionUUID = carePlan.nextVersionUUID
+        
         //Link versions and related classes
-        self.findCarePlan(self.previousVersionUUID){ [weak self]
+        self.findCarePlan(self.previousVersionUUID){
             previousCarePlan in
-            
-            guard let self = self else{
-                completion(nil)
-                return
-            }
             
             self.previousVersion = previousCarePlan
             
@@ -271,13 +274,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 }
             }
             
-            self.findCarePlan(self.nextVersionUUID){ [weak self]
+            self.findCarePlan(self.nextVersionUUID){
                 nextCarePlan in
-                
-                guard let self = self else{
-                    completion(nil)
-                    return
-                }
                 
                 self.nextVersion = nextCarePlan
                 
@@ -294,13 +292,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                     return
                 }
                 
-                self.findPatient(patientUUID){ [weak self]
+                self.findPatient(patientUUID){
                     patient in
-                    
-                    guard let self = self else{
-                        completion(nil)
-                        return
-                    }
                     
                     self.currentPatient = patient
                     completion(self)
@@ -312,17 +305,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKCarePlan?{
         
-        let patientUUID:UUID?
-        if let patientUUIDString = patient?.uuid{
-            patientUUID = UUID(uuidString: patientUUIDString)
-            if patientUUID == nil{
-                print("Warning in \(parseClassName).convertToCareKit. Couldn't make UUID from \(patientUUIDString). Attempted to convert anyways...")
-            }
-        }else{
-            patientUUID = nil
-        }
         //Create bare Entity and replace contents with Parse contents
-        var carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: patientUUID)
+        var carePlan = OCKCarePlan(id: self.entityId, title: self.title, patientUUID: self.patientUUID)
         
         if fromCloud{
             guard let decodedCarePlan = decodedCareKitObject(carePlan) else {
