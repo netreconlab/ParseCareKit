@@ -247,13 +247,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
         
         //Link versions and related classes
-        self.findPatient(self.previousVersionUUID){ [weak self]
+        self.findPatient(self.previousVersionUUID){
             previousPatient in
-            
-            guard let self = self else{
-                completion(nil)
-                return
-            }
             
             self.previousVersion = previousPatient
             
@@ -264,14 +259,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                 }
             }
             
-            self.findPatient(self.nextVersionUUID){ [weak self]
+            self.findPatient(self.nextVersionUUID){
                 nextPatient in
-                
-                guard let self = self else{
-                    completion(nil)
-                    return
-                }
-                
+               
                 self.nextVersion = nextPatient
                 
                 //Fix doubly linked list if it's broken in the cloud
