@@ -42,4 +42,38 @@ extension PCKVersionedObject{
         }
         return entity
     }
+    
+    func fixVersionLinkedList(_ versionFixed: Patient, backwards:Bool){
+        versionFixed.saveInBackground()
+        
+        if backwards{
+            if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
+                findPatient(versionFixed.previousVersionUUID){
+                    previousFound in
+                    
+                    guard let previousFound = previousFound else{
+                        //Previous version not found, stop fixing
+                        return
+                    }
+                    previousFound.next = versionFixed
+                    self.fixVersionLinkedList(previousFound, backwards: backwards)
+                }
+            }
+            //We are done fixing
+        }else{
+            if versionFixed.nextVersionUUIDString != nil && versionFixed.next == nil{
+                findPatient(versionFixed.nextVersionUUID){
+                    nextFound in
+                    
+                    guard let nextFound = nextFound else{
+                        //Next version not found, stop fixing
+                        return
+                    }
+                    nextFound.next = versionFixed
+                    self.fixVersionLinkedList(nextFound, backwards: backwards)
+                }
+            }
+            //We are done fixing
+        }
+    }
 }

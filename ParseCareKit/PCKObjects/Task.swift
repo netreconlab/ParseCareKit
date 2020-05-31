@@ -287,7 +287,9 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             if self.previousVersion != nil{
                 if self.previousVersion!.nextVersion == nil{
                     self.previousVersion!.nextVersion = self
-                    self.previousVersion!.saveInBackground()
+                    if let needsFixing = self.previousVersion!.nextVersion as? Task{
+                        self.fixVersionLinkedList(needsFixing, backwards: true)
+                    }
                 }
             }
             
@@ -300,7 +302,9 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 if self.nextVersion != nil{
                     if self.nextVersion!.previousVersion == nil{
                         self.nextVersion!.previousVersion = self
-                        self.nextVersion!.saveInBackground()
+                        if let needsFixing = self.nextVersion!.previousVersion as? Task{
+                            self.fixVersionLinkedList(needsFixing, backwards: false)
+                        }
                     }
                 }
                 
