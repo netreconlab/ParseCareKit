@@ -370,7 +370,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.findContact(self.previousVersionUUID){
             previousContact in
             
-            self.previousVersion = previousContact
+            self.previous = previousContact
             
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
@@ -382,7 +382,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             self.findContact(self.nextVersionUUID){
                 nextContact in
                 
-                self.nextVersion = nextContact
+                self.next = nextContact
                 
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
@@ -400,7 +400,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 self.findCarePlan(carePlanUUID){
                     carePlan in
                     
-                    self.currentCarePlan = carePlan
+                    self.carePlan = carePlan
                     completion(self)
                 }
             }

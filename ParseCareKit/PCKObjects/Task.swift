@@ -278,15 +278,10 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.carePlanUUID = task.carePlanUUID
         
         //Link versions and related classes
-        self.findTask(self.previousVersionUUID){ [weak self]
+        self.findTask(self.previousVersionUUID){
             previousTask in
             
-            guard let self = self else{
-                completion(nil)
-                return
-            }
-            
-            self.previousVersion = previousTask
+            self.previous = previousTask
             
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
@@ -295,15 +290,10 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 }
             }
             
-            self.findTask(self.nextVersionUUID){ [weak self]
+            self.findTask(self.nextVersionUUID){
                 nextTask in
                 
-                guard let self = self else{
-                    completion(nil)
-                    return
-                }
-                
-                self.nextVersion = nextTask
+                self.next = nextTask
                 
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
@@ -318,15 +308,10 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     return
                 }
                 
-                self.findCarePlan(carePlanUUID){ [weak self]
+                self.findCarePlan(carePlanUUID){
                     carePlan in
                     
-                    guard let self = self else{
-                        completion(nil)
-                        return
-                    }
-                    
-                    self.currentCarePlan = carePlan
+                    self.carePlan = carePlan
                     completion(self)
                 }
             }

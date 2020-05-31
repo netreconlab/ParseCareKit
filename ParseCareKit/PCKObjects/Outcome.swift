@@ -346,7 +346,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.findTask(taskUUID){
             task in
             
-            self.currentTask = task
+            self.task = task
             
             guard let task = self.currentTask else{
                 self.date = nil

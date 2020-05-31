@@ -237,15 +237,6 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             self.notes = Note.updateIfNeeded(self.notes, careKit: patient.notes)
         }
         
-        //Setting up CarePlan query
-        var uuidsToQuery = [UUID]()
-        if let previousUUID = patient.previousVersionUUID{
-            uuidsToQuery.append(previousUUID)
-        }
-        if let nextUUID = patient.nextVersionUUID{
-            uuidsToQuery.append(nextUUID)
-        }
-        
         self.previousVersionUUID = patient.previousVersionUUID
         self.nextVersionUUID = patient.nextVersionUUID
         
@@ -253,7 +244,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.findPatient(self.previousVersionUUID){
             previousPatient in
             
-            self.previousVersion = previousPatient
+            self.previous = previousPatient
             
             //Fix doubly linked list if it's broken in the cloud
             if self.previousVersion != nil{
@@ -265,7 +256,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             self.findPatient(self.nextVersionUUID){
                 nextPatient in
                
-                self.nextVersion = nextPatient
+                self.next = nextPatient
                 
                 //Fix doubly linked list if it's broken in the cloud
                 if self.nextVersion != nil{
