@@ -80,13 +80,38 @@ ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSync
 ```swift
 /*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
-let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
+let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-Register as a delegate just in case ParseCareKit needs your application to update a CareKit entity. ParseCareKit doesn't have access to your store, so your app will have to update. Registering for the delegates also allows you to handle synching conflicts. An example is below:
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the KnowledgeVector. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+
+```swift
+let userTypeUUIDDictionary = [
+"doctor": UUID().uuidString,
+"patient": UUID().uuidString
+]
+
+//Store the possible uuids for each type
+PFUser.current().userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
+PFUser.current().loggedInType = "doctor" 
+PFUser.current().saveInBackground()
+
+//Start synch with the correct knowlege vector for the particular type of user
+let lastLoggedInType = PFUser.current().loggedInType
+let userTypeUUIDString = PFUser.current().userTypes[lastLoggedInType] as! String
+let userTypeUUID = UUID(uuidString: userTypeUUID)!
+
+//Start synching 
+let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: userTypeUUID, auto: true)
+let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
+remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
+remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
+```
+
+Register as a delegate just in case ParseCareKit needs your application to update a CareKit entity. ParseCareKit doesn't have access to your CareKitStor, so your app will have to make the necessary update if ParseCareKit detects a problem and needs to make an update locally. Registering for the delegates also allows you to handle synching conflicts. An example is below:
 
 
 ```swift
