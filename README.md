@@ -73,17 +73,90 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
+### Using vector clocks aka CareKits KnowledgeVector (`ParseRemoteSynchronizationManager`)
+
+ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
 /*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
-This works with 1 or many devices per patient. Currently this only syncs OCKTask and OCKOutcome*/
-let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
+This works with 1 or many devices per patient.*/
+let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
+```
+
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the KnowledgeVector. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+
+```swift
+let userTypeUUIDDictionary = [
+"doctor": UUID().uuidString,
+"patient": UUID().uuidString
+]
+
+//Store the possible uuids for each type
+PFUser.current().userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
+PFUser.current().loggedInType = "doctor" 
+PFUser.current().saveInBackground()
+
+//Start synch with the correct knowlege vector for the particular type of user
+let lastLoggedInType = PFUser.current().loggedInType
+let userTypeUUIDString = PFUser.current().userTypes[lastLoggedInType] as! String
+let userTypeUUID = UUID(uuidString: userTypeUUID)!
+
+//Start synching 
+let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: userTypeUUID, auto: true)
+let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
+remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
+remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
+```
+
+Register as a delegate just in case ParseCareKit needs your application to update a CareKit entity. ParseCareKit doesn't have access to your CareKitStor, so your app will have to make the necessary update if ParseCareKit detects a problem and needs to make an update locally. Registering for the delegates also allows you to handle synching conflicts. An example is below:
 
 
+```swift
+extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizationDelegate{
+    func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
+        print("Implement")
+    }
+    
+    func remote(_ remote: OCKRemoteSynchronizable, didUpdateProgress progress: Double) {
+        print("Implement")
+    }
+    
+    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
+        let conflictPolicy = OCKMergeConflictResolutionPolicy.keepDevice
+        completion(conflictPolicy)
+    }
+    
+    func storeUpdatedOutcome(_ outcome: OCKOutcome) {
+        dataStore.updateAnyOutcome(outcome, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
+        dataStore.updateAnyCarePlan(carePlan, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedContact(_ contact: OCKContact) {
+        dataStore.updateAnyContact(contact, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedPatient(_ patient: OCKPatient) {
+        dataStore.updateAnyPatient(patient, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedTask(_ task: OCKTask) {
+        dataStore.updateAnyTask(task, callbackQueue: .global(qos: .background), completion: nil)
+    }
+}
+
+```
+
+### Using the wall clock (`ParseSynchronizedStoreManager`)
+
+You can also use ParseCareKit to stay synchronized with the `OCKStore` or `OCKAnyStoreProtocol` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
+
+```swift
 /*Use wall clock and OCKSynchronizedStoreManager to keep data synced. Useful if you are using CareKit 2.0.1 or below
 This should only be used if there's 1 device per patient or
 if all of a patients devices are on the same clock or else they may get out-of-sync*/
@@ -94,7 +167,7 @@ let cloudStoreManager = ParseSynchronizedStoreManager(dataStoreManager)
 
 During initialization of `ParseSynchronizedStoreManager`, all CareKit data that has `remoteID == nil` will automatically be synced to your parse-server, once synced, the `remoteID` for each entity will be replaced by the corresponding `objectId` on your parse-server.
 
-** Note that only the latest state of an OCK entity is synchronized to parse-server. The parse-server doesn't maintain the versioned data like the local OCKStore. If you want this functionality, you will have to develop it as the framework doesn't support it, and parse-server queries are not setup for this. **
+** Note that only the latest state of an OCK entity is synchronized to parse-server. **
 
 The mapping from CareKit -> Parse tables/classes are as follows:
 * OCKPatient <-> Patient - Note that by default of this framework, any "user" (doctor, patient, caregiver, etc.) is an `OCKPatient` and will have a corresponding record in your Parse `User` table.
@@ -208,7 +281,7 @@ class CancerPatient: Patient{
 
 Then you need to pass your custom class when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
-```
+```swift
 let updatedConcreteClasses: [PCKStoreClass: PCKRemoteSynchronized] = [
     .patient: CancerPatient()
 ]
