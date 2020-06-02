@@ -19,36 +19,43 @@ extension PCKObject{
         
             if success{
                 print("Successfully saved \(task) in Cloud.")
-                
-                //Fix versioning doubly linked list if it's broken in the cloud
-                if task.previous != nil {
-                    if task.previous!.next == nil{
-                        task.previous!.next = task
-                        task.previous!.next!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                task.fixVersionLinkedList(task.previous! as! Task, backwards: true)
+                task.linkRelated{
+                    (linked,_) in
+                    
+                    if linked{
+                        task.saveInBackground()
+                    }
+                    
+                    //Fix versioning doubly linked list if it's broken in the cloud
+                    if task.previous != nil {
+                        if task.previous!.next == nil{
+                            task.previous!.next = task
+                            task.previous!.next!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    task.fixVersionLinkedList(task.previous! as! Task, backwards: true)
+                                }
+                            }
+                        }
+                    }
+                    
+                    if task.next != nil {
+                        if task.next!.previous == nil{
+                            task.next!.previous = task
+                            task.next!.previous!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    task.fixVersionLinkedList(task.next! as! Task, backwards: false)
+                                }
                             }
                         }
                     }
                 }
-                
-                if task.next != nil {
-                    if task.next!.previous == nil{
-                        task.next!.previous = task
-                        task.next!.previous!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                task.fixVersionLinkedList(task.next! as! Task, backwards: false)
-                            }
-                        }
-                    }
-                }
-                
+                completion(success,error)
             }else{
                 print("Error in \(task.parseClassName).addToCloud(). \(String(describing: error))")
+                completion(success,error)
             }
-            completion(success,error)
         }
     }
     

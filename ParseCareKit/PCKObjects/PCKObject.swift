@@ -27,8 +27,6 @@ open class PCKObject: PFObject {
     @NSManaged public var notes: [Note]?
     @NSManaged public var remoteID: String?
     
-    //public weak var store:OCKStore!
-    
     open func stampRelationalEntities(){
         self.notes?.forEach{$0.stamp(self.logicalClock)}
     }

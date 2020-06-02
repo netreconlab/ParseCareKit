@@ -131,27 +131,24 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKContactClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyContact, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyContact) {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true, completion: completion)
+        _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
     open func new() -> PCKSynchronized {
         return Contact()
     }
     
-    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity)-> PCKSynchronized?{
         
         switch careKitEntity {
         case .contact(let entity):
-            let newClass = Contact()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return Contact(careKitEntity: entity)
+            
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            completion(nil)
+            return nil
         }
     }
     
@@ -310,12 +307,11 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.carePlanUUID = parse.carePlanUUID
     }
 
-    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool, completion: @escaping(Contact?) -> Void){
+    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool)-> Contact?{
         
         guard let _ = PFUser.current(),
             let contact = contactAny as? OCKContact else{
-            completion(nil)
-            return
+            return nil
         }
         
         if let uuid = contact.uuid?.uuidString{
@@ -365,32 +361,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.carePlanUUID = contact.carePlanUUID
         self.previousVersionUUID = contact.previousVersionUUID
         self.nextVersionUUID = contact.nextVersionUUID
-        
-        //Link versions and related classes
-        self.findContact(self.previousVersionUUID){
-            previousContact in
-            
-            self.previous = previousContact
-            
-            self.findContact(self.nextVersionUUID){
-                nextContact in
-                
-                self.next = nextContact
-                
-                guard let carePlanUUID = self.carePlanUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                    completion(self)
-                    return
-                }
-                
-                self.findCarePlan(carePlanUUID){
-                    carePlan in
-                    
-                    self.carePlan = carePlan
-                    completion(self)
-                }
-            }
-        }
+        return self
     }
     
     
@@ -441,6 +412,48 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             contact.effectiveDate = effectiveDate
         }
         return contact
+    }
+    
+    ///Link versions and related classes
+    public func linkRelated(completion: @escaping(Bool,Contact)->Void){
+        
+        var linkedNew = false
+        
+        //Link versions and related classes
+        self.findContact(self.previousVersionUUID){
+            previousContact in
+            
+            self.previous = previousContact
+            
+            if self.previous != nil{
+                linkedNew = true
+            }
+            
+            self.findContact(self.nextVersionUUID){
+                nextContact in
+                
+                self.next = nextContact
+                if self.next != nil{
+                    linkedNew = true
+                }
+                
+                guard let carePlanUUID = self.carePlanUUID else{
+                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                    completion(linkedNew,self)
+                    return
+                }
+                
+                self.findCarePlan(carePlanUUID){
+                    carePlan in
+                    
+                    self.carePlan = carePlan
+                    if self.carePlan != nil{
+                        linkedNew = true
+                    }
+                    completion(linkedNew,self)
+                }
+            }
+        }
     }
 }
 

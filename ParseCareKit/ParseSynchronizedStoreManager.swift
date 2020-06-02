@@ -105,154 +105,92 @@ open class ParseSynchronizedStoreManager: NSObject{
     private func updateCloudContacts(_ contacts: [OCKAnyContact]){
 
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0){
-                copiedContact in
-                guard let contact = copiedContact as? Contact else{return}
-                contact.updateCloud(){(_,_) in}
-            }
+            Contact(careKitEntity: $0).updateCloud(){(_,_) in}
         }
     }
     
     private func deleteCloudContacts(_ contacts: [OCKAnyContact]){
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0){
-                copiedContact in
-                guard let contact = copiedContact as? Contact else{return}
-                contact.deleteFromCloud(){(_,_) in}
-            }
+            Contact(careKitEntity: $0).deleteFromCloud(){(_,_) in}
         }
     }
     
     private func addCloudContacts(_ contacts: [OCKAnyContact]) {
         contacts.forEach{
-            let _ = Contact(careKitEntity: $0){
-                copiedContact in
-                guard let contact = copiedContact as? Contact else{return}
-                contact.addToCloud(){(_,_) in}
-            }
+            Contact(careKitEntity: $0).addToCloud(){(_,_) in}
         }
     }
     
     private func updateCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
-            let outcome = $0
-            let _ = Outcome(careKitEntity: outcome){
-                copiedOutcome in
-                guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.updateCloud(){(_,_) in}
-            }
+            Outcome(careKitEntity: $0).updateCloud(){(_,_) in}
         }
     }
     
     private func deleteCloudOutcomes(_ outcomes: [OCKAnyOutcome]){
         outcomes.forEach{
-            let careKitEntity = $0
-            let _ = Outcome(careKitEntity: careKitEntity){
-                copiedOutcome in
-                guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.deleteFromCloud(){(_,_) in}
-            }
+            Outcome(careKitEntity: $0).deleteFromCloud(){(_,_) in}
         }
     }
     
     private func addCloudOutcomes(_ outcomes: [OCKAnyOutcome]) {
         outcomes.forEach{
-            let _ = Outcome(careKitEntity: $0){
-                copiedOutcome in
-                guard let outcome = copiedOutcome as? Outcome else{return}
-                outcome.addToCloud(){(_,_) in}
-            }
+            Outcome(careKitEntity: $0).addToCloud(){(_,_) in}
         }
     }
     
     private func updateCloudTasks(_ tasks: [OCKAnyTask]){
         tasks.forEach{
-            let _ = Task(careKitEntity: $0){
-                copiedTask in
-                guard let task = copiedTask as? Task else{return}
-                task.updateCloud(){(_,_) in}
-            }
+            Task(careKitEntity: $0).updateCloud(){(_,_) in}
         }
     }
     
     private func deleteCloudTasks(_ tasks: [OCKAnyTask]){
         tasks.forEach{
-            let _ = Task(careKitEntity: $0){
-                copiedTask in
-                guard let task = copiedTask as? Task else{return}
-                task.deleteFromCloud(){(_,_) in}
-            }
+            Task(careKitEntity: $0).deleteFromCloud(){(_,_) in}
         }
     }
     
     private func addCloudTasks(_ tasks: [OCKAnyTask]) {
         tasks.forEach{
-            let _ = Task(careKitEntity: $0){
-                copiedTask in
-                guard let task = copiedTask as? Task else{return}
-                task.addToCloud(){(_,_) in}
-            }
+            Task(careKitEntity: $0).addToCloud(){(_,_) in}
         }
     }
     
     private func updateCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0){
-                copiedCarePlan in
-                guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.updateCloud(){(_,_) in}
-            }
+            CarePlan(careKitEntity: $0).updateCloud(){(_,_) in}
         }
     }
     
     private func deleteCloudCarePlans(_ carePlans: [OCKAnyCarePlan]){
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0){
-                copiedCarePlan in
-                guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.deleteFromCloud(){(_,_) in}
-            }
+            CarePlan(careKitEntity: $0).deleteFromCloud(){(_,_) in}
         }
     }
     
     private func addCloudCarePlans(_ carePlans: [OCKAnyCarePlan]) {
         carePlans.forEach{
-            let _ = CarePlan(careKitEntity: $0){
-                copiedCarePlan in
-                guard let carePlan = copiedCarePlan as? CarePlan else{return}
-                carePlan.addToCloud(){(_,_) in}
-            }
+            CarePlan(careKitEntity: $0).addToCloud(){(_,_) in}
         }
     }
     
     private func updateCloudPatients(_ patients: [OCKAnyPatient]){
         
         patients.forEach{
-            let _ = Patient(careKitEntity: $0){
-                copiedPatient in
-                guard let patient = copiedPatient as? Patient else{return}
-                patient.updateCloud(){(_,_) in}
-            }
+            Patient(careKitEntity: $0).updateCloud(){(_,_) in}
         }
     }
     
     private func deleteCloudPatients(_ patients: [OCKAnyPatient]){
         patients.forEach{
-            let _ = Patient(careKitEntity: $0){
-                copiedPatient in
-                guard let patient = copiedPatient as? Patient else{return}
-                patient.deleteFromCloud(){(_,_) in}
-            }
+            Patient(careKitEntity: $0).deleteFromCloud(){(_,_) in}
         }
     }
     
     private func addCloudPatients(_ patients: [OCKAnyPatient]) {
         patients.forEach{
-            let _ = Patient(careKitEntity: $0){
-                copiedPatient in
-                guard let patient = copiedPatient as? Patient else{return}
-                patient.addToCloud(){(_,_) in}
-            }
+            Patient(careKitEntity: $0).addToCloud(){(_,_) in}
         }
     }
     

@@ -21,27 +21,24 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKPatientClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyPatient, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyPatient) {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true, completion: completion)
+        _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
     open func new() -> PCKSynchronized {
         return Patient()
     }
     
-    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
     
         switch careKitEntity {
         case .patient(let entity):
-            let newClass = Patient()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return Patient(careKitEntity: entity)
+            
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            completion(nil)
+            return nil
         }
     }
     
@@ -198,12 +195,11 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.alergies = parse.alergies
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, completion: @escaping(Patient?) -> Void){
+    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)->Patient?{
         
         guard let _ = PFUser.current(),
             let patient = patientAny as? OCKPatient else{
-                completion(nil)
-            return
+            return nil
         }
         
         if let uuid = patient.uuid?.uuidString {
@@ -239,20 +235,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         
         self.previousVersionUUID = patient.previousVersionUUID
         self.nextVersionUUID = patient.nextVersionUUID
-        
-        //Link versions and related classes
-        self.findPatient(self.previousVersionUUID){
-            previousPatient in
-            
-            self.previous = previousPatient
-            
-            self.findPatient(self.nextVersionUUID){
-                nextPatient in
-               
-                self.next = nextPatient
-                completion(self)
-            }
-        }
+        return self
     }
     
     open func convertToCareKit(fromCloud:Bool=true)->OCKPatient?{
@@ -287,5 +270,29 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             patient.sex = OCKBiologicalSex(rawValue: sex)
         }
         return patient
+    }
+    
+    ///Link versions and related classes
+    public func linkRelated(completion: @escaping(Bool,Patient)->Void){
+        var linkedNew = false
+        //Link versions and related classes
+        self.findPatient(self.previousVersionUUID){
+            previousPatient in
+            
+            self.previous = previousPatient
+            if self.previous != nil{
+                linkedNew = true
+            }
+            
+            self.findPatient(self.nextVersionUUID){
+                nextPatient in
+               
+                self.next = nextPatient
+                if self.next != nil{
+                    linkedNew = true
+                }
+                completion(linkedNew,self)
+            }
+        }
     }
 }

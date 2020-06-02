@@ -55,31 +55,4 @@ public class ParseCareKitUtility {
         
         return dateFormatter.date(from: date)
     }
-    
-    public class func populateDummyParseData(){
-        let patient = Patient()
-        patient.uuid = "dummy"
-        patient.entityId = "dummy"
-        patient.saveInBackground()
-        
-        let contact = Contact()
-        contact.uuid = "dummy"
-        contact.entityId = "dummy"
-        contact.saveInBackground()
-        
-        let carePlan = CarePlan()
-        carePlan.uuid = "dummy"
-        carePlan.entityId = "dummy"
-        carePlan.saveInBackground()
-        
-        let task = Task()
-        task.uuid = "dummy"
-        task.entityId = "dummy"
-        task.saveInBackground()
-        
-        let outcome = Outcome()
-        outcome.uuid = "dummy"
-        outcome.entityId = "dummy"
-        outcome.saveInBackground()
-    }
 }

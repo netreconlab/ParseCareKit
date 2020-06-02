@@ -50,27 +50,23 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         return kPCKOutcomeClassKey
     }
 
-    public convenience init(careKitEntity: OCKAnyOutcome, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyOutcome) {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true, completion: completion)
+        _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
     public func new() -> PCKSynchronized {
         return Outcome()
     }
     
-    public func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
+    public func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
         
         switch careKitEntity {
         case .outcome(let entity):
-            let newClass = Outcome()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return Outcome(careKitEntity: entity)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            completion(nil)
+            return nil
         }
     }
     
@@ -294,12 +290,11 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.taskUUID = parse.taskUUID
     }
         
-    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool, completion: @escaping(Outcome?) -> Void){
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool)->Outcome?{
         
         guard let _ = PFUser.current(),
             let outcome = outcomeAny as? OCKOutcome else{
-            completion(nil)
-            return
+            return nil
         }
         
         if let uuid = outcome.uuid?.uuidString{
@@ -336,29 +331,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             self.notes = Note.updateIfNeeded(self.notes, careKit: outcome.notes)
             self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values)
         }
-        
-        guard let taskUUID = self.taskUUID else{
-            //Finished if there's no Task, otherwise see if it's in the cloud
-            completion(self)
-            return
-        }
-        
-        self.findTask(taskUUID){
-            task in
-            
-            self.task = task
-            
-            guard let task = self.currentTask else{
-                self.date = nil
-                completion(self)
-                return
-            }
-            
-            let schedule = task.makeSchedule()
-            self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
-            
-            completion(self)
-        }
+        return self
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -394,6 +367,31 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
         outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
         return outcome
+    }
+    
+    ///Link versions and related classes
+    public func linkRelated(completion: @escaping(Bool,Outcome)->Void){
+        guard let taskUUID = self.taskUUID else{
+            //Finished if there's no Task, otherwise see if it's in the cloud
+            completion(false,self)
+            return
+        }
+        
+        self.findTask(taskUUID){
+            task in
+            
+            self.task = task
+            
+            guard let task = self.currentTask else{
+                self.date = nil
+                completion(false,self)
+                return
+            }
+            
+            let schedule = task.makeSchedule()
+            self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
+            completion(true,self)
+        }
     }
     
     public class func tagWithId(_ outcome: OCKOutcome)-> OCKOutcome?{
