@@ -19,10 +19,13 @@ extension PCKObject{
             
             if success{
                 print("Successfully saved \(outcome) in Cloud.")
+                outcome.linkRelated{_ in
+                    completion(success,error)
+                }
             }else{
                 print("Error in CarePlan.addToCloud(). \(String(describing: error))")
+                completion(success,error)
             }
-            completion(success,error)
         }
     }
     
