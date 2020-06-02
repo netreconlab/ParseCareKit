@@ -19,34 +19,43 @@ extension PCKObject{
             if success{
                 print("Successfully added CarePlan \(carePlan) to Cloud")
                 
-                //Fix versioning doubly linked list if it's broken in the cloud
-                if carePlan.previous != nil {
-                    if carePlan.previous!.next == nil{
-                        carePlan.previous!.next = carePlan
-                        carePlan.previous!.next!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                carePlan.fixVersionLinkedList(carePlan.previous! as! CarePlan, backwards: true)
+                carePlan.linkRelated{
+                    (linked,_) in
+                    
+                    if linked{
+                        carePlan.saveInBackground()
+                    }
+                    
+                    //Fix versioning doubly linked list if it's broken in the cloud
+                    if carePlan.previous != nil {
+                        if carePlan.previous!.next == nil{
+                            carePlan.previous!.next = carePlan
+                            carePlan.previous!.next!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    carePlan.fixVersionLinkedList(carePlan.previous! as! CarePlan, backwards: true)
+                                }
                             }
                         }
                     }
-                }
-                
-                if carePlan.next != nil {
-                    if carePlan.next!.previous == nil{
-                        carePlan.next!.previous = carePlan
-                        carePlan.next!.previous!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                carePlan.fixVersionLinkedList(carePlan.next! as! CarePlan, backwards: false)
+                    
+                    if carePlan.next != nil {
+                        if carePlan.next!.previous == nil{
+                            carePlan.next!.previous = carePlan
+                            carePlan.next!.previous!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    carePlan.fixVersionLinkedList(carePlan.next! as! CarePlan, backwards: false)
+                                }
                             }
                         }
                     }
+                    completion(success,error)
                 }
             }else{
                 print("Error in CarePlan.save(). \(String(describing: error))")
+                completion(success,error)
             }
-            completion(success, error)
         }
     }
     

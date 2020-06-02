@@ -12,8 +12,8 @@ import CareKitStore
 
 open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
 
-    @NSManaged private var patient:Patient?
-    @NSManaged private var patientUUIDString:String?
+    @NSManaged var patient:Patient?
+    @NSManaged var patientUUIDString:String?
     @NSManaged public var title:String
     
     public var patientUUID:UUID? {
@@ -48,27 +48,23 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKCarePlanClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyCarePlan, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyCarePlan) {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true, completion: completion)
+        _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
     open func new() -> PCKSynchronized {
         return CarePlan()
     }
     
-    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
         
         switch careKitEntity {
         case .carePlan(let entity):
-            let newClass = CarePlan()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return CarePlan(careKitEntity: entity)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            completion(nil)
+            return nil
         }
     }
     
@@ -217,12 +213,11 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.title = parse.title
     }
     
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool, completion: @escaping(CarePlan?) -> Void){
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool)-> CarePlan?{
         
         guard let _ = PFUser.current(),
             let carePlan = carePlanAny as? OCKCarePlan else{
-            completion(nil)
-            return
+            return nil
         }
         
         if let uuid = carePlan.uuid?.uuidString{
@@ -260,32 +255,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.patientUUID = carePlan.patientUUID
         self.previousVersionUUID = carePlan.previousVersionUUID
         self.nextVersionUUID = carePlan.nextVersionUUID
-        
-        //Link versions and related classes
-        self.findCarePlan(self.previousVersionUUID){
-            previousCarePlan in
-            
-            self.previous = previousCarePlan
-            
-            self.findCarePlan(self.nextVersionUUID){
-                nextCarePlan in
-                
-                self.next = nextCarePlan
-                
-                guard let patientUUID = self.patientUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                    completion(self)
-                    return
-                }
-                
-                self.findPatient(patientUUID){
-                    patient in
-                    
-                    self.patient = patient
-                    completion(self)
-                }
-            }
-        }
+        return self
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
@@ -316,5 +286,43 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             carePlan.timezone = timeZone
         }
         return carePlan
+    }
+    
+    ///Link versions and related classes
+    public func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
+        var linkedNew = false
+        self.findCarePlan(self.previousVersionUUID){
+            previousCarePlan in
+            
+            self.previous = previousCarePlan
+            if self.previous != nil{
+                linkedNew = true
+            }
+            
+            self.findCarePlan(self.nextVersionUUID){
+                nextCarePlan in
+                
+                self.next = nextCarePlan
+                if self.next != nil{
+                    linkedNew = true
+                }
+                
+                guard let patientUUID = self.patientUUID else{
+                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                    completion(linkedNew,self)
+                    return
+                }
+                
+                self.findPatient(patientUUID){
+                    patient in
+                    
+                    self.patient = patient
+                    if self.patient != nil{
+                        linkedNew = true
+                    }
+                    completion(linkedNew,self)
+                }
+            }
+        }
     }
 }

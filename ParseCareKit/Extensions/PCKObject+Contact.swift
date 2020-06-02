@@ -19,34 +19,43 @@ extension PCKObject{
             if success{
                 print("Successfully saved \(self) in Cloud.")
                 
-                //Fix versioning doubly linked list if it's broken in the cloud
-                if contact.previous != nil {
-                    if contact.previous!.next == nil{
-                        contact.previous!.next = contact
-                        contact.previous!.next!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                contact.fixVersionLinkedList(contact.previous! as! Contact, backwards: true)
+                contact.linkRelated{
+                    (linked,_) in
+                    
+                    if linked{
+                        contact.saveInBackground()
+                    }
+                    
+                    //Fix versioning doubly linked list if it's broken in the cloud
+                    if contact.previous != nil {
+                        if contact.previous!.next == nil{
+                            contact.previous!.next = contact
+                            contact.previous!.next!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    contact.fixVersionLinkedList(contact.previous! as! Contact, backwards: true)
+                                }
                             }
                         }
                     }
-                }
-                
-                if contact.next != nil {
-                    if contact.next!.previous == nil{
-                        contact.next!.previous = contact
-                        contact.next!.previous!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                contact.fixVersionLinkedList(contact.next! as! Contact, backwards: false)
+                    
+                    if contact.next != nil {
+                        if contact.next!.previous == nil{
+                            contact.next!.previous = contact
+                            contact.next!.previous!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    contact.fixVersionLinkedList(contact.next! as! Contact, backwards: false)
+                                }
                             }
                         }
                     }
+                    completion(success,error)
                 }
             }else{
                 print("Error in Contact.save(). \(String(describing: error))")
+                completion(success,error)
             }
-            completion(success,error)
         }
     }
     

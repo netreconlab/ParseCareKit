@@ -18,7 +18,7 @@ public protocol PCKSynchronized: PFObject, PFSubclassing {
     func updateCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func deleteFromCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func new()->PCKSynchronized
-    func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void)
+    func new(with careKitEntity: OCKEntity)->PCKSynchronized?
 }
 
 /**

@@ -21,36 +21,43 @@ extension PCKObject{
             if success{
                 print("Successfully saved \(patient) in Cloud.")
                 
-                //Fix versioning doubly linked list if it's broken in the cloud
-                if patient.previous != nil {
-                    if patient.previous!.next == nil{
-                        patient.previous!.next = patient
-                        patient.previous!.next!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                patient.fixVersionLinkedList(patient.previous! as! Patient, backwards: true)
+                patient.linkRelated{
+                    (linked,_) in
+                    
+                    if linked{
+                        patient.saveInBackground()
+                    }
+                    
+                    //Fix versioning doubly linked list if it's broken in the cloud
+                    if patient.previous != nil {
+                        if patient.previous!.next == nil{
+                            patient.previous!.next = patient
+                            patient.previous!.next!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    patient.fixVersionLinkedList(patient.previous! as! Patient, backwards: true)
+                                }
+                            }
+                        }
+                    }
+                    
+                    if patient.next != nil {
+                        if patient.next!.previous == nil{
+                            patient.next!.previous = patient
+                            patient.next!.previous!.saveInBackground(){
+                                (success,_) in
+                                if success{
+                                    patient.fixVersionLinkedList(patient.next! as! Patient, backwards: false)
+                                }
                             }
                         }
                     }
                 }
-                
-                if patient.next != nil {
-                    if patient.next!.previous == nil{
-                        patient.next!.previous = patient
-                        patient.next!.previous!.saveInBackground(){
-                            (success,_) in
-                            if success{
-                                patient.fixVersionLinkedList(patient.next! as! Patient, backwards: false)
-                            }
-                        }
-                    }
-                }
-                
+                completion(success,error)
             }else{
                 print("Error in Patient.addToCloud(). \(String(describing: error))")
-                
+                completion(success,error)
             }
-            completion(success,error)
         }
     }
     

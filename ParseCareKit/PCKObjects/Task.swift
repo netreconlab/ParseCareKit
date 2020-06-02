@@ -51,27 +51,23 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         return kPCKTaskClassKey
     }
     
-    public convenience init(careKitEntity: OCKAnyTask, completion: @escaping(PCKObject?) -> Void) {
+    public convenience init(careKitEntity: OCKAnyTask) {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true, completion: completion)
+        _ = self.copyCareKit(careKitEntity, clone: true)
     }
     
     open func new() -> PCKSynchronized {
         return Task()
     }
     
-    open func new(with careKitEntity: OCKEntity, completion: @escaping(PCKSynchronized?)-> Void){
+    open func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
         
         switch careKitEntity {
         case .task(let entity):
-            let newClass = Task()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return Task(careKitEntity: entity)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            completion(nil)
+            return nil
         }
     }
     
@@ -230,12 +226,11 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     
-    open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool, completion: @escaping(Task?) -> Void){
+    open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool)->Task?{
         
         guard let _ = PFUser.current(),
             let task = taskAny as? OCKTask else{
-            completion(nil)
-            return
+            return nil
         }
         
         if let uuid = task.uuid?.uuidString{
@@ -276,32 +271,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.previousVersionUUID = task.previousVersionUUID
         self.nextVersionUUID = task.nextVersionUUID
         self.carePlanUUID = task.carePlanUUID
-        
-        //Link versions and related classes
-        self.findTask(self.previousVersionUUID){
-            previousTask in
-            
-            self.previous = previousTask
-            
-            self.findTask(self.nextVersionUUID){
-                nextTask in
-                
-                self.next = nextTask
-                
-                guard let carePlanUUID = self.carePlanUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                    completion(self)
-                    return
-                }
-                
-                self.findCarePlan(carePlanUUID){
-                    carePlan in
-                    
-                    self.carePlan = carePlan
-                    completion(self)
-                }
-            }
-        }
+        return self
     }
     
     
@@ -338,6 +308,45 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         task.notes = self.notes?.compactMap{$0.convertToCareKit()}
         
         return task
+    }
+    
+    ///Link versions and related classes
+    public func linkRelated(completion: @escaping(Bool,Task)->Void){
+        var linkedNew = false
+        //Link versions and related classes
+        self.findTask(self.previousVersionUUID){
+            previousTask in
+            
+            self.previous = previousTask
+            if self.previous != nil{
+                linkedNew = true
+            }
+            
+            self.findTask(self.nextVersionUUID){
+                nextTask in
+                
+                self.next = nextTask
+                if self.next != nil{
+                    linkedNew = true
+                }
+                
+                guard let carePlanUUID = self.carePlanUUID else{
+                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                    completion(linkedNew,self)
+                    return
+                }
+                
+                self.findCarePlan(carePlanUUID){
+                    carePlan in
+                    
+                    self.carePlan = carePlan
+                    if self.carePlan != nil{
+                        linkedNew = true
+                    }
+                    completion(linkedNew,self)
+                }
+            }
+        }
     }
     
     func makeSchedule() -> OCKSchedule {
