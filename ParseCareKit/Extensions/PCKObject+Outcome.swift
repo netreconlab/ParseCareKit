@@ -19,7 +19,13 @@ extension PCKObject{
             
             if success{
                 print("Successfully saved \(outcome) in Cloud.")
-                outcome.linkRelated{_ in
+                
+                outcome.linkRelated{
+                    (linked,_) in
+                    
+                    if linked{
+                        outcome.saveInBackground()
+                    }
                     completion(success,error)
                 }
             }else{

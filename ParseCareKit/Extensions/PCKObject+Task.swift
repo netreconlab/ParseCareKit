@@ -20,7 +20,12 @@ extension PCKObject{
             if success{
                 print("Successfully saved \(task) in Cloud.")
                 task.linkRelated{
-                    _ in
+                    (linked,_) in
+                    
+                    if linked{
+                        task.saveInBackground()
+                    }
+                    
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if task.previous != nil {
                         if task.previous!.next == nil{

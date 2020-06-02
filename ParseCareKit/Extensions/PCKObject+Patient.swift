@@ -22,7 +22,12 @@ extension PCKObject{
                 print("Successfully saved \(patient) in Cloud.")
                 
                 patient.linkRelated{
-                    _ in
+                    (linked,_) in
+                    
+                    if linked{
+                        patient.saveInBackground()
+                    }
+                    
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if patient.previous != nil {
                         if patient.previous!.next == nil{

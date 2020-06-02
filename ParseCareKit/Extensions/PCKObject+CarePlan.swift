@@ -20,7 +20,12 @@ extension PCKObject{
                 print("Successfully added CarePlan \(carePlan) to Cloud")
                 
                 carePlan.linkRelated{
-                    _ in
+                    (linked,_) in
+                    
+                    if linked{
+                        carePlan.saveInBackground()
+                    }
+                    
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if carePlan.previous != nil {
                         if carePlan.previous!.next == nil{

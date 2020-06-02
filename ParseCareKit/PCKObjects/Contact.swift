@@ -415,21 +415,31 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(_ completion: @escaping(Contact)->Void){
+    public func linkRelated(completion: @escaping(Bool,Contact)->Void){
+        
+        var linkedNew = false
+        
         //Link versions and related classes
         self.findContact(self.previousVersionUUID){
             previousContact in
             
             self.previous = previousContact
             
+            if self.previous != nil{
+                linkedNew = true
+            }
+            
             self.findContact(self.nextVersionUUID){
                 nextContact in
                 
                 self.next = nextContact
+                if self.next != nil{
+                    linkedNew = true
+                }
                 
                 guard let carePlanUUID = self.carePlanUUID else{
                     //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                    completion(self)
+                    completion(linkedNew,self)
                     return
                 }
                 
@@ -437,7 +447,10 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     carePlan in
                     
                     self.carePlan = carePlan
-                    completion(self)
+                    if self.carePlan != nil{
+                        linkedNew = true
+                    }
+                    completion(linkedNew,self)
                 }
             }
         }

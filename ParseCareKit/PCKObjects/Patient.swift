@@ -273,18 +273,25 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(_ completion: @escaping(Patient)->Void){
+    public func linkRelated(completion: @escaping(Bool,Patient)->Void){
+        var linkedNew = false
         //Link versions and related classes
         self.findPatient(self.previousVersionUUID){
             previousPatient in
             
             self.previous = previousPatient
+            if self.previous != nil{
+                linkedNew = true
+            }
             
             self.findPatient(self.nextVersionUUID){
                 nextPatient in
                
                 self.next = nextPatient
-                completion(self)
+                if self.next != nil{
+                    linkedNew = true
+                }
+                completion(linkedNew,self)
             }
         }
     }

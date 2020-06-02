@@ -370,10 +370,10 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(_ completion: @escaping(Outcome)->Void){
+    public func linkRelated(completion: @escaping(Bool,Outcome)->Void){
         guard let taskUUID = self.taskUUID else{
             //Finished if there's no Task, otherwise see if it's in the cloud
-            completion(self)
+            completion(false,self)
             return
         }
         
@@ -384,14 +384,13 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             
             guard let task = self.currentTask else{
                 self.date = nil
-                completion(self)
+                completion(false,self)
                 return
             }
             
             let schedule = task.makeSchedule()
             self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
-            
-            completion(self)
+            completion(true,self)
         }
     }
     

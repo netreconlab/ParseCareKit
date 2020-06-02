@@ -20,7 +20,11 @@ extension PCKObject{
                 print("Successfully saved \(self) in Cloud.")
                 
                 contact.linkRelated{
-                    _ in
+                    (linked,_) in
+                    
+                    if linked{
+                        contact.saveInBackground()
+                    }
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if contact.previous != nil {
