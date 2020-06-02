@@ -32,6 +32,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
 
     
     public init(uuid:UUID, auto: Bool) {
+        ParseCareKitUtility.setupServer()
         self.uuid = uuid
         self.automaticallySynchronizes = auto
         super.init()
