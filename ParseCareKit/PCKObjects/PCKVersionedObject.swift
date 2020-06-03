@@ -94,7 +94,7 @@ open class PCKVersionedObject: PCKObject {
     private class func queryVersionByDate(_ className: String, for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
         let interval = createCurrentDateInterval(for: date)
         
-        queryToAndWith.whereKeyDoesNotExist(kPCKVersionedObjectDeletedDateKey) //Only consider non deleted keys
+        queryToAndWith.whereKeyDoesNotExist(kPCKObjectDeletedDateKey) //Only consider non deleted keys
         queryToAndWith.whereKey(kPCKVersionedObjectEffectiveDateKey, lessThan: interval.end)
         return queryToAndWith
     }

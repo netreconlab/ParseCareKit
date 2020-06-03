@@ -43,4 +43,8 @@ open class PCKObject: PFObject {
         self.notes = parse.notes
         self.logicalClock = parse.logicalClock
     }
+    
+    open func copyRelationalEntities(_ parse: PCKObject){
+        Note.replaceWithCloudVersion(&self.notes, cloud: parse.notes)
+    }
 }
