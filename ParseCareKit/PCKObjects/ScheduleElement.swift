@@ -49,26 +49,13 @@ open class ScheduleElement: PFObject, PFSubclassing {
         return scheduleElement
     }
     
-    open class func updateIfNeeded(_ parse:[ScheduleElement], careKit: [OCKScheduleElement])->[ScheduleElement]{
-        let indexesToDelete = parse.count - careKit.count
-        if indexesToDelete > 0{
-            let stopIndex = parse.count - 1 - indexesToDelete
-            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
-                parse[index].deleteInBackground()
+    open class func replaceWithCloudVersion(_ local:inout [ScheduleElement], cloud:[ScheduleElement]){
+        for (index,element) in local.enumerated(){
+            guard let cloudNote = cloud.filter({$0.convertToCareKit() == element.convertToCareKit()}).first else{
+                continue
             }
+            local[index] = cloudNote
         }
-        var updatedValues = [ScheduleElement]()
-        for (index,value) in careKit.enumerated(){
-            let updated:ScheduleElement
-            //Replace if currently in cloud or create a new one
-            if index <= parse.count-1{
-                updated = parse[index].copyCareKit(value)
-            }else{
-                updated = ScheduleElement(careKitEntity: value)
-            }
-            updatedValues.append(updated)
-        }
-        return updatedValues
     }
     
     func stamp(_ clock: Int){

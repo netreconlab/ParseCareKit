@@ -72,20 +72,18 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = PFUser.current(),
-            let taskUUID = UUID(uuidString: self.uuid) else{
+        guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         //Check to see if already in the cloud
         let query = Task.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
-        query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.getFirstObjectInBackground(){
             (object, error) in
             
-            guard let foundObject = object as? Task else{
+            guard let _ = object as? Task else{
                 guard let parseError = error as NSError? else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
@@ -104,44 +102,48 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            completion(false,ParseCareKitError.uuidAlreadyExists)
         }
     }
     
     public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
-            let taskUUID = UUID(uuidString: self.uuid) else{
+            let previousPatientUUIDString = self.previousVersionUUID?.uuidString else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Task.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
+        query.whereKey(kPCKObjectUUIDKey, containedIn: [self.uuid,previousPatientUUIDString])
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.getFirstObjectInBackground{
-            (object, error) in
+        query.findObjectsInBackground(){
+            (objects, error) in
             
-            guard let foundObject = object as? Task else{
-                guard let parseError = error as NSError? else{
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
-                    completion(false,error)
-                    return
-                }
-                
-                switch parseError.code{
-                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
-                        self.save(self, completion: completion)
-                default:
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
-                    completion(false,error)
-                }
+            guard let foundObjects = objects as? [Task] else{
+                print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
+                completion(false,error)
                 return
             }
             
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            switch foundObjects.count{
+            case 0:
+                print("Warning in \(self.parseClassName).updateCloud(). A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
+                self.addToCloud(completion: completion)
+            case 1:
+                //This is the typical case
+                guard let previousVersion = foundObjects.filter({$0.uuid == previousPatientUUIDString}).first else {
+                    print("Error in \(self.parseClassName).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
+                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    return
+                }
+                self.copyRelationalEntities(previousVersion)
+                self.addToCloud(completion: completion)
+
+            default:
+                print("Error in \(self.parseClassName).updateCloud(). UUID already exists in Cloud")
+                completion(false,ParseCareKitError.uuidAlreadyExists)
+            }
         }
     }
     
@@ -204,7 +206,19 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         
         self.logicalClock = cloudClock //Stamp Entity
         
-        self.addToCloud(true, overwriteRemote: overwriteRemote){
+        guard let _ = self.previousVersionUUID else{
+            self.addToCloud(true, overwriteRemote: overwriteRemote){
+                (success,error) in
+                if success{
+                    completion(nil)
+                }else{
+                    completion(error)
+                }
+            }
+            return
+        }
+        
+        self.updateCloud(true, overwriteRemote: overwriteRemote){
             (success,error) in
             if success{
                 completion(nil)
@@ -251,27 +265,19 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.updatedDate = task.updatedDate
         self.userInfo = task.userInfo
         self.remoteID = task.remoteID
-        if clone{
-            self.createdDate = task.createdDate
-            self.notes = task.notes?.compactMap{Note(careKitEntity: $0)}
-            self.elements = task.schedule.elements.compactMap{ScheduleElement(careKitEntity: $0)}
-        }else{
-            //Only copy this over if the Local Version is older than the Parse version
-            if self.createdDate == nil {
-                self.createdDate = task.createdDate
-            } else if self.createdDate != nil && task.createdDate != nil{
-                if task.createdDate! < self.createdDate!{
-                    self.createdDate = task.createdDate
-                }
-            }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: task.notes)
-            self.elements = ScheduleElement.updateIfNeeded(self.elements, careKit: task.schedule.elements)
-        }
-        
+        self.createdDate = task.createdDate
+        self.notes = task.notes?.compactMap{Note(careKitEntity: $0)}
+        self.elements = task.schedule.elements.compactMap{ScheduleElement(careKitEntity: $0)}
         self.previousVersionUUID = task.previousVersionUUID
         self.nextVersionUUID = task.nextVersionUUID
         self.carePlanUUID = task.carePlanUUID
         return self
+    }
+    
+    open override func copyRelationalEntities(_ parse: PCKObject) {
+        guard let parse = parse as? Task else{return}
+        super.copyRelationalEntities(parse)
+        ScheduleElement.replaceWithCloudVersion(&self.elements, cloud: parse.elements)
     }
     
     

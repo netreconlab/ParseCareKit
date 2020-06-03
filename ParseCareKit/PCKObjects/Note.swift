@@ -49,20 +49,8 @@ open class Note: PCKObject, PFSubclassing {
         self.userInfo = note.userInfo
         self.updatedDate = note.updatedDate
         self.remoteID = note.remoteID
-        if clone{
-            self.createdDate = note.createdDate
-            self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}
-        }else{
-            //Only copy this over if the Local Version is older than the Parse version
-            if self.createdDate == nil {
-                self.createdDate = note.createdDate
-            } else if self.createdDate != nil && note.createdDate != nil{
-                if note.createdDate! < self.createdDate!{
-                    self.createdDate = note.createdDate
-                }
-            }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: note.notes)
-        }
+        self.createdDate = note.createdDate
+        self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}
         return self
     }
     
@@ -105,32 +93,54 @@ open class Note: PCKObject, PFSubclassing {
         }
     }
     
-    open class func updateIfNeeded(_ parse:[Note]?, careKit: [OCKNote]?)->[Note]?{
-        guard let parse = parse,
-            let careKit = careKit else {
+    open class func replaceWithCloudVersion(_ local:inout [Note]?, cloud:[Note]?){
+        guard let _ = local,
+            let _ = cloud else {
+            return
+        }
+        
+        for (index,note) in local!.enumerated(){
+            guard let cloudNote = cloud!.filter({$0.uuid == note.uuid}).first else{
+                continue
+            }
+            local![index] = cloudNote
+        }
+    }
+    
+    open class func fetchAndReplace(_ notes: [Note]?, completion: @escaping([Note]?)-> Void){
+        let entitiesToFetch = notes?.compactMap{ entity -> String? in
+            if entity.objectId == nil{
+                return entity.uuid
+            }
             return nil
         }
-        let indexesToDelete = parse.count - careKit.count
-        if indexesToDelete > 0{
-            let stopIndex = parse.count - 1 - indexesToDelete
-            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
-                parse[index].deleteInBackground()
-            }
+        
+        guard let uuids = entitiesToFetch,
+            let query = Note.query() else {
+            completion(nil)
+            return
         }
-        var updatedNotes = [Note]()
-        for (index,value) in careKit.enumerated(){
-            let updated:Note?
-            //Replace if currently in cloud or create a new one
-            if index <= parse.count-1{
-                updated = parse[index].copyCareKit(value, clone: true)
-            }else{
-                updated = Note(careKitEntity: value)
+        
+        query.whereKey(kPCKObjectUUIDKey, containedIn: uuids)
+        query.findObjectsInBackground(){
+            (objects,error) in
+            
+            guard let fetchedNotes = objects as? [Note],
+                let localNotes = notes else{
+                completion(nil)
+                return
             }
-            if updated != nil{
-                updatedNotes.append(updated!)
+            var returnNotes = notes!
+            for (index, note) in localNotes.enumerated(){
+                guard let replaceNote = fetchedNotes.filter({$0.uuid == note.uuid}).first else {
+                    continue
+                }
+                replaceNote.copy(note) //Copy any changes
+                returnNotes[index] = replaceNote
             }
+            
+            completion(returnNotes)
         }
-        return updatedNotes
     }
 }
 

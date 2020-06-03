@@ -19,6 +19,7 @@ enum ParseCareKitError: Error {
     case couldntUnwrapKnowledgeVector
     case cantUnwrapSelf
     case cloudVersionNewerThanLocal
+    case uuidAlreadyExists
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -40,6 +41,8 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("Can't unwrap self. This class has already been deallocated", comment: "Can't unwrap self, class deallocated")
         case .cloudVersionNewerThanLocal:
             return NSLocalizedString("Can't sync, the Cloud version newere than local version", comment: "Cloud version newer than local version")
+        case .uuidAlreadyExists:
+        return NSLocalizedString("Can't sync, the uuid already exists in the Cloud", comment: "UUID isn't unique")
             
         }
     }
@@ -194,10 +197,11 @@ public let kPCKObjectUpdatedDateKey                                 = "updatedDa
 public let kPCKObjectTagsKey                                        = "tags"
 public let kPCKObjectUserInfoKey                                    = "userInfo"
 public let kPCKObjectSourceKey                                      = "source"
-public let kPCKRemoteIDKey                                          = "remoteID"
+public let kPCKObjectDeletedDateKey                                 = "deletedDate"
+public let kPCKObjectRemoteIDKey                                    = "remoteID"
 
 public let kPCKVersionedObjectEffectiveDateKey                      = "effectiveDate"
-public let kPCKVersionedObjectDeletedDateKey                        = "deletedDate"
+
 public let kPCKVersionedObjectNextKey                               = "next"
 public let kPCKVersionedObjectPreviousKey                           = "previous"
 

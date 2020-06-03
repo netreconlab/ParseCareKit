@@ -138,20 +138,9 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         self.source = outcomeValue.source
         self.updatedDate = outcomeValue.updatedDate
         self.remoteID = outcomeValue.remoteID
-        if clone{
-            self.createdDate = outcomeValue.createdDate
-            self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
-        }else{
-            //Only copy this over if the Local Version is older than the Parse version
-            if self.createdDate == nil {
-                self.createdDate = outcomeValue.createdDate
-            } else if self.createdDate != nil && outcomeValue.createdDate != nil{
-                if outcomeValue.createdDate! < self.createdDate!{
-                    self.createdDate = outcomeValue.createdDate
-                }
-            }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: outcomeValue.notes)
-        }
+        self.createdDate = outcomeValue.createdDate
+        self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
+        
         
         return self
     }
@@ -188,29 +177,48 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         }
     }
     
-        
-    open class func updateIfNeeded(_ parse:[OutcomeValue], careKit: [OCKOutcomeValue])->[OutcomeValue]{
-        let indexesToDelete = parse.count - careKit.count
-        if indexesToDelete > 0{
-            let stopIndex = parse.count - 1 - indexesToDelete
-            for index in stride(from: parse.count-1, to: stopIndex, by: -1) {
-                parse[index].deleteInBackground()
+    open class func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud:[OutcomeValue]){
+        for (index,value) in local.enumerated(){
+            guard let cloudNote = cloud.filter({$0.uuid == value.uuid}).first else{
+                continue
             }
+            local[index] = cloudNote
         }
-        var updatedValues = [OutcomeValue]()
-        for (index,value) in careKit.enumerated(){
-            let updated:OutcomeValue?
-            //Replace if currently in cloud or create a new one
-            if index <= parse.count-1{
-                updated = parse[index].copyCareKit(value, clone: true)
-            }else{
-                updated = OutcomeValue(careKitEntity: value)
-            }
-            if updated != nil{
-                updatedValues.append(updated!)
-            }
-        }
-        return updatedValues
     }
+    
+    /*
+    open class func fetchAndReplace(_ values: [OutcomeValue], completion: @escaping([OutcomeValue])-> Void){
+        let uuidsToFetch = values.compactMap{ entity -> String? in
+            if entity.objectId == nil{
+                return entity.uuid
+            }
+            return nil
+        }
+        
+        guard let query = OutcomeValue.query() else {
+            completion(values)
+            return
+        }
+        
+        query.whereKey(kPCKObjectUUIDKey, containedIn: uuidsToFetch)
+        query.findObjectsInBackground(){
+            (objects,error) in
+            
+            guard let fetchedNotes = objects as? [OutcomeValue] else{
+                completion(nil)
+                return
+            }
+            var returnNotes = values!
+            for (index, note) in localNotes.enumerated(){
+                guard let replaceNote = fetchedNotes.filter({$0.uuid == note.uuid}).first else {
+                    continue
+                }
+                replaceNote.copy(note) //Copy any changes
+                returnNotes[index] = replaceNote
+            }
+            
+            completion(returnNotes)
+        }
+    }*/
 }
 

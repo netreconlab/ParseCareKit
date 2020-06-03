@@ -85,12 +85,10 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         //Check to see if already in the cloud
         let query = Outcome.query()!
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
             (object, error) in
             
-            guard let foundObject = object as? Outcome else{
+            guard let _ = object as? Outcome else{
                 guard let parseError = error as NSError? else{
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
@@ -99,8 +97,27 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
                 
                 switch parseError.code{
-                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
+                case 1: //1 - this column hasn't been added.
+                    self.save(self, completion: completion)
+                case 101: //101 - Query returned no results
+                    let query = Outcome.query()!
+                    query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
+                    query.whereKeyDoesNotExist(kPCKObjectDeletedDateKey)
+                    query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+                    
+                    query.getFirstObjectInBackground(){
+                        (object, error) in
+                        
+                        guard let objectThatWillBeTombstoned = object as? Outcome else{
+                            self.save(self, completion: completion)
+                            completion(false,nil)
+                            return
+                        }
+                        
+                        self.copyRelationalEntities(objectThatWillBeTombstoned)
                         self.save(self, completion: completion)
+                    }
+                    
                 default:
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
@@ -109,7 +126,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
+            completion(false,ParseCareKitError.uuidAlreadyExists)
         }
     }
     
@@ -218,7 +235,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         self.logicalClock = cloudClock //Stamp Entity
         
-        if self.createdDate != nil && self.updatedDate != nil{
+        guard self.createdDate == nil,
+            self.updatedDate == nil else {
             self.addToCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
@@ -227,19 +245,20 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                     completion(error)
                 }
             }
-        }else{
-            self.tombstsone(){
-                (success,error) in
-                if success{
-                    completion(nil)
-                }else{
-                    completion(error)
-                }
+            return
+        }
+        
+        self.tombstsone(){
+            (success,error) in
+            if success{
+                completion(nil)
+            }else{
+                completion(error)
             }
         }
     }
     
-    public func tombstsone(_ completion: @escaping(Bool,Error?) -> Void){
+    public func tombstsone(completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -248,7 +267,6 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query()!
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
         query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
         query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.getFirstObjectInBackground(){
@@ -265,7 +283,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 switch parseError.code{
                     case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
                         //This was tombstoned, but never reached the cloud, upload it now
-                        self.saveInBackground(block: completion)
+                        self.save(self, completion: completion)
                         completion(true,nil)
                 default:
                     //There was a different issue that we don't know how to handle
@@ -274,9 +292,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
                 return
             }
-            
             foundObject.copy(self)
-            foundObject.saveInBackground(block: completion)
+            foundObject.save(self, completion: completion)
         }
         
     }
@@ -315,23 +332,17 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.taskUUID = outcome.taskUUID
         self.deletedDate = outcome.deletedDate
         self.remoteID = outcome.remoteID
-        if clone{
-            self.createdDate = outcome.createdDate
-            self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
-            self.values = outcome.values.compactMap{OutcomeValue(careKitEntity: $0)}
-        }else{
-            //Only copy this over if the Local Version is older than the Parse version
-            if self.createdDate == nil {
-                self.createdDate = outcome.createdDate
-            } else if self.createdDate != nil && outcome.createdDate != nil{
-                if outcome.createdDate! < self.createdDate!{
-                    self.createdDate = outcome.createdDate
-                }
-            }
-            self.notes = Note.updateIfNeeded(self.notes, careKit: outcome.notes)
-            self.values = OutcomeValue.updateIfNeeded(self.values, careKit: outcome.values)
-        }
+        self.createdDate = outcome.createdDate
+        self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
+        self.values = outcome.values.compactMap{OutcomeValue(careKitEntity: $0)}
+        
         return self
+    }
+    
+    open override func copyRelationalEntities(_ parse: PCKObject) {
+        guard let parse = parse as? Outcome else{return}
+        super.copyRelationalEntities(parse)
+        OutcomeValue.replaceWithCloudVersion(&self.values, cloud: parse.values)
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
