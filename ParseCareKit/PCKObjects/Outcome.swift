@@ -337,6 +337,12 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         return self
     }
+    
+    open override func copyRelationalEntities(_ parse: PCKObject) {
+        guard let parse = parse as? Outcome else{return}
+        super.copyRelationalEntities(parse)
+        OutcomeValue.replaceWithCloudVersion(&self.values, cloud: parse.values)
+    }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKOutcome?{
