@@ -299,6 +299,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         if revisionsCompletedCount == deviceRevision.entities.count{
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
+                        return
                     }
                     
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
