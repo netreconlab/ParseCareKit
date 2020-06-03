@@ -235,7 +235,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         self.logicalClock = cloudClock //Stamp Entity
         
-        guard self.deletedDate != nil else {
+        guard self.createdDate == nil,
+            self.updatedDate == nil else {
             self.addToCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
