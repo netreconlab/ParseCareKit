@@ -297,6 +297,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
+                            //If this was the only revision, return as normal
+                            if deviceRevision.entities.count == 1{
+                                completion(nil)
+                                return
+                            }
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                         return
