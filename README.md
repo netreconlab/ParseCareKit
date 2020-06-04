@@ -132,7 +132,17 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
     }
     
     func storeUpdatedOutcome(_ outcome: OCKOutcome) {
-        dataStore.updateAnyOutcome(outcome, callbackQueue: .global(qos: .background), completion: nil)
+        //This is a workaround for a CareKit bug that doesn't allow you to query by id
+        store.updateOutcome(outcome, callbackQueue: .global(qos: .background)){
+            results in
+            switch results{
+            
+            case .success(_):
+                store.synchronize(){_ in} //Force synchronize after fix
+            case .failure(let error):
+                print("Error storing fix \(error)")
+            }
+        }
     }
     
     func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
@@ -186,14 +196,7 @@ To create a Parse object from a CareKit object:
 
 ```swift
 let newCarePlan = OCKCarePlan(id: "uniqueId", title: "New Care Plan", patientID: nil)
-let _ = CarePlan(careKitEntity: newCarePlan){
-    copiedToParseObject in
-                    
-    guard let parseCarePlan = copiedToParseObject else{
-        print("Error copying OCKCarePlan")
-        return
-    }
-}
+let parseCarePlan = CarePlan(careKitEntity: newCarePlan)
 ```
 
 To create a CareKit object from a Parse object:
@@ -204,7 +207,7 @@ guard let careKitCarePlan = parseCarePlan.convertToCareKit() else{
   return
 }
 
-dataStoreManager.store.addAnyCarePlan(careKitCarePlan, callbackQueue: .main){
+store.addCarePlan(careKitCarePlan, callbackQueue: .main){
     result in
 
     switch result{
@@ -229,35 +232,27 @@ class CancerPatient: Patient{
         return CancerPatient()
     }
     
-    override func new(with careKitEntity: OCKEntity, completion: @escaping (PCKSynchronized?) -> Void) {
+    override func new(with careKitEntity: OCKEntity)->PCKSynchronized? {
         
         switch careKitEntity {
         case .patient(let entity):
-            let newClass = CancerPatient()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return CancerPatient(careKitEntity: entity)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            completion(nil)
+            return nil
         }
     }
     
-    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, completion: @escaping (Patient?) -> Void) {
+    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> Patient? {
         
         guard let cancerPatient = patientAny as? OCKPatient else{
             completion(nil)
             return
         }
         
-        super.copyCareKit(cancerPatient, clone: clone){
-        _ in
-            
-            self.primaryCondition = cancerPatient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
-            self.comorbidities = cancerPatient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
-            completion(self)
-        }
+        _ = super.copyCareKit(cancerPatient, clone: clone){
+        self.primaryCondition = cancerPatient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
+        self.comorbidities = cancerPatient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
     }
     
     override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
@@ -308,15 +303,11 @@ class Doctor: Patient{
         return Doctor()
     }
     
-    override func new(with careKitEntity: OCKEntity, completion: @escaping (PCKSynchronized?) -> Void) {
+    override func new(with careKitEntity: OCKEntity)-?PCKSynchronized? {
         
         switch careKitEntity {
         case .patient(let entity):
-            let newClass = Doctor()
-            newClass.copyCareKit(entity, clone: true){
-                _ in
-                completion(newClass)
-            }
+            return Doctor(careKitEntity: entity)
         default:
             print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
@@ -324,27 +315,21 @@ class Doctor: Patient{
     }
     
     //Add a convienience initializer to to ensure that that the doctor class is always created correctly
-    convenience init(careKitEntity: OCKAnyPatient, completion: @escaping(PCKObject?) -> Void) {
+    convenience init(careKitEntity: OCKAnyPatient {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true){
-            _ in
-            self.userInfo = [kPCKCustomClassKey: self.parseClassName]
-        }
+        self.copyCareKit(careKitEntity, clone: true)
+        self.userInfo = [kPCKCustomClassKey: self.parseClassName]
     }
     
-    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool, completion: @escaping (Patient?) -> Void) {
+    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)->Patient? {
         
         guard let doctor = patientAny as? OCKPatient else{
-            completion(nil)
-            return
+            return nil
         }
         
-        super.copyCareKit(doctor, clone: clone){
-        _ in
-            
-            self.type = cancerPatient.userInfo?["CustomDoctorUserInfoTypeKey"]
-            completion(self)
-        }
+        super.copyCareKit(doctor, clone: clone)
+        self.type = cancerPatient.userInfo?["CustomDoctorUserInfoTypeKey"]
+        return seld
     }
     
     override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
