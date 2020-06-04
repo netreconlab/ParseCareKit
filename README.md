@@ -7,6 +7,18 @@ This framework is an API to synchronize [CareKit](https://github.com/carekit-app
 
 You can also use ParseCareKit with any parse-server setup. Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance.
 
+The following CareKit Entities are synchronized with Parse tables/classes:
+-[x] OCKPatient <-> Patient
+-[x] OCKCarePlan <-> CarePlan
+-[x] OCKTask <-> Task
+-[x] OCKContact <-> Contact
+-[x] OCKOutcome <-> Outcome
+-[x] OCKOutcomeValue <-> OutcomeValue
+-[x] OCKScheduleElement <-> ScheduleElement
+-[x] OCKNote <-> Note
+-[x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
+
+
 ## CareKit Sample App with ParseCareKit
 A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKitSample-ParseCareKit), connects to the aforementioned [parse-hipaa](https://github.com/netreconlab/parse-hipaa) and demonstrates how CareKit data can be easily synched to the Cloud using ParseCareKit.
 
@@ -178,19 +190,6 @@ let cloudStoreManager = ParseSynchronizedStoreManager(dataStoreManager)
 ```
 
 During initialization of `ParseSynchronizedStoreManager`, all CareKit data that has `remoteID == nil` will automatically be synced to your parse-server, once synced, the `remoteID` for each entity will be replaced by the corresponding `objectId` on your parse-server.
-
-** Note that only the latest state of an OCK entity is synchronized to parse-server. **
-
-The mapping from CareKit -> Parse tables/classes are as follows:
-* OCKPatient <-> Patient - Note that by default of this framework, any "user" (doctor, patient, caregiver, etc.) is an `OCKPatient` and will have a corresponding record in your Parse `User` table.
-* OCKCarePlan <-> CarePlan
-* OCKTask <-> Task
-* OCKContact <-> Contact
-* OCKOutcome <-> Outcome
-* OCKOutcomeValue <-> OutcomeValue
-* OCKScheduleElement <-> ScheduleElement
-* OCKNote <-> Note
-* OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
 
 To create a Parse object from a CareKit object:
 
