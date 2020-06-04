@@ -8,15 +8,15 @@ This framework is an API to synchronize [CareKit](https://github.com/carekit-app
 You can also use ParseCareKit with any parse-server setup. Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance.
 
 The following CareKit Entities are synchronized with Parse tables/classes:
--[x] OCKPatient <-> Patient
--[x] OCKCarePlan <-> CarePlan
--[x] OCKTask <-> Task
--[x] OCKContact <-> Contact
--[x] OCKOutcome <-> Outcome
--[x] OCKOutcomeValue <-> OutcomeValue
--[x] OCKScheduleElement <-> ScheduleElement
--[x] OCKNote <-> Note
--[x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
+- [x] OCKPatient <-> Patient
+- [x] OCKCarePlan <-> CarePlan
+- [x] OCKTask <-> Task
+- [x] OCKContact <-> Contact
+- [x] OCKOutcome <-> Outcome
+- [x] OCKOutcomeValue <-> OutcomeValue
+- [x] OCKScheduleElement <-> ScheduleElement
+- [x] OCKNote <-> Note
+- [x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
 
 
 ## CareKit Sample App with ParseCareKit
