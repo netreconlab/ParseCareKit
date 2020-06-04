@@ -3,7 +3,10 @@
 
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
-This framework is an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.0+ data with [parse-server](https://github.com/parse-community/parse-server). For the server-side, you can use [parse-hipaa](https://github.com/netreconlab/parse-hipaa) to setup a HIPAA compliant Parse/[Postgres](https://www.postgresql.org) or Parse/[Mongo](https://www.mongodb.com) backend along with [Parse Dashboard](https://github.com/parse-community/parse-dashboard).
+This framework is an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.0+ data with [parse-server](https://github.com/parse-community/parse-server). 
+
+For the backend, it is suggested to use [parse-hipaa](https://github.com/netreconlab/parse-hipaa) which is an out-of-the-box HIPAA compliant Parse/[Postgres](https://www.postgresql.org) or Parse/[Mongo](https://www.mongodb.com) server that comes with [Parse Dashboard](https://github.com/parse-community/parse-dashboard). Since [parse-hipaa](https://github.com/netreconlab/parse-hipaa) is a pare-server, it can be used for iOS, Android, and web based apps. API's such as [GraphQL](https://graphql.org), REST, and JS are also enabled in parse-hipaa and can be accessed directly or via the "API Console" in parse-dashboard. See the [Parse SDK documentation](https://parseplatform.org/#sdks) for details. These docker images include the necessary database auditing and logging for HIPAA compliance.
+
 
 You can also use ParseCareKit with any parse-server setup. Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance.
 
