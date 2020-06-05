@@ -20,6 +20,8 @@ enum ParseCareKitError: Error {
     case cantUnwrapSelf
     case cloudVersionNewerThanLocal
     case uuidAlreadyExists
+    case cantCastToNeededClassType
+    case classTypeNotAnEligibleType
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -42,8 +44,11 @@ extension ParseCareKitError: LocalizedError {
         case .cloudVersionNewerThanLocal:
             return NSLocalizedString("Can't sync, the Cloud version newere than local version", comment: "Cloud version newer than local version")
         case .uuidAlreadyExists:
-        return NSLocalizedString("Can't sync, the uuid already exists in the Cloud", comment: "UUID isn't unique")
-            
+            return NSLocalizedString("Can't sync, the uuid already exists in the Cloud", comment: "UUID isn't unique")
+        case .cantCastToNeededClassType:
+            return NSLocalizedString("Can't cast to needed class type", comment: "Can't cast to needed class type")
+        case .classTypeNotAnEligibleType:
+            return NSLocalizedString("PCKClass type isn't an eligible type", comment: "PCKClass type isn't an eligible type")
         }
     }
 }

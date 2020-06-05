@@ -94,7 +94,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
     
     public convenience init(careKitEntity:OCKOutcomeValue) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open override func copy(_ parse: PCKObject){
@@ -112,7 +112,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         self.dateValue = parse.dateValue
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, clone: Bool) -> OutcomeValue? {
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue) -> OutcomeValue? {
         
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
             self.uuid = uuid
@@ -185,40 +185,5 @@ open class OutcomeValue: PCKObject, PFSubclassing {
             local[index] = cloudNote
         }
     }
-    
-    /*
-    open class func fetchAndReplace(_ values: [OutcomeValue], completion: @escaping([OutcomeValue])-> Void){
-        let uuidsToFetch = values.compactMap{ entity -> String? in
-            if entity.objectId == nil{
-                return entity.uuid
-            }
-            return nil
-        }
-        
-        guard let query = OutcomeValue.query() else {
-            completion(values)
-            return
-        }
-        
-        query.whereKey(kPCKObjectUUIDKey, containedIn: uuidsToFetch)
-        query.findObjectsInBackground(){
-            (objects,error) in
-            
-            guard let fetchedNotes = objects as? [OutcomeValue] else{
-                completion(nil)
-                return
-            }
-            var returnNotes = values!
-            for (index, note) in localNotes.enumerated(){
-                guard let replaceNote = fetchedNotes.filter({$0.uuid == note.uuid}).first else {
-                    continue
-                }
-                replaceNote.copy(note) //Copy any changes
-                returnNotes[index] = replaceNote
-            }
-            
-            completion(returnNotes)
-        }
-    }*/
 }
 

@@ -52,7 +52,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
 
     public convenience init(careKitEntity: OCKAnyOutcome) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     public func new() -> PCKSynchronized {
@@ -131,75 +131,13 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     }
     
     open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        
-        guard let _ = PFUser.current() else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        
-        //Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Outcome.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        query.getFirstObjectInBackground(){
-            (object, error) in
-            
-            guard let foundObject = object as? Outcome else{
-                guard let parseError = error as NSError? else{
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
-                    completion(false,error)
-                    return
-                }
-                
-                switch parseError.code{
-                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
-                        self.save(self, completion: completion)
-                default:
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).updateCloud(). \(String(describing: error?.localizedDescription))")
-                    completion(false,error)
-                }
-                return
-            }
-            
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }
+        //Handled with tombstone, marked for deletion
+        completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
     }
     
     open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
-        /*
-        guard let _ = PFUser.current() else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-                
-        //Get latest item from the Cloud to compare against
-        let query = Outcome.query()!
-        //query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
-        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        query.getFirstObjectInBackground(){
-            (object, error) in
-            guard let foundObject = object as? Outcome else{
-                //This was tombstoned, but never reached the cloud, no need to do anything
-                completion(true,nil)
-                return
-            }
-            guard let local = self.convertToCareKit() else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            
-            foundObject.copyCareKit(local, clone: true){
-                tombstoned in
-                tombstoned?.saveInBackground(block: completion)
-            }
-            //self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -307,7 +245,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.taskUUID = parse.taskUUID
     }
         
-    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool)->Outcome?{
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome)->Outcome?{
         
         guard let _ = PFUser.current(),
             let outcome = outcomeAny as? OCKOutcome else{
@@ -388,18 +326,23 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             return
         }
         
-        self.findTask(taskUUID){
-            task in
+        self.getFirstPCKObject(taskUUID, classType: Task(), relatedObject: self.task, includeKeys: true){
+            (isNew,task) in
+            
+            guard let task = task as? Task else{
+                completion(isNew,self)
+                return
+            }
             
             self.task = task
             
-            guard let task = self.currentTask else{
+            guard let currentTask = self.currentTask else{
                 self.date = nil
                 completion(false,self)
                 return
             }
             
-            let schedule = task.makeSchedule()
+            let schedule = currentTask.makeSchedule()
             self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
             completion(true,self)
         }
@@ -430,6 +373,48 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     open override func stampRelationalEntities(){
         super.stampRelationalEntities()
         self.values.forEach{$0.stamp(self.logicalClock)}
+    }
+    
+    public class func queryNotDeleted(queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
+        queryToAndWith.whereKeyDoesNotExist(kPCKObjectDeletedDateKey) //Only consider non deleted keys
+        queryToAndWith.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        return queryToAndWith
+    }
+   
+    func findOutcomes(queryToAndWith: PFQuery<PFObject>) throws -> [Outcome] {
+        let query = type(of: self).queryNotDeleted(queryToAndWith: queryToAndWith)
+        let entities = try (query.findObjects() as! [Outcome])
+        
+        let filtered = entities.filter{
+            guard let possibleTasks = $0.task,
+                possibleTasks.deletedDate == nil else {
+                return false
+            }
+            return true
+        }
+        
+        return filtered
+    }
+    
+    public func findOutcomesInBackground(queryToAndWith: PFQuery<PFObject>, completion: @escaping([Outcome]?,Error?)->Void) {
+        let query = type(of: self).queryNotDeleted(queryToAndWith: queryToAndWith)
+        query.findObjectsInBackground{
+            (objects,error) in
+            guard let entities = objects as? [Outcome] else{
+                completion(nil,error)
+                return
+            }
+            
+            let filtered = entities.filter{
+                guard let possibleTasks = $0.task,
+                    possibleTasks.deletedDate == nil else {
+                    return false
+                }
+                return true
+            }
+            
+            completion(filtered,error)
+        }
     }
 }
 

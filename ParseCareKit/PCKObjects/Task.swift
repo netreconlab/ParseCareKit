@@ -16,8 +16,8 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var instructions:String?
     @NSManaged public var title:String?
     @NSManaged public var elements:[ScheduleElement] //Use elements to generate a schedule. Each task will point to an array of schedule elements
-    @NSManaged private var carePlan:CarePlan?
-    @NSManaged private var carePlanUUIDString:String?
+    @NSManaged var carePlan:CarePlan?
+    @NSManaged var carePlanUUIDString:String?
     
     public var carePlanUUID:UUID? {
         get {
@@ -53,7 +53,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyTask) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -150,27 +150,6 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
-        /*
-        guard let _ = PFUser.current(),
-            let taskUUID = UUID(uuidString: self.uuid) else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        
-        //Get latest item from the Cloud to compare against
-        let query = Task.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: taskUUID.uuidString)
-        query.includeKeys([kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.getFirstObjectInBackground(){
-            (objects, error) in
-            guard let foundObject = objects as? Task else{
-                completion(false,error)
-                return
-            }
-            
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }
-        */
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -240,7 +219,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     
-    open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool)->Task?{
+    open func copyCareKit(_ taskAny: OCKAnyTask)->Task?{
         
         guard let _ = PFUser.current(),
             let task = taskAny as? OCKTask else{
@@ -317,40 +296,31 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Task)->Void){
-        var linkedNew = false
-        //Link versions and related classes
-        self.findTask(self.previousVersionUUID){
-            previousTask in
-            
-            self.previous = previousTask
-            if self.previous != nil{
-                linkedNew = true
+    public override func linkRelated(completion: @escaping(Bool,Task)->Void){
+        
+        super.linkRelated(){
+            (isNew, _) in
+            var linkedNew = isNew
+        
+            guard let carePlanUUID = self.carePlanUUID else{
+                //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                completion(linkedNew,self)
+                return
             }
             
-            self.findTask(self.nextVersionUUID){
-                nextTask in
+            self.getFirstPCKObject(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, includeKeys: true){
+                (isNew,carePlan) in
                 
-                self.next = nextTask
-                if self.next != nil{
-                    linkedNew = true
-                }
-                
-                guard let carePlanUUID = self.carePlanUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                guard let carePlan = carePlan as? CarePlan else{
                     completion(linkedNew,self)
                     return
                 }
                 
-                self.findCarePlan(carePlanUUID){
-                    carePlan in
-                    
-                    self.carePlan = carePlan
-                    if self.carePlan != nil{
-                        linkedNew = true
-                    }
-                    completion(linkedNew,self)
+                self.carePlan = carePlan
+                if isNew{
+                    linkedNew = true
                 }
+                completion(linkedNew,self)
             }
         }
     }

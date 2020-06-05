@@ -50,7 +50,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyCarePlan) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -146,24 +146,6 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
-        /*
-        guard let _ = PFUser.current() else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-       
-        //Get latest item from the Cloud to compare against
-        let query = CarePlan.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        query.getFirstObjectInBackground{
-            (object, error) in
-            guard let foundObject = object as? CarePlan else{
-                completion(false,error)
-                return
-            }
-            
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -229,7 +211,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.title = parse.title
     }
     
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool)-> CarePlan?{
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan)-> CarePlan?{
         
         guard let _ = PFUser.current(),
             let carePlan = carePlanAny as? OCKCarePlan else{
@@ -292,39 +274,31 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
-        var linkedNew = false
-        self.findCarePlan(self.previousVersionUUID){
-            previousCarePlan in
+    open override func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
+        super.linkRelated(){
+            (isNew, _) in
             
-            self.previous = previousCarePlan
-            if self.previous != nil{
-                linkedNew = true
+            var linkedNew = isNew
+            
+            guard let patientUUID = self.patientUUID else{
+                //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                completion(linkedNew,self)
+                return
             }
             
-            self.findCarePlan(self.nextVersionUUID){
-                nextCarePlan in
+            self.getFirstPCKObject(patientUUID, classType: Patient(), relatedObject: self.patient, includeKeys: true){
+            (isNew,patient) in
                 
-                self.next = nextCarePlan
-                if self.next != nil{
-                    linkedNew = true
-                }
-                
-                guard let patientUUID = self.patientUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                guard let patient = patient as? Patient else{
                     completion(linkedNew,self)
                     return
                 }
                 
-                self.findPatient(patientUUID){
-                    patient in
-                    
-                    self.patient = patient
-                    if self.patient != nil{
-                        linkedNew = true
-                    }
-                    completion(linkedNew,self)
+                self.patient = patient
+                if self.patient != nil{
+                    linkedNew = true
                 }
+                completion(linkedNew,self)
             }
         }
     }

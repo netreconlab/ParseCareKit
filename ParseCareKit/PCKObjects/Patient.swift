@@ -23,7 +23,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyPatient) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -123,26 +123,6 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
-        /*
-        guard let _ = PFUser.current(),
-            let patientUUID = UUID(uuidString: self.uuid) else{
-            return
-        }
-        
-        //Get latest item from the Cloud to compare against
-        let query = Patient.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: patientUUID)
-        query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-        query.getFirstObjectInBackground(){
-            (objects, error) in
-            
-            guard let foundObject = objects as? Patient else{
-                completion(false,error)
-                return
-            }
-            
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -209,7 +189,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.alergies = parse.alergies
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)->Patient?{
+    open func copyCareKit(_ patientAny: OCKAnyPatient)->Patient?{
         
         guard let _ = PFUser.current(),
             let patient = patientAny as? OCKPatient else{
@@ -271,29 +251,5 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             patient.sex = OCKBiologicalSex(rawValue: sex)
         }
         return patient
-    }
-    
-    ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Patient)->Void){
-        var linkedNew = false
-        //Link versions and related classes
-        self.findPatient(self.previousVersionUUID){
-            previousPatient in
-            
-            self.previous = previousPatient
-            if self.previous != nil{
-                linkedNew = true
-            }
-            
-            self.findPatient(self.nextVersionUUID){
-                nextPatient in
-               
-                self.next = nextPatient
-                if self.next != nil{
-                    linkedNew = true
-                }
-                completion(linkedNew,self)
-            }
-        }
     }
 }

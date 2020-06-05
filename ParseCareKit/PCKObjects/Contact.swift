@@ -19,8 +19,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     @NSManaged public var organization:String?
     @NSManaged public var role:String?
     @NSManaged public var title:String?
-    @NSManaged private var carePlan:CarePlan?
-    @NSManaged private var carePlanUUIDString:String?
+    @NSManaged var carePlan:CarePlan?
+    @NSManaged var carePlanUUIDString:String?
     
     public var carePlanUUID:UUID? {
         get {
@@ -133,7 +133,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
 
     public convenience init(careKitEntity: OCKAnyContact) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -232,25 +232,6 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
-        /*
-        guard let _ = PFUser.current(),
-            let contactUUID = UUID(uuidString: self.uuid) else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-        
-        //Get latest item from the Cloud to compare against
-        let query = Contact.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: contactUUID.uuidString)
-        query.getFirstObjectInBackground(){
-            (object, error) in
-            guard let foundObject = object as? Contact else{
-                completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-                return
-            }
-            
-            self.compareDelete(self, parse: foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -321,7 +302,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.carePlanUUID = parse.carePlanUUID
     }
 
-    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool)-> Contact?{
+    open func copyCareKit(_ contactAny: OCKAnyContact)-> Contact?{
         
         guard let _ = PFUser.current(),
             let contact = contactAny as? OCKContact else{
@@ -414,43 +395,30 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Contact)->Void){
-        
-        var linkedNew = false
-        
-        //Link versions and related classes
-        self.findContact(self.previousVersionUUID){
-            previousContact in
+    public override func linkRelated(completion: @escaping(Bool,Contact)->Void){
+        super.linkRelated(){
+            (isNew, _) in
+            var linkedNew = isNew
             
-            self.previous = previousContact
-            
-            if self.previous != nil{
-                linkedNew = true
+            guard let carePlanUUID = self.carePlanUUID else{
+                //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                completion(linkedNew,self)
+                return
             }
             
-            self.findContact(self.nextVersionUUID){
-                nextContact in
+            self.getFirstPCKObject(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, includeKeys: true){
+                (isNew,carePlan) in
                 
-                self.next = nextContact
-                if self.next != nil{
-                    linkedNew = true
-                }
-                
-                guard let carePlanUUID = self.carePlanUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                guard let carePlan = carePlan as? CarePlan else{
                     completion(linkedNew,self)
                     return
                 }
                 
-                self.findCarePlan(carePlanUUID){
-                    carePlan in
-                    
-                    self.carePlan = carePlan
-                    if self.carePlan != nil{
-                        linkedNew = true
-                    }
-                    completion(linkedNew,self)
+                self.carePlan = carePlan
+                if isNew{
+                    linkedNew = true
                 }
+                completion(linkedNew,self)
             }
         }
     }

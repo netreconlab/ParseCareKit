@@ -21,7 +21,7 @@ open class Note: PCKObject, PFSubclassing {
     
     public convenience init(careKitEntity: OCKNote) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open override func copy(_ parse: PCKObject){
@@ -32,7 +32,7 @@ open class Note: PCKObject, PFSubclassing {
         self.title = parse.title
     }
     
-    open func copyCareKit(_ note: OCKNote, clone:Bool) -> Note?{
+    open func copyCareKit(_ note: OCKNote) -> Note?{
         
         if let uuid = Note.getUUIDFromCareKitEntity(note){
             self.uuid = uuid
