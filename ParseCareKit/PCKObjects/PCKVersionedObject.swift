@@ -72,7 +72,7 @@ open class PCKVersionedObject: PCKObject {
         }
     }
     
-    override func copy(_ parse: PCKObject){
+    open override func copy(_ parse: PCKObject){
         super.copy(parse)
         guard let parse = parse as? PCKVersionedObject else{return}
         self.effectiveDate = parse.effectiveDate
@@ -83,15 +83,15 @@ open class PCKVersionedObject: PCKObject {
     }
     
     //This query doesn't filter nextVersion effectiveDate >= interval.end
-    public class func query(_ className: String, for date: Date) -> PFQuery<PFObject> {
-        let query1 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNoNextVersion(className))
-        let query2 = self.queryVersionByDate(className, for: date, queryToAndWith: self.queryWhereNextVersionGreaterThanEqualToDate(className, for: date))
+    public class func query(for date: Date) -> PFQuery<PFObject> {
+        let query1 = self.queryVersion(for: date, queryToAndWith: self.queryWhereNoNextVersion())
+        let query2 = self.queryVersion(for: date, queryToAndWith: self.queryWhereNextVersionGreaterThanEqualToDate(for: date))
         let query = PFQuery.orQuery(withSubqueries: [query1,query2])
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         return query
     }
     
-    private class func queryVersionByDate(_ className: String, for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
+    private class func queryVersion(for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
         let interval = createCurrentDateInterval(for: date)
         
         queryToAndWith.whereKeyDoesNotExist(kPCKObjectDeletedDateKey) //Only consider non deleted keys
@@ -99,34 +99,28 @@ open class PCKVersionedObject: PCKObject {
         return queryToAndWith
     }
     
-    private class func queryWhereNoNextVersion(_ className: String)-> PFQuery<PFObject>{
-        let query = PFQuery(className: className)
+    private class func queryWhereNoNextVersion()-> PFQuery<PFObject>{
+        let query = self.query()!
         query.whereKeyDoesNotExist(kPCKVersionedObjectNextKey)
         return query
     }
     
-    private class func queryWhereNextVersionGreaterThanEqualToDate(_ className: String, for date: Date)-> PFQuery<PFObject>{
+    private class func queryWhereNextVersionGreaterThanEqualToDate(for date: Date)-> PFQuery<PFObject>{
         let interval = createCurrentDateInterval(for: date)
-        let query = PFQuery(className: className)
+        let query = self.query()!
         query.whereKeyExists(kPCKVersionedObjectPreviousKey)
         query.whereKey(kPCKVersionedObjectNextKey, greaterThan: interval.end)
         return query
     }
     
-    open class func createCurrentDateInterval(for date: Date)->DateInterval{
-        let startOfDay = Calendar.current.startOfDay(for: date)
-        let endOfDay = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
-        return DateInterval(start: startOfDay, end: endOfDay)
-    }
-    
-    open func find(for date: Date) throws -> [PCKVersionedObject] {
-        let query = PCKVersionedObject.query(parseClassName, for: date)
+    func find(for date: Date) throws -> [PCKVersionedObject] {
+        let query = type(of: self).query(for: date)
         let entities = try (query.findObjects() as! [PCKVersionedObject])
         return entities
     }
     
-    open func findInBackground(for date: Date, completion: @escaping([PCKVersionedObject]?,Error?)->Void) {
-        let query = PCKVersionedObject.query(parseClassName, for: date)
+    public func findInBackground(for date: Date, completion: @escaping([PCKVersionedObject]?,Error?)->Void) {
+        let query = type(of: self).query(for: date)
         query.findObjectsInBackground{
             (objects,error) in
             guard let entities = objects as? [PCKVersionedObject] else{
@@ -141,7 +135,7 @@ open class PCKVersionedObject: PCKObject {
         
         if backwards{
             if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
-                self.findPCKObject(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
+                self.getFirstPCKObject(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
                     (isNew,previousFound) in
                     
                     guard let previousFound = previousFound as? PCKVersionedObject else{
@@ -172,7 +166,7 @@ open class PCKVersionedObject: PCKObject {
             //We are done fixing
         }else{
             if versionFixed.nextVersionUUIDString != nil && versionFixed.next == nil{
-                self.findPCKObject(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
+                self.getFirstPCKObject(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
                     (isNew,nextFound) in
                     
                     guard let nextFound = nextFound as? PCKVersionedObject else{
@@ -207,7 +201,7 @@ open class PCKVersionedObject: PCKObject {
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Bool,PCKVersionedObject)->Void){
         var linkedNew = false
-        self.findPCKObject(self.previousVersionUUID, classType: self, relatedObject: self.previous, includeKeys: true){
+        self.getFirstPCKObject(self.previousVersionUUID, classType: self, relatedObject: self.previous, includeKeys: true){
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject as? PCKVersionedObject else{
@@ -220,7 +214,7 @@ open class PCKVersionedObject: PCKObject {
                 linkedNew = true
             }
             
-            self.findPCKObject(self.nextVersionUUID, classType: self, relatedObject: self.next, includeKeys: true){
+            self.getFirstPCKObject(self.nextVersionUUID, classType: self, relatedObject: self.next, includeKeys: true){
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject as? PCKVersionedObject else{

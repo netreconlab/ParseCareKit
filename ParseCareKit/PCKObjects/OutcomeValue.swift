@@ -185,40 +185,5 @@ open class OutcomeValue: PCKObject, PFSubclassing {
             local[index] = cloudNote
         }
     }
-    
-    /*
-    open class func fetchAndReplace(_ values: [OutcomeValue], completion: @escaping([OutcomeValue])-> Void){
-        let uuidsToFetch = values.compactMap{ entity -> String? in
-            if entity.objectId == nil{
-                return entity.uuid
-            }
-            return nil
-        }
-        
-        guard let query = OutcomeValue.query() else {
-            completion(values)
-            return
-        }
-        
-        query.whereKey(kPCKObjectUUIDKey, containedIn: uuidsToFetch)
-        query.findObjectsInBackground(){
-            (objects,error) in
-            
-            guard let fetchedNotes = objects as? [OutcomeValue] else{
-                completion(nil)
-                return
-            }
-            var returnNotes = values!
-            for (index, note) in localNotes.enumerated(){
-                guard let replaceNote = fetchedNotes.filter({$0.uuid == note.uuid}).first else {
-                    continue
-                }
-                replaceNote.copy(note) //Copy any changes
-                returnNotes[index] = replaceNote
-            }
-            
-            completion(returnNotes)
-        }
-    }*/
 }
 

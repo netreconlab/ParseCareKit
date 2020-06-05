@@ -146,24 +146,6 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
-        /*
-        guard let _ = PFUser.current() else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
-            return
-        }
-       
-        //Get latest item from the Cloud to compare against
-        let query = CarePlan.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        query.getFirstObjectInBackground{
-            (object, error) in
-            guard let foundObject = object as? CarePlan else{
-                completion(false,error)
-                return
-            }
-            
-            self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }*/
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
@@ -292,50 +274,32 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public override func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
+    open override func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
         super.linkRelated(){
             (isNew, _) in
             
             var linkedNew = isNew
-            /*self.findCarePlan(self.previousVersionUUID, relatedCarePlan: self.previous as? CarePlan){
-                (isNew,previousCarePlan) in
+            
+            guard let patientUUID = self.patientUUID else{
+                //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                completion(linkedNew,self)
+                return
+            }
+            
+            self.getFirstPCKObject(patientUUID, classType: Patient(), relatedObject: self.patient, includeKeys: true){
+            (isNew,patient) in
                 
-                self.previous = previousCarePlan
-                if isNew{
-                    linkedNew = true
+                guard let patient = patient as? Patient else{
+                    completion(linkedNew,self)
+                    return
                 }
                 
-                self.findCarePlan(self.nextVersionUUID, relatedCarePlan: self.next as? CarePlan){
-                    (isNew,nextCarePlan) in
-                    
-                    self.next = nextCarePlan
-                    if isNew{
-                        linkedNew = true
-                    }*/
-                    
-                    guard let patientUUID = self.patientUUID else{
-                        //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                        completion(linkedNew,self)
-                        return
-                    }
-                    
-                    self.findPCKObject(patientUUID, classType: Patient(), relatedObject: self.patient, includeKeys: true){
-                    (isNew,patient) in
-                        
-                        guard let patient = patient as? Patient else{
-                            completion(linkedNew,self)
-                            return
-                        }
-                        
-                        self.patient = patient
-                        if self.patient != nil{
-                            linkedNew = true
-                        }
-                        completion(linkedNew,self)
-                    }
-              //  }
-            //}
+                self.patient = patient
+                if self.patient != nil{
+                    linkedNew = true
+                }
+                completion(linkedNew,self)
+            }
         }
-        
     }
 }
