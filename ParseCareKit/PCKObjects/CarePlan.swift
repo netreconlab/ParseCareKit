@@ -50,7 +50,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyCarePlan) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -229,7 +229,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.title = parse.title
     }
     
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan, clone: Bool)-> CarePlan?{
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan)-> CarePlan?{
         
         guard let _ = PFUser.current(),
             let carePlan = carePlanAny as? OCKCarePlan else{

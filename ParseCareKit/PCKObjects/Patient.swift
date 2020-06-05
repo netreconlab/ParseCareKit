@@ -23,7 +23,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyPatient) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -209,7 +209,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.alergies = parse.alergies
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)->Patient?{
+    open func copyCareKit(_ patientAny: OCKAnyPatient)->Patient?{
         
         guard let _ = PFUser.current(),
             let patient = patientAny as? OCKPatient else{

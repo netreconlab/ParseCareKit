@@ -52,7 +52,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
 
     public convenience init(careKitEntity: OCKAnyOutcome) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     public func new() -> PCKSynchronized {
@@ -196,7 +196,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 return
             }
             
-            foundObject.copyCareKit(local, clone: true){
+            foundObject.copyCareKit(local){
                 tombstoned in
                 tombstoned?.saveInBackground(block: completion)
             }
@@ -309,7 +309,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.taskUUID = parse.taskUUID
     }
         
-    open func copyCareKit(_ outcomeAny: OCKAnyOutcome, clone: Bool)->Outcome?{
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome)->Outcome?{
         
         guard let _ = PFUser.current(),
             let outcome = outcomeAny as? OCKOutcome else{

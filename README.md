@@ -245,7 +245,7 @@ class CancerPatient: Patient{
         }
     }
     
-    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)-> Patient? {
+    override copyCareKit(_ patientAny: OCKAnyPatient)-> Patient? {
         
         guard let cancerPatient = patientAny as? OCKPatient else{
             completion(nil)
@@ -319,11 +319,11 @@ class Doctor: Patient{
     //Add a convienience initializer to to ensure that that the doctor class is always created correctly
     convenience init(careKitEntity: OCKAnyPatient {
         self.init()
-        self.copyCareKit(careKitEntity, clone: true)
+        self.copyCareKit(careKitEntity)
         self.userInfo = [kPCKCustomClassKey: self.parseClassName]
     }
     
-    override copyCareKit(_ patientAny: OCKAnyPatient, clone:Bool)->Patient? {
+    override copyCareKit(_ patientAny: OCKAnyPatient)->Patient? {
         
         guard let doctor = patientAny as? OCKPatient else{
             return nil

@@ -133,7 +133,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
 
     public convenience init(careKitEntity: OCKAnyContact) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -321,7 +321,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.carePlanUUID = parse.carePlanUUID
     }
 
-    open func copyCareKit(_ contactAny: OCKAnyContact, clone: Bool)-> Contact?{
+    open func copyCareKit(_ contactAny: OCKAnyContact)-> Contact?{
         
         guard let _ = PFUser.current(),
             let contact = contactAny as? OCKContact else{

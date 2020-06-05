@@ -53,7 +53,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     
     public convenience init(careKitEntity: OCKAnyTask) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open func new() -> PCKSynchronized {
@@ -240,7 +240,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     
-    open func copyCareKit(_ taskAny: OCKAnyTask, clone:Bool)->Task?{
+    open func copyCareKit(_ taskAny: OCKAnyTask)->Task?{
         
         guard let _ = PFUser.current(),
             let task = taskAny as? OCKTask else{

@@ -94,7 +94,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
     
     public convenience init(careKitEntity:OCKOutcomeValue) {
         self.init()
-        _ = self.copyCareKit(careKitEntity, clone: true)
+        _ = self.copyCareKit(careKitEntity)
     }
     
     open override func copy(_ parse: PCKObject){
@@ -112,7 +112,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         self.dateValue = parse.dateValue
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue, clone: Bool) -> OutcomeValue? {
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue) -> OutcomeValue? {
         
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
             self.uuid = uuid
