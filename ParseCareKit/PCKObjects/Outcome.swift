@@ -388,18 +388,23 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             return
         }
         
-        self.findTask(taskUUID){
-            task in
+        self.findPCKObject(taskUUID, classType: Task(), relatedObject: self.task, includeKeys: true){
+            (isNew,task) in
+            
+            guard let task = task as? Task else{
+                completion(isNew,self)
+                return
+            }
             
             self.task = task
             
-            guard let task = self.currentTask else{
+            guard let currentTask = self.currentTask else{
                 self.date = nil
                 completion(false,self)
                 return
             }
             
-            let schedule = task.makeSchedule()
+            let schedule = currentTask.makeSchedule()
             self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
             completion(true,self)
         }

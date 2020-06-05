@@ -11,7 +11,7 @@ import Parse
 import CareKitStore
 
 extension PCKObject{
-
+/*
     public func save(_ task: Task, completion: @escaping(Bool,Error?) -> Void){
        
         task.stampRelationalEntities()
@@ -58,7 +58,7 @@ extension PCKObject{
             }
         }
     }
-    
+   
     public func compareUpdate(_ parse: Task, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = self.updatedDate,
@@ -108,8 +108,8 @@ extension PCKObject{
                 completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }
-    }
-    
+    }*/
+    /*
     public func findTask(_ uuid:UUID?, completion: @escaping(Task?) -> Void){
        
         guard let _ = PFUser.current(),
@@ -130,7 +130,7 @@ extension PCKObject{
             }
             completion(foundObject)
         }
-    }
+    }*/
     
     public class func encodeCareKitToDictionary(_ entity: OCKTask)->[String:Any]?{
         let jsonDictionary:[String:Any]

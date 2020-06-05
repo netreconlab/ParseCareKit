@@ -47,4 +47,57 @@ open class PCKObject: PFObject {
     open func copyRelationalEntities(_ parse: PCKObject){
         Note.replaceWithCloudVersion(&self.notes, cloud: parse.notes)
     }
+    
+    public func findPCKObject(_ uuid:UUID?, classType: PCKObject, relatedObject:PCKObject?=nil, includeKeys:Bool=true, completion: @escaping(Bool,PCKObject?) -> Void){
+          
+        guard let _ = PFUser.current(),
+            let uuidString = uuid?.uuidString else{
+                completion(false,nil)
+                return
+        }
+            
+        guard relatedObject == nil else{
+            //No need to query the Cloud, it's already present
+            completion(false,relatedObject)
+            return
+        }
+             
+        let query = type(of: classType).query()!
+        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        
+        switch classType{
+        case is CarePlan:
+            if includeKeys{
+                query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            }
+        case is Contact:
+            if includeKeys{
+                query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            }
+        case is Outcome:
+            if includeKeys{
+                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+            }
+        case is Patient:
+            if includeKeys{
+                query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            }
+        case is Task:
+            if includeKeys{
+                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            }
+        default:
+            completion(false,nil)
+        }
+        
+        query.getFirstObjectInBackground(){
+            (object, parseError) in
+            
+            guard let foundObject = object as? PCKObject else{
+                completion(false,nil)
+                return
+            }
+            completion(true,foundObject)
+        }
+    }
 }

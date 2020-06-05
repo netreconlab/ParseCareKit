@@ -274,7 +274,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Patient)->Void){
+    /*public override func linkRelated(completion: @escaping(Bool,Patient)->Void){
+        
         var linkedNew = false
         //Link versions and related classes
         self.findPatient(self.previousVersionUUID){
@@ -295,5 +296,5 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                 completion(linkedNew,self)
             }
         }
-    }
+    }*/
 }

@@ -11,7 +11,7 @@ import Parse
 import CareKitStore
 
 extension PCKObject{
-    
+    /*
     public func save(_ carePlan: CarePlan, completion: @escaping(Bool,Error?) -> Void){
         carePlan.stampRelationalEntities()
         carePlan.saveInBackground{ (success, error) in
@@ -111,7 +111,7 @@ extension PCKObject{
             }
         }
     }
-    
+    */
     public class func encodeCareKitToDictionary(_ entity: OCKCarePlan)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
@@ -124,12 +124,18 @@ extension PCKObject{
         
         return jsonDictionary
     }
-    
-    public func findCarePlan(_ uuid:UUID?, completion: @escaping(CarePlan?) -> Void){
+    /*
+    public func findCarePlan(_ uuid:UUID?, relatedCarePlan:CarePlan?, completion: @escaping(Bool,CarePlan?) -> Void){
        
         guard let _ = PFUser.current(),
-        let uuidString = uuid?.uuidString else{
-            completion(nil)
+            let uuidString = uuid?.uuidString else{
+            completion(false,nil)
+            return
+        }
+        
+        guard relatedCarePlan == nil else{
+            //No need to query the Cloud, it's already present
+            completion(false,relatedCarePlan)
             return
         }
         
@@ -140,10 +146,11 @@ extension PCKObject{
             (object, parseError) in
             
             guard let foundObject = object as? CarePlan else{
-                completion(nil)
+                completion(false,nil)
                 return
             }
-            completion(foundObject)
+            completion(true,foundObject)
         }
-    }
+    }*/
+    
 }

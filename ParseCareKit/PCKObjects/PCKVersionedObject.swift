@@ -136,4 +136,319 @@ open class PCKVersionedObject: PCKObject {
             completion(entities,error)
         }
     }
+    
+    func fixVersionLinkedList(_ versionFixed: PCKVersionedObject, backwards:Bool){
+        
+        if backwards{
+            if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
+                self.findPCKObject(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
+                    (isNew,previousFound) in
+                    
+                    guard let previousFound = previousFound as? PCKVersionedObject else{
+                        //Previous version not found, stop fixing
+                        return
+                    }
+                    versionFixed.previous = previousFound
+                    if isNew{
+                        versionFixed.saveInBackground(){
+                            (success,_) in
+                            if success{
+                                if previousFound.next == nil{
+                                    previousFound.next = versionFixed
+                                    previousFound.saveInBackground(){
+                                        (success,_) in
+                                        if success{
+                                            self.fixVersionLinkedList(previousFound, backwards: backwards)
+                                        }
+                                    }
+                                }else{
+                                    self.fixVersionLinkedList(previousFound, backwards: backwards)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //We are done fixing
+        }else{
+            if versionFixed.nextVersionUUIDString != nil && versionFixed.next == nil{
+                self.findPCKObject(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
+                    (isNew,nextFound) in
+                    
+                    guard let nextFound = nextFound as? PCKVersionedObject else{
+                        //Next version not found, stop fixing
+                        return
+                    }
+                    versionFixed.next = nextFound
+                    if isNew{
+                        versionFixed.saveInBackground(){
+                            (success,_) in
+                            if success{
+                                if nextFound.previous == nil{
+                                    nextFound.previous = versionFixed
+                                    nextFound.saveInBackground(){
+                                    (success,_) in
+                                        if success{
+                                            self.fixVersionLinkedList(nextFound, backwards: backwards)
+                                        }
+                                    }
+                                }else{
+                                    self.fixVersionLinkedList(nextFound, backwards: backwards)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //We are done fixing
+        }
+    }
+    
+    ///Link versions and related classes
+    public func linkRelated(completion: @escaping(Bool,PCKVersionedObject)->Void){
+        var linkedNew = false
+        self.findPCKObject(self.previousVersionUUID, classType: self, relatedObject: self.previous, includeKeys: true){
+            (isNew,previousObject) in
+            
+            guard let previousObject  = previousObject as? PCKVersionedObject else{
+                completion(false,self)
+                return
+            }
+            
+            self.previous = previousObject
+            if isNew{
+                linkedNew = true
+            }
+            
+            self.findPCKObject(self.nextVersionUUID, classType: self, relatedObject: self.next, includeKeys: true){
+                (isNew,nextObject) in
+                
+                guard let nextObject  = nextObject as? PCKVersionedObject else{
+                    completion(false,self)
+                    return
+                }
+                
+                self.next = nextObject
+                if isNew{
+                    linkedNew = true
+                }
+                
+                completion(linkedNew,self)
+            }
+        }
+    }
+    
+    public func save(_ versionedObject: PCKVersionedObject, completion: @escaping(Bool,Error?) -> Void){
+        
+        switch versionedObject{
+        case is CarePlan:
+            
+            guard let versionedObject = versionedObject as? CarePlan else{
+                completion(false,ParseCareKitError.cantCastToNeededClassType)
+                return
+            }
+            
+            versionedObject.stampRelationalEntities()
+            
+            versionedObject.saveInBackground{
+                (success, error) in
+                if success{
+                    print("Successfully added \(versionedObject) to Cloud")
+                    
+                    versionedObject.linkRelated{
+                        (linked,_) in
+                        
+                        if linked{
+                            versionedObject.saveInBackground()
+                        }
+                        
+                        //Fix versioning doubly linked list if it's broken in the cloud
+                        if versionedObject.previous != nil {
+                            if versionedObject.previous!.next == nil{
+                                versionedObject.previous!.next = versionedObject
+                                versionedObject.previous!.next!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if versionedObject.next != nil {
+                            if versionedObject.next!.previous == nil{
+                                versionedObject.next!.previous = versionedObject
+                                versionedObject.next!.previous!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
+                                    }
+                                }
+                            }
+                        }
+                        completion(success,error)
+                    }
+                }else{
+                    print("Error in \(self.parseClassName).save(). \(String(describing: error))")
+                    completion(success,error)
+                }
+            }
+            
+        case is Contact:
+            guard let versionedObject = versionedObject as? Contact else{
+                completion(false,ParseCareKitError.cantCastToNeededClassType)
+                return
+            }
+            
+            versionedObject.stampRelationalEntities()
+            
+            versionedObject.saveInBackground{
+                (success, error) in
+                if success{
+                    print("Successfully added \(versionedObject) to Cloud")
+                    
+                    versionedObject.linkRelated{
+                        (linked,_) in
+                        
+                        if linked{
+                            versionedObject.saveInBackground()
+                        }
+                        
+                        //Fix versioning doubly linked list if it's broken in the cloud
+                        if versionedObject.previous != nil {
+                            if versionedObject.previous!.next == nil{
+                                versionedObject.previous!.next = versionedObject
+                                versionedObject.previous!.next!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if versionedObject.next != nil {
+                            if versionedObject.next!.previous == nil{
+                                versionedObject.next!.previous = versionedObject
+                                versionedObject.next!.previous!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
+                                    }
+                                }
+                            }
+                        }
+                        completion(success,error)
+                    }
+                }else{
+                    print("Error in \(self.parseClassName).save(). \(String(describing: error))")
+                    completion(success,error)
+                }
+            }
+        case is Patient:
+            guard let versionedObject = versionedObject as? Patient else{
+                completion(false,ParseCareKitError.cantCastToNeededClassType)
+                return
+            }
+            
+            versionedObject.stampRelationalEntities()
+            
+            versionedObject.saveInBackground{
+                (success, error) in
+                if success{
+                    print("Successfully added \(versionedObject) to Cloud")
+                    
+                    versionedObject.linkRelated{
+                        (linked,_) in
+                        
+                        if linked{
+                            versionedObject.saveInBackground()
+                        }
+                        
+                        //Fix versioning doubly linked list if it's broken in the cloud
+                        if versionedObject.previous != nil {
+                            if versionedObject.previous!.next == nil{
+                                versionedObject.previous!.next = versionedObject
+                                versionedObject.previous!.next!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if versionedObject.next != nil {
+                            if versionedObject.next!.previous == nil{
+                                versionedObject.next!.previous = versionedObject
+                                versionedObject.next!.previous!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
+                                    }
+                                }
+                            }
+                        }
+                        completion(success,error)
+                    }
+                }else{
+                    print("Error in \(self.parseClassName).save(). \(String(describing: error))")
+                    completion(success,error)
+                }
+            }
+        case is Task:
+            guard let versionedObject = versionedObject as? Task else{
+                completion(false,ParseCareKitError.cantCastToNeededClassType)
+                return
+            }
+            
+            versionedObject.stampRelationalEntities()
+            
+            versionedObject.saveInBackground{
+                (success, error) in
+                if success{
+                    print("Successfully added \(versionedObject) to Cloud")
+                    
+                    versionedObject.linkRelated{
+                        (linked,_) in
+                        
+                        if linked{
+                            versionedObject.saveInBackground()
+                        }
+                        
+                        //Fix versioning doubly linked list if it's broken in the cloud
+                        if versionedObject.previous != nil {
+                            if versionedObject.previous!.next == nil{
+                                versionedObject.previous!.next = versionedObject
+                                versionedObject.previous!.next!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if versionedObject.next != nil {
+                            if versionedObject.next!.previous == nil{
+                                versionedObject.next!.previous = versionedObject
+                                versionedObject.next!.previous!.saveInBackground(){
+                                    (success,_) in
+                                    if success{
+                                        versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
+                                    }
+                                }
+                            }
+                        }
+                        completion(success,error)
+                    }
+                }else{
+                    print("Error in \(self.parseClassName).save(). \(String(describing: error))")
+                    completion(success,error)
+                }
+            }
+        default:
+            completion(false,ParseCareKitError.classTypeNotAnEligibleType)
+        }
+    }
 }

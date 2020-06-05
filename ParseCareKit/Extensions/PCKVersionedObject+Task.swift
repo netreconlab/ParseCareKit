@@ -45,7 +45,7 @@ extension PCKVersionedObject{
         }
         return entity
     }
-    
+    /*
     func fixVersionLinkedList(_ versionFixed: Task, backwards:Bool){
         
         if backwards{
@@ -107,5 +107,5 @@ extension PCKVersionedObject{
             }
             //We are done fixing
         }
-    }
+    }*/
 }

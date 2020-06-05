@@ -317,10 +317,14 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Task)->Void){
-        var linkedNew = false
+    public override func linkRelated(completion: @escaping(Bool,Task)->Void){
+        
+        super.linkRelated(){
+            (isNew, _) in
+            var linkedNew = isNew
+        
         //Link versions and related classes
-        self.findTask(self.previousVersionUUID){
+        /*self.findTask(self.previousVersionUUID){
             previousTask in
             
             self.previous = previousTask
@@ -334,7 +338,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                 self.next = nextTask
                 if self.next != nil{
                     linkedNew = true
-                }
+                }*/
                 
                 guard let carePlanUUID = self.carePlanUUID else{
                     //Finished if there's no CarePlan, otherwise see if it's in the cloud
@@ -342,16 +346,22 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     return
                 }
                 
-                self.findCarePlan(carePlanUUID){
-                    carePlan in
+                self.findPCKObject(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, includeKeys: true){
+                    (isNew,carePlan) in
+                    
+                    guard let carePlan = carePlan as? CarePlan else{
+                        completion(linkedNew,self)
+                        return
+                    }
                     
                     self.carePlan = carePlan
-                    if self.carePlan != nil{
+                    if isNew{
                         linkedNew = true
                     }
                     completion(linkedNew,self)
                 }
-            }
+            //}
+        //}
         }
     }
     

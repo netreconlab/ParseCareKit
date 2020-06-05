@@ -11,7 +11,7 @@ import Parse
 import CareKitStore
 
 extension PCKObject{
-
+/*
     public func save(_ contact: Contact, completion: @escaping(Bool,Error?) -> Void){
         
         contact.stampRelationalEntities()
@@ -108,7 +108,7 @@ extension PCKObject{
                 completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }
-    }
+    }*/
     
     public class func encodeCareKitToDictionary(_ entity: OCKContact)->[String:Any]?{
         let jsonDictionary:[String:Any]
@@ -123,6 +123,7 @@ extension PCKObject{
         return jsonDictionary
     }
     
+    /*
     public func findContact(_ uuid:UUID?, completion: @escaping(Contact?) -> Void){
        
         guard let _ = PFUser.current(),
@@ -144,5 +145,5 @@ extension PCKObject{
             completion(foundObject)
         }
     }
-    
+    */
 }

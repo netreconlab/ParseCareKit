@@ -414,44 +414,51 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Contact)->Void){
-        
-        var linkedNew = false
-        
-        //Link versions and related classes
-        self.findContact(self.previousVersionUUID){
-            previousContact in
-            
-            self.previous = previousContact
-            
-            if self.previous != nil{
-                linkedNew = true
-            }
-            
-            self.findContact(self.nextVersionUUID){
-                nextContact in
+    public override func linkRelated(completion: @escaping(Bool,Contact)->Void){
+        super.linkRelated(){
+            (isNew, _) in
+            var linkedNew = isNew
+            /*
+            //Link versions and related classes
+            self.findContact(self.previousVersionUUID){
+                previousContact in
                 
-                self.next = nextContact
-                if self.next != nil{
+                self.previous = previousContact
+                
+                if self.previous != nil{
                     linkedNew = true
                 }
                 
-                guard let carePlanUUID = self.carePlanUUID else{
-                    //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                    completion(linkedNew,self)
-                    return
-                }
-                
-                self.findCarePlan(carePlanUUID){
-                    carePlan in
+                self.findContact(self.nextVersionUUID){
+                    nextContact in
                     
-                    self.carePlan = carePlan
-                    if self.carePlan != nil{
+                    self.next = nextContact
+                    if self.next != nil{
                         linkedNew = true
+                    }*/
+                    
+                    guard let carePlanUUID = self.carePlanUUID else{
+                        //Finished if there's no CarePlan, otherwise see if it's in the cloud
+                        completion(linkedNew,self)
+                        return
                     }
-                    completion(linkedNew,self)
-                }
-            }
+                    
+                    self.findPCKObject(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, includeKeys: true){
+                        (isNew,carePlan) in
+                        
+                        guard let carePlan = carePlan as? CarePlan else{
+                            completion(linkedNew,self)
+                            return
+                        }
+                        
+                        self.carePlan = carePlan
+                        if isNew{
+                            linkedNew = true
+                        }
+                        completion(linkedNew,self)
+                    }
+                //}
+            //}
         }
     }
 }
