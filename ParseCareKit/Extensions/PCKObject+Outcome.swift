@@ -34,7 +34,7 @@ extension PCKObject{
             }
         }
     }
-    
+    /*
     public func compareUpdate(_ parse: Outcome, usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void){
         
         if !usingKnowledgeVector{
@@ -88,7 +88,7 @@ extension PCKObject{
                 completion(false,ParseCareKitError.cloudClockLargerThanLocalWhilePushRevisions)
             }
         }
-    }
+    }*/
     
 
     public class func encodeCareKitToDictionary(_ entity: OCKOutcome)->[String:Any]?{

@@ -132,6 +132,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     
     open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
+        completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+        /*
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -165,7 +167,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             }
             
             self.compareUpdate(foundObject, usingKnowledgeVector: usingKnowledgeVector, overwriteRemote: overwriteRemote, completion: completion)
-        }
+        }*/
     }
     
     open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
