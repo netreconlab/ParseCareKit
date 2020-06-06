@@ -294,7 +294,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         self.parseRemoteDelegate?.storeUpdatedOutcome(outcomeNeedsToBeTagged)
                         
                         print("Warning in ParseRemoteSynchronizationManager.pushRevisions(). Requested for OCKStore to fix tags on outcome so it can be queried locally. If fixed, the Outcome will be synchronized on next synch.")
-                        
+                        /*
                         revisionsCompletedCount += 1
                         if revisionsCompletedCount == deviceRevision.entities.count{
                             //If this was the only revision, return as normal
@@ -304,7 +304,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
-                        return
+                        return*/
                     }
                     
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
