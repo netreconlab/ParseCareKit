@@ -40,7 +40,7 @@ The framework currently isn't SPM compatible yet as it's depedendent on [Parse](
 The easiest way to install is via cocoapods. Since ParseCareKit requires CareKit, and CareKit doesn't officially support cocoapods (see more [here](https://github.com/carekit-apple/CareKit/issues/383)), you will have to point to a github repo that contains CareKit 2.0+ podspecs. Feel free to point to the repo below which mirrors the most up-to-date versions of CareKit. Your podfile should contain at least the following:
 
 ```ruby
-platform :ios, '13.0' #Note that CareKitStore will switch this to it's minimum requirement of iOS 13
+platform :ios, '13.0' #Note that this the minimum requirement for CareKit iOS 13
 
 target 'MyApp' do #Change to your app name
   use_frameworks!
@@ -55,13 +55,12 @@ target 'MyApp' do #Change to your app name
 end
 ```
 
-The above podspec will also install the minimum required [Parse iOS framework](https://github.com/parse-community/Parse-SDK-iOS-OSX)(and its dependencies) as it's also a requirement for ParseCareKit.
+The above Podfile will also install the minimum required [Parse iOS framework](https://github.com/parse-community/Parse-SDK-iOS-OSX)(and its dependencies) as it's also a requirement for ParseCareKit.
 
 If you only need the `CareKitStore` and `ParseCareKit`, you can build your project for iOS 11+ by using:
 
-```
 ```ruby
-platform :ios, '11.0' #Note that CareKitStore will switch this to it's minimum requirement of iOS 13
+platform :ios, '11.0' #Can run on lower version as long as you are using tweek
 
 target 'MyApp' do #Change to your app name
   use_frameworks!
@@ -73,6 +72,8 @@ target 'MyApp' do #Change to your app name
   # Add the rest of your pods below
 end
 ```
+
+See the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch for details.
 
 
 ### Installing as a framework
