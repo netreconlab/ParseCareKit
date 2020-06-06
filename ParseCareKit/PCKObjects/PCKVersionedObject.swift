@@ -138,13 +138,13 @@ open class PCKVersionedObject: PCKObject {
                         //Previous version not found, stop fixing
                         return
                     }
-                    versionFixed.previous = previousFound
+                    versionFixed.previousVersion = previousFound
                     if isNew{
                         versionFixed.saveInBackground(){
                             (success,_) in
                             if success{
                                 if previousFound.next == nil{
-                                    previousFound.next = versionFixed
+                                    previousFound.nextVersion = versionFixed
                                     previousFound.saveInBackground(){
                                         (success,_) in
                                         if success{
@@ -169,13 +169,13 @@ open class PCKVersionedObject: PCKObject {
                         //Next version not found, stop fixing
                         return
                     }
-                    versionFixed.next = nextFound
+                    versionFixed.nextVersion = nextFound
                     if isNew{
                         versionFixed.saveInBackground(){
                             (success,_) in
                             if success{
                                 if nextFound.previous == nil{
-                                    nextFound.previous = versionFixed
+                                    nextFound.previousVersion = versionFixed
                                     nextFound.saveInBackground(){
                                     (success,_) in
                                         if success{
@@ -205,7 +205,7 @@ open class PCKVersionedObject: PCKObject {
                 return
             }
             
-            self.previous = previousObject
+            self.previousVersion = previousObject
             if isNew{
                 linkedNew = true
             }
@@ -218,7 +218,7 @@ open class PCKVersionedObject: PCKObject {
                     return
                 }
                 
-                self.next = nextObject
+                self.nextVersion = nextObject
                 if isNew{
                     linkedNew = true
                 }
@@ -255,7 +255,7 @@ open class PCKVersionedObject: PCKObject {
                         //Fix versioning doubly linked list if it's broken in the cloud
                         if versionedObject.previous != nil {
                             if versionedObject.previous!.next == nil{
-                                versionedObject.previous!.next = versionedObject
+                                versionedObject.previous!.nextVersion = versionedObject
                                 versionedObject.previous!.next!.saveInBackground(){
                                     (success,_) in
                                     if success{
@@ -267,7 +267,7 @@ open class PCKVersionedObject: PCKObject {
                         
                         if versionedObject.next != nil {
                             if versionedObject.next!.previous == nil{
-                                versionedObject.next!.previous = versionedObject
+                                versionedObject.next!.previousVersion = versionedObject
                                 versionedObject.next!.previous!.saveInBackground(){
                                     (success,_) in
                                     if success{
