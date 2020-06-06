@@ -90,6 +90,7 @@ extension OCKStore {
                               completion: ((Result<[OCKCarePlan], OCKStoreError>) -> Void)? = nil) {
         context.perform {
             do {
+                
                 let updated = try self.updateCarePlansWithoutCommitting(plans, copyUUIDs: false)
                 try self.context.save()
                 callbackQueue.async {

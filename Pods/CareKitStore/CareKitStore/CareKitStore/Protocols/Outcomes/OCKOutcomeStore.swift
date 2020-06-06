@@ -31,7 +31,7 @@ import Foundation
 
 /// Any store from which a single type conforming to `OCKAnyTask` can be queried is considered a `OCKReadableOutcomeStore`.
 public protocol OCKReadableOutcomeStore: OCKAnyReadOnlyOutcomeStore {
-    associatedtype Outcome: OCKAnyOutcome & Equatable & Identifiable
+    associatedtype Outcome: OCKAnyOutcome & Equatable// & Identifiable
     associatedtype OutcomeQuery: OCKAnyOutcomeQuery
 
     /// `fetchOutcomes` asynchronously retrieves an array of outcomes from the store.
