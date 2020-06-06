@@ -24,4 +24,9 @@ extension PCKObject{
         
         return jsonDictionary
     }
+    
+    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKTask)->[String:Any]?{
+        guard let json = Task.encodeCareKitToDictionary(entity) else{return nil}
+        return json["schemaVersion"] as? [String:Any]
+    }
 }

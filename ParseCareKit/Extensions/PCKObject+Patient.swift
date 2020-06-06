@@ -24,4 +24,9 @@ extension PCKObject{
         
         return jsonDictionary
     }
+    
+    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKPatient)->[String:Any]?{
+        guard let json = Patient.encodeCareKitToDictionary(entity) else{return nil}
+        return json["schemaVersion"] as? [String:Any]
+    }
 }

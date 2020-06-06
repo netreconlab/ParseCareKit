@@ -257,6 +257,12 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
         }
         
+        if let schemaVersion = Outcome.getSchemaVersionFromCareKitEntity(outcome){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(outcome)")
+        }
+        
         self.entityId = outcome.id
         self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
         self.groupIdentifier = outcome.groupIdentifier
