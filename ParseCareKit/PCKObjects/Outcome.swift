@@ -387,13 +387,6 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     func findOutcomes() throws -> [Outcome] {
         let query = type(of: self).queryNotDeleted()
         let entities = try (query.findObjects() as! [Outcome])
-        /*let filtered = entities.filter{
-            guard let possibleTasks = $0.task,
-                possibleTasks.deletedDate == nil else {
-                return false
-            }
-            return true
-        }*/
         
         return entities
     }

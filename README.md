@@ -223,6 +223,8 @@ store.addCarePlan(careKitCarePlan, callbackQueue: .main){
 }
 ```
 
+## Customising Parse Entities to Sync with CareKit
+
 There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below `new()`,  `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->Patient:
 
 ```swift
@@ -353,7 +355,7 @@ class Doctor: Patient{
 }
 ```
 
-You should never save changes to ParseCareKit classes directly to Parse as it may cause your data to get out-of-sync. Instead, user the `convertToCareKit` methods from each class and use the `add` or `update` methods for the CareStore. For example, the process below is recommended when creating new items to sync between CareKit and ParseCareKit
+***You should never save changes to ParseCareKit classes directly to Parse as it may cause your data to get out-of-sync.*** Instead, user the `convertToCareKit` methods from each class and use the `add` or `update` methods from the CareStore. For example, the process below is recommended when creating new items to sync between CareKit and ParseCareKit
 
 ```swift
 //Create doctor using CareKit
@@ -393,5 +395,62 @@ _ = Doctor(careKitEntity: newCareKitDoctor){
 }
 
 ```
+
+### Querying Parse Like OCKQuery in CareKit
+There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because `Patient`, `CarePlan`, `Contact`, and `Task` are versioned entities and `Outcome`'s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for "versioned" entities or tombstoned and not tombstoned `Outcome`s. A description of how versioning works in CareKit can be found [here](https://github.com/carekit-apple/CareKit#carekitstore-).
+
+```swift
+//To query the most recent version
+let query = Patient.query(for: Date())
+
+query.findInBackground(){
+    (objects,error) in
+    guard let found = objects as? [Patient] else{
+        print("\(String(describing: error))")
+        return
+    }
+    print(found) //Your recent versions are here
+}
+
+//You can also use this helper method
+let patient = Patient()
+patient.findInBackground(for: Date()){
+    (objects,error) in
+    guard let found = objects as? [Patient] else{
+        print("\(String(describing: error))")
+        return
+    }
+    print(found)
+}
+```
+
+For `Outcome`:
+
+```swift
+//To query all current outcomes
+let query = Outcome.queryNotDeleted()
+
+query.findInBackground(){
+    (objects,error) in
+    guard let found = objects as? [Outcome] else{
+        print("\(String(describing: error))")
+        return
+    }
+    print(found) //All of your outcomes that haven't been deleted
+}
+
+//Or you can use this helper method
+Outcome().findOutcomesInBackground(){
+    (objects,error) in
+    guard let found = objects else{
+        print("\(String(describing: error))")
+        return
+    }
+    print(found) //All of your outcomes that haven't been deleted
+}
+
+```
+
+### Custom OCKStores
 
 If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObject` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
