@@ -119,6 +119,13 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         }else{
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcomeValue)")
         }
+        
+        if let schemaVersion = OutcomeValue.getSchemaVersionFromCareKitEntity(outcomeValue){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(outcomeValue)")
+        }
+        
         self.userInfo = outcomeValue.userInfo
         self.kind = outcomeValue.kind
         
