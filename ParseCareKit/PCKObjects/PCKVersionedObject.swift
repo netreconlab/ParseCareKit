@@ -101,12 +101,13 @@ open class PCKVersionedObject: PCKObject {
         
         let query = self.query()!
         query.whereKeyDoesNotExist(kPCKVersionedObjectNextKey)
-        
+        return query
+        /*
         let interval = createCurrentDateInterval(for: date)
         let greaterEffectiveDate = self.query()!
         greaterEffectiveDate.whereKey(kPCKVersionedObjectNextKey, greaterThan: interval.end)
         
-        return PFQuery.orQuery(withSubqueries: [query,greaterEffectiveDate])
+        return PFQuery.orQuery(withSubqueries: [query,greaterEffectiveDate])*/
     }
     
     func find(for date: Date) throws -> [PCKVersionedObject] {
