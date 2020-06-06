@@ -1,19 +1,13 @@
 PODS:
   - Bolts/Tasks (1.9.1)
-  - CareKit (2.0):
-    - CareKitStore (= 2.0)
-    - CareKitUI (= 2.0)
   - CareKitStore (2.0)
-  - CareKitUI (2.0)
   - Parse (1.18.0):
     - Parse/Core (= 1.18.0)
   - Parse/Core (1.18.0):
     - Bolts/Tasks (= 1.9.1)
 
 DEPENDENCIES:
-  - CareKit (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
   - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod_vector`)
-  - CareKitUI (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
   - Parse (~> 1.18)
 
 SPEC REPOS:
@@ -22,34 +16,20 @@ SPEC REPOS:
     - Parse
 
 EXTERNAL SOURCES:
-  CareKit:
-    :branch: pod
-    :git: https://github.com/cbaker6/CareKit.git
   CareKitStore:
     :branch: pod_vector
     :git: https://github.com/cbaker6/CareKit.git
-  CareKitUI:
-    :branch: pod
-    :git: https://github.com/cbaker6/CareKit.git
 
 CHECKOUT OPTIONS:
-  CareKit:
-    :commit: f27d419cc231745a7e3c1e4cf67ef7b8ea867b1e
-    :git: https://github.com/cbaker6/CareKit.git
   CareKitStore:
     :commit: a85c2a9d04e78f466d5da69d6c5d47641ec21e22
-    :git: https://github.com/cbaker6/CareKit.git
-  CareKitUI:
-    :commit: f27d419cc231745a7e3c1e4cf67ef7b8ea867b1e
     :git: https://github.com/cbaker6/CareKit.git
 
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
-  CareKit: 11afe5f22152327020f9e3ff03efefe9542e1ea9
   CareKitStore: a0aeabb8c7dd7430c23ff537e7c45c8a6c829daa
-  CareKitUI: a8b24291173ea37c22466c4003d908abb962bcb4
   Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
 
-PODFILE CHECKSUM: eb0841df9f7d5d4bb17dbc86b76bce6ff2ca2bf9
+PODFILE CHECKSUM: a1ab012a0d9667a1bc2937fba656fb2809b7e394
 
 COCOAPODS: 1.9.1
