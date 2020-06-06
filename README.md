@@ -1,5 +1,5 @@
 # ParseCareKit
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license) ![Swift](https://img.shields.io/badge/swift-5.0-brightgreen.svg) ![Xcode 11.0+](https://img.shields.io/badge/Xcode-11.0%2B-blue.svg) ![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg) [![Version](https://img.shields.io/cocoapods/v/ParseCareKit.svg?style=flat)](https://cocoapods.org/pods/ParseCareKit)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license) ![Swift](https://img.shields.io/badge/swift-5.0-brightgreen.svg) ![Xcode 11.0+](https://img.shields.io/badge/Xcode-11.0%2B-blue.svg) ![iOS 11.0+](https://img.shields.io/badge/iOS-11.0%2B-blue.svg) [![Version](https://img.shields.io/cocoapods/v/ParseCareKit.svg?style=flat)](https://cocoapods.org/pods/ParseCareKit)
 
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
@@ -27,7 +27,7 @@ A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKi
 
 ## What version of ParseCareKit Suits Your Needs?
 - (Most cases) Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [master](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details.
-- Need to use ParseCareKit for iOS11+ and will be using [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. The limitation here is that CareKit and CareKitUI can't be use because they require iOS13.
+- Need to use ParseCareKit for iOS11+ and will be using [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? See this [section](https://github.com/netreconlab/ParseCareKit/blob/carestore/README.md#installing-via-cocoapods) for more details. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. The limitation here is that CareKit and CareKitUI can't be use because they require iOS13.
 - Need to use ParseCareKit for iOS13+ and will be using [CareKit <= 2.0.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore` or conforming to `OCKAnyStoreProtocol`) within your app? You should use the [carekit_2.0.1](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You should use `ParseSynchronizedStoreManager()` see [below](#synchronizing-your-data) more details.
 - Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you created your own store conforming to the `OCKAnyStoreProtocol`) within your app? You should use the [wall_clock](https://github.com/netreconlab/ParseCareKit/tree/wall_clock) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You should use `ParseSynchronizedStoreManager()` see [below](#synchronizing-your-data) more details. It's suggested to map your classes to OCKStore classes instead.
 
@@ -40,13 +40,15 @@ The framework currently isn't SPM compatible yet as it's depedendent on [Parse](
 The easiest way to install is via cocoapods. Since ParseCareKit requires CareKit, and CareKit doesn't officially support cocoapods (see more [here](https://github.com/carekit-apple/CareKit/issues/383)), you will have to point to a github repo that contains CareKit 2.0+ podspecs. Feel free to point to the repo below which mirrors the most up-to-date versions of CareKit. Your podfile should contain at least the following:
 
 ```ruby
-platform :ios, '13.0' #This is the minimum requirement for CareKit 2.0
+platform :ios, '11.0' #Note that CareKitStore will switch this to it's minimum requirement of iOS 13
 
 target 'MyApp' do #Change to your app name
   use_frameworks!
 
   # All of these are required to run ParseCareKit
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector'
+  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
+  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
   pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
   
   # Add the rest of your pods below
@@ -54,6 +56,24 @@ end
 ```
 
 The above podspec will also install the minimum required [Parse iOS framework](https://github.com/parse-community/Parse-SDK-iOS-OSX)(and its dependencies) as it's also a requirement for ParseCareKit.
+
+If you only need the `CareKitStore` and `ParseCareKit`, you can build your project for iOS 11+ by using:
+
+```
+```ruby
+platform :ios, '11.0' #Note that CareKitStore will switch this to it's minimum requirement of iOS 13
+
+target 'MyApp' do #Change to your app name
+  use_frameworks!
+
+  # All of these are required to run ParseCareKit
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_tweek'
+  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
+  
+  # Add the rest of your pods below
+end
+```
+
 
 ### Installing as a framework
 - Fork the project
