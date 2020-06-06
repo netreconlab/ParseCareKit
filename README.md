@@ -46,9 +46,7 @@ target 'MyApp' do #Change to your app name
   use_frameworks!
 
   # All of these are required to run ParseCareKit
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
   pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector'
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
   pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
   
   # Add the rest of your pods below
@@ -179,7 +177,7 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
 
 ```
 
-### Using the wall clock (`ParseSynchronizedStoreManager`)
+### Using the wall clock (`ParseSynchronizedStoreManager`) - Note that this is deprecated
 
 You can also use ParseCareKit to stay synchronized with the `OCKStore` or `OCKAnyStoreProtocol` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
