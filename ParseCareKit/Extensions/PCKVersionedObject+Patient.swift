@@ -23,6 +23,7 @@ extension PCKVersionedObject{
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        json["schemaVersion"] = self.schemaVersion
         if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
             json["deletedDate"] = deletedDate
         }

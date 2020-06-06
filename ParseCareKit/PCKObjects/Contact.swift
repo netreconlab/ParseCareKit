@@ -315,6 +315,12 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(contact)")
         }
         
+        if let schemaVersion = Contact.getSchemaVersionFromCareKitEntity(contact){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(contact)")
+        }
+        
         self.entityId = contact.id
         self.deletedDate = contact.deletedDate
         self.groupIdentifier = contact.groupIdentifier

@@ -231,6 +231,13 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName). Entity missing uuid: \(task)")
         }
+        
+        if let schemaVersion = Task.getSchemaVersionFromCareKitEntity(task){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(task)")
+        }
+        
         self.entityId = task.id
         self.deletedDate = task.deletedDate
         self.groupIdentifier = task.groupIdentifier

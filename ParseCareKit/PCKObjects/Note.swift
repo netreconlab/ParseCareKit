@@ -40,6 +40,12 @@ open class Note: PCKObject, PFSubclassing {
             print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(note)")
         }
         
+        if let schemaVersion = Note.getSchemaVersionFromCareKitEntity(note){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(note)")
+        }
+        
         self.groupIdentifier = note.groupIdentifier
         self.tags = note.tags
         self.source = note.source

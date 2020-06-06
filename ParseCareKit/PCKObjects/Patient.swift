@@ -201,6 +201,13 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName). Entity missing uuid: \(patient)")
         }
+        
+        if let schemaVersion = Patient.getSchemaVersionFromCareKitEntity(patient){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(patient)")
+        }
+        
         self.entityId = patient.id
         self.name = CareKitPersonNameComponents.familyName.convertToDictionary(patient.name)
         self.birthday = patient.birthday

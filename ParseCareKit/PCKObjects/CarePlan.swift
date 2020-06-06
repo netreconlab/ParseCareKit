@@ -223,6 +223,13 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         }else{
             print("Warning in \(parseClassName). Entity missing uuid: \(carePlan)")
         }
+        
+        if let schemaVersion = CarePlan.getSchemaVersionFromCareKitEntity(carePlan){
+            self.schemaVersion = schemaVersion
+        }else{
+            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(carePlan)")
+        }
+        
         self.entityId = carePlan.id
         self.deletedDate = carePlan.deletedDate
         self.title = carePlan.title

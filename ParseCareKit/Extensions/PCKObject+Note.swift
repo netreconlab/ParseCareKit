@@ -24,6 +24,7 @@ extension PCKObject{
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        json["schemaVersion"] = self.schemaVersion
         let entity:OCKNote!
         do {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
@@ -51,5 +52,10 @@ extension PCKObject{
     public class func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
         guard let json = Note.encodeCareKitToDictionary(entity) else{return nil}
         return json["uuid"] as? String
+    }
+    
+    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKNote)->[String:Any]?{
+        guard let json = Note.encodeCareKitToDictionary(entity) else{return nil}
+        return json["schemaVersion"] as? [String:Any]
     }
 }

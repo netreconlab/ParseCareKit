@@ -14,6 +14,7 @@ open class PCKObject: PFObject {
     
     @NSManaged public internal(set) var uuid: String
     @NSManaged public internal(set) var entityId:String
+    @NSManaged var schemaVersion:[String:Any]
     @NSManaged var logicalClock: Int
     @NSManaged public internal(set) var createdDate: Date?
     @NSManaged public internal(set) var updatedDate: Date?
