@@ -173,8 +173,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         self.logicalClock = cloudClock //Stamp Entity
         
-        guard self.createdDate == nil,
-            self.updatedDate == nil else {
+        guard self.deletedDate != nil else {
             self.addToCloud(true, overwriteRemote: overwriteRemote){
                 (success,error) in
                 if success{
@@ -375,29 +374,25 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.values.forEach{$0.stamp(self.logicalClock)}
     }
     
-    public class func queryNotDeleted(queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
-        queryToAndWith.whereKeyDoesNotExist(kPCKObjectDeletedDateKey) //Only consider non deleted keys
-        queryToAndWith.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        return queryToAndWith
+    public class func queryNotDeleted()-> PFQuery<PFObject>{
+        let query = self.query()!
+        query.whereKeyDoesNotExist(kPCKObjectDeletedDateKey)
+        let taskQuery = Task.query()!
+        taskQuery.whereKeyDoesNotExist(kPCKObjectDeletedDateKey)
+        query.whereKey(kPCKOutcomeTaskKey, matchesQuery: taskQuery)
+        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        return query
     }
    
-    func findOutcomes(queryToAndWith: PFQuery<PFObject>) throws -> [Outcome] {
-        let query = type(of: self).queryNotDeleted(queryToAndWith: queryToAndWith)
+    func findOutcomes() throws -> [Outcome] {
+        let query = type(of: self).queryNotDeleted()
         let entities = try (query.findObjects() as! [Outcome])
         
-        let filtered = entities.filter{
-            guard let possibleTasks = $0.task,
-                possibleTasks.deletedDate == nil else {
-                return false
-            }
-            return true
-        }
-        
-        return filtered
+        return entities
     }
     
-    public func findOutcomesInBackground(queryToAndWith: PFQuery<PFObject>, completion: @escaping([Outcome]?,Error?)->Void) {
-        let query = type(of: self).queryNotDeleted(queryToAndWith: queryToAndWith)
+    public func findOutcomesInBackground(completion: @escaping([Outcome]?,Error?)->Void) {
+        let query = type(of: self).queryNotDeleted()
         query.findObjectsInBackground{
             (objects,error) in
             guard let entities = objects as? [Outcome] else{
@@ -405,15 +400,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 return
             }
             
-            let filtered = entities.filter{
-                guard let possibleTasks = $0.task,
-                    possibleTasks.deletedDate == nil else {
-                    return false
-                }
-                return true
-            }
-            
-            completion(filtered,error)
+            completion(entities,error)
         }
     }
 }

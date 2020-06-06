@@ -84,9 +84,7 @@ open class PCKVersionedObject: PCKObject {
     
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public class func query(for date: Date) -> PFQuery<PFObject> {
-        let query1 = self.queryVersion(for: date, queryToAndWith: self.queryWhereNoNextVersion())
-        let query2 = self.queryVersion(for: date, queryToAndWith: self.queryWhereNextVersionGreaterThanEqualToDate(for: date))
-        let query = PFQuery.orQuery(withSubqueries: [query1,query2])
+        let query = self.queryVersion(for: date, queryToAndWith: self.queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         return query
     }
@@ -99,18 +97,16 @@ open class PCKVersionedObject: PCKObject {
         return queryToAndWith
     }
     
-    private class func queryWhereNoNextVersion()-> PFQuery<PFObject>{
+    private class func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> PFQuery<PFObject>{
+        
         let query = self.query()!
         query.whereKeyDoesNotExist(kPCKVersionedObjectNextKey)
-        return query
-    }
-    
-    private class func queryWhereNextVersionGreaterThanEqualToDate(for date: Date)-> PFQuery<PFObject>{
+        
         let interval = createCurrentDateInterval(for: date)
-        let query = self.query()!
-        query.whereKeyExists(kPCKVersionedObjectPreviousKey)
-        query.whereKey(kPCKVersionedObjectNextKey, greaterThan: interval.end)
-        return query
+        let greaterEqualEffectiveDate = self.query()!
+        greaterEqualEffectiveDate.whereKey(kPCKVersionedObjectEffectiveDateKey, greaterThanOrEqualTo: interval.end)
+        
+        return PFQuery.orQuery(withSubqueries: [query,greaterEqualEffectiveDate])
     }
     
     func find(for date: Date) throws -> [PCKVersionedObject] {
