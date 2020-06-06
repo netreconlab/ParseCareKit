@@ -256,7 +256,7 @@ open class PCKVersionedObject: PCKObject {
                         if versionedObject.previous != nil {
                             if versionedObject.previous!.next == nil{
                                 versionedObject.previous!.nextVersion = versionedObject
-                                versionedObject.previous!.next!.saveInBackground(){
+                                versionedObject.previous!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
@@ -268,7 +268,7 @@ open class PCKVersionedObject: PCKObject {
                         if versionedObject.next != nil {
                             if versionedObject.next!.previous == nil{
                                 versionedObject.next!.previousVersion = versionedObject
-                                versionedObject.next!.previous!.saveInBackground(){
+                                versionedObject.next!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
@@ -307,8 +307,8 @@ open class PCKVersionedObject: PCKObject {
                         //Fix versioning doubly linked list if it's broken in the cloud
                         if versionedObject.previous != nil {
                             if versionedObject.previous!.next == nil{
-                                versionedObject.previous!.next = versionedObject
-                                versionedObject.previous!.next!.saveInBackground(){
+                                versionedObject.previous!.nextVersion = versionedObject
+                                versionedObject.previous!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
@@ -319,8 +319,8 @@ open class PCKVersionedObject: PCKObject {
                         
                         if versionedObject.next != nil {
                             if versionedObject.next!.previous == nil{
-                                versionedObject.next!.previous = versionedObject
-                                versionedObject.next!.previous!.saveInBackground(){
+                                versionedObject.next!.previousVersion = versionedObject
+                                versionedObject.next!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
@@ -358,8 +358,8 @@ open class PCKVersionedObject: PCKObject {
                         //Fix versioning doubly linked list if it's broken in the cloud
                         if versionedObject.previous != nil {
                             if versionedObject.previous!.next == nil{
-                                versionedObject.previous!.next = versionedObject
-                                versionedObject.previous!.next!.saveInBackground(){
+                                versionedObject.previous!.nextVersion = versionedObject
+                                versionedObject.previous!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
@@ -370,8 +370,8 @@ open class PCKVersionedObject: PCKObject {
                         
                         if versionedObject.next != nil {
                             if versionedObject.next!.previous == nil{
-                                versionedObject.next!.previous = versionedObject
-                                versionedObject.next!.previous!.saveInBackground(){
+                                versionedObject.next!.previousVersion = versionedObject
+                                versionedObject.next!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
@@ -409,8 +409,8 @@ open class PCKVersionedObject: PCKObject {
                         //Fix versioning doubly linked list if it's broken in the cloud
                         if versionedObject.previous != nil {
                             if versionedObject.previous!.next == nil{
-                                versionedObject.previous!.next = versionedObject
-                                versionedObject.previous!.next!.saveInBackground(){
+                                versionedObject.previous!.nextVersion = versionedObject
+                                versionedObject.previous!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
@@ -421,8 +421,8 @@ open class PCKVersionedObject: PCKObject {
                         
                         if versionedObject.next != nil {
                             if versionedObject.next!.previous == nil{
-                                versionedObject.next!.previous = versionedObject
-                                versionedObject.next!.previous!.saveInBackground(){
+                                versionedObject.next!.previousVersion = versionedObject
+                                versionedObject.next!.saveInBackground(){
                                     (success,_) in
                                     if success{
                                         versionedObject.fixVersionLinkedList(versionedObject.next! as! CarePlan, backwards: false)
