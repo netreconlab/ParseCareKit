@@ -229,10 +229,16 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 }
                 return
             }
+            
+            //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
+            foundObject.values.forEach{
+                $0.deleteInBackground()
+                $0.notes?.forEach{$0.deleteInBackground()}
+            }
+            foundObject.notes?.forEach{$0.deleteInBackground()} //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
             foundObject.copy(self)
-            foundObject.save(self, completion: completion)
+            foundObject.save(foundObject, completion: completion)
         }
-        
     }
     
     open override func copy(_ parse: PCKObject){
