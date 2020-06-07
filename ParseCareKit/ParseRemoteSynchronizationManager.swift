@@ -288,7 +288,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         
                     }
                 case .outcome(let outcome):
-                    
+                    /*
                     if let outcomeNeedsToBeTagged = Outcome.tagWithId(outcome){
                         //Fix query issue with tag for future. Old version will be tombstoned
                         self.parseRemoteDelegate?.storeUpdatedOutcome(outcomeNeedsToBeTagged)
@@ -305,7 +305,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
                         }
                         return
-                    }
+                    }*/
                     
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
