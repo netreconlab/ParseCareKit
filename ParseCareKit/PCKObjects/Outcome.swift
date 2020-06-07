@@ -237,7 +237,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             }
             foundObject.notes?.forEach{$0.deleteInBackground()} //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
             foundObject.copy(self)
-            foundObject.save(self, completion: completion)
+            foundObject.save(foundObject, completion: completion)
         }
     }
     
