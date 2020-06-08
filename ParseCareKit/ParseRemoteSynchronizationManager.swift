@@ -66,13 +66,13 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         KnowledgeVector.fetchFromCloud(uuid: uuid, createNewIfNeeded: false){
             (_, potentialCKKnowledgeVector, error) in
             guard let cloudVector = potentialCKKnowledgeVector else{
-                //Okay to return nil here to let pushRevisions fix KnowledgeVector
-                completion(nil)
+                //No KnowledgeVector available, need to let CareKit know this is the first sync.
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision,completion)
                 return
             }
             let returnError:Error? = nil
             
-            //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: self.uuid)
             
             self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){previosError in
