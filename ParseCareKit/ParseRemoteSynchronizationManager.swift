@@ -72,7 +72,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }
             let returnError:Error? = nil
             
-            //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: self.uuid)
             
             self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){previosError in
