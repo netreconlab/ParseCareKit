@@ -147,7 +147,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let outcomes = objects as? [Outcome] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
