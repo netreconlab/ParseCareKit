@@ -37,7 +37,7 @@ A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKi
 The framework currently isn't SPM compatible yet as it's depedendent on [Parse](https://github.com/parse-community/Parse-SDK-iOS-OSX) which is currently only compatible with cocoapods. 
 
 ### Installing via cocoapods
-The easiest way to install is via cocoapods. Since ParseCareKit requires CareKit, and CareKit doesn't officially support cocoapods (see more [here](https://github.com/carekit-apple/CareKit/issues/383)), you will have to point to a github repo that contains CareKit 2.0+ podspecs. Feel free to point to the repo below which mirrors the most up-to-date versions of CareKit. Your podfile should contain at least the following:
+The easiest way to install is via cocoapods. Since ParseCareKit requires CareKit, and CareKit doesn't officially support cocoapods (see more [here](https://github.com/carekit-apple/CareKit/issues/383)), you will have to point to a github repo that contains CareKit 2.0+ podspecs. Feel free to point to the repo below which mirrors the most up-to-date versions of CareKit. Your podfile should contain all of the following if you plan on using `CareKit`, `CareKitUI`, and `CareKitStore`:
 
 ```ruby
 platform :ios, '13.0' #Note that this the minimum requirement for CareKit iOS 13

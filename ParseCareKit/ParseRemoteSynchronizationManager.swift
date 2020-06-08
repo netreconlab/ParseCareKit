@@ -66,13 +66,13 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         KnowledgeVector.fetchFromCloud(uuid: uuid, createNewIfNeeded: false){
             (_, potentialCKKnowledgeVector, error) in
             guard let cloudVector = potentialCKKnowledgeVector else{
-                //Okay to return nil here to let pushRevisions fix KnowledgeVector
-                completion(nil)
+                //No KnowledgeVector available, need to let CareKit know this is the first sync.
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision,completion)
                 return
             }
             let returnError:Error? = nil
             
-            //Currently can't seet UUIDs using structs, so this commented out. Maybe if I encode/decode?
             let localClock = knowledgeVector.clock(for: self.uuid)
             
             self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){previosError in
@@ -288,24 +288,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         
                     }
                 case .outcome(let outcome):
-                    
-                    if let outcomeNeedsToBeTagged = Outcome.tagWithId(outcome){
-                        //Fix query issue with tag for future. Old version will be tombstoned
-                        self.parseRemoteDelegate?.storeUpdatedOutcome(outcomeNeedsToBeTagged)
-                        
-                        print("Warning in ParseRemoteSynchronizationManager.pushRevisions(). Requested for OCKStore to fix tags on outcome so it can be queried locally. If fixed, the Outcome will be synchronized on next synch.")
-                        
-                        revisionsCompletedCount += 1
-                        if revisionsCompletedCount == deviceRevision.entities.count{
-                            //If this was the only revision, return as normal
-                            if deviceRevision.entities.count == 1{
-                                completion(nil)
-                                return
-                            }
-                            self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
-                        }
-                        return
-                    }
                     
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){

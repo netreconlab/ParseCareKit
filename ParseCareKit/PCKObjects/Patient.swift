@@ -132,7 +132,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Patient] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
