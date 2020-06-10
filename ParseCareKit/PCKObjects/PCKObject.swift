@@ -19,7 +19,7 @@ open class PCKObject: PFObject {
     @NSManaged public internal(set) var createdDate: Date?
     @NSManaged public internal(set) var updatedDate: Date?
     @NSManaged public internal(set) var deletedDate: Date?
-    @NSManaged public internal(set) var timezoneIdentifier: String
+    @NSManaged public internal(set) var timezone: String
     @NSManaged public var userInfo: [String: String]?
     @NSManaged public var groupIdentifier: String?
     @NSManaged public var tags: [String]?
@@ -32,17 +32,17 @@ open class PCKObject: PFObject {
         self.notes?.forEach{$0.stamp(self.logicalClock)}
     }
     
-    open func copy(_ parse: PCKObject){
-        self.uuid = parse.uuid
-        self.entityId = parse.entityId
-        self.deletedDate = parse.deletedDate
-        self.updatedDate = parse.updatedDate
-        self.timezoneIdentifier = parse.timezoneIdentifier
-        self.userInfo = parse.userInfo
-        self.remoteID = parse.remoteID
-        self.createdDate = parse.createdDate
-        self.notes = parse.notes
-        self.logicalClock = parse.logicalClock
+    open func copyCommonValues(from other: PCKObject){
+        self.uuid = other.uuid
+        self.entityId = other.entityId
+        self.deletedDate = other.deletedDate
+        self.updatedDate = other.updatedDate
+        self.timezone = other.timezone
+        self.userInfo = other.userInfo
+        self.remoteID = other.remoteID
+        self.createdDate = other.createdDate
+        self.notes = other.notes
+        self.logicalClock = other.logicalClock
     }
     
     open func copyRelationalEntities(_ parse: PCKObject){

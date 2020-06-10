@@ -236,18 +236,18 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
                 $0.notes?.forEach{$0.deleteInBackground()}
             }
             foundObject.notes?.forEach{$0.deleteInBackground()} //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-            foundObject.copy(self)
+            foundObject.copyCommonValues(from: self)
             foundObject.save(foundObject, completion: completion)
         }
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? Outcome else{return}
-        self.taskOccurrenceIndex = parse.taskOccurrenceIndex
-        self.values = parse.values
-        self.currentTask = parse.currentTask
-        self.taskUUID = parse.taskUUID
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? Outcome else{return}
+        self.taskOccurrenceIndex = other.taskOccurrenceIndex
+        self.values = other.values
+        self.currentTask = other.currentTask
+        self.taskUUID = other.taskUUID
     }
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome)->Outcome?{
@@ -275,7 +275,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         self.tags = outcome.tags
         self.source = outcome.source
         self.asset = outcome.asset
-        self.timezoneIdentifier = outcome.timezone.abbreviation()!
+        self.timezone = outcome.timezone.abbreviation()!
         self.updatedDate = outcome.updatedDate
         self.userInfo = outcome.userInfo
         self.taskUUID = outcome.taskUUID
@@ -322,7 +322,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
         outcome.groupIdentifier = self.groupIdentifier
         outcome.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+        if let timeZone = TimeZone(abbreviation: self.timezone){
             outcome.timezone = timeZone
         }
         outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}

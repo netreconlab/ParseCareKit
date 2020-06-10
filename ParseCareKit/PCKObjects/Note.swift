@@ -24,12 +24,12 @@ open class Note: PCKObject, PFSubclassing {
         _ = self.copyCareKit(careKitEntity)
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? Note else{return}
-        self.content = parse.content
-        self.author = parse.author
-        self.title = parse.title
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? Note else{return}
+        self.content = other.content
+        self.author = other.author
+        self.title = other.title
     }
     
     open func copyCareKit(_ note: OCKNote) -> Note?{
@@ -50,7 +50,7 @@ open class Note: PCKObject, PFSubclassing {
         self.tags = note.tags
         self.source = note.source
         self.asset = note.asset
-        self.timezoneIdentifier = note.timezone.abbreviation()!
+        self.timezone = note.timezone.abbreviation()!
         self.author = note.author
         self.userInfo = note.userInfo
         self.updatedDate = note.updatedDate
@@ -84,7 +84,7 @@ open class Note: PCKObject, PFSubclassing {
         note.remoteID = self.remoteID
         note.groupIdentifier = self.groupIdentifier
         note.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+        if let timeZone = TimeZone(abbreviation: self.timezone){
             note.timezone = timeZone
         }
         
@@ -141,7 +141,7 @@ open class Note: PCKObject, PFSubclassing {
                 guard let replaceNote = fetchedNotes.filter({$0.uuid == note.uuid}).first else {
                     continue
                 }
-                replaceNote.copy(note) //Copy any changes
+                replaceNote.copyCommonValues(from: note) //Copy any changes
                 returnNotes[index] = replaceNote
             }
             
