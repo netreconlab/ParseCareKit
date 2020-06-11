@@ -125,7 +125,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         }else{
             print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(outcomeValue)")
         }
-        
+        self.timezone = outcomeValue.timezone.abbreviation()!
         self.userInfo = outcomeValue.userInfo
         self.kind = outcomeValue.kind
         
@@ -174,6 +174,9 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         outcomeValue.notes = self.notes?.compactMap{$0.convertToCareKit()}
         outcomeValue.remoteID = self.remoteID
         outcomeValue.userInfo = self.userInfo
+        if let timeZone = TimeZone(abbreviation: self.timezone){
+            outcomeValue.timezone = timeZone
+        }
         return outcomeValue
     }
     

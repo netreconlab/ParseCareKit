@@ -45,7 +45,7 @@ open class Note: PCKObject, PFSubclassing {
         }else{
             print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(note)")
         }
-        
+        self.timezone = note.timezone.abbreviation()!
         self.groupIdentifier = note.groupIdentifier
         self.tags = note.tags
         self.source = note.source
@@ -87,7 +87,6 @@ open class Note: PCKObject, PFSubclassing {
         if let timeZone = TimeZone(abbreviation: self.timezone){
             note.timezone = timeZone
         }
-        
         note.notes = self.notes?.compactMap{$0.convertToCareKit()}
         return note
     }
