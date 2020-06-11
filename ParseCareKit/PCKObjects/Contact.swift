@@ -289,17 +289,17 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? Contact else{return}
-        self.address = parse.address
-        self.category = parse.category
-        self.title = parse.title
-        self.name = parse.name
-        self.organization = parse.organization
-        self.role = parse.role
-        self.currentCarePlan = parse.currentCarePlan
-        self.carePlanUUID = parse.carePlanUUID
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? Contact else{return}
+        self.address = other.address
+        self.category = other.category
+        self.title = other.title
+        self.name = other.name
+        self.organization = other.organization
+        self.role = other.role
+        self.currentCarePlan = other.currentCarePlan
+        self.carePlanUUID = other.carePlanUUID
     }
 
     open func copyCareKit(_ contactAny: OCKAnyContact)-> Contact?{
@@ -331,7 +331,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.organization = contact.organization
         self.category = contact.category?.rawValue
         self.asset = contact.asset
-        self.timezoneIdentifier = contact.timezone.abbreviation()!
+        self.timezone = contact.timezone.abbreviation()!
         self.name = CareKitPersonNameComponents.familyName.convertToDictionary(contact.name)
         self.updatedDate = contact.updatedDate
         self.userInfo = contact.userInfo
@@ -386,7 +386,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
         contact.groupIdentifier = self.groupIdentifier
         contact.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+        if let timeZone = TimeZone(abbreviation: self.timezone){
             contact.timezone = timeZone
         }
         contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)

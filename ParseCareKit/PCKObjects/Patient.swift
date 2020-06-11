@@ -180,13 +180,13 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? Patient else{return}
-        self.name = parse.name
-        self.birthday = parse.birthday
-        self.sex = parse.sex
-        self.alergies = parse.alergies
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? Patient else{return}
+        self.name = other.name
+        self.birthday = other.birthday
+        self.sex = other.sex
+        self.alergies = other.alergies
     }
     
     open func copyCareKit(_ patientAny: OCKAnyPatient)->Patient?{
@@ -215,7 +215,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.effectiveDate = patient.effectiveDate
         self.deletedDate = patient.deletedDate
         self.updatedDate = patient.updatedDate
-        self.timezoneIdentifier = patient.timezone.abbreviation()!
+        self.timezone = patient.timezone.abbreviation()!
         self.userInfo = patient.userInfo
         self.remoteID = patient.remoteID
         self.alergies = patient.allergies
@@ -251,7 +251,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         patient.userInfo = self.userInfo
         patient.notes = self.notes?.compactMap{$0.convertToCareKit()}
         patient.remoteID = self.remoteID
-        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+        if let timeZone = TimeZone(abbreviation: self.timezone){
             patient.timezone = timeZone
         }
         if let sex = self.sex{

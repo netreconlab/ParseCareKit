@@ -97,19 +97,19 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         _ = self.copyCareKit(careKitEntity)
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? OutcomeValue else{return}
-        self.index = parse.index
-        self.kind = parse.kind
-        self.units = parse.units
-        self.typeString = parse.typeString
-        self.textValue = parse.textValue
-        self.binaryValue = parse.binaryValue
-        self.booleanValue = parse.booleanValue
-        self.integerValue = parse.integerValue
-        self.doubleValue = parse.doubleValue
-        self.dateValue = parse.dateValue
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? OutcomeValue else{return}
+        self.index = other.index
+        self.kind = other.kind
+        self.units = other.units
+        self.typeString = other.typeString
+        self.textValue = other.textValue
+        self.binaryValue = other.binaryValue
+        self.booleanValue = other.booleanValue
+        self.integerValue = other.integerValue
+        self.doubleValue = other.doubleValue
+        self.dateValue = other.dateValue
     }
     
     open func copyCareKit(_ outcomeValue: OCKOutcomeValue) -> OutcomeValue? {

@@ -72,14 +72,14 @@ open class PCKVersionedObject: PCKObject {
         }
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? PCKVersionedObject else{return}
-        self.effectiveDate = parse.effectiveDate
-        self.previous = parse.previous
-        self.previousVersionUUIDString = parse.previousVersionUUIDString
-        self.next = parse.next
-        self.nextVersionUUIDString = parse.nextVersionUUIDString
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? PCKVersionedObject else{return}
+        self.effectiveDate = other.effectiveDate
+        self.previous = other.previous
+        self.previousVersionUUIDString = other.previousVersionUUIDString
+        self.next = other.next
+        self.nextVersionUUIDString = other.nextVersionUUIDString
     }
     
     //This query doesn't filter nextVersion effectiveDate >= interval.end

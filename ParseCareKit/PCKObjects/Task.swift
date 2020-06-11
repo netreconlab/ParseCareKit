@@ -207,15 +207,15 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open override func copy(_ parse: PCKObject){
-        super.copy(parse)
-        guard let parse = parse as? Task else{return}
-        self.impactsAdherence = parse.impactsAdherence
-        self.instructions = parse.instructions
-        self.title = parse.title
-        self.elements = parse.elements
-        self.currentCarePlan = parse.currentCarePlan
-        self.carePlanUUID = parse.carePlanUUID
+    open override func copyCommonValues(from other: PCKObject){
+        super.copyCommonValues(from: other)
+        guard let other = other as? Task else{return}
+        self.impactsAdherence = other.impactsAdherence
+        self.instructions = other.instructions
+        self.title = other.title
+        self.elements = other.elements
+        self.currentCarePlan = other.currentCarePlan
+        self.carePlanUUID = other.carePlanUUID
     }
     
     
@@ -246,7 +246,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         self.tags = task.tags
         self.source = task.source
         self.asset = task.asset
-        self.timezoneIdentifier = task.timezone.abbreviation()!
+        self.timezone = task.timezone.abbreviation()!
         self.effectiveDate = task.effectiveDate
         self.updatedDate = task.updatedDate
         self.userInfo = task.userInfo
@@ -294,7 +294,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         task.groupIdentifier = self.groupIdentifier
         task.asset = self.asset
         task.userInfo = self.userInfo
-        if let timeZone = TimeZone(abbreviation: self.timezoneIdentifier){
+        if let timeZone = TimeZone(abbreviation: self.timezone){
             task.timezone = timeZone
         }
         task.notes = self.notes?.compactMap{$0.convertToCareKit()}
