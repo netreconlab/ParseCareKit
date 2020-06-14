@@ -37,6 +37,12 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         super.init()
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
+        
+        do {
+            try PFCloud.callFunction("ensureClassDefaultFieldsForParseCareKit", withParameters: nil)
+        }catch{
+            print(error)
+        }
     }
     
     convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
