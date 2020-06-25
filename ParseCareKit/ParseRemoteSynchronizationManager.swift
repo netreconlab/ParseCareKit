@@ -20,6 +20,7 @@ public protocol ParseRemoteSynchronizationDelegate {
     func storeUpdatedContact(_ contact: OCKContact)
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
+    func successfullyPushedDataToCloud()
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -350,6 +351,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(error)
                 return
             }
+            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
             completion(nil)
         }
     }

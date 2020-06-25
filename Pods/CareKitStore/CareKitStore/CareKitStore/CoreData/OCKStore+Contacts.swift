@@ -128,18 +128,17 @@ extension OCKStore {
         return addedContacts
     }
 
-    /// Updates existing tasks to the versions passed in.
+    /// Updates existing contacts to the versions passed in.
     ///
-    /// The copyUUIDs argument should be true when ingesting tasks from a remote to ensure
-    /// the UUIDs match on all devices, and false when creating a new version of a task locally
+    /// The copyUUIDs argument should be true when ingesting contacts from a remote to ensure
+    /// the UUIDs match on all devices, and false when creating a new version of a contact locally
     /// to ensure that the new version has a different UUID than its parent version.
     ///
     /// - Parameters:
-    ///   - tasks: The new versions of the tasks.
-    ///   - copyUUIDs: If true, the UUIDs of the tasks will be copied to the new versions
+    ///   - contacts: The new versions of the contacts.
+    ///   - copyUUIDs: If true, the UUIDs of the contacts will be copied to the new versions
     func updateContactsWithoutCommitting(_ contacts: [Contact], copyUUIDs: Bool) throws -> [Contact] {
         try validateUpdateIdentifiers(contacts.map { $0.id })
-        try confirmUpdateWillNotCauseDataLoss(contacts: contacts)
         let updatedContacts = try self.performVersionedUpdate(values: contacts, addNewVersion: self.createContact)
         if copyUUIDs {
             updatedContacts.enumerated().forEach { $1.uuid = contacts[$0].uuid! }
@@ -148,29 +147,6 @@ extension OCKStore {
         return updated
     }
     
-    // Ensure that new versions of tasks do not overwrite regions of previous
-    // versions that already have outcomes saved to them.
-    //
-    // |<------------- Time Line --------------->|
-    //  TaskV1 ------x------------------->
-    //                     V2 ---------->
-    //              V3------------------>
-    //
-    // Throws an error when updating to V3 from V2 if V1 has outcomes after `x`.
-    // Throws an error when updating to V3 from V2 if V2 has any outcomes.
-    // Does not throw when updating to V3 from V2 if V1 has outcomes before `x`.
-    func confirmUpdateWillNotCauseDataLoss(contacts: [Contact]) throws {
-        let heads = fetchHeads(OCKCDContact.self, ids: contacts.map { $0.id })
-        for contact in heads {
-
-            // For each task, gather all outcomes
-            var currentVersion: OCKCDContact? = contact
-            while let version = currentVersion {
-                currentVersion = version.previous as? OCKCDContact
-            }
-        }
-    }
-
     private func createContact(from contact: OCKContact) -> OCKCDContact {
         let persistableContact = OCKCDContact(context: context)
         persistableContact.name = OCKCDPersonName(context: context)

@@ -141,47 +141,23 @@ extension OCKStore {
         return addedPlans
     }
 
-    /// Updates existing tasks to the versions passed in.
+    /// Updates existing plans to the versions passed in.
     ///
-    /// The copyUUIDs argument should be true when ingesting tasks from a remote to ensure
-    /// the UUIDs match on all devices, and false when creating a new version of a task locally
+    /// The copyUUIDs argument should be true when ingesting plans from a remote to ensure
+    /// the UUIDs match on all devices, and false when creating a new version of a plan locally
     /// to ensure that the new version has a different UUID than its parent version.
     ///
     /// - Parameters:
-    ///   - tasks: The new versions of the tasks.
-    ///   - copyUUIDs: If true, the UUIDs of the tasks will be copied to the new versions
+    ///   - plans: The new versions of the plans.
+    ///   - copyUUIDs: If true, the UUIDs of the plans will be copied to the new versions
     func updateCarePlansWithoutCommitting(_ plans: [Plan], copyUUIDs: Bool) throws -> [Plan] {
         try validateUpdateIdentifiers(plans.map { $0.id })
-        try confirmUpdateWillNotCauseDataLoss(plans: plans)
         let updatedPlans = try self.performVersionedUpdate(values: plans, addNewVersion: self.createCarePlan)
         if copyUUIDs {
             updatedPlans.enumerated().forEach { $1.uuid = plans[$0].uuid! }
         }
         let updated = updatedPlans.map(self.makePlan)
         return updated
-    }
-    
-    // Ensure that new versions of tasks do not overwrite regions of previous
-    // versions that already have outcomes saved to them.
-    //
-    // |<------------- Time Line --------------->|
-    //  TaskV1 ------x------------------->
-    //                     V2 ---------->
-    //              V3------------------>
-    //
-    // Throws an error when updating to V3 from V2 if V1 has outcomes after `x`.
-    // Throws an error when updating to V3 from V2 if V2 has any outcomes.
-    // Does not throw when updating to V3 from V2 if V1 has outcomes before `x`.
-    func confirmUpdateWillNotCauseDataLoss(plans: [Plan]) throws {
-        let heads = fetchHeads(OCKCDCarePlan.self, ids: plans.map { $0.id })
-        for plan in heads {
-
-            // For each task, gather all outcomes
-            var currentVersion: OCKCDCarePlan? = plan
-            while let version = currentVersion {
-                currentVersion = version.previous as? OCKCDCarePlan
-            }
-        }
     }
     
     // MARK: Private

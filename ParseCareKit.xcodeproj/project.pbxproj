@@ -37,6 +37,7 @@
 		918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080924800BFF00C3A205 /* PCKObject+Task.swift */; };
 		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
 		91D5287A24813AF70022292B /* PCKSynchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D5287924813AF70022292B /* PCKSynchronized.swift */; };
+		B732F6BC142F259E372324D9 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -86,6 +87,9 @@
 		918F080724800BF000C3A205 /* PCKObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Patient.swift"; sourceTree = "<group>"; };
 		918F080924800BFF00C3A205 /* PCKObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Task.swift"; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
+		91AD928F24A504A200925D4D /* ParseCareKitWatchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseCareKitWatchOS.h; sourceTree = "<group>"; };
+		91AD929024A504A200925D4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ParseCareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91D5287924813AF70022292B /* PCKSynchronized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKSynchronized.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9119D61F24562933001B7AA3 /* Pods_ParseCareKit.framework in Frameworks */,
+				B732F6BC142F259E372324D9 /* Pods_ParseCareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +120,7 @@
 			children = (
 				9119D699245689D9001B7AA3 /* README.md */,
 				9119D5ED245618D7001B7AA3 /* ParseCareKit */,
+				91AD928E24A504A200925D4D /* ParseCareKitWatchOS */,
 				9119D5EC245618D7001B7AA3 /* Products */,
 				0530611FC1C08596D30B7FAF /* Pods */,
 				A8989C8300B16B02AF1BC395 /* Frameworks */,
@@ -180,6 +186,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		91AD928E24A504A200925D4D /* ParseCareKitWatchOS */ = {
+			isa = PBXGroup;
+			children = (
+				91AD928F24A504A200925D4D /* ParseCareKitWatchOS.h */,
+				91AD929024A504A200925D4D /* Info.plist */,
+			);
+			path = ParseCareKitWatchOS;
+			sourceTree = "<group>";
+		};
 		91D52878248128700022292B /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +206,7 @@
 		A8989C8300B16B02AF1BC395 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */,
 				71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */,
 			);
 			name = Frameworks;
@@ -226,8 +242,6 @@
 			dependencies = (
 			);
 			name = ParseCareKit;
-			packageProductDependencies = (
-			);
 			productName = ParseCareKit;
 			productReference = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -256,8 +270,6 @@
 				Base,
 			);
 			mainGroup = 9119D5E1245618D7001B7AA3;
-			packageReferences = (
-			);
 			productRefGroup = 9119D5EC245618D7001B7AA3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
