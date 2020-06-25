@@ -60,6 +60,7 @@ extension OCKStore {
                           completion: ((Result<[OCKPatient], OCKStoreError>) -> Void)? = nil) {
         context.perform {
             do {
+                try self.validateNumberOfPatients()
                 let addedPatients = try self.createPatientsWithoutCommitting(patients)
                 try self.context.save()
                 callbackQueue.async {
@@ -131,47 +132,23 @@ extension OCKStore {
         return addedPatients
     }
 
-    /// Updates existing tasks to the versions passed in.
+    /// Updates existing patients to the versions passed in.
     ///
-    /// The copyUUIDs argument should be true when ingesting tasks from a remote to ensure
-    /// the UUIDs match on all devices, and false when creating a new version of a task locally
+    /// The copyUUIDs argument should be true when ingesting patients from a remote to ensure
+    /// the UUIDs match on all devices, and false when creating a new version of a patient locally
     /// to ensure that the new version has a different UUID than its parent version.
     ///
     /// - Parameters:
-    ///   - tasks: The new versions of the tasks.
-    ///   - copyUUIDs: If true, the UUIDs of the tasks will be copied to the new versions
+    ///   - patients: The new versions of the patients.
+    ///   - copyUUIDs: If true, the UUIDs of the patients will be copied to the new versions
     func updatePatientsWithoutCommitting(_ patients: [Patient], copyUUIDs: Bool) throws -> [Patient] {
         try validateUpdateIdentifiers(patients.map { $0.id })
-        try confirmUpdateWillNotCauseDataLoss(patients: patients)
         let updatedPatients = try self.performVersionedUpdate(values: patients, addNewVersion: self.createPatient)
         if copyUUIDs {
             updatedPatients.enumerated().forEach { $1.uuid = patients[$0].uuid! }
         }
         let updated = updatedPatients.map(self.makePatient)
         return updated
-    }
-    
-    // Ensure that new versions of tasks do not overwrite regions of previous
-    // versions that already have outcomes saved to them.
-    //
-    // |<------------- Time Line --------------->|
-    //  TaskV1 ------x------------------->
-    //                     V2 ---------->
-    //              V3------------------>
-    //
-    // Throws an error when updating to V3 from V2 if V1 has outcomes after `x`.
-    // Throws an error when updating to V3 from V2 if V2 has any outcomes.
-    // Does not throw when updating to V3 from V2 if V1 has outcomes before `x`.
-    func confirmUpdateWillNotCauseDataLoss(patients: [Patient]) throws {
-        let heads = fetchHeads(OCKCDPatient.self, ids: patients.map { $0.id })
-        for patient in heads {
-
-            // For each task, gather all outcomes
-            var currentVersion: OCKCDPatient? = patient
-            while let version = currentVersion {
-                currentVersion = version.previous as? OCKCDPatient
-            }
-        }
     }
 
     // MARK: Private
@@ -243,5 +220,17 @@ extension OCKStore {
             case .groupIdentifier(let ascending): return NSSortDescriptor(keyPath: \OCKCDPatient.groupIdentifier, ascending: ascending)
             }
         } + defaultSortDescritors()
+    }
+    
+    private func validateNumberOfPatients() throws {
+        let fetchRequest = OCKCDPatient.fetchRequest()
+        let numberOfPatients = try context.count(for: fetchRequest)
+        if numberOfPatients > 0 {
+            let explanation = """
+            OCKStore` only supports one patient per store.
+            If you would like to have more than one patient, create a new store for that patient.
+            """
+            throw OCKStoreError.addFailed(reason: explanation)
+        }
     }
 }

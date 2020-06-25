@@ -36,8 +36,8 @@
 		918F080824800BF000C3A205 /* PCKObject+Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080724800BF000C3A205 /* PCKObject+Patient.swift */; };
 		918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080924800BFF00C3A205 /* PCKObject+Task.swift */; };
 		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
-		91AD929124A504A200925D4D /* ParseCareKitWatchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 91AD928F24A504A200925D4D /* ParseCareKitWatchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91D5287A24813AF70022292B /* PCKSynchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D5287924813AF70022292B /* PCKSynchronized.swift */; };
+		B732F6BC142F259E372324D9 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -87,9 +87,9 @@
 		918F080724800BF000C3A205 /* PCKObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Patient.swift"; sourceTree = "<group>"; };
 		918F080924800BFF00C3A205 /* PCKObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Task.swift"; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
-		91AD928D24A504A200925D4D /* ParseCareKitWatchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParseCareKitWatchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91AD928F24A504A200925D4D /* ParseCareKitWatchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseCareKitWatchOS.h; sourceTree = "<group>"; };
 		91AD929024A504A200925D4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ParseCareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91D5287924813AF70022292B /* PCKSynchronized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKSynchronized.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,13 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9119D61F24562933001B7AA3 /* Pods_ParseCareKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		91AD928A24A504A200925D4D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				B732F6BC142F259E372324D9 /* Pods_ParseCareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */,
-				91AD928D24A504A200925D4D /* ParseCareKitWatchOS.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,6 +206,7 @@
 		A8989C8300B16B02AF1BC395 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */,
 				71C1D5A6F236FB79121D04EA /* Pods_ParseCareKit.framework */,
 			);
 			name = Frameworks;
@@ -226,14 +220,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9119D5F0245618D7001B7AA3 /* ParseCareKit.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		91AD928824A504A200925D4D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				91AD929124A504A200925D4D /* ParseCareKitWatchOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,28 +242,8 @@
 			dependencies = (
 			);
 			name = ParseCareKit;
-			packageProductDependencies = (
-			);
 			productName = ParseCareKit;
 			productReference = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		91AD928C24A504A200925D4D /* ParseCareKitWatchOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 91AD929424A504A200925D4D /* Build configuration list for PBXNativeTarget "ParseCareKitWatchOS" */;
-			buildPhases = (
-				91AD928824A504A200925D4D /* Headers */,
-				91AD928924A504A200925D4D /* Sources */,
-				91AD928A24A504A200925D4D /* Frameworks */,
-				91AD928B24A504A200925D4D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ParseCareKitWatchOS;
-			productName = ParseCareKitWatchOS;
-			productReference = 91AD928D24A504A200925D4D /* ParseCareKitWatchOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -293,9 +259,6 @@
 						CreatedOnToolsVersion = 11.4.1;
 						LastSwiftMigration = 1140;
 					};
-					91AD928C24A504A200925D4D = {
-						CreatedOnToolsVersion = 12.0;
-					};
 				};
 			};
 			buildConfigurationList = 9119D5E5245618D7001B7AA3 /* Build configuration list for PBXProject "ParseCareKit" */;
@@ -307,14 +270,11 @@
 				Base,
 			);
 			mainGroup = 9119D5E1245618D7001B7AA3;
-			packageReferences = (
-			);
 			productRefGroup = 9119D5EC245618D7001B7AA3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				9119D5EA245618D7001B7AA3 /* ParseCareKit */,
-				91AD928C24A504A200925D4D /* ParseCareKitWatchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -325,13 +285,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9119D69A245689DA001B7AA3 /* README.md in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		91AD928B24A504A200925D4D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,13 +346,6 @@
 				91D5287A24813AF70022292B /* PCKSynchronized.swift in Sources */,
 				916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */,
 				9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		91AD928924A504A200925D4D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,62 +527,6 @@
 			};
 			name = Release;
 		};
-		91AD929224A504A200925D4D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = K26KDKYY38;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = ParseCareKitWatchOS/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netreconlab.ParseCareKitWatchOS;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-			};
-			name = Debug;
-		};
-		91AD929324A504A200925D4D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = K26KDKYY38;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = ParseCareKitWatchOS/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netreconlab.ParseCareKitWatchOS;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 6.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -654,15 +544,6 @@
 			buildConfigurations = (
 				9119D5F4245618D7001B7AA3 /* Debug */,
 				9119D5F5245618D7001B7AA3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		91AD929424A504A200925D4D /* Build configuration list for PBXNativeTarget "ParseCareKitWatchOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				91AD929224A504A200925D4D /* Debug */,
-				91AD929324A504A200925D4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
