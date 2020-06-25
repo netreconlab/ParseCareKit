@@ -27,7 +27,8 @@ Pod::Spec.new do |s|
   s.author           = { 'cbaker6' => 'coreyearleon@icloud.com' }
   s.source           = { :git => 'https://github.com/netreconlab/ParseCareKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
+  
+  s.platform = :ios, :watchos
   s.ios.deployment_target  = '13.0'
   s.watchos.deployment_target = '6.0'
   s.osx.deployment_target  = '10.15'
