@@ -351,7 +351,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 completion(error)
                 return
             }
-            parseRemoteDelegate?.successfullyPushedDataToCloud()
+            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
             completion(nil)
         }
     }
