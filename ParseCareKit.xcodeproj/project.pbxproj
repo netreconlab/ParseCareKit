@@ -87,8 +87,6 @@
 		918F080724800BF000C3A205 /* PCKObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Patient.swift"; sourceTree = "<group>"; };
 		918F080924800BFF00C3A205 /* PCKObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Task.swift"; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
-		91AD928F24A504A200925D4D /* ParseCareKitWatchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseCareKitWatchOS.h; sourceTree = "<group>"; };
-		91AD929024A504A200925D4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ParseCareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91D5287924813AF70022292B /* PCKSynchronized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKSynchronized.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
