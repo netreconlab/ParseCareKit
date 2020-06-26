@@ -118,6 +118,7 @@
 			children = (
 				9119D699245689D9001B7AA3 /* README.md */,
 				9119D5ED245618D7001B7AA3 /* ParseCareKit */,
+				91AD928E24A504A200925D4D /* ParseCareKitWatchOS */,
 				9119D5EC245618D7001B7AA3 /* Products */,
 				0530611FC1C08596D30B7FAF /* Pods */,
 				A8989C8300B16B02AF1BC395 /* Frameworks */,
@@ -181,6 +182,15 @@
 				918F07FD2480070D00C3A205 /* PCKVersionedObject+Task.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		91AD928E24A504A200925D4D /* ParseCareKitWatchOS */ = {
+			isa = PBXGroup;
+			children = (
+				91AD928F24A504A200925D4D /* ParseCareKitWatchOS.h */,
+				91AD929024A504A200925D4D /* Info.plist */,
+			);
+			path = ParseCareKitWatchOS;
 			sourceTree = "<group>";
 		};
 		91D52878248128700022292B /* Protocols */ = {
