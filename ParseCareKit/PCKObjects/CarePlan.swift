@@ -152,6 +152,8 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         
         let query = CarePlan.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
+        query.addAscendingOrder(kPCKObjectClockKey)
+        query.addAscendingOrder(kPCKParseCreatedAtKey)
         query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [CarePlan] else{

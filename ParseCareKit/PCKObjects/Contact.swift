@@ -238,6 +238,8 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         
         let query = Contact.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
+        query.addAscendingOrder(kPCKObjectClockKey)
+        query.addAscendingOrder(kPCKParseCreatedAtKey)
         query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{

@@ -144,6 +144,8 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
         let query = Outcome.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
+        query.addAscendingOrder(kPCKObjectClockKey)
+        query.addAscendingOrder(kPCKParseCreatedAtKey)
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let outcomes = objects as? [Outcome] else{

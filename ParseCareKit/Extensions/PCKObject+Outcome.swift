@@ -60,6 +60,9 @@ extension PCKObject{
         json["uuid"] = self.uuid
         json["createdDate"] = createdDate
         json["updatedDate"] = updatedDate
+        if let deletedDate = self.deletedDate?.timeIntervalSinceReferenceDate{
+            json["deletedDate"] = deletedDate
+        }
         json["schemaVersion"] = self.schemaVersion
         let entity:OCKOutcome!
         do {
