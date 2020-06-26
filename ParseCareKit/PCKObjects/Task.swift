@@ -157,6 +157,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         let query = Task.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
         query.addAscendingOrder(kPCKObjectClockKey)
+        query.addAscendingOrder(kPCKParseCreatedAtKey)
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let tasks = objects as? [Task] else{
