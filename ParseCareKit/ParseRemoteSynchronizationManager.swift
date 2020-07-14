@@ -66,7 +66,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
         guard let _ = PFUser.current() else{
-            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+            let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+            mergeRevision(revision){
+                error in
+                completion(error)
+            }
             return
         }
         
