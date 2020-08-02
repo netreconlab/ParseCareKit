@@ -1,4 +1,4 @@
-name: Swift
+name: Build
 
 on:
   push:
@@ -7,13 +7,48 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  swift-test-ios:
 
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      run: xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit -destination platform\=iOS\ Simulator,OS\=13.6,name\=iPhone\ 11\ Pro\ Max build test | xcpretty
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
+  
+#  swift-test-spm:
+    
+#    runs-on: macos-latest
+
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Build
+#      run: swift build -v
+  
+  cocoapods:
+    needs: [swift-test-ios]
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: CocoaPods
+        run: |
+          set -eo pipefail
+          pod lib lint --allow-warnings --verbose 
+      - name: Deploy CocoaPods
+        if: github.ref == 'refs/heads/master'
+        run: pod trunk push ParseCareKit.podspec --allow-warnings --verbose
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+
+  carthage:
+
+   needs: swift-test-ios
+   runs-on: macos-latest
+
+   steps:
+     - uses: actions/checkout@v2
+     - name: Carthage 
+       run: carthage build --no-skip-current --verbose
