@@ -27,21 +27,21 @@ jobs:
 #    - name: Build
 #      run: swift build -v
   
-  cocoapods:
-    needs: [swift-test-ios]
-    runs-on: macos-latest
+#  cocoapods:
+#    needs: [swift-test-ios]
+#    runs-on: macos-latest
     
-    steps:
-      - uses: actions/checkout@v2
-      - name: CocoaPods
-        run: |
-          set -eo pipefail
-          pod lib lint --allow-warnings --verbose 
-      - name: Deploy CocoaPods
-        if: github.ref == 'refs/heads/master'
-        run: pod trunk push ParseCareKit.podspec --allow-warnings --verbose
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: CocoaPods
+#        run: |
+#          set -eo pipefail
+#          pod lib lint --allow-warnings --verbose 
+#      - name: Deploy CocoaPods
+#        if: github.ref == 'refs/heads/master'
+#        run: pod trunk push ParseCareKit.podspec --allow-warnings --verbose
+#        env:
+#          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
   carthage:
 
