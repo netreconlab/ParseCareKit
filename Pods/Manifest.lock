@@ -8,7 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod_vector`)
-  - Parse (~> 1.18)
+  - Parse (~> 1.19)
 
 SPEC REPOS:
   trunk:
@@ -30,6 +30,6 @@ SPEC CHECKSUMS:
   CareKitStore: a0aeabb8c7dd7430c23ff537e7c45c8a6c829daa
   Parse: 0fb5c7cc7ee5900f2434e24607d0496155b8d04f
 
-PODFILE CHECKSUM: b42208d28863b9de481bc189e71f26762388b8d0
+PODFILE CHECKSUM: 60e27d205026810ad54d92f7a016d06f5e106ce7
 
 COCOAPODS: 1.9.3
