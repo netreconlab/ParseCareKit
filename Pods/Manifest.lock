@@ -1,14 +1,14 @@
 PODS:
   - Bolts/Tasks (1.9.1)
   - CareKitStore (2.0)
-  - Parse (1.18.0):
-    - Parse/Core (= 1.18.0)
-  - Parse/Core (1.18.0):
+  - Parse (1.19.0):
+    - Parse/Core (= 1.19.0)
+  - Parse/Core (1.19.0):
     - Bolts/Tasks (= 1.9.1)
 
 DEPENDENCIES:
   - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod_vector`)
-  - Parse (~> 1.18)
+  - Parse (~> 1.19)
 
 SPEC REPOS:
   trunk:
@@ -28,8 +28,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
   CareKitStore: a0aeabb8c7dd7430c23ff537e7c45c8a6c829daa
-  Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
+  Parse: 0fb5c7cc7ee5900f2434e24607d0496155b8d04f
 
-PODFILE CHECKSUM: a1ab012a0d9667a1bc2937fba656fb2809b7e394
+PODFILE CHECKSUM: af99b7030f4967b51fa061d68dcf052a5815632e
 
 COCOAPODS: 1.9.3

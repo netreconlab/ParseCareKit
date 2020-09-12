@@ -7,5 +7,5 @@ target 'ParseCareKit' do
 
   # Pods for ParseCareKit
   pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector'
-  pod 'Parse', '~>1.18'
+  pod 'Parse', '~>1.19'
 end
