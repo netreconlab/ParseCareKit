@@ -1,4 +1,4 @@
-name: Build
+name: build
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit -destination platform\=iOS\ Simulator,OS\=13.6,name\=iPhone\ 11\ Pro\ Max build test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit -destination platform\=iOS\ Simulator,OS\=13.6,name\=iPhone\ 11\ Pro\ Max build test | xcpretty
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
   
@@ -38,7 +38,7 @@ jobs:
 #          set -eo pipefail
 #          pod lib lint --allow-warnings --verbose 
 #      - name: Deploy CocoaPods
-#        if: github.ref == 'refs/heads/master'
+#        if: github.ref == 'refs/heads/main'
 #        run: pod trunk push ParseCareKit.podspec --allow-warnings --verbose
 #        env:
 #          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
