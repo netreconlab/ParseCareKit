@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "E66CB5BA-36B7-4F17-9864-FE4AF04F004B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ParseCareKit.xcodeproj",
+        "identifier" : "709752D0250D270E0020EA70",
+        "name" : "ParseCareKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

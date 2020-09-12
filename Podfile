@@ -9,3 +9,12 @@ target 'ParseCareKit' do
   pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector'
   pod 'Parse', '~>1.19'
 end
+
+target 'TestHost' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for ParseCareKit
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector'
+  pod 'Parse', '~>1.18'
+end
