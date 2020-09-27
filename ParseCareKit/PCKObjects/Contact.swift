@@ -422,7 +422,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.getFirstPCKObject(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, include: true){
+            self.first(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, include: true){
                 (isNew,carePlan) in
                 
                 guard let carePlan = carePlan as? CarePlan else{

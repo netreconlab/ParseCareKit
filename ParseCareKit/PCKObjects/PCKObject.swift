@@ -82,7 +82,7 @@ open class PCKObject: ParseObject {
         return true
     }
 
-    public func getFirstPCKObject(_ uuid:UUID?, classType: PCKObject, relatedObject:PCKObject?=nil, include:Bool=true, completion: @escaping(Bool,PCKObject?) -> Void) {
+    public func first(_ uuid:UUID?, classType: PCKObject, relatedObject:PCKObject?=nil, include:Bool=true, completion: @escaping(Bool,PCKObject?) -> Void) {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
@@ -141,12 +141,12 @@ open class PCKObject: ParseObject {
         }
     }
     
-    public func findPCKObjects(_ uuid:UUID?, classType: PCKObject, include:Bool=true,
+    public func find(_ uuid:UUID?, classType: PCKObject, include:Bool=true,
                                    completion: @escaping([PCKObject]?,Error?) -> Void) {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
-                print("Error in \(self.className).findPCKObjects(). \(ParseCareKitError.requiredValueCantBeUnwrapped)")
+                print("Error in \(self.className).find(). \(ParseCareKitError.requiredValueCantBeUnwrapped)")
                 completion(nil,ParseCareKitError.couldntUnwrapKnowledgeVector)
                 return
         }
@@ -187,7 +187,7 @@ open class PCKObject: ParseObject {
             case .success(let foundObjects):
                 completion(foundObjects, nil)
             case .failure(let error):
-                print("Error in \(self.className).findPCKObjects(). \(error.localizedDescription)")
+                print("Error in \(self.className).find(). \(error.localizedDescription)")
                 completion(nil,error)
             }
             

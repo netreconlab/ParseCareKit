@@ -338,7 +338,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
             return
         }
         
-        self.getFirstPCKObject(taskUUID, classType: Task(), relatedObject: self.task, include: true){
+        self.first(taskUUID, classType: Task(), relatedObject: self.task, include: true){
             (isNew,task) in
             
             guard let task = task as? Task else{

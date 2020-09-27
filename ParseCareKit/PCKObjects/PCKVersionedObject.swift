@@ -116,7 +116,7 @@ open class PCKVersionedObject: PCKObject {
     func fixVersionLinkedList(_ versionFixed: PCKVersionedObject, backwards:Bool){
         if backwards{
             if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
-                self.getFirstPCKObject(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
+                self.first(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
                     (isNew,previousFound) in
                     
                     guard let previousFound = previousFound as? PCKVersionedObject else{
@@ -153,7 +153,7 @@ open class PCKVersionedObject: PCKObject {
             //We are done fixing
         }else{
             if versionFixed.nextVersionUUIDString != nil && versionFixed.next == nil{
-                self.getFirstPCKObject(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
+                self.first(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
                     (isNew,nextFound) in
                     
                     guard let nextFound = nextFound as? PCKVersionedObject else{
@@ -216,7 +216,7 @@ open class PCKVersionedObject: PCKObject {
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Bool, PCKVersionedObject)->Void){
         var linkedNew = false
-        self.getFirstPCKObject(self.previousVersionUUID, classType: self, relatedObject: self.previous, include: true){
+        self.first(self.previousVersionUUID, classType: self, relatedObject: self.previous, include: true){
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject as? PCKVersionedObject else{
@@ -229,7 +229,7 @@ open class PCKVersionedObject: PCKObject {
                 linkedNew = true
             }
             
-            self.getFirstPCKObject(self.nextVersionUUID, classType: self, relatedObject: self.next, include: true){
+            self.first(self.nextVersionUUID, classType: self, relatedObject: self.next, include: true){
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject as? PCKVersionedObject else{

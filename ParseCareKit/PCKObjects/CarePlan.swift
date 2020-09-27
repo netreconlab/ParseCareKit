@@ -303,7 +303,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.getFirstPCKObject(patientUUID, classType: Patient(), relatedObject: self.patient, include: true){
+            self.first(patientUUID, classType: Patient(), relatedObject: self.patient, include: true){
             (isNew,patient) in
                 
                 guard let patient = patient as? Patient else{
