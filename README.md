@@ -91,7 +91,7 @@ See the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) 
 - Build the project
 - In your project Targets, click your corresponding target and then click the `General` heading to the right
 - Place `ParseCareKit.framework` in `Frameworks, Libraries, and Embedded Content` and it should automatically appear in `Linked Binary with Libraries` under the `Build Phases` section
-- Then, simply place `import ParseCareKit` at the top of any file that needs the framework.
+- Then, simply place `import ParseSwiftCareKit` at the top of any file that needs the framework.
 
 **If you have CareKit already in your project via SPM or copied, you will need to remove it as ParseCareKit comes with the a compatibile version of CareKit and a conflict of CareKit appearing twice will cause your app to crash**
 
@@ -139,13 +139,13 @@ let userTypeUUIDDictionary = [
 ]
 
 //Store the possible uuids for each type
-PFUser.current().userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
-PFUser.current().loggedInType = "doctor" 
-PFUser.current().saveInBackground()
+PCKUser.current.userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
+PCKUser.current.loggedInType = "doctor" 
+PCKUser.current.saveInBackground()
 
 //Start synch with the correct knowlege vector for the particular type of user
-let lastLoggedInType = PFUser.current().loggedInType
-let userTypeUUIDString = PFUser.current().userTypes[lastLoggedInType] as! String
+let lastLoggedInType = PCKUser.current.loggedInType
+let userTypeUUIDString = PCKUser.current.userTypes[lastLoggedInType] as! String
 let userTypeUUID = UUID(uuidString: userTypeUUID)!
 
 //Start synching 
@@ -256,8 +256,8 @@ There will be times you need to customize entities by adding fields that are dif
 
 ```swift
 class CancerPatient: Patient{
-    @NSManaged public var primaryCondition:String?
-    @NSManaged public var comorbidities:String?
+    public var primaryCondition:String?
+    public var comorbidities:String?
     
     override func new() -> PCKSynchronized {
         return CancerPatient()
@@ -269,7 +269,7 @@ class CancerPatient: Patient{
         case .patient(let entity):
             return CancerPatient(careKitEntity: entity)
         default:
-            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             return nil
         }
     }
@@ -324,11 +324,11 @@ remoteStoreManager.parseRemoteDelegate = self
 Of course, you can customize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
 
 
-You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.parseClassName()` as the value. See below:
+You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.className()` as the value. See below:
 
 ```swift
 class Doctor: Patient{
-    @NSManaged public var type:String?
+    public var type:String?
     
     override func new() -> PCKSynchronized {
         return Doctor()
@@ -340,7 +340,7 @@ class Doctor: Patient{
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
         }
     }
@@ -349,7 +349,7 @@ class Doctor: Patient{
     convenience init(careKitEntity: OCKAnyPatient {
         self.init()
         self.copyCareKit(careKitEntity)
-        self.userInfo = [kPCKCustomClassKey: self.parseClassName]
+        self.userInfo = [kPCKCustomClassKey: self.className]
     }
     
     override copyCareKit(_ patientAny: OCKAnyPatient)->Patient? {
@@ -430,7 +430,7 @@ There are some of helper methods provided in ParseCareKit to query parse in a si
 //To query the most recent version
 let query = Patient.query(for: Date())
 
-query.findInBackground(){
+query.find(){
     (objects,error) in
     guard let found = objects as? [Patient] else{
         print("\(String(describing: error))")
@@ -441,7 +441,7 @@ query.findInBackground(){
 
 //You can also use this helper method
 let patient = Patient()
-patient.findInBackground(for: Date()){
+patient.find(for: Date()){
     (objects,error) in
     guard let found = objects as? [Patient] else{
         print("\(String(describing: error))")
@@ -457,7 +457,7 @@ For `Outcome`:
 //To query all current outcomes
 let query = Outcome.queryNotDeleted()
 
-query.findInBackground(){
+query.find(){
     (objects,error) in
     guard let found = objects as? [Outcome] else{
         print("\(String(describing: error))")
@@ -480,4 +480,4 @@ Outcome().findOutcomesInBackground(){
 
 ### Custom OCKStores
 
-If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObject` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObject` protocol which will require you to subclass `ParseObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 

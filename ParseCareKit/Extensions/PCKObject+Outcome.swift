@@ -7,35 +7,36 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 import CareKitStore
 
 extension PCKObject{
 
     public func save(_ outcome: Outcome, completion: @escaping(Bool,Error?) -> Void){
         
-        outcome.stampRelationalEntities()
-        outcome.saveInBackground{ (success, error) in
+        _ = outcome.stampRelationalEntities()
+        outcome.save(callbackQueue: .global(qos: .background)){ results in
+            switch results {
             
-            if success{
+            case .success(_):
                 print("Successfully saved \(outcome) in Cloud.")
                 
                 outcome.linkRelated{
                     (linked,_) in
                     
                     if linked{
-                        outcome.saveInBackground()
+                        outcome.save(callbackQueue: .global(qos: .background)){ _ in }
                     }
-                    completion(success,error)
+                    completion(true,nil)
                 }
-            }else{
-                print("Error in CarePlan.addToCloud(). \(String(describing: error))")
-                completion(success,error)
+            case .failure(let error):
+                print("Error in CarePlan.addToCloud(). \(error)")
+                completion(false,error)
             }
         }
     }
     
-    public class func encodeCareKitToDictionary(_ entity: OCKOutcome)->[String:Any]?{
+    public static func encodeCareKitToDictionary(_ entity: OCKOutcome)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
@@ -51,7 +52,7 @@ extension PCKObject{
     public func decodedCareKitObject(_ bareCareKitObject: OCKOutcome)->OCKOutcome?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+                print("Error in \(className).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
         
@@ -69,13 +70,13 @@ extension PCKObject{
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
             entity = try JSONDecoder().decode(OCKOutcome.self, from: data)
         }catch{
-            print("Error in \(parseClassName).decodedCareKitObject(). \(error)")
+            print("Error in \(className).decodedCareKitObject(). \(error)")
             return nil
         }
         return entity
     }
     
-    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKOutcome)->[String:Any]?{
+    public static func getSchemaVersionFromCareKitEntity(_ entity: OCKOutcome)->[String:Any]?{
         guard let json = Outcome.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }

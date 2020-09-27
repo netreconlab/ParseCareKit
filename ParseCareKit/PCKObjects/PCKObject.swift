@@ -7,32 +7,57 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 import CareKitStore
 
-open class PCKObject: PFObject {
+open class PCKObject: ParseObject {
+    public var objectId: String?
     
-    @NSManaged public internal(set) var uuid: String
-    @NSManaged public internal(set) var entityId:String
-    @NSManaged var schemaVersion:[String:Any]
-    @NSManaged var logicalClock: Int
-    @NSManaged public internal(set) var createdDate: Date?
-    @NSManaged public internal(set) var updatedDate: Date?
-    @NSManaged public internal(set) var deletedDate: Date?
-    @NSManaged public internal(set) var timezone: String
-    @NSManaged public var userInfo: [String: String]?
-    @NSManaged public var groupIdentifier: String?
-    @NSManaged public var tags: [String]?
-    @NSManaged public var source: String?
-    @NSManaged public var asset: String?
-    @NSManaged public var notes: [Note]?
-    @NSManaged public var remoteID: String?
+    public var createdAt: Date?
     
-    open func stampRelationalEntities(){
-        self.notes?.forEach{$0.stamp(self.logicalClock)}
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+
+    public internal(set) var uuid: String?
+    public internal(set) var entityId:String?
+    var schemaVersion = [String:Any]()
+    var logicalClock: Int?
+    public internal(set) var createdDate: Date?
+    public internal(set) var updatedDate: Date?
+    public internal(set) var deletedDate: Date?
+    public internal(set) var timezone: String?
+    public var userInfo: [String: String]?
+    public var groupIdentifier: String?
+    public var tags: [String]?
+    public var source: String?
+    public var asset: String?
+    public var notes: [Note]?
+    public var remoteID: String?
+
+    public init() {
+        
+    }
+
+    public required init(from decoder: Decoder) throws {
+        return
+    }
+    enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+        case uuid
+    }
+    public func encode(to encoder: Encoder) throws {
+        return
     }
     
-    open func copyCommonValues(from other: PCKObject){
+    func stampRelationalEntities() -> Bool {
+        guard let logicalClock = self.logicalClock else {
+            return false
+        }
+        self.notes?.forEach{$0.stamp(logicalClock)}
+        return true
+    }
+
+    func copyCommonValues(from other: PCKObject) {
         self.uuid = other.uuid
         self.entityId = other.entityId
         self.deletedDate = other.deletedDate
@@ -45,13 +70,21 @@ open class PCKObject: PFObject {
         self.logicalClock = other.logicalClock
     }
     
-    open func copyRelationalEntities(_ parse: PCKObject){
+    func copyRelationalEntities(_ parse: PCKObject) {
         Note.replaceWithCloudVersion(&self.notes, cloud: parse.notes)
     }
     
-    public func getFirstPCKObject(_ uuid:UUID?, classType: PCKObject, relatedObject:PCKObject?=nil, includeKeys:Bool=true, completion: @escaping(Bool,PCKObject?) -> Void){
+    public func canConvertToCareKit()->Bool {
+        guard let _ = self.entityId,
+              let _ = self.timezone else {
+            return false
+        }
+        return true
+    }
+
+    public func getFirstPCKObject(_ uuid:UUID?, classType: PCKObject, relatedObject:PCKObject?=nil, include:Bool=true, completion: @escaping(Bool,PCKObject?) -> Void) {
           
-        guard let _ = PFUser.current(),
+        guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
                 completion(false,nil)
                 return
@@ -63,90 +96,101 @@ open class PCKObject: PFObject {
             return
         }
              
-        let query = type(of: classType).query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
+        var query = Self.query(kPCKObjectUUIDKey == uuidString)
         
         switch classType{
         case is CarePlan:
-            if includeKeys{
-                query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include(kPCKCarePlanPatientKey,kPCKObjectNotesKey,
+                                  kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
         case is Contact:
-            if includeKeys{
-                query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include(kPCKContactCarePlanKey,kPCKObjectNotesKey,
+                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
         case is Outcome:
-            if includeKeys{
-                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+            if include{
+                query.include(kPCKOutcomeTaskKey,
+                                      kPCKOutcomeValuesKey,kPCKObjectNotesKey)
             }
         case is Patient:
-            if includeKeys{
-                query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include(kPCKObjectNotesKey,
+                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
         case is Task:
-            if includeKeys{
-                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include(kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,
+                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
         default:
             completion(false,nil)
         }
         
-        query.getFirstObjectInBackground(){
-            (object, parseError) in
+        query.first(callbackQueue: .global(qos: .background)) { result in
             
-            guard let foundObject = object as? PCKObject else{
+            switch result {
+            
+            case .success(let object):
+                completion(true, object)
+            case .failure(_):
                 completion(false,nil)
-                return
             }
-            completion(true,foundObject)
+            
         }
     }
     
-    public func findPCKObjects(_ uuid:UUID?, classType: PCKObject, includeKeys:Bool=true, completion: @escaping([PCKObject]?,Error?) -> Void){
+    public func findPCKObjects(_ uuid:UUID?, classType: PCKObject, include:Bool=true,
+                                   completion: @escaping([PCKObject]?,Error?) -> Void) {
           
-        guard let _ = PFUser.current(),
+        guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
+                print("Error in \(self.className).findPCKObjects(). \(ParseCareKitError.requiredValueCantBeUnwrapped)")
                 completion(nil,ParseCareKitError.couldntUnwrapKnowledgeVector)
                 return
         }
             
-        let query = type(of: classType).query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: uuidString)
-        
+        var query = Self.query(kPCKObjectUUIDKey == uuidString)
+
         switch classType{
         case is CarePlan:
-            if includeKeys{
-                query.includeKeys([kPCKCarePlanPatientKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include(kPCKCarePlanPatientKey,kPCKObjectNotesKey,
+                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
         case is Contact:
-            if includeKeys{
-                query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
             }
         case is Outcome:
-            if includeKeys{
-                query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+            if include{
+                query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
             }
         case is Patient:
-            if includeKeys{
-                query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
             }
         case is Task:
-            if includeKeys{
-                query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+            if include{
+                query.include([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
             }
         default:
             completion(nil,ParseCareKitError.classTypeNotAnEligibleType)
         }
         
-        query.findObjectsInBackground(){
-            (objects, error) in
+        query.find(callbackQueue: .global(qos: .background)){
+            results in
             
-            guard let foundObjects = objects as? [PCKObject] else{
-                print("Error in \(self.parseClassName).findPCKObjects(). \(String(describing: error?.localizedDescription))")
+            switch results {
+            
+            case .success(let foundObjects):
+                completion(foundObjects, nil)
+            case .failure(let error):
+                print("Error in \(self.className).findPCKObjects(). \(error.localizedDescription)")
                 completion(nil,error)
-                return
             }
-            completion(foundObjects,error)
+            
         }
     }
     
@@ -156,3 +200,4 @@ open class PCKObject: PFObject {
         return DateInterval(start: startOfDay, end: endOfDay)
     }
 }
+

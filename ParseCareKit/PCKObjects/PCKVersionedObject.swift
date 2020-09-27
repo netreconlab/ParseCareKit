@@ -7,19 +7,20 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 
 open class PCKVersionedObject: PCKObject {
-    @NSManaged public var effectiveDate: Date?
-    @NSManaged var previous: PCKVersionedObject?
-    @NSManaged var previousVersionUUIDString: String?
-    @NSManaged var next: PCKVersionedObject?
-    @NSManaged var nextVersionUUIDString: String?
-    
+
+    var effectiveDate: Date?
+    var previous: PCKVersionedObject?
+    var previousVersionUUIDString: String?
+    var next: PCKVersionedObject?
+    var nextVersionUUIDString: String?
+
     public internal(set) var nextVersionUUID:UUID? {
         get {
-            if next != nil{
-                return UUID(uuidString: next!.uuid)
+            if next?.uuid != nil{
+                return UUID(uuidString: next!.uuid!)
             }else if nextVersionUUIDString != nil {
                 return UUID(uuidString: nextVersionUUIDString!)
             }else{
@@ -46,8 +47,8 @@ open class PCKVersionedObject: PCKObject {
 
     public internal(set) var previousVersionUUID: UUID? {
         get {
-            if previous != nil{
-                return UUID(uuidString: previous!.uuid)
+            if previous?.uuid != nil{
+                return UUID(uuidString: previous!.uuid!)
             }else if previousVersionUUIDString != nil{
                 return UUID(uuidString: previousVersionUUIDString!)
             }else{
@@ -71,10 +72,18 @@ open class PCKVersionedObject: PCKObject {
             previousVersionUUIDString = newValue?.uuid
         }
     }
-    
-    open override func copyCommonValues(from other: PCKObject){
+
+    public override init() {
+        super.init()
+    }
+
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+    }
+
+    open override func copyCommonValues(from other: PCKObject) {
         super.copyCommonValues(from: other)
-        guard let other = other as? PCKVersionedObject else{return}
+        guard let other = other as? Self else{return}
         self.effectiveDate = other.effectiveDate
         self.previous = other.previous
         self.previousVersionUUIDString = other.previousVersionUUIDString
@@ -82,53 +91,29 @@ open class PCKVersionedObject: PCKObject {
         self.nextVersionUUIDString = other.nextVersionUUIDString
     }
     
-    //This query doesn't filter nextVersion effectiveDate >= interval.end
-    public class func query(for date: Date) -> PFQuery<PFObject> {
-        let query = self.queryVersion(for: date, queryToAndWith: self.queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-        query.includeKeys([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+    private class func queryVersion(for date: Date, queryToAndWith: Query<PCKVersionedObject>)-> Query<PCKVersionedObject> {
+        let interval = createCurrentDateInterval(for: date)
+    
+        var query = queryToAndWith
+        query.where(doesNotExist(key: kPCKObjectDeletedDateKey)) //Only consider non deleted keys
+        query.where(kPCKVersionedObjectEffectiveDateKey < interval.end)
         return query
     }
     
-    private class func queryVersion(for date: Date, queryToAndWith: PFQuery<PFObject>)-> PFQuery<PFObject>{
-        let interval = createCurrentDateInterval(for: date)
+    private class func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> Query<PCKVersionedObject> {
         
-        queryToAndWith.whereKeyDoesNotExist(kPCKObjectDeletedDateKey) //Only consider non deleted keys
-        queryToAndWith.whereKey(kPCKVersionedObjectEffectiveDateKey, lessThan: interval.end)
-        return queryToAndWith
-    }
-    
-    private class func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> PFQuery<PFObject>{
-        
-        let query = self.query()!
-        query.whereKeyDoesNotExist(kPCKVersionedObjectNextKey)
+        let query = self.query(doesNotExist(key: kPCKVersionedObjectNextKey))
         
         let interval = createCurrentDateInterval(for: date)
-        let greaterEqualEffectiveDate = self.query()!
-        greaterEqualEffectiveDate.whereKey(kPCKVersionedObjectEffectiveDateKey, greaterThanOrEqualTo: interval.end)
-        
-        return PFQuery.orQuery(withSubqueries: [query,greaterEqualEffectiveDate])
+        let greaterEqualEffectiveDate = self.query(kPCKVersionedObjectEffectiveDateKey >= interval.end)
+        return self.query(or(queries: [query,greaterEqualEffectiveDate]))
     }
     
     func find(for date: Date) throws -> [PCKVersionedObject] {
-        let query = type(of: self).query(for: date)
-        let entities = try (query.findObjects() as! [PCKVersionedObject])
-        return entities
-    }
-    
-    public func findInBackground(for date: Date, completion: @escaping([PCKVersionedObject]?,Error?)->Void) {
-        let query = type(of: self).query(for: date)
-        query.findObjectsInBackground{
-            (objects,error) in
-            guard let entities = objects as? [PCKVersionedObject] else{
-                completion(nil,error)
-                return
-            }
-            completion(entities,error)
-        }
+        try Self.query(for: date).find()
     }
     
     func fixVersionLinkedList(_ versionFixed: PCKVersionedObject, backwards:Bool){
-        
         if backwards{
             if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
                 self.getFirstPCKObject(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
@@ -140,20 +125,26 @@ open class PCKVersionedObject: PCKObject {
                     }
                     versionFixed.previousVersion = previousFound
                     if isNew{
-                        versionFixed.saveInBackground(){
-                            (success,_) in
-                            if success{
+                        versionFixed.save(callbackQueue: .global(qos: .background)) { results in
+                            switch results {
+                            
+                            case .success(_):
                                 if previousFound.next == nil{
                                     previousFound.nextVersion = versionFixed
-                                    previousFound.saveInBackground(){
-                                        (success,_) in
-                                        if success{
+                                    previousFound.save(callbackQueue: .global(qos: .background)){ results in
+                                        switch results {
+                                        
+                                        case .success(_):
                                             self.fixVersionLinkedList(previousFound, backwards: backwards)
+                                        case .failure(let error):
+                                            print("Couldn't save in fixVersionLinkedList(). Error: \(error). Object: \(versionFixed)")
                                         }
                                     }
                                 }else{
                                     self.fixVersionLinkedList(previousFound, backwards: backwards)
                                 }
+                            case .failure(let error):
+                                print("Couldn't save in fixVersionLinkedList(). Error: \(error). Object: \(versionFixed)")
                             }
                         }
                     }
@@ -171,20 +162,27 @@ open class PCKVersionedObject: PCKObject {
                     }
                     versionFixed.nextVersion = nextFound
                     if isNew{
-                        versionFixed.saveInBackground(){
-                            (success,_) in
-                            if success{
+                        versionFixed.save(callbackQueue: .global(qos: .background)){ results in
+                            switch results {
+                            
+                            case .success(_):
                                 if nextFound.previous == nil{
                                     nextFound.previousVersion = versionFixed
-                                    nextFound.saveInBackground(){
-                                    (success,_) in
-                                        if success{
+                                    nextFound.save(callbackQueue: .global(qos: .background)){ results in
+                                    
+                                        switch results {
+                                        
+                                        case .success(_):
                                             self.fixVersionLinkedList(nextFound, backwards: backwards)
+                                        case .failure(let error):
+                                            print("Couldn't save in fixVersionLinkedList(). Error: \(error). Object: \(versionFixed)")
                                         }
                                     }
                                 }else{
                                     self.fixVersionLinkedList(nextFound, backwards: backwards)
                                 }
+                            case .failure(let error):
+                                print("Couldn't save in fixVersionLinkedList(). Error: \(error). Object: \(versionFixed)")
                             }
                         }
                     }
@@ -193,11 +191,32 @@ open class PCKVersionedObject: PCKObject {
             //We are done fixing
         }
     }
-    
+
+    //This query doesn't filter nextVersion effectiveDate >= interval.end
+    public class func query(for date: Date) -> Query<PCKVersionedObject> {
+        var query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
+        query.include([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        return query
+    }
+
+    public func find(for date: Date, completion: @escaping([PCKVersionedObject]?, Error?) -> Void) {
+        let query = Self.query(for: date)
+        query.find(callbackQueue: .global(qos: .background)) { results in
+            switch results {
+            
+            case .success(let entities):
+                completion(entities, nil)
+            case .failure(let error):
+                completion(nil, error)
+            }
+            
+        }
+    }
+
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,PCKVersionedObject)->Void){
+    public func linkRelated(completion: @escaping(Bool, PCKVersionedObject)->Void){
         var linkedNew = false
-        self.getFirstPCKObject(self.previousVersionUUID, classType: self, relatedObject: self.previous, includeKeys: true){
+        self.getFirstPCKObject(self.previousVersionUUID, classType: self, relatedObject: self.previous, include: true){
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject as? PCKVersionedObject else{
@@ -210,7 +229,7 @@ open class PCKVersionedObject: PCKObject {
                 linkedNew = true
             }
             
-            self.getFirstPCKObject(self.nextVersionUUID, classType: self, relatedObject: self.next, includeKeys: true){
+            self.getFirstPCKObject(self.nextVersionUUID, classType: self, relatedObject: self.next, include: true){
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject as? PCKVersionedObject else{
@@ -228,8 +247,7 @@ open class PCKVersionedObject: PCKObject {
         }
     }
     
-    public func save(_ versionedObject: PCKVersionedObject, completion: @escaping(Bool,Error?) -> Void){
-        
+    public func save(_ versionedObject: PCKVersionedObject, completion: @escaping(Bool, Error?) -> Void){
         switch versionedObject{
         case is CarePlan:
             
@@ -238,7 +256,7 @@ open class PCKVersionedObject: PCKObject {
                 return
             }
             
-            versionedObject.stampRelationalEntities()
+            _ = versionedObject.stampRelationalEntities()
             
         case is Contact:
             guard let versionedObject = versionedObject as? Contact else{
@@ -246,7 +264,7 @@ open class PCKVersionedObject: PCKObject {
                 return
             }
             
-            versionedObject.stampRelationalEntities()
+            _ = versionedObject.stampRelationalEntities()
 
         case is Patient:
             guard let versionedObject = versionedObject as? Patient else{
@@ -254,7 +272,7 @@ open class PCKVersionedObject: PCKObject {
                 return
             }
             
-            versionedObject.stampRelationalEntities()
+            _ = versionedObject.stampRelationalEntities()
 
         case is Task:
             guard let versionedObject = versionedObject as? Task else{
@@ -262,32 +280,36 @@ open class PCKVersionedObject: PCKObject {
                 return
             }
             
-            versionedObject.stampRelationalEntities()
+            _ = versionedObject.stampRelationalEntities()
 
         default:
             completion(false,ParseCareKitError.classTypeNotAnEligibleType)
         }
         
-        versionedObject.saveInBackground{
-            (success, error) in
-            if success{
+        versionedObject.save(callbackQueue: .global(qos: .background)){ results in
+            switch results {
+            
+            case .success(_):
                 print("Successfully added \(versionedObject) to Cloud")
                 
                 versionedObject.linkRelated{
                     (linked,_) in
                     
                     if linked{
-                        versionedObject.saveInBackground()
+                        versionedObject.save(callbackQueue: .global(qos: .background)) { _ in }
                     }
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if versionedObject.previous != nil {
                         if versionedObject.previous!.next == nil{
                             versionedObject.previous!.nextVersion = versionedObject
-                            versionedObject.previous!.saveInBackground(){
-                                (success,_) in
-                                if success{
+                            versionedObject.previous!.save(callbackQueue: .global(qos: .background)){ results in
+                                switch results {
+                                    
+                                case .success(_):
                                     versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
+                                case .failure(let error):
+                                    print("Couldn't save(). Error: \(error). Object: \(versionedObject)")
                                 }
                             }
                         }
@@ -296,19 +318,22 @@ open class PCKVersionedObject: PCKObject {
                     if versionedObject.next != nil {
                         if versionedObject.next!.previous == nil{
                             versionedObject.next!.previousVersion = versionedObject
-                            versionedObject.next!.saveInBackground(){
-                                (success,_) in
-                                if success{
+                            versionedObject.next!.save(callbackQueue: .global(qos: .background)){ results in
+                                switch results {
+                                
+                                case .success(_):
                                     versionedObject.fixVersionLinkedList(versionedObject.next!, backwards: false)
+                                case .failure(let error):
+                                    print("Couldn't save(). Error: \(error). Object: \(versionedObject)")
                                 }
                             }
                         }
                     }
-                    completion(success,error)
+                    completion(true, nil)
                 }
-            }else{
-                print("Error in \(self.parseClassName).save(). \(String(describing: error))")
-                completion(success,error)
+            case .failure(let error):
+                print("Error in \(self.className).save(). \(String(describing: error))")
+                completion(false, error)
             }
         }
     }

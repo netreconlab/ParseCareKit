@@ -6,22 +6,30 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
-import Parse
+import ParseSwift
 import CareKitStore
 
-open class Note: PCKObject, PFSubclassing {
+open class Note: PCKObject {
 
-    @NSManaged public var content:String
-    @NSManaged public var title:String
-    @NSManaged public var author:String?
+    public var content:String?
+    public var title:String?
+    public var author:String?
     
-    public static func parseClassName() -> String {
+    public static func className() -> String {
         return kPCKNoteClassKey
     }
     
+    override init() {
+        super.init()
+    }
+
     public convenience init(careKitEntity: OCKNote) {
         self.init()
         _ = self.copyCareKit(careKitEntity)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     open override func copyCommonValues(from other: PCKObject){
@@ -37,13 +45,13 @@ open class Note: PCKObject, PFSubclassing {
         if let uuid = Note.getUUIDFromCareKitEntity(note){
             self.uuid = uuid
         }else{
-            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(note)")
+            print("Warning in \(className).copyCareKit(). Entity missing uuid: \(note)")
         }
         
         if let schemaVersion = Note.getSchemaVersionFromCareKitEntity(note){
             self.schemaVersion = schemaVersion
         }else{
-            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(note)")
+            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(note)")
         }
         self.timezone = note.timezone.abbreviation()!
         self.groupIdentifier = note.groupIdentifier
@@ -61,12 +69,18 @@ open class Note: PCKObject, PFSubclassing {
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true)->OCKNote?{
+    open func convertToCareKit(fromCloud:Bool=true)->OCKNote? {
+        
+        guard self.canConvertToCareKit() == true,
+            let content = self.content,
+              let title = self.title else {
+            return nil
+        }
         
         var note: OCKNote!
         if fromCloud{
-            guard let decodedNote = decodedCareKitObject(self.author, title: self.title, content: self.content) else{
-                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+            guard let decodedNote = decodedCareKitObject(self.author, title: title, content: content) else{
+                print("Error in \(className). Couldn't decode entity \(self)")
                 return nil
             }
             note = decodedNote
@@ -84,7 +98,7 @@ open class Note: PCKObject, PFSubclassing {
         note.remoteID = self.remoteID
         note.groupIdentifier = self.groupIdentifier
         note.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezone!){
             note.timezone = timeZone
         }
         note.notes = self.notes?.compactMap{$0.convertToCareKit()}
@@ -121,30 +135,29 @@ open class Note: PCKObject, PFSubclassing {
         }
         
         guard let uuids = entitiesToFetch,
-            let query = Note.query() else {
+              var originalNotes = notes else {
             completion(nil)
             return
         }
-        
-        query.whereKey(kPCKObjectUUIDKey, containedIn: uuids)
-        query.findObjectsInBackground(){
-            (objects,error) in
+        let query = Self.query(containedIn(key: kPCKObjectUUIDKey, array: uuids))
+        query.find(callbackQueue: .global(qos: .background)){ results in
             
-            guard let fetchedNotes = objects as? [Note],
-                let localNotes = notes else{
-                completion(nil)
-                return
-            }
-            var returnNotes = notes!
-            for (index, note) in localNotes.enumerated(){
-                guard let replaceNote = fetchedNotes.filter({$0.uuid == note.uuid}).first else {
-                    continue
+            switch results {
+            
+            case .success(let localNotes):
+                //var returnNotes = notes!
+                for (index, note) in localNotes.enumerated(){
+                    guard let replaceNote = localNotes.filter({$0.uuid == note.uuid}).first else {
+                        continue
+                    }
+                    replaceNote.copyCommonValues(from: note) //Copy any changes
+                    originalNotes[index] = replaceNote
                 }
-                replaceNote.copyCommonValues(from: note) //Copy any changes
-                returnNotes[index] = replaceNote
+                
+                completion(originalNotes)
+            case .failure(_):
+                completion(nil)
             }
-            
-            completion(returnNotes)
         }
     }
 }

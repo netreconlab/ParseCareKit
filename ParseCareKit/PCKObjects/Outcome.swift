@@ -6,22 +6,22 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
-import Parse
+import ParseSwift
 import CareKitStore
 
 
-open class Outcome: PCKObject, PCKRemoteSynchronized {
+public class Outcome: PCKObject, PCKRemoteSynchronized {
 
-    @NSManaged public var taskOccurrenceIndex:Int
-    @NSManaged public var values:[OutcomeValue]
-    @NSManaged var task:Task?
-    @NSManaged var taskUUIDString:String?
-    @NSManaged var date:Date?
+    public var taskOccurrenceIndex:Int?
+    public var values:[OutcomeValue]?
+    var task:Task?
+    var taskUUIDString:String?
+    var date:Date?
     
     public internal(set) var taskUUID:UUID? {
         get {
-            if task != nil{
-                return UUID(uuidString: task!.uuid)
+            if task?.uuid != nil{
+                return UUID(uuidString: task!.uuid!)
             }else if taskUUIDString != nil {
                 return UUID(uuidString: taskUUIDString!)
             }else{
@@ -46,13 +46,21 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }
     
-    public static func parseClassName() -> String {
+    public static func className() -> String {
         return kPCKOutcomeClassKey
+    }
+
+    override init() {
+        super.init()
     }
 
     public convenience init(careKitEntity: OCKAnyOutcome) {
         self.init()
         _ = self.copyCareKit(careKitEntity)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     public func new() -> PCKSynchronized {
@@ -65,14 +73,14 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         case .outcome(let entity):
             return Outcome(careKitEntity: entity)
         default:
-            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             return nil
         }
     }
     
     open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
-        guard let _ = PFUser.current() else{
+        guard let _ = PCKUser.current else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
@@ -83,50 +91,41 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
         
         //Check to see if already in the cloud
-        let query = Outcome.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        query.getFirstObjectInBackground(){
-            (object, error) in
+        let query = Outcome.query(kPCKObjectUUIDKey == self.uuid)
+        query.first(callbackQueue: .global(qos: .background)){ result in
             
-            guard let _ = object as? Outcome else{
-                guard let parseError = error as NSError? else{
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
-                    completion(false,error)
-                    return
-                }
-                
-                switch parseError.code{
-                case 1: //1 - this column hasn't been added.
+            switch result {
+            
+            case .success(_):
+                completion(false,ParseCareKitError.uuidAlreadyExists)
+            case .failure(let error):
+                switch error.code{
+                case .internalServer: //1 - this column hasn't been added.
                     self.save(self, completion: completion)
-                case 101: //101 - Query returned no results
-                    let query = Outcome.query()!
-                    query.whereKey(kPCKObjectEntityIdKey, equalTo: self.entityId)
-                    query.whereKeyDoesNotExist(kPCKObjectDeletedDateKey)
-                    query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+                case .objectNotFound: //101 - Query returned no results
+                    var query = Outcome.query(kPCKObjectEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectDeletedDateKey))
+                    query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
                     
-                    query.getFirstObjectInBackground(){
-                        (object, error) in
+                    query.first(callbackQueue: .global(qos: .background)){ result in
                         
-                        guard let objectThatWillBeTombstoned = object as? Outcome else{
+                        switch result {
+                        
+                        case .success(let objectThatWillBeTombstoned):
+                            self.copyRelationalEntities(objectThatWillBeTombstoned)
+                            self.save(self, completion: completion)
+
+                        case .failure(_):
                             self.save(self, completion: completion)
                             completion(false,nil)
-                            return
                         }
-                        
-                        self.copyRelationalEntities(objectThatWillBeTombstoned)
-                        self.save(self, completion: completion)
                     }
                     
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).addToCloud(). \(String(describing: error?.localizedDescription))")
+                    print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
                     completion(false,error)
                 }
-                return
             }
-            
-            completion(false,ParseCareKitError.uuidAlreadyExists)
         }
     }
     
@@ -142,32 +141,30 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Outcome.query()!
-        query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
-        query.addAscendingOrder(kPCKObjectClockKey)
-        query.addAscendingOrder(kPCKParseCreatedAtKey)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        query.findObjectsInBackground{ (objects,error) in
-            guard let outcomes = objects as? [Outcome] else{
+        var query = Self.query(kPCKObjectClockKey >= localClock)
+        query.order([.ascending(kPCKObjectClockKey), .ascending(kPCKParseCreatedAtKey)])
+        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        query.find(callbackQueue: .global(qos: .background)){ results in
+            switch results {
+            
+            case .success(let outcomes):
+                let pulled = outcomes.compactMap{$0.convertToCareKit()}
+                let entities = pulled.compactMap{OCKEntity.outcome($0)}
+                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+                mergeRevision(revision)
+            case .failure(let error):
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
-                guard let error = error as NSError?,
-                    let errorDictionary = error.userInfo["error"] as? [String:Any],
-                    let reason = errorDictionary["routine"] as? String else {
-                        mergeRevision(revision)
-                        return
-                }
-                //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
-                if reason == "errorMissingColumn"{
+                
+                switch error.code{
+                case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
+                    //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table Outcome either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome...")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                default:
+                    print("An unexpected error occured \(error.localizedDescription)")
                 }
                 mergeRevision(revision)
-                return
             }
-            let pulled = outcomes.compactMap{$0.convertToCareKit()}
-            let entities = pulled.compactMap{OCKEntity.outcome($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
-            mergeRevision(revision)
         }
     }
     
@@ -199,47 +196,40 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     
     public func tombstsone(completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = PFUser.current() else{
+        guard let _ = PCKUser.current else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
                 
         //Get latest item from the Cloud to compare against
-        let query = Outcome.query()!
-        query.whereKey(kPCKObjectUUIDKey, equalTo: self.uuid)
-        query.includeKeys([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
-        query.getFirstObjectInBackground(){
-            (object, error) in
+        var query = Outcome.query(kPCKObjectUUIDKey == self.uuid)
+        query.include([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        query.first(callbackQueue: .global(qos: .background)){ result in
+            /*
+            switch result {
             
-            guard let foundObject = object as? Outcome else{
-                guard let parseError = error as NSError? else{
-                    //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).tombstsone(). \(String(describing: error?.localizedDescription))")
-                    completion(false,error)
-                    return
+            case .success(let foundObject):
+                //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
+                foundObject.values.forEach{
+                    $0.delete(callbackQueue: .global(qos: .background)){ _ in }
+                    $0.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } }
                 }
-                
-                switch parseError.code{
-                    case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
-                        //This was tombstoned, but never reached the cloud, upload it now
+                foundObject.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
+                foundObject.copyCommonValues(from: self)
+                foundObject.save(foundObject, completion: completion)
+    
+            case .failure(let error):
+                switch error.code {
+                case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                         self.save(self, completion: completion)
-                        completion(true,nil)
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.parseClassName).tombstsone(). \(String(describing: error?.localizedDescription))")
+                    print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
                     completion(false,error)
                 }
-                return
-            }
-            
-            //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-            foundObject.values.forEach{
-                $0.deleteInBackground()
-                $0.notes?.forEach{$0.deleteInBackground()}
-            }
-            foundObject.notes?.forEach{$0.deleteInBackground()} //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-            foundObject.copyCommonValues(from: self)
-            foundObject.save(foundObject, completion: completion)
+            }*/
+            //(****BAKER: Fix delete and remove the completion below
+            completion(false, ParseCareKitError.cantUnwrapSelf)
         }
     }
     
@@ -254,7 +244,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome)->Outcome?{
         
-        guard let _ = PFUser.current(),
+        guard let _ = PCKUser.current,
             let outcome = outcomeAny as? OCKOutcome else{
             return nil
         }
@@ -262,13 +252,13 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         if let uuid = outcome.uuid?.uuidString{
             self.uuid = uuid
         }else{
-            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcome)")
+            print("Warning in \(className).copyCareKit(). Entity missing uuid: \(outcome)")
         }
         
         if let schemaVersion = Outcome.getSchemaVersionFromCareKitEntity(outcome){
             self.schemaVersion = schemaVersion
         }else{
-            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(outcome)")
+            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(outcome)")
         }
         
         self.entityId = outcome.id
@@ -293,24 +283,32 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     open override func copyRelationalEntities(_ parse: PCKObject) {
         guard let parse = parse as? Outcome else{return}
         super.copyRelationalEntities(parse)
-        OutcomeValue.replaceWithCloudVersion(&self.values, cloud: parse.values)
+        if self.values == nil {
+            self.values = .init()
+        }
+        if parse.values != nil {
+            OutcomeValue.replaceWithCloudVersion(&self.values!, cloud: parse.values!)
+        }
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true)->OCKOutcome?{
         
-        guard let taskUUID = self.taskUUID else{
-            print("Error in \(parseClassName).convertToCareKit(). Must contain task with a uuid in \(self)")
+        guard self.canConvertToCareKit() == true,
+            let taskUUID = self.taskUUID,
+            let taskOccurrenceIndex = self.taskOccurrenceIndex,
+            let values = self.values else{
+            print("Error in \(className).convertToCareKit(). Must contain task with a uuid in \(self)")
             return nil
         }
         
         //Create bare Entity and replace contents with Parse contents
-        let outcomeValues = self.values.compactMap{$0.convertToCareKit()}
-        var outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: self.taskOccurrenceIndex, values: outcomeValues)
+        let outcomeValues = values.compactMap{$0.convertToCareKit()}
+        var outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: taskOccurrenceIndex, values: outcomeValues)
         
         if fromCloud{
             guard let decodedOutcome = decodedCareKitObject(outcome) else{
-                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+                print("Error in \(className). Couldn't decode entity \(self)")
                 return nil
             }
             outcome = decodedOutcome
@@ -321,10 +319,10 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         outcome.remoteID = self.remoteID
         outcome.source = self.source
         outcome.userInfo = self.userInfo
-        outcome.taskOccurrenceIndex = self.taskOccurrenceIndex
+        outcome.taskOccurrenceIndex = taskOccurrenceIndex
         outcome.groupIdentifier = self.groupIdentifier
         outcome.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezone!){
             outcome.timezone = timeZone
         }
         outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
@@ -333,13 +331,14 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
     
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Bool,Outcome)->Void){
-        guard let taskUUID = self.taskUUID else{
+        guard let taskUUID = self.taskUUID,
+              let taskOccurrenceIndex = self.taskOccurrenceIndex else{
             //Finished if there's no Task, otherwise see if it's in the cloud
             completion(false,self)
             return
         }
         
-        self.getFirstPCKObject(taskUUID, classType: Task(), relatedObject: self.task, includeKeys: true){
+        self.getFirstPCKObject(taskUUID, classType: Task(), relatedObject: self.task, include: true){
             (isNew,task) in
             
             guard let task = task as? Task else{
@@ -356,12 +355,12 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             }
             
             let schedule = currentTask.makeSchedule()
-            self.date = schedule.event(forOccurrenceIndex: self.taskOccurrenceIndex)?.start
+            self.date = schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
             completion(true,self)
         }
     }
     
-    public class func tagWithId(_ outcome: OCKOutcome)-> OCKOutcome?{
+    public static func tagWithId(_ outcome: OCKOutcome)-> OCKOutcome?{
         
         //If this object has a createdDate, it's been stored locally before
         guard outcome.uuid != nil else{
@@ -383,38 +382,38 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         return nil
     }
     
-    open override func stampRelationalEntities(){
-        super.stampRelationalEntities()
-        self.values.forEach{$0.stamp(self.logicalClock)}
+    open override func stampRelationalEntities() -> Bool {
+        let successful = super.stampRelationalEntities()
+        if successful{
+            self.values?.forEach{$0.stamp(self.logicalClock!)}
+        }
+        return successful
     }
     
-    public class func queryNotDeleted()-> PFQuery<PFObject>{
-        let query = self.query()!
-        query.whereKeyDoesNotExist(kPCKObjectDeletedDateKey)
-        let taskQuery = Task.query()!
-        taskQuery.whereKeyDoesNotExist(kPCKObjectDeletedDateKey)
-        query.whereKey(kPCKOutcomeTaskKey, matchesQuery: taskQuery)
-        query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+    public static func queryNotDeleted()-> Query<Outcome>{
+        let taskQuery = Task.query(doesNotExist(key: kPCKObjectDeletedDateKey))
+        // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
+        var query = Outcome.query(doesNotExist(key: kPCKObjectDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
+        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         return query
     }
    
     func findOutcomes() throws -> [Outcome] {
-        let query = type(of: self).queryNotDeleted()
-        let entities = try (query.findObjects() as! [Outcome])
-        
-        return entities
+        let query = Self.queryNotDeleted()
+        return try query.find()
     }
     
     public func findOutcomesInBackground(completion: @escaping([Outcome]?,Error?)->Void) {
-        let query = type(of: self).queryNotDeleted()
-        query.findObjectsInBackground{
-            (objects,error) in
-            guard let entities = objects as? [Outcome] else{
-                completion(nil,error)
-                return
-            }
+        let query = Self.queryNotDeleted()
+        query.find(callbackQueue: .global(qos: .background)){ results in
             
-            completion(entities,error)
+            switch results {
+            
+            case .success(let entities):
+                completion(entities, nil)
+            case .failure(let error):
+                completion(nil, error)
+            }
         }
     }
 }

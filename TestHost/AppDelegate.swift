@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ParseCareKit
+import ParseSwiftCareKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

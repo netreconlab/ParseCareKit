@@ -7,14 +7,14 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 import CareKitStore
 
 extension PCKObject{
     public func decodedCareKitObject(_ author: String?, title: String, content: String)->OCKNote?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+                print("Error in \(className).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
             
@@ -30,13 +30,13 @@ extension PCKObject{
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
             entity = try JSONDecoder().decode(OCKNote.self, from: data)
         }catch{
-            print("Error in \(parseClassName).decodedCareKitObject(). \(error)")
+            print("Error in \(className).decodedCareKitObject(). \(error)")
             return nil
         }
         return entity
     }
     
-    public class func encodeCareKitToDictionary(_ entity: OCKNote)->[String:Any]?{
+    public static func encodeCareKitToDictionary(_ entity: OCKNote)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
@@ -49,12 +49,12 @@ extension PCKObject{
         return jsonDictionary
     }
     
-    public class func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
+    public static func getUUIDFromCareKitEntity(_ entity: OCKNote)->String?{
         guard let json = Note.encodeCareKitToDictionary(entity) else{return nil}
         return json["uuid"] as? String
     }
     
-    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKNote)->[String:Any]?{
+    public static func getSchemaVersionFromCareKitEntity(_ entity: OCKNote)->[String:Any]?{
         guard let json = Note.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 import CareKitStore
 
 extension PCKVersionedObject{
@@ -15,7 +15,7 @@ extension PCKVersionedObject{
     public func decodedCareKitObject(_ bareCareKitObject: OCKCarePlan)->OCKCarePlan?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+                print("Error in \(className).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
         
@@ -39,7 +39,7 @@ extension PCKVersionedObject{
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
             entity = try JSONDecoder().decode(OCKCarePlan.self, from: data)
         }catch{
-            print("Error in \(parseClassName).decodedCareKitObject(). \(error)")
+            print("Error in \(className).decodedCareKitObject(). \(error)")
             return nil
         }
         return entity

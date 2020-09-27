@@ -7,13 +7,18 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 import CareKitStore
 
 extension PCKObject{
 
     public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
         
+        guard let logicalClock = self.logicalClock,
+              let parseLogicalClock = parse.logicalClock else {
+            return nil
+        }
+
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
@@ -26,9 +31,9 @@ extension PCKObject{
             
             return nil //Items are the same, no need to do anything
         }else{
-            if ((self.logicalClock <= parse.logicalClock) && !overwriteRemote){
+            if ((logicalClock <= parseLogicalClock) && !overwriteRemote){
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                print("Warning in \(self.className).compareUpdate(). KnowledgeVector in Cloud \(parseLogicalClock) >= \(logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
             }
             return nil
         }
@@ -37,7 +42,7 @@ extension PCKObject{
     public func decodedCareKitObject(_ value: OCKOutcomeValueUnderlyingType, units: String?)->OCKOutcomeValue?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
-                print("Error in \(parseClassName).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
+                print("Error in \(className).decodedCareKitObject(). Missing either createdDate \(String(describing: self.createdDate)) or updatedDate \(String(describing: self.updatedDate))")
             return nil
         }
             
@@ -54,13 +59,13 @@ extension PCKObject{
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
             entity = try JSONDecoder().decode(OCKOutcomeValue.self, from: data)
         }catch{
-            print("Error in \(parseClassName).decodedCareKitObject(). \(error)")
+            print("Error in \(className).decodedCareKitObject(). \(error)")
             return nil
         }
         return entity
     }
     
-    public class func encodeCareKitToDictionary(_ entity: OCKOutcomeValue)->[String:Any]?{
+    public static func encodeCareKitToDictionary(_ entity: OCKOutcomeValue)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
@@ -73,12 +78,12 @@ extension PCKObject{
         return jsonDictionary
     }
     
-    public class func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
+    public static func getUUIDFromCareKitEntity(_ entity: OCKOutcomeValue)->String?{
         guard let json = OutcomeValue.encodeCareKitToDictionary(entity) else{return nil}
         return json["uuid"] as? String
     }
 
-    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKOutcomeValue)->[String:Any]?{
+    public static func getSchemaVersionFromCareKitEntity(_ entity: OCKOutcomeValue)->[String:Any]?{
         guard let json = OutcomeValue.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 import CareKitStore
-import Parse
+import ParseSwift
 
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
@@ -23,7 +23,7 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func successfullyPushedDataToCloud()
 }
 
-open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
+public class ParseRemoteSynchronizationManager<T>: OCKRemoteSynchronizable where T: PCKRemoteSynchronized {
     public var delegate: OCKRemoteSynchronizationDelegate?
     public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate? {
         set{
@@ -35,25 +35,24 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     }
     public var automaticallySynchronizes: Bool
     public internal(set) var uuid:UUID!
-    public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
-    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
+    public internal(set) var customClassesToSynchronize:[String: T]?
+    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass<T>: T]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
     
     public init(uuid:UUID, auto: Bool) {
         self.uuid = uuid
         self.automaticallySynchronizes = auto
-        super.init()
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass<T>: T]) {
         self.init(uuid: uuid, auto: auto)
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass<T>: T]?, customClasses: [String:T]){
         self.init(uuid: uuid, auto: auto)
         if replacePCKStoreClasses != nil{
             self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
@@ -65,7 +64,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
-        guard let _ = PFUser.current() else{
+        guard let _ = PCKUser.current else{
             let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
             mergeRevision(revision){
                 error in
@@ -96,11 +95,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     func pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
         
-        let classNames = PCKStoreClass.patient.orderedArray()
+        let classNames = PCKStoreClass<T>.patient.orderedArray()
         
         guard concreteClassesAlreadyPulled < classNames.count,
             let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]],
-            let newConcreteClass = concreteClass.new() as? PCKRemoteSynchronized else{
+            let newConcreteClass = concreteClass.new() as? T else{
                 print("Finished pulling default revision classes")
                 completion(previousError)
                 return
@@ -128,7 +127,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]],
-                let newCustomClass = customClass.new() as? PCKRemoteSynchronized else{
+                let newCustomClass = customClass.new() as? T else{
                     print("Finished pulling custom revision classes")
                     completion(previousError)
                     return
@@ -153,7 +152,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     
     public func pushRevisions(deviceRevision: OCKRevisionRecord, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
         
-        guard let _ = PFUser.current() else{
+        guard let _ = PCKUser.current else{
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
@@ -171,26 +170,26 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             guard let cloudParseVector = potentialPCKKnowledgeVector,
                 let cloudCareKitVector = potentialCKKnowledgeVector else{
                     
-                    guard let parseError = error as NSError? else{
+                    guard let parseError = error else{
                         //There was a different issue that we don't know how to handle
                         print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(String(describing: error?.localizedDescription))")
                         return
                     }
                     
                     switch parseError.code{
-                        case 1,101: //1 - this column hasn't been added. 101 - Query returned no results
-                            if potentialPCKKnowledgeVector != nil{
-                                potentialPCKKnowledgeVector!.saveInBackground{
-                                    (success,error) in
-                                    print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
-                                    completion(error)
-                                }
-                            }else{
+                    case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
+                        if potentialPCKKnowledgeVector != nil{
+                            potentialPCKKnowledgeVector!.save(callbackQueue: .global(qos: .background)) {
+                                _ in
+                                print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
                                 completion(error)
                             }
+                        }else{
+                            completion(error)
+                        }
                     default:
                         //There was a different issue that we don't know how to handle
-                        print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(String(describing: error?.localizedDescription))")
+                        print("Error in ParseRemoteSynchronizationManager.pushRevisions() \(parseError.localizedDescription)")
                         completion(error)
                     }
                 return
@@ -213,7 +212,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }else{
                         
-                        guard let parse = self.pckStoreClassesToSynchronize[.patient]!.new(with: entity) as? PCKRemoteSynchronized else{
+                        guard let parse = self.pckStoreClassesToSynchronize[.patient]!.new(with: entity) as? T else{
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -238,7 +237,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                         }
                     }else{
                         
-                        guard let parse = self.pckStoreClassesToSynchronize[.carePlan]!.new(with: entity) as? PCKRemoteSynchronized else {
+                        guard let parse = self.pckStoreClassesToSynchronize[.carePlan]!.new(with: entity) as? T else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -261,7 +260,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.contact]!.new(with: entity) as? PCKRemoteSynchronized else {
+                        guard let parse = self.pckStoreClassesToSynchronize[.contact]!.new(with: entity) as? T else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -284,7 +283,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.task]!.new(with: entity) as? PCKRemoteSynchronized else {
+                        guard let parse = self.pckStoreClassesToSynchronize[.task]!.new(with: entity) as? T else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -310,7 +309,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.outcome]!.new(with: entity) as? PCKRemoteSynchronized else{
+                        guard let parse = self.pckStoreClassesToSynchronize[.outcome]!.new(with: entity) as? T else{
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -334,7 +333,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             return
         }
         
-        guard let parse = customClass.new(with: entity) as? PCKRemoteSynchronized else{
+        guard let parse = customClass.new(with: entity) as? T else{
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
@@ -345,7 +344,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     }
     
     func finishedRevisions(_ parseKnowledgeVector: KnowledgeVector, cloudKnowledgeVector: OCKRevisionRecord.KnowledgeVector, localKnowledgeVector: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
-        
+        var parseKnowledgeVector = parseKnowledgeVector
         var cloudVector = cloudKnowledgeVector
         //Increment and merge Knowledge Vector
         cloudVector.increment(clockFor: uuid)
@@ -355,15 +354,17 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
             return
         }
-        parseKnowledgeVector.saveInBackground{
-            (success,error) in
-            if !success{
-                print("Error in ParseRemoteSynchronizationManager.finishedRevisions(). \(String(describing: error))")
+        parseKnowledgeVector.save(callbackQueue: .global(qos: .background)){
+            result in
+            switch result {
+
+            case .success(_):
+                self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                completion(nil)
+            case .failure(let error):
+                print("Error in ParseRemoteSynchronizationManager.finishedRevisions(). \(error.localizedDescription)")
                 completion(error)
-                return
             }
-            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-            completion(nil)
         }
     }
     

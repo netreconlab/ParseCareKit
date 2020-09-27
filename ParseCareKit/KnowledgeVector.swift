@@ -6,19 +6,23 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
-import Parse
+import ParseSwift
 import CareKitStore
 
-class KnowledgeVector: PFObject, PFSubclassing {
-    @NSManaged public var uuid:String
-    @NSManaged public var vector:String
+struct KnowledgeVector: ParseObject {
+    var objectId: String?
     
-    static func parseClassName() -> String {
-        return kPCKKnowledgeVectorClassKey
-    }
+    var createdAt: Date?
     
-    convenience init(uuid: UUID) {
-        self.init()
+    var updatedAt: Date?
+    
+    var ACL: ParseACL?
+    
+    var uuid:String
+
+    var vector:String
+
+    init(uuid: UUID) {
         self.uuid = uuid.uuidString
         self.vector = "{\"processes\":[{\"id\":\"\(self.uuid)\",\"clock\":0}]}"
     }
@@ -40,7 +44,7 @@ class KnowledgeVector: PFObject, PFSubclassing {
         completion(cloudVector)
     }
     
-    func encodeKnowledgeVector(_ knowledgeVector: OCKRevisionRecord.KnowledgeVector)->String?{
+    mutating func encodeKnowledgeVector(_ knowledgeVector: OCKRevisionRecord.KnowledgeVector)->String?{
         do{
             let json = try JSONEncoder().encode(knowledgeVector)
             let cloudVectorString = String(data: json, encoding: .utf8)!
@@ -53,16 +57,22 @@ class KnowledgeVector: PFObject, PFSubclassing {
         }
     }
     
-    class func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?,OCKRevisionRecord.KnowledgeVector?,Error?)->Void){
+    static func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?, OCKRevisionRecord.KnowledgeVector?, ParseError?)->Void){
         
         //Fetch KnowledgeVector from Cloud
-        let query = KnowledgeVector.query()!
-        query.whereKey(kPCKKnowledgeVectorPatientTypeUUIDKey, equalTo: uuid.uuidString)
-        query.getFirstObjectInBackground{ (object,error) in
+        let query = KnowledgeVector.query(kPCKKnowledgeVectorPatientTypeUUIDKey == uuid.uuidString)
+        query.first(callbackQueue: .global(qos: .background)) { result in
             
-            guard let foundVector = object as? KnowledgeVector else{
+            switch result {
+            
+            case .success(let foundVector):
+                foundVector.decodeKnowledgeVector(){
+                    possiblyDecoded in
+                    completion(foundVector, possiblyDecoded, nil)
+                }
+            case .failure(let error):
                 if !createNewIfNeeded{
-                    completion(nil,nil,error)
+                    completion(nil, nil, error)
                 }else{
                     //This is the first time the KnowledgeVector is user setup for this user
                     let newVector = KnowledgeVector(uuid: uuid)
@@ -71,11 +81,6 @@ class KnowledgeVector: PFObject, PFSubclassing {
                         completion(newVector,possiblyDecoded,error)
                     }
                 }
-                return
-            }
-            foundVector.decodeKnowledgeVector(){
-                possiblyDecoded in
-                completion(foundVector,possiblyDecoded,error)
             }
         }
     }

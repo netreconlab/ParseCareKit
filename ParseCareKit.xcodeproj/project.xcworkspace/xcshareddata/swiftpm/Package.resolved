@@ -5,8 +5,26 @@
         "package": "CareKit",
         "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
         "state": {
-          "branch": "master",
-          "revision": "610624a9f75f8233989b65956749209d0d21d335",
+          "branch": "main",
+          "revision": "bb55b4719e7091d5587f652f742eb8189492fe98",
+          "version": null
+        }
+      },
+      {
+        "package": "FHIRModels",
+        "repositoryURL": "https://github.com/apple/FHIRModels.git",
+        "state": {
+          "branch": null,
+          "revision": "1d34af2339e49ed5d9dd2d084f5f4f42cf4a7927",
+          "version": "0.3.1"
+        }
+      },
+      {
+        "package": "ParseSwift",
+        "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
+        "state": {
+          "branch": "geopoint",
+          "revision": "72bf7c433f82f375d751e4a47e0835fa80789560",
           "version": null
         }
       }

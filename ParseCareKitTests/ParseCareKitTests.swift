@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ParseCareKit
+@testable import ParseSwiftCareKit
 
 class ParseCareKitTests: XCTestCase {
 

@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 
-public class ParseCareKitUtility {
+public struct ParseCareKitUtility {
     
-    public class func setupServer() {
+    public static func setupServer() {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration:[String: AnyObject]
         guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
@@ -28,19 +28,15 @@ public class ParseCareKitUtility {
         guard let parseDictionary = plistConfiguration["ParseClientConfiguration"] as? [String:AnyObject],
             let appID = parseDictionary["ApplicationID"] as? String,
             let server = parseDictionary["Server"] as? String,
-            let enableDataStore = parseDictionary["EnableLocalDataStore"] as? Bool else {
+            let serverURL = URL(string: server),
+            let _ = parseDictionary["EnableLocalDataStore"] as? Bool else {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
         }
         
-        let configuration = ParseClientConfiguration {
-            $0.applicationId = appID
-            $0.server = server
-            $0.isLocalDatastoreEnabled = enableDataStore
-        }
-        Parse.initialize(with: configuration)
+        ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
     }
     
-    public class func dateToString(_ date:Date)->String{
+    public static func dateToString(_ date:Date)->String{
         let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
@@ -48,7 +44,7 @@ public class ParseCareKitUtility {
         return dateFormatter.string(from: date)
     }
     
-    public class func stringToDate(_ date:String)->Date?{
+    public static func stringToDate(_ date:String)->Date?{
         let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"

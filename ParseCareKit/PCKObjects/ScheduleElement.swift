@@ -6,27 +6,41 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
-import Parse
+import ParseSwift
 import CareKitStore
 
-open class ScheduleElement: PFObject, PFSubclassing {
+public class ScheduleElement: ParseObject {
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
 
     //1 to 1 between Parse and CareStore
-    @NSManaged public var elements:[ScheduleElement]
-    @NSManaged public var end:Date?
-    @NSManaged public var interval:[String:Any]
-    @NSManaged public var start:Date
-    @NSManaged public var text:String?
-    @NSManaged public var targetValues:[OutcomeValue]
-    @NSManaged public var logicalClock:Int
+    public var elements:[ScheduleElement]?
+    public var end:Date?
+    public var interval:[String:Any]?
+    public var start:Date?
+    public var text:String?
+    public var targetValues:[OutcomeValue]?
+    public var logicalClock:Int?
     
-    public static func parseClassName() -> String {
+    public static func className() -> String {
         return kAScheduleElementClassKey
     }
-    
-    public convenience init(careKitEntity:OCKScheduleElement) {
-        self.init()
+
+    public init(careKitEntity:OCKScheduleElement) {
         _ = self.copyCareKit(careKitEntity)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    required public init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     func copyCareKit(_ scheduleElement: OCKScheduleElement)->ScheduleElement{
@@ -40,10 +54,15 @@ open class ScheduleElement: PFObject, PFSubclassing {
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit()->OCKScheduleElement{
-        let interval = CareKitInterval.era.convertToDateComponents(self.interval)
-        var scheduleElement = OCKScheduleElement(start: self.start, end: self.end, interval: interval)
-        scheduleElement.targetValues = self.targetValues.compactMap{$0.convertToCareKit()}
+    open func convertToCareKit() -> OCKScheduleElement? {
+        guard let interval = self.interval,
+              let start = self.start,
+              let targetValues = self.targetValues else {
+            return nil
+        }
+        let schedhuleInterval = CareKitInterval.era.convertToDateComponents(interval)
+        var scheduleElement = OCKScheduleElement(start: start, end: self.end, interval: schedhuleInterval)
+        scheduleElement.targetValues = targetValues.compactMap{$0.convertToCareKit()}
         //scheduleElement.elements = self.elements.compactMap{$0.convertToCareKit()} //This is marked is get-only
         scheduleElement.text = self.text
         return scheduleElement
@@ -60,7 +79,7 @@ open class ScheduleElement: PFObject, PFSubclassing {
     
     func stamp(_ clock: Int){
         self.logicalClock = clock
-        self.elements.forEach{
+        self.elements?.forEach{
             $0.logicalClock = self.logicalClock
         }
     }

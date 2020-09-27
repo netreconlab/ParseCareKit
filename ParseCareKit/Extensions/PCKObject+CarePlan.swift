@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import Parse
+import ParseSwift
 import CareKitStore
 
 extension PCKObject{
     
-    public class func encodeCareKitToDictionary(_ entity: OCKCarePlan)->[String:Any]?{
+    public static func encodeCareKitToDictionary(_ entity: OCKCarePlan)->[String:Any]?{
         let jsonDictionary:[String:Any]
         do{
             let data = try JSONEncoder().encode(entity)
@@ -25,7 +25,7 @@ extension PCKObject{
         return jsonDictionary
     }
     
-    public class func getSchemaVersionFromCareKitEntity(_ entity: OCKCarePlan)->[String:Any]?{
+    public static func getSchemaVersionFromCareKitEntity(_ entity: OCKCarePlan)->[String:Any]?{
         guard let json = CarePlan.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }

@@ -6,38 +6,50 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
-import Parse
+import ParseSwift
 import CareKitStore
 
 
-open class OutcomeValue: PCKObject, PFSubclassing {
+public class OutcomeValue: PCKObject {
 
-    @NSManaged public var index:NSNumber?
-    @NSManaged public var kind:String?
-    @NSManaged public var units:String?
+    public var index:NSNumber?
+    public var kind:String?
+    public var units:String?
     
-    @NSManaged private var typeString: String
-    var type: OCKOutcomeValueType {
-        get { return OCKOutcomeValueType(rawValue: typeString)! }
-        set { typeString = newValue.rawValue }
+    private var typeString: String?
+    var type: OCKOutcomeValueType? {
+        get {
+            guard let type = typeString else {
+                return nil
+            }
+            return OCKOutcomeValueType(rawValue: type)
+        }
+        set { typeString = newValue?.rawValue }
     }
 
-    @NSManaged var textValue: String?
-    @NSManaged var binaryValue: Data?
-    @NSManaged var booleanValue: Bool
-    @NSManaged var integerValue: Int64
-    @NSManaged var doubleValue: Double
-    @NSManaged var dateValue: Date?
+    var textValue: String?
+    var binaryValue: Data?
+    var booleanValue: Bool?
+    var integerValue: Int64?
+    var doubleValue: Double?
+    var dateValue: Date?
 
-    var value: OCKOutcomeValueUnderlyingType {
+    var value: OCKOutcomeValueUnderlyingType? {
         get {
-            switch type {
-            case .integer: return Int(integerValue)
+            guard let valueType = type else {
+                return nil
+            }
+            switch valueType {
+            case .integer:
+                guard let integerValue = integerValue else {
+                    return nil
+                }
+                return Int(integerValue)
             case .double: return doubleValue
             case .boolean: return booleanValue
-            case .text: return textValue!
-            case .binary: return binaryValue!
-            case .date: return dateValue!
+            case .text: return textValue
+            case .binary: return binaryValue
+            case .date: return dateValue
             }
         }
 
@@ -88,13 +100,21 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         index = nil
     }
     
-    public static func parseClassName() -> String {
+    public static func className() -> String {
         return kPCKOutcomeValueClassKey
+    }
+    
+    override init() {
+        super.init()
     }
     
     public convenience init(careKitEntity:OCKOutcomeValue) {
         self.init()
         _ = self.copyCareKit(careKitEntity)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     open override func copyCommonValues(from other: PCKObject){
@@ -117,13 +137,13 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
             self.uuid = uuid
         }else{
-            print("Warning in \(parseClassName).copyCareKit(). Entity missing uuid: \(outcomeValue)")
+            print("Warning in \(className).copyCareKit(). Entity missing uuid: \(outcomeValue)")
         }
         
         if let schemaVersion = OutcomeValue.getSchemaVersionFromCareKitEntity(outcomeValue){
             self.schemaVersion = schemaVersion
         }else{
-            print("Warning in \(parseClassName).copyCareKit(). Entity missing schemaVersion: \(outcomeValue)")
+            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(outcomeValue)")
         }
         self.timezone = outcomeValue.timezone.abbreviation()!
         self.userInfo = outcomeValue.userInfo
@@ -154,16 +174,22 @@ open class OutcomeValue: PCKObject, PFSubclassing {
     
     open func convertToCareKit(fromCloud:Bool=true)->OCKOutcomeValue?{
         
+        //If super passes, can safely force unwrap entityId, timeZone
+        guard self.canConvertToCareKit() == true,
+              let value = self.value else {
+            return nil
+        }
+        
         var outcomeValue:OCKOutcomeValue!
         if fromCloud{
-            guard let decodedOutcomeValue = decodedCareKitObject(self.value, units: units)else{
-                print("Error in \(parseClassName). Couldn't decode entity \(self)")
+            guard let decodedOutcomeValue = decodedCareKitObject(value, units: units)else{
+                print("Error in \(className). Couldn't decode entity \(self)")
                 return nil
             }
             outcomeValue = decodedOutcomeValue
         }else{
             //Create bare Entity and replace contents with Parse contents
-            outcomeValue = OCKOutcomeValue(self.value, units: self.units)
+            outcomeValue = OCKOutcomeValue(value, units: self.units)
         }
         outcomeValue.remoteID = self.remoteID
         outcomeValue.index = self.index as? Int
@@ -174,7 +200,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         outcomeValue.notes = self.notes?.compactMap{$0.convertToCareKit()}
         outcomeValue.remoteID = self.remoteID
         outcomeValue.userInfo = self.userInfo
-        if let timeZone = TimeZone(abbreviation: self.timezone){
+        if let timeZone = TimeZone(abbreviation: self.timezone!){
             outcomeValue.timezone = timeZone
         }
         return outcomeValue
