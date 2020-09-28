@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70854C3625218F9A00BA2179 /* ParseCareKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70854C3525218F9A00BA2179 /* ParseCareKitTests.swift */; };
+		70854C3825218F9A00BA2179 /* ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */; };
+		70854C442521903700BA2179 /* ParseCareKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752D3250D270E0020EA70 /* ParseCareKitTests.swift */; };
 		708D03482521363F00646C70 /* PCKObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D03472521363F00646C70 /* PCKObject.swift */; };
-		709752D4250D270E0020EA70 /* ParseCareKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752D3250D270E0020EA70 /* ParseCareKitTests.swift */; };
-		709752D6250D270E0020EA70 /* ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */; };
 		709752E3250D27300020EA70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E2250D27300020EA70 /* AppDelegate.swift */; };
 		709752E5250D27300020EA70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E4250D27300020EA70 /* SceneDelegate.swift */; };
 		709752E7250D27300020EA70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E6250D27300020EA70 /* ContentView.swift */; };
@@ -52,14 +53,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		709752D7250D270E0020EA70 /* PBXContainerItemProxy */ = {
+		70854C3925218F9A00BA2179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9119D5E2245618D7001B7AA3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9119D5EA245618D7001B7AA3;
 			remoteInfo = ParseCareKit;
 		};
-		709752F4250D27400020EA70 /* PBXContainerItemProxy */ = {
+		70854C3F25218FA000BA2179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9119D5E2245618D7001B7AA3 /* Project object */;
 			proxyType = 1;
@@ -100,8 +101,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		70854C3325218F9A00BA2179 /* ParseCareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		70854C3525218F9A00BA2179 /* ParseCareKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitTests.swift; sourceTree = "<group>"; };
+		70854C3725218F9A00BA2179 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		708D03472521363F00646C70 /* PCKObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObject.swift; sourceTree = "<group>"; };
-		709752D1250D270E0020EA70 /* ParseCareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		708D038F25218D7200646C70 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		709752D3250D270E0020EA70 /* ParseCareKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitTests.swift; sourceTree = "<group>"; };
 		709752D5250D270E0020EA70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		709752E0250D27300020EA70 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,11 +150,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		709752CE250D270E0020EA70 /* Frameworks */ = {
+		70854C3025218F9A00BA2179 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				709752D6250D270E0020EA70 /* ParseCareKit.framework in Frameworks */,
+				70854C3825218F9A00BA2179 /* ParseCareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,10 +178,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		709752D2250D270E0020EA70 /* ParseCareKitTests */ = {
+		70854C2E25218F2300BA2179 /* ParseCareKit */ = {
+			isa = PBXGroup;
+			children = (
+				9119D5EF245618D7001B7AA3 /* Info.plist */,
+			);
+			path = ParseCareKit;
+			sourceTree = "<group>";
+		};
+		70854C3425218F9A00BA2179 /* ParseCareKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				70854C3525218F9A00BA2179 /* ParseCareKitTests.swift */,
+				70854C3725218F9A00BA2179 /* Info.plist */,
+			);
+			path = ParseCareKitTests;
+			sourceTree = "<group>";
+		};
+		708D038D25218D3D00646C70 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				9119D5ED245618D7001B7AA3 /* ParseCareKit */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		708D038E25218D7200646C70 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				709752D3250D270E0020EA70 /* ParseCareKitTests.swift */,
+				708D038F25218D7200646C70 /* LinuxMain.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		709752D2250D270E0020EA70 /* ParseCareKitTests */ = {
+			isa = PBXGroup;
+			children = (
 				709752D5250D270E0020EA70 /* Info.plist */,
 			);
 			path = ParseCareKitTests;
@@ -209,10 +246,13 @@
 			isa = PBXGroup;
 			children = (
 				9119D699245689D9001B7AA3 /* README.md */,
-				9119D5ED245618D7001B7AA3 /* ParseCareKit */,
+				708D038D25218D3D00646C70 /* Sources */,
 				91AD928E24A504A200925D4D /* ParseCareKitWatchOS */,
+				708D038E25218D7200646C70 /* Tests */,
+				70854C2E25218F2300BA2179 /* ParseCareKit */,
 				709752D2250D270E0020EA70 /* ParseCareKitTests */,
 				709752E1250D27300020EA70 /* TestHost */,
+				70854C3425218F9A00BA2179 /* ParseCareKitTests */,
 				9119D5EC245618D7001B7AA3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -221,8 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */,
-				709752D1250D270E0020EA70 /* ParseCareKitTests.xctest */,
 				709752E0250D27300020EA70 /* TestHost.app */,
+				70854C3325218F9A00BA2179 /* ParseCareKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,7 +273,6 @@
 				918F080C2480411300C3A205 /* Extensions */,
 				918F080B248040AA00C3A205 /* PCKObjects */,
 				91D52878248128700022292B /* Protocols */,
-				9119D5EF245618D7001B7AA3 /* Info.plist */,
 				91AA07222466F0CD00B39452 /* KnowledgeVector.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
@@ -309,23 +348,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		709752D0250D270E0020EA70 /* ParseCareKitTests */ = {
+		70854C3225218F9A00BA2179 /* ParseCareKitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 709752DB250D270E0020EA70 /* Build configuration list for PBXNativeTarget "ParseCareKitTests" */;
+			buildConfigurationList = 70854C3B25218F9A00BA2179 /* Build configuration list for PBXNativeTarget "ParseCareKitTests" */;
 			buildPhases = (
-				709752CD250D270E0020EA70 /* Sources */,
-				709752CE250D270E0020EA70 /* Frameworks */,
-				709752CF250D270E0020EA70 /* Resources */,
+				70854C2F25218F9A00BA2179 /* Sources */,
+				70854C3025218F9A00BA2179 /* Frameworks */,
+				70854C3125218F9A00BA2179 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				709752D8250D270E0020EA70 /* PBXTargetDependency */,
-				709752F5250D27400020EA70 /* PBXTargetDependency */,
+				70854C3A25218F9A00BA2179 /* PBXTargetDependency */,
+				70854C4025218FA000BA2179 /* PBXTargetDependency */,
 			);
 			name = ParseCareKitTests;
 			productName = ParseCareKitTests;
-			productReference = 709752D1250D270E0020EA70 /* ParseCareKitTests.xctest */;
+			productReference = 70854C3325218F9A00BA2179 /* ParseCareKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		709752DF250D27300020EA70 /* TestHost */ = {
@@ -376,12 +415,12 @@
 		9119D5E2245618D7001B7AA3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1170;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Network Reconnaissance Lab";
 				TargetAttributes = {
-					709752D0250D270E0020EA70 = {
-						CreatedOnToolsVersion = 11.7;
+					70854C3225218F9A00BA2179 = {
+						CreatedOnToolsVersion = 12.0.1;
 						TestTargetID = 709752DF250D27300020EA70;
 					};
 					709752DF250D27300020EA70 = {
@@ -411,14 +450,14 @@
 			projectRoot = "";
 			targets = (
 				9119D5EA245618D7001B7AA3 /* ParseCareKit */,
-				709752D0250D270E0020EA70 /* ParseCareKitTests */,
 				709752DF250D27300020EA70 /* TestHost */,
+				70854C3225218F9A00BA2179 /* ParseCareKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		709752CF250D270E0020EA70 /* Resources */ = {
+		70854C3125218F9A00BA2179 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -446,11 +485,12 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		709752CD250D270E0020EA70 /* Sources */ = {
+		70854C2F25218F9A00BA2179 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				709752D4250D270E0020EA70 /* ParseCareKitTests.swift in Sources */,
+				70854C3625218F9A00BA2179 /* ParseCareKitTests.swift in Sources */,
+				70854C442521903700BA2179 /* ParseCareKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,15 +542,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		709752D8250D270E0020EA70 /* PBXTargetDependency */ = {
+		70854C3A25218F9A00BA2179 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9119D5EA245618D7001B7AA3 /* ParseCareKit */;
-			targetProxy = 709752D7250D270E0020EA70 /* PBXContainerItemProxy */;
+			targetProxy = 70854C3925218F9A00BA2179 /* PBXContainerItemProxy */;
 		};
-		709752F5250D27400020EA70 /* PBXTargetDependency */ = {
+		70854C4025218FA000BA2179 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 709752DF250D27300020EA70 /* TestHost */;
-			targetProxy = 709752F4250D27400020EA70 /* PBXContainerItemProxy */;
+			targetProxy = 70854C3F25218FA000BA2179 /* PBXContainerItemProxy */;
 		};
 		709752FD250D351B0020EA70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -531,13 +571,12 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		709752D9250D270E0020EA70 /* Debug */ = {
+		70854C3C25218F9A00BA2179 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ParseCareKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -545,21 +584,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netrecon.ParseCareKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
-		709752DA250D270E0020EA70 /* Release */ = {
+		70854C3D25218F9A00BA2179 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ParseCareKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -567,8 +603,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netrecon.ParseCareKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
@@ -801,11 +835,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		709752DB250D270E0020EA70 /* Build configuration list for PBXNativeTarget "ParseCareKitTests" */ = {
+		70854C3B25218F9A00BA2179 /* Build configuration list for PBXNativeTarget "ParseCareKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				709752D9250D270E0020EA70 /* Debug */,
-				709752DA250D270E0020EA70 /* Release */,
+				70854C3C25218F9A00BA2179 /* Debug */,
+				70854C3D25218F9A00BA2179 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

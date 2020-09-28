@@ -44,46 +44,12 @@ PFUser.enableRevocableSessionInBackground() //Allows you to revoke sessions from
 **Note that it is recommended to use Knowledge Vectors (`ParseRemoteSynchronizationManager`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how Knowledge Vectors work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
 
 ## Install ParseCareKit
-The framework currently isn't SPM compatible yet as it's depedendent on [Parse](https://github.com/parse-community/Parse-SDK-iOS-OSX) which is currently only compatible with cocoapods. 
+
+### Swift Package Manager (SPM)
+ParseCareKit can be installed via SPM. Open an existing project or create a new Xcode project and navigate to `File > Swift Packages > Add Package Dependency`. Enter the url `https://github.com/netreconlab/ParseCareKit` and tap `Next`. Choose the main branch, and on the next screen, check off the package.
 
 ### Installing via cocoapods
-The easiest way to install is via cocoapods. Since ParseCareKit requires CareKit, and CareKit doesn't officially support cocoapods (see more [here](https://github.com/carekit-apple/CareKit/issues/383)), you will have to point to a github repo that contains CareKit 2.0+ podspecs. Feel free to point to the repo below which mirrors the most up-to-date versions of CareKit. Your podfile should contain all of the following if you plan on using `CareKit`, `CareKitUI`, and `CareKitStore`:
-
-```ruby
-platform :ios, '13.0' #Note that this the minimum requirement for CareKit iOS 13
-
-target 'MyApp' do #Change to your app name
-  use_frameworks!
-
-  # All of these are required to run ParseCareKit
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
-  
-  # Add the rest of your pods below
-end
-```
-
-The above Podfile will also install the minimum required [Parse iOS framework](https://github.com/parse-community/Parse-SDK-iOS-OSX)(and its dependencies) as it's also a requirement for ParseCareKit.
-
-If you only need the `CareKitStore` and `ParseCareKit`, you can build your project for iOS 11+ by using:
-
-```ruby
-platform :ios, '11.0' #Can run on lower version as long as you are using tweek
-
-target 'MyApp' do #Change to your app name
-  use_frameworks!
-
-  # All of these are required to run ParseCareKit
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_tweek'
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'carestore'
-  
-  # Add the rest of your pods below
-end
-```
-
-See the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch for details.
+To install via cocoapods, go to the [objc](https://github.com/netreconlab/ParseCareKit/tree/2.1) branch for the readme.
 
 
 ### Installing as a framework
