@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CareKit",
+        "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
+        "state": {
+          "branch": "main",
+          "revision": "bb55b4719e7091d5587f652f742eb8189492fe98",
+          "version": null
+        }
+      },
+      {
+        "package": "FHIRModels",
+        "repositoryURL": "https://github.com/apple/FHIRModels.git",
+        "state": {
+          "branch": null,
+          "revision": "1d34af2339e49ed5d9dd2d084f5f4f42cf4a7927",
+          "version": "0.3.1"
+        }
+      },
+      {
+        "package": "ParseSwift",
+        "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
+        "state": {
+          "branch": "geopoint",
+          "revision": "996cfb953567f0dce2d26b9a2d83a2cf8bf626dc",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

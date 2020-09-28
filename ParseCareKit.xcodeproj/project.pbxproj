@@ -105,7 +105,6 @@
 		70854C3525218F9A00BA2179 /* ParseCareKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitTests.swift; sourceTree = "<group>"; };
 		70854C3725218F9A00BA2179 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		708D03472521363F00646C70 /* PCKObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObject.swift; sourceTree = "<group>"; };
-		708D038F25218D7200646C70 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		709752D3250D270E0020EA70 /* ParseCareKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitTests.swift; sourceTree = "<group>"; };
 		709752D5250D270E0020EA70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		709752E0250D27300020EA70 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +194,14 @@
 			path = ParseCareKitTests;
 			sourceTree = "<group>";
 		};
+		70854C4925219A2100BA2179 /* ParseCareKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				709752D3250D270E0020EA70 /* ParseCareKitTests.swift */,
+			);
+			path = ParseCareKitTests;
+			sourceTree = "<group>";
+		};
 		708D038D25218D3D00646C70 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,8 +213,7 @@
 		708D038E25218D7200646C70 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				709752D3250D270E0020EA70 /* ParseCareKitTests.swift */,
-				708D038F25218D7200646C70 /* LinuxMain.swift */,
+				70854C4925219A2100BA2179 /* ParseCareKitTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
