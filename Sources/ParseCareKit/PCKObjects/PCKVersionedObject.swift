@@ -9,93 +9,75 @@
 import Foundation
 import ParseSwift
 
-open class PCKVersionedObject: PCKObject {
-
-    var effectiveDate: Date?
-    var previous: PCKVersionedObject?
-    var previousVersionUUIDString: String?
-    var next: PCKVersionedObject?
-    var nextVersionUUIDString: String?
-
+open class PCKVersionedObject: PCKObject, PCKVersionable {
+    
+    public internal(set) var nextVersion: PCKVersionedObject? {
+        didSet {
+            nextVersionUUID = nextVersion?.uuid
+        }
+    }
+    
     public internal(set) var nextVersionUUID:UUID? {
-        get {
-            if next?.uuid != nil{
-                return UUID(uuidString: next!.uuid!)
-            }else if nextVersionUUIDString != nil {
-                return UUID(uuidString: nextVersionUUIDString!)
-            }else{
-                return nil
+        didSet {
+            if nextVersionUUID != nextVersion?.uuid {
+                nextVersion = nil
             }
-        }
-        set{
-            nextVersionUUIDString = newValue?.uuidString
-            if newValue?.uuidString != next?.uuid{
-                next = nil
-            }
-        }
-    }
-    
-    var nextVersion: PCKVersionedObject?{
-        get{
-            return next
-        }
-        set{
-            next = newValue
-            nextVersionUUIDString = newValue?.uuid
         }
     }
 
-    public internal(set) var previousVersionUUID: UUID? {
-        get {
-            if previous?.uuid != nil{
-                return UUID(uuidString: previous!.uuid!)
-            }else if previousVersionUUIDString != nil{
-                return UUID(uuidString: previousVersionUUIDString!)
-            }else{
-                return nil
-            }
+    public internal(set) var previousVersion: PCKVersionedObject? {
+        didSet {
+            previousVersionUUID = previousVersion?.uuid
         }
-        set{
-            previousVersionUUIDString = newValue?.uuidString
-            if newValue?.uuidString != previous?.uuid{
-                previous = nil
+    }
+    
+    public internal(set) var previousVersionUUID: UUID? {
+        didSet {
+            if previousVersionUUID != previousVersion?.uuid {
+                previousVersion = nil
             }
         }
     }
     
-    var previousVersion: PCKVersionedObject?{
-        get{
-            return previous
-        }
-        set{
-            previous = newValue
-            previousVersionUUIDString = newValue?.uuid
-        }
-    }
+    var effectiveDate: Date?
 
     override init() {
         super.init()
     }
-
+    
+    enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+        case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if encodingForParse {
+            try container.encode(nextVersion, forKey: .nextVersion)
+            try container.encode(previousVersion, forKey: .previousVersion)
+        }
+        try container.encode(previousVersionUUID, forKey: .previousVersionUUID)
+        try container.encode(nextVersionUUID, forKey: .nextVersionUUID)
+        try container.encode(effectiveDate, forKey: .effectiveDate)
+    }
+    
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-
-    open override func copyCommonValues(from other: PCKObject) {
-        guard let other = other as? Self else{return}
-        super.copyCommonValues(from: other)
-        self.effectiveDate = other.effectiveDate
-        self.previous = other.previous
-        self.previousVersionUUIDString = other.previousVersionUUIDString
-        self.next = other.next
-        self.nextVersionUUIDString = other.nextVersionUUIDString
-    }
     
+    public func copyVersionedValues(from other: PCKVersionedObject) {
+        self.effectiveDate = other.effectiveDate
+        self.previousVersion = other.previousVersion
+        self.nextVersion = other.nextVersion
+        self.copyCommonValues(from: other)
+    }
+
     private class func queryVersion(for date: Date, queryToAndWith: Query<PCKVersionedObject>)-> Query<PCKVersionedObject> {
         let interval = createCurrentDateInterval(for: date)
     
         var query = queryToAndWith
-        query.where(doesNotExist(key: kPCKObjectCompatibleDeletedDateKey)) //Only consider non deleted keys
+        query.where(doesNotExist(key: kPCKObjectableDeletedDateKey)) //Only consider non deleted keys
         query.where(kPCKVersionedObjectEffectiveDateKey < interval.end)
         return query
     }
@@ -115,8 +97,8 @@ open class PCKVersionedObject: PCKObject {
     
     func fixVersionLinkedList(_ versionFixed: PCKVersionedObject, backwards:Bool){
         if backwards{
-            if versionFixed.previousVersionUUIDString != nil && versionFixed.previous == nil{
-                self.first(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
+            if versionFixed.previousVersionUUID != nil && versionFixed.previousVersion == nil{
+                self.first(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previousVersion){
                     (isNew,previousFound) in
                     
                     guard let previousFound = previousFound else{
@@ -129,7 +111,7 @@ open class PCKVersionedObject: PCKObject {
                             switch results {
                             
                             case .success(_):
-                                if previousFound.next == nil{
+                                if previousFound.nextVersion == nil{
                                     previousFound.nextVersion = versionFixed
                                     previousFound.save(callbackQueue: .global(qos: .background)){ results in
                                         switch results {
@@ -152,8 +134,8 @@ open class PCKVersionedObject: PCKObject {
             }
             //We are done fixing
         }else{
-            if versionFixed.nextVersionUUIDString != nil && versionFixed.next == nil{
-                self.first(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
+            if versionFixed.nextVersionUUID != nil && versionFixed.nextVersion == nil{
+                self.first(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.nextVersion){
                     (isNew,nextFound) in
                     
                     guard let nextFound = nextFound else{
@@ -166,7 +148,7 @@ open class PCKVersionedObject: PCKObject {
                             switch results {
                             
                             case .success(_):
-                                if nextFound.previous == nil{
+                                if nextFound.previousVersion == nil{
                                     nextFound.previousVersion = versionFixed
                                     nextFound.save(callbackQueue: .global(qos: .background)){ results in
                                     
@@ -195,7 +177,7 @@ open class PCKVersionedObject: PCKObject {
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public class func query(for date: Date) -> Query<PCKVersionedObject> {
         var query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-        query.include([kPCKObjectCompatibleNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         return query
     }
 
@@ -216,7 +198,7 @@ open class PCKVersionedObject: PCKObject {
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Bool, PCKVersionedObject)->Void){
         var linkedNew = false
-        self.first(self.previousVersionUUID, classType: self, relatedObject: self.previous, include: true){
+        self.first(self.previousVersionUUID, classType: self, relatedObject: self.previousVersion, include: true){
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject else{
@@ -229,7 +211,7 @@ open class PCKVersionedObject: PCKObject {
                 linkedNew = true
             }
             
-            self.first(self.nextVersionUUID, classType: self, relatedObject: self.next, include: true){
+            self.first(self.nextVersionUUID, classType: self, relatedObject: self.nextVersion, include: true){
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject else{
@@ -300,14 +282,14 @@ open class PCKVersionedObject: PCKObject {
                     }
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
-                    if versionedObject.previous != nil {
-                        if versionedObject.previous!.next == nil{
-                            versionedObject.previous!.nextVersion = versionedObject
-                            versionedObject.previous!.save(callbackQueue: .global(qos: .background)){ results in
+                    if versionedObject.previousVersion != nil {
+                        if versionedObject.previousVersion!.nextVersion == nil{
+                            versionedObject.previousVersion!.nextVersion = versionedObject
+                            versionedObject.previousVersion!.save(callbackQueue: .global(qos: .background)){ results in
                                 switch results {
                                     
                                 case .success(_):
-                                    versionedObject.fixVersionLinkedList(versionedObject.previous!, backwards: true)
+                                    versionedObject.fixVersionLinkedList(versionedObject.previousVersion!, backwards: true)
                                 case .failure(let error):
                                     print("Couldn't save(). Error: \(error). Object: \(versionedObject)")
                                 }
@@ -315,14 +297,14 @@ open class PCKVersionedObject: PCKObject {
                         }
                     }
                     
-                    if versionedObject.next != nil {
-                        if versionedObject.next!.previous == nil{
-                            versionedObject.next!.previousVersion = versionedObject
-                            versionedObject.next!.save(callbackQueue: .global(qos: .background)){ results in
+                    if versionedObject.nextVersion != nil {
+                        if versionedObject.nextVersion!.previousVersion == nil{
+                            versionedObject.nextVersion!.previousVersion = versionedObject
+                            versionedObject.nextVersion!.save(callbackQueue: .global(qos: .background)){ results in
                                 switch results {
                                 
                                 case .success(_):
-                                    versionedObject.fixVersionLinkedList(versionedObject.next!, backwards: false)
+                                    versionedObject.fixVersionLinkedList(versionedObject.nextVersion!, backwards: false)
                                 case .failure(let error):
                                     print("Couldn't save(). Error: \(error). Object: \(versionedObject)")
                                 }

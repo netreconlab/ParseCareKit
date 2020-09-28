@@ -1,5 +1,5 @@
 //
-//  PCKObjectCompatible+OutcomeValue.swift
+//  PCKObjectable+OutcomeValue.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/28/20.
@@ -10,23 +10,23 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-extension PCKObjectCompatible{
+extension PCKObjectable{
 
-    public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
+    public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol) throws -> OCKOutcomeValue? {
         
         guard let logicalClock = self.logicalClock,
               let parseLogicalClock = parse.logicalClock else {
-            return nil
+            throw ParseCareKitError.cantCastToNeededClassType
         }
 
         if !usingKnowledgeVector{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
-                return nil
+                throw ParseCareKitError.cantCastToNeededClassType
             }
             if cloudUpdatedAt > careKitLastUpdated{
                 //Item from cloud is newer, no change needed in the cloud
-                return parse.convertToCareKit()
+                return try parse.convertToCareKit()
             }
             
             return nil //Items are the same, no need to do anything
@@ -35,7 +35,7 @@ extension PCKObjectCompatible{
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
                 print("Warning in \(self.className).compareUpdate(). KnowledgeVector in Cloud \(parseLogicalClock) >= \(logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
             }
-            return nil
+            throw ParseCareKitError.couldntUnwrapKnowledgeVector
         }
     }
     

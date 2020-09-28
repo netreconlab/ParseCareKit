@@ -13,12 +13,22 @@ import CareKitStore
 
 public class Outcome: PCKObject, PCKRemoteSynchronized {
 
-    public var taskOccurrenceIndex:Int?
-    public var values:[OutcomeValue]?
-    var task:Task?
-    var taskUUIDString:String?
-    var date:Date?
-    
+    public var taskOccurrenceIndex: Int?
+    public var values: [OutcomeValue]?
+    var task: Task? {
+        didSet {
+            taskUUID = task?.uuid
+        }
+    }
+    var taskUUID: UUID? {
+        didSet {
+            if taskUUID != task?.uuid {
+                task = nil
+            }
+        }
+    }
+    var date: Date?
+    /*
     public internal(set) var taskUUID:UUID? {
         get {
             if task?.uuid != nil{
@@ -35,33 +45,39 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                 task = nil
             }
         }
-    }
-    
-    public var currentTask: Task?{
-        get{
-            return task
-        }
-        set{
-            task = newValue
-            taskUUIDString = newValue?.uuid
-        }
-    }
-    
-    public static func className() -> String {
-        return kPCKOutcomeClassKey
-    }
+    }*/
 
     override init() {
         super.init()
     }
 
-    public convenience init(careKitEntity: OCKAnyOutcome) {
+    public convenience init?(careKitEntity: OCKAnyOutcome) {
         self.init()
-        _ = self.copyCareKit(careKitEntity)
+        do {
+            _ = try self.copyCareKit(careKitEntity)
+        } catch {
+            return nil
+        }
     }
     
     public required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        try super.init(from: decoder)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case task, taskUUID, taskOccurrenceIndex, values, date
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if encodingForParse {
+            try container.encode(task, forKey: .task)
+        }
+        try container.encode(taskUUID, forKey: .taskUUID)
+        try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
+        try container.encode(values, forKey: .values)
+        try container.encode(date, forKey: .date)
     }
     
     public func new() -> PCKSynchronized {
@@ -92,7 +108,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         }
         
         //Check to see if already in the cloud
-        let query = Outcome.query(kPCKObjectCompatibleUUIDKey == self.uuid)
+        let query = Outcome.query(kPCKObjectableUUIDKey == self.uuid)
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -104,8 +120,8 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                 case .internalServer: //1 - this column hasn't been added.
                     self.save(self, completion: completion)
                 case .objectNotFound: //101 - Query returned no results
-                    var query = Outcome.query(kPCKObjectCompatibleEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectCompatibleDeletedDateKey))
-                    query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
+                    var query = Outcome.query(kPCKObjectableEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectableDeletedDateKey))
+                    query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
                     
                     query.first(callbackQueue: .global(qos: .background)){ result in
                         
@@ -142,14 +158,14 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectCompatibleClockKey >= localClock)
-        query.order([.ascending(kPCKObjectCompatibleClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
+        var query = Self.query(kPCKObjectableClockKey >= localClock)
+        query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
             case .success(let outcomes):
-                let pulled = outcomes.compactMap{$0.convertToCareKit()}
+                let pulled = outcomes.compactMap{try? $0.convertToCareKit()}
                 let entities = pulled.compactMap{OCKEntity.outcome($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
                 mergeRevision(revision)
@@ -160,7 +176,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectCompatibleClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectableClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
                 default:
                     print("An unexpected error occured \(error.localizedDescription)")
                 }
@@ -203,8 +219,8 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         }
                 
         //Get latest item from the Cloud to compare against
-        var query = Outcome.query(kPCKObjectCompatibleUUIDKey == self.uuid)
-        query.include([kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
+        var query = Outcome.query(kPCKObjectableUUIDKey == self.uuid)
+        query.include([kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -237,17 +253,22 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         guard let other = other as? Outcome else{return}
         self.taskOccurrenceIndex = other.taskOccurrenceIndex
         self.values = other.values
-        self.currentTask = other.currentTask
-        self.taskUUID = other.taskUUID
+        self.task = other.task
     }
         
-    open func copyCareKit(_ outcomeAny: OCKAnyOutcome)->Outcome?{
+    open func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
         
         guard let _ = PCKUser.current,
             let outcome = outcomeAny as? OCKOutcome else{
-            return nil
+            throw ParseCareKitError.cantCastToNeededClassType
         }
         
+        let encoded = try JSONEncoder().encode(outcome)
+        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        self.copyCommonValues(from: decoded)
+        self.entityId = outcome.id
+        return self
+        /*
         if let uuid = outcome.uuid?.uuidString{
             self.uuid = uuid
         }else{
@@ -276,7 +297,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
         self.values = outcome.values.compactMap{OutcomeValue(careKitEntity: $0)}
         
-        return self
+        return self*/
     }
     
     open override func copyRelationalEntities(_ parse: PCKObject) {
@@ -291,16 +312,21 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true)->OCKOutcome?{
-        
+    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
+        /*
         guard self.canConvertToCareKit() == true,
-            let taskUUID = self.taskUUID,
+            let _ = self.taskUUID,
             let taskOccurrenceIndex = self.taskOccurrenceIndex,
             let values = self.values else{
             print("Error in \(className).convertToCareKit(). Must contain task with a uuid in \(self)")
             return nil
-        }
+        }*/
+        self.encodingForParse = false
+        let encoded = try JSONEncoder().encode(self)
+        self.encodingForParse = true
+        return try JSONDecoder().decode(OCKOutcome.self, from: encoded)
         
+        /*
         //Create bare Entity and replace contents with Parse contents
         let outcomeValues = values.compactMap{$0.convertToCareKit()}
         var outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: taskOccurrenceIndex, values: outcomeValues)
@@ -325,7 +351,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
             outcome.timezone = timeZone
         }
         outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        return outcome
+        return outcome*/
     }
     
     ///Link versions and related classes
@@ -347,7 +373,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
             
             self.task = task
             
-            guard let currentTask = self.currentTask else{
+            guard let currentTask = self.task else{
                 self.date = nil
                 completion(false,self)
                 return
@@ -390,10 +416,10 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     }
     
     public static func queryNotDeleted()-> Query<Outcome>{
-        let taskQuery = Task.query(doesNotExist(key: kPCKObjectCompatibleDeletedDateKey))
+        let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        var query = Outcome.query(doesNotExist(key: kPCKObjectCompatibleDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
+        var query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
+        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         return query
     }
    

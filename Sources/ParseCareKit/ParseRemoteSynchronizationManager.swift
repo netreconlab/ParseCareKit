@@ -10,6 +10,8 @@ import Foundation
 import CareKitStore
 import ParseSwift
 
+typealias SynchronizedType = PCKRemoteSynchronized
+
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
 */

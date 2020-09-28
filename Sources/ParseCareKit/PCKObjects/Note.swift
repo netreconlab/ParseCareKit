@@ -16,33 +16,48 @@ open class Note: PCKObject {
     public var title:String?
     public var author:String?
     
-    public static func className() -> String {
-        return kPCKNoteClassKey
-    }
-    
     override init() {
         super.init()
     }
 
-    public convenience init(careKitEntity: OCKNote) {
+    public convenience init?(careKitEntity: OCKNote) {
         self.init()
-        _ = self.copyCareKit(careKitEntity)
+        do {
+            _ = try self.copyCareKit(careKitEntity)
+        } catch {
+            return nil
+        }
     }
     
     public required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        try super.init(from: decoder)
     }
     
-    open override func copyCommonValues(from other: PCKObject){
-        super.copyCommonValues(from: other)
+    enum CodingKeys: String, CodingKey {
+        case content, title, author
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(content, forKey: .content)
+        try container.encode(title, forKey: .title)
+        try container.encode(author, forKey: .author)
+    }
+
+    open func copyCommon(from other: PCKObject){
+        self.copyCommonValues(from: other)
         guard let other = other as? Note else{return}
         self.content = other.content
         self.author = other.author
         self.title = other.title
     }
     
-    open func copyCareKit(_ note: OCKNote) -> Note?{
-        
+    open func copyCareKit(_ note: OCKNote) throws -> Note {
+        let encoded = try JSONEncoder().encode(note)
+        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        self.copyCommonValues(from: decoded)
+        /*
         if let uuid = Note.getUUIDFromCareKitEntity(note){
             self.uuid = uuid
         }else{
@@ -65,13 +80,16 @@ open class Note: PCKObject {
         self.updatedDate = note.updatedDate
         self.remoteID = note.remoteID
         self.createdDate = note.createdDate
-        self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}
+        self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}*/
         return self
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true)->OCKNote? {
+    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKNote {
+        let encoded = try JSONEncoder().encode(self)
+        return try JSONDecoder().decode(OCKNote.self, from: encoded)
         
+        /*
         guard self.canConvertToCareKit() == true,
             let content = self.content,
               let title = self.title else {
@@ -99,11 +117,11 @@ open class Note: PCKObject {
         note.remoteID = self.remoteID
         note.groupIdentifier = self.groupIdentifier
         note.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone!){
+        if let timeZone = self.timezone {
             note.timezone = timeZone
         }
         note.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        return note
+        return note*/
     }
     
     func stamp(_ clock: Int){
@@ -128,7 +146,7 @@ open class Note: PCKObject {
     }
     
     open class func fetchAndReplace(_ notes: [Note]?, completion: @escaping([Note]?)-> Void){
-        let entitiesToFetch = notes?.compactMap{ entity -> String? in
+        let entitiesToFetch = notes?.compactMap{ entity -> UUID? in
             if entity.objectId == nil{
                 return entity.uuid
             }
@@ -140,7 +158,7 @@ open class Note: PCKObject {
             completion(nil)
             return
         }
-        let query = Self.query(containedIn(key: kPCKObjectCompatibleUUIDKey, array: uuids))
+        let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: uuids))
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {

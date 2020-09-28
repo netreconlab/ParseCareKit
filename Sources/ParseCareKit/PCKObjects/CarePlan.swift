@@ -13,41 +13,21 @@ import CareKitStore
 
 open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
 
-    var patient:Patient?
-    var patientUUIDString:String?
-    public var title:String?
+    public var patient:Patient? {
+        didSet {
+            patientUUID = patient?.uuid
+        }
+    }
     
     public var patientUUID:UUID? {
-        get {
-            if patient?.uuid != nil{
-                return UUID(uuidString: patient!.uuid!)
-            }else if patientUUIDString != nil {
-                return UUID(uuidString: patientUUIDString!)
-            }else{
-                return nil
-            }
-        }
-        set{
-            patientUUIDString = newValue?.uuidString
-            if newValue?.uuidString != patient?.uuid{
+        didSet{
+            if patientUUID != patient?.uuid {
                 patient = nil
             }
         }
     }
     
-    public var currentPatient: Patient?{
-        get{
-            return patient
-        }
-        set{
-            patient = newValue
-            patientUUIDString = newValue?.uuid
-        }
-    }
-    
-    public class func className() -> String {
-        return kPCKCarePlanClassKey
-    }
+    public var title:String?
 
     override init() {
         super.init()
@@ -57,9 +37,27 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         try super.init(from: decoder)
     }
 
-    public convenience init(careKitEntity: OCKAnyCarePlan) {
+    public convenience init?(careKitEntity: OCKAnyCarePlan) {
         self.init()
-        _ = self.copyCareKit(careKitEntity)
+        do {
+            _ = try self.copyCareKit(careKitEntity)
+        } catch {
+            return nil
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case title, patient, patientUUID
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if encodingForParse {
+            try container.encode(patient, forKey: .patient)
+        }
+        try container.encode(title, forKey: .title)
+        try container.encode(patientUUID, forKey: .patientUUID)
     }
     
     open func new() -> PCKSynchronized {
@@ -82,7 +80,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
             return
         }
         
-        let query = Self.query(kPCKObjectCompatibleUUIDKey == self.uuid)
+        let query = Self.query(kPCKObjectableUUIDKey == self.uuid)
         query.first(callbackQueue: .global(qos: .background)){
             result in
             
@@ -106,14 +104,15 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     
     public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PCKUser.current,
-            let previousCarePlanUUIDString = self.previousVersionUUID?.uuidString else{
+              let uuid = self.uuid,
+            let previousCarePlanUUID = self.previousVersionUUID else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         //Check to see if this entity is already in the Cloud, but not matched locally
-        var query = Self.query(containedIn(key: kPCKObjectCompatibleUUIDKey, array: [self.uuid, previousCarePlanUUIDString]))
-        query.include(kPCKCarePlanPatientKey,kPCKObjectCompatibleNotesKey,
+        var query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid, previousCarePlanUUID]))
+        query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,
                           kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
         query.find(callbackQueue: .main) {
             results in
@@ -127,7 +126,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.filter({$0.uuid == previousCarePlanUUIDString}).first else {
+                    guard let previousVersion = foundObjects.filter({$0.uuid == self.previousVersionUUID}).first else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
                         completion(false,ParseCareKitError.uuidAlreadyExists)
                         return
@@ -154,15 +153,15 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectCompatibleClockKey >= localClock)
-        query.order([.ascending(kPCKObjectCompatibleClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKCarePlanPatientKey,kPCKObjectCompatibleNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        var query = Self.query(kPCKObjectableClockKey >= localClock)
+        query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+        query.include([kPCKCarePlanPatientKey,kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
             
             case .success(let carePlans):
-                let pulled = carePlans.compactMap{$0.convertToCareKit()}
+                let pulled = carePlans.compactMap{try? $0.convertToCareKit()}
                 let entities = pulled.compactMap{OCKEntity.carePlan($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
                 mergeRevision(revision)
@@ -173,7 +172,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectCompatibleClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectableClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
                 default:
                     print("An unexpected error occured \(error.localizedDescription)")
                 }
@@ -211,18 +210,23 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     open override func copyCommonValues(from other: PCKObject){
         super.copyCommonValues(from: other)
         guard let other = other as? CarePlan else{return}
-        self.currentPatient = other.currentPatient
-        self.patientUUID = other.patientUUID
+        self.patient = other.patient
         self.title = other.title
     }
     
-    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan)-> CarePlan?{
+    open func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
         
         guard let _ = PCKUser.current,
             let carePlan = carePlanAny as? OCKCarePlan else{
-            return nil
+            throw ParseCareKitError.cantCastToNeededClassType
         }
+        let encoded = try JSONEncoder().encode(carePlan)
+        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        self.copyCommonValues(from: decoded)
+        self.entityId = carePlan.id
+        return self
         
+        /*
         if let uuid = carePlan.uuid?.uuidString{
             self.uuid = uuid
         }else{
@@ -252,12 +256,16 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         self.patientUUID = carePlan.patientUUID
         self.previousVersionUUID = carePlan.previousVersionUUID
         self.nextVersionUUID = carePlan.nextVersionUUID
-        return self
+        return self*/
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    open func convertToCareKit(fromCloud:Bool=true)->OCKCarePlan? {
-        
+    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKCarePlan? {
+        self.encodingForParse = false
+        let encoded = try JSONEncoder().encode(self)
+        self.encodingForParse = true
+        return try JSONDecoder().decode(OCKCarePlan.self, from: encoded)
+        /*
         //If super passes, can safely force unwrap entityId, timeZone
         guard self.canConvertToCareKit() == true,
               let title = self.title else {
@@ -288,7 +296,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
         if let timeZone = TimeZone(abbreviation: self.timezone!){
             carePlan.timezone = timeZone
         }
-        return carePlan
+        return carePlan*/
     }
     
     ///Link versions and related classes

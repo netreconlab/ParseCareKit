@@ -1,5 +1,5 @@
 //
-//  PCKObjectCompatible+Outcome.swift
+//  PCKObjectable+Outcome.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/28/20.
@@ -10,7 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-extension PCKObjectCompatible{
+extension PCKObjectable{
 
     public func save(_ outcome: Outcome, completion: @escaping(Bool,Error?) -> Void){
         

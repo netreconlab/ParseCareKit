@@ -14,49 +14,31 @@ import CareKitStore
 public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
 
     //1 to 1 between Parse and CareStore
-    public var address:[String:String]?
-    public var category:String?
-    public var name:[String:String]?
+    public var address:OCKPostalAddress?
+    public var category:OCKContactCategory?
+    public var name:PersonNameComponents?
     public var organization:String?
     public var role:String?
     public var title:String?
-    var carePlan:CarePlan?
-    var carePlanUUIDString:String?
-    
-    public var carePlanUUID:UUID? {
-        get {
-            if carePlan?.uuid != nil{
-                return UUID(uuidString: carePlan!.uuid!)
-            }else if carePlanUUIDString != nil {
-                return UUID(uuidString: carePlanUUIDString!)
-            }else{
-                return nil
-            }
+    var carePlan:CarePlan? {
+        didSet {
+            carePlanUUID = carePlan?.uuid
         }
-        set{
-            carePlanUUIDString = newValue?.uuidString
-            if newValue?.uuidString != carePlan?.uuid{
+    }
+    var carePlanUUID:UUID? {
+        didSet{
+            if carePlanUUID != carePlan?.uuid {
                 carePlan = nil
             }
         }
     }
-    
-    public var currentCarePlan: CarePlan?{
-        get{
-            return carePlan
-        }
-        set{
-            carePlan = newValue
-            carePlanUUIDString = newValue?.uuid
-        }
-    }
-    
+    /*
     var emailAddressesArray:[String]?
     var messagingNumbersArray:[String]?
     var otherContactInfoArray:[String]?
-    var phoneNumbersArray:[String]?
+    var phoneNumbersArray:[String]?*/
     
-    var messagingNumbers: [OCKLabeledValue]? {
+    var messagingNumbers: [OCKLabeledValue]? /*{
         get {
             do{
                 return try messagingNumbersArray?.asDecodedLabeledValues()
@@ -72,9 +54,9 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 print(error)
             }
         }
-    }
+    }*/
 
-    var emailAddresses: [OCKLabeledValue]? {
+    var emailAddresses: [OCKLabeledValue]? /*{
         get {
             do{
                 return try emailAddressesArray?.asDecodedLabeledValues()
@@ -90,9 +72,9 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 print(error)
             }
         }
-    }
+    }*/
 
-    var phoneNumbers: [OCKLabeledValue]? {
+    var phoneNumbers: [OCKLabeledValue]? /*{
         get {
             do{
                 return try phoneNumbersArray?.asDecodedLabeledValues()
@@ -108,9 +90,9 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 print(error)
             }
         }
-    }
+    }*/
 
-    var otherContactInfo: [OCKLabeledValue]? {
+    var otherContactInfo: [OCKLabeledValue]? /*{
         get {
             do{
                 return try otherContactInfoArray?.asDecodedLabeledValues()
@@ -126,15 +108,15 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 print(error)
             }
         }
-    }
+    }*/
     
-    public static func className() -> String {
-        return kPCKContactClassKey
-    }
-    
-    public convenience init(careKitEntity: OCKAnyContact) {
+    public convenience init?(careKitEntity: OCKAnyContact) {
         self.init()
-        _ = self.copyCareKit(careKitEntity)
+        do {
+            _ = try self.copyCareKit(careKitEntity)
+        } catch {
+            return nil
+        }
     }
     
     public override init() {
@@ -142,9 +124,35 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     }
 
     public required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        try super.init(from: decoder)
     }
 
+    enum CodingKeys: String, CodingKey {
+        case carePlan, title, carePlanUUID, address, category, name, organization, role
+        case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if encodingForParse {
+            try container.encode(carePlan, forKey: .carePlan)
+        }
+        
+        try container.encode(title, forKey: .title)
+        try container.encode(carePlanUUID, forKey: .carePlanUUID)
+        try container.encode(address, forKey: .address)
+        try container.encode(category, forKey: .category)
+        try container.encode(name, forKey: .name)
+        try container.encode(organization, forKey: .organization)
+        try container.encode(role, forKey: .role)
+        try container.encode(emailAddresses, forKey: .emailAddresses)
+        try container.encode(messagingNumbers, forKey: .messagingNumbers)
+        try container.encode(phoneNumbers, forKey: .phoneNumbers)
+        try container.encode(otherContactInfo, forKey: .otherContactInfo)
+    }
+    
     open func new() -> PCKSynchronized {
         return Contact()
     }
@@ -169,7 +177,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
         
         //Check to see if already in the cloud
-        let query = Contact.query(kPCKObjectCompatibleUUIDKey == self.uuid)
+        let query = Contact.query(kPCKObjectableUUIDKey == self.uuid)
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -192,14 +200,15 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     
     public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PCKUser.current,
-            let previousContactUUIDString = self.previousVersionUUID?.uuidString else{
+              let uuid = self.uuid,
+            let previousVersionUUID = self.previousVersionUUID else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         //Check to see if this entity is already in the Cloud, but not matched locally
-        var query = Contact.query(containedIn(key: kPCKObjectCompatibleUUIDKey, array: [self.uuid,previousContactUUIDString]))
-        query.include([kPCKContactCarePlanKey,kPCKObjectCompatibleNotesKey,
+        var query = Contact.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousVersionUUID]))
+        query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
                        kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             
@@ -212,7 +221,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.filter({$0.uuid == previousContactUUIDString}).first else {
+                    guard let previousVersion = foundObjects.filter({$0.uuid == previousVersionUUID}).first else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
                         completion(false,ParseCareKitError.uuidAlreadyExists)
                         return
@@ -238,16 +247,16 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Contact.query(kPCKObjectCompatibleClockKey >= localClock)
-        query.order([.ascending(kPCKObjectCompatibleClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKContactCarePlanKey,kPCKObjectCompatibleNotesKey,
+        var query = Contact.query(kPCKObjectableClockKey >= localClock)
+        query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+        query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
         kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
             
             case .success(let carePlans):
-                let pulled = carePlans.compactMap{$0.convertToCareKit()}
+                let pulled = carePlans.compactMap{try? $0.convertToCareKit()}
                 let entities = pulled.compactMap{OCKEntity.contact($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
                 mergeRevision(revision)
@@ -259,7 +268,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectCompatibleClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectableClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
                 default:
                     print("An unexpected error occured \(error.localizedDescription)")
                 }
@@ -303,17 +312,21 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.name = other.name
         self.organization = other.organization
         self.role = other.role
-        self.currentCarePlan = other.currentCarePlan
-        self.carePlanUUID = other.carePlanUUID
+        self.carePlan = other.carePlan
     }
 
-    open func copyCareKit(_ contactAny: OCKAnyContact)-> Contact?{
+    open func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
         
         guard let _ = PCKUser.current,
             let contact = contactAny as? OCKContact else{
-            return nil
+            throw ParseCareKitError.cantCastToNeededClassType
         }
-        
+        let encoded = try JSONEncoder().encode(contact)
+        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        self.copyCommonValues(from: decoded)
+        self.entityId = contact.id
+        return self
+        /*
         if let uuid = contact.uuid?.uuidString{
             self.uuid = uuid
         }else{
@@ -352,19 +365,17 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         self.carePlanUUID = contact.carePlanUUID
         self.previousVersionUUID = contact.previousVersionUUID
         self.nextVersionUUID = contact.nextVersionUUID
-        return self
+        return self*/
     }
     
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true)->OCKContact?{
-        
-        //If super passes, can safely force unwrap entityId, timeZone
-        guard self.canConvertToCareKit() == true,
-              let name = self.name else {
-            return nil
-        }
-
+    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
+        self.encodingForParse = false
+        let encoded = try JSONEncoder().encode(self)
+        self.encodingForParse = true
+        return try JSONDecoder().decode(OCKContact.self, from: encoded)
+        /*
         //Create bare Entity and replace contents with Parse contents
         let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(name)
         
@@ -408,7 +419,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         if let effectiveDate = self.effectiveDate{
             contact.effectiveDate = effectiveDate
         }
-        return contact
+        return contact*/
     }
     
     ///Link versions and related classes

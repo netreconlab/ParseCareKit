@@ -13,12 +13,12 @@ import CareKitStore
 
 public class OutcomeValue: PCKObject {
 
-    public var index:NSNumber?
+    public var index:Int?
     public var kind:String?
     public var units:String?
     
-    private var typeString: String?
-    var type: OCKOutcomeValueType? {
+    //private var typeString: String?
+    var type: OCKOutcomeValueType? /*{
         get {
             guard let type = typeString else {
                 return nil
@@ -26,16 +26,16 @@ public class OutcomeValue: PCKObject {
             return OCKOutcomeValueType(rawValue: type)
         }
         set { typeString = newValue?.rawValue }
-    }
+    }*/
 
     var textValue: String?
     var binaryValue: Data?
     var booleanValue: Bool?
-    var integerValue: Int64?
+    var integerValue: Int?
     var doubleValue: Double?
     var dateValue: Date?
 
-    var value: OCKOutcomeValueUnderlyingType? {
+    var value: OCKOutcomeValueUnderlyingType? /*{
         get {
             guard let valueType = type else {
                 return nil
@@ -89,33 +89,52 @@ public class OutcomeValue: PCKObject {
             default: fatalError("Unexpected type!")
             }
         }
-    }
+    }*/
 
     private func reset() {
         textValue = nil
         binaryValue = nil
-        booleanValue = false
-        integerValue = 0
-        doubleValue = 0
+        booleanValue = nil
+        integerValue = nil
+        doubleValue = nil
         dateValue = nil
         index = nil
-    }
-    
-    public static func className() -> String {
-        return kPCKOutcomeValueClassKey
     }
     
     override init() {
         super.init()
     }
     
-    public convenience init(careKitEntity:OCKOutcomeValue) {
+    public convenience init?(careKitEntity:OCKOutcomeValue) {
         self.init()
-        _ = self.copyCareKit(careKitEntity)
+        do {
+            _ = try self.copyCareKit(careKitEntity)
+        } catch {
+            return nil
+        }
     }
     
     public required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        try super.init(from: decoder)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case index, kind, units, textValue, binaryValue
+        case booleanValue, integerValue, doubleValue, dateValue
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(index, forKey: .index)
+        try container.encode(kind, forKey: .kind)
+        try container.encode(units, forKey: .units)
+        try container.encode(textValue, forKey: .textValue)
+        try container.encode(binaryValue, forKey: .binaryValue)
+        try container.encode(booleanValue, forKey: .booleanValue)
+        try container.encode(integerValue, forKey: .integerValue)
+        try container.encode(doubleValue, forKey: .doubleValue)
+        try container.encode(dateValue, forKey: .dateValue)
     }
     
     open override func copyCommonValues(from other: PCKObject){
@@ -124,7 +143,7 @@ public class OutcomeValue: PCKObject {
         self.index = other.index
         self.kind = other.kind
         self.units = other.units
-        self.typeString = other.typeString
+        self.type = other.type
         self.textValue = other.textValue
         self.binaryValue = other.binaryValue
         self.booleanValue = other.booleanValue
@@ -133,8 +152,12 @@ public class OutcomeValue: PCKObject {
         self.dateValue = other.dateValue
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue) -> OutcomeValue? {
-        
+    open func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
+        let encoded = try JSONEncoder().encode(outcomeValue)
+        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        self.copyCommonValues(from: decoded)
+        return self
+        /*
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
             self.uuid = uuid
         }else{
@@ -170,11 +193,15 @@ public class OutcomeValue: PCKObject {
         self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
         
         
-        return self
+        return self*/
     }
     
-    open func convertToCareKit(fromCloud:Bool=true)->OCKOutcomeValue?{
+    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcomeValue {
         
+        let encoded = try JSONEncoder().encode(self)
+        return try JSONDecoder().decode(OCKOutcomeValue.self, from: encoded)
+        
+        /*
         //If super passes, can safely force unwrap entityId, timeZone
         guard self.canConvertToCareKit() == true,
               let value = self.value else {
@@ -204,7 +231,7 @@ public class OutcomeValue: PCKObject {
         if let timeZone = TimeZone(abbreviation: self.timezone!){
             outcomeValue.timezone = timeZone
         }
-        return outcomeValue
+        return outcomeValue*/
     }
     
     func stamp(_ clock: Int){
