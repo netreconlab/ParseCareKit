@@ -6,6 +6,7 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
+import Foundation
 import ParseSwift
 import CareKitStore
 
@@ -18,17 +19,17 @@ struct KnowledgeVector: ParseObject {
     
     var ACL: ParseACL?
     
-    var uuid:String
+    var uuid:String?
 
-    var vector:String
+    var vector:String?
 
     init(uuid: UUID) {
         self.uuid = uuid.uuidString
-        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid)\",\"clock\":0}]}"
+        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!)\",\"clock\":0}]}"
     }
     
     func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
-        guard let data = self.vector.data(using: .utf8) else{
+        guard let data = self.vector?.data(using: .utf8) else{
             print("Error in KnowlegeVector. Couldn't get data as utf8")
             return
         }

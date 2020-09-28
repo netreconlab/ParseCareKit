@@ -6,6 +6,7 @@
 //  Copyright © 2019 Network Reconnaissance Lab. All rights reserved.
 //
 
+import Foundation
 import ParseSwift
 import CareKitStore
 
