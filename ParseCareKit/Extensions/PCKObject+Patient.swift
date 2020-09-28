@@ -1,5 +1,5 @@
 //
-//  PCKObject+Patient.swift
+//  PCKObjectCompatible+Patient.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/28/20.
@@ -10,7 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-extension PCKObject {
+extension PCKObjectCompatible {
     
     static func encodeCareKitToDictionary(_ entity: OCKPatient)->[String:Any]?{
         let jsonDictionary:[String:Any]

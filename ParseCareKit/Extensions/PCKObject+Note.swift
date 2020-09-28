@@ -1,5 +1,5 @@
 //
-//  PCKObject+Note.swift
+//  PCKObjectCompatible+Note.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/28/20.
@@ -10,7 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-extension PCKObject{
+extension PCKObjectCompatible{
     public func decodedCareKitObject(_ author: String?, title: String, content: String)->OCKNote?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{

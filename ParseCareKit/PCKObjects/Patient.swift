@@ -56,8 +56,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
 
         //Check to see if already in the cloud
-        var query = Self.query(kPCKObjectUUIDKey == self.uuid)
-        query.include([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        var query = Self.query(kPCKObjectCompatibleUUIDKey == self.uuid)
+        query.include([kPCKObjectCompatibleNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
            
             switch result {
@@ -87,8 +87,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
         
         //Check to see if this entity is already in the Cloud, but not paired locally
-        var query = Patient.query(containedIn(key: kPCKObjectUUIDKey, array: [self.uuid,previousPatientUUIDString]))
-        query.include([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        var query = Patient.query(containedIn(key: kPCKObjectCompatibleUUIDKey, array: [self.uuid,previousPatientUUIDString]))
+        query.include([kPCKObjectCompatibleNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
@@ -128,9 +128,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectClockKey >= localClock)
-        query.order([.ascending(kPCKObjectClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        var query = Self.query(kPCKObjectCompatibleClockKey >= localClock)
+        query.order([.ascending(kPCKObjectCompatibleClockKey), .ascending(kPCKParseCreatedAtKey)])
+        query.include([kPCKObjectCompatibleNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -146,7 +146,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectCompatibleClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
                 default:
                     print("An unexpected error occured \(error.localizedDescription)")
                 }

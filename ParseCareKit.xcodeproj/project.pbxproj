@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		708D03482521363F00646C70 /* PCKObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D03472521363F00646C70 /* PCKObject.swift */; };
 		709752D4250D270E0020EA70 /* ParseCareKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752D3250D270E0020EA70 /* ParseCareKitTests.swift */; };
 		709752D6250D270E0020EA70 /* ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */; };
 		709752E3250D27300020EA70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E2250D27300020EA70 /* AppDelegate.swift */; };
@@ -33,7 +34,7 @@
 		9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */; };
 		9119D69A245689DA001B7AA3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9119D699245689D9001B7AA3 /* README.md */; };
 		916570D72462DABC008F2997 /* ParseRemoteSynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */; };
-		918F07EE247D66C800C3A205 /* PCKObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObject.swift */; };
+		918F07EE247D66C800C3A205 /* PCKObjectCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectCompatible.swift */; };
 		918F07F0247D66E100C3A205 /* PCKVersionedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */; };
 		918F07F6247FFF7900C3A205 /* PCKObject+CarePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07F5247FFF7900C3A205 /* PCKObject+CarePlan.swift */; };
 		918F07F82480000800C3A205 /* PCKVersionedObject+CarePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */; };
@@ -99,6 +100,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		708D03472521363F00646C70 /* PCKObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObject.swift; sourceTree = "<group>"; };
 		709752D1250D270E0020EA70 /* ParseCareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		709752D3250D270E0020EA70 /* ParseCareKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitTests.swift; sourceTree = "<group>"; };
 		709752D5250D270E0020EA70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,7 +128,7 @@
 		9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitUtility.swift; sourceTree = "<group>"; };
 		9119D699245689D9001B7AA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemoteSynchronizationManager.swift; sourceTree = "<group>"; };
-		918F07ED247D66C800C3A205 /* PCKObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObject.swift; sourceTree = "<group>"; };
+		918F07ED247D66C800C3A205 /* PCKObjectCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObjectCompatible.swift; sourceTree = "<group>"; };
 		918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKVersionedObject.swift; sourceTree = "<group>"; };
 		918F07F5247FFF7900C3A205 /* PCKObject+CarePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+CarePlan.swift"; sourceTree = "<group>"; };
 		918F07F72480000800C3A205 /* PCKVersionedObject+CarePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionedObject+CarePlan.swift"; sourceTree = "<group>"; };
@@ -250,7 +252,8 @@
 				9119D5FF24561A28001B7AA3 /* Outcome.swift */,
 				9119D60024561A28001B7AA3 /* OutcomeValue.swift */,
 				9119D5FB24561A28001B7AA3 /* Patient.swift */,
-				918F07ED247D66C800C3A205 /* PCKObject.swift */,
+				918F07ED247D66C800C3A205 /* PCKObjectCompatible.swift */,
+				708D03472521363F00646C70 /* PCKObject.swift */,
 				918F07EF247D66E100C3A205 /* PCKVersionedObject.swift */,
 				9119D5F924561A28001B7AA3 /* ScheduleElement.swift */,
 				9119D5FA24561A28001B7AA3 /* Task.swift */,
@@ -468,6 +471,7 @@
 				9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */,
 				9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */,
 				918F07FE2480070D00C3A205 /* PCKVersionedObject+Task.swift in Sources */,
+				708D03482521363F00646C70 /* PCKObject.swift in Sources */,
 				918F07FA248006E000C3A205 /* PCKVersionedObject+Contact.swift in Sources */,
 				9119D60324561A28001B7AA3 /* Task.swift in Sources */,
 				9119D60824561A28001B7AA3 /* Outcome.swift in Sources */,
@@ -476,7 +480,7 @@
 				70B326BE251EBE610028B229 /* PCKUser.swift in Sources */,
 				918F080624800BD800C3A205 /* PCKObject+OutcomeValue.swift in Sources */,
 				9119D60624561A28001B7AA3 /* Note.swift in Sources */,
-				918F07EE247D66C800C3A205 /* PCKObject.swift in Sources */,
+				918F07EE247D66C800C3A205 /* PCKObjectCompatible.swift in Sources */,
 				918F080024800B9D00C3A205 /* PCKObject+Contact.swift in Sources */,
 				9119D60924561A28001B7AA3 /* OutcomeValue.swift in Sources */,
 				918F080424800BC600C3A205 /* PCKObject+Outcome.swift in Sources */,
@@ -848,8 +852,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
 			requirement = {
-				branch = geopoint;
-				kind = branch;
+				kind = revision;
+				revision = 996cfb953567f0dce2d26b9a2d83a2cf8bf626dc;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

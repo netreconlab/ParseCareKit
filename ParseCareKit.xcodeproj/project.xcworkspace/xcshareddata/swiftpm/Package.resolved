@@ -23,8 +23,8 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
-          "branch": "geopoint",
-          "revision": "72bf7c433f82f375d751e4a47e0835fa80789560",
+          "branch": null,
+          "revision": "996cfb953567f0dce2d26b9a2d83a2cf8bf626dc",
           "version": null
         }
       }

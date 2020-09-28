@@ -1,5 +1,5 @@
 //
-//  PCKObject+Contact.swift
+//  PCKObjectCompatible+Contact.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/28/20.
@@ -10,7 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-extension PCKObject{
+extension PCKObjectCompatible{
     
     public static func encodeCareKitToDictionary(_ entity: OCKContact)->[String:Any]?{
         let jsonDictionary:[String:Any]

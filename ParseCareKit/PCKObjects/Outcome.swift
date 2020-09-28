@@ -91,7 +91,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         }
         
         //Check to see if already in the cloud
-        let query = Outcome.query(kPCKObjectUUIDKey == self.uuid)
+        let query = Outcome.query(kPCKObjectCompatibleUUIDKey == self.uuid)
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -103,8 +103,8 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                 case .internalServer: //1 - this column hasn't been added.
                     self.save(self, completion: completion)
                 case .objectNotFound: //101 - Query returned no results
-                    var query = Outcome.query(kPCKObjectEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectDeletedDateKey))
-                    query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+                    var query = Outcome.query(kPCKObjectCompatibleEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectCompatibleDeletedDateKey))
+                    query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
                     
                     query.first(callbackQueue: .global(qos: .background)){ result in
                         
@@ -141,9 +141,9 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectClockKey >= localClock)
-        query.order([.ascending(kPCKObjectClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        var query = Self.query(kPCKObjectCompatibleClockKey >= localClock)
+        query.order([.ascending(kPCKObjectCompatibleClockKey), .ascending(kPCKParseCreatedAtKey)])
+        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -159,7 +159,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectCompatibleClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
                 default:
                     print("An unexpected error occured \(error.localizedDescription)")
                 }
@@ -202,15 +202,15 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         }
                 
         //Get latest item from the Cloud to compare against
-        var query = Outcome.query(kPCKObjectUUIDKey == self.uuid)
-        query.include([kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        var query = Outcome.query(kPCKObjectCompatibleUUIDKey == self.uuid)
+        query.include([kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
-            /*
+            
             switch result {
             
             case .success(let foundObject):
                 //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-                foundObject.values.forEach{
+                foundObject.values?.forEach{
                     $0.delete(callbackQueue: .global(qos: .background)){ _ in }
                     $0.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } }
                 }
@@ -227,9 +227,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                     print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
                     completion(false,error)
                 }
-            }*/
-            //(****BAKER: Fix delete and remove the completion below
-            completion(false, ParseCareKitError.cantUnwrapSelf)
+            }
         }
     }
     
@@ -341,7 +339,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         self.first(taskUUID, classType: Task(), relatedObject: self.task, include: true){
             (isNew,task) in
             
-            guard let task = task as? Task else{
+            guard let task = task else{
                 completion(isNew,self)
                 return
             }
@@ -391,10 +389,10 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     }
     
     public static func queryNotDeleted()-> Query<Outcome>{
-        let taskQuery = Task.query(doesNotExist(key: kPCKObjectDeletedDateKey))
+        let taskQuery = Task.query(doesNotExist(key: kPCKObjectCompatibleDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        var query = Outcome.query(doesNotExist(key: kPCKObjectDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
+        var query = Outcome.query(doesNotExist(key: kPCKObjectCompatibleDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
+        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectCompatibleNotesKey])
         return query
     }
    

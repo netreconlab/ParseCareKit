@@ -73,7 +73,7 @@ open class PCKVersionedObject: PCKObject {
         }
     }
 
-    public override init() {
+    override init() {
         super.init()
     }
 
@@ -82,8 +82,8 @@ open class PCKVersionedObject: PCKObject {
     }
 
     open override func copyCommonValues(from other: PCKObject) {
-        super.copyCommonValues(from: other)
         guard let other = other as? Self else{return}
+        super.copyCommonValues(from: other)
         self.effectiveDate = other.effectiveDate
         self.previous = other.previous
         self.previousVersionUUIDString = other.previousVersionUUIDString
@@ -95,7 +95,7 @@ open class PCKVersionedObject: PCKObject {
         let interval = createCurrentDateInterval(for: date)
     
         var query = queryToAndWith
-        query.where(doesNotExist(key: kPCKObjectDeletedDateKey)) //Only consider non deleted keys
+        query.where(doesNotExist(key: kPCKObjectCompatibleDeletedDateKey)) //Only consider non deleted keys
         query.where(kPCKVersionedObjectEffectiveDateKey < interval.end)
         return query
     }
@@ -119,7 +119,7 @@ open class PCKVersionedObject: PCKObject {
                 self.first(versionFixed.previousVersionUUID, classType: versionFixed, relatedObject: versionFixed.previous){
                     (isNew,previousFound) in
                     
-                    guard let previousFound = previousFound as? PCKVersionedObject else{
+                    guard let previousFound = previousFound else{
                         //Previous version not found, stop fixing
                         return
                     }
@@ -156,7 +156,7 @@ open class PCKVersionedObject: PCKObject {
                 self.first(versionFixed.nextVersionUUID, classType: versionFixed, relatedObject: versionFixed.next){
                     (isNew,nextFound) in
                     
-                    guard let nextFound = nextFound as? PCKVersionedObject else{
+                    guard let nextFound = nextFound else{
                         //Next version not found, stop fixing
                         return
                     }
@@ -195,7 +195,7 @@ open class PCKVersionedObject: PCKObject {
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public class func query(for date: Date) -> Query<PCKVersionedObject> {
         var query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-        query.include([kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.include([kPCKObjectCompatibleNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         return query
     }
 
@@ -219,7 +219,7 @@ open class PCKVersionedObject: PCKObject {
         self.first(self.previousVersionUUID, classType: self, relatedObject: self.previous, include: true){
             (isNew,previousObject) in
             
-            guard let previousObject  = previousObject as? PCKVersionedObject else{
+            guard let previousObject  = previousObject else{
                 completion(false,self)
                 return
             }
@@ -232,7 +232,7 @@ open class PCKVersionedObject: PCKObject {
             self.first(self.nextVersionUUID, classType: self, relatedObject: self.next, include: true){
                 (isNew,nextObject) in
                 
-                guard let nextObject  = nextObject as? PCKVersionedObject else{
+                guard let nextObject  = nextObject else{
                     completion(false,self)
                     return
                 }

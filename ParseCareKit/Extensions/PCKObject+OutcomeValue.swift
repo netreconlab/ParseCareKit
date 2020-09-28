@@ -1,5 +1,5 @@
 //
-//  PCKObject+OutcomeValue.swift
+//  PCKObjectCompatible+OutcomeValue.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/28/20.
@@ -10,7 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-extension PCKObject{
+extension PCKObjectCompatible{
 
     public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
         

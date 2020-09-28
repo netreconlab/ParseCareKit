@@ -139,7 +139,7 @@ open class Note: PCKObject {
             completion(nil)
             return
         }
-        let query = Self.query(containedIn(key: kPCKObjectUUIDKey, array: uuids))
+        let query = Self.query(containedIn(key: kPCKObjectCompatibleUUIDKey, array: uuids))
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
