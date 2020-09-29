@@ -108,13 +108,14 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = PCKUser.current else{
+        guard let _ = PCKUser.current,
+              let uuid = self.uuid else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         //Check to see if already in the cloud
-        let query = Task.query(kPCKObjectableUUIDKey == self.uuid)
+        let query = Task.query(kPCKObjectableUUIDKey == uuid)
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {

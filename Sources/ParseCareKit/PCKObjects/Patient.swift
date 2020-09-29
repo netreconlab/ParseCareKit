@@ -65,12 +65,14 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        guard let _ = PCKUser.current else{
+        guard let _ = PCKUser.current,
+              let uuid = self.uuid else{
+            completion(false, ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
 
         //Check to see if already in the cloud
-        var query = Self.query(kPCKObjectableUUIDKey == self.uuid)
+        var query = Self.query(kPCKObjectableUUIDKey == uuid)
         query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
            

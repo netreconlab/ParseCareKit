@@ -97,7 +97,8 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     
     open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
-        guard let _ = PCKUser.current else{
+        guard let _ = PCKUser.current,
+              let uuid = self.uuid else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
@@ -108,7 +109,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         }
         
         //Check to see if already in the cloud
-        let query = Outcome.query(kPCKObjectableUUIDKey == self.uuid)
+        let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -213,13 +214,14 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     
     public func tombstsone(completion: @escaping(Bool,Error?) -> Void){
         
-        guard let _ = PCKUser.current else{
+        guard let _ = PCKUser.current,
+              let uuid = self.uuid else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
                 
         //Get latest item from the Cloud to compare against
-        var query = Outcome.query(kPCKObjectableUUIDKey == self.uuid)
+        var query = Outcome.query(kPCKObjectableUUIDKey == uuid)
         query.include([kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
             
