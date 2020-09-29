@@ -15,11 +15,6 @@ open class Note: PCKObject {
     public var content:String?
     public var title:String?
     public var author:String?
-    
-    public static var className: String {
-        let classType = "\(type(of: self))"
-        return classType.components(separatedBy: ".").first! // strip .Type
-    }
 
     override init() {
         super.init()

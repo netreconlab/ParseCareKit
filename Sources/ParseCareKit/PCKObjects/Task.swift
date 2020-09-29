@@ -59,8 +59,7 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
 
     public static var className: String {
-        let classType = "\(type(of: self))"
-        return classType.components(separatedBy: ".").first! // strip .Type
+        kPCKTaskClassKey
     }
 
     override init () {

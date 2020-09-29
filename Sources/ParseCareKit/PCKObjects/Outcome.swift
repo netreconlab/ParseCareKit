@@ -48,8 +48,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
     }*/
 
     public static var className: String {
-        let classType = "\(type(of: self))"
-        return classType.components(separatedBy: ".").first! // strip .Type
+        kPCKNoteClassKey
     }
 
     override init() {

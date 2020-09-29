@@ -30,8 +30,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
     public var title:String?
 
     public static var className: String {
-        let classType = "\(type(of: self))"
-        return classType.components(separatedBy: ".").first! // strip .Type
+        kPCKCarePlanClassKey
     }
     
     override init() {
