@@ -100,7 +100,12 @@ public class OutcomeValue: PCKObject {
         dateValue = nil
         index = nil
     }
-    
+
+    public static var className: String {
+        let classType = "\(type(of: self))"
+        return classType.components(separatedBy: ".").first! // strip .Type
+    }
+
     override init() {
         super.init()
     }

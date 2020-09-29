@@ -18,6 +18,11 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     public var name: PersonNameComponents?
     public var sex: OCKBiologicalSex?
     
+    public static var className: String {
+        let classType = "\(type(of: self))"
+        return classType.components(separatedBy: ".").first! // strip .Type
+    }
+
     override init () {
         super.init()
     }

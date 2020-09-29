@@ -110,6 +110,11 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }*/
     
+    public static var className: String {
+        let classType = "\(type(of: self))"
+        return classType.components(separatedBy: ".").first! // strip .Type
+    }
+
     public convenience init?(careKitEntity: OCKAnyContact) {
         self.init()
         do {

@@ -57,7 +57,12 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
             carePlanUUID = newValue?.uuid
         }
     }
-    
+
+    public static var className: String {
+        let classType = "\(type(of: self))"
+        return classType.components(separatedBy: ".").first! // strip .Type
+    }
+
     override init () {
         super.init()
     }
