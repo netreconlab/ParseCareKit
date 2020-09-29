@@ -19,13 +19,13 @@ struct KnowledgeVector: ParseObject {
     
     var ACL: ParseACL?
     
-    var uuid:String?
+    var uuid:UUID?
 
     var vector:String?
 
     init(uuid: UUID) {
-        self.uuid = uuid.uuidString
-        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!)\",\"clock\":0}]}"
+        self.uuid = uuid
+        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
     }
     
     func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
@@ -61,7 +61,7 @@ struct KnowledgeVector: ParseObject {
     static func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?, OCKRevisionRecord.KnowledgeVector?, ParseError?)->Void){
         
         //Fetch KnowledgeVector from Cloud
-        let query = KnowledgeVector.query(kPCKKnowledgeVectorPatientTypeUUIDKey == uuid.uuidString)
+        let query = KnowledgeVector.query(kPCKKnowledgeVectorPatientTypeUUIDKey == uuid)
         query.first(callbackQueue: .global(qos: .background)) { result in
             
             switch result {

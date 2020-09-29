@@ -229,8 +229,8 @@ open class PCKVersionedObject: PCKObject, PCKVersionable {
         }
     }
     
-    public func save(_ versionedObject: PCKVersionedObject, completion: @escaping(Bool, Error?) -> Void){
-        switch versionedObject{
+    public func save(completion: @escaping(Bool, Error?) -> Void) {
+        /*switch versionedObject{
         case is CarePlan:
             
             guard let versionedObject = versionedObject as? CarePlan else{
@@ -266,47 +266,47 @@ open class PCKVersionedObject: PCKObject, PCKVersionable {
 
         default:
             completion(false,ParseCareKitError.classTypeNotAnEligibleType)
-        }
-        
-        versionedObject.save(callbackQueue: .global(qos: .background)){ results in
+        }*/
+        _ = self.stampRelationalEntities()
+        self.save(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
             case .success(_):
-                print("Successfully added \(versionedObject) to Cloud")
+                print("Successfully added \(self) to Cloud")
                 
-                versionedObject.linkRelated{
+                self.linkRelated{
                     (linked,_) in
                     
                     if linked{
-                        versionedObject.save(callbackQueue: .global(qos: .background)) { _ in }
+                        self.save(callbackQueue: .global(qos: .background)) { _ in }
                     }
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
-                    if versionedObject.previousVersion != nil {
-                        if versionedObject.previousVersion!.nextVersion == nil{
-                            versionedObject.previousVersion!.nextVersion = versionedObject
-                            versionedObject.previousVersion!.save(callbackQueue: .global(qos: .background)){ results in
+                    if self.previousVersion != nil {
+                        if self.previousVersion!.nextVersion == nil{
+                            self.previousVersion!.nextVersion = self
+                            self.previousVersion!.save(callbackQueue: .global(qos: .background)){ results in
                                 switch results {
                                     
                                 case .success(_):
-                                    versionedObject.fixVersionLinkedList(versionedObject.previousVersion!, backwards: true)
+                                    self.fixVersionLinkedList(self.previousVersion!, backwards: true)
                                 case .failure(let error):
-                                    print("Couldn't save(). Error: \(error). Object: \(versionedObject)")
+                                    print("Couldn't save(). Error: \(error). Object: \(self)")
                                 }
                             }
                         }
                     }
                     
-                    if versionedObject.nextVersion != nil {
-                        if versionedObject.nextVersion!.previousVersion == nil{
-                            versionedObject.nextVersion!.previousVersion = versionedObject
-                            versionedObject.nextVersion!.save(callbackQueue: .global(qos: .background)){ results in
+                    if self.nextVersion != nil {
+                        if self.nextVersion!.previousVersion == nil{
+                            self.nextVersion!.previousVersion = self
+                            self.nextVersion!.save(callbackQueue: .global(qos: .background)){ results in
                                 switch results {
                                 
                                 case .success(_):
-                                    versionedObject.fixVersionLinkedList(versionedObject.nextVersion!, backwards: false)
+                                    self.fixVersionLinkedList(self.nextVersion!, backwards: false)
                                 case .failure(let error):
-                                    print("Couldn't save(). Error: \(error). Object: \(versionedObject)")
+                                    print("Couldn't save(). Error: \(error). Object: \(self)")
                                 }
                             }
                         }

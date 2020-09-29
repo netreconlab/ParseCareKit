@@ -97,7 +97,7 @@ open class CarePlan: PCKVersionedObject, PCKRemoteSynchronized {
 
                 switch error.code {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
-                        self.save(self, completion: completion)
+                        self.save(completion: completion)
                 default:
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
