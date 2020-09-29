@@ -53,7 +53,7 @@ extension ParseCareKitError: LocalizedError {
     }
 }
 
-public enum PCKStoreClass<T> where T: PCKRemoteSynchronized {
+public enum PCKStoreClass {
     case carePlan
     case contact
     case outcome
@@ -79,13 +79,13 @@ public enum PCKStoreClass<T> where T: PCKRemoteSynchronized {
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
     
-    func getRemoteConcrete() -> [PCKStoreClass: T]?{
-        var remoteClasses = [PCKStoreClass: T]()
+    func getRemoteConcrete() -> [PCKStoreClass: PCKRemoteSynchronized]? {
+        var remoteClasses = [PCKStoreClass: PCKRemoteSynchronized]()
         
         guard let regularClasses = getConcrete() else{return nil}
         
         for (key,value) in regularClasses{
-            guard let remoteClass = value as? T else{
+            guard let remoteClass = value as? PCKRemoteSynchronized else{
                 continue
             }
             remoteClasses[key] = remoteClass
@@ -99,7 +99,7 @@ public enum PCKStoreClass<T> where T: PCKRemoteSynchronized {
         return remoteClasses
     }
     
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: T]) -> [PCKStoreClass: T]?{
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKRemoteSynchronized]) -> [PCKStoreClass: PCKRemoteSynchronized]?{
         guard var updatedClasses = getRemoteConcrete() else{
             return nil
         }

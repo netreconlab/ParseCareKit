@@ -24,7 +24,7 @@ public protocol PCKSynchronized {
 /**
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
-public protocol PCKRemoteSynchronized: PCKSynchronized, ParseObject {
+public protocol PCKRemoteSynchronized: PCKSynchronized {
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
 }
