@@ -10,7 +10,7 @@ import Foundation
 import CareKitStore
 import ParseSwift
 
-typealias SynchronizedType = PCKRemoteSynchronizable
+typealias SynchronizedType = PCKSynchronizable
 
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
@@ -37,24 +37,24 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     }
     public var automaticallySynchronizes: Bool
     public internal(set) var uuid:UUID!
-    public internal(set) var customClassesToSynchronize:[String: PCKRemoteSynchronizable]?
-    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronizable]!
+    public internal(set) var customClassesToSynchronize:[String: PCKSynchronizable]?
+    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
     
     public init(uuid:UUID, auto: Bool) {
         self.uuid = uuid
         self.automaticallySynchronizes = auto
-        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
+        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronizable]) {
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]) {
         self.init(uuid: uuid, auto: auto)
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronizable]?, customClasses: [String:PCKRemoteSynchronizable]){
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]?, customClasses: [String:PCKSynchronizable]){
         self.init(uuid: uuid, auto: auto)
         if replacePCKStoreClasses != nil{
             self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
@@ -100,13 +100,12 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         let classNames = PCKStoreClass.patient.orderedArray()
         
         guard concreteClassesAlreadyPulled < classNames.count,
-            let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]],
-            let newConcreteClass = concreteClass.new() as? PCKRemoteSynchronizable else{
+            let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else{
                 print("Finished pulling default revision classes")
                 completion(previousError)
                 return
         }
-        
+        let newConcreteClass = concreteClass.new()
         var currentError = previousError
         newConcreteClass.pullRevisions(localClock, cloudVector: cloudVector){
             customRevision in
@@ -128,12 +127,12 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             let classNames = customClassesToSynchronize.keys.sorted()
             
             guard customClassesAlreadyPulled < classNames.count,
-                let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]],
-                let newCustomClass = customClass.new() as? PCKRemoteSynchronizable else{
+                let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else{
                     print("Finished pulling custom revision classes")
                     completion(previousError)
                     return
             }
+            let newCustomClass = customClass.new()
             var currentError = previousError
             newCustomClass.pullRevisions(localClock, cloudVector: cloudVector){
                 customRevision in
@@ -214,7 +213,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }else{
                         
-                        guard let parse = self.pckStoreClassesToSynchronize[.patient]?.new(with: entity) as? PCKRemoteSynchronizable else{
+                        guard let parse = self.pckStoreClassesToSynchronize[.patient]?.new(with: entity) else{
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -239,7 +238,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }else{
                         
-                        guard let parse = self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) as? PCKRemoteSynchronizable else {
+                        guard let parse = self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -262,7 +261,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) as? PCKRemoteSynchronizable else {
+                        guard let parse = self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -285,7 +284,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.task]?.new(with: entity) as? PCKRemoteSynchronizable else {
+                        guard let parse = self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -311,7 +310,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) as? PCKRemoteSynchronizable else{
+                        guard let parse = self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else{
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -335,7 +334,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
         
-        guard let parse = customClass.new(with: entity) as? PCKRemoteSynchronizable else{
+        guard let parse = customClass.new(with: entity) else{
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }

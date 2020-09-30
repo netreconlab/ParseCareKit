@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 
 
-public final class Patient: PCKVersionable, PCKRemoteSynchronizable {
+public final class Patient: PCKVersionable, PCKSynchronizable {
     public internal(set) var nextVersion: Patient? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
@@ -105,23 +105,19 @@ public final class Patient: PCKVersionable, PCKRemoteSynchronizable {
         }
     }
     
-    /*
-    public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-    }
-    
     enum CodingKeys: String, CodingKey {
         case alergies, birthday, name, sex
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(alergies, forKey: .alergies)
         try container.encode(birthday, forKey: .birthday)
         try container.encode(name, forKey: .name)
         try container.encode(sex, forKey: .sex)
-    }*/
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
+    }
     
     public func new() -> PCKSynchronizable {
         return Patient()

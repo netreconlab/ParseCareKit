@@ -11,16 +11,8 @@ import ParseSwift
 import CareKitStore
 
 
-public final class Task: PCKVersionable, PCKRemoteSynchronizable {
-    /*var previousVersionUUID: UUID?
-    
-    var previousVersion: Task?
-    
-    var nextVersionUUID: UUID?
-    
-    var nextVersion: Task?
-    */
-    
+public final class Task: PCKVersionable, PCKSynchronizable {
+
     public internal(set) var nextVersion: Task? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
@@ -107,24 +99,6 @@ public final class Task: PCKVersionable, PCKRemoteSynchronizable {
             }
         }
     }
-    /*
-    public var carePlanUUID:UUID? {
-        get {
-            if carePlan?.uuid != nil{
-                return UUID(uuidString: carePlan!.uuid!)
-            }else if carePlanUUIDString != nil {
-                return UUID(uuidString: carePlanUUIDString!)
-            }else{
-                return nil
-            }
-        }
-        set{
-            carePlanUUIDString = newValue?.uuidString
-            if newValue?.uuidString != carePlan?.uuid{
-                carePlan = nil
-            }
-        }
-    }*/
     
     public var currentCarePlan: CarePlan?{
         get{
@@ -152,17 +126,12 @@ public final class Task: PCKVersionable, PCKRemoteSynchronizable {
             return nil
         }
     }
-    /*
-    public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-    }
-    
+
     enum CodingKeys: String, CodingKey {
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, elements
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
             try container.encode(carePlan, forKey: .carePlan)
@@ -172,7 +141,9 @@ public final class Task: PCKVersionable, PCKRemoteSynchronizable {
         try container.encode(impactsAdherence, forKey: .impactsAdherence)
         try container.encode(instructions, forKey: .instructions)
         try container.encode(elements, forKey: .elements)
-    }*/
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
+    }
 
     public func new() -> PCKSynchronizable {
         return Task()

@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 
 
-public final class Contact: PCKVersionable, PCKRemoteSynchronizable {
+public final class Contact: PCKVersionable, PCKSynchronizable {
     public internal(set) var nextVersion: Contact? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
@@ -199,14 +199,13 @@ public final class Contact: PCKVersionable, PCKRemoteSynchronizable {
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-
+*/
     enum CodingKeys: String, CodingKey {
         case carePlan, title, carePlanUUID, address, category, name, organization, role
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         if encodingForParse {
@@ -224,7 +223,9 @@ public final class Contact: PCKVersionable, PCKRemoteSynchronizable {
         try container.encode(messagingNumbers, forKey: .messagingNumbers)
         try container.encode(phoneNumbers, forKey: .phoneNumbers)
         try container.encode(otherContactInfo, forKey: .otherContactInfo)
-    }*/
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
+    }
     
     public func new() -> PCKSynchronizable {
         return Contact()

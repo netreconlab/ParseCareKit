@@ -226,3 +226,31 @@ extension PCKObjectable {
     }
 }
 
+//Encodable
+extension PCKObjectable {
+    
+    public func encodeObjectable(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PCKCodingKeys.self)
+        
+        if encodingForParse {
+            try container.encode(entityId, forKey: .entityId)
+        } else {
+            try container.encode(entityId, forKey: .id)
+        }
+        try container.encode(entityId, forKey: .entityId)
+        try container.encode(uuid, forKey: .uuid)
+        try container.encode(schemaVersion, forKey: .schemaVersion)
+        try container.encode(createdDate, forKey: .createdDate)
+        try container.encode(updatedDate, forKey: .updatedDate)
+        try container.encode(deletedDate, forKey: .deletedDate)
+        try container.encode(timezone, forKey: .timezone)
+        try container.encode(userInfo, forKey: .userInfo)
+        try container.encode(groupIdentifier, forKey: .groupIdentifier)
+        try container.encode(tags, forKey: .tags)
+        try container.encode(source, forKey: .source)
+        try container.encode(asset, forKey: .asset)
+        try container.encode(remoteID, forKey: .remoteID)
+        try container.encode(className, forKey: .className)
+        try container.encode(ACL, forKey: .ACL)
+    }
+}

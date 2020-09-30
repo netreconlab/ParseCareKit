@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 
 
-public final class CarePlan: PCKVersionable, PCKRemoteSynchronizable {
+public final class CarePlan: PCKVersionable, PCKSynchronizable {
     var effectiveDate: Date?
     
     var uuid: UUID?
@@ -117,26 +117,6 @@ public final class CarePlan: PCKVersionable, PCKRemoteSynchronizable {
         }
     }
     
-    /*
-     From PCKVersnionedObject Class
-     enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
-         case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
-     }
-     
-     public override func encode(to encoder: Encoder) throws {
-         try super.encode(to: encoder)
-         var container = encoder.container(keyedBy: CodingKeys.self)
-         
-         if encodingForParse {
-             try container.encode(nextVersion, forKey: .nextVersion)
-             try container.encode(previousVersion, forKey: .previousVersion)
-         }
-         try container.encode(previousVersionUUID, forKey: .previousVersionUUID)
-         try container.encode(nextVersionUUID, forKey: .nextVersionUUID)
-         try container.encode(effectiveDate, forKey: .effectiveDate)
-     }
-     */
-    
     enum CodingKeys: String, CodingKey {
         case title, patient, patientUUID
     }
@@ -148,6 +128,8 @@ public final class CarePlan: PCKVersionable, PCKRemoteSynchronizable {
         }
         try container.encode(title, forKey: .title)
         try container.encode(patientUUID, forKey: .patientUUID)
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
     }
     
     public func new() -> PCKSynchronizable {

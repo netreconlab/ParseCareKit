@@ -37,7 +37,7 @@ public class ScheduleElement: ParseObject {
             return nil
         }
     }
-    
+    /*
     enum CodingKeys: String, CodingKey {
         case elements, end, interval, start, text, targetValues, logicalClock, duration
     }
@@ -52,7 +52,7 @@ public class ScheduleElement: ParseObject {
         try container.encode(targetValues, forKey: .targetValues)
         try container.encode(duration, forKey: .duration)
         try container.encode(logicalClock, forKey: .logicalClock)
-    }
+    }*/
     
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

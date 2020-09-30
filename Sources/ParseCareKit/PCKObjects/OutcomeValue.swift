@@ -57,7 +57,7 @@ public class OutcomeValue: PCKObjectable {
     public var index:Int?
     public var kind:String?
     public var units:String?
-    
+
     //private var typeString: String?
     var type: OCKOutcomeValueType? /*{
         get {
@@ -76,7 +76,7 @@ public class OutcomeValue: PCKObjectable {
     var doubleValue: Double?
     var dateValue: Date?
 
-    var value: OCKOutcomeValueUnderlyingType? /*{
+    var valueType: OCKOutcomeValueType? /*{
         get {
             guard let valueType = type else {
                 return nil
@@ -154,7 +154,7 @@ public class OutcomeValue: PCKObjectable {
             return nil
         }
     }
-    
+    /*
     public required init(from decoder: Decoder) throws {
         return
     }
@@ -176,7 +176,7 @@ public class OutcomeValue: PCKObjectable {
         try container.encode(integerValue, forKey: .integerValue)
         try container.encode(doubleValue, forKey: .doubleValue)
         try container.encode(dateValue, forKey: .dateValue)
-    }
+    }*/
     
     public static func copyValues(from other: OutcomeValue, to here: OutcomeValue) throws -> Self {
         var here = here
@@ -191,7 +191,7 @@ public class OutcomeValue: PCKObjectable {
         here.integerValue = other.integerValue
         here.doubleValue = other.doubleValue
         here.dateValue = other.dateValue
-        
+       
         guard let copied = here as? Self else {
             throw ParseCareKitError.cantCastToNeededClassType
         }

@@ -10,6 +10,13 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
+public enum PCKCodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+    case entityId, id
+    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, className, ACL
+    case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
+}
+
+
 enum ParseCareKitError: Error {
     case userNotLoggedIn
     case relatedEntityNotInCloud
@@ -78,14 +85,14 @@ public enum PCKStoreClass {
     func orderedArray() -> [PCKStoreClass]{
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
-    
-    func getRemoteConcrete() -> [PCKStoreClass: PCKRemoteSynchronizable]? {
-        var remoteClasses = [PCKStoreClass: PCKRemoteSynchronizable]()
+    /*
+    func getRemoteConcrete() -> [PCKStoreClass: PCKSynchronizable]? {
+        var remoteClasses = [PCKStoreClass: PCKSynchronizable]()
         
         guard let regularClasses = getConcrete() else{return nil}
         
         for (key,value) in regularClasses{
-            guard let remoteClass = value as? PCKRemoteSynchronizable else{
+            guard let remoteClass = value as? PCKSynchronizable else{
                 continue
             }
             remoteClasses[key] = remoteClass
@@ -97,10 +104,10 @@ public enum PCKStoreClass {
         }
         
         return remoteClasses
-    }
+    }*/
     
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKRemoteSynchronizable]) -> [PCKStoreClass: PCKRemoteSynchronizable]?{
-        guard var updatedClasses = getRemoteConcrete() else{
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) -> [PCKStoreClass: PCKSynchronizable]?{
+        guard var updatedClasses = getConcrete() else{
             return nil
         }
         for (key,value) in newClasses{

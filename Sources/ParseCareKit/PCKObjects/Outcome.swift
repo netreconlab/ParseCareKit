@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 
 
-public class Outcome: PCKObjectable, PCKRemoteSynchronizable {
+public class Outcome: PCKObjectable, PCKSynchronizable {
     var uuid: UUID?
     
     var entityId: String?
@@ -103,13 +103,12 @@ public class Outcome: PCKObjectable, PCKRemoteSynchronizable {
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
-    
+    */
     enum CodingKeys: String, CodingKey {
         case task, taskUUID, taskOccurrenceIndex, values, date
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
             try container.encode(task, forKey: .task)
@@ -118,7 +117,9 @@ public class Outcome: PCKObjectable, PCKRemoteSynchronizable {
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encode(values, forKey: .values)
         try container.encode(date, forKey: .date)
-    }*/
+        try encodeObjectable(to: encoder)
+        encodingForParse = true
+    }
     
     public func new() -> PCKSynchronizable {
         return Outcome()

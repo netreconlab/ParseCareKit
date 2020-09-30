@@ -276,7 +276,7 @@ class CancerPatient: Patient{
 Then you need to pass your custom class when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
 ```swift
-let updatedConcreteClasses: [PCKStoreClass: PCKRemoteSynchronizable] = [
+let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
     .patient: CancerPatient()
 ]
 
