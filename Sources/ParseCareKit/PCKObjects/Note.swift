@@ -11,37 +11,38 @@ import ParseSwift
 import CareKitStore
 
 open class Note: PCKObjectable {
+    
+    public internal(set) var uuid: UUID?
+    
+    public internal(set) var entityId: String?
+    
+    public internal(set) var logicalClock: Int?
+    
+    public internal(set) var schemaVersion: OCKSemanticVersion?
+    
+    public internal(set) var createdDate: Date?
+    
+    public internal(set) var updatedDate: Date?
+    
+    public internal(set) var deletedDate: Date?
+    
+    public var timezone: TimeZone?
+    
+    public var userInfo: [String : String]?
+    
+    public var groupIdentifier: String?
+    
+    public var tags: [String]?
+    
+    public var source: String?
+    
+    public var asset: String?
+    
+    public var notes: [Note]?
+    
+    public var remoteID: String?
+    
     var encodingForParse: Bool = true
-    
-    var uuid: UUID?
-    
-    var entityId: String?
-    
-    var logicalClock: Int?
-    
-    var schemaVersion: OCKSemanticVersion?
-    
-    var createdDate: Date?
-    
-    var updatedDate: Date?
-    
-    var deletedDate: Date?
-    
-    var timezone: TimeZone?
-    
-    var userInfo: [String : String]?
-    
-    var groupIdentifier: String?
-    
-    var tags: [String]?
-    
-    var source: String?
-    
-    var asset: String?
-    
-    var notes: [Note]?
-    
-    var remoteID: String?
     
     public var objectId: String?
     
@@ -70,7 +71,7 @@ open class Note: PCKObjectable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case content, title, author
     }
     /*

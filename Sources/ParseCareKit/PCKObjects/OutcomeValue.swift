@@ -13,37 +13,37 @@ import CareKitStore
 
 public class OutcomeValue: PCKObjectable {
     
-    var uuid: UUID?
+    public internal(set) var uuid: UUID?
     
-    var entityId: String?
+    public internal(set) var entityId: String?
     
-    var logicalClock: Int?
+    public internal(set) var logicalClock: Int?
     
-    var schemaVersion: OCKSemanticVersion?
+    public internal(set) var schemaVersion: OCKSemanticVersion?
     
-    var createdDate: Date?
+    public internal(set) var createdDate: Date?
     
-    var updatedDate: Date?
+    public internal(set) var updatedDate: Date?
     
-    var deletedDate: Date?
+    public internal(set) var deletedDate: Date?
     
-    var timezone: TimeZone?
+    public var timezone: TimeZone?
     
-    var userInfo: [String : String]?
+    public var userInfo: [String : String]?
     
-    var groupIdentifier: String?
+    public var groupIdentifier: String?
     
-    var tags: [String]?
+    public var tags: [String]?
     
-    var source: String?
+    public var source: String?
     
-    var asset: String?
+    public var asset: String?
     
-    var notes: [Note]?
+    public var notes: [Note]?
     
-    var remoteID: String?
+    public var remoteID: String?
     
-    var encodingForParse: Bool = false
+    var encodingForParse: Bool = true
     
     public var objectId: String?
     
@@ -57,7 +57,7 @@ public class OutcomeValue: PCKObjectable {
     public var index:Int?
     public var kind:String?
     public var units:String?
-
+    public var value: AnyCodable?
     //private var typeString: String?
     var type: OCKOutcomeValueType? /*{
         get {
@@ -68,7 +68,7 @@ public class OutcomeValue: PCKObjectable {
         }
         set { typeString = newValue?.rawValue }
     }*/
-
+/*
     var textValue: String?
     var binaryValue: Data?
     var booleanValue: Bool?
@@ -140,7 +140,7 @@ public class OutcomeValue: PCKObjectable {
         doubleValue = nil
         dateValue = nil
         index = nil
-    }
+    }*/
 
     init() {
         //super.init()
@@ -154,6 +154,12 @@ public class OutcomeValue: PCKObjectable {
             return nil
         }
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case index, kind, units, value, type
+    }
+
     /*
     public required init(from decoder: Decoder) throws {
         return
@@ -185,12 +191,12 @@ public class OutcomeValue: PCKObjectable {
         here.kind = other.kind
         here.units = other.units
         here.type = other.type
-        here.textValue = other.textValue
+        /*here.textValue = other.textValue
         here.binaryValue = other.binaryValue
         here.booleanValue = other.booleanValue
         here.integerValue = other.integerValue
         here.doubleValue = other.doubleValue
-        here.dateValue = other.dateValue
+        here.dateValue = other.dateValue*/
        
         guard let copied = here as? Self else {
             throw ParseCareKitError.cantCastToNeededClassType

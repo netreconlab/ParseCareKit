@@ -12,7 +12,7 @@ import CareKitStore
 
 public enum PCKCodingKeys: String, CodingKey { // swiftlint:disable:this nesting
     case entityId, id
-    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, className, ACL
+    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock, className, ACL
     case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
 }
 

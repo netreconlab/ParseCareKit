@@ -12,37 +12,39 @@ import CareKitStore
 
 
 public final class CarePlan: PCKVersionable, PCKSynchronizable {
-    var effectiveDate: Date?
+    public var effectiveDate: Date?
     
-    var uuid: UUID?
+    public internal(set) var uuid: UUID?
     
-    var entityId: String?
+    public internal(set) var entityId: String?
     
-    var logicalClock: Int?
+    public internal(set) var logicalClock: Int?
     
-    var schemaVersion: OCKSemanticVersion?
+    public internal(set) var schemaVersion: OCKSemanticVersion?
     
-    var createdDate: Date?
+    public internal(set) var createdDate: Date?
     
-    var updatedDate: Date?
+    public internal(set) var updatedDate: Date?
     
-    var deletedDate: Date?
+    public internal(set) var deletedDate: Date?
     
-    var timezone: TimeZone?
+    public var timezone: TimeZone?
     
-    var userInfo: [String : String]?
+    public var userInfo: [String : String]?
     
-    var groupIdentifier: String?
+    public var groupIdentifier: String?
     
-    var tags: [String]?
+    public var tags: [String]?
     
-    var source: String?
+    public var source: String?
     
-    var asset: String?
+    public var asset: String?
     
-    var notes: [Note]?
+    public var notes: [Note]?
     
-    var remoteID: String?
+    public var remoteID: String?
+    
+    var encodingForParse: Bool = true
     
     public var objectId: String?
     
@@ -51,8 +53,6 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public var updatedAt: Date?
     
     public var ACL: ParseACL?
-    
-    var encodingForParse: Bool = true
     
 
     public internal(set) var nextVersion: CarePlan? {

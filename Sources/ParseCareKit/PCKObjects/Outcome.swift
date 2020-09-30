@@ -12,35 +12,36 @@ import CareKitStore
 
 
 public class Outcome: PCKObjectable, PCKSynchronizable {
-    var uuid: UUID?
     
-    var entityId: String?
+    public internal(set) var uuid: UUID?
     
-    var logicalClock: Int?
+    public internal(set) var entityId: String?
     
-    var schemaVersion: OCKSemanticVersion?
+    public internal(set) var logicalClock: Int?
     
-    var createdDate: Date?
+    public internal(set) var schemaVersion: OCKSemanticVersion?
     
-    var updatedDate: Date?
+    public internal(set) var createdDate: Date?
     
-    var deletedDate: Date?
+    public internal(set) var updatedDate: Date?
     
-    var timezone: TimeZone?
+    public internal(set) var deletedDate: Date?
     
-    var userInfo: [String : String]?
+    public var timezone: TimeZone?
     
-    var groupIdentifier: String?
+    public var userInfo: [String : String]?
     
-    var tags: [String]?
+    public var groupIdentifier: String?
     
-    var source: String?
+    public var tags: [String]?
     
-    var asset: String?
+    public var source: String?
     
-    var notes: [Note]?
+    public var asset: String?
     
-    var remoteID: String?
+    public var notes: [Note]?
+    
+    public var remoteID: String?
     
     var encodingForParse: Bool = true
     
@@ -105,18 +106,26 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
     */
     enum CodingKeys: String, CodingKey {
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, date
     }
+    /*
+    enum CodingKeys: String, CodingKey {
+        case task, taskUUID, taskOccurrenceIndex, values, date
+    }*/
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
             try container.encode(task, forKey: .task)
+            try container.encode(date, forKey: .date)
         }
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
+        //var nestedContainer = container.nestedContainer(keyedBy: OutcomeValue.CodingKeys.self, forKey: .values)
+        //try values?.encode(to: nestedContainer.
         try container.encode(values, forKey: .values)
-        try container.encode(date, forKey: .date)
+        
         try encodeObjectable(to: encoder)
         encodingForParse = true
     }
@@ -367,17 +376,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
-        /*
-        guard self.canConvertToCareKit() == true,
-            let _ = self.taskUUID,
-            let taskOccurrenceIndex = self.taskOccurrenceIndex,
-            let values = self.values else{
-            print("Error in \(className).convertToCareKit(). Must contain task with a uuid in \(self)")
-            return nil
-        }*/
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
-        self.encodingForParse = true
         return try JSONDecoder().decode(OCKOutcome.self, from: encoded)
         
         /*

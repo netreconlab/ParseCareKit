@@ -238,10 +238,14 @@ extension PCKObjectable {
         
         if encodingForParse {
             try container.encode(entityId, forKey: .entityId)
+            try container.encode(className, forKey: .className)
+            try container.encode(ACL, forKey: .ACL)
+            try container.encode(logicalClock, forKey: .logicalClock)
         } else {
-            try container.encode(entityId, forKey: .id)
+            if !(self is Outcome) {
+                try container.encode(entityId, forKey: .id)
+            }
         }
-        try container.encode(entityId, forKey: .entityId)
         try container.encode(uuid, forKey: .uuid)
         try container.encode(schemaVersion, forKey: .schemaVersion)
         try container.encode(createdDate, forKey: .createdDate)
@@ -255,7 +259,5 @@ extension PCKObjectable {
         try container.encode(asset, forKey: .asset)
         try container.encode(remoteID, forKey: .remoteID)
         try container.encode(notes, forKey: .notes)
-        try container.encode(className, forKey: .className)
-        try container.encode(ACL, forKey: .ACL)
     }
 }
