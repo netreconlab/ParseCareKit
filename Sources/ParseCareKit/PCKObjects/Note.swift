@@ -71,7 +71,7 @@ open class Note: PCKObjectable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case content, title, author
     }
     /*

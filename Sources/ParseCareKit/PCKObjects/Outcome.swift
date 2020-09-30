@@ -123,7 +123,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         //var nestedContainer = container.nestedContainer(keyedBy: OutcomeValue.CodingKeys.self, forKey: .values)
-        //try values?.encode(to: nestedContainer.
+        //try values?.encode(to: nestedContainer.superEncoder())
         try container.encode(values, forKey: .values)
         
         try encodeObjectable(to: encoder)

@@ -21,7 +21,6 @@ public class ScheduleElement: ParseObject {
     
 
     //1 to 1 between Parse and CareStore
-    public var elements:[ScheduleElement]?
     public var end:Date?
     public var interval:DateComponents?
     public var start:Date?
@@ -30,6 +29,9 @@ public class ScheduleElement: ParseObject {
     public var logicalClock:Int?
     public var duration: OCKScheduleElement.Duration?
 
+    init() {
+        
+    }
     public init?(careKitEntity:OCKScheduleElement) {
         do {
             _ = try Self.copyCareKit(careKitEntity)
@@ -37,11 +39,11 @@ public class ScheduleElement: ParseObject {
             return nil
         }
     }
-    /*
-    enum CodingKeys: String, CodingKey {
-        case elements, end, interval, start, text, targetValues, logicalClock, duration
-    }
     
+    enum CodingKeys: String, CodingKey {
+        case end, interval, start, text, targetValues, logicalClock, duration
+    }
+    /*
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(elements, forKey: .elements)
@@ -53,10 +55,9 @@ public class ScheduleElement: ParseObject {
         try container.encode(duration, forKey: .duration)
         try container.encode(logicalClock, forKey: .logicalClock)
     }*/
-    
+    /*
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        elements = try container.decode([ScheduleElement].self, forKey: .elements)
         end = try container.decode(Date.self, forKey: .end)
         interval = try container.decode(DateComponents.self, forKey: .interval)
         start = try container.decode(Date.self, forKey: .start)
@@ -64,7 +65,7 @@ public class ScheduleElement: ParseObject {
         targetValues = try container.decode([OutcomeValue].self, forKey: .targetValues)
         duration = try container.decode(OCKScheduleElement.Duration.self, forKey: .duration)
         logicalClock = try container.decode(Int.self, forKey: .logicalClock)
-    }
+    }*/
     
     class func copyCareKit(_ scheduleElement: OCKScheduleElement) throws -> ScheduleElement {
         let encoded = try JSONEncoder().encode(scheduleElement)
@@ -109,8 +110,5 @@ public class ScheduleElement: ParseObject {
     
     func stamp(_ clock: Int){
         self.logicalClock = clock
-        self.elements?.forEach{
-            $0.logicalClock = self.logicalClock
-        }
     }
 }

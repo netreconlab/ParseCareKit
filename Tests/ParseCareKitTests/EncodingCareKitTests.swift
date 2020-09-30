@@ -343,8 +343,25 @@ class ParseCareKitTests: XCTestCase {
     }
 
     func testOutcome() throws {
-        var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: .init())
+        var careKitValue = OCKOutcomeValue(10)
+        careKitValue.kind = "whale"
+        careKitValue.units = "m/s"
+        careKitValue.index = 0
+        careKitValue.uuid = UUID()
+        careKitValue.createdDate = Date().addingTimeInterval(-200)
+        careKitValue.updatedDate = Date().addingTimeInterval(-99)
+        careKitValue.timezone = .current
+        careKitValue.userInfo = ["String": "String"]
+        careKitValue.remoteID = "we"
+        careKitValue.groupIdentifier = "mine"
+        careKitValue.tags = ["one", "two"]
+        careKitValue.schemaVersion = .init(majorVersion: 4)
+        careKitValue.source = "yo"
+        careKitValue.asset = "pic"
+        
+        var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [careKitValue])
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
+        careKitValue.notes = [careKitNote]
         
         //Special
         //let test = careKit.
@@ -371,14 +388,14 @@ class ParseCareKitTests: XCTestCase {
             //Special
             XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
             XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
-            /*XCTAssertEqual(parse.values?.count, 1)
             XCTAssertEqual(parse.values?.count, 1)
+            XCTAssertEqual(careKit.values.count, 1)
             guard let value = parse.values?.first?.value?.value as? Int,
                   let careKitValue = careKit.values.first?.value as? Int else {
                 XCTFail("Should have casted")
                 return
             }
-            XCTAssertEqual(value, careKitValue)*/
+            XCTAssertEqual(value, careKitValue)
             
             //Objectable
             XCTAssertEqual(parse.className, "Outcome")
@@ -405,14 +422,14 @@ class ParseCareKitTests: XCTestCase {
             //Special
             XCTAssertEqual(parse2.taskUUID, careKit.taskUUID)
             XCTAssertEqual(parse2.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
-            /*XCTAssertEqual(parse2.values.count, 1)
             XCTAssertEqual(parse2.values.count, 1)
+            XCTAssertEqual(careKit.values.count, 1)
             guard let value2 = parse2.values.first?.value as? Int,
                   let careKitValue2 = careKit.values.first?.value as? Int else {
                 XCTFail("Should have casted")
                 return
             }
-            XCTAssertEqual(value2, careKitValue2)*/
+            XCTAssertEqual(value2, careKitValue2)
             
             //Objectable
             XCTAssertEqual(parse2.uuid, careKit.uuid)
@@ -435,80 +452,58 @@ class ParseCareKitTests: XCTestCase {
             XCTFail(error.localizedDescription)
         }
     }
-/*
+
     func testScheduleElement() throws {
         var careKit = OCKScheduleElement(start: Date(), end: Date().addingTimeInterval(3000), interval: .init(day: 1))
 
         //Objectable
-        careKit.uuid = UUID()
-        careKit.createdDate = Date().addingTimeInterval(-200)
-        careKit.updatedDate = Date().addingTimeInterval(-99)
-        careKit.timezone = .current
-        careKit.userInfo = ["String": "String"]
-        careKit.remoteID = "we"
-        careKit.groupIdentifier = "mine"
-        careKit.tags = ["one", "two"]
-        careKit.schemaVersion = .init(majorVersion: 4)
-        careKit.source = "yo"
-        careKit.asset = "pic"
-        careKit.notes = [careKit]
+        careKit.targetValues = .init()
+        careKit.text = "we"
+        careKit.duration = .allDay
         
         do {
             //Test CareKit -> Parse
-            let parse = try Note.copyCareKit(careKit)
+            let parse = try ScheduleElement.copyCareKit(careKit)
 
             //Special
-            XCTAssertEqual(parse.content, careKit.content)
-            XCTAssertEqual(parse.title, careKit.title)
-            XCTAssertEqual(parse.author, careKit.author)
+            XCTAssertEqual(parse.text, careKit.text)
+            XCTAssertEqual(parse.duration, careKit.duration)
+            XCTAssertEqual(parse.start, careKit.start)
+            XCTAssertEqual(parse.interval, careKit.interval)
+            XCTAssertEqual(parse.end, careKit.end)
+            /*XCTAssertEqual(parse.targetValues?.count, 1)
+            XCTAssertEqual(parse.targetValues?.count, 1)
+            guard let value = parse.targetValues?.first?.value?.value as? Int,
+                  let careKitValue = careKit.targetValues.first?.value as? Int else {
+                XCTFail("Should have casted")
+                return
+            }
+            XCTAssertEqual(value, careKitValue)*/
             
             //Objectable
-            XCTAssertEqual(parse.className, "Note")
-            XCTAssertEqual(parse.uuid, careKit.uuid)
-            XCTAssertEqual(parse.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse.timezone, careKit.timezone)
-            XCTAssertEqual(parse.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse.source, careKit.source)
-            XCTAssertEqual(parse.asset, careKit.asset)
-            XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse.tags, careKit.tags)
-            XCTAssertEqual(parse.notes?.count, 1)
-            XCTAssertEqual(parse.notes?.first?.author, "myId")
-            XCTAssertEqual(parse.notes?.first?.title, "hello")
-            XCTAssertEqual(parse.notes?.first?.content, "world")
+            XCTAssertEqual(parse.className, "ScheduleElement")
             
             //Test Parse -> CareKit
             let parse2 = try parse.convertToCareKit()
             
-            //Special
-            XCTAssertEqual(parse2.content, careKit.content)
-            XCTAssertEqual(parse2.title, careKit.title)
-            XCTAssertEqual(parse2.author, careKit.author)
-            
-            //Objectable
-            XCTAssertEqual(parse2.uuid, careKit.uuid)
-            XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse2.timezone, careKit.timezone)
-            XCTAssertEqual(parse2.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse2.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse2.source, careKit.source)
-            XCTAssertEqual(parse2.asset, careKit.asset)
-            XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse2.tags, careKit.tags)
-            XCTAssertEqual(parse2.notes?.count, 1)
-            XCTAssertEqual(parse2.notes?.first?.author, "myId")
-            XCTAssertEqual(parse2.notes?.first?.title, "hello")
-            XCTAssertEqual(parse2.notes?.first?.content, "world")
+            XCTAssertEqual(parse2.text, careKit.text)
+            XCTAssertEqual(parse2.duration, careKit.duration)
+            XCTAssertEqual(parse2.start, careKit.start)
+            XCTAssertEqual(parse2.interval, careKit.interval)
+            XCTAssertEqual(parse2.end, careKit.end)
+            /*XCTAssertEqual(parse.targetValues?.count, 1)
+            XCTAssertEqual(parse.targetValues?.count, 1)
+            guard let value = parse.targetValues?.first?.value?.value as? Int,
+                  let careKitValue = careKit.targetValues.first?.value as? Int else {
+                XCTFail("Should have casted")
+                return
+            }
+            XCTAssertEqual(value, careKitValue)*/
         } catch {
             XCTFail(error.localizedDescription)
         }
     }
-*/
+
     func testTask() throws {
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
