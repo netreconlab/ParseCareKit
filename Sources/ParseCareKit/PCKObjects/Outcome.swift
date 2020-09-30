@@ -90,7 +90,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     init() {
         
     }
-
+    
     public convenience init?(careKitEntity: OCKAnyOutcome) {
         self.init()
         do {
@@ -125,14 +125,14 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         return Outcome()
     }
     
-    public func new(with careKitEntity: OCKEntity)->PCKSynchronizable?{
+    public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
         case .outcome(let entity):
-            return Outcome(careKitEntity: entity)
+            return try self.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            return nil
+            throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
     
@@ -319,8 +319,9 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let encoded = try JSONEncoder().encode(outcome)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.entityId = outcome.id
-        return try Self.copyValues(from: decoded, to: self)
+        let copied = try Self.copyValues(from: decoded, to: self)
+        copied.entityId = outcome.id
+        return copied
         /*
         if let uuid = outcome.uuid?.uuidString{
             self.uuid = uuid

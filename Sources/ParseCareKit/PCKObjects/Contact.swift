@@ -231,15 +231,14 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         return Contact()
     }
     
-    public func new(with careKitEntity: OCKEntity)-> PCKSynchronizable?{
+    public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
         case .contact(let entity):
-            return Contact(careKitEntity: entity)
-            
+            return try self.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
-            return nil
+            throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
     
@@ -404,9 +403,9 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         }
         let encoded = try JSONEncoder().encode(contact)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.entityId = contact.id
-        
-        return try Self.copyValues(from: decoded, to: self)
+        let copied = try Self.copyValues(from: decoded, to: self)
+        copied.entityId = contact.id
+        return copied
         /*
         if let uuid = contact.uuid?.uuidString{
             self.uuid = uuid

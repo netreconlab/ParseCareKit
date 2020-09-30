@@ -213,7 +213,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }else{
                         
-                        guard let parse = self.pckStoreClassesToSynchronize[.patient]?.new(with: entity) else{
+                        guard let parse = try? self.pckStoreClassesToSynchronize[.patient]?.new(with: entity) else{
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -238,7 +238,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }else{
                         
-                        guard let parse = self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
+                        guard let parse = try?  self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -261,7 +261,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
+                        guard let parse = try?  self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -284,7 +284,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
+                        guard let parse = try?  self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -310,7 +310,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             }
                         }
                     }else{
-                        guard let parse = self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else{
+                        guard let parse = try?  self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else{
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
@@ -334,7 +334,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
         
-        guard let parse = customClass.new(with: entity) else{
+        guard let parse = try? customClass.new(with: entity) else{
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }

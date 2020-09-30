@@ -18,7 +18,7 @@ public protocol PCKSynchronizable {
     func updateCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func deleteFromCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func new() -> PCKSynchronizable
-    func new(with careKitEntity: OCKEntity) -> PCKSynchronizable?
+    func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
 }
