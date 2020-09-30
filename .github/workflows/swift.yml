@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  CI_XCODE_VER: '/Applications/Xcode_11.7.app/Contents/Developer'
+
 jobs:
   swift-test-ios:
 
@@ -18,14 +21,14 @@ jobs:
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
   
-  swift-test-spm:
+#  swift-test-spm:
     
-    runs-on: macos-latest
+#    runs-on: macos-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Build
+#      run: swift build -v
   
 #  cocoapods:
 #    needs: [swift-test-ios]

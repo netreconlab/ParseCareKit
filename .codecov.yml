@@ -1,6 +1,6 @@
 coverage:
   ignore:
-    - Example/.*
+    - Tests/.*
   status:
     patch: true
     changes: false
