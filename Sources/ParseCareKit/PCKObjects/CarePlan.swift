@@ -111,7 +111,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public convenience init?(careKitEntity: OCKAnyCarePlan) {
         do {
             self.init()
-            _ = try self.copyCareKit(careKitEntity)
+            _ = try Self.copyCareKit(careKitEntity)
         } catch {
             return nil
         }
@@ -139,7 +139,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         switch careKitEntity {
         case .carePlan(let entity):
-            return try self.copyCareKit(entity)
+            return try Self.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -293,7 +293,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         return copied
     }
     
-    public func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
+    public class func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
         
         guard let _ = PCKUser.current,
             let carePlan = carePlanAny as? OCKCarePlan else{
@@ -301,9 +301,8 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
         let encoded = try JSONEncoder().encode(carePlan)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        let copied = try Self.copyValues(from: decoded, to: self)
-        copied.entityId = carePlan.id
-        return copied
+        decoded.entityId = carePlan.id
+        return decoded
         
         /*
         if let uuid = carePlan.uuid?.uuidString{

@@ -380,7 +380,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public class func copyValues(from other: Contact, to here: Contact) throws -> Self {
         var copy = here
-        copy.copyCommonValues(from: other)
+        copy.copyVersionedValues(from: other)
         copy.address = other.address
         copy.category = other.category
         copy.title = other.title

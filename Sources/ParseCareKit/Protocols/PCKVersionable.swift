@@ -32,6 +32,9 @@ extension PCKVersionable {
         self.effectiveDate = other.effectiveDate
         self.previousVersion = other.previousVersion
         self.nextVersion = other.nextVersion
+        //Copy UUID's after
+        self.previousVersionUUID = other.previousVersionUUID
+        self.nextVersionUUID = other.nextVersionUUID
         self.copyCommonValues(from: other)
     }
 

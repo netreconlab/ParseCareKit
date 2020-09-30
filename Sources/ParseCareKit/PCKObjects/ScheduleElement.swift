@@ -32,7 +32,7 @@ public class ScheduleElement: ParseObject {
 
     public init?(careKitEntity:OCKScheduleElement) {
         do {
-            _ = try self.copyCareKit(careKitEntity)
+            _ = try Self.copyCareKit(careKitEntity)
         } catch {
             return nil
         }
@@ -66,7 +66,7 @@ public class ScheduleElement: ParseObject {
         logicalClock = try container.decode(Int.self, forKey: .logicalClock)
     }
     
-    func copyCareKit(_ scheduleElement: OCKScheduleElement) throws -> ScheduleElement {
+    class func copyCareKit(_ scheduleElement: OCKScheduleElement) throws -> ScheduleElement {
         let encoded = try JSONEncoder().encode(scheduleElement)
         return try JSONDecoder().decode(Self.self, from: encoded)
         //self.copyCommonValues(from: decoded)

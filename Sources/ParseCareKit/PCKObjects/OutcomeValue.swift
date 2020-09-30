@@ -149,7 +149,7 @@ public class OutcomeValue: PCKObjectable {
     public convenience init?(careKitEntity:OCKOutcomeValue) {
         self.init()
         do {
-            _ = try self.copyCareKit(careKitEntity)
+            _ = try Self.copyCareKit(careKitEntity)
         } catch {
             return nil
         }
@@ -198,11 +198,11 @@ public class OutcomeValue: PCKObjectable {
         return copied
     }
     
-    open func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
+    open class func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
         let encoded = try JSONEncoder().encode(outcomeValue)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
         
-        return try Self.copyValues(from: decoded, to: self)
+        return decoded
         /*
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
             self.uuid = uuid

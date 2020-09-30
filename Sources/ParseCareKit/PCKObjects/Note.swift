@@ -63,10 +63,15 @@ open class Note: PCKObjectable {
     public convenience init?(careKitEntity: OCKNote) {
         do {
             self.init()
-            _ = try self.copyCareKit(careKitEntity)
+            _ = try Self.copyCareKit(careKitEntity)
         } catch {
             return nil
         }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
+        case content, title, author
     }
     /*
     enum CodingKeys: String, CodingKey {
@@ -93,10 +98,9 @@ open class Note: PCKObjectable {
         return copied
     }
     
-    open func copyCareKit(_ note: OCKNote) throws -> Note {
+    open class func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try JSONEncoder().encode(note)
-        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        return try Self.copyValues(from: decoded, to: self)
+        return try JSONDecoder().decode(Self.self, from: encoded)
         /*
         if let uuid = Note.getUUIDFromCareKitEntity(note){
             self.uuid = uuid
@@ -126,6 +130,7 @@ open class Note: PCKObjectable {
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKNote {
+        encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         return try JSONDecoder().decode(OCKNote.self, from: encoded)
         

@@ -78,7 +78,6 @@ extension PCKObjectable {
     }
     
     mutating public func copyCommonValues(from other: Self) {
-        //guard let other = other as? Self else{return}
         uuid = other.uuid
         entityId = other.entityId
         deletedDate = other.deletedDate
@@ -89,6 +88,11 @@ extension PCKObjectable {
         createdDate = other.createdDate
         notes = other.notes
         logicalClock = other.logicalClock
+        source = other.source
+        asset = other.asset
+        schemaVersion = other.schemaVersion
+        groupIdentifier = other.groupIdentifier
+        tags = other.tags
     }
 
     mutating public func stampRelationalEntities() throws -> Self {
@@ -250,6 +254,7 @@ extension PCKObjectable {
         try container.encode(source, forKey: .source)
         try container.encode(asset, forKey: .asset)
         try container.encode(remoteID, forKey: .remoteID)
+        try container.encode(notes, forKey: .notes)
         try container.encode(className, forKey: .className)
         try container.encode(ACL, forKey: .ACL)
     }

@@ -40,37 +40,37 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    var effectiveDate: Date?
+    public var effectiveDate: Date?
     
-    var uuid: UUID?
+    public internal(set) var uuid: UUID?
     
-    var entityId: String?
+    public internal(set) var entityId: String?
     
-    var logicalClock: Int?
+    public internal(set) var logicalClock: Int?
     
-    var schemaVersion: OCKSemanticVersion?
+    public internal(set) var schemaVersion: OCKSemanticVersion?
     
-    var createdDate: Date?
+    public internal(set) var createdDate: Date?
     
-    var updatedDate: Date?
+    public internal(set) var updatedDate: Date?
     
-    var deletedDate: Date?
+    public internal(set) var deletedDate: Date?
     
-    var timezone: TimeZone?
+    public var timezone: TimeZone?
     
-    var userInfo: [String : String]?
+    public var userInfo: [String : String]?
     
-    var groupIdentifier: String?
+    public var groupIdentifier: String?
     
-    var tags: [String]?
+    public var tags: [String]?
     
-    var source: String?
+    public var source: String?
     
-    var asset: String?
+    public var asset: String?
     
-    var notes: [Note]?
+    public var notes: [Note]?
     
-    var remoteID: String?
+    public var remoteID: String?
     
     var encodingForParse: Bool = true
     
@@ -83,7 +83,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     public var ACL: ParseACL?
     
     
-    public var alergies:[String]?
+    public var allergies:[String]?
     public var birthday:Date?
     public var name: PersonNameComponents?
     public var sex: OCKBiologicalSex?
@@ -99,19 +99,28 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     public convenience init?(careKitEntity: OCKAnyPatient) {
         self.init()
         do {
-            _ = try self.copyCareKit(careKitEntity)
+            _ = try Self.copyCareKit(careKitEntity)
         } catch {
             return nil
         }
     }
+    /*
+    enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+        case entityId, id
+        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID
+        case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
+        case allergies, birthday, name, sex
+    }*/
     
     enum CodingKeys: String, CodingKey {
-        case alergies, birthday, name, sex
+        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
+        case previousVersionUUID, nextVersionUUID, effectiveDate
+        case allergies, birthday, name, sex
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(alergies, forKey: .alergies)
+        try container.encode(allergies, forKey: .allergies)
         try container.encode(birthday, forKey: .birthday)
         try container.encode(name, forKey: .name)
         try container.encode(sex, forKey: .sex)
@@ -127,7 +136,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
         switch careKitEntity {
         case .patient(let entity):
-            return try self.copyCareKit(entity)
+            return try Self.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -271,18 +280,18 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public class func copyValues(from other: Patient, to here: Patient) throws -> Self {
         var here = here
-        here.copyCommonValues(from: other)
+        here.copyVersionedValues(from: other)
         here.name = other.name
         here.birthday = other.birthday
         here.sex = other.sex
-        here.alergies = other.alergies
+        here.allergies = other.allergies
         guard let copied = here as? Self else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         return copied
     }
     
-    public func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
+    public class func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
         
         guard let _ = PCKUser.current,
             let patient = patientAny as? OCKPatient else{
@@ -290,10 +299,9 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
         
         let encoded = try JSONEncoder().encode(patient)
-        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        let copied = try Self.copyValues(from: decoded, to: self)
-        copied.entityId = patient.id
-        return copied
+        let decoded = try JSONDecoder().decode(Patient.self, from: encoded)
+        decoded.entityId = patient.id
+        return decoded
         
         /*
         if let uuid = patient.uuid?.uuidString {
@@ -326,10 +334,9 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         return self*/
     }
     
-    public func convertToCareKit(fromCloud:Bool=true) throws ->OCKPatient {
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKPatient {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
-        self.encodingForParse = true
         return try JSONDecoder().decode(OCKPatient.self, from: encoded)
         
         /*guard self.canConvertToCareKit() == true,
