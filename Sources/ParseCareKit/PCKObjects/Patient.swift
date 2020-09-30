@@ -11,7 +11,77 @@ import ParseSwift
 import CareKitStore
 
 
-open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
+public final class Patient: PCKVersionable, PCKRemoteSynchronizable {
+    public internal(set) var nextVersion: Patient? {
+        didSet {
+            nextVersionUUID = nextVersion?.uuid
+        }
+    }
+    
+    public internal(set) var nextVersionUUID:UUID? {
+        didSet {
+            if nextVersionUUID != nextVersion?.uuid {
+                nextVersion = nil
+            }
+        }
+    }
+
+    public internal(set) var previousVersion: Patient? {
+        didSet {
+            previousVersionUUID = previousVersion?.uuid
+        }
+    }
+    
+    public internal(set) var previousVersionUUID: UUID? {
+        didSet {
+            if previousVersionUUID != previousVersion?.uuid {
+                previousVersion = nil
+            }
+        }
+    }
+    
+    var effectiveDate: Date?
+    
+    var uuid: UUID?
+    
+    var entityId: String?
+    
+    var logicalClock: Int?
+    
+    var schemaVersion: OCKSemanticVersion?
+    
+    var createdDate: Date?
+    
+    var updatedDate: Date?
+    
+    var deletedDate: Date?
+    
+    var timezone: TimeZone?
+    
+    var userInfo: [String : String]?
+    
+    var groupIdentifier: String?
+    
+    var tags: [String]?
+    
+    var source: String?
+    
+    var asset: String?
+    
+    var notes: [Note]?
+    
+    var remoteID: String?
+    
+    var encodingForParse: Bool = true
+    
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
     
     public var alergies:[String]?
     public var birthday:Date?
@@ -22,8 +92,8 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         kPCKPatientClassKey
     }
 
-    override init () {
-        super.init()
+    init () {
+        //super.init()
     }
 
     public convenience init?(careKitEntity: OCKAnyPatient) {
@@ -35,6 +105,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
+    /*
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
@@ -50,13 +121,13 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         try container.encode(birthday, forKey: .birthday)
         try container.encode(name, forKey: .name)
         try container.encode(sex, forKey: .sex)
-    }
+    }*/
     
-    open func new() -> PCKSynchronized {
+    public func new() -> PCKSynchronizable {
         return Patient()
     }
     
-    open func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
+    public func new(with careKitEntity: OCKEntity)->PCKSynchronizable?{
     
         switch careKitEntity {
         case .patient(let entity):
@@ -68,7 +139,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
             completion(false, ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -99,7 +170,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid,
             let previousPatientUUID = self.previousVersionUUID else{
@@ -121,13 +192,14 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.filter({$0.uuid == previousPatientUUID}).first else {
+                    guard let previousVersion = foundObjects.first(where: {$0.uuid == previousPatientUUID}) else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
                         completion(false,ParseCareKitError.uuidAlreadyExists)
                         return
                     }
-                    self.copyRelationalEntities(previousVersion)
-                    self.addToCloud(completion: completion)
+                    var updated = self
+                    updated = updated.copyRelationalEntities(previousVersion)
+                    updated.addToCloud(completion: completion)
 
                 default:
                     print("Error in \(self.className).updateCloud(). UUID already exists in Cloud")
@@ -142,7 +214,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
     
     
-    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
@@ -202,16 +274,20 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open override func copyCommonValues(from other: PCKObject){
-        super.copyCommonValues(from: other)
-        guard let other = other as? Patient else{return}
-        self.name = other.name
-        self.birthday = other.birthday
-        self.sex = other.sex
-        self.alergies = other.alergies
+    public class func copyValues(from other: Patient, to here: Patient) throws -> Self {
+        var here = here
+        here.copyCommonValues(from: other)
+        here.name = other.name
+        here.birthday = other.birthday
+        here.sex = other.sex
+        here.alergies = other.alergies
+        guard let copied = here as? Self else {
+            throw ParseCareKitError.cantCastToNeededClassType
+        }
+        return copied
     }
     
-    open func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
+    public func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
         
         guard let _ = PCKUser.current,
             let patient = patientAny as? OCKPatient else{
@@ -220,9 +296,9 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         
         let encoded = try JSONEncoder().encode(patient)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.copyCommonValues(from: decoded)
         self.entityId = patient.id
-        return self
+        
+        return try Self.copyValues(from: decoded, to: self)
         
         /*
         if let uuid = patient.uuid?.uuidString {
@@ -255,7 +331,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         return self*/
     }
     
-    open func convertToCareKit(fromCloud:Bool=true) throws ->OCKPatient {
+    public func convertToCareKit(fromCloud:Bool=true) throws ->OCKPatient {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         self.encodingForParse = true

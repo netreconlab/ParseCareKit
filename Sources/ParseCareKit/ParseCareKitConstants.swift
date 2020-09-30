@@ -60,7 +60,7 @@ public enum PCKStoreClass {
     case patient
     case task
     
-    func getDefault() -> PCKSynchronized{
+    func getDefault() -> PCKSynchronizable{
         switch self {
         case .carePlan:
             return CarePlan()
@@ -79,13 +79,13 @@ public enum PCKStoreClass {
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
     
-    func getRemoteConcrete() -> [PCKStoreClass: PCKRemoteSynchronized]? {
-        var remoteClasses = [PCKStoreClass: PCKRemoteSynchronized]()
+    func getRemoteConcrete() -> [PCKStoreClass: PCKRemoteSynchronizable]? {
+        var remoteClasses = [PCKStoreClass: PCKRemoteSynchronizable]()
         
         guard let regularClasses = getConcrete() else{return nil}
         
         for (key,value) in regularClasses{
-            guard let remoteClass = value as? PCKRemoteSynchronized else{
+            guard let remoteClass = value as? PCKRemoteSynchronizable else{
                 continue
             }
             remoteClasses[key] = remoteClass
@@ -99,7 +99,7 @@ public enum PCKStoreClass {
         return remoteClasses
     }
     
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKRemoteSynchronized]) -> [PCKStoreClass: PCKRemoteSynchronized]?{
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKRemoteSynchronizable]) -> [PCKStoreClass: PCKRemoteSynchronizable]?{
         guard var updatedClasses = getRemoteConcrete() else{
             return nil
         }
@@ -113,9 +113,9 @@ public enum PCKStoreClass {
         return updatedClasses
     }
     
-    func getConcrete() -> [PCKStoreClass: PCKSynchronized]?{
+    func getConcrete() -> [PCKStoreClass: PCKSynchronizable]?{
         
-        var concreteClasses: [PCKStoreClass: PCKSynchronized] = [
+        var concreteClasses: [PCKStoreClass: PCKSynchronizable] = [
             .carePlan: PCKStoreClass.carePlan.getDefault(),
             .contact: PCKStoreClass.contact.getDefault(),
             .outcome: PCKStoreClass.outcome.getDefault(),
@@ -137,7 +137,7 @@ public enum PCKStoreClass {
         return concreteClasses
     }
     
-    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronized]) -> [PCKStoreClass: PCKSynchronized]?{
+    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) -> [PCKStoreClass: PCKSynchronizable]?{
         guard var updatedClasses = getConcrete() else{
             return nil
         }
@@ -151,7 +151,7 @@ public enum PCKStoreClass {
         return updatedClasses
     }
     
-    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronized) -> Bool{
+    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool{
         switch type {
         case .carePlan:
             guard let _ = check as? CarePlan else{

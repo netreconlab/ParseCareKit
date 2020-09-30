@@ -225,11 +225,11 @@ class CancerPatient: Patient{
     public var primaryCondition:String?
     public var comorbidities:String?
     
-    override func new() -> PCKSynchronized {
+    override func new() -> PCKSynchronizable {
         return CancerPatient()
     }
     
-    override func new(with careKitEntity: OCKEntity)->PCKSynchronized? {
+    override func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):
@@ -276,7 +276,7 @@ class CancerPatient: Patient{
 Then you need to pass your custom class when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
 ```swift
-let updatedConcreteClasses: [PCKStoreClass: PCKRemoteSynchronized] = [
+let updatedConcreteClasses: [PCKStoreClass: PCKRemoteSynchronizable] = [
     .patient: CancerPatient()
 ]
 
@@ -296,11 +296,11 @@ You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This i
 class Doctor: Patient{
     public var type:String?
     
-    override func new() -> PCKSynchronized {
+    override func new() -> PCKSynchronizable {
         return Doctor()
     }
     
-    override func new(with careKitEntity: OCKEntity)-?PCKSynchronized? {
+    override func new(with careKitEntity: OCKEntity)-?PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):

@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 extension PCKVersionedObject{
     open func decodedCareKitObject(_ bareCareKitObject: OCKPatient)->OCKPatient?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
@@ -43,4 +43,4 @@ extension PCKVersionedObject{
         }
         return entity
     }
-}
+}*/

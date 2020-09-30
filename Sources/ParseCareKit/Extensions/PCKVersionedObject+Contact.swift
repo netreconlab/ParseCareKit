@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 extension PCKVersionedObject{
 
     open func decodedCareKitObject(_ bareCareKitObject: OCKContact)->OCKContact?{
@@ -44,4 +44,4 @@ extension PCKVersionedObject{
         }
         return entity
     }
-}
+}*/

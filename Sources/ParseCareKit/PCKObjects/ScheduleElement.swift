@@ -100,7 +100,7 @@ public class ScheduleElement: ParseObject {
     
     open class func replaceWithCloudVersion(_ local:inout [ScheduleElement], cloud:[ScheduleElement]){
         for (index,element) in local.enumerated(){
-            guard let cloudNote = cloud.filter({ try! $0.convertToCareKit() == element.convertToCareKit()}).first else{
+            guard let cloudNote = cloud.first(where: { try! $0.convertToCareKit() == element.convertToCareKit()}) else{
                 continue
             }
             local[index] = cloudNote

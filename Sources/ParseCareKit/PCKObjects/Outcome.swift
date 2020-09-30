@@ -11,7 +11,47 @@ import ParseSwift
 import CareKitStore
 
 
-public class Outcome: PCKObject, PCKRemoteSynchronized {
+public class Outcome: PCKObjectable, PCKRemoteSynchronizable {
+    var uuid: UUID?
+    
+    var entityId: String?
+    
+    var logicalClock: Int?
+    
+    var schemaVersion: OCKSemanticVersion?
+    
+    var createdDate: Date?
+    
+    var updatedDate: Date?
+    
+    var deletedDate: Date?
+    
+    var timezone: TimeZone?
+    
+    var userInfo: [String : String]?
+    
+    var groupIdentifier: String?
+    
+    var tags: [String]?
+    
+    var source: String?
+    
+    var asset: String?
+    
+    var notes: [Note]?
+    
+    var remoteID: String?
+    
+    var encodingForParse: Bool = true
+    
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
 
     public var taskOccurrenceIndex: Int?
     public var values: [OutcomeValue]?
@@ -47,12 +87,8 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }*/
 
-    public static var className: String {
-        kPCKNoteClassKey
-    }
-
-    override init() {
-        super.init()
+    init() {
+        
     }
 
     public convenience init?(careKitEntity: OCKAnyOutcome) {
@@ -63,7 +99,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
             return nil
         }
     }
-    
+    /*
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
@@ -82,13 +118,13 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encode(values, forKey: .values)
         try container.encode(date, forKey: .date)
-    }
+    }*/
     
-    public func new() -> PCKSynchronized {
+    public func new() -> PCKSynchronizable {
         return Outcome()
     }
     
-    public func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
+    public func new(with careKitEntity: OCKEntity)->PCKSynchronizable?{
         
         switch careKitEntity {
         case .outcome(let entity):
@@ -123,7 +159,7 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
             case .failure(let error):
                 switch error.code{
                 case .internalServer: //1 - this column hasn't been added.
-                    self.save(self, completion: completion)
+                    self.save(completion: completion)
                 case .objectNotFound: //101 - Query returned no results
                     var query = Outcome.query(kPCKObjectableEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectableDeletedDateKey))
                     query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
@@ -133,11 +169,12 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                         switch result {
                         
                         case .success(let objectThatWillBeTombstoned):
-                            self.copyRelationalEntities(objectThatWillBeTombstoned)
-                            self.save(self, completion: completion)
+                            var objectToAdd = self
+                            objectToAdd = objectToAdd.copyRelational(objectThatWillBeTombstoned)
+                            objectToAdd.save(completion: completion)
 
                         case .failure(_):
-                            self.save(self, completion: completion)
+                            self.save(completion: completion)
                             completion(false,nil)
                         }
                     }
@@ -238,28 +275,38 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
                     $0.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } }
                 }
                 foundObject.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-                foundObject.copyCommonValues(from: self)
-                foundObject.save(foundObject, completion: completion)
+                
+                guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
+                    print("Error in \(self.className).tombstsone(). Couldn't cast to self")
+                    completion(false,ParseCareKitError.cantCastToNeededClassType)
+                    return
+                }
+                copied.save(completion: completion)
     
             case .failure(let error):
                 switch error.code {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
-                        self.save(self, completion: completion)
+                        self.save(completion: completion)
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
+                    print("Error in \(self.className).tombstsone(). \(error.localizedDescription)")
                     completion(false,error)
                 }
             }
         }
     }
     
-    open override func copyCommonValues(from other: PCKObject){
-        super.copyCommonValues(from: other)
-        guard let other = other as? Outcome else{return}
-        self.taskOccurrenceIndex = other.taskOccurrenceIndex
-        self.values = other.values
-        self.task = other.task
+    public class func copyValues(from other: Outcome, to here: Outcome) throws -> Self{
+        var here = here
+        here.copyCommonValues(from: other)
+        here.taskOccurrenceIndex = other.taskOccurrenceIndex
+        here.values = other.values
+        here.task = other.task
+        
+        guard let copied = here as? Self else {
+            throw ParseCareKitError.cantCastToNeededClassType
+        }
+        return copied
     }
         
     open func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
@@ -271,9 +318,8 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         
         let encoded = try JSONEncoder().encode(outcome)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.copyCommonValues(from: decoded)
         self.entityId = outcome.id
-        return self
+        return try Self.copyValues(from: decoded, to: self)
         /*
         if let uuid = outcome.uuid?.uuidString{
             self.uuid = uuid
@@ -306,15 +352,16 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         return self*/
     }
     
-    open override func copyRelationalEntities(_ parse: PCKObject) {
-        guard let parse = parse as? Outcome else{return}
-        super.copyRelationalEntities(parse)
-        if self.values == nil {
-            self.values = .init()
+    public func copyRelational(_ parse: Outcome) -> Outcome {
+        var copy = self
+        copy = copy.copyRelationalEntities(parse)
+        if copy.values == nil {
+            copy.values = .init()
         }
-        if parse.values != nil {
-            OutcomeValue.replaceWithCloudVersion(&self.values!, cloud: parse.values!)
+        if let valuesToCopy = parse.values {
+            OutcomeValue.replaceWithCloudVersion(&copy.values!, cloud: valuesToCopy)
         }
+        return copy
     }
         
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -360,6 +407,32 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         return outcome*/
     }
     
+    public func save(completion: @escaping(Bool,Error?) -> Void){
+        guard let stamped = try? self.stampRelational() else {
+            completion(false, ParseCareKitError.cantUnwrapSelf)
+            return
+        }
+        stamped.save(callbackQueue: .global(qos: .background)){ results in
+            switch results {
+            
+            case .success(let saved):
+                print("Successfully saved \(saved) in Cloud.")
+                
+                saved.linkRelated{
+                    (success, linkedObject) in
+                    
+                    if success{
+                        linkedObject.save(callbackQueue: .global(qos: .background)){ _ in }
+                    }
+                    completion(true,nil)
+                }
+            case .failure(let error):
+                print("Error in CarePlan.addToCloud(). \(error)")
+                completion(false,error)
+            }
+        }
+    }
+    
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Bool,Outcome)->Void){
         guard let taskUUID = self.taskUUID,
@@ -369,15 +442,15 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
             return
         }
         
-        self.first(taskUUID, classType: Task(), relatedObject: self.task, include: true){
-            (isNew,task) in
+        task?.first(taskUUID, relatedObject: self.task, include: true){
+            (isNew,foundTask) in
             
-            guard let task = task else{
+            guard let foundTask = foundTask else{
                 completion(isNew,self)
                 return
             }
             
-            self.task = task
+            self.task = foundTask
             
             guard let currentTask = self.task else{
                 self.date = nil
@@ -413,12 +486,12 @@ public class Outcome: PCKObject, PCKRemoteSynchronized {
         return nil
     }
     
-    open override func stampRelationalEntities() -> Bool {
-        let successful = super.stampRelationalEntities()
-        if successful{
-            self.values?.forEach{$0.stamp(self.logicalClock!)}
-        }
-        return successful
+    public func stampRelational() throws -> Outcome {
+        var stamped = self
+        stamped = try stamped.stampRelationalEntities()
+        stamped.values?.forEach{$0.stamp(stamped.logicalClock!)}
+        
+        return stamped
     }
     
     public static func queryNotDeleted()-> Query<Outcome>{

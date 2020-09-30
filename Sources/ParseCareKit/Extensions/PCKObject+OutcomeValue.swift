@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 extension PCKObjectable{
 
     public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol) throws -> OCKOutcomeValue? {
@@ -37,8 +37,8 @@ extension PCKObjectable{
             }
             throw ParseCareKitError.couldntUnwrapKnowledgeVector
         }
-    }
-    
+    }*/
+    /*
     public func decodedCareKitObject(_ value: OCKOutcomeValueUnderlyingType, units: String?)->OCKOutcomeValue?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
             let updatedDate = self.updatedDate?.timeIntervalSinceReferenceDate else{
@@ -87,4 +87,4 @@ extension PCKObjectable{
         guard let json = OutcomeValue.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }
-}
+}*/

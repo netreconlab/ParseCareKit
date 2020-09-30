@@ -10,29 +10,65 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-open class Note: PCKObject {
+open class Note: PCKObjectable {
+    var encodingForParse: Bool = true
+    
+    var uuid: UUID?
+    
+    var entityId: String?
+    
+    var logicalClock: Int?
+    
+    var schemaVersion: OCKSemanticVersion?
+    
+    var createdDate: Date?
+    
+    var updatedDate: Date?
+    
+    var deletedDate: Date?
+    
+    var timezone: TimeZone?
+    
+    var userInfo: [String : String]?
+    
+    var groupIdentifier: String?
+    
+    var tags: [String]?
+    
+    var source: String?
+    
+    var asset: String?
+    
+    var notes: [Note]?
+    
+    var remoteID: String?
+    
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
 
     public var content:String?
     public var title:String?
     public var author:String?
 
-    override init() {
-        super.init()
+    init() {
+        
     }
 
     public convenience init?(careKitEntity: OCKNote) {
-        self.init()
         do {
+            self.init()
             _ = try self.copyCareKit(careKitEntity)
         } catch {
             return nil
         }
     }
-    
-    public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-    }
-    
+    /*
     enum CodingKeys: String, CodingKey {
         case content, title, author
     }
@@ -43,20 +79,24 @@ open class Note: PCKObject {
         try container.encode(content, forKey: .content)
         try container.encode(title, forKey: .title)
         try container.encode(author, forKey: .author)
-    }
+    }*/
 
-    open func copyCommon(from other: PCKObject){
-        self.copyCommonValues(from: other)
-        guard let other = other as? Note else{return}
-        self.content = other.content
-        self.author = other.author
-        self.title = other.title
+    open class func copyValues(from other: Note, to here: Note) throws -> Self {
+        var here = here
+        here.copyCommonValues(from: other)
+        here.content = other.content
+        here.author = other.author
+        here.title = other.title
+        guard let copied = here as? Self else {
+            throw ParseCareKitError.cantCastToNeededClassType
+        }
+        return copied
     }
     
     open func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try JSONEncoder().encode(note)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.copyCommonValues(from: decoded)
+        return try Self.copyValues(from: decoded, to: self)
         /*
         if let uuid = Note.getUUIDFromCareKitEntity(note){
             self.uuid = uuid
@@ -81,7 +121,7 @@ open class Note: PCKObject {
         self.remoteID = note.remoteID
         self.createdDate = note.createdDate
         self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}*/
-        return self
+        //return self
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -138,7 +178,7 @@ open class Note: PCKObject {
         }
         
         for (index,note) in local!.enumerated(){
-            guard let cloudNote = cloud!.filter({$0.uuid == note.uuid}).first else{
+            guard let cloudNote = cloud!.first(where: {$0.uuid == note.uuid}) else{
                 continue
             }
             local![index] = cloudNote
@@ -166,11 +206,12 @@ open class Note: PCKObject {
             case .success(let localNotes):
                 //var returnNotes = notes!
                 for (index, note) in localNotes.enumerated(){
-                    guard let replaceNote = localNotes.filter({$0.uuid == note.uuid}).first else {
+                    guard let replaceNote = localNotes.first(where: {$0.uuid == note.uuid}),
+                          let updatedNote = try? Self.copyValues(from: note, to: replaceNote) else {
                         continue
                     }
-                    replaceNote.copyCommonValues(from: note) //Copy any changes
-                    originalNotes[index] = replaceNote
+                    
+                    originalNotes[index] = updatedNote//Copy any changes
                 }
                 
                 completion(originalNotes)

@@ -9,32 +9,8 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
-extension PCKObjectable{
-
-    public func save(_ outcome: Outcome, completion: @escaping(Bool,Error?) -> Void){
-        
-        _ = outcome.stampRelationalEntities()
-        outcome.save(callbackQueue: .global(qos: .background)){ results in
-            switch results {
-            
-            case .success(_):
-                print("Successfully saved \(outcome) in Cloud.")
-                
-                outcome.linkRelated{
-                    (linked,_) in
-                    
-                    if linked{
-                        outcome.save(callbackQueue: .global(qos: .background)){ _ in }
-                    }
-                    completion(true,nil)
-                }
-            case .failure(let error):
-                print("Error in CarePlan.addToCloud(). \(error)")
-                completion(false,error)
-            }
-        }
-    }
+/*
+extension PCKObjectable {
     
     public static func encodeCareKitToDictionary(_ entity: OCKOutcome)->[String:Any]?{
         let jsonDictionary:[String:Any]
@@ -80,4 +56,4 @@ extension PCKObjectable{
         guard let json = Outcome.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }
-}
+}*/

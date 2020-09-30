@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 extension PCKObjectable {
     
     static func encodeCareKitToDictionary(_ entity: OCKPatient)->[String:Any]?{
@@ -29,4 +29,4 @@ extension PCKObjectable {
         guard let json = Patient.encodeCareKitToDictionary(entity) else{return nil}
         return json["schemaVersion"] as? [String:Any]
     }
-}
+}*/

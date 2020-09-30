@@ -11,7 +11,48 @@ import ParseSwift
 import CareKitStore
 
 
-public class OutcomeValue: PCKObject {
+public class OutcomeValue: PCKObjectable {
+    
+    var uuid: UUID?
+    
+    var entityId: String?
+    
+    var logicalClock: Int?
+    
+    var schemaVersion: OCKSemanticVersion?
+    
+    var createdDate: Date?
+    
+    var updatedDate: Date?
+    
+    var deletedDate: Date?
+    
+    var timezone: TimeZone?
+    
+    var userInfo: [String : String]?
+    
+    var groupIdentifier: String?
+    
+    var tags: [String]?
+    
+    var source: String?
+    
+    var asset: String?
+    
+    var notes: [Note]?
+    
+    var remoteID: String?
+    
+    var encodingForParse: Bool = false
+    
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
 
     public var index:Int?
     public var kind:String?
@@ -101,8 +142,8 @@ public class OutcomeValue: PCKObject {
         index = nil
     }
 
-    override init() {
-        super.init()
+    init() {
+        //super.init()
     }
     
     public convenience init?(careKitEntity:OCKOutcomeValue) {
@@ -115,7 +156,7 @@ public class OutcomeValue: PCKObject {
     }
     
     public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
+        return
     }
     
     enum CodingKeys: String, CodingKey {
@@ -123,8 +164,8 @@ public class OutcomeValue: PCKObject {
         case booleanValue, integerValue, doubleValue, dateValue
     }
     
-    public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
+    public func encode(to encoder: Encoder) throws {
+        //try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(index, forKey: .index)
         try container.encode(kind, forKey: .kind)
@@ -137,26 +178,31 @@ public class OutcomeValue: PCKObject {
         try container.encode(dateValue, forKey: .dateValue)
     }
     
-    open override func copyCommonValues(from other: PCKObject){
-        super.copyCommonValues(from: other)
-        guard let other = other as? OutcomeValue else{return}
-        self.index = other.index
-        self.kind = other.kind
-        self.units = other.units
-        self.type = other.type
-        self.textValue = other.textValue
-        self.binaryValue = other.binaryValue
-        self.booleanValue = other.booleanValue
-        self.integerValue = other.integerValue
-        self.doubleValue = other.doubleValue
-        self.dateValue = other.dateValue
+    public static func copyValues(from other: OutcomeValue, to here: OutcomeValue) throws -> Self {
+        var here = here
+        here.copyCommonValues(from: other)
+        here.index = other.index
+        here.kind = other.kind
+        here.units = other.units
+        here.type = other.type
+        here.textValue = other.textValue
+        here.binaryValue = other.binaryValue
+        here.booleanValue = other.booleanValue
+        here.integerValue = other.integerValue
+        here.doubleValue = other.doubleValue
+        here.dateValue = other.dateValue
+        
+        guard let copied = here as? Self else {
+            throw ParseCareKitError.cantCastToNeededClassType
+        }
+        return copied
     }
     
     open func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
         let encoded = try JSONEncoder().encode(outcomeValue)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.copyCommonValues(from: decoded)
-        return self
+        
+        return try Self.copyValues(from: decoded, to: self)
         /*
         if let uuid = OutcomeValue.getUUIDFromCareKitEntity(outcomeValue) {
             self.uuid = uuid
@@ -243,7 +289,7 @@ public class OutcomeValue: PCKObject {
     
     open class func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud:[OutcomeValue]){
         for (index,value) in local.enumerated(){
-            guard let cloudNote = cloud.filter({$0.uuid == value.uuid}).first else{
+            guard let cloudNote = cloud.first(where: {$0.uuid == value.uuid}) else{
                 continue
             }
             local[index] = cloudNote

@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 extension PCKObjectable{
     
     public static func encodeCareKitToDictionary(_ entity: OCKCarePlan)->[String:Any]?{
@@ -30,3 +30,4 @@ extension PCKObjectable{
         return json["schemaVersion"] as? [String:Any]
     }
 }
+*/

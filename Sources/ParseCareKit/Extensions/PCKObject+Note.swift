@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 extension PCKObjectable{
     public func decodedCareKitObject(_ author: String?, title: String, content: String)->OCKNote?{
         guard let createdDate = self.createdDate?.timeIntervalSinceReferenceDate,
@@ -59,3 +59,4 @@ extension PCKObjectable{
         return json["schemaVersion"] as? [String:Any]
     }
 }
+*/

@@ -63,10 +63,42 @@ internal protocol PCKObjectable: ParseObject {
     /// A unique id optionally used by a remote database. Its precise format will be
     /// determined by the remote database, but it is generally not expected to be human readable.
     var remoteID: String? {get set}
+    
+    var encodingForParse: Bool {get set}
+
+    static func copyValues(from other: Self, to here: Self) throws -> Self
 }
 
 extension PCKObjectable {
+
+    mutating func copyRelationalEntities(_ parse: Self) -> Self {
+        var current = self
+        Note.replaceWithCloudVersion(&current.notes, cloud: parse.notes)
+        return current
+    }
     
+    mutating public func copyCommonValues(from other: Self) {
+        //guard let other = other as? Self else{return}
+        uuid = other.uuid
+        entityId = other.entityId
+        deletedDate = other.deletedDate
+        updatedDate = other.updatedDate
+        timezone = other.timezone
+        userInfo = other.userInfo
+        remoteID = other.remoteID
+        createdDate = other.createdDate
+        notes = other.notes
+        logicalClock = other.logicalClock
+    }
+
+    mutating public func stampRelationalEntities() throws -> Self {
+        guard let logicalClock = self.logicalClock else {
+            throw ParseCareKitError.cantUnwrapSelf
+        }
+        self.notes?.forEach{$0.stamp(logicalClock)}
+        return self
+    }
+
     public func canConvertToCareKit()->Bool {
         guard let _ = self.entityId,
               let _ = self.timezone else {
@@ -75,7 +107,7 @@ extension PCKObjectable {
         return true
     }
 
-    public func first<T>(_ uuid:UUID?, classType: T, relatedObject:T?=nil, include:Bool=true, completion: @escaping(Bool,T?) -> Void) where T: PCKObjectable {
+    public func first(_ uuid:UUID?, relatedObject:Self?=nil, include:Bool=true, completion: @escaping(Bool,Self?) -> Void) {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
@@ -89,9 +121,9 @@ extension PCKObjectable {
             return
         }
              
-        var query = T.query(kPCKObjectableUUIDKey == uuidString)
+        var query = Self.query(kPCKObjectableUUIDKey == uuidString)
         
-        switch classType{
+        switch self {
         case is CarePlan:
             if include{
                 query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,
@@ -134,8 +166,8 @@ extension PCKObjectable {
         }
     }
     
-    public func find<T> (_ uuid:UUID?, classType: T, include:Bool=true,
-                         completion: @escaping([Self]?,Error?) -> Void) where T: PCKObjectable {
+    public func find(_ uuid:UUID?, include:Bool=true,
+                         completion: @escaping([Self]?,Error?) -> Void) {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
@@ -146,7 +178,7 @@ extension PCKObjectable {
             
         var query = Self.query(kPCKObjectableUUIDKey == uuidString)
 
-        switch classType{
+        switch self {
         case is CarePlan:
             if include{
                 query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,

@@ -11,7 +11,85 @@ import ParseSwift
 import CareKitStore
 
 
-public class Task: PCKVersionedObject, PCKRemoteSynchronized {
+public final class Task: PCKVersionable, PCKRemoteSynchronizable {
+    /*var previousVersionUUID: UUID?
+    
+    var previousVersion: Task?
+    
+    var nextVersionUUID: UUID?
+    
+    var nextVersion: Task?
+    */
+    
+    public internal(set) var nextVersion: Task? {
+        didSet {
+            nextVersionUUID = nextVersion?.uuid
+        }
+    }
+    
+    public internal(set) var nextVersionUUID:UUID? {
+        didSet {
+            if nextVersionUUID != nextVersion?.uuid {
+                nextVersion = nil
+            }
+        }
+    }
+
+    public internal(set) var previousVersion: Task? {
+        didSet {
+            previousVersionUUID = previousVersion?.uuid
+        }
+    }
+    
+    public internal(set) var previousVersionUUID: UUID? {
+        didSet {
+            if previousVersionUUID != previousVersion?.uuid {
+                previousVersion = nil
+            }
+        }
+    }
+    var effectiveDate: Date?
+    
+    var uuid: UUID?
+    
+    var entityId: String?
+    
+    var logicalClock: Int?
+    
+    var schemaVersion: OCKSemanticVersion?
+    
+    var createdDate: Date?
+    
+    var updatedDate: Date?
+    
+    var deletedDate: Date?
+    
+    var timezone: TimeZone?
+    
+    var userInfo: [String : String]?
+    
+    var groupIdentifier: String?
+    
+    var tags: [String]?
+    
+    var source: String?
+    
+    var asset: String?
+    
+    var notes: [Note]?
+    
+    var remoteID: String?
+    
+    var encodingForParse: Bool = true
+    
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
 
     public var impactsAdherence:Bool?
     public var instructions:String?
@@ -62,8 +140,8 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
         kPCKTaskClassKey
     }
 
-    override init () {
-        super.init()
+    init () {
+        //super.init()
     }
 
     public convenience init?(careKitEntity: OCKAnyTask) {
@@ -74,7 +152,7 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
             return nil
         }
     }
-    
+    /*
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
@@ -94,13 +172,13 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
         try container.encode(impactsAdherence, forKey: .impactsAdherence)
         try container.encode(instructions, forKey: .instructions)
         try container.encode(elements, forKey: .elements)
-    }
+    }*/
 
-    open func new() -> PCKSynchronized {
+    public func new() -> PCKSynchronizable {
         return Task()
     }
     
-    open func new(with careKitEntity: OCKEntity)->PCKSynchronized?{
+    public func new(with careKitEntity: OCKEntity)->PCKSynchronizable?{
         
         switch careKitEntity {
         case .task(let entity):
@@ -163,13 +241,14 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.filter({$0.uuid == previousPatientUUID}).first else {
+                    guard let previousVersion = foundObjects.first(where: {$0.uuid == previousPatientUUID}) else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
                         completion(false,ParseCareKitError.uuidAlreadyExists)
                         return
                     }
-                    self.copyRelationalEntities(previousVersion)
-                    self.addToCloud(completion: completion)
+                    var updated = self
+                    updated = updated.copyRelational(previousVersion)
+                    updated.addToCloud(completion: completion)
 
                 default:
                     print("Error in \(self.className).updateCloud(). UUID already exists in Cloud")
@@ -243,19 +322,25 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open override func copyCommonValues(from other: PCKObject){
-        super.copyCommonValues(from: other)
-        guard let other = other as? Task else{return}
-        self.impactsAdherence = other.impactsAdherence
-        self.instructions = other.instructions
-        self.title = other.title
-        self.elements = other.elements
-        self.currentCarePlan = other.currentCarePlan
-        self.carePlanUUID = other.carePlanUUID
+    public class func copyValues(from other: Task, to here: Task) throws -> Self {
+        var here = here
+        here.copyCommonValues(from: other)
+        
+        here.impactsAdherence = other.impactsAdherence
+        here.instructions = other.instructions
+        here.title = other.title
+        here.elements = other.elements
+        here.currentCarePlan = other.currentCarePlan
+        here.carePlanUUID = other.carePlanUUID
+        
+        guard let copied = here as? Self else {
+            throw ParseCareKitError.cantCastToNeededClassType
+        }
+        return copied
     }
     
     
-    open func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
+    public func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
         
         guard let _ = PCKUser.current,
             let task = taskAny as? OCKTask else{
@@ -264,9 +349,9 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
         
         let encoded = try JSONEncoder().encode(task)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.copyCommonValues(from: decoded)
         self.entityId = task.id
-        return self
+
+        return try Self.copyValues(from: decoded, to: self)
         /*
         if let uuid = task.uuid?.uuidString{
             self.uuid = uuid
@@ -302,21 +387,22 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
         return self*/
     }
     
-    open override func copyRelationalEntities(_ parse: PCKObject) {
-        guard let parse = parse as? Task else{return}
-        super.copyRelationalEntities(parse)
-        if self.elements == nil {
-            self.elements = .init()
+    public func copyRelational(_ parse: Task) -> Task {
+        var copy = self
+        copy = copy.copyRelationalEntities(parse)
+        if copy.elements == nil {
+            copy.elements = .init()
         }
         
         if parse.elements != nil {
-            ScheduleElement.replaceWithCloudVersion(&self.elements!, cloud: parse.elements!)
+            ScheduleElement.replaceWithCloudVersion(&copy.elements!, cloud: parse.elements!)
         }
+        return copy
     }
     
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKTask {
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKTask {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         self.encodingForParse = true
@@ -362,19 +448,19 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public override func linkRelated(completion: @escaping(Bool,Task)->Void){
+    public func linkRelated(completion: @escaping(Bool,Task)->Void){
         
-        super.linkRelated(){
-            (isNew, _) in
+        self.linkVersions(){
+            (isNew, linkedObject) in
             var linkedNew = isNew
         
-            guard let carePlanUUID = self.carePlanUUID else{
+            guard let carePlanUUID = self.carePlanUUID else {
                 //Finished if there's no CarePlan, otherwise see if it's in the cloud
                 completion(linkedNew,self)
                 return
             }
             
-            self.first(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, include: true){
+            linkedObject.carePlan?.first(carePlanUUID, relatedObject: linkedObject.carePlan, include: true){
                 (isNew,carePlan) in
                 
                 guard let carePlan = carePlan else{
@@ -382,11 +468,11 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
                     return
                 }
                 
-                self.carePlan = carePlan
+                linkedObject.carePlan = carePlan
                 if isNew{
                     linkedNew = true
                 }
-                completion(linkedNew,self)
+                completion(linkedNew,linkedObject)
             }
         }
     }
@@ -398,12 +484,12 @@ public class Task: PCKVersionedObject, PCKRemoteSynchronized {
         return OCKSchedule(composing: elements.compactMap{ try? $0.convertToCareKit() })
     }
     
-    open override func stampRelationalEntities() -> Bool {
-        let successful = super.stampRelationalEntities()
-        if successful {
-            self.elements?.forEach{$0.stamp(self.logicalClock!)}
-        }
-        return successful
+    public func stampRelational() throws -> Task {
+        var stamped = self
+        stamped = try stamped.stampRelationalEntities()
+        stamped.elements?.forEach{$0.stamp(self.logicalClock!)}
+        
+        return stamped
     }
 }
 

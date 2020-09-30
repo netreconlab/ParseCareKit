@@ -11,7 +11,77 @@ import ParseSwift
 import CareKitStore
 
 
-public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
+public final class Contact: PCKVersionable, PCKRemoteSynchronizable {
+    public internal(set) var nextVersion: Contact? {
+        didSet {
+            nextVersionUUID = nextVersion?.uuid
+        }
+    }
+    
+    public internal(set) var nextVersionUUID:UUID? {
+        didSet {
+            if nextVersionUUID != nextVersion?.uuid {
+                nextVersion = nil
+            }
+        }
+    }
+
+    public internal(set) var previousVersion: Contact? {
+        didSet {
+            previousVersionUUID = previousVersion?.uuid
+        }
+    }
+    
+    public internal(set) var previousVersionUUID: UUID? {
+        didSet {
+            if previousVersionUUID != previousVersion?.uuid {
+                previousVersion = nil
+            }
+        }
+    }
+    
+    var effectiveDate: Date?
+    
+    var uuid: UUID?
+    
+    var entityId: String?
+    
+    var logicalClock: Int?
+    
+    var schemaVersion: OCKSemanticVersion?
+    
+    var createdDate: Date?
+    
+    var updatedDate: Date?
+    
+    var deletedDate: Date?
+    
+    var timezone: TimeZone?
+    
+    var userInfo: [String : String]?
+    
+    var groupIdentifier: String?
+    
+    var tags: [String]?
+    
+    var source: String?
+    
+    var asset: String?
+    
+    var notes: [Note]?
+    
+    var remoteID: String?
+    
+    var encodingForParse: Bool = true
+    
+    public var objectId: String?
+    
+    public var createdAt: Date?
+    
+    public var updatedAt: Date?
+    
+    public var ACL: ParseACL?
+    
 
     //1 to 1 between Parse and CareStore
     public var address:OCKPostalAddress?
@@ -123,10 +193,9 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public override init() {
-        super.init()
+    public init() {
     }
-
+/*
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
@@ -155,13 +224,13 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         try container.encode(messagingNumbers, forKey: .messagingNumbers)
         try container.encode(phoneNumbers, forKey: .phoneNumbers)
         try container.encode(otherContactInfo, forKey: .otherContactInfo)
-    }
+    }*/
     
-    open func new() -> PCKSynchronized {
+    public func new() -> PCKSynchronizable {
         return Contact()
     }
     
-    open func new(with careKitEntity: OCKEntity)-> PCKSynchronized?{
+    public func new(with careKitEntity: OCKEntity)-> PCKSynchronizable?{
         
         switch careKitEntity {
         case .contact(let entity):
@@ -226,13 +295,14 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.filter({$0.uuid == previousVersionUUID}).first else {
+                    guard let previousVersion = foundObjects.first(where: {$0.uuid == previousVersionUUID}) else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
                         completion(false,ParseCareKitError.uuidAlreadyExists)
                         return
                     }
-                    self.copyRelationalEntities(previousVersion)
-                    self.addToCloud(completion: completion)
+                    var updated = self
+                    updated = updated.copyRelationalEntities(previousVersion)
+                    updated.addToCloud(completion: completion)
 
                 default:
                     print("Error in \(self.className).updateCloud(). UUID already exists in Cloud")
@@ -308,19 +378,24 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    open override func copyCommonValues(from other: PCKObject){
-        super.copyCommonValues(from: other)
-        guard let other = other as? Contact else{return}
-        self.address = other.address
-        self.category = other.category
-        self.title = other.title
-        self.name = other.name
-        self.organization = other.organization
-        self.role = other.role
-        self.carePlan = other.carePlan
+    public class func copyValues(from other: Contact, to here: Contact) throws -> Self {
+        var copy = here
+        copy.copyCommonValues(from: other)
+        copy.address = other.address
+        copy.category = other.category
+        copy.title = other.title
+        copy.name = other.name
+        copy.organization = other.organization
+        copy.role = other.role
+        copy.carePlan = other.carePlan
+        
+        guard let copied = copy as? Self else {
+            throw ParseCareKitError.cantCastToNeededClassType
+        }
+        return copied
     }
 
-    open func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
+    public func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
         
         guard let _ = PCKUser.current,
             let contact = contactAny as? OCKContact else{
@@ -328,9 +403,9 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
         let encoded = try JSONEncoder().encode(contact)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        self.copyCommonValues(from: decoded)
         self.entityId = contact.id
-        return self
+        
+        return try Self.copyValues(from: decoded, to: self)
         /*
         if let uuid = contact.uuid?.uuidString{
             self.uuid = uuid
@@ -375,7 +450,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         self.encodingForParse = true
@@ -428,9 +503,9 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
     }
     
     ///Link versions and related classes
-    public override func linkRelated(completion: @escaping(Bool,Contact)->Void){
-        super.linkRelated(){
-            (isNew, _) in
+    public func linkRelated(completion: @escaping(Bool,Contact)->Void){
+        self.linkVersions {
+            (isNew, linked) in
             var linkedNew = isNew
             
             guard let carePlanUUID = self.carePlanUUID else{
@@ -439,7 +514,7 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                 return
             }
             
-            self.first(carePlanUUID, classType: CarePlan(), relatedObject: self.carePlan, include: true){
+            linked.carePlan?.first(carePlanUUID, relatedObject: linked.carePlan, include: true){
                 (isNew,carePlan) in
                 
                 guard let carePlan = carePlan else{
@@ -447,11 +522,11 @@ public class Contact: PCKVersionedObject, PCKRemoteSynchronized {
                     return
                 }
                 
-                self.carePlan = carePlan
+                linked.carePlan = carePlan
                 if isNew{
                     linkedNew = true
                 }
-                completion(linkedNew,self)
+                completion(linkedNew,linked)
             }
         }
     }

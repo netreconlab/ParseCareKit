@@ -9,7 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
-
+/*
 open class PCKObject: PCKObjectable {
 
     public var uuid: UUID?
@@ -55,20 +55,6 @@ open class PCKObject: PCKObjectable {
     private let id = "" //This value is to never be set, used for key
     
     init() {}
-
-    public func copyCommonValues(from other: PCKObject) {
-        guard let other = other as? Self else{return}
-        self.uuid = other.uuid
-        self.entityId = other.entityId
-        self.deletedDate = other.deletedDate
-        self.updatedDate = other.updatedDate
-        self.timezone = other.timezone
-        self.userInfo = other.userInfo
-        self.remoteID = other.remoteID
-        self.createdDate = other.createdDate
-        self.notes = other.notes
-        self.logicalClock = other.logicalClock
-    }
     
     enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
         case entityId, id
@@ -117,15 +103,5 @@ open class PCKObject: PCKObjectable {
         try container.decode(remoteID, forKey: .remoteID)
     }*/
     
-    open func copyRelationalEntities(_ parse: PCKObject) {
-        Note.replaceWithCloudVersion(&self.notes, cloud: parse.notes)
-    }
-
-    open func stampRelationalEntities() -> Bool {
-        guard let logicalClock = self.logicalClock else {
-            return false
-        }
-        self.notes?.forEach{$0.stamp(logicalClock)}
-        return true
-    }
 }
+*/
