@@ -259,7 +259,7 @@ class ParseCareKitTests: XCTestCase {
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
         //Special
         careKit.index = 0
-        careKit.kind = "whale"
+        //careKit.kind = "whale"
         careKit.units = "m/s"
         
         //Objectable
@@ -343,25 +343,8 @@ class ParseCareKitTests: XCTestCase {
     }
 
     func testOutcome() throws {
-        var careKitValue = OCKOutcomeValue(10)
-        careKitValue.kind = "whale"
-        careKitValue.units = "m/s"
-        careKitValue.index = 0
-        careKitValue.uuid = UUID()
-        careKitValue.createdDate = Date().addingTimeInterval(-200)
-        careKitValue.updatedDate = Date().addingTimeInterval(-99)
-        careKitValue.timezone = .current
-        careKitValue.userInfo = ["String": "String"]
-        careKitValue.remoteID = "we"
-        careKitValue.groupIdentifier = "mine"
-        careKitValue.tags = ["one", "two"]
-        careKitValue.schemaVersion = .init(majorVersion: 4)
-        careKitValue.source = "yo"
-        careKitValue.asset = "pic"
-        
-        var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [careKitValue])
+        var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
-        careKitValue.notes = [careKitNote]
         
         //Special
         //let test = careKit.

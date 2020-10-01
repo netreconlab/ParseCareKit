@@ -237,27 +237,27 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         
         if encodingForParse {
-            try container.encode(entityId, forKey: .entityId)
+            try container.encodeIfPresent(entityId, forKey: .entityId)
             try container.encode(className, forKey: .className)
-            try container.encode(ACL, forKey: .ACL)
-            try container.encode(logicalClock, forKey: .logicalClock)
+            try container.encodeIfPresent(ACL, forKey: .ACL)
+            try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
         } else {
             if !(self is Outcome) {
-                try container.encode(entityId, forKey: .id)
+                try container.encodeIfPresent(entityId, forKey: .id)
             }
         }
         try container.encode(uuid, forKey: .uuid)
         try container.encode(schemaVersion, forKey: .schemaVersion)
         try container.encode(createdDate, forKey: .createdDate)
         try container.encode(updatedDate, forKey: .updatedDate)
-        try container.encode(deletedDate, forKey: .deletedDate)
+        try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         try container.encode(timezone, forKey: .timezone)
-        try container.encode(userInfo, forKey: .userInfo)
-        try container.encode(groupIdentifier, forKey: .groupIdentifier)
-        try container.encode(tags, forKey: .tags)
-        try container.encode(source, forKey: .source)
-        try container.encode(asset, forKey: .asset)
-        try container.encode(remoteID, forKey: .remoteID)
-        try container.encode(notes, forKey: .notes)
+        try container.encodeIfPresent(userInfo, forKey: .userInfo)
+        try container.encodeIfPresent(groupIdentifier, forKey: .groupIdentifier)
+        try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(source, forKey: .source)
+        try container.encodeIfPresent(asset, forKey: .asset)
+        try container.encodeIfPresent(remoteID, forKey: .remoteID)
+        try container.encodeIfPresent(notes, forKey: .notes)
     }
 }

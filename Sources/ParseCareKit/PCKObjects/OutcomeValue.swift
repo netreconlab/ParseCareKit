@@ -143,7 +143,6 @@ public class OutcomeValue: PCKObjectable {
     }*/
 
     init() {
-        //super.init()
     }
     
     public convenience init?(careKitEntity:OCKOutcomeValue) {
@@ -160,6 +159,25 @@ public class OutcomeValue: PCKObjectable {
         case index, kind, units, value, type
     }
 
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        kind = try container.decodeIfPresent(String.self, forKey: .kind)
+        index = try container.decodeIfPresent(Int.self, forKey: .index)
+        units = try container.decodeIfPresent(String.self, forKey: .units)
+        type = try container.decodeIfPresent(OCKOutcomeValueType.self, forKey: .type)
+        value = try container.decode(AnyCodable.self, forKey: .value)
+        
+        uuid = try container.decodeIfPresent(UUID.self, forKey: .uuid)
+        createdDate = try container.decodeIfPresent(Date.self, forKey: .createdDate)
+        updatedDate = try container.decodeIfPresent(Date.self, forKey: .updatedDate)
+        schemaVersion = try container.decodeIfPresent(OCKSemanticVersion.self, forKey: .schemaVersion)
+        groupIdentifier = try container.decodeIfPresent(String.self, forKey: .groupIdentifier)
+        tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        remoteID = try container.decodeIfPresent(String.self, forKey: .remoteID)
+        source = try container.decodeIfPresent(String.self, forKey: .source)
+        userInfo = try container.decodeIfPresent([String: String].self, forKey: .userInfo)
+        timezone = try container.decode(TimeZone.self, forKey: .timezone)
+    }
     /*
     public required init(from decoder: Decoder) throws {
         return
@@ -303,3 +321,15 @@ public class OutcomeValue: PCKObjectable {
     }
 }
 
+extension OutcomeValue {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(kind, forKey: .kind)
+        try container.encodeIfPresent(units, forKey: .units)
+        try container.encodeIfPresent(index, forKey: .index)
+        try container.encodeIfPresent(value, forKey: .value)
+        try self.encodeObjectable(to: encoder)
+    }
+}

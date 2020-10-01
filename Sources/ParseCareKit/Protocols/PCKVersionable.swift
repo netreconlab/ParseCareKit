@@ -302,13 +302,13 @@ extension PCKVersionable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         
         if encodingForParse {
-            try container.encode(nextVersion, forKey: .nextVersion)
-            try container.encode(previousVersion, forKey: .previousVersion)
+            try container.encodeIfPresent(nextVersion, forKey: .nextVersion)
+            try container.encodeIfPresent(previousVersion, forKey: .previousVersion)
             
         }
-        try container.encode(previousVersionUUID, forKey: .previousVersionUUID)
-        try container.encode(nextVersionUUID, forKey: .nextVersionUUID)
-        try container.encode(effectiveDate, forKey: .effectiveDate)
+        try container.encodeIfPresent(previousVersionUUID, forKey: .previousVersionUUID)
+        try container.encodeIfPresent(nextVersionUUID, forKey: .nextVersionUUID)
+        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
         try encodeObjectable(to: encoder)
     }
 }
