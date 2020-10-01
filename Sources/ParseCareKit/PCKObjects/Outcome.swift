@@ -53,81 +53,25 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public var ACL: ParseACL?
     
-
+    var date: Date? //Custom added, check if needed
     public var taskOccurrenceIndex: Int?
     public var values: [OutcomeValue]?
-    var task: Task? {
+    public var task: Task? {
         didSet {
             taskUUID = task?.uuid
         }
     }
-    var taskUUID: UUID? {
+    public var taskUUID: UUID? {
         didSet {
             if taskUUID != task?.uuid {
                 task = nil
             }
         }
     }
-    var date: Date?
-    /*
-    public internal(set) var taskUUID:UUID? {
-        get {
-            if task?.uuid != nil{
-                return UUID(uuidString: task!.uuid!)
-            }else if taskUUIDString != nil {
-                return UUID(uuidString: taskUUIDString!)
-            }else{
-                return nil
-            }
-        }
-        set{
-            taskUUIDString = newValue?.uuidString
-            if newValue?.uuidString != task?.uuid{
-                task = nil
-            }
-        }
-    }*/
 
-    init() {
-        
-    }
-    
-    public convenience init?(careKitEntity: OCKAnyOutcome) {
-        self.init()
-        do {
-            _ = try Self.copyCareKit(careKitEntity)
-        } catch {
-            return nil
-        }
-    }
-    /*
-    public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-    }
-    */
     enum CodingKeys: String, CodingKey {
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, date
-    }
-    /*
-    enum CodingKeys: String, CodingKey {
-        case task, taskUUID, taskOccurrenceIndex, values, date
-    }*/
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        if encodingForParse {
-            try container.encode(task, forKey: .task)
-            try container.encode(date, forKey: .date)
-        }
-        try container.encode(taskUUID, forKey: .taskUUID)
-        try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
-        //var nestedContainer = container.nestedContainer(keyedBy: OutcomeValue.CodingKeys.self, forKey: .values)
-        //try values?.encode(to: nestedContainer.superEncoder())
-        try container.encode(values, forKey: .values)
-        
-        try encodeObjectable(to: encoder)
-        encodingForParse = true
     }
     
     public func new() -> PCKSynchronizable {
@@ -330,36 +274,6 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
         return decoded
-        /*
-        if let uuid = outcome.uuid?.uuidString{
-            self.uuid = uuid
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing uuid: \(outcome)")
-        }
-        
-        if let schemaVersion = Outcome.getSchemaVersionFromCareKitEntity(outcome){
-            self.schemaVersion = schemaVersion
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(outcome)")
-        }
-        
-        self.entityId = outcome.id
-        self.taskOccurrenceIndex = outcome.taskOccurrenceIndex
-        self.groupIdentifier = outcome.groupIdentifier
-        self.tags = outcome.tags
-        self.source = outcome.source
-        self.asset = outcome.asset
-        self.timezone = outcome.timezone.abbreviation()!
-        self.updatedDate = outcome.updatedDate
-        self.userInfo = outcome.userInfo
-        self.taskUUID = outcome.taskUUID
-        self.deletedDate = outcome.deletedDate
-        self.remoteID = outcome.remoteID
-        self.createdDate = outcome.createdDate
-        self.notes = outcome.notes?.compactMap{Note(careKitEntity: $0)}
-        self.values = outcome.values.compactMap{OutcomeValue(careKitEntity: $0)}
-        
-        return self*/
     }
     
     public func copyRelational(_ parse: Outcome) -> Outcome {
@@ -379,33 +293,6 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         return try JSONDecoder().decode(OCKOutcome.self, from: encoded)
-        
-        /*
-        //Create bare Entity and replace contents with Parse contents
-        let outcomeValues = values.compactMap{$0.convertToCareKit()}
-        var outcome = OCKOutcome(taskUUID: taskUUID, taskOccurrenceIndex: taskOccurrenceIndex, values: outcomeValues)
-        
-        if fromCloud{
-            guard let decodedOutcome = decodedCareKitObject(outcome) else{
-                print("Error in \(className). Couldn't decode entity \(self)")
-                return nil
-            }
-            outcome = decodedOutcome
-        }
-        
-        outcome.groupIdentifier = self.groupIdentifier
-        outcome.tags = self.tags
-        outcome.remoteID = self.remoteID
-        outcome.source = self.source
-        outcome.userInfo = self.userInfo
-        outcome.taskOccurrenceIndex = taskOccurrenceIndex
-        outcome.groupIdentifier = self.groupIdentifier
-        outcome.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone!){
-            outcome.timezone = timeZone
-        }
-        outcome.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        return outcome*/
     }
     
     public func save(completion: @escaping(Bool,Error?) -> Void){
@@ -459,8 +346,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 return
             }
             
-            let schedule = currentTask.makeSchedule()
-            self.date = schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
+            self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
             completion(true,self)
         }
     }
@@ -523,3 +409,17 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
 }
 
+extension Outcome {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if encodingForParse {
+            try container.encode(task, forKey: .task)
+            try container.encode(date, forKey: .date)
+        }
+        try container.encode(taskUUID, forKey: .taskUUID)
+        try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
+        try container.encode(values, forKey: .values)
+        try encodeObjectable(to: encoder)
+        encodingForParse = true
+    }
+}

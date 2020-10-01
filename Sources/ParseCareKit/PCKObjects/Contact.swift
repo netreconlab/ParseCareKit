@@ -90,141 +90,32 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     public var organization:String?
     public var role:String?
     public var title:String?
-    var carePlan:CarePlan? {
+    public var carePlan:CarePlan? {
         didSet {
             carePlanUUID = carePlan?.uuid
         }
     }
-    var carePlanUUID:UUID? {
+    public var carePlanUUID:UUID? {
         didSet{
             if carePlanUUID != carePlan?.uuid {
                 carePlan = nil
             }
         }
     }
-    /*
-    var emailAddressesArray:[String]?
-    var messagingNumbersArray:[String]?
-    var otherContactInfoArray:[String]?
-    var phoneNumbersArray:[String]?*/
     
-    var messagingNumbers: [OCKLabeledValue]? /*{
-        get {
-            do{
-                return try messagingNumbersArray?.asDecodedLabeledValues()
-            }
-            catch{
-                return nil
-            }
-        }
-        set {
-            do {
-                try messagingNumbersArray = newValue?.asEncodedStringArray()
-            }catch{
-                print(error)
-            }
-        }
-    }*/
+    public var messagingNumbers: [OCKLabeledValue]?
 
-    var emailAddresses: [OCKLabeledValue]? /*{
-        get {
-            do{
-                return try emailAddressesArray?.asDecodedLabeledValues()
-            }
-            catch{
-                return nil
-            }
-        }
-        set {
-            do {
-                try emailAddressesArray = newValue?.asEncodedStringArray()
-            }catch{
-                print(error)
-            }
-        }
-    }*/
+    public var emailAddresses: [OCKLabeledValue]?
 
-    var phoneNumbers: [OCKLabeledValue]? /*{
-        get {
-            do{
-                return try phoneNumbersArray?.asDecodedLabeledValues()
-            }
-            catch{
-                return nil
-            }
-        }
-        set {
-            do {
-                try phoneNumbersArray = newValue?.asEncodedStringArray()
-            }catch{
-                print(error)
-            }
-        }
-    }*/
+    public var phoneNumbers: [OCKLabeledValue]?
 
-    var otherContactInfo: [OCKLabeledValue]? /*{
-        get {
-            do{
-                return try otherContactInfoArray?.asDecodedLabeledValues()
-            }
-            catch{
-                return nil
-            }
-        }
-        set {
-            do {
-                try otherContactInfoArray = newValue?.asEncodedStringArray()
-            }catch{
-                print(error)
-            }
-        }
-    }*/
-    
-    public static var className: String {
-        kPCKContactClassKey
-    }
+    public var otherContactInfo: [OCKLabeledValue]?
 
-    public convenience init?(careKitEntity: OCKAnyContact) {
-        self.init()
-        do {
-            _ = try self.copyCareKit(careKitEntity)
-        } catch {
-            return nil
-        }
-    }
-    
-    public init() {
-    }
-/*
-    public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-    }
-*/
     enum CodingKeys: String, CodingKey {
+        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case previousVersionUUID, nextVersionUUID, effectiveDate
         case carePlan, title, carePlanUUID, address, category, name, organization, role
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        if encodingForParse {
-            try container.encode(carePlan, forKey: .carePlan)
-        }
-        
-        try container.encode(title, forKey: .title)
-        try container.encode(carePlanUUID, forKey: .carePlanUUID)
-        try container.encode(address, forKey: .address)
-        try container.encode(category, forKey: .category)
-        try container.encode(name, forKey: .name)
-        try container.encode(organization, forKey: .organization)
-        try container.encode(role, forKey: .role)
-        try container.encode(emailAddresses, forKey: .emailAddresses)
-        try container.encode(messagingNumbers, forKey: .messagingNumbers)
-        try container.encode(phoneNumbers, forKey: .phoneNumbers)
-        try container.encode(otherContactInfo, forKey: .otherContactInfo)
-        try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
     
     public func new() -> PCKSynchronizable {
@@ -235,7 +126,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         switch careKitEntity {
         case .contact(let entity):
-            return try self.copyCareKit(entity)
+            return try Self.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -395,7 +286,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         return copied
     }
 
-    public func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
+    public class func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
         
         guard let _ = PCKUser.current,
             let contact = contactAny as? OCKContact else{
@@ -403,49 +294,8 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         }
         let encoded = try JSONEncoder().encode(contact)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        let copied = try Self.copyValues(from: decoded, to: self)
-        copied.entityId = contact.id
-        return copied
-        /*
-        if let uuid = contact.uuid?.uuidString{
-            self.uuid = uuid
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing uuid: \(contact)")
-        }
-        
-        if let schemaVersion = Contact.getSchemaVersionFromCareKitEntity(contact){
-            self.schemaVersion = schemaVersion
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(contact)")
-        }
-        
-        self.entityId = contact.id
-        self.deletedDate = contact.deletedDate
-        self.groupIdentifier = contact.groupIdentifier
-        self.tags = contact.tags
-        self.source = contact.source
-        self.title = contact.title
-        self.role = contact.role
-        self.organization = contact.organization
-        self.category = contact.category?.rawValue
-        self.asset = contact.asset
-        self.timezone = contact.timezone.abbreviation()!
-        self.name = CareKitPersonNameComponents.familyName.convertToDictionary(contact.name)
-        self.updatedDate = contact.updatedDate
-        self.userInfo = contact.userInfo
-        self.createdDate = contact.createdDate
-        self.notes = contact.notes?.compactMap{Note(careKitEntity: $0)}
-        self.emailAddresses = contact.emailAddresses
-        self.otherContactInfo = contact.otherContactInfo
-        self.phoneNumbers = contact.phoneNumbers
-        self.messagingNumbers = contact.messagingNumbers
-        self.address = CareKitPostalAddress.city.convertToDictionary(contact.address)
-        self.remoteID = contact.remoteID
-        
-        self.carePlanUUID = contact.carePlanUUID
-        self.previousVersionUUID = contact.previousVersionUUID
-        self.nextVersionUUID = contact.nextVersionUUID
-        return self*/
+        decoded.entityId = contact.id
+        return decoded
     }
     
     
@@ -455,51 +305,6 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         let encoded = try JSONEncoder().encode(self)
         self.encodingForParse = true
         return try JSONDecoder().decode(OCKContact.self, from: encoded)
-        /*
-        //Create bare Entity and replace contents with Parse contents
-        let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(name)
-        
-        var contact = OCKContact(id: self.entityId!, name: nameComponents, carePlanUUID: self.carePlanUUID)
-        
-        if fromCloud{
-            guard let decodedContact = decodedCareKitObject(contact) else{
-                print("Error in \(className). Couldn't decode entity \(self)")
-                return nil
-            }
-            contact = decodedContact
-        }
-        
-        contact.role = self.role
-        contact.title = self.title
-        
-        if let categoryToConvert = self.category{
-            contact.category = OCKContactCategory(rawValue: categoryToConvert)
-        }
-        
-        contact.groupIdentifier = self.groupIdentifier
-        contact.tags = self.tags
-        contact.source = self.source
-        contact.userInfo = self.userInfo
-        contact.remoteID = self.remoteID
-        contact.organization = self.organization
-        contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
-        if let parseCategory = self.category{
-            contact.category = OCKContactCategory(rawValue: parseCategory)
-        }
-        contact.groupIdentifier = self.groupIdentifier
-        contact.asset = self.asset
-        if let timeZone = TimeZone(abbreviation: self.timezone!){
-            contact.timezone = timeZone
-        }
-        contact.address = CareKitPostalAddress.city.convertToPostalAddress(self.address)
-        contact.phoneNumbers = self.phoneNumbers
-        contact.messagingNumbers = self.messagingNumbers
-        contact.emailAddresses = self.emailAddresses
-        contact.otherContactInfo = self.otherContactInfo
-        if let effectiveDate = self.effectiveDate{
-            contact.effectiveDate = effectiveDate
-        }
-        return contact*/
     }
     
     ///Link versions and related classes
@@ -578,3 +383,26 @@ public extension Array where Element == OCKLabeledValue {
     }
 }
 
+extension Contact {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if encodingForParse {
+            try container.encode(carePlan, forKey: .carePlan)
+        }
+        
+        try container.encode(title, forKey: .title)
+        try container.encode(carePlanUUID, forKey: .carePlanUUID)
+        try container.encode(address, forKey: .address)
+        try container.encode(category, forKey: .category)
+        try container.encode(name, forKey: .name)
+        try container.encode(organization, forKey: .organization)
+        try container.encode(role, forKey: .role)
+        try container.encode(emailAddresses, forKey: .emailAddresses)
+        try container.encode(messagingNumbers, forKey: .messagingNumbers)
+        try container.encode(phoneNumbers, forKey: .phoneNumbers)
+        try container.encode(otherContactInfo, forKey: .otherContactInfo)
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
+    }
+}

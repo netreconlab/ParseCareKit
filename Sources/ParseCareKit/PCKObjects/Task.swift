@@ -87,65 +87,26 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     public var impactsAdherence:Bool?
     public var instructions:String?
     public var title:String?
-    public var elements:[ScheduleElement]? //Use elements to generate a schedule. Each task will point to an array of schedule elements
-    var carePlan:CarePlan? {
+    public var schedule: OCKSchedule?
+    public var carePlan:CarePlan? {
         didSet {
             carePlanUUID = carePlan?.uuid
         }
     }
-    var carePlanUUID:UUID? {
+    public var carePlanUUID:UUID? {
         didSet {
             if carePlanUUID != carePlan?.uuid {
                 carePlan = nil
             }
         }
     }
-    
-    public var currentCarePlan: CarePlan?{
-        get{
-            return carePlan
-        }
-        set{
-            carePlan = newValue
-            carePlanUUID = newValue?.uuid
-        }
-    }
-
-    public static var className: String {
-        kPCKTaskClassKey
-    }
-
-    init () {
-        //super.init()
-    }
-
-    public convenience init?(careKitEntity: OCKAnyTask) {
-        self.init()
-        do {
-            _ = try Self.copyCareKit(careKitEntity)
-        } catch {
-            return nil
-        }
-    }
 
     enum CodingKeys: String, CodingKey {
-        case title, carePlan, carePlanUUID, impactsAdherence, instructions, elements
+        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case previousVersionUUID, nextVersionUUID, effectiveDate
+        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        if encodingForParse {
-            try container.encode(carePlan, forKey: .carePlan)
-        }
-        try container.encode(title, forKey: .title)
-        try container.encode(carePlanUUID, forKey: .carePlanUUID)
-        try container.encode(impactsAdherence, forKey: .impactsAdherence)
-        try container.encode(instructions, forKey: .instructions)
-        try container.encode(elements, forKey: .elements)
-        try encodeVersionable(to: encoder)
-        encodingForParse = true
-    }
-
     public func new() -> PCKSynchronizable {
         return Task()
     }
@@ -301,8 +262,8 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         here.impactsAdherence = other.impactsAdherence
         here.instructions = other.instructions
         here.title = other.title
-        here.elements = other.elements
-        here.currentCarePlan = other.currentCarePlan
+        here.schedule = other.schedule
+        here.carePlan = other.carePlan
         here.carePlanUUID = other.carePlanUUID
         
         guard let copied = here as? Self else {
@@ -323,51 +284,11 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
         return decoded
-        /*
-        if let uuid = task.uuid?.uuidString{
-            self.uuid = uuid
-        }else{
-            print("Warning in \(className). Entity missing uuid: \(task)")
-        }
-        
-        if let schemaVersion = Task.getSchemaVersionFromCareKitEntity(task){
-            self.schemaVersion = schemaVersion
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(task)")
-        }
-        
-        self.entityId = task.id
-        self.deletedDate = task.deletedDate
-        self.groupIdentifier = task.groupIdentifier
-        self.title = task.title
-        self.impactsAdherence = task.impactsAdherence
-        self.tags = task.tags
-        self.source = task.source
-        self.asset = task.asset
-        self.timezone = task.timezone.abbreviation()!
-        self.effectiveDate = task.effectiveDate
-        self.updatedDate = task.updatedDate
-        self.userInfo = task.userInfo
-        self.remoteID = task.remoteID
-        self.createdDate = task.createdDate
-        self.notes = task.notes?.compactMap{Note(careKitEntity: $0)}
-        self.elements = task.schedule.elements.compactMap{ScheduleElement(careKitEntity: $0)}
-        self.previousVersionUUID = task.previousVersionUUID
-        self.nextVersionUUID = task.nextVersionUUID
-        self.carePlanUUID = task.carePlanUUID
-        return self*/
     }
     
     public func copyRelational(_ parse: Task) -> Task {
         var copy = self
         copy = copy.copyRelationalEntities(parse)
-        if copy.elements == nil {
-            copy.elements = .init()
-        }
-        
-        if parse.elements != nil {
-            ScheduleElement.replaceWithCloudVersion(&copy.elements!, cloud: parse.elements!)
-        }
         return copy
     }
     
@@ -377,44 +298,6 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         return try JSONDecoder().decode(OCKTask.self, from: encoded)
-
-        /*
-        guard self.canConvertToCareKit() == true,
-            let impactsAdherence = self.impactsAdherence,
-              let elements = self.elements else {
-            return nil
-        }
-
-        //Create bare Entity and replace contents with Parse contents
-        let careKitScheduleElements = elements.compactMap{$0.convertToCareKit()}
-        let schedule = OCKSchedule(composing: careKitScheduleElements)
-        var task = OCKTask(id: self.entityId!, title: self.title, carePlanUUID: self.carePlanUUID, schedule: schedule)
-        
-        if fromCloud{
-            guard let decodedTask = decodedCareKitObject(task) else{
-                print("Error in \(className). Couldn't decode entity \(self)")
-                return nil
-            }
-            task = decodedTask
-        }
-        task.remoteID = self.remoteID
-        task.groupIdentifier = self.groupIdentifier
-        task.tags = self.tags
-        if let effectiveDate = self.effectiveDate{
-            task.effectiveDate = effectiveDate
-        }
-        task.source = self.source
-        task.instructions = self.instructions
-        task.impactsAdherence = impactsAdherence
-        task.groupIdentifier = self.groupIdentifier
-        task.asset = self.asset
-        task.userInfo = self.userInfo
-        if let timeZone = TimeZone(abbreviation: self.timezone!){
-            task.timezone = timeZone
-        }
-        task.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        
-        return task*/
     }
     
     ///Link versions and related classes
@@ -447,19 +330,28 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    func makeSchedule() -> OCKSchedule? {
-        guard let elements = self.elements else {
-            return nil
-        }
-        return OCKSchedule(composing: elements.compactMap{ try? $0.convertToCareKit() })
-    }
-    
     public func stampRelational() throws -> Task {
         var stamped = self
         stamped = try stamped.stampRelationalEntities()
-        stamped.elements?.forEach{$0.stamp(self.logicalClock!)}
+        //stamped.elements?.forEach{$0.stamp(self.logicalClock!)}
         
         return stamped
+    }
+}
+
+extension Task {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if encodingForParse {
+            try container.encode(carePlan, forKey: .carePlan)
+        }
+        try container.encode(title, forKey: .title)
+        try container.encode(carePlanUUID, forKey: .carePlanUUID)
+        try container.encode(impactsAdherence, forKey: .impactsAdherence)
+        try container.encode(instructions, forKey: .instructions)
+        try container.encode(schedule, forKey: .schedule)
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
     }
 }
 

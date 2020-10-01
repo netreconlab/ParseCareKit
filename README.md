@@ -31,7 +31,6 @@ ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](htt
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
 ParseCareKitUtility.setupServer() //Pulls from ParseCareKit.plist to connect to server
-PFUser.enableRevocableSessionInBackground() //Allows you to revoke sessions from the Cloud
 
 ```
 

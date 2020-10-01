@@ -56,36 +56,11 @@ open class Note: PCKObjectable {
     public var content:String?
     public var title:String?
     public var author:String?
-
-    init() {
-        
-    }
-
-    public convenience init?(careKitEntity: OCKNote) {
-        do {
-            self.init()
-            _ = try Self.copyCareKit(careKitEntity)
-        } catch {
-            return nil
-        }
-    }
     
     enum CodingKeys: String, CodingKey {
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case content, title, author
     }
-    /*
-    enum CodingKeys: String, CodingKey {
-        case content, title, author
-    }
-    
-    public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(content, forKey: .content)
-        try container.encode(title, forKey: .title)
-        try container.encode(author, forKey: .author)
-    }*/
 
     open class func copyValues(from other: Note, to here: Note) throws -> Self {
         var here = here
@@ -102,31 +77,6 @@ open class Note: PCKObjectable {
     open class func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try JSONEncoder().encode(note)
         return try JSONDecoder().decode(Self.self, from: encoded)
-        /*
-        if let uuid = Note.getUUIDFromCareKitEntity(note){
-            self.uuid = uuid
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing uuid: \(note)")
-        }
-        
-        if let schemaVersion = Note.getSchemaVersionFromCareKitEntity(note){
-            self.schemaVersion = schemaVersion
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(note)")
-        }
-        self.timezone = note.timezone.abbreviation()!
-        self.groupIdentifier = note.groupIdentifier
-        self.tags = note.tags
-        self.source = note.source
-        self.asset = note.asset
-        self.timezone = note.timezone.abbreviation()!
-        self.author = note.author
-        self.userInfo = note.userInfo
-        self.updatedDate = note.updatedDate
-        self.remoteID = note.remoteID
-        self.createdDate = note.createdDate
-        self.notes = note.notes?.compactMap{Note(careKitEntity: $0)}*/
-        //return self
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -134,40 +84,6 @@ open class Note: PCKObjectable {
         encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         return try JSONDecoder().decode(OCKNote.self, from: encoded)
-        
-        /*
-        guard self.canConvertToCareKit() == true,
-            let content = self.content,
-              let title = self.title else {
-            return nil
-        }
-        
-        var note: OCKNote!
-        if fromCloud{
-            guard let decodedNote = decodedCareKitObject(self.author, title: title, content: content) else{
-                print("Error in \(className). Couldn't decode entity \(self)")
-                return nil
-            }
-            note = decodedNote
-        }else{
-            //Create bare Entity and replace contents with Parse contents
-            note = OCKNote(author: self.author, title: self.title, content: self.content)
-        }
-        note.remoteID = self.remoteID
-        note.asset = self.asset
-        note.groupIdentifier = self.groupIdentifier
-        note.tags = self.tags
-        note.source = self.source
-        note.userInfo = self.userInfo
-        note.author = self.author
-        note.remoteID = self.remoteID
-        note.groupIdentifier = self.groupIdentifier
-        note.asset = self.asset
-        if let timeZone = self.timezone {
-            note.timezone = timeZone
-        }
-        note.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        return note*/
     }
     
     func stamp(_ clock: Int){

@@ -125,7 +125,6 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         try container.encode(name, forKey: .name)
         try container.encode(sex, forKey: .sex)
         try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
     
     public func new() -> PCKSynchronizable {

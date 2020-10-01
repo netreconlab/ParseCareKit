@@ -102,34 +102,11 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public static var className: String {
         kPCKCarePlanClassKey
     }
-
-
-    init () {
-        
-    }
-    
-    public convenience init?(careKitEntity: OCKAnyCarePlan) {
-        do {
-            self.init()
-            _ = try Self.copyCareKit(careKitEntity)
-        } catch {
-            return nil
-        }
-    }
     
     enum CodingKeys: String, CodingKey {
+        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case previousVersionUUID, nextVersionUUID, effectiveDate
         case title, patient, patientUUID
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        if encodingForParse {
-            try container.encode(patient, forKey: .patient)
-        }
-        try container.encode(title, forKey: .title)
-        try container.encode(patientUUID, forKey: .patientUUID)
-        try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
     
     public func new() -> PCKSynchronizable {
@@ -303,78 +280,14 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
         return decoded
-        
-        /*
-        if let uuid = carePlan.uuid?.uuidString{
-            self.uuid = uuid
-        }else{
-            print("Warning in \(className). Entity missing uuid: \(carePlan)")
-        }
-        
-        if let schemaVersion = CarePlan.getSchemaVersionFromCareKitEntity(carePlan){
-            self.schemaVersion = schemaVersion
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(carePlan)")
-        }
-        
-        self.entityId = carePlan.id
-        self.deletedDate = carePlan.deletedDate
-        self.title = carePlan.title
-        self.groupIdentifier = carePlan.groupIdentifier
-        self.tags = carePlan.tags
-        self.source = carePlan.source
-        self.asset = carePlan.asset
-        self.timezone = carePlan.timezone.abbreviation()!
-        self.effectiveDate = carePlan.effectiveDate
-        self.updatedDate = carePlan.updatedDate
-        self.userInfo = carePlan.userInfo
-        self.createdDate = carePlan.createdDate
-        self.notes = carePlan.notes?.compactMap{Note(careKitEntity: $0)}
-        self.remoteID = carePlan.remoteID
-        self.patientUUID = carePlan.patientUUID
-        self.previousVersionUUID = carePlan.previousVersionUUID
-        self.nextVersionUUID = carePlan.nextVersionUUID
-        return self*/
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKCarePlan? {
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKCarePlan {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
         self.encodingForParse = true
         return try JSONDecoder().decode(OCKCarePlan.self, from: encoded)
-        /*
-        //If super passes, can safely force unwrap entityId, timeZone
-        guard self.canConvertToCareKit() == true,
-              let title = self.title else {
-            return nil
-        }
-
-        //Create bare Entity and replace contents with Parse contents
-        var carePlan = OCKCarePlan(id: self.entityId!, title: title, patientUUID: self.patientUUID)
-        
-        if fromCloud{
-            guard let decodedCarePlan = decodedCareKitObject(carePlan) else {
-                print("Error in \(className). Couldn't decode entity \(self)")
-                return nil
-            }
-            carePlan = decodedCarePlan
-        }
-        carePlan.remoteID = self.remoteID
-        carePlan.groupIdentifier = self.groupIdentifier
-        carePlan.tags = self.tags
-        if let effectiveDate = self.effectiveDate{
-            carePlan.effectiveDate = effectiveDate
-        }
-        carePlan.source = self.source
-        carePlan.groupIdentifier = self.groupIdentifier
-        carePlan.asset = self.asset
-        carePlan.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        carePlan.userInfo = self.userInfo
-        if let timeZone = TimeZone(abbreviation: self.timezone!){
-            carePlan.timezone = timeZone
-        }
-        return carePlan*/
     }
     
     ///Link versions and related classes
@@ -404,5 +317,18 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                 completion(linkedNew,linked)
             }
         }
+    }
+}
+
+extension CarePlan {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if encodingForParse {
+            try container.encode(patient, forKey: .patient)
+        }
+        try container.encode(title, forKey: .title)
+        try container.encode(patientUUID, forKey: .patientUUID)
+        try encodeVersionable(to: encoder)
+        encodingForParse = true
     }
 }

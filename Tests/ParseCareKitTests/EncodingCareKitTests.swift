@@ -94,60 +94,56 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKit]
         
-        do {
-            //Test CareKit -> Parse
-            let parse = try Note.copyCareKit(careKit)
+        //Test CareKit -> Parse
+        let parse = try Note.copyCareKit(careKit)
 
-            //Special
-            XCTAssertEqual(parse.content, careKit.content)
-            XCTAssertEqual(parse.title, careKit.title)
-            XCTAssertEqual(parse.author, careKit.author)
-            
-            //Objectable
-            XCTAssertEqual(parse.className, "Note")
-            XCTAssertEqual(parse.uuid, careKit.uuid)
-            XCTAssertEqual(parse.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse.timezone, careKit.timezone)
-            XCTAssertEqual(parse.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse.source, careKit.source)
-            XCTAssertEqual(parse.asset, careKit.asset)
-            XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse.tags, careKit.tags)
-            XCTAssertEqual(parse.notes?.count, 1)
-            XCTAssertEqual(parse.notes?.first?.author, "myId")
-            XCTAssertEqual(parse.notes?.first?.title, "hello")
-            XCTAssertEqual(parse.notes?.first?.content, "world")
-            
-            //Test Parse -> CareKit
-            let parse2 = try parse.convertToCareKit()
-            
-            //Special
-            XCTAssertEqual(parse2.content, careKit.content)
-            XCTAssertEqual(parse2.title, careKit.title)
-            XCTAssertEqual(parse2.author, careKit.author)
-            
-            //Objectable
-            XCTAssertEqual(parse2.uuid, careKit.uuid)
-            XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse2.timezone, careKit.timezone)
-            XCTAssertEqual(parse2.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse2.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse2.source, careKit.source)
-            XCTAssertEqual(parse2.asset, careKit.asset)
-            XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse2.tags, careKit.tags)
-            XCTAssertEqual(parse2.notes?.count, 1)
-            XCTAssertEqual(parse2.notes?.first?.author, "myId")
-            XCTAssertEqual(parse2.notes?.first?.title, "hello")
-            XCTAssertEqual(parse2.notes?.first?.content, "world")
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
+        //Special
+        XCTAssertEqual(parse.content, careKit.content)
+        XCTAssertEqual(parse.title, careKit.title)
+        XCTAssertEqual(parse.author, careKit.author)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "Note")
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+        
+        //Special
+        XCTAssertEqual(parse2.content, careKit.content)
+        XCTAssertEqual(parse2.title, careKit.title)
+        XCTAssertEqual(parse2.author, careKit.author)
+        
+        //Objectable
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
     }
 
     func testPatient() throws {
@@ -178,80 +174,72 @@ class ParseCareKitTests: XCTestCase {
         careKit.nextVersionUUID = UUID()
         careKit.effectiveDate = Date().addingTimeInterval(-199)
         
-        do {
-            //Test CareKit -> Parse
-            let parse = try Patient.copyCareKit(careKit)
-    /*
-            let encoded = try JSONEncoder().encode(careKit)
-            let decoded = try JSONDecoder().decode([String: AnyCodable].self, from: encoded)
-            print(decoded)
-    */
-            //Special
-            XCTAssertEqual(parse.name, careKit.name)
-            XCTAssertEqual(parse.sex, careKit.sex)
-            XCTAssertEqual(parse.birthday, careKit.birthday)
-            XCTAssertEqual(parse.allergies, careKit.allergies)
-            
-            //Objectable
-            XCTAssertEqual(parse.className, "Patient")
-            XCTAssertEqual(parse.entityId, careKit.id)
-            XCTAssertEqual(parse.uuid, careKit.uuid)
-            XCTAssertEqual(parse.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
-            XCTAssertEqual(parse.timezone, careKit.timezone)
-            XCTAssertEqual(parse.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse.source, careKit.source)
-            XCTAssertEqual(parse.asset, careKit.asset)
-            XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse.tags, careKit.tags)
-            XCTAssertEqual(parse.notes?.count, 1)
-            XCTAssertEqual(parse.notes?.first?.author, "myId")
-            XCTAssertEqual(parse.notes?.first?.title, "hello")
-            XCTAssertEqual(parse.notes?.first?.content, "world")
-            
-            //Versionable
-            XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
-            XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
-            XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
-            
-            //Test Parse -> CareKit
-            let parse2 = try parse.convertToCareKit()
+        //Test CareKit -> Parse
+        let parse = try Patient.copyCareKit(careKit)
 
-            //Special
-            XCTAssertEqual(parse2.name, careKit.name)
-            XCTAssertEqual(parse2.sex, careKit.sex)
-            XCTAssertEqual(parse2.birthday, careKit.birthday)
-            XCTAssertEqual(parse2.allergies, careKit.allergies)
-            
-            //Objectable
-            XCTAssertEqual(parse2.id, careKit.id)
-            XCTAssertEqual(parse2.uuid, careKit.uuid)
-            XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
-            XCTAssertEqual(parse2.timezone, careKit.timezone)
-            XCTAssertEqual(parse2.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse2.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse2.source, careKit.source)
-            XCTAssertEqual(parse2.asset, careKit.asset)
-            XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse2.tags, careKit.tags)
-            XCTAssertEqual(parse2.notes?.count, 1)
-            XCTAssertEqual(parse2.notes?.first?.author, "myId")
-            XCTAssertEqual(parse2.notes?.first?.title, "hello")
-            XCTAssertEqual(parse2.notes?.first?.content, "world")
-            
-            //Versionable
-            XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
-            XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
-            XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
+        //Special
+        XCTAssertEqual(parse.name, careKit.name)
+        XCTAssertEqual(parse.sex, careKit.sex)
+        XCTAssertEqual(parse.birthday, careKit.birthday)
+        XCTAssertEqual(parse.allergies, careKit.allergies)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "Patient")
+        XCTAssertEqual(parse.entityId, careKit.id)
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+
+        //Special
+        XCTAssertEqual(parse2.name, careKit.name)
+        XCTAssertEqual(parse2.sex, careKit.sex)
+        XCTAssertEqual(parse2.birthday, careKit.birthday)
+        XCTAssertEqual(parse2.allergies, careKit.allergies)
+        
+        //Objectable
+        XCTAssertEqual(parse2.id, careKit.id)
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
 
     func testOutcomeValue() throws {
@@ -276,78 +264,71 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKitNote]
         
-        do {
-            //Test CareKit -> Parse
-            let parse = try OutcomeValue.copyCareKit(careKit)
+        //Test CareKit -> Parse
+        let parse = try OutcomeValue.copyCareKit(careKit)
 
-            //Special
-            XCTAssertEqual(parse.index, careKit.index)
-            XCTAssertEqual(parse.kind, careKit.kind)
-            XCTAssertEqual(parse.units, careKit.units)
-            guard let value = parse.value?.value as? Int,
-                  let careKitValue = careKit.value as? Int else {
-                XCTFail("Should have casted")
-                return
-            }
+        //Special
+        XCTAssertEqual(parse.index, careKit.index)
+        XCTAssertEqual(parse.kind, careKit.kind)
+        XCTAssertEqual(parse.units, careKit.units)
+        if let value = parse.value?.value as? Int,
+            let careKitValue = careKit.value as? Int {
             XCTAssertEqual(value, careKitValue)
-            
-            //Objectable
-            XCTAssertEqual(parse.className, "OutcomeValue")
-            XCTAssertEqual(parse.uuid, careKit.uuid)
-            XCTAssertEqual(parse.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse.timezone, careKit.timezone)
-            XCTAssertEqual(parse.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse.source, careKit.source)
-            XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse.tags, careKit.tags)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            
-            //This skips the encoding/decoding of below on purpose
-            /*
-            XCTAssertEqual(parse.asset, careKit.asset)
-            XCTAssertEqual(parse.notes?.count, 1)
-            XCTAssertEqual(parse.notes?.first?.author, "myId")
-            XCTAssertEqual(parse.notes?.first?.title, "hello")
-            XCTAssertEqual(parse.notes?.first?.content, "world")*/
-            
-            //Test Parse -> CareKit
-            let parse2 = try parse.convertToCareKit()
-            //Special
-            XCTAssertEqual(parse2.index, careKit.index)
-            XCTAssertEqual(parse2.kind, careKit.kind)
-            XCTAssertEqual(parse2.units, careKit.units)
-            guard let value2 = parse2.value as? Int,
-                  let careKitValue2 = careKit.value as? Int else {
-                XCTFail("Should have casted")
-                return
-            }
-            XCTAssertEqual(value2, careKitValue2)
-            
-            //Objectable
-            XCTAssertEqual(parse2.uuid, careKit.uuid)
-            XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse2.timezone, careKit.timezone)
-            XCTAssertEqual(parse2.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse2.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse2.source, careKit.source)
-            XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse2.tags, careKit.tags)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            
-        } catch {
-            XCTFail(error.localizedDescription)
+        } else {
+            XCTFail("Should have casted")
         }
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "OutcomeValue")
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+        //Special
+        XCTAssertEqual(parse2.index, careKit.index)
+        XCTAssertEqual(parse2.kind, careKit.kind)
+        XCTAssertEqual(parse2.units, careKit.units)
+        if let value2 = parse2.value as? Int,
+            let careKitValue = careKit.value as? Int {
+            XCTAssertEqual(value2, careKitValue)
+        } else {
+            XCTFail("Should have casted")
+        }
+        
+        //Objectable
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
     }
 
     func testOutcome() throws {
         var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
-        
-        //Special
-        //let test = careKit.
         
         //Objectable
         careKit.uuid = UUID()
@@ -364,83 +345,78 @@ class ParseCareKitTests: XCTestCase {
         careKit.notes = [careKitNote]
         careKit.timezone = .current
         
-        do {
-            //Test CareKit -> Parse
-            let parse = try Outcome.copyCareKit(careKit)
+    
+        //Test CareKit -> Parse
+        let parse = try Outcome.copyCareKit(careKit)
 
-            //Special
-            XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
-            XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
-            XCTAssertEqual(parse.values?.count, 1)
-            XCTAssertEqual(careKit.values.count, 1)
-            guard let value = parse.values?.first?.value?.value as? Int,
-                  let careKitValue = careKit.values.first?.value as? Int else {
-                XCTFail("Should have casted")
-                return
-            }
-            XCTAssertEqual(value, careKitValue)
-            
-            //Objectable
-            XCTAssertEqual(parse.className, "Outcome")
-            XCTAssertEqual(parse.uuid, careKit.uuid)
-            XCTAssertEqual(parse.entityId, careKit.id)
-            XCTAssertEqual(parse.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse.timezone, careKit.timezone)
-            XCTAssertEqual(parse.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse.source, careKit.source)
-            XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse.tags, careKit.tags)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse.asset, careKit.asset)
-            XCTAssertEqual(parse.notes?.count, 1)
-            XCTAssertEqual(parse.notes?.first?.author, "myId")
-            XCTAssertEqual(parse.notes?.first?.title, "hello")
-            XCTAssertEqual(parse.notes?.first?.content, "world")
-            
-            //Test Parse -> CareKit
-            let parse2 = try parse.convertToCareKit()
-            
-            //Special
-            XCTAssertEqual(parse2.taskUUID, careKit.taskUUID)
-            XCTAssertEqual(parse2.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
-            XCTAssertEqual(parse2.values.count, 1)
-            XCTAssertEqual(careKit.values.count, 1)
-            guard let value2 = parse2.values.first?.value as? Int,
-                  let careKitValue2 = careKit.values.first?.value as? Int else {
-                XCTFail("Should have casted")
-                return
-            }
-            XCTAssertEqual(value2, careKitValue2)
-            
-            //Objectable
-            XCTAssertEqual(parse2.uuid, careKit.uuid)
-            XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse2.timezone, careKit.timezone)
-            XCTAssertEqual(parse2.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse2.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse2.source, careKit.source)
-            XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse2.tags, careKit.tags)
-            XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse2.asset, careKit.asset)
-            XCTAssertEqual(parse2.notes?.count, 1)
-            XCTAssertEqual(parse2.notes?.first?.author, "myId")
-            XCTAssertEqual(parse2.notes?.first?.title, "hello")
-            XCTAssertEqual(parse2.notes?.first?.content, "world")
-            
-        } catch {
-            XCTFail(error.localizedDescription)
+        //Special
+        XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
+        XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
+        XCTAssertEqual(parse.values?.count, 1)
+        XCTAssertEqual(careKit.values.count, 1)
+        guard let value = parse.values?.first?.value?.value as? Int,
+              let careKitValue = careKit.values.first?.value as? Int else {
+            XCTFail("Should have casted")
+            return
         }
+        XCTAssertEqual(value, careKitValue)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "Outcome")
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.entityId, careKit.id)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+        
+        //Special
+        XCTAssertEqual(parse2.taskUUID, careKit.taskUUID)
+        XCTAssertEqual(parse2.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
+        XCTAssertEqual(parse2.values.count, 1)
+        if let value2 = parse2.values.first?.value as? Int,
+            let careKitValue = careKit.values.first?.value as? Int {
+            XCTAssertEqual(value2, careKitValue)
+        } else {
+            XCTFail("Should have casted")
+        }
+        
+        //Objectable
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
     }
-
+/*
     func testScheduleElement() throws {
         var careKit = OCKScheduleElement(start: Date(), end: Date().addingTimeInterval(3000), interval: .init(day: 1))
 
         //Objectable
-        careKit.targetValues = .init()
+        careKit.targetValues = [.init(10)]
         careKit.text = "we"
         careKit.duration = .allDay
         
@@ -454,14 +430,14 @@ class ParseCareKitTests: XCTestCase {
             XCTAssertEqual(parse.start, careKit.start)
             XCTAssertEqual(parse.interval, careKit.interval)
             XCTAssertEqual(parse.end, careKit.end)
-            /*XCTAssertEqual(parse.targetValues?.count, 1)
             XCTAssertEqual(parse.targetValues?.count, 1)
-            guard let value = parse.targetValues?.first?.value?.value as? Int,
-                  let careKitValue = careKit.targetValues.first?.value as? Int else {
+            XCTAssertEqual(parse.targetValues?.count, 1)
+            if let value = parse.targetValues?.first?.value?.value as? Int,
+                let careKitValue = careKit.targetValues.first?.value as? Int {
+                XCTAssertEqual(value, careKitValue)
+            } else {
                 XCTFail("Should have casted")
-                return
             }
-            XCTAssertEqual(value, careKitValue)*/
             
             //Objectable
             XCTAssertEqual(parse.className, "ScheduleElement")
@@ -474,26 +450,120 @@ class ParseCareKitTests: XCTestCase {
             XCTAssertEqual(parse2.start, careKit.start)
             XCTAssertEqual(parse2.interval, careKit.interval)
             XCTAssertEqual(parse2.end, careKit.end)
-            /*XCTAssertEqual(parse.targetValues?.count, 1)
-            XCTAssertEqual(parse.targetValues?.count, 1)
-            guard let value = parse.targetValues?.first?.value?.value as? Int,
-                  let careKitValue = careKit.targetValues.first?.value as? Int else {
+            XCTAssertEqual(parse2.targetValues.count, 1)
+            if let value2 = parse2.targetValues.first?.value as? Int,
+               let careKitValue = careKit.targetValues.first?.value as? Int {
+                XCTAssertEqual(value2, careKitValue)
+            } else {
                 XCTFail("Should have casted")
-                return
             }
-            XCTAssertEqual(value, careKitValue)*/
+            
         } catch {
             XCTFail(error.localizedDescription)
         }
-    }
+    }*/
 
     func testTask() throws {
-        var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
+        let careKitSchedule = OCKScheduleElement(start: Date(), end: Date().addingTimeInterval(3000), interval: .init(day: 1))
+        var careKit = OCKTask(id: "myId", title: "hello", carePlanUUID: UUID(), schedule: .init(composing: [careKitSchedule]))
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
+
         //Special
-        careKit.birthday = Date().addingTimeInterval(-300)
-        careKit.allergies = ["sneezing"]
-        careKit.sex = .female
+        careKit.impactsAdherence = true
+        careKit.instructions = "sneezing"
+        careKit.carePlanUUID = UUID()
+        
+        //Objectable
+        careKit.uuid = UUID()
+        careKit.createdDate = Date().addingTimeInterval(-200)
+        careKit.deletedDate = Date().addingTimeInterval(-100)
+        careKit.updatedDate = Date().addingTimeInterval(-99)
+        careKit.timezone = .current
+        careKit.userInfo = ["String": "String"]
+        careKit.remoteID = "we"
+        careKit.groupIdentifier = "mine"
+        careKit.tags = ["one", "two"]
+        careKit.schemaVersion = .init(majorVersion: 4)
+        careKit.source = "yo"
+        careKit.asset = "pic"
+        careKit.notes = [careKitNote]
+        
+        //Versionable
+        careKit.previousVersionUUID = UUID()
+        careKit.nextVersionUUID = UUID()
+        careKit.effectiveDate = Date().addingTimeInterval(-199)
+        
+        //Test CareKit -> Parse
+        let parse = try Task.copyCareKit(careKit)
+
+        //Special
+        XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
+        XCTAssertEqual(parse.title, careKit.title)
+        XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        //XCTAssertEqual(parse.allergies, careKit.allergies)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "Task")
+        XCTAssertEqual(parse.entityId, careKit.id)
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+
+        //Special
+        XCTAssertEqual(parse2.impactsAdherence, careKit.impactsAdherence)
+        XCTAssertEqual(parse2.title, careKit.title)
+        XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
+        //XCTAssertEqual(parse2.allergies, careKit.allergies)
+        
+        //Objectable
+        XCTAssertEqual(parse2.id, careKit.id)
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+    }
+
+    func testCarePlan() throws {
+        var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
+        let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
         //Objectable
         careKit.uuid = UUID()
@@ -515,79 +585,183 @@ class ParseCareKitTests: XCTestCase {
         careKit.nextVersionUUID = UUID()
         careKit.effectiveDate = Date().addingTimeInterval(-199)
         
-        do {
-            //Test CareKit -> Parse
-            let parse = try Patient.copyCareKit(careKit)
-    /*
-            let encoded = try JSONEncoder().encode(careKit)
-            let decoded = try JSONDecoder().decode([String: AnyCodable].self, from: encoded)
-            print(decoded)
-    */
-            //Special
-            XCTAssertEqual(parse.name, careKit.name)
-            XCTAssertEqual(parse.sex, careKit.sex)
-            XCTAssertEqual(parse.birthday, careKit.birthday)
-            XCTAssertEqual(parse.allergies, careKit.allergies)
-            
-            //Objectable
-            XCTAssertEqual(parse.className, "Patient")
-            XCTAssertEqual(parse.entityId, careKit.id)
-            XCTAssertEqual(parse.uuid, careKit.uuid)
-            XCTAssertEqual(parse.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
-            XCTAssertEqual(parse.timezone, careKit.timezone)
-            XCTAssertEqual(parse.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse.source, careKit.source)
-            XCTAssertEqual(parse.asset, careKit.asset)
-            XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse.tags, careKit.tags)
-            XCTAssertEqual(parse.notes?.count, 1)
-            XCTAssertEqual(parse.notes?.first?.author, "myId")
-            XCTAssertEqual(parse.notes?.first?.title, "hello")
-            XCTAssertEqual(parse.notes?.first?.content, "world")
-            
-            //Versionable
-            XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
-            XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
-            XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
-            
-            //Test Parse -> CareKit
-            let parse2 = try parse.convertToCareKit()
+        //Test CareKit -> Parse
+        let parse = try CarePlan.copyCareKit(careKit)
 
-            //Special
-            XCTAssertEqual(parse2.name, careKit.name)
-            XCTAssertEqual(parse2.sex, careKit.sex)
-            XCTAssertEqual(parse2.birthday, careKit.birthday)
-            XCTAssertEqual(parse2.allergies, careKit.allergies)
-            
-            //Objectable
-            XCTAssertEqual(parse2.id, careKit.id)
-            XCTAssertEqual(parse2.uuid, careKit.uuid)
-            XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-            XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-            XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
-            XCTAssertEqual(parse2.timezone, careKit.timezone)
-            XCTAssertEqual(parse2.userInfo, careKit.userInfo)
-            XCTAssertEqual(parse2.remoteID, careKit.remoteID)
-            XCTAssertEqual(parse2.source, careKit.source)
-            XCTAssertEqual(parse2.asset, careKit.asset)
-            XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
-            XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
-            XCTAssertEqual(parse2.tags, careKit.tags)
-            XCTAssertEqual(parse2.notes?.count, 1)
-            XCTAssertEqual(parse2.notes?.first?.author, "myId")
-            XCTAssertEqual(parse2.notes?.first?.title, "hello")
-            XCTAssertEqual(parse2.notes?.first?.content, "world")
-            
-            //Versionable
-            XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
-            XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
-            XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
+        //Special
+        XCTAssertEqual(parse.title, careKit.title)
+        XCTAssertEqual(parse.patientUUID, careKit.patientUUID)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "CarePlan")
+        XCTAssertEqual(parse.entityId, careKit.id)
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+
+        //Special
+        XCTAssertEqual(parse2.title, careKit.title)
+        XCTAssertEqual(parse2.patientUUID, careKit.patientUUID)
+        //XCTAssertEqual(parse2.allergies, careKit.allergies)
+        
+        //Objectable
+        XCTAssertEqual(parse2.id, careKit.id)
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+    }
+
+    func testContact() throws {
+        var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
+        let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
+
+        //Special
+        let address = OCKPostalAddress()
+        address.state = "KY"
+        careKit.address = address
+        careKit.category = .careProvider
+        careKit.organization = "yo"
+        careKit.role = "nope"
+        careKit.title = "wep"
+        careKit.messagingNumbers = [.init(label: "home", value: "555-4325")]
+        careKit.emailAddresses = [.init(label: "mine", value: "netrecon@uky.edu")]
+        careKit.phoneNumbers = [.init(label: "wer", value: "232-45")]
+        careKit.otherContactInfo = [.init(label: "qp", value: "rest")]
+
+        //Objectable
+        careKit.uuid = UUID()
+        careKit.createdDate = Date().addingTimeInterval(-200)
+        careKit.deletedDate = Date().addingTimeInterval(-100)
+        careKit.updatedDate = Date().addingTimeInterval(-99)
+        careKit.timezone = .current
+        careKit.userInfo = ["String": "String"]
+        careKit.remoteID = "we"
+        careKit.groupIdentifier = "mine"
+        careKit.tags = ["one", "two"]
+        careKit.schemaVersion = .init(majorVersion: 4)
+        careKit.source = "yo"
+        careKit.asset = "pic"
+        careKit.notes = [careKitNote]
+        
+        //Versionable
+        careKit.previousVersionUUID = UUID()
+        careKit.nextVersionUUID = UUID()
+        careKit.effectiveDate = Date().addingTimeInterval(-199)
+        
+        //Test CareKit -> Parse
+        let parse = try Contact.copyCareKit(careKit)
+
+        //Special
+        XCTAssertEqual(parse.title, careKit.title)
+        XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse.address, careKit.address)
+        XCTAssertEqual(parse.category, careKit.category)
+        XCTAssertEqual(parse.role, careKit.role)
+        XCTAssertEqual(parse.messagingNumbers, careKit.messagingNumbers)
+        XCTAssertEqual(parse.emailAddresses, careKit.emailAddresses)
+        XCTAssertEqual(parse.phoneNumbers, careKit.phoneNumbers)
+        XCTAssertEqual(parse.otherContactInfo, careKit.otherContactInfo)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, "Contact")
+        XCTAssertEqual(parse.entityId, careKit.id)
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+
+        //Special
+        XCTAssertEqual(parse2.title, careKit.title)
+        XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse2.address, careKit.address)
+        XCTAssertEqual(parse2.category, careKit.category)
+        XCTAssertEqual(parse2.role, careKit.role)
+        XCTAssertEqual(parse2.messagingNumbers, careKit.messagingNumbers)
+        XCTAssertEqual(parse2.emailAddresses, careKit.emailAddresses)
+        XCTAssertEqual(parse2.phoneNumbers, careKit.phoneNumbers)
+        XCTAssertEqual(parse2.otherContactInfo, careKit.otherContactInfo)
+        
+        //Objectable
+        XCTAssertEqual(parse2.id, careKit.id)
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
+        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Versionable
+        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
+        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
 }
