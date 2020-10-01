@@ -22,7 +22,7 @@ internal protocol PCKVersionable: PCKObjectable {
     
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.
-    var effectiveDate: Date? { get set }
+    var effectiveDate: Date { get set }
     
 }
 
@@ -308,7 +308,7 @@ extension PCKVersionable {
         }
         try container.encodeIfPresent(previousVersionUUID, forKey: .previousVersionUUID)
         try container.encodeIfPresent(nextVersionUUID, forKey: .nextVersionUUID)
-        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
+        try container.encode(effectiveDate, forKey: .effectiveDate)
         try encodeObjectable(to: encoder)
     }
 }

@@ -14,10 +14,9 @@ import CareKitStore
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
 public protocol PCKSynchronizable {
-    func addToCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func updateCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func deleteFromCloud(_ usingKnowledgeVector:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
-    func new() -> PCKSynchronizable
+    func addToCloud(_ usingClock:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
+    func updateCloud(_ usingClock:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
+    func deleteFromCloud(_ usingClock:Bool, overwriteRemote: Bool, completion: @escaping(Bool,Error?) -> Void)
     func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable
     func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
     func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)

@@ -15,7 +15,14 @@ public class OutcomeValue: PCKObjectable {
     
     public internal(set) var uuid: UUID?
     
-    public internal(set) var entityId: String?
+    var entityId: String?
+    
+    public var id: String {
+        guard let returnId = entityId else {
+            return ""
+        }
+        return returnId
+    }
     
     public internal(set) var logicalClock: Int?
     
@@ -27,7 +34,7 @@ public class OutcomeValue: PCKObjectable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone?
+    public var timezone: TimeZone
     
     public var userInfo: [String : String]?
     

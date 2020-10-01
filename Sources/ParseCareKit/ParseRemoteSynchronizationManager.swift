@@ -41,23 +41,23 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
     
-    public init(uuid:UUID, auto: Bool) {
+    public init(uuid:UUID, auto: Bool) throws {
+        self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
+        self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.automaticallySynchronizes = auto
-        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getConcrete()
+    }
+    
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]) throws {
+        try self.init(uuid: uuid, auto: auto)
+        try self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]) {
-        self.init(uuid: uuid, auto: auto)
-        self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
-        self.customClassesToSynchronize = nil
-    }
-    
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]?, customClasses: [String:PCKSynchronizable]){
-        self.init(uuid: uuid, auto: auto)
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]?, customClasses: [String:PCKSynchronizable]) throws {
+        try self.init(uuid: uuid, auto: auto)
         if replacePCKStoreClasses != nil{
-            self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
+            self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
         }else{
             self.pckStoreClassesToSynchronize = nil
         }
@@ -75,11 +75,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
         
-        //Fetch KnowledgeVector from Cloud
-        KnowledgeVector.fetchFromCloud(uuid: uuid, createNewIfNeeded: false){
-            (_, potentialCKKnowledgeVector, error) in
-            guard let cloudVector = potentialCKKnowledgeVector else{
-                //No KnowledgeVector available, need to let CareKit know this is the first sync.
+        //Fetch Clock from Cloud
+        Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: false){
+            (_, potentialCKClock, error) in
+            guard let cloudVector = potentialCKClock else{
+                //No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision,completion)
                 return
@@ -105,9 +105,9 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 completion(previousError)
                 return
         }
-        let newConcreteClass = concreteClass.new()
+        //let newConcreteClass = concreteClass
         var currentError = previousError
-        newConcreteClass.pullRevisions(localClock, cloudVector: cloudVector){
+        concreteClass.pullRevisions(localClock, cloudVector: cloudVector){
             customRevision in
             mergeRevision(customRevision){
                 error in
@@ -132,9 +132,8 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     completion(previousError)
                     return
             }
-            let newCustomClass = customClass.new()
             var currentError = previousError
-            newCustomClass.pullRevisions(localClock, cloudVector: cloudVector){
+            customClass.pullRevisions(localClock, cloudVector: cloudVector){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
@@ -164,12 +163,12 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
         
-        //Fetch KnowledgeVector from Cloud
-        KnowledgeVector.fetchFromCloud(uuid: uuid, createNewIfNeeded: true){
-            (potentialPCKKnowledgeVector, potentialCKKnowledgeVector, error) in
+        //Fetch Clock from Cloud
+        Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: true){
+            (potentialPCKClock, potentialCKClock, error) in
         
-            guard let cloudParseVector = potentialPCKKnowledgeVector,
-                let cloudCareKitVector = potentialCKKnowledgeVector else{
+            guard let cloudParseVector = potentialPCKClock,
+                let cloudCareKitVector = potentialCKClock else{
                     
                     guard let parseError = error else{
                         //There was a different issue that we don't know how to handle
@@ -179,10 +178,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     
                     switch parseError.code{
                     case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
-                        if potentialPCKKnowledgeVector != nil{
-                            potentialPCKKnowledgeVector!.save(callbackQueue: .global(qos: .background)) {
+                        if potentialPCKClock != nil{
+                            potentialPCKClock!.save(callbackQueue: .global(qos: .background)) {
                                 _ in
-                                print("Saved KnowledgeVector. Try to sync again \(potentialPCKKnowledgeVector!)")
+                                print("Saved Clock. Try to sync again \(potentialPCKClock!)")
                                 completion(error)
                             }
                         }else{
@@ -208,7 +207,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }else{
@@ -222,7 +221,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             error in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }
@@ -233,7 +232,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }else{
@@ -247,7 +246,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }
@@ -257,7 +256,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }else{
@@ -270,7 +269,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
     
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }
@@ -280,7 +279,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }else{
@@ -294,7 +293,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                         
@@ -306,7 +305,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             _ in
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }else{
@@ -319,7 +318,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 
-                                self.finishedRevisions(cloudParseVector, cloudKnowledgeVector: cloudCareKitVector, localKnowledgeVector: deviceRevision.knowledgeVector, completion: completion)
+                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
                             }
                         }
                     }
@@ -344,18 +343,18 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         }
     }
     
-    func finishedRevisions(_ parseKnowledgeVector: KnowledgeVector, cloudKnowledgeVector: OCKRevisionRecord.KnowledgeVector, localKnowledgeVector: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
-        var parseKnowledgeVector = parseKnowledgeVector
-        var cloudVector = cloudKnowledgeVector
+    func finishedRevisions(_ parseClock: Clock, cloudClock: OCKRevisionRecord.KnowledgeVector, localClock: OCKRevisionRecord.KnowledgeVector, completion: @escaping (Error?)->Void){
+        var parseClock = parseClock
+        var cloudVector = cloudClock
         //Increment and merge Knowledge Vector
         cloudVector.increment(clockFor: uuid)
-        cloudVector.merge(with: localKnowledgeVector)
+        cloudVector.merge(with: localClock)
         
-        guard let _ = parseKnowledgeVector.encodeKnowledgeVector(cloudVector) else{
-            completion(ParseCareKitError.couldntUnwrapKnowledgeVector)
+        guard let _ = parseClock.encodeClock(cloudVector) else{
+            completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        parseKnowledgeVector.save(callbackQueue: .global(qos: .background)){
+        parseClock.save(callbackQueue: .global(qos: .background)){
             result in
             switch result {
 

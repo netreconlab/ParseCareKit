@@ -18,7 +18,7 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKOutcomeValue <-> OutcomeValue
 - [x] OCKScheduleElement <-> ScheduleElement
 - [x] OCKNote <-> Note
-- [x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
+- [x] OCKRevisionRecord.Clock <-> Clock
 
 
 ## CareKit Sample App with ParseCareKit
@@ -82,12 +82,12 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-### Using vector clocks aka CareKits KnowledgeVector (`ParseRemoteSynchronizationManager`)
+### Using vector clocks aka CareKits Clock (`ParseRemoteSynchronizationManager`)
 
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
-/*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
+/*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
 let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
@@ -95,7 +95,7 @@ remoteStoreManager.delegate = self //Conform to this protocol if you are writing
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the KnowledgeVector. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
 
 ```swift
 let userTypeUUIDDictionary = [
@@ -220,13 +220,9 @@ store.addCarePlan(careKitCarePlan, callbackQueue: .main){
 There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below `new()`,  `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->Patient:
 
 ```swift
-class CancerPatient: Patient{
+class CancerPatient: Patient {
     public var primaryCondition:String?
     public var comorbidities:String?
-    
-    override func new() -> PCKSynchronizable {
-        return CancerPatient()
-    }
     
     override func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
         
@@ -292,12 +288,8 @@ Of course, you can customize further by implementing your copyCareKit and conver
 You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.className()` as the value. See below:
 
 ```swift
-class Doctor: Patient{
+class Doctor: Patient {
     public var type:String?
-    
-    override func new() -> PCKSynchronizable {
-        return Doctor()
-    }
     
     override func new(with careKitEntity: OCKEntity)-?PCKSynchronizable? {
         

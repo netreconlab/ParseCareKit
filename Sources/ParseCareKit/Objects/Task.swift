@@ -1,5 +1,5 @@
 //
-//  CarePlan.swift
+//  Task.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/17/20.
@@ -11,12 +11,48 @@ import ParseSwift
 import CareKitStore
 
 
-public final class CarePlan: PCKVersionable, PCKSynchronizable {
-    public var effectiveDate: Date?
+public final class Task: PCKVersionable, PCKSynchronizable {
+
+    public internal(set) var nextVersion: Task? {
+        didSet {
+            nextVersionUUID = nextVersion?.uuid
+        }
+    }
+    
+    public internal(set) var nextVersionUUID:UUID? {
+        didSet {
+            if nextVersionUUID != nextVersion?.uuid {
+                nextVersion = nil
+            }
+        }
+    }
+
+    public internal(set) var previousVersion: Task? {
+        didSet {
+            previousVersionUUID = previousVersion?.uuid
+        }
+    }
+    
+    public internal(set) var previousVersionUUID: UUID? {
+        didSet {
+            if previousVersionUUID != previousVersion?.uuid {
+                previousVersion = nil
+            }
+        }
+    }
+    
+    public var effectiveDate: Date
     
     public internal(set) var uuid: UUID?
     
-    public internal(set) var entityId: String?
+    var entityId: String?
+    
+    public var id: String {
+        guard let returnId = entityId else {
+            return ""
+        }
+        return returnId
+    }
     
     public internal(set) var logicalClock: Int?
     
@@ -28,7 +64,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone?
+    public var timezone: TimeZone
     
     public var userInfo: [String : String]?
     
@@ -55,67 +91,33 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public var ACL: ParseACL?
     
 
-    public internal(set) var nextVersion: CarePlan? {
-        didSet {
-            nextVersionUUID = nextVersion?.uuid
-        }
-    }
-    
-    public internal(set) var nextVersionUUID:UUID? {
-        didSet {
-            if nextVersionUUID != nextVersion?.uuid {
-                nextVersion = nil
-            }
-        }
-    }
-
-    public internal(set) var previousVersion: CarePlan? {
-        didSet {
-            previousVersionUUID = previousVersion?.uuid
-        }
-    }
-    
-    public internal(set) var previousVersionUUID: UUID? {
-        didSet {
-            if previousVersionUUID != previousVersion?.uuid {
-                previousVersion = nil
-            }
-        }
-    }
-
-    public var patient:Patient? {
-        didSet {
-            patientUUID = patient?.uuid
-        }
-    }
-    
-    public var patientUUID:UUID? {
-        didSet{
-            if patientUUID != patient?.uuid {
-                patient = nil
-            }
-        }
-    }
-    
+    public var impactsAdherence:Bool?
+    public var instructions:String?
     public var title:String?
-
-    public static var className: String {
-        kPCKCarePlanClassKey
+    public var schedule: OCKSchedule?
+    public var carePlan:CarePlan? {
+        didSet {
+            carePlanUUID = carePlan?.uuid
+        }
     }
-    
+    public var carePlanUUID:UUID? {
+        didSet {
+            if carePlanUUID != carePlan?.uuid {
+                carePlan = nil
+            }
+        }
+    }
+
     enum CodingKeys: String, CodingKey {
         case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
-        case title, patient, patientUUID
+        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
     
-    public func new() -> PCKSynchronizable {
-        return CarePlan()
-    }
-
-    public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
+    public func new(with careKitEntity: OCKEntity) throws ->PCKSynchronizable {
+        
         switch careKitEntity {
-        case .carePlan(let entity):
+        case .task(let entity):
             return try Self.copyCareKit(entity)
         default:
             print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
@@ -123,49 +125,48 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
-        let query = Self.query(kPCKObjectableUUIDKey == uuid)
-        query.first(callbackQueue: .global(qos: .background)){
-            result in
+        //Check to see if already in the cloud
+        let query = Task.query(kPCKObjectableUUIDKey == uuid)
+        query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
             
             case .success(_):
                 completion(false,ParseCareKitError.uuidAlreadyExists)
             case .failure(let error):
-
                 switch error.code {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
-                    self.save(completion: completion)
+                        self.save(completion: completion)
                 default:
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
                     completion(false,error)
                 }
+                return
             }
         }
     }
     
-    public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid,
-            let previousCarePlanUUID = self.previousVersionUUID else{
+            let previousPatientUUID = self.previousVersionUUID else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
         //Check to see if this entity is already in the Cloud, but not matched locally
-        var query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid, previousCarePlanUUID]))
-        query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,
-                          kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
-        query.find(callbackQueue: .main) {
-            results in
+        var query = Task.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
+        query.include([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,
+                           kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
             
@@ -176,13 +177,13 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.first(where: {$0.uuid == self.previousVersionUUID}) else {
+                    guard let previousVersion = foundObjects.first(where: {$0.uuid == previousPatientUUID}) else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
                         completion(false,ParseCareKitError.uuidAlreadyExists)
                         return
                     }
                     var updated = self
-                    updated = updated.copyRelationalEntities(previousVersion)
+                    updated = updated.copyRelational(previousVersion)
                     updated.addToCloud(completion: completion)
 
                 default:
@@ -190,30 +191,29 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                     completion(false,ParseCareKitError.uuidAlreadyExists)
                 }
             case .failure(let error):
-                print("Error in \(self.className).updateCloud(). \(error.localizedDescription)")
+                print("Error in \(self.className).updateCloud(). \(String(describing: error.localizedDescription))")
                 completion(false,error)
             }
-            
         }
     }
     
-    public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectableClockKey >= localClock)
+        var query = Task.query(kPCKObjectableClockKey >= localClock)
         query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKCarePlanPatientKey,kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        query.include([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,
+                           kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
-            
             switch results {
             
-            case .success(let carePlans):
-                let pulled = carePlans.compactMap{try? $0.convertToCareKit()}
-                let entities = pulled.compactMap{OCKEntity.carePlan($0)}
+            case .success(let tasks):
+                let pulled = tasks.compactMap{try? $0.convertToCareKit()}
+                let entities = pulled.compactMap{OCKEntity.task($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
                 mergeRevision(revision)
             case .failure(let error):
@@ -233,6 +233,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     }
     
     public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+        
         self.logicalClock = cloudClock //Stamp Entity
         
         guard let _ = self.previousVersionUUID else{
@@ -255,80 +256,105 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                 completion(error)
             }
         }
-        
     }
     
-    public static func copyValues(from other: CarePlan, to here: CarePlan) throws -> Self {
+    public class func copyValues(from other: Task, to here: Task) throws -> Self {
         var here = here
         here.copyVersionedValues(from: other)
-        //guard let other = other as? CarePlan else{return}
-        here.patient = other.patient
+        
+        here.impactsAdherence = other.impactsAdherence
+        here.instructions = other.instructions
         here.title = other.title
+        here.schedule = other.schedule
+        here.carePlan = other.carePlan
+        here.carePlanUUID = other.carePlanUUID
+        
         guard let copied = here as? Self else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         return copied
     }
     
-    public class func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
+    
+    public class func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
         
         guard let _ = PCKUser.current,
-            let carePlan = carePlanAny as? OCKCarePlan else{
+            let task = taskAny as? OCKTask else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try JSONEncoder().encode(carePlan)
+        
+        let encoded = try JSONEncoder().encode(task)
         let decoded = try JSONDecoder().decode(Self.self, from: encoded)
-        decoded.entityId = carePlan.id
+        decoded.entityId = task.id
         return decoded
     }
     
-    //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKCarePlan {
+    public func copyRelational(_ parse: Task) -> Task {
+        var copy = self
+        copy = copy.copyRelationalEntities(parse)
+        return copy
+    }
+    
+    
+    //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKTask {
         self.encodingForParse = false
         let encoded = try JSONEncoder().encode(self)
-        self.encodingForParse = true
-        return try JSONDecoder().decode(OCKCarePlan.self, from: encoded)
+        return try JSONDecoder().decode(OCKTask.self, from: encoded)
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
-        self.linkVersions {
-            (isNew, linked) in
-            
+    public func linkRelated(completion: @escaping(Bool,Task)->Void){
+        
+        self.linkVersions(){
+            (isNew, linkedObject) in
             var linkedNew = isNew
-            
-            guard let patientUUID = self.patientUUID else{
+        
+            guard let carePlanUUID = self.carePlanUUID else {
                 //Finished if there's no CarePlan, otherwise see if it's in the cloud
                 completion(linkedNew,self)
                 return
             }
             
-            linked.patient?.first(patientUUID, relatedObject: linked.patient, include: true){ (isNew,patient) in
+            linkedObject.carePlan?.first(carePlanUUID, relatedObject: linkedObject.carePlan, include: true){
+                (isNew,carePlan) in
                 
-                guard let patient = patient else{
+                guard let carePlan = carePlan else{
                     completion(linkedNew,self)
                     return
                 }
                 
-                linked.patient = patient
-                if self.patient != nil{
+                linkedObject.carePlan = carePlan
+                if isNew{
                     linkedNew = true
                 }
-                completion(linkedNew,linked)
+                completion(linkedNew,linkedObject)
             }
         }
     }
+    
+    public func stampRelational() throws -> Task {
+        var stamped = self
+        stamped = try stamped.stampRelationalEntities()
+        //stamped.elements?.forEach{$0.stamp(self.logicalClock!)}
+        
+        return stamped
+    }
 }
 
-extension CarePlan {
+extension Task {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encode(patient, forKey: .patient)
+            try container.encode(carePlan, forKey: .carePlan)
         }
         try container.encode(title, forKey: .title)
-        try container.encode(patientUUID, forKey: .patientUUID)
+        try container.encode(carePlanUUID, forKey: .carePlanUUID)
+        try container.encode(impactsAdherence, forKey: .impactsAdherence)
+        try container.encode(instructions, forKey: .instructions)
+        try container.encode(schedule, forKey: .schedule)
         try encodeVersionable(to: encoder)
         encodingForParse = true
     }
 }
+

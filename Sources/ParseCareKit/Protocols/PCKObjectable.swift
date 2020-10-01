@@ -13,8 +13,12 @@ import CareKitStore
 internal protocol PCKObjectable: ParseObject {
     /// A universally unique identifier for this object.
     var uuid: UUID? {get set}
+
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
-    var entityId:String? {get set}
+    var id:String { get }
+    
+    /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
+    var entityId: String? {get set}
     
     var logicalClock: Int? {get set}
     
@@ -35,7 +39,7 @@ internal protocol PCKObjectable: ParseObject {
     var deletedDate: Date? {get set}
     
     /// The timezone this record was created in.
-    var timezone: TimeZone? {get set}
+    var timezone: TimeZone {get set}
     
     /// A dictionary of information that can be provided by developers to support their own unique
     /// use cases.
@@ -104,8 +108,7 @@ extension PCKObjectable {
     }
 
     public func canConvertToCareKit()->Bool {
-        guard let _ = self.entityId,
-              let _ = self.timezone else {
+        guard let _ = self.entityId else {
             return false
         }
         return true
@@ -176,7 +179,7 @@ extension PCKObjectable {
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
                 print("Error in \(self.className).find(). \(ParseCareKitError.requiredValueCantBeUnwrapped)")
-                completion(nil,ParseCareKitError.couldntUnwrapKnowledgeVector)
+                completion(nil,ParseCareKitError.couldntUnwrapClock)
                 return
         }
             
@@ -237,7 +240,9 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         
         if encodingForParse {
-            try container.encodeIfPresent(entityId, forKey: .entityId)
+            if !(self is Note) {
+                try container.encodeIfPresent(entityId, forKey: .id)
+            }
             try container.encode(className, forKey: .className)
             try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
@@ -250,7 +255,9 @@ extension PCKObjectable {
         try container.encode(schemaVersion, forKey: .schemaVersion)
         try container.encode(createdDate, forKey: .createdDate)
         try container.encode(updatedDate, forKey: .updatedDate)
-        try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
+        if !(self is Note) {
+            try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
+        }
         try container.encode(timezone, forKey: .timezone)
         try container.encodeIfPresent(userInfo, forKey: .userInfo)
         try container.encodeIfPresent(groupIdentifier, forKey: .groupIdentifier)

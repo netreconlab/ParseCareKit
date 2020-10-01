@@ -23,12 +23,13 @@ enum ParseCareKitError: Error {
     case requiredValueCantBeUnwrapped
     case objectIdDoesntMatchRemoteId
     case cloudClockLargerThanLocalWhilePushRevisions
-    case couldntUnwrapKnowledgeVector
+    case couldntUnwrapClock
     case cantUnwrapSelf
     case cloudVersionNewerThanLocal
     case uuidAlreadyExists
     case cantCastToNeededClassType
     case classTypeNotAnEligibleType
+    case couldntCreateConcreteClasses
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -40,8 +41,8 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("ParseCareKit: Related entity isn't in cloud.", comment: "Related entity error")
         case .requiredValueCantBeUnwrapped:
             return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
-        case .couldntUnwrapKnowledgeVector:
-            return NSLocalizedString("ParseCareKit: KnowledgeVector can't be unwrapped.", comment: "KnowledgeVector Unwrapping error")
+        case .couldntUnwrapClock:
+            return NSLocalizedString("ParseCareKit: Clock can't be unwrapped.", comment: "Clock Unwrapping error")
         case .objectIdDoesntMatchRemoteId:
             return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
         case .cloudClockLargerThanLocalWhilePushRevisions:
@@ -56,6 +57,8 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("Can't cast to needed class type", comment: "Can't cast to needed class type")
         case .classTypeNotAnEligibleType:
             return NSLocalizedString("PCKClass type isn't an eligible type", comment: "PCKClass type isn't an eligible type")
+        case .couldntCreateConcreteClasses:
+            return NSLocalizedString("Couldn't create concrete classes", comment: "Couldn't create concrete classes")
         }
     }
 }
@@ -67,18 +70,23 @@ public enum PCKStoreClass {
     case patient
     case task
     
-    func getDefault() -> PCKSynchronizable{
+    func getDefault() throws -> PCKSynchronizable {
         switch self {
         case .carePlan:
-            return CarePlan()
+            let carePlan = OCKCarePlan(id: "", title: "", patientUUID: nil)
+            return try CarePlan.copyCareKit(carePlan)
         case .contact:
-            return Contact()
+            let contact = OCKContact(id: "", givenName: "", familyName: "", carePlanUUID: nil)
+            return try Contact.copyCareKit(contact)
         case .outcome:
-            return Outcome()
+            let outcome = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [])
+            return try Outcome.copyCareKit(outcome)
         case .patient:
-            return Patient()
+            let patient = OCKPatient(id: "", givenName: "", familyName: "")
+            return try Patient.copyCareKit(patient)
         case .task:
-            return Task()
+            let task = OCKTask(id: "", title: "", carePlanUUID: nil, schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
+            return try Task.copyCareKit(task)
         }
     }
     
@@ -106,10 +114,9 @@ public enum PCKStoreClass {
         return remoteClasses
     }*/
     
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) -> [PCKStoreClass: PCKSynchronizable]?{
-        guard var updatedClasses = getConcrete() else{
-            return nil
-        }
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable])throws -> [PCKStoreClass: PCKSynchronizable] {
+        var updatedClasses = try getConcrete()
+
         for (key,value) in newClasses{
             if isCorrectType(key, check: value){
                 updatedClasses[key] = value
@@ -120,14 +127,14 @@ public enum PCKStoreClass {
         return updatedClasses
     }
     
-    func getConcrete() -> [PCKStoreClass: PCKSynchronizable]?{
+    func getConcrete() throws -> [PCKStoreClass: PCKSynchronizable] {
         
         var concreteClasses: [PCKStoreClass: PCKSynchronizable] = [
-            .carePlan: PCKStoreClass.carePlan.getDefault(),
-            .contact: PCKStoreClass.contact.getDefault(),
-            .outcome: PCKStoreClass.outcome.getDefault(),
-            .patient: PCKStoreClass.patient.getDefault(),
-            .task: PCKStoreClass.task.getDefault()
+            .carePlan: try PCKStoreClass.carePlan.getDefault(),
+            .contact: try PCKStoreClass.contact.getDefault(),
+            .outcome: try PCKStoreClass.outcome.getDefault(),
+            .patient: try PCKStoreClass.patient.getDefault(),
+            .task: try PCKStoreClass.task.getDefault()
         ]
         
         for (key,value) in concreteClasses{
@@ -138,16 +145,15 @@ public enum PCKStoreClass {
         
         //Ensure all default classes are created
         guard concreteClasses.count == orderedArray().count else{
-            return nil
+            throw ParseCareKitError.couldntCreateConcreteClasses
         }
         
         return concreteClasses
     }
     
-    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) -> [PCKStoreClass: PCKSynchronizable]?{
-        guard var updatedClasses = getConcrete() else{
-            return nil
-        }
+    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
+        var updatedClasses = try getConcrete()
+
         for (key,value) in newClasses{
             if isCorrectType(key, check: value){
                 updatedClasses[key] = value
@@ -301,11 +307,11 @@ public let kPCKNoteContentKey                                  = "content"
 public let kPCKNoteTitleKey                                    = "title"
 public let kPCKNoteAuthorKey                                   = "author"
 
-//#Mark - KnowledgeVector Class
-public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
+//#Mark - Clock Class
+public let kPCKClockClassKey                         = "Clock"
 // Field keys
-public let kPCKKnowledgeVectorPatientTypeUUIDKey               = "uuid"
-public let kPCKKnowledgeVectorVectorKey                        = "vector"
+public let kPCKClockPatientTypeUUIDKey               = "uuid"
+public let kPCKClockVectorKey                        = "vector"
 
 
 //#Mark - CareKit UserInfo Database Keys

@@ -1,5 +1,5 @@
 //
-//  KnowledgeVector.swift
+//  Clock.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/9/20.
@@ -10,7 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-struct KnowledgeVector: ParseObject {
+struct Clock: ParseObject {
     var objectId: String?
     
     var createdAt: Date?
@@ -28,7 +28,7 @@ struct KnowledgeVector: ParseObject {
         self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
     }
     
-    func decodeKnowledgeVector(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
+    func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
         guard let data = self.vector?.data(using: .utf8) else{
             print("Error in KnowlegeVector. Couldn't get data as utf8")
             return
@@ -39,13 +39,13 @@ struct KnowledgeVector: ParseObject {
             cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
         }catch{
             let error = error
-            print("Error in KnowledgeVector.decodeKnowledgeVector(). Couldn't decode vector \(data). Error: \(error)")
+            print("Error in Clock.decodeClock(). Couldn't decode vector \(data). Error: \(error)")
             cloudVector = nil
         }
         completion(cloudVector)
     }
     
-    mutating func encodeKnowledgeVector(_ knowledgeVector: OCKRevisionRecord.KnowledgeVector)->String?{
+    mutating func encodeClock(_ knowledgeVector: OCKRevisionRecord.KnowledgeVector)->String?{
         do{
             let json = try JSONEncoder().encode(knowledgeVector)
             let cloudVectorString = String(data: json, encoding: .utf8)!
@@ -53,21 +53,21 @@ struct KnowledgeVector: ParseObject {
             return self.vector
         }catch{
             let error = error
-            print("Error in KnowledgeVector.encodeKnowledgeVector(). Couldn't encode vector \(knowledgeVector). Error: \(error)")
+            print("Error in Clock.encodeClock(). Couldn't encode vector \(knowledgeVector). Error: \(error)")
             return nil
         }
     }
     
-    static func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(KnowledgeVector?, OCKRevisionRecord.KnowledgeVector?, ParseError?)->Void){
+    static func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(Clock?, OCKRevisionRecord.KnowledgeVector?, ParseError?)->Void){
         
-        //Fetch KnowledgeVector from Cloud
-        let query = KnowledgeVector.query(kPCKKnowledgeVectorPatientTypeUUIDKey == uuid)
+        //Fetch Clock from Cloud
+        let query = Clock.query(kPCKClockPatientTypeUUIDKey == uuid)
         query.first(callbackQueue: .global(qos: .background)) { result in
             
             switch result {
             
             case .success(let foundVector):
-                foundVector.decodeKnowledgeVector(){
+                foundVector.decodeClock(){
                     possiblyDecoded in
                     completion(foundVector, possiblyDecoded, nil)
                 }
@@ -75,9 +75,9 @@ struct KnowledgeVector: ParseObject {
                 if !createNewIfNeeded{
                     completion(nil, nil, error)
                 }else{
-                    //This is the first time the KnowledgeVector is user setup for this user
-                    let newVector = KnowledgeVector(uuid: uuid)
-                    newVector.decodeKnowledgeVector(){
+                    //This is the first time the Clock is user setup for this user
+                    let newVector = Clock(uuid: uuid)
+                    newVector.decodeClock(){
                         possiblyDecoded in
                         completion(newVector,possiblyDecoded,error)
                     }

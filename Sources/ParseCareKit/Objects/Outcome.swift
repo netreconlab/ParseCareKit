@@ -14,8 +14,16 @@ import CareKitStore
 public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var uuid: UUID?
+
+    var entityId: String?
     
-    public internal(set) var entityId: String?
+    public var id: String {
+        guard let currentUUID = uuid,
+              let currentOccurrenceIndex = taskOccurrenceIndex else {
+            return ""
+        }
+        return "\(currentUUID)_\(currentOccurrenceIndex)"
+    }
     
     public internal(set) var logicalClock: Int?
     
@@ -27,7 +35,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone?
+    public var timezone: TimeZone
     
     public var userInfo: [String : String]?
     
@@ -74,10 +82,6 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         case task, taskUUID, taskOccurrenceIndex, values, date
     }
     
-    public func new() -> PCKSynchronizable {
-        return Outcome()
-    }
-    
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
@@ -89,7 +93,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
@@ -97,8 +101,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             return
         }
         
-        //Make wall.logicalClock level entities compatible with KnowledgeVector by setting it's initial .logicalClock to 0
-        if !usingKnowledgeVector{
+        //Make wall.logicalClock level entities compatible with Clock by setting it's initial .logicalClock to 0
+        if !usingClock{
             self.logicalClock = 0
         }
         
@@ -115,7 +119,10 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 case .internalServer: //1 - this column hasn't been added.
                     self.save(completion: completion)
                 case .objectNotFound: //101 - Query returned no results
-                    var query = Outcome.query(kPCKObjectableEntityIdKey == self.entityId, doesNotExist(key: kPCKObjectableDeletedDateKey))
+                    guard self.id.count > 0 else {
+                        return
+                    }
+                    var query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
                     query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
                     
                     query.first(callbackQueue: .global(qos: .background)){ result in
@@ -142,12 +149,12 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with tombstone, marked for deletion
         completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
     }
     
-    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
@@ -419,6 +426,9 @@ extension Outcome {
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encode(values, forKey: .values)
+        if id.count > 0{
+            entityId = id
+        }
         try encodeObjectable(to: encoder)
         encodingForParse = true
     }
