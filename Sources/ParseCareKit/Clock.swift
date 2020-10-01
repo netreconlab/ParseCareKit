@@ -30,7 +30,7 @@ struct Clock: ParseObject {
     
     func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
         guard let data = self.vector?.data(using: .utf8) else{
-            print("Error in KnowlegeVector. Couldn't get data as utf8")
+            print("Error in Clock. Couldn't get data as utf8")
             return
         }
         
@@ -45,15 +45,15 @@ struct Clock: ParseObject {
         completion(cloudVector)
     }
     
-    mutating func encodeClock(_ knowledgeVector: OCKRevisionRecord.KnowledgeVector)->String?{
+    mutating func encodeClock(_ clock: OCKRevisionRecord.KnowledgeVector)->String?{
         do{
-            let json = try JSONEncoder().encode(knowledgeVector)
+            let json = try JSONEncoder().encode(clock)
             let cloudVectorString = String(data: json, encoding: .utf8)!
             self.vector = cloudVectorString
             return self.vector
         }catch{
             let error = error
-            print("Error in Clock.encodeClock(). Couldn't encode vector \(knowledgeVector). Error: \(error)")
+            print("Error in Clock.encodeClock(). Couldn't encode vector \(clock). Error: \(error)")
             return nil
         }
     }

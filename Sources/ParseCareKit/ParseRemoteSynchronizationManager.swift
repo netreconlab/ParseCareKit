@@ -64,7 +64,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         self.customClassesToSynchronize = customClasses
     }
     
-    public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
+    public func pullRevisions(since clock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void) {
         
         guard let _ = PCKUser.current else{
             let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -86,7 +86,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             }
             let returnError:Error? = nil
             
-            let localClock = knowledgeVector.clock(for: self.uuid)
+            let localClock = clock.clock(for: self.uuid)
             
             self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock, cloudVector: cloudVector, mergeRevision: mergeRevision){previosError in
                     
