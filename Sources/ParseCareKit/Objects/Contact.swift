@@ -175,8 +175,8 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         }
         
         //Check to see if this entity is already in the Cloud, but not matched locally
-        var query = Contact.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousVersionUUID]))
-        query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
+        let query = Contact.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousVersionUUID]))
+        _ = query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
                        kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             
@@ -216,9 +216,9 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Contact.query(kPCKObjectableClockKey >= localClock)
-        query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
+        let query = Contact.query(kPCKObjectableClockKey >= localClock)
+        _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+        _ = query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
         kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             

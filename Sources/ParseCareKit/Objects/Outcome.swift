@@ -122,8 +122,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                     guard self.id.count > 0 else {
                         return
                     }
-                    var query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                    query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+                    let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
+                    _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
                     
                     query.first(callbackQueue: .global(qos: .background)){ result in
                         
@@ -161,9 +161,9 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectableClockKey >= localClock)
-        query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        let query = Self.query(kPCKObjectableClockKey >= localClock)
+        _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+        _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -223,8 +223,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
                 
         //Get latest item from the Cloud to compare against
-        var query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-        query.include([kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
+        _ = query.include([kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -391,8 +391,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     public static func queryNotDeleted()-> Query<Outcome>{
         let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        var query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-        query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
+        _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
         return query
     }
    

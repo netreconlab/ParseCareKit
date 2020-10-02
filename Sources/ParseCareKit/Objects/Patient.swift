@@ -133,8 +133,8 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
 
         //Check to see if already in the cloud
-        var query = Self.query(kPCKObjectableUUIDKey == uuid)
-        query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        let query = Self.query(kPCKObjectableUUIDKey == uuid)
+        _ = query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
            
             switch result {
@@ -165,8 +165,8 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
         
         //Check to see if this entity is already in the Cloud, but not paired locally
-        var query = Patient.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
-        query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        let query = Patient.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
+        _ = query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
@@ -207,9 +207,9 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        var query = Self.query(kPCKObjectableClockKey >= localClock)
-        query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        let query = Self.query(kPCKObjectableClockKey >= localClock)
+        _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+        _ = query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             

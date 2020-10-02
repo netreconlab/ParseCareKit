@@ -257,9 +257,9 @@ extension PCKVersionable {
     private static func queryVersion(for date: Date, queryToAndWith: Query<Self>)-> Query<Self> {
         let interval = createCurrentDateInterval(for: date)
     
-        var query = queryToAndWith
-        query.where(doesNotExist(key: kPCKObjectableDeletedDateKey)) //Only consider non deleted keys
-        query.where(kPCKVersionedObjectEffectiveDateKey < interval.end)
+        let query = queryToAndWith
+        _ = query.where(doesNotExist(key: kPCKObjectableDeletedDateKey)) //Only consider non deleted keys
+        _ = query.where(kPCKVersionedObjectEffectiveDateKey < interval.end)
         return query
     }
     
@@ -280,8 +280,8 @@ extension PCKVersionable {
 
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public static func query(for date: Date) -> Query<Self> {
-        var query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-        query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        let query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
+        _ = query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         return query
     }
 
