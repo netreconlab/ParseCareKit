@@ -238,6 +238,7 @@ extension PCKObjectable {
             if !(self is Note) {
                 try container.encodeIfPresent(entityId, forKey: .entityId)
             }
+            try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
         } else {
             if !(self is Outcome) {
