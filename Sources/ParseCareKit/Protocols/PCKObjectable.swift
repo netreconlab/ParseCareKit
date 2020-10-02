@@ -34,10 +34,6 @@ internal protocol PCKObjectable: ParseObject {
     /// It will be nil for unpersisted values and objects.
     var updatedDate: Date? {get set}
     
-    /// The date on which this object was marked deleted. Note that objects are never actually deleted,
-    /// but rather they are marked deleted and will no longer be returned from queries.
-    var deletedDate: Date? {get set}
-    
     /// The timezone this record was created in.
     var timezone: TimeZone {get set}
     
@@ -84,7 +80,6 @@ extension PCKObjectable {
     mutating public func copyCommonValues(from other: Self) {
         uuid = other.uuid
         entityId = other.entityId
-        deletedDate = other.deletedDate
         updatedDate = other.updatedDate
         timezone = other.timezone
         userInfo = other.userInfo
@@ -255,9 +250,6 @@ extension PCKObjectable {
         try container.encode(schemaVersion, forKey: .schemaVersion)
         try container.encode(createdDate, forKey: .createdDate)
         try container.encode(updatedDate, forKey: .updatedDate)
-        if !(self is Note) {
-            try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
-        }
         try container.encode(timezone, forKey: .timezone)
         try container.encodeIfPresent(userInfo, forKey: .userInfo)
         try container.encodeIfPresent(groupIdentifier, forKey: .groupIdentifier)

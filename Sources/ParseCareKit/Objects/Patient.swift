@@ -98,14 +98,6 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     public static var className: String {
         kPCKPatientClassKey
     }
-
-    /*
-    enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
-        case entityId, id
-        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID
-        case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
-        case allergies, birthday, name, sex
-    }*/
     
     enum CodingKeys: String, CodingKey {
         case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock

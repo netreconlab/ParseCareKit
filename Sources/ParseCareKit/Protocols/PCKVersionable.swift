@@ -23,6 +23,10 @@ internal protocol PCKVersionable: PCKObjectable {
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.
     var effectiveDate: Date { get set }
+
+    /// The date on which this object was marked deleted. Note that objects are never actually deleted,
+    /// but rather they are marked deleted and will no longer be returned from queries.
+    var deletedDate: Date? {get set}
     
 }
 
@@ -30,6 +34,7 @@ extension PCKVersionable {
 
     mutating public func copyVersionedValues(from other: Self) {
         self.effectiveDate = other.effectiveDate
+        self.deletedDate = other.deletedDate
         self.previousVersion = other.previousVersion
         self.nextVersion = other.nextVersion
         //Copy UUID's after
@@ -306,6 +311,7 @@ extension PCKVersionable {
             try container.encodeIfPresent(previousVersion, forKey: .previousVersion)
             
         }
+        try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         try container.encodeIfPresent(previousVersionUUID, forKey: .previousVersionUUID)
         try container.encodeIfPresent(nextVersionUUID, forKey: .nextVersionUUID)
         try container.encode(effectiveDate, forKey: .effectiveDate)

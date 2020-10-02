@@ -79,7 +79,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
-        case task, taskUUID, taskOccurrenceIndex, values, date
+        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
     
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
@@ -426,6 +426,7 @@ extension Outcome {
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encode(values, forKey: .values)
+        try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         if id.count > 0{
             entityId = id
         }

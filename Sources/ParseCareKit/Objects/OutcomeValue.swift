@@ -32,8 +32,6 @@ public class OutcomeValue: PCKObjectable {
     
     public internal(set) var updatedDate: Date?
     
-    public internal(set) var deletedDate: Date?
-    
     public var timezone: TimeZone
     
     public var userInfo: [String : String]?
