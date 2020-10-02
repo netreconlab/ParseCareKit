@@ -17,14 +17,6 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
 
     var entityId: String?
     
-    public var id: String {
-        guard let currentUUID = uuid,
-              let currentOccurrenceIndex = taskOccurrenceIndex else {
-            return ""
-        }
-        return "\(currentUUID)_\(currentOccurrenceIndex)"
-    }
-    
     public internal(set) var logicalClock: Int?
     
     public internal(set) var schemaVersion: OCKSemanticVersion?

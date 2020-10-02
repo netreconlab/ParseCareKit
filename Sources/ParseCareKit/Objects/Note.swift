@@ -16,13 +16,6 @@ open class Note: PCKObjectable {
     
     var entityId: String?
     
-    var id: String {
-        guard let returnId = entityId else {
-            return ""
-        }
-        return returnId
-    }
-    
     public internal(set) var logicalClock: Int?
     
     public internal(set) var schemaVersion: OCKSemanticVersion?

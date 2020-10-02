@@ -46,13 +46,6 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     var entityId: String?
     
-    public var id: String {
-        guard let returnId = entityId else {
-            return ""
-        }
-        return returnId
-    }
-    
     public internal(set) var logicalClock: Int?
     
     public internal(set) var schemaVersion: OCKSemanticVersion?

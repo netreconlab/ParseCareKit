@@ -228,6 +228,16 @@ extension PCKObjectable {
     }
 }
 
+//Defaults
+extension PCKObjectable {
+    public var id: String {
+        guard let returnId = entityId else {
+            return ""
+        }
+        return returnId
+    }
+}
+
 //Encodable
 extension PCKObjectable {
     
