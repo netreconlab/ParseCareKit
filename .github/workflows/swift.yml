@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
+
 jobs:
   swift-test-ios:
 
@@ -13,44 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install Pods
-      run: pod install
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max build test | xcpretty
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
   
-#  swift-test-spm:
-    
-#    runs-on: macos-latest
-
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Build
-#      run: swift build -v
-  
-#  cocoapods:
-#    needs: [swift-test-ios]
-#    runs-on: macos-latest
-    
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: CocoaPods
-#        run: |
-#          set -eo pipefail
-#          pod lib lint --allow-warnings --verbose 
-#      - name: Deploy CocoaPods
-#        if: github.ref == 'refs/heads/main'
-#        run: pod trunk push ParseCareKit.podspec --allow-warnings --verbose
-#        env:
-#          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-
-  carthage:
-
-   needs: swift-test-ios
-   runs-on: macos-latest
-
-   steps:
-     - uses: actions/checkout@v2
-     - name: Carthage 
-       run: carthage build --no-skip-current --verbose

@@ -1,5 +1,5 @@
 # ParseCareKit
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license) ![Swift](https://img.shields.io/badge/swift-5.0-brightgreen.svg) ![Xcode 11.0+](https://img.shields.io/badge/xcode-11.0%2B-blue.svg) ![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg) [![Version](https://img.shields.io/cocoapods/v/ParseCareKit.svg?style=flat)](https://cocoapods.org/pods/ParseCareKit) [![CI Status](https://github.com/netreconlab/ParseCareKit/workflows/build/badge.svg?branch=main)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Abuild) ![Codecov](https://codecov.io/gh/netreconlab/ParseCareKit/branches/main/graph/badge.svg)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license) ![Swift](https://img.shields.io/badge/swift-5.0-brightgreen.svg) ![Xcode 11.0+](https://img.shields.io/badge/xcode-11.0%2B-blue.svg) ![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg)  [![CI Status](https://github.com/netreconlab/ParseCareKit/workflows/build/badge.svg?branch=main)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Abuild) ![Codecov](https://codecov.io/gh/netreconlab/ParseCareKit/branches/main/graph/badge.svg)
 
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
@@ -18,7 +18,7 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKOutcomeValue <-> OutcomeValue
 - [x] OCKScheduleElement <-> ScheduleElement
 - [x] OCKNote <-> Note
-- [x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
+- [x] OCKRevisionRecord.Clock <-> Clock
 
 
 ## CareKit Sample App with ParseCareKit
@@ -31,7 +31,6 @@ ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](htt
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
 ParseCareKitUtility.setupServer() //Pulls from ParseCareKit.plist to connect to server
-PFUser.enableRevocableSessionInBackground() //Allows you to revoke sessions from the Cloud
 
 ```
 
@@ -44,46 +43,12 @@ PFUser.enableRevocableSessionInBackground() //Allows you to revoke sessions from
 **Note that it is recommended to use Knowledge Vectors (`ParseRemoteSynchronizationManager`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how Knowledge Vectors work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
 
 ## Install ParseCareKit
-The framework currently isn't SPM compatible yet as it's depedendent on [Parse](https://github.com/parse-community/Parse-SDK-iOS-OSX) which is currently only compatible with cocoapods. 
+
+### Swift Package Manager (SPM)
+ParseCareKit can be installed via SPM. Open an existing project or create a new Xcode project and navigate to `File > Swift Packages > Add Package Dependency`. Enter the url `https://github.com/netreconlab/ParseCareKit` and tap `Next`. Choose the main branch, and on the next screen, check off the package.
 
 ### Installing via cocoapods
-The easiest way to install is via cocoapods. Since ParseCareKit requires CareKit, and CareKit doesn't officially support cocoapods (see more [here](https://github.com/carekit-apple/CareKit/issues/383)), you will have to point to a github repo that contains CareKit 2.0+ podspecs. Feel free to point to the repo below which mirrors the most up-to-date versions of CareKit. Your podfile should contain all of the following if you plan on using `CareKit`, `CareKitUI`, and `CareKitStore`:
-
-```ruby
-platform :ios, '13.0' #Note that this the minimum requirement for CareKit iOS 13
-
-target 'MyApp' do #Change to your app name
-  use_frameworks!
-
-  # All of these are required to run ParseCareKit
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
-  
-  # Add the rest of your pods below
-end
-```
-
-The above Podfile will also install the minimum required [Parse iOS framework](https://github.com/parse-community/Parse-SDK-iOS-OSX)(and its dependencies) as it's also a requirement for ParseCareKit.
-
-If you only need the `CareKitStore` and `ParseCareKit`, you can build your project for iOS 11+ by using:
-
-```ruby
-platform :ios, '11.0' #Can run on lower version as long as you are using tweek
-
-target 'MyApp' do #Change to your app name
-  use_frameworks!
-
-  # All of these are required to run ParseCareKit
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_tweek'
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'carestore'
-  
-  # Add the rest of your pods below
-end
-```
-
-See the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch for details.
+To install via cocoapods, go to the [objc](https://github.com/netreconlab/ParseCareKit/tree/2.1) branch for the readme.
 
 
 ### Installing as a framework
@@ -91,7 +56,7 @@ See the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) 
 - Build the project
 - In your project Targets, click your corresponding target and then click the `General` heading to the right
 - Place `ParseCareKit.framework` in `Frameworks, Libraries, and Embedded Content` and it should automatically appear in `Linked Binary with Libraries` under the `Build Phases` section
-- Then, simply place `import ParseCareKit` at the top of any file that needs the framework.
+- Then, simply place `import ParseSwiftCareKit` at the top of any file that needs the framework.
 
 **If you have CareKit already in your project via SPM or copied, you will need to remove it as ParseCareKit comes with the a compatibile version of CareKit and a conflict of CareKit appearing twice will cause your app to crash**
 
@@ -117,12 +82,12 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-### Using vector clocks aka CareKits KnowledgeVector (`ParseRemoteSynchronizationManager`)
+### Using vector clocks aka CareKits Clock (`ParseRemoteSynchronizationManager`)
 
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
-/*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
+/*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
 let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
@@ -130,7 +95,7 @@ remoteStoreManager.delegate = self //Conform to this protocol if you are writing
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the KnowledgeVector. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
 
 ```swift
 let userTypeUUIDDictionary = [
@@ -139,13 +104,13 @@ let userTypeUUIDDictionary = [
 ]
 
 //Store the possible uuids for each type
-PFUser.current().userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
-PFUser.current().loggedInType = "doctor" 
-PFUser.current().saveInBackground()
+PCKUser.current.userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
+PCKUser.current.loggedInType = "doctor" 
+PCKUser.current.saveInBackground()
 
 //Start synch with the correct knowlege vector for the particular type of user
-let lastLoggedInType = PFUser.current().loggedInType
-let userTypeUUIDString = PFUser.current().userTypes[lastLoggedInType] as! String
+let lastLoggedInType = PCKUser.current.loggedInType
+let userTypeUUIDString = PCKUser.current.userTypes[lastLoggedInType] as! String
 let userTypeUUID = UUID(uuidString: userTypeUUID)!
 
 //Start synching 
@@ -255,21 +220,17 @@ store.addCarePlan(careKitCarePlan, callbackQueue: .main){
 There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below `new()`,  `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->Patient:
 
 ```swift
-class CancerPatient: Patient{
-    @NSManaged public var primaryCondition:String?
-    @NSManaged public var comorbidities:String?
+class CancerPatient: Patient {
+    public var primaryCondition:String?
+    public var comorbidities:String?
     
-    override func new() -> PCKSynchronized {
-        return CancerPatient()
-    }
-    
-    override func new(with careKitEntity: OCKEntity)->PCKSynchronized? {
+    override func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):
             return CancerPatient(careKitEntity: entity)
         default:
-            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             return nil
         }
     }
@@ -310,7 +271,7 @@ class CancerPatient: Patient{
 Then you need to pass your custom class when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
 ```swift
-let updatedConcreteClasses: [PCKStoreClass: PCKRemoteSynchronized] = [
+let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
     .patient: CancerPatient()
 ]
 
@@ -324,23 +285,19 @@ remoteStoreManager.parseRemoteDelegate = self
 Of course, you can customize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
 
 
-You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.parseClassName()` as the value. See below:
+You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.className()` as the value. See below:
 
 ```swift
-class Doctor: Patient{
-    @NSManaged public var type:String?
+class Doctor: Patient {
+    public var type:String?
     
-    override func new() -> PCKSynchronized {
-        return Doctor()
-    }
-    
-    override func new(with careKitEntity: OCKEntity)-?PCKSynchronized? {
+    override func new(with careKitEntity: OCKEntity)-?PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            print("Error in \(parseClassName).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
             completion(nil)
         }
     }
@@ -349,7 +306,7 @@ class Doctor: Patient{
     convenience init(careKitEntity: OCKAnyPatient {
         self.init()
         self.copyCareKit(careKitEntity)
-        self.userInfo = [kPCKCustomClassKey: self.parseClassName]
+        self.userInfo = [kPCKCustomClassKey: self.className]
     }
     
     override copyCareKit(_ patientAny: OCKAnyPatient)->Patient? {
@@ -430,7 +387,7 @@ There are some of helper methods provided in ParseCareKit to query parse in a si
 //To query the most recent version
 let query = Patient.query(for: Date())
 
-query.findInBackground(){
+query.find(){
     (objects,error) in
     guard let found = objects as? [Patient] else{
         print("\(String(describing: error))")
@@ -441,7 +398,7 @@ query.findInBackground(){
 
 //You can also use this helper method
 let patient = Patient()
-patient.findInBackground(for: Date()){
+patient.find(for: Date()){
     (objects,error) in
     guard let found = objects as? [Patient] else{
         print("\(String(describing: error))")
@@ -457,7 +414,7 @@ For `Outcome`:
 //To query all current outcomes
 let query = Outcome.queryNotDeleted()
 
-query.findInBackground(){
+query.find(){
     (objects,error) in
     guard let found = objects as? [Outcome] else{
         print("\(String(describing: error))")
@@ -480,4 +437,4 @@ Outcome().findOutcomesInBackground(){
 
 ### Custom OCKStores
 
-If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObject` protocol which will require you to subclass `PFObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObjectable` protocol which will require you to subclass `ParseObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 

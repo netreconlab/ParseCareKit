@@ -13,9 +13,13 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "ParseCareKitTests\/testExample()",
+        "ParseCareKitTests\/testPerformanceExample()"
+      ],
       "target" : {
         "containerPath" : "container:ParseCareKit.xcodeproj",
-        "identifier" : "709752D0250D270E0020EA70",
+        "identifier" : "70854C3225218F9A00BA2179",
         "name" : "ParseCareKitTests"
       }
     }

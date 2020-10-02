@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "709752D0250D270E0020EA70"
+               BlueprintIdentifier = "70854C3225218F9A00BA2179"
                BuildableName = "ParseCareKitTests.xctest"
                BlueprintName = "ParseCareKitTests"
                ReferencedContainer = "container:ParseCareKit.xcodeproj">
@@ -53,7 +53,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "709752D0250D270E0020EA70"
+               BlueprintIdentifier = "70854C3225218F9A00BA2179"
                BuildableName = "ParseCareKitTests.xctest"
                BlueprintName = "ParseCareKitTests"
                ReferencedContainer = "container:ParseCareKit.xcodeproj">
