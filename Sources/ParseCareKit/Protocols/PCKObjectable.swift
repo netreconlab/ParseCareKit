@@ -236,7 +236,7 @@ extension PCKObjectable {
         
         if encodingForParse {
             if !(self is Note) {
-                try container.encodeIfPresent(entityId, forKey: .id)
+                try container.encodeIfPresent(entityId, forKey: .entityId)
             }
             try container.encode(className, forKey: .className)
             try container.encodeIfPresent(ACL, forKey: .ACL)
