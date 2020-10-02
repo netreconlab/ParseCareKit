@@ -59,7 +59,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
 
     public internal(set) var nextVersion: CarePlan? {

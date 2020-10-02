@@ -87,7 +87,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
 
     //1 to 1 between Parse and CareStore

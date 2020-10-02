@@ -59,7 +59,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
     var date: Date? //Custom added, check if needed
     public var taskOccurrenceIndex: Int?

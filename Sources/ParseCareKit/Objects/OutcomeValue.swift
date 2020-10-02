@@ -56,7 +56,7 @@ public class OutcomeValue: PCKObjectable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
     public var index:Int?
     public var kind:String?

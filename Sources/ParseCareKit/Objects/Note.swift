@@ -55,7 +55,7 @@ open class Note: PCKObjectable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
 
     public var content:String?
