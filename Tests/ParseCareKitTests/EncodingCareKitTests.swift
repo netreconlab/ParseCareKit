@@ -5,7 +5,7 @@
 //  Created by Corey Baker on 9/12/20.
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
-
+#if !os(watchOS)
 import XCTest
 @testable import ParseCareKit
 @testable import CareKitStore
@@ -765,3 +765,4 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
 }
+#endif

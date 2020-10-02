@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
         "state": {
           "branch": "main",
-          "revision": "bb55b4719e7091d5587f652f742eb8189492fe98",
+          "revision": "248c42c4e4ea97ff5fe349361fa6e0a849eab204",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
           "branch": "geopoint",
-          "revision": "dcd40b890415f03a6fa737c2d4d56b369e9fc764",
+          "revision": "e7ced51cddfadc3a86f90f2b5bc5f3462216577f",
           "version": null
         }
       }
