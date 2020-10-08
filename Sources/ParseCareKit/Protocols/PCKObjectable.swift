@@ -236,6 +236,14 @@ extension PCKObjectable {
         }
         return returnId
     }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.uuid == rhs.uuid
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.uuid)
+    }
 }
 
 //Encodable
