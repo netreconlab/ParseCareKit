@@ -73,7 +73,11 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     
     public var remoteID: String?
     
-    var encodingForParse: Bool = true
+    var encodingForParse: Bool = true {
+        willSet {
+            prepareEncodingRelational(newValue)
+        }
+    }
     
     public var objectId: String?
     
@@ -276,8 +280,8 @@ public final class Task: PCKVersionable, PCKSynchronizable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         
-        let encoded = try JSONEncoder().encode(task)
-        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(task)
+        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
         return decoded
     }
@@ -287,13 +291,21 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         copy = copy.copyRelationalEntities(parse)
         return copy
     }
-    
-    
+
+    func prepareEncodingRelational(_ encodingForParse: Bool) {
+        previousVersion?.encodingForParse = encodingForParse
+        nextVersion?.encodingForParse = encodingForParse
+        carePlan?.encodingForParse = encodingForParse
+        notes?.forEach {
+            $0.encodingForParse = encodingForParse
+        }
+    }
+
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKTask {
         self.encodingForParse = false
-        let encoded = try JSONEncoder().encode(self)
-        return try JSONDecoder().decode(OCKTask.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        return try ParseCareKitUtility.decoder().decode(OCKTask.self, from: encoded)
     }
     
     ///Link versions and related classes

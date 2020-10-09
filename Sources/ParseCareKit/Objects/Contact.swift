@@ -72,7 +72,11 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public var remoteID: String?
     
-    var encodingForParse: Bool = true
+    var encodingForParse: Bool = true {
+        willSet {
+            prepareEncodingRelational(newValue)
+        }
+    }
     
     public var objectId: String?
     
@@ -288,19 +292,27 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
             let contact = contactAny as? OCKContact else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try JSONEncoder().encode(contact)
-        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(contact)
+        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
         return decoded
     }
     
-    
+    func prepareEncodingRelational(_ encodingForParse: Bool) {
+        previousVersion?.encodingForParse = encodingForParse
+        nextVersion?.encodingForParse = encodingForParse
+        carePlan?.encodingForParse = encodingForParse
+        notes?.forEach {
+            $0.encodingForParse = encodingForParse
+        }
+    }
+
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
         self.encodingForParse = false
-        let encoded = try JSONEncoder().encode(self)
+        let encoded = try ParseCareKitUtility.encoder().encode(self)
         self.encodingForParse = true
-        return try JSONDecoder().decode(OCKContact.self, from: encoded)
+        return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
     }
     
     ///Link versions and related classes

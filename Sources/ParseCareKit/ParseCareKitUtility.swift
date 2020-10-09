@@ -51,4 +51,12 @@ public struct ParseCareKitUtility {
         
         return dateFormatter.date(from: date)
     }
+    
+    public static func encoder() -> ParseEncoder {
+        Note().getEncoder()
+    }
+
+    public static func decoder() -> JSONDecoder {
+        Note().getDecoder()
+    }
 }

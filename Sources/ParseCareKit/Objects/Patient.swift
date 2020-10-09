@@ -72,7 +72,11 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public var remoteID: String?
     
-    var encodingForParse: Bool = true
+    var encodingForParse: Bool = true {
+        willSet {
+            prepareEncodingRelational(newValue)
+        }
+    }
     
     public var objectId: String?
     
@@ -273,80 +277,23 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         
-        let encoded = try JSONEncoder().encode(patient)
-        let decoded = try JSONDecoder().decode(Patient.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(patient)
+        let decoded = try ParseCareKitUtility.decoder().decode(Patient.self, from: encoded)
         decoded.entityId = patient.id
         return decoded
-        
-        /*
-        if let uuid = patient.uuid?.uuidString {
-            self.uuid = uuid
-        }else{
-            print("Warning in \(className). Entity missing uuid: \(patient)")
+    }
+
+    func prepareEncodingRelational(_ encodingForParse: Bool) {
+        previousVersion?.encodingForParse = encodingForParse
+        nextVersion?.encodingForParse = encodingForParse
+        notes?.forEach {
+            $0.encodingForParse = encodingForParse
         }
-        
-        if let schemaVersion = Patient.getSchemaVersionFromCareKitEntity(patient){
-            self.schemaVersion = schemaVersion
-        }else{
-            print("Warning in \(className).copyCareKit(). Entity missing schemaVersion: \(patient)")
-        }
-        
-        self.entityId = patient.id
-        self.name = CareKitPersonNameComponents.familyName.convertToDictionary(patient.name)
-        self.birthday = patient.birthday
-        self.sex = patient.sex?.rawValue
-        self.effectiveDate = patient.effectiveDate
-        self.deletedDate = patient.deletedDate
-        self.updatedDate = patient.updatedDate
-        self.timezone = patient.timezone.abbreviation()!
-        self.userInfo = patient.userInfo
-        self.remoteID = patient.remoteID
-        self.alergies = patient.allergies
-        self.createdDate = patient.createdDate
-        self.notes = patient.notes?.compactMap{Note(careKitEntity: $0)}
-        self.previousVersionUUID = patient.previousVersionUUID
-        self.nextVersionUUID = patient.nextVersionUUID
-        return self*/
     }
     
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKPatient {
         self.encodingForParse = false
-        let encoded = try JSONEncoder().encode(self)
-        return try JSONDecoder().decode(OCKPatient.self, from: encoded)
-        
-        /*guard self.canConvertToCareKit() == true,
-            let name = self.name else {
-            return nil
-        }
-        let nameComponents = CareKitPersonNameComponents.familyName.convertToPersonNameComponents(name)
-        var patient = OCKPatient(id: self.entityId!, name: nameComponents)
-
-        if fromCloud{
-            guard let decodedPatient = decodedCareKitObject(patient) else{
-                print("Error in \(className). Couldn't decode entity \(self)")
-                return nil
-            }
-            patient = decodedPatient
-        }
-        
-        if let effectiveDate = self.effectiveDate{
-            patient.effectiveDate = effectiveDate
-        }
-        patient.birthday = self.birthday
-        patient.allergies = self.alergies
-        patient.groupIdentifier = self.groupIdentifier
-        patient.tags = self.tags
-        patient.source = self.source
-        patient.asset = self.asset
-        patient.userInfo = self.userInfo
-        patient.notes = self.notes?.compactMap{$0.convertToCareKit()}
-        patient.remoteID = self.remoteID
-        if let timeZone = TimeZone(abbreviation: self.timezone!){
-            patient.timezone = timeZone
-        }
-        if let sex = self.sex{
-            patient.sex = OCKBiologicalSex(rawValue: sex)
-        }
-        return patient*/
+        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        return try ParseCareKitUtility.decoder().decode(OCKPatient.self, from: encoded)
     }
 }
