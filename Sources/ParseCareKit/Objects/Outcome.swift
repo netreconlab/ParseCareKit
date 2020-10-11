@@ -119,8 +119,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                         return
                     }
                     let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                    _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
-                    
+                    _ = query.includeAll()
                     query.first(callbackQueue: .global(qos: .background)){ result in
                         
                         switch result {
@@ -159,7 +158,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
         _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -220,7 +219,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-        _ = query.include([kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        _ = query.includeAll()
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -399,7 +398,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-        _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        _ = query.includeAll()
         return query
     }
    

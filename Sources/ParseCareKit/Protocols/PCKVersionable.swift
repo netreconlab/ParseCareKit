@@ -281,7 +281,7 @@ extension PCKVersionable {
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public static func query(for date: Date) -> Query<Self> {
         let query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-        _ = query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        _ = query.includeAll()
         return query
     }
 

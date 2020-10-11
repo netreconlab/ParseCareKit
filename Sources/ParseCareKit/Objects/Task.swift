@@ -161,8 +161,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Task.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
-        _ = query.include([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,
-                           kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
@@ -203,8 +202,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         let query = Task.query(kPCKObjectableClockKey >= localClock)
         _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.include([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,
-                           kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             

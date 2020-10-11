@@ -124,37 +124,7 @@ extension PCKObjectable {
         }
              
         let query = Self.query(kPCKObjectableUUIDKey == uuidString)
-
-        switch Self.self {
-        case is CarePlan.Type:
-            if include{
-                _ = query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,
-                                  kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
-            }
-        case is Contact.Type:
-            if include{
-                _ = query.include(kPCKContactCarePlanKey,kPCKObjectableNotesKey,
-                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
-            }
-        case is Outcome.Type:
-            if include{
-                _ = query.include(kPCKOutcomeTaskKey,
-                                      kPCKOutcomeValuesKey,kPCKObjectableNotesKey)
-            }
-        case is Patient.Type:
-            if include{
-                _ = query.include(kPCKObjectableNotesKey,
-                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
-            }
-        case is Task.Type:
-            if include{
-                _ = query.include(kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,
-                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
-            }
-        default:
-            completion(false,nil)
-        }
-        
+        _ = query.includeAll()
         query.first(callbackQueue: .global(qos: .background)) { result in
             
             switch result {
@@ -179,33 +149,7 @@ extension PCKObjectable {
         }
             
         let query = Self.query(kPCKObjectableUUIDKey == uuidString)
-
-        switch self {
-        case is CarePlan:
-            if include{
-                _ = query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,
-                              kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
-            }
-        case is Contact:
-            if include{
-                _ = query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-            }
-        case is Outcome:
-            if include{
-                _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
-            }
-        case is Patient:
-            if include{
-                _ = query.include([kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-            }
-        case is Task:
-            if include{
-                _ = query.include([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
-            }
-        default:
-            completion(nil,ParseCareKitError.classTypeNotAnEligibleType)
-        }
-        
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){
             results in
             
