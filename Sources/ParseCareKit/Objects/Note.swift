@@ -60,7 +60,7 @@ open class Note: PCKObjectable {
     public var author:String?
     
     enum CodingKeys: String, CodingKey {
-        case ACL, objectId, createdAt, updatedAt
+        case objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case content, title, author
     }
