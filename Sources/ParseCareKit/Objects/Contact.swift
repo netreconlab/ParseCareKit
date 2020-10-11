@@ -116,6 +116,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     public var otherContactInfo: [OCKLabeledValue]?
 
     enum CodingKeys: String, CodingKey {
+        case ACL, objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
         case carePlan, title, carePlanUUID, address, category, name, organization, role

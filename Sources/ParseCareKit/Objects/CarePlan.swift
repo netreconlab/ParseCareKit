@@ -104,6 +104,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public var title:String?
     
     enum CodingKeys: String, CodingKey {
+        case ACL, objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
         case title, patient, patientUUID

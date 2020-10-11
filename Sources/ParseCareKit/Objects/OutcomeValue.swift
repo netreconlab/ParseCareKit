@@ -89,6 +89,7 @@ final public class OutcomeValue: PCKObjectable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case ACL, objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock, ACL
         case index, kind, units, value, type
     }
@@ -129,7 +130,10 @@ final public class OutcomeValue: PCKObjectable {
                 value = try container.decode(Date.self, forKey: .value)
             }
         }
-
+        ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
+        objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
+        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
+        updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         kind = try container.decodeIfPresent(String.self, forKey: .kind)
         units = try container.decodeIfPresent(String.self, forKey: .units)
         index = try container.decodeIfPresent(Int.self, forKey: .index)
