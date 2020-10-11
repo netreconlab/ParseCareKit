@@ -321,7 +321,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
                 return
             }
             
-            linkedObject.carePlan?.first(carePlanUUID, relatedObject: linkedObject.carePlan, include: true){
+            CarePlan.first(carePlanUUID, relatedObject: linkedObject.carePlan, include: true){
                 (isNew,carePlan) in
                 
                 guard let carePlan = carePlan else{

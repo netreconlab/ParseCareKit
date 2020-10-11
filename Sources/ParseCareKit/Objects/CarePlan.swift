@@ -307,7 +307,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                 return
             }
             
-            linked.patient?.first(patientUUID, relatedObject: linked.patient, include: true){ (isNew,patient) in
+            Patient.first(patientUUID, relatedObject: linked.patient, include: true){ (isNew,patient) in
                 
                 guard let patient = patient else{
                     completion(linkedNew,self)

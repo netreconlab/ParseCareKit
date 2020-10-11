@@ -47,7 +47,7 @@ extension PCKVersionable {
     func linkVersions(completion: @escaping (Bool, Self) -> Void) {
         var linkedNew = false
         var versionedObject = self
-        versionedObject.first(versionedObject.previousVersionUUID, relatedObject: versionedObject.previousVersion, include: true){
+        Self.first(versionedObject.previousVersionUUID, relatedObject: versionedObject.previousVersion, include: true){
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject else{
@@ -60,7 +60,7 @@ extension PCKVersionable {
                 linkedNew = true
             }
             
-            versionedObject.first(versionedObject.nextVersionUUID, relatedObject: versionedObject.nextVersion, include: true){
+            Self.first(versionedObject.nextVersionUUID, relatedObject: versionedObject.nextVersion, include: true){
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject else{
@@ -83,7 +83,7 @@ extension PCKVersionable {
         
         if backwards{
             if versionFixed.previousVersionUUID != nil && versionFixed.previousVersion == nil{
-                versionFixed.first(versionFixed.previousVersionUUID, relatedObject: versionFixed.previousVersion){
+                Self.first(versionFixed.previousVersionUUID, relatedObject: versionFixed.previousVersion){
                     (isNew,previousFound) in
 
                     
@@ -121,7 +121,7 @@ extension PCKVersionable {
             //We are done fixing
         }else{
             if versionFixed.nextVersionUUID != nil && versionFixed.nextVersion == nil{
-                versionFixed.first(versionFixed.nextVersionUUID, relatedObject: versionFixed.nextVersion){
+                Self.first(versionFixed.nextVersionUUID, relatedObject: versionFixed.nextVersion){
                     (isNew,nextFound) in
                     
                     guard var nextFound = nextFound else{

@@ -109,7 +109,7 @@ extension PCKObjectable {
         return true
     }
 
-    public func first(_ uuid:UUID?, relatedObject:Self?=nil, include:Bool=true, completion: @escaping(Bool,Self?) -> Void) {
+    static public func first(_ uuid:UUID?, relatedObject:Self?=nil, include:Bool=true, completion: @escaping(Bool,Self?) -> Void) {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
@@ -124,29 +124,29 @@ extension PCKObjectable {
         }
              
         let query = Self.query(kPCKObjectableUUIDKey == uuidString)
-        
-        switch self {
-        case is CarePlan:
+
+        switch Self.self {
+        case is CarePlan.Type:
             if include{
                 _ = query.include(kPCKCarePlanPatientKey,kPCKObjectableNotesKey,
                                   kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
-        case is Contact:
+        case is Contact.Type:
             if include{
                 _ = query.include(kPCKContactCarePlanKey,kPCKObjectableNotesKey,
                               kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
-        case is Outcome:
+        case is Outcome.Type:
             if include{
                 _ = query.include(kPCKOutcomeTaskKey,
                                       kPCKOutcomeValuesKey,kPCKObjectableNotesKey)
             }
-        case is Patient:
+        case is Patient.Type:
             if include{
                 _ = query.include(kPCKObjectableNotesKey,
                               kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)
             }
-        case is Task:
+        case is Task.Type:
             if include{
                 _ = query.include(kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectableNotesKey,
                               kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey)

@@ -342,25 +342,26 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             completion(false,self)
             return
         }
-        
-        task?.first(taskUUID, relatedObject: self.task, include: true){
-            (isNew,foundTask) in
-            
-            guard let foundTask = foundTask else{
-                completion(isNew,self)
-                return
+        if self.task == nil {
+            Task.first(taskUUID, relatedObject: self.task, include: true){
+                (isNew,foundTask) in
+                
+                guard let foundTask = foundTask else{
+                    completion(isNew,self)
+                    return
+                }
+                
+                self.task = foundTask
+                
+                guard let currentTask = self.task else{
+                    self.date = nil
+                    completion(false,self)
+                    return
+                }
+                
+                self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
+                completion(true,self)
             }
-            
-            self.task = foundTask
-            
-            guard let currentTask = self.task else{
-                self.date = nil
-                completion(false,self)
-                return
-            }
-            
-            self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
-            completion(true,self)
         }
     }
     
