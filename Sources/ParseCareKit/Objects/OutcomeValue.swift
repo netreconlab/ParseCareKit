@@ -90,7 +90,7 @@ final public class OutcomeValue: PCKObjectable {
     
     enum CodingKeys: String, CodingKey {
         case ACL, objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock, ACL
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case index, kind, units, value, type
     }
 
