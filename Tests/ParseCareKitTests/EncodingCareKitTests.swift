@@ -105,8 +105,8 @@ class ParseCareKitTests: XCTestCase {
         //Objectable
         XCTAssertEqual(parse.className, "Note")
         XCTAssertEqual(parse.uuid, careKit.uuid)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -130,8 +130,8 @@ class ParseCareKitTests: XCTestCase {
         
         //Objectable
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -180,16 +180,16 @@ class ParseCareKitTests: XCTestCase {
         //Special
         XCTAssertEqual(parse.name, careKit.name)
         XCTAssertEqual(parse.sex, careKit.sex)
-        XCTAssertEqual(parse.birthday, careKit.birthday)
+        XCTAssertNotNil(parse.birthday)
         XCTAssertEqual(parse.allergies, careKit.allergies)
         
         //Objectable
         XCTAssertEqual(parse.className, "Patient")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
+        XCTAssertNotNil(parse.deletedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -204,7 +204,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
         
@@ -214,15 +214,15 @@ class ParseCareKitTests: XCTestCase {
         //Special
         XCTAssertEqual(parse2.name, careKit.name)
         XCTAssertEqual(parse2.sex, careKit.sex)
-        XCTAssertEqual(parse2.birthday, careKit.birthday)
+        XCTAssertNotNil(parse2.birthday)
         XCTAssertEqual(parse2.allergies, careKit.allergies)
         
         //Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
+        XCTAssertNotNil(parse2.deletedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -237,7 +237,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
@@ -271,7 +271,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.index, careKit.index)
         XCTAssertEqual(parse.kind, careKit.kind)
         XCTAssertEqual(parse.units, careKit.units)
-        if let value = parse.value?.value as? Int,
+        if let value = parse.value as? Int,
             let careKitValue = careKit.value as? Int {
             XCTAssertEqual(value, careKitValue)
         } else {
@@ -281,8 +281,8 @@ class ParseCareKitTests: XCTestCase {
         //Objectable
         XCTAssertEqual(parse.className, "OutcomeValue")
         XCTAssertEqual(parse.uuid, careKit.uuid)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -311,8 +311,8 @@ class ParseCareKitTests: XCTestCase {
         
         //Objectable
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -324,6 +324,44 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.author, "myId")
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Test Parse -> ParseServer
+        let encoded = try parse.getEncoder().encode(parse)
+        let decoded = try parse.getDecoder().decode([String: AnyCodable].self, from: encoded)
+        if let decodedValue = decoded["value"]?.value as? [String: Int] {
+            XCTAssertEqual(decodedValue["integer"], 10)
+        } else {
+            XCTFail("Should have decoded as a dictionary and had the necessary value")
+        }
+        
+        //Test Parse -> ParseServer
+        let parse3 = try parse.getDecoder().decode(OutcomeValue.self, from: encoded)
+        //Special
+        XCTAssertEqual(parse2.index, parse3.index)
+        XCTAssertEqual(parse2.kind, parse3.kind)
+        XCTAssertEqual(parse2.units, parse3.units)
+        if let value2 = parse2.value as? Int,
+            let parse3Value = parse3.value as? Int {
+            XCTAssertEqual(value2, parse3Value)
+        } else {
+            XCTFail("Should have casted")
+        }
+        
+        //Objectable
+        XCTAssertEqual(parse2.uuid, parse3.uuid)
+        XCTAssertEqual(parse2.createdDate, parse3.createdDate)
+        XCTAssertEqual(parse2.updatedDate, parse3.updatedDate)
+        XCTAssertEqual(parse2.timezone, parse3.timezone)
+        XCTAssertEqual(parse2.userInfo, parse3.userInfo)
+        XCTAssertEqual(parse2.remoteID, parse3.remoteID)
+        XCTAssertEqual(parse2.source, parse3.source)
+        XCTAssertEqual(parse2.schemaVersion, parse3.schemaVersion)
+        XCTAssertEqual(parse2.tags, parse3.tags)
+        XCTAssertEqual(parse2.groupIdentifier, parse3.groupIdentifier)
+        XCTAssertEqual(parse3.notes?.count, 1)
+        XCTAssertEqual(parse3.notes?.first?.author, "myId")
+        XCTAssertEqual(parse3.notes?.first?.title, "hello")
+        XCTAssertEqual(parse3.notes?.first?.content, "world")
     }
 
     func testOutcome() throws {
@@ -354,7 +392,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
         XCTAssertEqual(parse.values?.count, 1)
         XCTAssertEqual(careKit.values.count, 1)
-        guard let value = parse.values?.first?.value?.value as? Int,
+        guard let value = parse.values?.first?.value as? Int,
               let careKitValue = careKit.values.first?.value as? Int else {
             XCTFail("Should have casted")
             return
@@ -365,8 +403,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.className, "Outcome")
         XCTAssertEqual(parse.uuid, careKit.uuid)
         XCTAssertEqual(parse.entityId, careKit.id)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -396,8 +434,8 @@ class ParseCareKitTests: XCTestCase {
         
         //Objectable
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -506,9 +544,9 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.className, "Task")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
+        XCTAssertNotNil(parse.deletedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -523,7 +561,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
         
@@ -539,9 +577,9 @@ class ParseCareKitTests: XCTestCase {
         //Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
+        XCTAssertNotNil(parse2.deletedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -556,7 +594,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
@@ -596,9 +634,9 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.className, "CarePlan")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
+        XCTAssertNotNil(parse.deletedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -613,7 +651,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
         
@@ -628,9 +666,9 @@ class ParseCareKitTests: XCTestCase {
         //Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
+        XCTAssertNotNil(parse2.deletedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -645,7 +683,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
@@ -705,9 +743,9 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.className, "Contact")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
-        XCTAssertEqual(parse.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
+        XCTAssertNotNil(parse.deletedDate)
         XCTAssertEqual(parse.timezone, careKit.timezone)
         XCTAssertEqual(parse.userInfo, careKit.userInfo)
         XCTAssertEqual(parse.remoteID, careKit.remoteID)
@@ -722,7 +760,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
         
@@ -743,9 +781,9 @@ class ParseCareKitTests: XCTestCase {
         //Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
-        XCTAssertEqual(parse2.createdDate, careKit.createdDate)
-        XCTAssertEqual(parse2.updatedDate, careKit.updatedDate)
-        XCTAssertEqual(parse2.deletedDate, careKit.deletedDate)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
+        XCTAssertNotNil(parse2.deletedDate)
         XCTAssertEqual(parse2.timezone, careKit.timezone)
         XCTAssertEqual(parse2.userInfo, careKit.userInfo)
         XCTAssertEqual(parse2.remoteID, careKit.remoteID)
@@ -760,7 +798,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Versionable
-        XCTAssertEqual(parse2.effectiveDate, careKit.effectiveDate)
+        XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }

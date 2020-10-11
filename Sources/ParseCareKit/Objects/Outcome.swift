@@ -17,14 +17,6 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
 
     var entityId: String?
     
-    public var id: String {
-        guard let currentUUID = uuid,
-              let currentOccurrenceIndex = taskOccurrenceIndex else {
-            return ""
-        }
-        return "\(currentUUID)_\(currentOccurrenceIndex)"
-    }
-    
     public internal(set) var logicalClock: Int?
     
     public internal(set) var schemaVersion: OCKSemanticVersion?
@@ -51,7 +43,11 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public var remoteID: String?
     
-    var encodingForParse: Bool = true
+    var encodingForParse: Bool = true {
+        willSet {
+            prepareEncodingRelational(newValue)
+        }
+    }
     
     public var objectId: String?
     
@@ -78,6 +74,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     enum CodingKeys: String, CodingKey {
+        case objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
@@ -123,8 +120,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                         return
                     }
                     let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                    _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
-                    
+                    _ = query.includeAll()
                     query.first(callbackQueue: .global(qos: .background)){ result in
                         
                         switch result {
@@ -163,7 +159,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
         _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -224,7 +220,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-        _ = query.include([kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        _ = query.includeAll()
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -277,8 +273,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         
-        let encoded = try JSONEncoder().encode(outcome)
-        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(outcome)
+        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
         return decoded
     }
@@ -295,11 +291,21 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         return copy
     }
         
+    public func prepareEncodingRelational(_ encodingForParse: Bool) {
+        task?.encodingForParse = encodingForParse
+        values?.forEach {
+            $0.encodingForParse = encodingForParse
+        }
+        notes?.forEach {
+            $0.encodingForParse = encodingForParse
+        }
+    }
+
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
         self.encodingForParse = false
-        let encoded = try JSONEncoder().encode(self)
-        return try JSONDecoder().decode(OCKOutcome.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
     
     public func save(completion: @escaping(Bool,Error?) -> Void){
@@ -336,25 +342,26 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             completion(false,self)
             return
         }
-        
-        task?.first(taskUUID, relatedObject: self.task, include: true){
-            (isNew,foundTask) in
-            
-            guard let foundTask = foundTask else{
-                completion(isNew,self)
-                return
+        if self.task == nil {
+            Task.first(taskUUID, relatedObject: self.task, include: true){
+                (isNew,foundTask) in
+                
+                guard let foundTask = foundTask else{
+                    completion(isNew,self)
+                    return
+                }
+                
+                self.task = foundTask
+                
+                guard let currentTask = self.task else{
+                    self.date = nil
+                    completion(false,self)
+                    return
+                }
+                
+                self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
+                completion(true,self)
             }
-            
-            self.task = foundTask
-            
-            guard let currentTask = self.task else{
-                self.date = nil
-                completion(false,self)
-                return
-            }
-            
-            self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
-            completion(true,self)
         }
     }
     
@@ -392,7 +399,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-        _ = query.include([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectableNotesKey])
+        _ = query.includeAll()
         return query
     }
    

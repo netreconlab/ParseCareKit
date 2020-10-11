@@ -16,13 +16,6 @@ open class Note: PCKObjectable {
     
     var entityId: String?
     
-    var id: String {
-        guard let returnId = entityId else {
-            return ""
-        }
-        return returnId
-    }
-    
     public internal(set) var logicalClock: Int?
     
     public internal(set) var schemaVersion: OCKSemanticVersion?
@@ -47,7 +40,11 @@ open class Note: PCKObjectable {
     
     public var remoteID: String?
     
-    var encodingForParse: Bool = true
+    var encodingForParse: Bool = true {
+        willSet {
+            prepareEncodingRelational(newValue)
+        }
+    }
     
     public var objectId: String?
     
@@ -63,8 +60,14 @@ open class Note: PCKObjectable {
     public var author:String?
     
     enum CodingKeys: String, CodingKey {
+        case objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case content, title, author
+    }
+
+    //Used to get encoder/decoder for ParseCareKitUtility, don't remove
+    init() {
+        self.timezone = .current
     }
 
     open class func copyValues(from other: Note, to here: Note) throws -> Self {
@@ -80,17 +83,23 @@ open class Note: PCKObjectable {
     }
     
     open class func copyCareKit(_ note: OCKNote) throws -> Note {
-        let encoded = try JSONEncoder().encode(note)
-        return try JSONDecoder().decode(Self.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(note)
+        return try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKNote {
         encodingForParse = false
-        let encoded = try JSONEncoder().encode(self)
-        return try JSONDecoder().decode(OCKNote.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        return try ParseCareKitUtility.decoder().decode(OCKNote.self, from: encoded)
     }
     
+    public func prepareEncodingRelational(_ encodingForParse: Bool) {
+        notes?.forEach {
+            $0.encodingForParse = encodingForParse
+        }
+    }
+
     func stamp(_ clock: Int){
         self.logicalClock = clock
         self.notes?.forEach{

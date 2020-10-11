@@ -46,13 +46,6 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     var entityId: String?
     
-    public var id: String {
-        guard let returnId = entityId else {
-            return ""
-        }
-        return returnId
-    }
-    
     public internal(set) var logicalClock: Int?
     
     public internal(set) var schemaVersion: OCKSemanticVersion?
@@ -79,7 +72,11 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public var remoteID: String?
     
-    var encodingForParse: Bool = true
+    var encodingForParse: Bool = true {
+        willSet {
+            prepareEncodingRelational(newValue)
+        }
+    }
     
     public var objectId: String?
     
@@ -119,6 +116,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     public var otherContactInfo: [OCKLabeledValue]?
 
     enum CodingKeys: String, CodingKey {
+        case objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
         case carePlan, title, carePlanUUID, address, category, name, organization, role
@@ -176,8 +174,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Contact.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousVersionUUID]))
-        _ = query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
-                       kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
@@ -218,8 +215,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         let query = Contact.query(kPCKObjectableClockKey >= localClock)
         _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.include([kPCKContactCarePlanKey,kPCKObjectableNotesKey,
-        kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
+        _ = query.includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
@@ -295,19 +291,27 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
             let contact = contactAny as? OCKContact else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try JSONEncoder().encode(contact)
-        let decoded = try JSONDecoder().decode(Self.self, from: encoded)
+        let encoded = try ParseCareKitUtility.encoder().encode(contact)
+        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
         return decoded
     }
     
-    
+    func prepareEncodingRelational(_ encodingForParse: Bool) {
+        previousVersion?.encodingForParse = encodingForParse
+        nextVersion?.encodingForParse = encodingForParse
+        carePlan?.encodingForParse = encodingForParse
+        notes?.forEach {
+            $0.encodingForParse = encodingForParse
+        }
+    }
+
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
         self.encodingForParse = false
-        let encoded = try JSONEncoder().encode(self)
+        let encoded = try ParseCareKitUtility.encoder().encode(self)
         self.encodingForParse = true
-        return try JSONDecoder().decode(OCKContact.self, from: encoded)
+        return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
     }
     
     ///Link versions and related classes
@@ -322,7 +326,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
                 return
             }
             
-            linked.carePlan?.first(carePlanUUID, relatedObject: linked.carePlan, include: true){
+            CarePlan.first(carePlanUUID, relatedObject: linked.carePlan, include: true){
                 (isNew,carePlan) in
                 
                 guard let carePlan = carePlan else{
