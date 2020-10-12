@@ -5,7 +5,7 @@
 
 This framework is an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.0+ data with [parse-server](https://github.com/parse-community/parse-server). 
 
-For the backend, it is suggested to use [parse-hipaa](https://github.com/netreconlab/parse-hipaa) which is an out-of-the-box HIPAA compliant Parse/[Postgres](https://www.postgresql.org) or Parse/[Mongo](https://www.mongodb.com) server that comes with [Parse Dashboard](https://github.com/parse-community/parse-dashboard). Since [parse-hipaa](https://github.com/netreconlab/parse-hipaa) is a pare-server, it can be used for [iOS](https://docs.parseplatform.org/ios/guide/), [Android](https://docs.parseplatform.org/android/guide/), and web based apps. API's such as [GraphQL](https://docs.parseplatform.org/graphql/guide/), [REST](https://docs.parseplatform.org/rest/guide/), and [JS](https://docs.parseplatform.org/js/guide/) are also enabled in parse-hipaa and can be accessed directly or tested via the "API Console" in parse-dashboard. See the [Parse SDK documentation](https://parseplatform.org/#sdks) for details. These docker images include the necessary database auditing and logging for HIPAA compliance.
+For the backend, it is suggested to use [parse-hipaa](https://github.com/netreconlab/parse-hipaa) which is an out-of-the-box HIPAA compliant Parse/[Postgres](https://www.postgresql.org) or Parse/[Mongo](https://www.mongodb.com) server that comes with [Parse Dashboard](https://github.com/parse-community/parse-dashboard). Since [parse-hipaa](https://github.com/netreconlab/parse-hipaa) is a pare-server, it can be used for [iOS](https://docs.parseplatform.org/ios/guide/), [Android](https://docs.parseplatform.org/android/guide/), and web based apps. API's such as [GraphQL](https://docs.parseplatform.org/graphql/guide/), [REST](https://docs.parseplatform.org/rest/guide/), and [JS](https://docs.parseplatform.org/js/guide/) are also enabled in parse-hipaa and can be accessed directly or tested via the "API Console" in parse-dashboard. See the [Parse SDK documentation](http://parseplatform.org/Parse-Swift/api/) for details. These docker images include the necessary database auditing and logging for HIPAA compliance.
 
 You can also use ParseCareKit with any parse-server setup. If you devide to use your own parse-server, it's strongly recommended to add the following [CloudCode](https://github.com/netreconlab/parse-hipaa/tree/main/parse/cloud) to your server's "cloud" folder to ensure the necessary classes and fields are created as well as ensuring uniqueness of pushed entities. In addition, you should follow the [directions](https://github.com/netreconlab/parse-hipaa#running-in-production-for-parsecarekit) to setup additional indexes for optimized queries. ***Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance.***
 
@@ -16,7 +16,6 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKContact <-> Contact
 - [x] OCKOutcome <-> Outcome
 - [x] OCKOutcomeValue <-> OutcomeValue
-- [x] OCKScheduleElement <-> ScheduleElement
 - [x] OCKNote <-> Note
 - [x] OCKRevisionRecord.Clock <-> Clock
 
@@ -169,50 +168,6 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
     }
 }
 
-```
-
-### Using the wall clock (`ParseSynchronizedStoreManager`) - Note that this is deprecated
-
-You can also use ParseCareKit to stay synchronized with the `OCKStore` or `OCKAnyStoreProtocol` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
-
-```swift
-/*Use wall clock and OCKSynchronizedStoreManager to keep data synced. Useful if you are using CareKit 2.0.1 or below
-This should only be used if there's 1 device per patient or
-if all of a patients devices are on the same clock or else they may get out-of-sync*/
-let dataStore = OCKStore(name: "myDataStore", type: .onDisk)
-let dataStoreManager = OCKSynchronizedStoreManager(wrapping: dataStore)
-let cloudStoreManager = ParseSynchronizedStoreManager(dataStoreManager)
-```
-
-During initialization of `ParseSynchronizedStoreManager`, all CareKit data that has `remoteID == nil` will automatically be synced to your parse-server, once synced, the `remoteID` for each entity will be replaced by the corresponding `objectId` on your parse-server.
-
-To create a Parse object from a CareKit object:
-
-```swift
-let newCarePlan = OCKCarePlan(id: "uniqueId", title: "New Care Plan", patientID: nil)
-let parseCarePlan = CarePlan(careKitEntity: newCarePlan)
-```
-
-To create a CareKit object from a Parse object:
-
-```swift
-guard let careKitCarePlan = parseCarePlan.convertToCareKit() else{
-  print("Error converting to CareKit object")
-  return
-}
-
-store.addCarePlan(careKitCarePlan, callbackQueue: .main){
-    result in
-
-    switch result{
-    case .success(let savedCareKitCarePlan):
-        print("patient \(savedCareKitCarePlan) saved successfully")
-        
-        //Note that since the "cloudStoreManager" singleton is still alive, it will automatically sync your new CarePlan to Parse. There is no need to save the Parse object directly. I recommend letting "ParseSynchronizedStoreManager" sync all of your data to Parse instead of saving your own objects (with the exception of signing up a User, which I show later)
-    case .failure(let error):
-        print("Error savinf OCKCarePlan. \(error)")
-    }
-}
 ```
 
 ## Customising Parse Entities to Sync with CareKit
