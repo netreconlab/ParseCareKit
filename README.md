@@ -46,8 +46,10 @@ ParseCareKitUtility.setupServer() //Pulls from ParseCareKit.plist to connect to 
 ### Swift Package Manager (SPM)
 ParseCareKit can be installed via SPM. Open an existing project or create a new Xcode project and navigate to `File > Swift Packages > Add Package Dependency`. Enter the url `https://github.com/netreconlab/ParseCareKit` and tap `Next`. Choose the main branch, and on the next screen, check off the package.
 
+Note: ParseCareKit includes [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (it's a dependency) from CareKit's main branch, so there's no need to add CareKitStore to your app. If you want the rest of CareKit, you only need to add [CareKit](https://github.com/carekit-apple/CareKit#carekit-) and [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-) via SPM. Anytime you need ParseCareKit, simply add `import ParseCareKit` at the top of the file.
+
 ### Installing via cocoapods
-To install via cocoapods, go to the [objc](https://github.com/netreconlab/ParseCareKit/tree/2.1) branch for the readme.
+To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#installing-via-cocoapods) branch for the readme. The main branch isn't compatable with cocoapods as the CareKit framework isn't compatible with Cocoapods.
 
 
 ### Installing as a framework
@@ -55,7 +57,7 @@ To install via cocoapods, go to the [objc](https://github.com/netreconlab/ParseC
 - Build the project
 - In your project Targets, click your corresponding target and then click the `General` heading to the right
 - Place `ParseCareKit.framework` in `Frameworks, Libraries, and Embedded Content` and it should automatically appear in `Linked Binary with Libraries` under the `Build Phases` section
-- Then, simply place `import ParseSwiftCareKit` at the top of any file that needs the framework.
+- Then, simply place `import ParseCareKit` at the top of any file that needs the framework.
 
 **If you have CareKit already in your project via SPM or copied, you will need to remove it as ParseCareKit comes with the a compatibile version of CareKit and a conflict of CareKit appearing twice will cause your app to crash**
 
@@ -81,9 +83,9 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-### Using vector clocks aka CareKits Clock (`ParseRemoteSynchronizationManager`)
+### Using vector clocks aka CareKit's KnowledgeVector (`ParseRemoteSynchronizationManager`)
 
-ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
+ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore. An example is below:
 
 ```swift
 /*Use Clock and OCKRemoteSynchronizable to keep data synced. 
@@ -94,7 +96,7 @@ remoteStoreManager.delegate = self //Conform to this protocol if you are writing
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `ParseUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular ParseUser's `Doctor` and `Patient` type. You can save all types to ParseUser:
 
 ```swift
 let userTypeUUIDDictionary = [
