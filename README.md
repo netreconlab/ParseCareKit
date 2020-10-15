@@ -174,7 +174,7 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
 
 ```
 
-## Customising Parse Entities to Sync with CareKit
+## Customizing Parse Entities to Sync with CareKit
 
 There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below `new()`,  `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->Patient:
 
@@ -346,24 +346,15 @@ There are some of helper methods provided in ParseCareKit to query parse in a si
 //To query the most recent version
 let query = Patient.query(for: Date())
 
-query.find(){
-    (objects,error) in
-    guard let found = objects as? [Patient] else{
-        print("\(String(describing: error))")
-        return
-    }
-    print(found) //Your recent versions are here
-}
+query.find(callbackQueue: .global(qos: .background)){ results in
+            
+    switch results {
 
-//You can also use this helper method
-let patient = Patient()
-patient.find(for: Date()){
-    (objects,error) in
-    guard let found = objects as? [Patient] else{
-        print("\(String(describing: error))")
-        return
+    case .success(let patients):
+        print(patients)
+    case .failure(let error):
+        print(error)
     }
-    print(found)
 }
 ```
 
@@ -372,24 +363,15 @@ For `Outcome`:
 ```swift
 //To query all current outcomes
 let query = Outcome.queryNotDeleted()
+query.find(callbackQueue: .global(qos: .background)){ results in
 
-query.find(){
-    (objects,error) in
-    guard let found = objects as? [Outcome] else{
-        print("\(String(describing: error))")
-        return
-    }
-    print(found) //All of your outcomes that haven't been deleted
-}
+    switch results {
 
-//Or you can use this helper method
-Outcome().findOutcomesInBackground(){
-    (objects,error) in
-    guard let found = objects else{
-        print("\(String(describing: error))")
-        return
+    case .success(let outcomes):
+        print(outcomes)
+    case .failure(let error):
+        print(error)
     }
-    print(found) //All of your outcomes that haven't been deleted
 }
 
 ```
