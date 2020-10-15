@@ -65,14 +65,18 @@ To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netrecon
 For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default. 
 
 ### Protecting Patients data in the Cloud using ACL's
-You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following right under `PFUser.enableRevocableSessionInBackground()` in `AppDelegate.swift`:
+You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following in `AppDelegate.swift`:
 
 ```swift
-//Set default ACL for all Classes
-let defaultACL = PFACL()
-defaultACL.hasPublicReadAccess = false
-defaultACL.hasPublicWriteAccess = false
-PFACL.setDefault(defaultACL, withAccessForCurrentUser:true)
+//Set default ACL for all Parse Classes
+var defaultACL = ParseACL()
+defaultACL.publicRead = false
+defaultACL.publicWrite = false
+do {
+    _ = try ParseACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+} catch {
+    print(error.localizedDescription)
+}
 ```
 
 When giving access to a CareTeam or other entities, special care should be taken when deciding the propper ACL or Role. Feel free to read more about [ACLs](https://docs.parseplatform.org/ios/guide/#security-for-user-objects) and [Role](https://docs.parseplatform.org/ios/guide/#roles) access in Parse. For details, your setup should look similar to the code [here](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/a4b1106816f37d227ad9a6ea3e84e02556ccbbc8/OCKSample/AppDelegate.swift#L53).
@@ -87,6 +91,7 @@ ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSync
 ```swift
 /*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
+let uuid = UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!
 let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
@@ -391,4 +396,4 @@ Outcome().findOutcomesInBackground(){
 
 ### Custom OCKStores
 
-If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObjectable` protocol which will require you to subclass `ParseObject` and conform to `PFSubclassing`. You should also create methods for your custom entity such as `addToCloud,updateCloud,deleteFromCloud` and properly subclass `ParseSynchronizedStoreManager`, overiding the necessary methods. You can look through the entities like `User` and `CarePlan` as a reference for builfing your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObjectable` protocol which will require you to subclass  and conform to `PCKSynchronizable`. You can look through the entities like `Patient` and `CarePlan` as a reference for building your own. 
