@@ -378,4 +378,4 @@ query.find(callbackQueue: .global(qos: .background)){ results in
 
 ### Custom OCKStores
 
-If you have a custom store, and have created your own entities, you simply need to conform to the `PCKObjectable` protocol which will require you to subclass  and conform to `PCKSynchronizable`. You can look through the entities like `Patient` and `CarePlan` as a reference for building your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to either `PCKObjectable` (OCKNote, OCKOutcome, OCKOutcomeValue) or `PCKVersionable` (OCKPatient, OCKCarePlan, OCKTask, OCKContact) protocols. In additionm you will need to conform to `PCKSynchronizable`. You can look through ParseCareKit entities such as `Note`(`PCKObjectable`) and `CarePlan`(`PCKVersionable`) as a reference for building your own. 
