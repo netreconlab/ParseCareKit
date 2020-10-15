@@ -3,8 +3,8 @@ platform :ios, '13.0'
 
 def shared_pods
   # Pods for ParseCareKit
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector'
-  pod 'Parse', '~>1.19'
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1'
+  pod 'Parse', '~>1.19.1'
 end
 
 target 'ParseCareKit' do

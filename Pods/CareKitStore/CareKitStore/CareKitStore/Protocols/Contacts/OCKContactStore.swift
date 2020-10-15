@@ -31,7 +31,7 @@ import Foundation
 
 /// Any store from which a single type conforming to `OCKAnyContact` can be queried is considered `OCKAReadableCarePlanStore`.
 public protocol OCKReadableContactStore: OCKAnyReadOnlyContactStore {
-    associatedtype Contact: OCKAnyContact & Equatable & Identifiable
+    associatedtype Contact: OCKAnyContact & Equatable// & Identifiable
     associatedtype ContactQuery: OCKAnyContactQuery
 
     /// `fetchContacts` asynchronously retrieves an array of contacts from the store.
@@ -118,7 +118,7 @@ public extension OCKReadableContactStore {
         query.extendedSortDescriptors = [.effectiveDate(ascending: true)]
 
         fetchContacts(query: ContactQuery(query), callbackQueue: callbackQueue, completion:
-            chooseFirst(then: completion, replacementError: .fetchFailed(reason: "No contact with ID: \(id)")))
+            chooseFirst(then: completion, replacementError: .fetchFailed(reason: "No contact with matching ID")))
     }
 }
 
@@ -127,17 +127,17 @@ public extension OCKReadableContactStore {
 public extension OCKContactStore {
     func addContact(_ contact: Contact, callbackQueue: DispatchQueue = .main, completion: OCKResultClosure<Contact>? = nil) {
         addContacts([contact], callbackQueue: callbackQueue, completion:
-            chooseFirst(then: completion, replacementError: .addFailed(reason: "Failed to add contact: \(contact)")))
+            chooseFirst(then: completion, replacementError: .addFailed(reason: "Failed to add contact")))
     }
 
     func updateContact(_ contact: Contact, callbackQueue: DispatchQueue = .main, completion: OCKResultClosure<Contact>? = nil) {
         updateContacts([contact], callbackQueue: callbackQueue, completion:
-            chooseFirst(then: completion, replacementError: .updateFailed(reason: "Failed to update contact: \(contact)")))
+            chooseFirst(then: completion, replacementError: .updateFailed(reason: "Failed to update contact")))
     }
 
     func deleteContact(_ contact: Contact, callbackQueue: DispatchQueue = .main, completion: OCKResultClosure<Contact>? = nil) {
         deleteContacts([contact], callbackQueue: callbackQueue, completion:
-            chooseFirst(then: completion, replacementError: .deleteFailed(reason: "Failed to delete contact: \(contact)")))
+            chooseFirst(then: completion, replacementError: .deleteFailed(reason: "Failed to delete contact")))
     }
 }
 

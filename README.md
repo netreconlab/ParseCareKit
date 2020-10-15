@@ -56,10 +56,10 @@ target 'MyApp' do #Change to your app name
   use_frameworks!
 
   # All of these are required to run ParseCareKit
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod_vector' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'master'
+  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1' #mirrors CareKits main branch
+  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1' #mirrors CareKits main branch
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
+  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'main'
   
   # Add the rest of your pods below
 end

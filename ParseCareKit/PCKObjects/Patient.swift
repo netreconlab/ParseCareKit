@@ -12,7 +12,7 @@ import CareKitStore
 
 open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
     
-    @NSManaged public var alergies:[String]?
+    @NSManaged public var allergies:[String]?
     @NSManaged public var birthday:Date?
     @NSManaged public var name:[String:String]
     @NSManaged public var sex:String?
@@ -188,7 +188,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.name = other.name
         self.birthday = other.birthday
         self.sex = other.sex
-        self.alergies = other.alergies
+        self.allergies = other.allergies
     }
     
     open func copyCareKit(_ patientAny: OCKAnyPatient)->Patient?{
@@ -220,7 +220,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
         self.timezone = patient.timezone.abbreviation()!
         self.userInfo = patient.userInfo
         self.remoteID = patient.remoteID
-        self.alergies = patient.allergies
+        self.allergies = patient.allergies
         self.createdDate = patient.createdDate
         self.notes = patient.notes?.compactMap{Note(careKitEntity: $0)}
         self.previousVersionUUID = patient.previousVersionUUID
@@ -245,7 +245,7 @@ open class Patient: PCKVersionedObject, PCKRemoteSynchronized {
             patient.effectiveDate = effectiveDate
         }
         patient.birthday = self.birthday
-        patient.allergies = self.alergies
+        patient.allergies = self.allergies
         patient.groupIdentifier = self.groupIdentifier
         patient.tags = self.tags
         patient.source = self.source

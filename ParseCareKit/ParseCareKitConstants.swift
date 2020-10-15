@@ -214,7 +214,7 @@ public let kPCKVersionedObjectPreviousKey                           = "previous"
 public let kPCKPatientClassKey                                 = "Patient"
 
 // Field keys
-public let kPCKPatientAllergiesKey                                  = "alergies"
+public let kPCKPatientAllergiesKey                                  = "allergies"
 public let kPCKPatientBirthdayKey                                   = "birthday"
 public let kPCKPatientSexKey                                        = "sex"
 public let kPCKPatientNameKey                                       = "name"

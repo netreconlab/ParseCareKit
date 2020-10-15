@@ -48,11 +48,14 @@ public protocol OCKAnyTask {
     /// A schedule that specifies how often this task occurs.
     var schedule: OCKSchedule { get }
 
-    /// A user-defined group identifer that can be used both for querying and sorting results.
+    /// A user-defined group identifier that can be used both for querying and sorting results.
     /// Examples may include: "medications", "exercises", "family", "males", "diabetics", etc.
     var groupIdentifier: String? { get }
 
-    /// An identifier for this patient in a remote store.
+    /// An universally unique identifier for this task.
+    var uuid: UUID? { get }
+
+    /// An identifier for this task in a remote store.
     var remoteID: String? { get }
 
     /// Any array of notes associated with this object.
