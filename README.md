@@ -1,8 +1,8 @@
 # ParseCareKit
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 [![CI Status](https://github.com/netreconlab/ParseCareKit/workflows/build/badge.svg?branch=main)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Abuild) ![Codecov](https://codecov.io/gh/netreconlab/ParseCareKit/branches/main/graph/badge.svg)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license)
 
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
