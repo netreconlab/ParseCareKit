@@ -51,7 +51,7 @@ extension PCKVersionable {
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject else{
-                completion(false, versionedObject)
+                completion(linkedNew, versionedObject)
                 return
             }
             
@@ -64,7 +64,7 @@ extension PCKVersionable {
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject else{
-                    completion(false,versionedObject)
+                    completion(linkedNew,versionedObject)
                     return
                 }
                 
@@ -162,43 +162,6 @@ extension PCKVersionable {
 
     public func save(completion: @escaping(Bool, Error?) -> Void) {
         var versionedObject = self
-        /*switch versionedObject{
-        case is CarePlan:
-            
-            guard let versionedObject = versionedObject as? CarePlan else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-            
-        case is Contact:
-            guard let versionedObject = versionedObject as? Contact else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-
-        case is Patient:
-            guard let versionedObject = versionedObject as? Patient else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-
-        case is Task:
-            guard let versionedObject = versionedObject as? Task else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-
-        default:
-            completion(false,ParseCareKitError.classTypeNotAnEligibleType)
-        }*/
         _ = try? versionedObject.stampRelationalEntities()
         versionedObject.save(callbackQueue: .global(qos: .background)){ results in
             switch results {
@@ -207,22 +170,34 @@ extension PCKVersionable {
                 print("Successfully added \(self) to Cloud")
                 
                 self.linkVersions { (linked, modifiedObject) in
-                    var modifiedObject = modifiedObject
                     if linked{
                         modifiedObject.save(callbackQueue: .global(qos: .background)) { _ in }
                     }
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if modifiedObject.previousVersion != nil {
-                        if modifiedObject.previousVersion!.nextVersion == nil{
-                            modifiedObject.previousVersion!.nextVersion = modifiedObject
-                            modifiedObject.previousVersion!.save(callbackQueue: .global(qos: .background)){ results in
+                        if modifiedObject.previousVersion!.nextVersion == nil {
+                            modifiedObject.previousVersion!.find(modifiedObject.previousVersion!.uuid) {
+                                results in
+                                
                                 switch results {
-                                    
-                                case .success(_):
-                                    self.fixVersionLinkedList(modifiedObject.previousVersion!, backwards: true)
+                                
+                                case .success(let versionedObjectsFound):
+                                    guard var previousObjectFound = versionedObjectsFound.first else {
+                                        return
+                                    }
+                                    previousObjectFound.nextVersion = modifiedObject
+                                    previousObjectFound.save(callbackQueue: .global(qos: .background)){ results in
+                                        switch results {
+                                            
+                                        case .success(_):
+                                            self.fixVersionLinkedList(previousObjectFound, backwards: true)
+                                        case .failure(let error):
+                                            print("Couldn't save(). Error: \(error). Object: \(self)")
+                                        }
+                                    }
                                 case .failure(let error):
-                                    print("Couldn't save(). Error: \(error). Object: \(self)")
+                                    print("Couldn't find object in save(). Error: \(error). Object: \(self)")
                                 }
                             }
                         }
@@ -230,14 +205,27 @@ extension PCKVersionable {
                     
                     if modifiedObject.nextVersion != nil {
                         if modifiedObject.nextVersion!.previousVersion == nil{
-                            modifiedObject.nextVersion!.previousVersion = modifiedObject
-                            modifiedObject.nextVersion!.save(callbackQueue: .global(qos: .background)){ results in
+                            modifiedObject.nextVersion!.find(modifiedObject.nextVersion!.uuid) {
+                                results in
+                                
                                 switch results {
                                 
-                                case .success(_):
-                                    self.fixVersionLinkedList(modifiedObject.nextVersion!, backwards: false)
+                                case .success(let versionedObjectsFound):
+                                    guard var nextObjectFound = versionedObjectsFound.first else {
+                                        return
+                                    }
+                                    nextObjectFound.previousVersion = modifiedObject
+                                    nextObjectFound.save(callbackQueue: .global(qos: .background)){ results in
+                                        switch results {
+                                            
+                                        case .success(_):
+                                            self.fixVersionLinkedList(nextObjectFound, backwards: true)
+                                        case .failure(let error):
+                                            print("Couldn't save(). Error: \(error). Object: \(self)")
+                                        }
+                                    }
                                 case .failure(let error):
-                                    print("Couldn't save(). Error: \(error). Object: \(self)")
+                                    print("Couldn't find object in save(). Error: \(error). Object: \(self)")
                                 }
                             }
                         }

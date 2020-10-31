@@ -285,8 +285,8 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     }
 
     func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
-        nextVersion?.encodingForParse = encodingForParse
+        /*previousVersion?.encodingForParse = encodingForParse
+        nextVersion?.encodingForParse = encodingForParse*/
         notes?.forEach {
             $0.encodingForParse = encodingForParse
         }

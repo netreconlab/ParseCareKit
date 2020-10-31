@@ -298,9 +298,9 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     }
     
     func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
+        /*previousVersion?.encodingForParse = encodingForParse
         nextVersion?.encodingForParse = encodingForParse
-        carePlan?.encodingForParse = encodingForParse
+        carePlan?.encodingForParse = encodingForParse*/
         notes?.forEach {
             $0.encodingForParse = encodingForParse
         }
