@@ -187,7 +187,7 @@ extension PCKVersionable {
                                     guard var previousObjectFound = versionedObjectsFound.first else {
                                         return
                                     }
-                                    previousObjectFound = modifiedObject
+                                    previousObjectFound.nextVersion = modifiedObject
                                     previousObjectFound.save(callbackQueue: .global(qos: .background)){ results in
                                         switch results {
                                             
