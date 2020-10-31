@@ -87,12 +87,13 @@ class ParseCareKitTests: XCTestCase {
         userLogin()
         //userLoginToRealServer()
         do {
-            parse = try ParseRemoteSynchronizationManager(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!, auto: false)
+        parse = try ParseRemoteSynchronizationManager(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!, auto: false)
         } catch {
             print(error.localizedDescription)
         }
         store = OCKStore(name: "SampleAppStore", type: .onDisk, remote: parse)
         parse?.parseRemoteDelegate = self
+        
     }
 
     override func tearDownWithError() throws {
@@ -832,7 +833,8 @@ class ParseCareKitTests: XCTestCase {
         let contact = OCKContact(id: "test", givenName: "hello", familyName: "world", carePlanUUID: nil)
         var savedContact = try store.addContactAndWait(contact)
         //savedContact.title = "me"
-        //try self.store.updateContactAndWait(savedContact)
+        //parse.automaticallySynchronizes = true
+        try self.store.updateContactAndWait(savedContact)
         /*
         let revision = store.computeRevision(since: 0)
         XCTAssert(revision.entities.count == 1)
