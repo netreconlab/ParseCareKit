@@ -292,7 +292,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
         
     public func prepareEncodingRelational(_ encodingForParse: Bool) {
-        task?.encodingForParse = encodingForParse
+        //task?.encodingForParse = encodingForParse
         values?.forEach {
             $0.encodingForParse = encodingForParse
         }

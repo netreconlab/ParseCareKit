@@ -279,9 +279,9 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     }
 
     func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
+        /*previousVersion?.encodingForParse = encodingForParse
         nextVersion?.encodingForParse = encodingForParse
-        patient?.encodingForParse = encodingForParse
+        patient?.encodingForParse = encodingForParse*/
         notes?.forEach {
             $0.encodingForParse = encodingForParse
         }

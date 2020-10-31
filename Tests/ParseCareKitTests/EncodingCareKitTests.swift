@@ -57,8 +57,24 @@ func userLogin() {
     }
 }
 
+func userLoginToRealServer() {
+    let loginResponse = LoginSignupResponse()
+    do {
+        _ = try PCKUser.signup(username: loginResponse.username!, password: loginResponse.password!)
+    } catch {
+        do {
+            _ = try PCKUser.login(username: loginResponse.username!, password: loginResponse.password!)
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+}
+
 class ParseCareKitTests: XCTestCase {
 
+    private var parse: ParseRemoteSynchronizationManager!
+    private var store: OCKStore!
+    
     override func setUpWithError() throws {
         guard let url = URL(string: "http://localhost:1337/1") else {
                     XCTFail("Should create valid URL")
@@ -69,12 +85,21 @@ class ParseCareKitTests: XCTestCase {
                                       masterKey: "masterKey",
                                       serverURL: url)
         userLogin()
+        //userLoginToRealServer()
+        do {
+            parse = try ParseRemoteSynchronizationManager(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!, auto: false)
+        } catch {
+            print(error.localizedDescription)
+        }
+        store = OCKStore(name: "SampleAppStore", type: .onDisk, remote: parse)
+        parse?.parseRemoteDelegate = self
     }
 
     override func tearDownWithError() throws {
         MockURLProtocol.removeAll()
-        try? KeychainStore.shared.deleteAll()
-        try? ParseStorage.shared.deleteAll()
+        try KeychainStore.shared.deleteAll()
+        try ParseStorage.shared.deleteAll()
+        try store.delete()
     }
     
     func testNote() throws {
@@ -802,5 +827,77 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
     }
+/*
+    func testAddContact() throws {
+        let contact = OCKContact(id: "test", givenName: "hello", familyName: "world", carePlanUUID: nil)
+        var savedContact = try store.addContactAndWait(contact)
+        //savedContact.title = "me"
+        //try self.store.updateContactAndWait(savedContact)
+        /*
+        let revision = store.computeRevision(since: 0)
+        XCTAssert(revision.entities.count == 1)
+        XCTAssert(revision.entities.first?.entityType == .contact)*/
+        let expectation = XCTestExpectation(description: "Synch")
+        self.store.synchronize{ error in
+            if let error = error {
+                XCTFail("\(error.localizedDescription)")
+            }
+            savedContact.title = "me"
+            do {
+                let updatedContact = try self.store.updateContactAndWait(savedContact)
+                let revision2 = self.store.computeRevision(since: 1)
+                XCTAssert(updatedContact.name.familyName == "me")
+                XCTAssert(revision2.entities.count == 1)
+                XCTAssert(revision2.entities.first?.entityType == .contact)
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 50.0)
+    }*/
 }
+
+extension ParseCareKitTests: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizationDelegate{
+    func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
+        print("Implement")
+    }
+    
+    func remote(_ remote: OCKRemoteSynchronizable, didUpdateProgress progress: Double) {
+        print("Implement")
+    }
+    
+    func successfullyPushedDataToCloud(){
+        print("Implement")
+    }
+    
+    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
+        let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
+        completion(conflictPolicy)
+    }
+    
+    func storeUpdatedOutcome(_ outcome: OCKOutcome) {
+        store.updateOutcome(outcome, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
+        store.updateAnyCarePlan(carePlan, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedContact(_ contact: OCKContact) {
+        store.updateAnyContact(contact, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedPatient(_ patient: OCKPatient) {
+        store.updateAnyPatient(patient, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    func storeUpdatedTask(_ task: OCKTask) {
+        store.updateAnyTask(task, callbackQueue: .global(qos: .background), completion: nil)
+    }
+    
+    
+}
+
 #endif

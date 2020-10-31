@@ -51,7 +51,7 @@ extension PCKVersionable {
             (isNew,previousObject) in
             
             guard let previousObject  = previousObject else{
-                completion(false, versionedObject)
+                completion(linkedNew, versionedObject)
                 return
             }
             
@@ -64,7 +64,7 @@ extension PCKVersionable {
                 (isNew,nextObject) in
                 
                 guard let nextObject  = nextObject else{
-                    completion(false,versionedObject)
+                    completion(linkedNew,versionedObject)
                     return
                 }
                 
@@ -162,43 +162,6 @@ extension PCKVersionable {
 
     public func save(completion: @escaping(Bool, Error?) -> Void) {
         var versionedObject = self
-        /*switch versionedObject{
-        case is CarePlan:
-            
-            guard let versionedObject = versionedObject as? CarePlan else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-            
-        case is Contact:
-            guard let versionedObject = versionedObject as? Contact else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-
-        case is Patient:
-            guard let versionedObject = versionedObject as? Patient else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-
-        case is Task:
-            guard let versionedObject = versionedObject as? Task else{
-                completion(false,ParseCareKitError.cantCastToNeededClassType)
-                return
-            }
-            
-            _ = versionedObject.stampRelationalEntities()
-
-        default:
-            completion(false,ParseCareKitError.classTypeNotAnEligibleType)
-        }*/
         _ = try? versionedObject.stampRelationalEntities()
         versionedObject.save(callbackQueue: .global(qos: .background)){ results in
             switch results {
@@ -307,6 +270,9 @@ extension PCKVersionable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         
         if encodingForParse {
+            if nextVersion != nil {
+                print(nextVersion)
+            }
             try container.encodeIfPresent(nextVersion, forKey: .nextVersion)
             try container.encodeIfPresent(previousVersion, forKey: .previousVersion)
             
