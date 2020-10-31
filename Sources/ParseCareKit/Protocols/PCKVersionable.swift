@@ -178,9 +178,31 @@ extension PCKVersionable {
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if modifiedObject.previousVersion != nil {
                         if modifiedObject.previousVersion!.nextVersion == nil {
-                            var previousVersionToUpdate = modifiedObject.previousVersion!
-                            previousVersionToUpdate.nextVersion = modifiedObject
-                            previousVersionToUpdate.save(callbackQueue: .global(qos: .background)){ results in
+                            modifiedObject.previousVersion!.find(modifiedObject.previousVersion!.uuid) {
+                                results in
+                                
+                                switch results {
+                                
+                                case .success(let versionedObjectsFound):
+                                    guard var previousObjectFound = versionedObjectsFound.first else {
+                                        return
+                                    }
+                                    previousObjectFound = modifiedObject
+                                    previousObjectFound.save(callbackQueue: .global(qos: .background)){ results in
+                                        switch results {
+                                            
+                                        case .success(_):
+                                            self.fixVersionLinkedList(previousObjectFound, backwards: true)
+                                        case .failure(let error):
+                                            print("Couldn't save(). Error: \(error). Object: \(self)")
+                                        }
+                                    }
+                                case .failure(let error):
+                                    print("Couldn't find object in save(). Error: \(error). Object: \(self)")
+                                }
+                            }
+                            /*modifiedObject.previousVersion!.nextVersion = modifiedObject
+                            modifiedObject.previousVersion!.save(callbackQueue: .global(qos: .background)){ results in
                                 switch results {
                                     
                                 case .success(_):
@@ -188,7 +210,7 @@ extension PCKVersionable {
                                 case .failure(let error):
                                     print("Couldn't save(). Error: \(error). Object: \(self)")
                                 }
-                            }
+                            }*/
                         }
                     }
                     
@@ -271,9 +293,6 @@ extension PCKVersionable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         
         if encodingForParse {
-            if nextVersion != nil {
-                print(nextVersion)
-            }
             try container.encodeIfPresent(nextVersion, forKey: .nextVersion)
             try container.encodeIfPresent(previousVersion, forKey: .previousVersion)
             

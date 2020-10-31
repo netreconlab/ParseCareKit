@@ -139,12 +139,12 @@ extension PCKObjectable {
     }
     
     public func find(_ uuid:UUID?, include:Bool=true,
-                         completion: @escaping([Self]?,Error?) -> Void) {
+                         completion: @escaping(Result<[Self],Error>) -> Void) {
           
         guard let _ = PCKUser.current,
-            let uuidString = uuid?.uuidString else{
+            let uuidString = uuid?.uuidString else {
                 print("Error in \(self.className).find(). \(ParseCareKitError.requiredValueCantBeUnwrapped)")
-                completion(nil,ParseCareKitError.couldntUnwrapClock)
+                completion(.failure(ParseCareKitError.couldntUnwrapClock))
                 return
         }
             
@@ -156,10 +156,10 @@ extension PCKObjectable {
             switch results {
             
             case .success(let foundObjects):
-                completion(foundObjects, nil)
+                completion(.success(foundObjects))
             case .failure(let error):
                 print("Error in \(self.className).find(). \(error.localizedDescription)")
-                completion(nil,error)
+                completion(.failure(error))
             }
             
         }
