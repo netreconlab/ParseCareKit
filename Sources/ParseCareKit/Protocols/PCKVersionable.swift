@@ -177,9 +177,10 @@ extension PCKVersionable {
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
                     if modifiedObject.previousVersion != nil {
-                        if modifiedObject.previousVersion!.nextVersion == nil{
-                            modifiedObject.previousVersion!.nextVersion = modifiedObject
-                            modifiedObject.previousVersion!.save(callbackQueue: .global(qos: .background)){ results in
+                        if modifiedObject.previousVersion!.nextVersion == nil {
+                            var previousVersionToUpdate = modifiedObject.previousVersion!
+                            previousVersionToUpdate.nextVersion = modifiedObject
+                            previousVersionToUpdate.save(callbackQueue: .global(qos: .background)){ results in
                                 switch results {
                                     
                                 case .success(_):
