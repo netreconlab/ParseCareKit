@@ -15,11 +15,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max build test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
   
-  spm-build-test:
+  xcode-buid-watchos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -targe ParseCareKit-watchOS | xcpretty
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
+
+  spm-test:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -27,3 +36,29 @@ jobs:
       run: make test
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
+
+  deploy_docs:
+    
+    needs: build-test-swift
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache Gems
+        id: cache-gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+      - name: Install Bundle
+        run: |
+          bundle config path vendor/bundle
+          bundle install
+      - name: Create Jazzy Docs
+        run: ./jazzy.sh
+      - name: Deploy Jazzy Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
