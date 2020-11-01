@@ -25,9 +25,3 @@ let package = Package(
             dependencies: ["ParseCareKit"]),
     ]
 )
-
-#if os(watchOS)
-//if ProcessInfo.processInfo.environment["TARGETING_WATCHOS"] == "true" {
-  package.targets.removeAll(where: { $0.isTest })
-//}
-#endif
