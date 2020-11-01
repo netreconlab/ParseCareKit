@@ -19,12 +19,12 @@ jobs:
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
   
-  xcode-buid-watchos:
+  xcode-build-watchos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -targe ParseCareKit-watchOS | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -target ParseCareKit-watchOS | xcpretty
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
 
@@ -56,7 +56,21 @@ jobs:
           bundle config path vendor/bundle
           bundle install
       - name: Create Jazzy Docs
-        run: ./jazzy.sh
+        run: |
+          ver=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" ParseCareKit/Info.plist`
+          bundle exec jazzy \
+            --clean \
+            --author "Corey E. Baker" \
+            --author_url https://www.cs.uky.edu/~baker \
+            --github_url https://github.com/netreconlab/ParseCareKit \
+            --root-url https://netreconlab.github.io/api/ \
+            --module-version ${ver} \
+            --theme fullwidth \
+            --skip-undocumented \
+            --output ./docs/api \
+            --module ParseCareKit \
+            --swift-build-tool spm \
+
       - name: Deploy Jazzy Docs
         uses: peaceiris/actions-gh-pages@v3
         with:
