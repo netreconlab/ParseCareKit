@@ -16,19 +16,18 @@ let package = Package(
         .package(url: "https://github.com/carekit-apple/CareKit.git", .branch("main")),
         .package(url: "https://github.com/parse-community/Parse-Swift.git", .branch("main")),
     ],
-    targets: {
-        var targets: [Target] = [
+    targets: [
         .target(
             name: "ParseCareKit",
             dependencies: ["ParseSwift", "CareKitStore"]),
-        ]
-#if !os(watchOS)
-        targets.append(contentsOf: [
         .testTarget(
             name: "ParseCareKitTests",
             dependencies: ["ParseCareKit"]),
-        ])
-#endif
-        return targets
-    }()
+    ]
 )
+
+#if os(watchOS)
+//if ProcessInfo.processInfo.environment["TARGETING_WATCHOS"] == "true" {
+  package.targets.removeAll(where: { $0.isTest })
+//}
+#endif
