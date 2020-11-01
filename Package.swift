@@ -16,12 +16,19 @@ let package = Package(
         .package(url: "https://github.com/carekit-apple/CareKit.git", .branch("main")),
         .package(url: "https://github.com/parse-community/Parse-Swift.git", .branch("main")),
     ],
-    targets: [
+    targets: {
+        var targets: [Target] = [
         .target(
             name: "ParseCareKit",
             dependencies: ["ParseSwift", "CareKitStore"]),
+        ]
+#if !os(watchOS)
+        targets.append(contentsOf: [
         .testTarget(
             name: "ParseCareKitTests",
             dependencies: ["ParseCareKit"]),
-    ]
+        ])
+#endif
+        return targets
+    }()
 )
