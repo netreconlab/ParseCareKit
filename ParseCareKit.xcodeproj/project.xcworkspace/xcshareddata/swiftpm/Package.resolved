@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "CareKit",
-        "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
+        "repositoryURL": "https://github.com/cbaker6/CareKit",
         "state": {
-          "branch": "main",
-          "revision": "248c42c4e4ea97ff5fe349361fa6e0a849eab204",
+          "branch": null,
+          "revision": "9c8a95aeb18c3fc290b742e2a9e15ae96a8bafdb",
           "version": null
         }
       },
