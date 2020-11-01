@@ -39,7 +39,7 @@ jobs:
 
   deploy_docs:
     
-    needs: spm-test
+    needs: xcode-test-ios
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -68,8 +68,8 @@ jobs:
             --theme fullwidth \
             --skip-undocumented \
             --output ./docs/api \
+            --build-tool-arguments -scheme,ParseCareKit \
             --module ParseCareKit \
-            --swift-build-tool spm \
 
       - name: Deploy Jazzy Docs
         uses: peaceiris/actions-gh-pages@v3
