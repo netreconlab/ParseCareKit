@@ -39,7 +39,7 @@ jobs:
 
   deploy_docs:
     
-    needs: build-test-swift
+    needs: spm-test
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
