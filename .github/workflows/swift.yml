@@ -4,16 +4,14 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: '*'
 
 env:
   CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
 
 jobs:
-  swift-test-ios:
-
+  xcode-test-ios:
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -21,3 +19,11 @@ jobs:
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
   
+  spm-build-test:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: make test
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
