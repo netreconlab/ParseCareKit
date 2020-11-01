@@ -39,8 +39,8 @@
 		70F2E18E254EFC8000B2EA5C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FD24561A28001B7AA3 /* Note.swift */; };
 		70F2E18F254EFC8000B2EA5C /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FA24561A28001B7AA3 /* Task.swift */; };
 		70F2E194254EFCBA00B2EA5C /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70F2E193254EFCBA00B2EA5C /* CareKitStore */; };
-		70F2E196254EFCBA00B2EA5C /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70F2E195254EFCBA00B2EA5C /* ParseSwift */; };
-		70F2E2F4254F4B7200B2EA5C /* ParseCareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9119D5EE245618D7001B7AA3 /* ParseCareKit.h */; };
+		70F2E2FC254F4E3E00B2EA5C /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70F2E2FB254F4E3E00B2EA5C /* ParseSwift */; };
+		70F2E303254F4F3300B2EA5C /* ParseCareKit_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 70F2E179254EFC6100B2EA5C /* ParseCareKit_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9119D5F0245618D7001B7AA3 /* ParseCareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9119D5EE245618D7001B7AA3 /* ParseCareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9119D60124561A28001B7AA3 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F824561A28001B7AA3 /* Contact.swift */; };
 		9119D60324561A28001B7AA3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FA24561A28001B7AA3 /* Task.swift */; };
@@ -157,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F2E196254EFCBA00B2EA5C /* ParseSwift in Frameworks */,
+				70F2E2FC254F4E3E00B2EA5C /* ParseSwift in Frameworks */,
 				70F2E194254EFCBA00B2EA5C /* CareKitStore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +341,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F2E2F4254F4B7200B2EA5C /* ParseCareKit.h in Headers */,
+				70F2E303254F4F3300B2EA5C /* ParseCareKit_watchOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +409,7 @@
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
 				70F2E193254EFCBA00B2EA5C /* CareKitStore */,
-				70F2E195254EFCBA00B2EA5C /* ParseSwift */,
+				70F2E2FB254F4E3E00B2EA5C /* ParseSwift */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -1011,7 +1011,7 @@
 			package = 70552828252ECA0900336DA1 /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
 		};
-		70F2E195254EFCBA00B2EA5C /* ParseSwift */ = {
+		70F2E2FB254F4E3E00B2EA5C /* ParseSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7055282C252ECA5500336DA1 /* XCRemoteSwiftPackageReference "Parse-Swift" */;
 			productName = ParseSwift;

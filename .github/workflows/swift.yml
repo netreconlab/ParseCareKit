@@ -18,15 +18,6 @@ jobs:
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
-  
-  xcode-build-watchos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -target ParseCareKit-watchOS | xcpretty
-    - name: Codecov
-      run: bash <(curl https://codecov.io/bash)
 
   spm-test:
     runs-on: macos-latest
@@ -70,7 +61,6 @@ jobs:
             --output ./docs/api \
             --build-tool-arguments -scheme,ParseCareKit \
             --module ParseCareKit \
-
       - name: Deploy Jazzy Docs
         uses: peaceiris/actions-gh-pages@v3
         with:
