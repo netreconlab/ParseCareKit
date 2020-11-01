@@ -8,11 +8,12 @@ default: test
 test:
 	set -o pipefail && env NSUnbufferedIO=YES xcodebuild test \
 		-scheme ParseCareKit \
-		-destination platform="$(PLATFORM_IOS)"
+		-destination platform="$(PLATFORM_IOS)" \
+		| xcpretty
 	set -o pipefail && env NSUnbufferedIO=YES xcodebuild \
 		-scheme ParseCareKit-watchOS \
 		-destination platform="$(PLATFORM_WATCHOS)" \
-                | xcpretty
+		| xcpretty
 
 format:
 	swift format --in-place --recursive \
