@@ -117,7 +117,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
         case carePlan, title, carePlanUUID, address, category, name, organization, role
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
@@ -349,20 +349,20 @@ extension Contact {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         if encodingForParse {
-            try container.encode(carePlan, forKey: .carePlan)
+            try container.encodeIfPresent(carePlan, forKey: .carePlan)
         }
         
-        try container.encode(title, forKey: .title)
-        try container.encode(carePlanUUID, forKey: .carePlanUUID)
-        try container.encode(address, forKey: .address)
-        try container.encode(category, forKey: .category)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
+        try container.encodeIfPresent(address, forKey: .address)
+        try container.encodeIfPresent(category, forKey: .category)
         try container.encode(name, forKey: .name)
-        try container.encode(organization, forKey: .organization)
-        try container.encode(role, forKey: .role)
-        try container.encode(emailAddresses, forKey: .emailAddresses)
-        try container.encode(messagingNumbers, forKey: .messagingNumbers)
-        try container.encode(phoneNumbers, forKey: .phoneNumbers)
-        try container.encode(otherContactInfo, forKey: .otherContactInfo)
+        try container.encodeIfPresent(organization, forKey: .organization)
+        try container.encodeIfPresent(role, forKey: .role)
+        try container.encodeIfPresent(emailAddresses, forKey: .emailAddresses)
+        try container.encodeIfPresent(messagingNumbers, forKey: .messagingNumbers)
+        try container.encodeIfPresent(phoneNumbers, forKey: .phoneNumbers)
+        try container.encodeIfPresent(otherContactInfo, forKey: .otherContactInfo)
         try encodeVersionable(to: encoder)
         encodingForParse = true
     }

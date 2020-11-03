@@ -107,7 +107,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
@@ -352,10 +352,10 @@ extension Task {
         if encodingForParse {
             try container.encode(carePlan, forKey: .carePlan)
         }
-        try container.encode(title, forKey: .title)
-        try container.encode(carePlanUUID, forKey: .carePlanUUID)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
         try container.encode(impactsAdherence, forKey: .impactsAdherence)
-        try container.encode(instructions, forKey: .instructions)
+        try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encode(schedule, forKey: .schedule)
         try encodeVersionable(to: encoder)
         encodingForParse = true

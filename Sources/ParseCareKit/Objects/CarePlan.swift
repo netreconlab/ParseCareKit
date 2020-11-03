@@ -105,7 +105,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUID, nextVersionUUID, effectiveDate
         case title, patient, patientUUID
     }
@@ -328,10 +328,10 @@ extension CarePlan {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encode(patient, forKey: .patient)
+            try container.encodeIfPresent(patient, forKey: .patient)
         }
         try container.encode(title, forKey: .title)
-        try container.encode(patientUUID, forKey: .patientUUID)
+        try container.encodeIfPresent(patientUUID, forKey: .patientUUID)
         try encodeVersionable(to: encoder)
         encodingForParse = true
     }

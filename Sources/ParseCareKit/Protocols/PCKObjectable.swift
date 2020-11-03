@@ -197,7 +197,7 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         
         if encodingForParse {
-            if !(self is Note) {
+            if !(self is Note) || !(self is OutcomeValue) {
                 try container.encodeIfPresent(entityId, forKey: .entityId)
             }
             try container.encodeIfPresent(ACL, forKey: .ACL)
