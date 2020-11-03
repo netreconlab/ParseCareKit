@@ -308,6 +308,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         self.encodingForParse = true
         
         do {
+            let outcomeV = try ParseCareKitUtility.encoder().encode(values!.first!)
+            let test2 = try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: outcomeV)
             let test = try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
         } catch {
             print(error.localizedDescription)
