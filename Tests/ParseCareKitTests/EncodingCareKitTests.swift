@@ -10,7 +10,6 @@ import XCTest
 @testable import ParseCareKit
 @testable import CareKitStore
 @testable import ParseSwift
-import Contacts
 
 struct LoginSignupResponse: ParseUser {
     var objectId: String?
@@ -716,40 +715,6 @@ class ParseCareKitTests: XCTestCase {
     }
 
     func testContact() throws {
-        var careKit = OCKContact(id: "matthew", givenName: "Matthew",
-                                 familyName: "Reiff", carePlanUUID: nil)
-        careKit.asset = "MatthewReiff"
-        careKit.title = "OBGYN"
-        careKit.role = "Dr. Reiff is an OBGYN with 13 years of experience."
-        careKit.phoneNumbers = [OCKLabeledValue(label: CNLabelWork, value: "(859) 257-1000")]
-        careKit.messagingNumbers = [OCKLabeledValue(label: CNLabelWork, value: "(859) 257-1234")]
-        careKit.address = {
-           let address = OCKPostalAddress()
-           address.street = "1000 S Limestone"
-           address.city = "Lexington"
-           address.state = "KY"
-           address.postalCode = "40536"
-           return address
-        }()
-
-        /*var careKit = OCKContact(id: "jane", givenName: "Jane",
-                                 familyName: "Daniels", carePlanUUID: nil)
-        careKit.asset = "JaneDaniels"
-        careKit.title = "Family Practice Doctor"
-        careKit.role = "Dr. Daniels is a family practice doctor with 8 years of experience."
-        careKit.emailAddresses = [OCKLabeledValue(label: CNLabelEmailiCloud, value: "janedaniels@uky.edu")]
-        careKit.phoneNumbers = [OCKLabeledValue(label: CNLabelWork, value: "(859) 257-2000")]
-        careKit.messagingNumbers = [OCKLabeledValue(label: CNLabelWork, value: "(859) 357-2040")]
-
-        careKit.address = {
-           let address = OCKPostalAddress()
-           address.street = "2195 Harrodsburg Rd"
-           address.city = "Lexington"
-           address.state = "KY"
-           address.postalCode = "40504"
-           return address
-        }()*/
-        /*
         var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
@@ -784,7 +749,7 @@ class ParseCareKitTests: XCTestCase {
         //Versionable
         careKit.previousVersionUUID = UUID()
         careKit.nextVersionUUID = UUID()
-        careKit.effectiveDate = Date().addingTimeInterval(-199)*/
+        careKit.effectiveDate = Date().addingTimeInterval(-199)
         
         //Test CareKit -> Parse
         let parse = try Contact.copyCareKit(careKit)

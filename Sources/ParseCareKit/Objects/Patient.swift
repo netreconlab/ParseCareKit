@@ -105,10 +105,10 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(allergies, forKey: .allergies)
-        try container.encode(birthday, forKey: .birthday)
+        try container.encodeIfPresent(allergies, forKey: .allergies)
+        try container.encodeIfPresent(birthday, forKey: .birthday)
         try container.encode(name, forKey: .name)
-        try container.encode(sex, forKey: .sex)
+        try container.encodeIfPresent(sex, forKey: .sex)
         try encodeVersionable(to: encoder)
     }
     

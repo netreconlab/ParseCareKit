@@ -427,8 +427,8 @@ extension Outcome {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encode(task, forKey: .task)
-            try container.encode(date, forKey: .date)
+            try container.encodeIfPresent(task, forKey: .task)
+            try container.encodeIfPresent(date, forKey: .date)
         }
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)

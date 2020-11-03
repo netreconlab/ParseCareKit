@@ -352,10 +352,10 @@ extension Task {
         if encodingForParse {
             try container.encode(carePlan, forKey: .carePlan)
         }
-        try container.encode(title, forKey: .title)
-        try container.encode(carePlanUUID, forKey: .carePlanUUID)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
         try container.encode(impactsAdherence, forKey: .impactsAdherence)
-        try container.encode(instructions, forKey: .instructions)
+        try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encode(schedule, forKey: .schedule)
         try encodeVersionable(to: encoder)
         encodingForParse = true
