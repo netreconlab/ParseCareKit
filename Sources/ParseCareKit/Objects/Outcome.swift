@@ -159,8 +159,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
-            .include(kPCKOutcomeValuesKey)
+            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
