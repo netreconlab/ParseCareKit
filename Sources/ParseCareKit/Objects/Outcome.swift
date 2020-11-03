@@ -158,8 +158,9 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
-        _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.includeAll()
+            .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+            .includeAll()
+            .include(kPCKOutcomeValuesKey)
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
