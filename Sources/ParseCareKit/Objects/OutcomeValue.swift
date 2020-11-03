@@ -130,7 +130,6 @@ final public class OutcomeValue: PCKObjectable {
                 value = try container.decode(Date.self, forKey: .value)
             }
         }
-        ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
         objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
         updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
@@ -149,7 +148,6 @@ final public class OutcomeValue: PCKObjectable {
         timezone = try container.decode(TimeZone.self, forKey: .timezone)
         asset = try container.decodeIfPresent(String.self, forKey: .asset)
         notes = try container.decodeIfPresent([Note].self, forKey: .notes)
-        ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
     }
 
     public static func copyValues(from other: OutcomeValue, to here: OutcomeValue) throws -> Self {
