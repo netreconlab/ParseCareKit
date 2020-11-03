@@ -311,6 +311,12 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.encoder().encode(self)
         self.encodingForParse = true
+        do {
+            let test = try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
+            print(test)
+        } catch {
+            print(error.localizedDescription)
+        }
         return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
     }
     
