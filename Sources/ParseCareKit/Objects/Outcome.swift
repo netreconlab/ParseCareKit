@@ -305,16 +305,6 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.encoder().encode(self)
-        
-        do {
-            prepareEncodingRelational(false)
-            let outcomeV = try ParseCareKitUtility.encoder().encode(values!.first!)
-            prepareEncodingRelational(true)
-            let test2 = try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: outcomeV)
-            let test = try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
-        } catch {
-            print(error.localizedDescription)
-        }
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
     
