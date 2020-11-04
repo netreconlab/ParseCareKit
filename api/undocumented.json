@@ -23,7 +23,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Contact.swift",
-      "line": 347,
+      "line": 346,
       "symbol": "Contact",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -58,7 +58,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/OutcomeValue.swift",
-      "line": 204,
+      "line": 203,
       "symbol": "OutcomeValue",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
