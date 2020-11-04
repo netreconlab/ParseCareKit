@@ -446,13 +446,11 @@ extension Outcome {
         guard let valuesToEncode = values else {
             throw ParseCareKitError.requiredValueCantBeUnwrapped
         }
-        try container.encode(valuesToEncode, forKey: .values)
-        /*
         try valuesToEncode.forEach { value in
             var nestedContainer = container.nestedContainer(keyedBy: CodingKeys.self,
                                               forKey: .values)
-            try value.encode(to: nestedContainer.superEncoder(forKey: <#T##KeyedEncodingContainer<CodingKeys>.Key#>))
-        }*/
+            try value.encode(to: nestedContainer.superEncoder(forKey: .values))
+        }
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         if id.count > 0 {
             entityId = id
