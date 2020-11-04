@@ -158,8 +158,8 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
-        _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.includeAll()
+            .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey])
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -432,9 +432,16 @@ extension Outcome {
         }
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
-        try container.encode(values, forKey: .values)
+        //try container.encode(values., forKey: .values)
+        guard let valuesToEncode = values else {
+            throw ParseCareKitError.requiredValueCantBeUnwrapped
+        }
+        try valuesToEncode.forEach { value in
+            var nestedUnkeyedContainer = container.nestedUnkeyedContainer(forKey: .values)
+            try nestedUnkeyedContainer.encode(value)
+        }
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
-        if id.count > 0{
+        if id.count > 0 {
             entityId = id
         }
         try encodeObjectable(to: encoder)
