@@ -989,8 +989,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
 			requirement = {
-				kind = revision;
-				revision = 74e738360e0d76dd2570ea9aa39be2f731abad6b;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
