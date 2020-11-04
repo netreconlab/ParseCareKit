@@ -448,7 +448,7 @@ extension Outcome {
         }
         try valuesToEncode.forEach { value in
             var nestedUnkeyedContainer = container.nestedUnkeyedContainer(forKey: .values)
-            try value.encode(to: nestedUnkeyedContainer.superEncoder())
+            try nestedUnkeyedContainer.encode(value)
         }
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         if id.count > 0 {
