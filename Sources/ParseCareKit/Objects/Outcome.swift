@@ -447,9 +447,8 @@ extension Outcome {
             throw ParseCareKitError.requiredValueCantBeUnwrapped
         }
         try valuesToEncode.forEach { value in
-            var nestedContainer = container.nestedContainer(keyedBy: CodingKeys.self,
-                                              forKey: .values)
-            try value.encode(to: nestedContainer.superEncoder(forKey: .values))
+            var nestedUnkeyedContainer = container.nestedUnkeyedContainer(forKey: .values)
+            try value.encode(to: nestedUnkeyedContainer.superEncoder())
         }
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         if id.count > 0 {
