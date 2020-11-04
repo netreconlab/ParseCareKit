@@ -442,7 +442,17 @@ extension Outcome {
         }
         try container.encode(taskUUID, forKey: .taskUUID)
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
-        try container.encode(values, forKey: .values)
+        //try container.encode(values., forKey: .values)
+        guard let valuesToEncode = values else {
+            throw ParseCareKitError.requiredValueCantBeUnwrapped
+        }
+        try container.encode(valuesToEncode, forKey: .values)
+        /*
+        try valuesToEncode.forEach { value in
+            var nestedContainer = container.nestedContainer(keyedBy: CodingKeys.self,
+                                              forKey: .values)
+            try value.encode(to: nestedContainer.superEncoder(forKey: <#T##KeyedEncodingContainer<CodingKeys>.Key#>))
+        }*/
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         if id.count > 0 {
             entityId = id
