@@ -307,13 +307,14 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let encoded = try ParseCareKitUtility.encoder().encode(self)
         
         do {
+            prepareEncodingRelational(false)
             let outcomeV = try ParseCareKitUtility.encoder().encode(values!.first!)
+            prepareEncodingRelational(true)
             let test2 = try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: outcomeV)
             let test = try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
         } catch {
             print(error.localizedDescription)
         }
-        self.encodingForParse = true
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
     
@@ -443,7 +444,7 @@ extension Outcome {
         try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encode(values, forKey: .values)
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
-        if id.count > 0{
+        if id.count > 0 {
             entityId = id
         }
         try encodeObjectable(to: encoder)
