@@ -117,7 +117,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                     return
                 }
                 //This object already exists on server, ignore gracefully
-                completion(false,ParseCareKitError.uuidAlreadyExists)
+                completion(true,ParseCareKitError.uuidAlreadyExists)
             case .failure(let error):
                 switch error.code{
                 case .internalServer: //1 - this column hasn't been added.
