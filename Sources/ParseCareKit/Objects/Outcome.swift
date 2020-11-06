@@ -75,7 +75,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
+        case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
     
