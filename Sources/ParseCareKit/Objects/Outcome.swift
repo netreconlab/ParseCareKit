@@ -109,8 +109,17 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             
             switch result {
             
-            case .success(_):
-                completion(false,ParseCareKitError.uuidAlreadyExists)
+            case .success(let foundEntity):
+                guard foundEntity.createdDate == self.createdDate,
+                      foundEntity.updatedDate == self.updatedDate,
+                      foundEntity.deletedDate == self.deletedDate,
+                      foundEntity.id == self.id else {
+                    //A different entity with the same uuid exists
+                        completion(false,ParseCareKitError.uuidAlreadyExists)
+                        return
+                      }
+                //This entity is already synced, skip
+                completion(true,ParseCareKitError.uuidAlreadyExists)
             case .failure(let error):
                 switch error.code{
                 case .internalServer: //1 - this column hasn't been added.
