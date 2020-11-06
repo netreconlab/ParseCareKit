@@ -110,7 +110,13 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             
             switch result {
             
-            case .success(_):
+            case .success(let foundEntity):
+                guard foundEntity.id == self.id else {
+                    //This object has a duplicate uuid but isn't the same object
+                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    return
+                }
+                //This object already exists on server, ignore gracefully
                 completion(false,ParseCareKitError.uuidAlreadyExists)
             case .failure(let error):
                 switch error.code{
