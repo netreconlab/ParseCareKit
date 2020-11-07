@@ -93,13 +93,13 @@ extension PCKVersionable {
                     }
                     versionFixed.previousVersion = previousFound
                     if isNew{
-                        versionFixed.save(callbackQueue: .global(qos: .background)) { results in
+                        versionFixed.save(callbackQueue: .main) { results in
                             switch results {
                             
                             case .success(_):
                                 if previousFound.nextVersion == nil{
                                     previousFound.nextVersion = versionFixed
-                                    previousFound.save(callbackQueue: .global(qos: .background)){ results in
+                                    previousFound.save(callbackQueue: .main){ results in
                                         switch results {
                                         
                                         case .success(_):
@@ -130,13 +130,13 @@ extension PCKVersionable {
                     }
                     versionFixed.nextVersion = nextFound
                     if isNew{
-                        versionFixed.save(callbackQueue: .global(qos: .background)){ results in
+                        versionFixed.save(callbackQueue: .main){ results in
                             switch results {
                             
                             case .success(_):
                                 if nextFound.previousVersion == nil{
                                     nextFound.previousVersion = versionFixed
-                                    nextFound.save(callbackQueue: .global(qos: .background)){ results in
+                                    nextFound.save(callbackQueue: .main){ results in
                                     
                                         switch results {
                                         
@@ -163,7 +163,7 @@ extension PCKVersionable {
     public func save(completion: @escaping(Bool, Error?) -> Void) {
         var versionedObject = self
         _ = try? versionedObject.stampRelationalEntities()
-        versionedObject.save(callbackQueue: .global(qos: .background)){ results in
+        versionedObject.save(callbackQueue: .main){ results in
             switch results {
             
             case .success(_):
@@ -171,7 +171,7 @@ extension PCKVersionable {
                 
                 self.linkVersions { (linked, modifiedObject) in
                     if linked{
-                        modifiedObject.save(callbackQueue: .global(qos: .background)) { _ in }
+                        modifiedObject.save(callbackQueue: .main) { _ in }
                     }
                     
                     //Fix versioning doubly linked list if it's broken in the cloud
@@ -187,7 +187,7 @@ extension PCKVersionable {
                                         return
                                     }
                                     previousObjectFound.nextVersion = modifiedObject
-                                    previousObjectFound.save(callbackQueue: .global(qos: .background)){ results in
+                                    previousObjectFound.save(callbackQueue: .main){ results in
                                         switch results {
                                             
                                         case .success(_):
@@ -215,7 +215,7 @@ extension PCKVersionable {
                                         return
                                     }
                                     nextObjectFound.previousVersion = modifiedObject
-                                    nextObjectFound.save(callbackQueue: .global(qos: .background)){ results in
+                                    nextObjectFound.save(callbackQueue: .main){ results in
                                         switch results {
                                             
                                         case .success(_):
@@ -277,7 +277,7 @@ extension PCKVersionable {
     public func find(for date: Date, completion: @escaping([Self]?, ParseError?) -> Void) {
         let query = Self.query(for: date)
             .includeAll()
-        query.find(callbackQueue: .global(qos: .background)) { results in
+        query.find(callbackQueue: .main) { results in
             switch results {
             
             case .success(let entities):

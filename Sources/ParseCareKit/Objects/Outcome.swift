@@ -106,7 +106,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         //Check to see if already in the cloud
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
             .includeAll()
-        query.first(callbackQueue: .global(qos: .background)){ result in
+        query.first(callbackQueue: .main){ result in
             
             switch result {
             
@@ -128,7 +128,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                     }
                     let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
                         .includeAll()
-                    query.first(callbackQueue: .global(qos: .background)){ result in
+                    query.first(callbackQueue: .main){ result in
                         
                         switch result {
                         
@@ -167,7 +167,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
             .includeAll()
-        query.find(callbackQueue: .global(qos: .background)){ results in
+        query.find(callbackQueue: .main){ results in
             switch results {
             
             case .success(let outcomes):
@@ -228,17 +228,17 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
             .includeAll()
-        query.first(callbackQueue: .global(qos: .background)){ result in
+        query.first(callbackQueue: .main){ result in
             
             switch result {
             
             case .success(let foundObject):
                 //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
                 foundObject.values?.forEach{
-                    $0.delete(callbackQueue: .global(qos: .background)){ _ in }
-                    $0.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } }
+                    $0.delete(callbackQueue: .main){ _ in }
+                    $0.notes?.forEach{ $0.delete(callbackQueue: .main){ _ in } }
                 }
-                foundObject.notes?.forEach{ $0.delete(callbackQueue: .global(qos: .background)){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
+                foundObject.notes?.forEach{ $0.delete(callbackQueue: .main){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
                 
                 guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
                     print("Error in \(self.className).tombstsone(). Couldn't cast to self")
@@ -320,7 +320,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
             completion(false, ParseCareKitError.cantUnwrapSelf)
             return
         }
-        stamped.save(callbackQueue: .global(qos: .background)){ results in
+        stamped.save(callbackQueue: .main){ results in
             switch results {
             
             case .success(let saved):
@@ -330,7 +330,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                     (success, linkedObject) in
                     
                     if success{
-                        linkedObject.save(callbackQueue: .global(qos: .background)){ _ in }
+                        linkedObject.save(callbackQueue: .main){ _ in }
                     }
                     completion(true,nil)
                 }
@@ -417,7 +417,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public func findOutcomesInBackground(completion: @escaping([Outcome]?,Error?)->Void) {
         let query = Self.queryNotDeleted()
-        query.find(callbackQueue: .global(qos: .background)){ results in
+        query.find(callbackQueue: .main){ results in
             
             switch results {
             

@@ -145,7 +145,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         //Check to see if already in the cloud
         let query = Contact.query(kPCKObjectableUUIDKey == uuid)
             .includeAll()
-        query.first(callbackQueue: .global(qos: .background)){ result in
+        query.first(callbackQueue: .main){ result in
             
             switch result {
             
@@ -182,7 +182,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Contact.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousVersionUUID]))
             .includeAll()
-        query.find(callbackQueue: .global(qos: .background)){ results in
+        query.find(callbackQueue: .main){ results in
             
             switch results {
             
@@ -223,7 +223,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         let query = Contact.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
             .includeAll()
-        query.find(callbackQueue: .global(qos: .background)){ results in
+        query.find(callbackQueue: .main){ results in
             
             switch results {
             

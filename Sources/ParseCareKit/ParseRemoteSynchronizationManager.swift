@@ -179,7 +179,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     switch parseError.code{
                     case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                         if potentialPCKClock != nil{
-                            potentialPCKClock!.save(callbackQueue: .global(qos: .background)) {
+                            potentialPCKClock!.save(callbackQueue: .main) {
                                 _ in
                                 print("Saved Clock. Try to sync again \(potentialPCKClock!)")
                                 completion(error)
@@ -394,7 +394,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        parseClock.save(callbackQueue: .global(qos: .background)){
+        parseClock.save(callbackQueue: .main){
             result in
             switch result {
 
