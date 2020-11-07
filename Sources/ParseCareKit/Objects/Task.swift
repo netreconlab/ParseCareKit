@@ -137,8 +137,15 @@ public final class Task: PCKVersionable, PCKSynchronizable {
             
             switch result {
             
-            case .success(_):
-                completion(false,ParseCareKitError.uuidAlreadyExists)
+            case .success(let foundEntity):
+                guard foundEntity.entityId == self.entityId else {
+                    //This object has a duplicate uuid but isn't the same object
+                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    return
+                }
+                //This object already exists on server, ignore gracefully
+                completion(true,ParseCareKitError.uuidAlreadyExists)
+
             case .failure(let error):
                 switch error.code {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results

@@ -105,13 +105,13 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
+            //.include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
             
             case .success(let foundEntity):
-                guard foundEntity.id == self.id else {
+                guard foundEntity.entityId == self.entityId else {
                     //This object has a duplicate uuid but isn't the same object
                     completion(false,ParseCareKitError.uuidAlreadyExists)
                     return
