@@ -62,7 +62,7 @@ struct Clock: ParseObject {
         
         //Fetch Clock from Cloud
         let query = Clock.query(kPCKClockPatientTypeUUIDKey == uuid)
-        query.first(callbackQueue: .global(qos: .background)) { result in
+        query.first(callbackQueue: .main) { result in
             
             switch result {
             

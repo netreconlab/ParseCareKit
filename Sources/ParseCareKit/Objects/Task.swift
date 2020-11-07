@@ -108,7 +108,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, effectiveDate
+        case previousVersionUUID, nextVersionUUID, previousVersion, nextVersion, effectiveDate
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
     
@@ -133,7 +133,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         //Check to see if already in the cloud
         let query = Task.query(kPCKObjectableUUIDKey == uuid)
             .includeAll()
-        query.first(callbackQueue: .global(qos: .background)){ result in
+        query.first(callbackQueue: .main){ result in
             
             switch result {
             
@@ -171,7 +171,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Task.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
             .includeAll()
-        query.find(callbackQueue: .global(qos: .background)){ results in
+        query.find(callbackQueue: .main){ results in
             
             switch results {
             
@@ -212,7 +212,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         let query = Task.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
             .includeAll()
-        query.find(callbackQueue: .global(qos: .background)){ results in
+        query.find(callbackQueue: .main){ results in
             switch results {
             
             case .success(let tasks):

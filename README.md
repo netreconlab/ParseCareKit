@@ -146,7 +146,7 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
     
     func storeUpdatedOutcome(_ outcome: OCKOutcome) {
         //This is a workaround for a CareKit bug that doesn't allow you to query by id
-        store.updateOutcome(outcome, callbackQueue: .global(qos: .background)){
+        store.updateOutcome(outcome, callbackQueue: .main){
             results in
             switch results{
             
@@ -159,19 +159,19 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
     }
     
     func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
-        dataStore.updateAnyCarePlan(carePlan, callbackQueue: .global(qos: .background), completion: nil)
+        dataStore.updateAnyCarePlan(carePlan, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedContact(_ contact: OCKContact) {
-        dataStore.updateAnyContact(contact, callbackQueue: .global(qos: .background), completion: nil)
+        dataStore.updateAnyContact(contact, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedPatient(_ patient: OCKPatient) {
-        dataStore.updateAnyPatient(patient, callbackQueue: .global(qos: .background), completion: nil)
+        dataStore.updateAnyPatient(patient, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedTask(_ task: OCKTask) {
-        dataStore.updateAnyTask(task, callbackQueue: .global(qos: .background), completion: nil)
+        dataStore.updateAnyTask(task, callbackQueue: .main, completion: nil)
     }
 }
 
@@ -349,7 +349,7 @@ There are some of helper methods provided in ParseCareKit to query parse in a si
 //To query the most recent version
 let query = Patient.query(for: Date())
 
-query.find(callbackQueue: .global(qos: .background)){ results in
+query.find(callbackQueue: .main){ results in
             
     switch results {
 
@@ -366,7 +366,7 @@ For `Outcome`:
 ```swift
 //To query all current outcomes
 let query = Outcome.queryNotDeleted()
-query.find(callbackQueue: .global(qos: .background)){ results in
+query.find(callbackQueue: .main){ results in
 
     switch results {
 
