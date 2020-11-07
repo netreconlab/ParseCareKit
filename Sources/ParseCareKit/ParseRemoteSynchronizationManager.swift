@@ -204,7 +204,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     
                     if let customClassName = patient.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -219,6 +223,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         
                         parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
                             error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -229,7 +237,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 case .carePlan(let carePlan):
                     if let customClassName = carePlan.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -243,7 +255,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                         
                         parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -253,7 +269,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 case .contact(let contact):
                     if let customClassName = contact.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -265,7 +285,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             return
                         }
                         parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
     
@@ -276,7 +300,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 case .task(let task):
                     if let customClassName = task.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -289,7 +317,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                         
                         parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 
@@ -302,7 +334,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     
                     if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, overwriteRemote: overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector, localClock: deviceRevision.knowledgeVector, completion: completion)
@@ -314,7 +350,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                             return
                         }
                         parse.pushRevision(overwriteRemote, cloudClock: cloudVectorClock){
-                            _ in
+                            error in
+                            
+                            if error != nil {
+                                completion(error)
+                            }
                             revisionsCompletedCount += 1
                             if revisionsCompletedCount == deviceRevision.entities.count{
                                 

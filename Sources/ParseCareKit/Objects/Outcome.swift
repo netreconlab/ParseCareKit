@@ -75,7 +75,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
+        case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
     
@@ -105,12 +105,19 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
+            .includeAll()
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
             
-            case .success(_):
-                completion(false,ParseCareKitError.uuidAlreadyExists)
+            case .success(let foundEntity):
+                guard foundEntity.entityId == self.entityId else {
+                    //This object has a duplicate uuid but isn't the same object
+                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    return
+                }
+                //This object already exists on server, ignore gracefully
+                completion(true,ParseCareKitError.uuidAlreadyExists)
             case .failure(let error):
                 switch error.code{
                 case .internalServer: //1 - this column hasn't been added.
@@ -120,7 +127,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                         return
                     }
                     let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                    _ = query.includeAll()
+                        .includeAll()
                     query.first(callbackQueue: .global(qos: .background)){ result in
                         
                         switch result {
@@ -159,7 +166,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey])
+            .includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             switch results {
             
@@ -220,7 +227,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-        _ = query.includeAll()
+            .includeAll()
         query.first(callbackQueue: .global(qos: .background)){ result in
             
             switch result {
@@ -399,7 +406,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-        _ = query.includeAll()
+            .includeAll()
         return query
     }
    

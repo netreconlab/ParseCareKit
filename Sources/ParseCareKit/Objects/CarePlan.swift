@@ -128,13 +128,21 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
         
         let query = Self.query(kPCKObjectableUUIDKey == uuid)
+            .includeAll()
         query.first(callbackQueue: .global(qos: .background)){
             result in
             
             switch result {
             
-            case .success(_):
-                completion(false,ParseCareKitError.uuidAlreadyExists)
+            case .success(let foundEntity):
+                guard foundEntity.entityId == self.entityId else {
+                    //This object has a duplicate uuid but isn't the same object
+                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    return
+                }
+                //This object already exists on server, ignore gracefully
+                completion(true,ParseCareKitError.uuidAlreadyExists)
+
             case .failure(let error):
 
                 switch error.code {
@@ -159,7 +167,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid, previousCarePlanUUID]))
-        _ = query.includeAll()
+            .includeAll()
         query.find(callbackQueue: .main) {
             results in
             
@@ -201,8 +209,8 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
-        _ = query.order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-        _ = query.includeAll()
+            .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
+            .includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {

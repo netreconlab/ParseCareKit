@@ -135,6 +135,7 @@ open class Note: PCKObjectable {
             return
         }
         let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: uuids))
+            .includeAll()
         query.find(callbackQueue: .global(qos: .background)){ results in
             
             switch results {
