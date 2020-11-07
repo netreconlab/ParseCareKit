@@ -170,6 +170,31 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.author, "myId")
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Note.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.content, cloudDecoded.content)
+        XCTAssertEqual(parse.title, cloudDecoded.title)
+        XCTAssertEqual(parse.author, cloudDecoded.author)
     }
 
     func testPatient() throws {
@@ -266,6 +291,39 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Patient.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.name, cloudDecoded.name)
+        XCTAssertEqual(parse.sex, cloudDecoded.sex)
+        XCTAssertNotNil(cloudDecoded.birthday)
+        XCTAssertEqual(parse.allergies, cloudDecoded.allergies)
+        
+        //Versionable
+        XCTAssertNotNil(cloudDecoded.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
+        XCTAssertEqual(parse.previousVersion, cloudDecoded.previousVersion)
+        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.nextVersion, cloudDecoded.nextVersion)
     }
 
     func testOutcomeValue() throws {
@@ -388,6 +446,32 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse3.notes?.first?.author, "myId")
         XCTAssertEqual(parse3.notes?.first?.title, "hello")
         XCTAssertEqual(parse3.notes?.first?.content, "world")
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(OutcomeValue.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.index, cloudDecoded.index)
+        XCTAssertEqual(parse.kind, cloudDecoded.kind)
+        XCTAssertEqual(parse.units, cloudDecoded.units)
+        XCTAssertEqual(parse.value.debugDescription, cloudDecoded.value.debugDescription)
     }
 
     func testOutcome() throws {
@@ -474,6 +558,31 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.author, "myId")
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Outcome.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.taskUUID, cloudDecoded.taskUUID)
+        XCTAssertEqual(parse.taskOccurrenceIndex, cloudDecoded.taskOccurrenceIndex)
+        XCTAssertEqual(parse.values, cloudDecoded.values)
     }
 /*
     func testScheduleElement() throws {
@@ -598,7 +707,6 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
-        //XCTAssertEqual(parse2.allergies, careKit.allergies)
         
         //Objectable
         XCTAssertEqual(parse2.id, careKit.id)
@@ -623,6 +731,38 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Task.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.impactsAdherence, cloudDecoded.impactsAdherence)
+        XCTAssertEqual(parse.title, cloudDecoded.title)
+        XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
+        
+        //Versionable
+        XCTAssertNotNil(cloudDecoded.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
+        XCTAssertEqual(parse.previousVersion, cloudDecoded.previousVersion)
+        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.nextVersion, cloudDecoded.nextVersion)
     }
 
     func testCarePlan() throws {
@@ -687,7 +827,6 @@ class ParseCareKitTests: XCTestCase {
         //Special
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.patientUUID, careKit.patientUUID)
-        //XCTAssertEqual(parse2.allergies, careKit.allergies)
         
         //Objectable
         XCTAssertEqual(parse2.id, careKit.id)
@@ -712,6 +851,37 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(CarePlan.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.title, cloudDecoded.title)
+        XCTAssertEqual(parse.patientUUID, cloudDecoded.patientUUID)
+        
+        //Versionable
+        XCTAssertNotNil(cloudDecoded.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
+        XCTAssertEqual(parse.previousVersion, cloudDecoded.previousVersion)
+        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.nextVersion, cloudDecoded.nextVersion)
     }
 
     func testContact() throws {
@@ -827,6 +997,44 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        
+        //Encode to cloud format
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Contact.self, from: cloudEncoded)
+        
+        //Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        //Special
+        XCTAssertEqual(parse.title, cloudDecoded.title)
+        XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
+        XCTAssertEqual(parse.address, cloudDecoded.address)
+        XCTAssertEqual(parse.category, cloudDecoded.category)
+        XCTAssertEqual(parse.role, cloudDecoded.role)
+        XCTAssertEqual(parse.messagingNumbers, cloudDecoded.messagingNumbers)
+        XCTAssertEqual(parse.emailAddresses, cloudDecoded.emailAddresses)
+        XCTAssertEqual(parse.phoneNumbers, cloudDecoded.phoneNumbers)
+        XCTAssertEqual(parse.otherContactInfo, cloudDecoded.otherContactInfo)
+        
+        //Versionable
+        XCTAssertNotNil(cloudDecoded.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
+        XCTAssertEqual(parse.previousVersion, cloudDecoded.previousVersion)
+        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.nextVersion, cloudDecoded.nextVersion)
     }
 /*
     func testAddContact() throws {

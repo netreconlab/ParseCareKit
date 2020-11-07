@@ -99,7 +99,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, effectiveDate
+        case previousVersionUUID, nextVersionUUID, previousVersion, nextVersion, effectiveDate
         case allergies, birthday, name, sex
     }
     
@@ -110,6 +110,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         try container.encode(name, forKey: .name)
         try container.encodeIfPresent(sex, forKey: .sex)
         try encodeVersionable(to: encoder)
+        encodingForParse = true
     }
     
     public func new(with careKitEntity: OCKEntity) throws ->PCKSynchronizable {
