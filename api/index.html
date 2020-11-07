@@ -214,7 +214,7 @@ This works with 1 or many devices per patient.*/</span>
 
     <span class="kd">func</span> <span class="nf">storeUpdatedOutcome</span><span class="p">(</span><span class="n">_</span> <span class="nv">outcome</span><span class="p">:</span> <span class="kt">OCKOutcome</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">//This is a workaround for a CareKit bug that doesn't allow you to query by id</span>
-        <span class="n">store</span><span class="o">.</span><span class="nf">updateOutcome</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">)){</span>
+        <span class="n">store</span><span class="o">.</span><span class="nf">updateOutcome</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span>
             <span class="n">results</span> <span class="k">in</span>
             <span class="k">switch</span> <span class="n">results</span><span class="p">{</span>
 
@@ -227,19 +227,19 @@ This works with 1 or many devices per patient.*/</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">storeUpdatedCarePlan</span><span class="p">(</span><span class="n">_</span> <span class="nv">carePlan</span><span class="p">:</span> <span class="kt">OCKCarePlan</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyCarePlan</span><span class="p">(</span><span class="n">carePlan</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">),</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyCarePlan</span><span class="p">(</span><span class="n">carePlan</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">storeUpdatedContact</span><span class="p">(</span><span class="n">_</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">OCKContact</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyContact</span><span class="p">(</span><span class="n">contact</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">),</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyContact</span><span class="p">(</span><span class="n">contact</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">storeUpdatedPatient</span><span class="p">(</span><span class="n">_</span> <span class="nv">patient</span><span class="p">:</span> <span class="kt">OCKPatient</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyPatient</span><span class="p">(</span><span class="n">patient</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">),</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyPatient</span><span class="p">(</span><span class="n">patient</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">storeUpdatedTask</span><span class="p">(</span><span class="n">_</span> <span class="nv">task</span><span class="p">:</span> <span class="kt">OCKTask</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyTask</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">),</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyTask</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -404,7 +404,7 @@ This works with 1 or many devices per patient.*/</span>
 <pre class="highlight swift"><code><span class="c1">//To query the most recent version</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Patient</span><span class="o">.</span><span class="nf">query</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())</span>
 
-<span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">)){</span> <span class="n">results</span> <span class="k">in</span>
+<span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span> <span class="n">results</span> <span class="k">in</span>
 
     <span class="k">switch</span> <span class="n">results</span> <span class="p">{</span>
 
@@ -419,7 +419,7 @@ This works with 1 or many devices per patient.*/</span>
 <p>For <code>Outcome</code>:</p>
 <pre class="highlight swift"><code><span class="c1">//To query all current outcomes</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Outcome</span><span class="o">.</span><span class="nf">queryNotDeleted</span><span class="p">()</span>
-<span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">)){</span> <span class="n">results</span> <span class="k">in</span>
+<span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span> <span class="n">results</span> <span class="k">in</span>
 
     <span class="k">switch</span> <span class="n">results</span> <span class="p">{</span>
 
