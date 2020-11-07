@@ -105,6 +105,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
+            .includeAll()
             //.include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .global(qos: .background)){ result in
             
