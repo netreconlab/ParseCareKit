@@ -880,23 +880,23 @@ extension ParseCareKitTests: OCKRemoteSynchronizationDelegate, ParseRemoteSynchr
     }
     
     func storeUpdatedOutcome(_ outcome: OCKOutcome) {
-        store.updateOutcome(outcome, callbackQueue: .global(qos: .background), completion: nil)
+        store.updateOutcome(outcome, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
-        store.updateAnyCarePlan(carePlan, callbackQueue: .global(qos: .background), completion: nil)
+        store.updateAnyCarePlan(carePlan, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedContact(_ contact: OCKContact) {
-        store.updateAnyContact(contact, callbackQueue: .global(qos: .background), completion: nil)
+        store.updateAnyContact(contact, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedPatient(_ patient: OCKPatient) {
-        store.updateAnyPatient(patient, callbackQueue: .global(qos: .background), completion: nil)
+        store.updateAnyPatient(patient, callbackQueue: .main, completion: nil)
     }
     
     func storeUpdatedTask(_ task: OCKTask) {
-        store.updateAnyTask(task, callbackQueue: .global(qos: .background), completion: nil)
+        store.updateAnyTask(task, callbackQueue: .main, completion: nil)
     }
     
     
