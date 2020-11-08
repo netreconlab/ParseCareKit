@@ -282,8 +282,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     
     public class func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
         
-        guard let _ = PCKUser.current,
-            let task = taskAny as? OCKTask else{
+        guard let task = taskAny as? OCKTask else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
         

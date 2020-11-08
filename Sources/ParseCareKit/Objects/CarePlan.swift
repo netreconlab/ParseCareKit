@@ -276,8 +276,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     
     public class func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
         
-        guard let _ = PCKUser.current,
-            let carePlan = carePlanAny as? OCKCarePlan else{
+        guard let carePlan = carePlanAny as? OCKCarePlan else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try ParseCareKitUtility.encoder().encode(carePlan)
