@@ -294,8 +294,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
 
     public class func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
         
-        guard let _ = PCKUser.current,
-            let contact = contactAny as? OCKContact else{
+        guard let contact = contactAny as? OCKContact else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try ParseCareKitUtility.encoder().encode(contact)

@@ -275,8 +275,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
     open class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
         
-        guard let _ = PCKUser.current,
-            let outcome = outcomeAny as? OCKOutcome else{
+        guard let outcome = outcomeAny as? OCKOutcome else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
         

@@ -281,8 +281,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public class func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
         
-        guard let _ = PCKUser.current,
-            let patient = patientAny as? OCKPatient else{
+        guard let patient = patientAny as? OCKPatient else{
             throw ParseCareKitError.cantCastToNeededClassType
         }
         
