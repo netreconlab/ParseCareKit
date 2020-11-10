@@ -41,7 +41,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public var effectiveDate: Date
+    public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
     

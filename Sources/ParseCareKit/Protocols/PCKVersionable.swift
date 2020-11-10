@@ -22,7 +22,7 @@ internal protocol PCKVersionable: PCKObjectable {
     
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.
-    var effectiveDate: Date { get set }
+    var effectiveDate: Date? { get set }
 
     /// The date on which this object was marked deleted. Note that objects are never actually deleted,
     /// but rather they are marked deleted and will no longer be returned from queries.

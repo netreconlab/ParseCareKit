@@ -12,7 +12,7 @@ import CareKitStore
 
 
 public final class CarePlan: PCKVersionable, PCKSynchronizable {
-    public var effectiveDate: Date
+    public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
     
