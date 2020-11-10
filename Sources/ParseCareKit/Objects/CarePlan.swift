@@ -28,7 +28,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -337,7 +337,7 @@ extension CarePlan {
         if encodingForParse {
             try container.encodeIfPresent(patient, forKey: .patient)
         }
-        try container.encode(title, forKey: .title)
+        try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(patientUUID, forKey: .patientUUID)
         try encodeVersionable(to: encoder)
         encodingForParse = true

@@ -27,7 +27,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -166,7 +166,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .include([kPCKOutcomeTaskKey, kPCKOutcomeValuesKey])
+            .include([kPCKOutcomeValuesKey])
             //.includeAll()
             //.include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
@@ -438,9 +438,9 @@ extension Outcome {
             try container.encodeIfPresent(task, forKey: .task)
             try container.encodeIfPresent(date, forKey: .date)
         }
-        try container.encode(taskUUID, forKey: .taskUUID)
-        try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
-        //try container.encode(values., forKey: .values)
+        try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
+        try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
+        //try container.encodeIfPresent(values., forKey: .values)
         guard let valuesToEncode = values else {
             throw ParseCareKitError.requiredValueCantBeUnwrapped
         }

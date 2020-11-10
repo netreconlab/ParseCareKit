@@ -56,7 +56,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -361,7 +361,7 @@ extension Contact {
         try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
         try container.encodeIfPresent(address, forKey: .address)
         try container.encodeIfPresent(category, forKey: .category)
-        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(organization, forKey: .organization)
         try container.encodeIfPresent(role, forKey: .role)
         try container.encodeIfPresent(emailAddresses, forKey: .emailAddresses)

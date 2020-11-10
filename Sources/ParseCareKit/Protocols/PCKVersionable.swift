@@ -304,7 +304,7 @@ extension PCKVersionable {
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         try container.encodeIfPresent(previousVersionUUID, forKey: .previousVersionUUID)
         try container.encodeIfPresent(nextVersionUUID, forKey: .nextVersionUUID)
-        try container.encode(effectiveDate, forKey: .effectiveDate)
+        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
         try encodeObjectable(to: encoder)
     }
 }

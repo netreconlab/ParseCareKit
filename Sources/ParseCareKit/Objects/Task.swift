@@ -57,7 +57,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -357,13 +357,13 @@ extension Task {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encode(carePlan, forKey: .carePlan)
+            try container.encodeIfPresent(carePlan, forKey: .carePlan)
         }
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
-        try container.encode(impactsAdherence, forKey: .impactsAdherence)
+        try container.encodeIfPresent(impactsAdherence, forKey: .impactsAdherence)
         try container.encodeIfPresent(instructions, forKey: .instructions)
-        try container.encode(schedule, forKey: .schedule)
+        try container.encodeIfPresent(schedule, forKey: .schedule)
         try encodeVersionable(to: encoder)
         encodingForParse = true
     }

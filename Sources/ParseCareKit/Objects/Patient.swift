@@ -56,7 +56,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -107,7 +107,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(allergies, forKey: .allergies)
         try container.encodeIfPresent(birthday, forKey: .birthday)
-        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(sex, forKey: .sex)
         try encodeVersionable(to: encoder)
         encodingForParse = true

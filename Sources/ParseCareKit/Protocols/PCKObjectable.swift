@@ -35,7 +35,7 @@ internal protocol PCKObjectable: ParseObject {
     var updatedDate: Date? {get set}
     
     /// The timezone this record was created in.
-    var timezone: TimeZone {get set}
+    var timezone: TimeZone? {get set}
     
     /// A dictionary of information that can be provided by developers to support their own unique
     /// use cases.
@@ -207,11 +207,11 @@ extension PCKObjectable {
                 try container.encodeIfPresent(entityId, forKey: .id)
             }
         }
-        try container.encode(uuid, forKey: .uuid)
-        try container.encode(schemaVersion, forKey: .schemaVersion)
-        try container.encode(createdDate, forKey: .createdDate)
-        try container.encode(updatedDate, forKey: .updatedDate)
-        try container.encode(timezone, forKey: .timezone)
+        try container.encodeIfPresent(uuid, forKey: .uuid)
+        try container.encodeIfPresent(schemaVersion, forKey: .schemaVersion)
+        try container.encodeIfPresent(createdDate, forKey: .createdDate)
+        try container.encodeIfPresent(updatedDate, forKey: .updatedDate)
+        try container.encodeIfPresent(timezone, forKey: .timezone)
         try container.encodeIfPresent(userInfo, forKey: .userInfo)
         try container.encodeIfPresent(groupIdentifier, forKey: .groupIdentifier)
         try container.encodeIfPresent(tags, forKey: .tags)
