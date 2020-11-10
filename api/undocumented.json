@@ -44,7 +44,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 432,
+      "line": 434,
       "symbol": "Outcome",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -58,7 +58,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/OutcomeValue.swift",
-      "line": 203,
+      "line": 209,
       "symbol": "OutcomeValue",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
