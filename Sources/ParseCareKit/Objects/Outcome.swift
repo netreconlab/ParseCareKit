@@ -78,7 +78,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
-    
+    /*
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -87,7 +87,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         task = try container.decodeIfPresent(Task.self, forKey: .task)
         print("here")
     }
-    
+    */
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
