@@ -24,7 +24,7 @@ open class Note: PCKObjectable {
     
     public internal(set) var updatedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -90,7 +90,7 @@ open class Note: PCKObjectable {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKNote {
         encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKNote.self, from: encoded)
     }
     
@@ -135,7 +135,7 @@ open class Note: PCKObjectable {
             return
         }
         let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: uuids))
-            .includeAll()
+            .include([kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {

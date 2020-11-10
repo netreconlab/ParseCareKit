@@ -41,7 +41,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public var effectiveDate: Date
+    public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
     
@@ -57,7 +57,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -132,7 +132,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Task.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKTaskCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -170,7 +170,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Task.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
-            .includeAll()
+            .include([kPCKTaskCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {
@@ -211,7 +211,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         let query = Task.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKTaskCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             switch results {
             
@@ -310,7 +310,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKTask {
         self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKTask.self, from: encoded)
     }
     
@@ -357,13 +357,13 @@ extension Task {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encode(carePlan, forKey: .carePlan)
+            try container.encodeIfPresent(carePlan, forKey: .carePlan)
         }
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
-        try container.encode(impactsAdherence, forKey: .impactsAdherence)
+        try container.encodeIfPresent(impactsAdherence, forKey: .impactsAdherence)
         try container.encodeIfPresent(instructions, forKey: .instructions)
-        try container.encode(schedule, forKey: .schedule)
+        try container.encodeIfPresent(schedule, forKey: .schedule)
         try encodeVersionable(to: encoder)
         encodingForParse = true
     }

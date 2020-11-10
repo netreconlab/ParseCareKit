@@ -12,7 +12,7 @@ import CareKitStore
 
 
 public final class CarePlan: PCKVersionable, PCKSynchronizable {
-    public var effectiveDate: Date
+    public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
     
@@ -28,7 +28,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -128,7 +128,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
         
         let query = Self.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){
             result in
             
@@ -167,7 +167,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid, previousCarePlanUUID]))
-            .includeAll()
+            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main) {
             results in
             
@@ -210,7 +210,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {
@@ -297,7 +297,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKCarePlan {
         self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKCarePlan.self, from: encoded)
     }
     
@@ -337,7 +337,7 @@ extension CarePlan {
         if encodingForParse {
             try container.encodeIfPresent(patient, forKey: .patient)
         }
-        try container.encode(title, forKey: .title)
+        try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(patientUUID, forKey: .patientUUID)
         try encodeVersionable(to: encoder)
         encodingForParse = true

@@ -56,6 +56,10 @@ public struct ParseCareKitUtility {
         Note().getEncoder()
     }
 
+    public static func jsonEncoder() -> JSONEncoder {
+        Note().getJSONEncoder()
+    }
+    
     public static func decoder() -> JSONDecoder {
         Note().getDecoder()
     }

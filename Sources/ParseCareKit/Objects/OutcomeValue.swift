@@ -25,7 +25,7 @@ final public class OutcomeValue: PCKObjectable {
     
     public internal(set) var updatedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -96,7 +96,15 @@ final public class OutcomeValue: PCKObjectable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let valueType = try container.decode(OCKOutcomeValueType.self, forKey: .type)
+        
+        //Decode Parse first
+        objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
+        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
+        updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
+        
+        guard let valueType = try container.decodeIfPresent(OCKOutcomeValueType.self, forKey: .type) else {
+            return
+        }
 
         if let valueDictionary = try? container.decodeIfPresent([String: AnyCodable].self, forKey: .value) {
             if let tempValue = valueDictionary[valueType.rawValue]?.value as? Int {
@@ -130,9 +138,7 @@ final public class OutcomeValue: PCKObjectable {
                 value = try container.decode(Date.self, forKey: .value)
             }
         }
-        objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
-        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
-        updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
+        
         kind = try container.decodeIfPresent(String.self, forKey: .kind)
         units = try container.decodeIfPresent(String.self, forKey: .units)
         index = try container.decodeIfPresent(Int.self, forKey: .index)
@@ -145,7 +151,7 @@ final public class OutcomeValue: PCKObjectable {
         remoteID = try container.decodeIfPresent(String.self, forKey: .remoteID)
         source = try container.decodeIfPresent(String.self, forKey: .source)
         userInfo = try container.decodeIfPresent([String: String].self, forKey: .userInfo)
-        timezone = try container.decode(TimeZone.self, forKey: .timezone)
+        timezone = try container.decodeIfPresent(TimeZone.self, forKey: .timezone)
         asset = try container.decodeIfPresent(String.self, forKey: .asset)
         notes = try container.decodeIfPresent([Note].self, forKey: .notes)
         logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
@@ -173,7 +179,7 @@ final public class OutcomeValue: PCKObjectable {
     
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcomeValue {
         encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: encoded)
     }
     
@@ -210,12 +216,12 @@ extension OutcomeValue {
         try container.encodeIfPresent(index, forKey: .index)
         if encodingForParse {
             var encodedValue = false
-            if let value = integerValue { try container.encode([type.rawValue: value], forKey: .value); encodedValue = true } else
-            if let value = doubleValue { try container.encode([type.rawValue: value], forKey: .value); encodedValue = true } else
-            if let value = stringValue { try container.encode([type.rawValue: value], forKey: .value); encodedValue = true } else
-            if let value = booleanValue { try container.encode([type.rawValue: value], forKey: .value); encodedValue = true } else
-            if let value = dataValue { try container.encode([type.rawValue: value], forKey: .value); encodedValue = true } else
-            if let value = dateValue { try container.encode([type.rawValue: value], forKey: .value); encodedValue = true }
+            if let value = integerValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true } else
+            if let value = doubleValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true } else
+            if let value = stringValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true } else
+            if let value = booleanValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true } else
+            if let value = dataValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true } else
+            if let value = dateValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true }
 
             guard encodedValue else {
                 let message = "Value could not be converted to a concrete type."
@@ -223,12 +229,12 @@ extension OutcomeValue {
             }
         } else {
             var encodedValue = false
-            if let value = integerValue { try container.encode(value, forKey: .value); encodedValue = true } else
-            if let value = doubleValue { try container.encode(value, forKey: .value); encodedValue = true } else
-            if let value = stringValue { try container.encode(value, forKey: .value); encodedValue = true } else
-            if let value = booleanValue { try container.encode(value, forKey: .value); encodedValue = true } else
-            if let value = dataValue { try container.encode(value, forKey: .value); encodedValue = true } else
-            if let value = dateValue { try container.encode(value, forKey: .value); encodedValue = true }
+            if let value = integerValue { try container.encodeIfPresent(value, forKey: .value); encodedValue = true } else
+            if let value = doubleValue { try container.encodeIfPresent(value, forKey: .value); encodedValue = true } else
+            if let value = stringValue { try container.encodeIfPresent(value, forKey: .value); encodedValue = true } else
+            if let value = booleanValue { try container.encodeIfPresent(value, forKey: .value); encodedValue = true } else
+            if let value = dataValue { try container.encodeIfPresent(value, forKey: .value); encodedValue = true } else
+            if let value = dateValue { try container.encodeIfPresent(value, forKey: .value); encodedValue = true }
 
             guard encodedValue else {
                 let message = "Value could not be converted to a concrete type."

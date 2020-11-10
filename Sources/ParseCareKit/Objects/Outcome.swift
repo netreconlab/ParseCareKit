@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 
 
-public class Outcome: PCKObjectable, PCKSynchronizable {
+final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var uuid: UUID?
 
@@ -27,7 +27,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -78,7 +78,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
-    
+
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
@@ -90,7 +90,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    open func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
@@ -105,7 +105,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKOutcomeValuesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -127,7 +127,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                         return
                     }
                     let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                        .includeAll()
+                        .include([kPCKOutcomeValuesKey])
                     query.first(callbackQueue: .main){ result in
                         
                         switch result {
@@ -152,12 +152,12 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    open func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with tombstone, marked for deletion
         completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
     }
     
-    open func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
@@ -166,7 +166,9 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKOutcomeValuesKey])
+            //.includeAll()
+            //.include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             switch results {
             
@@ -227,7 +229,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKOutcomeValuesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -273,7 +275,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         return copied
     }
         
-    open class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
+    public class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
         
         guard let outcome = outcomeAny as? OCKOutcome else{
             throw ParseCareKitError.cantCastToNeededClassType
@@ -308,9 +310,9 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
         self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
     
@@ -405,7 +407,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-            .includeAll()
+            .include([kPCKOutcomeValuesKey])
         return query
     }
    
@@ -436,9 +438,8 @@ extension Outcome {
             try container.encodeIfPresent(task, forKey: .task)
             try container.encodeIfPresent(date, forKey: .date)
         }
-        try container.encode(taskUUID, forKey: .taskUUID)
-        try container.encode(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
-        //try container.encode(values., forKey: .values)
+        try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
+        try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         guard let valuesToEncode = values else {
             throw ParseCareKitError.requiredValueCantBeUnwrapped
         }

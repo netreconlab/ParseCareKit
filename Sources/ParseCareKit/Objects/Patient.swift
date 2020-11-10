@@ -40,7 +40,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public var effectiveDate: Date
+    public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
     
@@ -56,7 +56,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -107,7 +107,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(allergies, forKey: .allergies)
         try container.encodeIfPresent(birthday, forKey: .birthday)
-        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(sex, forKey: .sex)
         try encodeVersionable(to: encoder)
         encodingForParse = true
@@ -133,7 +133,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
 
         //Check to see if already in the cloud
         let query = Self.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
            
             switch result {
@@ -172,7 +172,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not paired locally
         let query = Patient.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousPatientUUID]))
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {
@@ -215,7 +215,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             switch results {
             
@@ -301,7 +301,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKPatient {
         self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKPatient.self, from: encoded)
     }
 }

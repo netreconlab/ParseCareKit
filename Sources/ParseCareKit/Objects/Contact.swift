@@ -40,7 +40,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public var effectiveDate: Date
+    public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
     
@@ -56,7 +56,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     
     public internal(set) var deletedDate: Date?
     
-    public var timezone: TimeZone
+    public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
     
@@ -144,7 +144,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Contact.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKContactCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -181,7 +181,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Contact.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid,previousVersionUUID]))
-            .includeAll()
+            .include([kPCKContactCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {
@@ -222,7 +222,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         let query = Contact.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKContactCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {
@@ -315,7 +315,7 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
         self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
     }
     
@@ -361,7 +361,7 @@ extension Contact {
         try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
         try container.encodeIfPresent(address, forKey: .address)
         try container.encodeIfPresent(category, forKey: .category)
-        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(organization, forKey: .organization)
         try container.encodeIfPresent(role, forKey: .role)
         try container.encodeIfPresent(emailAddresses, forKey: .emailAddresses)

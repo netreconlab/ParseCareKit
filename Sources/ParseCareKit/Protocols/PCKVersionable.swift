@@ -22,7 +22,7 @@ internal protocol PCKVersionable: PCKObjectable {
     
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.
-    var effectiveDate: Date { get set }
+    var effectiveDate: Date? { get set }
 
     /// The date on which this object was marked deleted. Note that objects are never actually deleted,
     /// but rather they are marked deleted and will no longer be returned from queries.
@@ -248,14 +248,14 @@ extension PCKVersionable {
         let query = queryToAndWith
             .where(doesNotExist(key: kPCKObjectableDeletedDateKey)) //Only consider non deleted keys
             .where(kPCKVersionedObjectEffectiveDateKey < interval.end)
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         return query
     }
     
     private static func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> Query<Self> {
         
         let query = Self.query(doesNotExist(key: kPCKVersionedObjectNextKey))
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         let interval = createCurrentDateInterval(for: date)
         let greaterEqualEffectiveDate = self.query(kPCKVersionedObjectEffectiveDateKey >= interval.end)
         return Self.query(or(queries: [query,greaterEqualEffectiveDate]))
@@ -270,13 +270,13 @@ extension PCKVersionable {
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public static func query(for date: Date) -> Query<Self> {
         let query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         return query
     }
 
     public func find(for date: Date, completion: @escaping([Self]?, ParseError?) -> Void) {
         let query = Self.query(for: date)
-            .includeAll()
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main) { results in
             switch results {
             
@@ -304,7 +304,7 @@ extension PCKVersionable {
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         try container.encodeIfPresent(previousVersionUUID, forKey: .previousVersionUUID)
         try container.encodeIfPresent(nextVersionUUID, forKey: .nextVersionUUID)
-        try container.encode(effectiveDate, forKey: .effectiveDate)
+        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
         try encodeObjectable(to: encoder)
     }
 }

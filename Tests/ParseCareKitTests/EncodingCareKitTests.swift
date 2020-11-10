@@ -172,7 +172,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Encode to cloud format
-        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
+        let cloudEncoded = try ParseCoding.jsonEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Note.self, from: cloudEncoded)
         
         //Objectable
@@ -293,6 +294,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
         
         //Encode to cloud format
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Patient.self, from: cloudEncoded)
         
@@ -410,7 +412,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Test Parse -> ParseServer
-        let encoded = try parse.getEncoder().encode(parse)
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
+        let encoded = try parse.getJSONEncoder().encode(parse)
         let decoded = try parse.getDecoder().decode([String: AnyCodable].self, from: encoded)
         if let decodedValue = decoded["value"]?.value as? [String: Int] {
             XCTAssertEqual(decodedValue["integer"], 10)
@@ -560,6 +563,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.content, "world")
         
         //Encode to cloud format
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Outcome.self, from: cloudEncoded)
         
@@ -733,6 +737,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
         
         //Encode to cloud format
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Task.self, from: cloudEncoded)
         
@@ -853,6 +858,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
         
         //Encode to cloud format
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(CarePlan.self, from: cloudEncoded)
         
@@ -999,6 +1005,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
         
         //Encode to cloud format
+        parse.notes?.first?.objectId = "hello" //Needs objectId to be ParseObject
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Contact.self, from: cloudEncoded)
         
