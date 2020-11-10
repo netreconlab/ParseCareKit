@@ -90,7 +90,7 @@ open class Note: PCKObjectable {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     open func convertToCareKit(fromCloud:Bool=true) throws -> OCKNote {
         encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKNote.self, from: encoded)
     }
     

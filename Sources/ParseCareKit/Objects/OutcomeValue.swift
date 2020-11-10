@@ -179,7 +179,7 @@ final public class OutcomeValue: PCKObjectable {
     
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcomeValue {
         encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: encoded)
     }
     

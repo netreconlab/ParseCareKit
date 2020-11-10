@@ -78,16 +78,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
-    /*
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
-        values = try container.decodeIfPresent([OutcomeValue].self, forKey: .values)
-        task = try container.decodeIfPresent(Task.self, forKey: .task)
-        print("here")
-    }
-    */
+
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
@@ -321,7 +312,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
         self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.encoder().encode(self)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
     
