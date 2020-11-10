@@ -128,7 +128,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
         
         let query = Self.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){
             result in
             
@@ -167,7 +167,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid, previousCarePlanUUID]))
-            .includeAll()
+            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main) {
             results in
             
@@ -210,7 +210,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {

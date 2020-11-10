@@ -105,7 +105,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -127,7 +127,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                         return
                     }
                     let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                        .includeAll()
+                        .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
                     query.first(callbackQueue: .main){ result in
                         
                         switch result {
@@ -166,7 +166,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .includeAll()
+            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             switch results {
             
@@ -227,7 +227,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
                 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-            .includeAll()
+            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -405,7 +405,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-            .includeAll()
+            .include([kPCKOutcomeValuesKey, kPCKOutcomeTaskKey, kPCKObjectableNotesKey])
         return query
     }
    
