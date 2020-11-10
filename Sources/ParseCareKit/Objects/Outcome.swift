@@ -84,7 +84,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         
         objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
         values = try container.decodeIfPresent([OutcomeValue].self, forKey: .values)
-        task = try container.decodeIfPresent(Task.self, forKey: .values)
+        task = try container.decodeIfPresent(Task.self, forKey: .task)
         print("here")
     }
     
