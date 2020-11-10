@@ -23,8 +23,8 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
-          "branch": "main",
-          "revision": "7015af270a3b1d581b9b01dbf8ea96e3a0c85ec4",
+          "branch": "fixNestedUnkeyedController",
+          "revision": "49177af077c7666156ca5759b9f0176241b001c1",
           "version": null
         }
       }
