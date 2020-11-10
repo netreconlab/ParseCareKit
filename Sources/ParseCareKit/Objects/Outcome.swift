@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 
 
-public class Outcome: PCKObjectable, PCKSynchronizable {
+final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var uuid: UUID?
 
@@ -79,6 +79,15 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
     
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
+        values = try container.decodeIfPresent([OutcomeValue].self, forKey: .values)
+        task = try container.decodeIfPresent(Task.self, forKey: .values)
+        print("here")
+    }
+    
     public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
         
         switch careKitEntity {
@@ -90,7 +99,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    open func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
@@ -152,12 +161,12 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    open func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with tombstone, marked for deletion
         completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
     }
     
-    open func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
@@ -275,7 +284,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
         return copied
     }
         
-    open class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
+    public class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
         
         guard let outcome = outcomeAny as? OCKOutcome else{
             throw ParseCareKitError.cantCastToNeededClassType
@@ -310,7 +319,7 @@ public class Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
+    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.encoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
