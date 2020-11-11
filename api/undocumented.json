@@ -9,7 +9,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/CarePlan.swift",
-      "line": 334,
+      "line": 333,
       "symbol": "CarePlan",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -23,7 +23,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Contact.swift",
-      "line": 352,
+      "line": 351,
       "symbol": "Contact",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -44,7 +44,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 434,
+      "line": 431,
       "symbol": "Outcome",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -79,7 +79,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Task.swift",
-      "line": 356,
+      "line": 355,
       "symbol": "Task",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
