@@ -70,15 +70,15 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }
     
-    open func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
             
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
         
-        //Make wall.logicalClock level entities compatible with KnowledgeVector by setting it's initial .logicalClock to 0
-        if !usingKnowledgeVector{
+        //Make wall.logicalClock level entities compatible with Clock by setting it's initial .logicalClock to 0
+        if !usingClock{
             self.logicalClock = 0
         }
         
@@ -130,17 +130,17 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         }
     }
     
-    open func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with tombstone, marked for deletion
         completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
     }
     
-    open func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    open func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
     
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Outcome.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
@@ -149,7 +149,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         query.includeKeys([kPCKOutcomeTaskKey,kPCKOutcomeValuesKey,kPCKObjectNotesKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let outcomes = objects as? [Outcome] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
@@ -166,7 +166,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             }
             let pulled = outcomes.compactMap{$0.convertToCareKit()}
             let entities = pulled.compactMap{OCKEntity.outcome($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
             mergeRevision(revision)
         }
     }

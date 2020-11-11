@@ -18,14 +18,14 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKOutcomeValue <-> OutcomeValue
 - [x] OCKScheduleElement <-> ScheduleElement
 - [x] OCKNote <-> Note
-- [x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
+- [x] OCKRevisionRecord.KnowledgeVector <-> Clock
 
 
 ## CareKit Sample App with ParseCareKit
 A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKitSample-ParseCareKit), connects to the aforementioned [parse-hipaa](https://github.com/netreconlab/parse-hipaa) and demonstrates how CareKit data can be easily synched to the Cloud using ParseCareKit.
 
 ### ParseCareKit.plist with server connection information
-ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/ParseCareKitUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/master/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
+ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/ParseCareKitUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -36,12 +36,12 @@ PFUser.enableRevocableSessionInBackground() //Allows you to revoke sessions from
 ```
 
 ## What version of ParseCareKit Suits Your Needs?
-- (Most cases) Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [master](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details.
-- Need to use ParseCareKit for iOS11+ and will be using [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app?You should use the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. The limitation here is that CareKit and CareKitUI can't be use because they require iOS13.
-- Need to use ParseCareKit for iOS13+ and will be using [CareKit <= 2.0.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore` or conforming to `OCKAnyStoreProtocol`) within your app? You should use the [carekit_2.0.1](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You should use `ParseSynchronizedStoreManager()` see [below](#synchronizing-your-data) more details.
-- Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you created your own store conforming to the `OCKAnyStoreProtocol`) within your app? You should use the [wall_clock](https://github.com/netreconlab/ParseCareKit/tree/wall_clock) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You should use `ParseSynchronizedStoreManager()` see [below](#synchronizing-your-data) more details. It's suggested to map your classes to OCKStore classes instead.
+- (Most cases) Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [main](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. This branch uses the [Parse-Swift SDK](https://github.com/parse-community/Parse-Swift) instead of the [Parse-Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX).
+- Need to use ParseCareKit for iOS11+ and will be using [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app?You should use the [carestore](https://github.com/netreconlab/ParseCareKit/tree/carestore) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. The limitation here is that CareKit and CareKitUI can't be used because they require iOS13+. This branch uses the [Parse-Swift SDK](https://github.com/parse-community/Parse-Swift) instead of the [Parse-Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX).
+- Need to use ParseCareKit for iOS13+ and will be using [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you would like to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) within your app? You will need to use Cocoapods and the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc) branch. You can still use all of the capabilities of ParseCareKit. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#synchronizing-your-data) for more details.
+- Need to use ParseCareKit for iOS13+ and will be using [CareKit <= 2.0.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore` or conforming to `OCKAnyStoreProtocol`) within your app? You should use the [carekit_2.0.1](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You will also have to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) and Cocoapods. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1#synchronizing-your-data) for more details.
 
-**Note that it is recommended to use Knowledge Vectors (`ParseRemoteSynchronizationManager`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how Knowledge Vectors work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
+**Note that it is recommended to use Vectors Clocks (`ParseRemoteSynchronizationManager`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how Knowledge Vectors work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
 
 ## Install ParseCareKit
 The framework currently isn't SPM compatible yet as it's depedendent on [Parse](https://github.com/parse-community/Parse-SDK-iOS-OSX) which is currently only compatible with cocoapods. 
@@ -56,9 +56,9 @@ target 'MyApp' do #Change to your app name
   use_frameworks!
 
   # All of these are required to run ParseCareKit
-  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1' #mirrors CareKits main branch
-  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1' #mirrors CareKits main branch
-  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod-2.1' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
+  pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
+  pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
+  pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
   pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'main'
   
   # Add the rest of your pods below
@@ -117,12 +117,12 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-### Using vector clocks aka CareKits KnowledgeVector (`ParseRemoteSynchronizationManager`)
+### Using vector clocks aka CareKits Clock (`ParseRemoteSynchronizationManager`)
 
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
-/*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
+/*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
 let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
@@ -130,7 +130,7 @@ remoteStoreManager.delegate = self //Conform to this protocol if you are writing
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the KnowledgeVector. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
 
 ```swift
 let userTypeUUIDDictionary = [
@@ -208,7 +208,7 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
 
 ### Using the wall clock (`ParseSynchronizedStoreManager`) - Note that this is deprecated
 
-You can also use ParseCareKit to stay synchronized with the `OCKStore` or `OCKAnyStoreProtocol` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/master/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
+You can also use ParseCareKit to stay synchronized with the `OCKStore` or `OCKAnyStoreProtocol` by leveraging `OCKSynchronizedStoreManager`. Once your care-store is setup, simply pass an instance of `OCKSynchronizedStoreManager` to [ParseSynchronizedStoreManager](https://github.com/netreconlab/ParseCareKit/blob/main/ParseCareKit/ParseSynchronizedStoreManager.swift). I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
 /*Use wall clock and OCKSynchronizedStoreManager to keep data synced. Useful if you are using CareKit 2.0.1 or below

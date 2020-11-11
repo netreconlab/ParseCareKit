@@ -12,9 +12,9 @@ import CareKitStore
 
 extension PCKObject{
 
-    public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingKnowledgeVector: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
+    public func compareUpdate(_ careKit: OCKOutcomeValue, parse: OutcomeValue, usingClock: Bool, overwriteRemote: Bool, newClockValue:Int, store: OCKAnyStoreProtocol)->OCKOutcomeValue?{
         
-        if !usingKnowledgeVector{
+        if !usingClock{
             guard let careKitLastUpdated = careKit.updatedDate,
                 let cloudUpdatedAt = parse.updatedDate else{
                 return nil
@@ -28,7 +28,7 @@ extension PCKObject{
         }else{
             if ((self.logicalClock <= parse.logicalClock) && !overwriteRemote){
                 //This should throw a conflict as pullRevisions should have made sure it doesn't happen. Ignoring should allow the newer one to be pulled from the cloud, so we do nothing here
-                print("Warning in \(self.parseClassName).compareUpdate(). KnowledgeVector in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
+                print("Warning in \(self.parseClassName).compareUpdate(). Clock in Cloud \(parse.logicalClock) >= \(self.logicalClock). This should never occur. It should get fixed in next pullRevision. Local: \(self)... Cloud: \(parse)")
             }
             return nil
         }

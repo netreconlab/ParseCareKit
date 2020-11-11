@@ -71,7 +71,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -106,7 +106,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let previousPatientUUIDString = self.previousVersionUUID?.uuidString else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -147,12 +147,12 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
     
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Task.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
@@ -161,7 +161,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
         query.includeKeys([kPCKTaskCarePlanKey,kPCKTaskElementsKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let tasks = objects as? [Task] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
@@ -178,7 +178,7 @@ open class Task: PCKVersionedObject, PCKRemoteSynchronized {
             }
             let pulled = tasks.compactMap{$0.convertToCareKit()}
             let entities = pulled.compactMap{OCKEntity.task($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
             mergeRevision(revision)
         }
     }

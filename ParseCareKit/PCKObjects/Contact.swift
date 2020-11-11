@@ -152,7 +152,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func addToCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         
         guard let _ = PFUser.current() else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -188,7 +188,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func updateCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         guard let _ = PFUser.current(),
             let previousContactUUIDString = self.previousVersionUUID?.uuidString else{
             completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -229,12 +229,12 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         }
     }
     
-    public func deleteFromCloud(_ usingKnowledgeVector:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
         //Handled with update, marked for deletion
         completion(true,nil)
     }
     
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Contact.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
@@ -243,7 +243,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
         query.includeKeys([kPCKContactCarePlanKey,kPCKObjectNotesKey,kPCKVersionedObjectPreviousKey,kPCKVersionedObjectNextKey])
         query.findObjectsInBackground{ (objects,error) in
             guard let carePlans = objects as? [Contact] else{
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
                 guard let error = error as NSError?,
                     let errorDictionary = error.userInfo["error"] as? [String:Any],
                     let reason = errorDictionary["routine"] as? String else {
@@ -260,7 +260,7 @@ open class Contact: PCKVersionedObject, PCKRemoteSynchronized {
             }
             let pulled = carePlans.compactMap{$0.convertToCareKit()}
             let entities = pulled.compactMap{OCKEntity.contact($0)}
-            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+            let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
             mergeRevision(revision)
         }
     }
