@@ -132,7 +132,6 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Task.query(kPCKObjectableUUIDKey == uuid)
-            .include([kPCKTaskCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -211,7 +210,7 @@ public final class Task: PCKVersionable, PCKSynchronizable {
         
         let query = Task.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .include([kPCKTaskCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             switch results {
             

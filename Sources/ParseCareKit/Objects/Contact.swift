@@ -144,7 +144,6 @@ public final class Contact: PCKVersionable, PCKSynchronizable {
         
         //Check to see if already in the cloud
         let query = Contact.query(kPCKObjectableUUIDKey == uuid)
-            .include([kPCKContactCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
             
             switch result {

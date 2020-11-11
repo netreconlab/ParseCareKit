@@ -133,7 +133,6 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
 
         //Check to see if already in the cloud
         let query = Self.query(kPCKObjectableUUIDKey == uuid)
-            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){ result in
            
             switch result {
