@@ -59,7 +59,7 @@ target 'MyApp' do #Change to your app name
   pod 'CareKit', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
   pod 'CareKitUI', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #mirrors CareKits main branch
   pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod' #Modified CareKit that synchs all entities. If you want to use the CareKit mirror, use `pod`, but it's limited to only synching OCKTask, OCKOutcome, and OCKOutcomeValue
-  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'main'
+  pod 'ParseCareKit', :git => 'https://github.com/netreconlab/ParseCareKit.git', :branch => 'parse-objc'
   
   # Add the rest of your pods below
 end
