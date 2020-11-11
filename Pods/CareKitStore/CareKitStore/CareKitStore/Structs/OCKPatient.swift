@@ -31,7 +31,7 @@
 import Foundation
 
 /// Represents a patient
-public struct OCKPatient: Codable, Equatable, /*Identifiable,*/ OCKAnyPatient, OCKVersionedObjectCompatible {
+public struct OCKPatient: Codable, Equatable, Identifiable, OCKAnyPatient, OCKVersionedObjectCompatible {
 
     // MARK: OCKAnyPatient
     public let id: String

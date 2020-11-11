@@ -31,7 +31,7 @@ import Foundation
 
 /// Any store from which a single type conforming to `OCKAnyPatient` can be queried is considered `OCKAnyReadOnlyPatientStore`.
 public protocol OCKReadablePatientStore: OCKAnyReadOnlyPatientStore {
-    associatedtype Patient: OCKAnyPatient & Equatable// & Identifiable
+    associatedtype Patient: OCKAnyPatient & Equatable & Identifiable
     associatedtype PatientQuery: OCKAnyPatientQuery
 
     /// `fetchPatients` asynchronously retrieves an array of patients from the store.

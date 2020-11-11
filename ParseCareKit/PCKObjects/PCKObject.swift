@@ -106,7 +106,7 @@ open class PCKObject: PFObject {
           
         guard let _ = PFUser.current(),
             let uuidString = uuid?.uuidString else{
-                completion(nil,ParseCareKitError.couldntUnwrapKnowledgeVector)
+                completion(nil,ParseCareKitError.couldntUnwrapClock)
                 return
         }
             

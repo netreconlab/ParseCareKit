@@ -16,7 +16,7 @@ enum ParseCareKitError: Error {
     case requiredValueCantBeUnwrapped
     case objectIdDoesntMatchRemoteId
     case cloudClockLargerThanLocalWhilePushRevisions
-    case couldntUnwrapKnowledgeVector
+    case couldntUnwrapClock
     case cantUnwrapSelf
     case cloudVersionNewerThanLocal
     case uuidAlreadyExists
@@ -33,8 +33,8 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("ParseCareKit: Related entity isn't in cloud.", comment: "Related entity error")
         case .requiredValueCantBeUnwrapped:
             return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
-        case .couldntUnwrapKnowledgeVector:
-            return NSLocalizedString("ParseCareKit: KnowledgeVector can't be unwrapped.", comment: "KnowledgeVector Unwrapping error")
+        case .couldntUnwrapClock:
+            return NSLocalizedString("ParseCareKit: Clock can't be unwrapped.", comment: "KnowledgeVector Unwrapping error")
         case .objectIdDoesntMatchRemoteId:
             return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
         case .cloudClockLargerThanLocalWhilePushRevisions:
@@ -294,11 +294,11 @@ public let kPCKNoteContentKey                                  = "content"
 public let kPCKNoteTitleKey                                    = "title"
 public let kPCKNoteAuthorKey                                   = "author"
 
-//#Mark - KnowledgeVector Class
-public let kPCKKnowledgeVectorClassKey                         = "KnowledgeVector"
+//#Mark - Clock Class
+public let kPCKClockClassKey                         = "Clock"
 // Field keys
-public let kPCKKnowledgeVectorPatientTypeUUIDKey               = "uuid"
-public let kPCKKnowledgeVectorVectorKey                        = "vector"
+public let kPCKClockPatientTypeUUIDKey               = "uuid"
+public let kPCKClockVectorKey                        = "vector"
 
 
 //#Mark - CareKit UserInfo Database Keys

@@ -46,7 +46,7 @@
 		918F080624800BD800C3A205 /* PCKObject+OutcomeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080524800BD800C3A205 /* PCKObject+OutcomeValue.swift */; };
 		918F080824800BF000C3A205 /* PCKObject+Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080724800BF000C3A205 /* PCKObject+Patient.swift */; };
 		918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F080924800BFF00C3A205 /* PCKObject+Task.swift */; };
-		91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* KnowledgeVector.swift */; };
+		91AA07232466F0CD00B39452 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* Clock.swift */; };
 		91D5287A24813AF70022292B /* PCKSynchronized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D5287924813AF70022292B /* PCKSynchronized.swift */; };
 		9D16F93DD397CFCF68B2E4E2 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 709752F6250D2B180020EA70 /* Pods_ParseCareKit.framework */; };
 		B732F6BC142F259E372324D9 /* Pods_ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */; };
@@ -148,7 +148,7 @@
 		918F080524800BD800C3A205 /* PCKObject+OutcomeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+OutcomeValue.swift"; sourceTree = "<group>"; };
 		918F080724800BF000C3A205 /* PCKObject+Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Patient.swift"; sourceTree = "<group>"; };
 		918F080924800BFF00C3A205 /* PCKObject+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObject+Task.swift"; sourceTree = "<group>"; };
-		91AA07222466F0CD00B39452 /* KnowledgeVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeVector.swift; sourceTree = "<group>"; };
+		91AA07222466F0CD00B39452 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		91AD929524A50C4100925D4D /* Pods_ParseCareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ParseCareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91D5287924813AF70022292B /* PCKSynchronized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKSynchronized.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,7 +257,7 @@
 				918F080B248040AA00C3A205 /* PCKObjects */,
 				91D52878248128700022292B /* Protocols */,
 				9119D5EF245618D7001B7AA3 /* Info.plist */,
-				91AA07222466F0CD00B39452 /* KnowledgeVector.swift */,
+				91AA07222466F0CD00B39452 /* Clock.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
@@ -578,7 +578,7 @@
 				918F07F6247FFF7900C3A205 /* PCKObject+CarePlan.swift in Sources */,
 				918F07F82480000800C3A205 /* PCKVersionedObject+CarePlan.swift in Sources */,
 				918F080A24800BFF00C3A205 /* PCKObject+Task.swift in Sources */,
-				91AA07232466F0CD00B39452 /* KnowledgeVector.swift in Sources */,
+				91AA07232466F0CD00B39452 /* Clock.swift in Sources */,
 				9119D60224561A28001B7AA3 /* ScheduleElement.swift in Sources */,
 				918F080224800BAE00C3A205 /* PCKObject+Note.swift in Sources */,
 				9119D60424561A28001B7AA3 /* Patient.swift in Sources */,

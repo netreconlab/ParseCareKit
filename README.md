@@ -18,7 +18,7 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKOutcomeValue <-> OutcomeValue
 - [x] OCKScheduleElement <-> ScheduleElement
 - [x] OCKNote <-> Note
-- [x] OCKRevisionRecord.KnowledgeVector <-> KnowledgeVector
+- [x] OCKRevisionRecord.KnowledgeVector <-> Clock
 
 
 ## CareKit Sample App with ParseCareKit
@@ -117,12 +117,12 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-### Using vector clocks aka CareKits KnowledgeVector (`ParseRemoteSynchronizationManager`)
+### Using vector clocks aka CareKits Clock (`ParseRemoteSynchronizationManager`)
 
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore from here. An example is below:
 
 ```swift
-/*Use KnowledgeVector and OCKRemoteSynchronizable to keep data synced. 
+/*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
 let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
@@ -130,7 +130,7 @@ remoteStoreManager.delegate = self //Conform to this protocol if you are writing
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the KnowledgeVector. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
+The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `PFUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular PFUser's `Doctor` and `Patient` type. You can save all types to PFUser:
 
 ```swift
 let userTypeUUIDDictionary = [
