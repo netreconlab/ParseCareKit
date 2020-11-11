@@ -128,7 +128,6 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
         
         let query = Self.query(kPCKObjectableUUIDKey == uuid)
-            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.first(callbackQueue: .main){
             result in
             
@@ -210,7 +209,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .include([kPCKCarePlanPatientKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
         query.find(callbackQueue: .main){ results in
             
             switch results {
