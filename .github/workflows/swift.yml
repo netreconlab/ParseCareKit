@@ -30,7 +30,6 @@ jobs:
 
   deploy_docs:
     
-    needs: xcode-test-ios
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
