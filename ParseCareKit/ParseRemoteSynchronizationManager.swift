@@ -9,7 +9,7 @@
 import Foundation
 import CareKitStore
 import Parse
-#if canImport(ParseLiveQuery)
+#if !os(watchOS)
 import ParseLiveQuery
 #endif
 /**
@@ -124,7 +124,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }
         }
         
-        #if canImport(ParseLiveQuery)
+        #if !os(watchOS)
         if !subscriptions.contains(newConcreteClass.parseClassName) {
             subscriptions.insert(newConcreteClass.parseClassName)
             let subcscription = Client.shared.subscribe(query)
@@ -160,7 +160,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 }
             }
             
-            #if canImport(ParseLiveQuery)
+            #if !os(watchOS)
             if !subscriptions.contains(newCustomClass.parseClassName) {
                 subscriptions.insert(newCustomClass.parseClassName)
                 let subcscription = Client.shared.subscribe(query)
