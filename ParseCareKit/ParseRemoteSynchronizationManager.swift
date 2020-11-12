@@ -9,8 +9,9 @@
 import Foundation
 import CareKitStore
 import Parse
+#if canImport(ParseLiveQuery)
 import ParseLiveQuery
-
+#endif
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
 */
@@ -123,6 +124,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             }
         }
         
+        #if canImport(ParseLiveQuery)
         if !subscriptions.contains(newConcreteClass.parseClassName) {
             subscriptions.insert(newConcreteClass.parseClassName)
             let subcscription = Client.shared.subscribe(query)
@@ -130,6 +132,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 self.delegate?.didRequestSynchronization(self)
             }
         }
+        #endif
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
@@ -157,6 +160,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 }
             }
             
+            #if canImport(ParseLiveQuery)
             if !subscriptions.contains(newCustomClass.parseClassName) {
                 subscriptions.insert(newCustomClass.parseClassName)
                 let subcscription = Client.shared.subscribe(query)
@@ -164,6 +168,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.delegate?.didRequestSynchronization(self)
                 }
             }
+            #endif
         }else{
             completion(previousError)
         }

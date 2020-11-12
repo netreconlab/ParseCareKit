@@ -43,5 +43,4 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'CareKitStore', '~> 2.0'
   s.dependency 'Parse', '~> 1.18'
-  s.dependency 'ParseLiveQuery', '~> 2.7'
 end
