@@ -9,6 +9,7 @@
 import Foundation
 import CareKitStore
 import Parse
+import ParseLiveQuery
 
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
@@ -38,6 +39,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
+    private var subscriptions = Set<String>()
     
     public init(uuid:UUID, auto: Bool) {
         self.uuid = uuid
@@ -107,7 +109,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
         
         var currentError = previousError
-        newConcreteClass.pullRevisions(localClock, cloudClock: cloudClock){
+        let query = newConcreteClass.pullRevisions(localClock, cloudClock: cloudClock){
             customRevision in
             mergeRevision(customRevision){
                 error in
@@ -118,6 +120,14 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
                 self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 
+            }
+        }
+        
+        if !subscriptions.contains(newConcreteClass.parseClassName) {
+            subscriptions.insert(newConcreteClass.parseClassName)
+            let subcscription = Client.shared.subscribe(query)
+            subcscription.handleEvent { query, event in
+                self.delegate?.didRequestSynchronization(self)
             }
         }
     }
@@ -134,7 +144,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     return
             }
             var currentError = previousError
-            newCustomClass.pullRevisions(localClock, cloudClock: cloudClock){
+            let query = newCustomClass.pullRevisions(localClock, cloudClock: cloudClock){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
@@ -144,6 +154,14 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     }
                     
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
+                }
+            }
+            
+            if !subscriptions.contains(newCustomClass.parseClassName) {
+                subscriptions.insert(newCustomClass.parseClassName)
+                let subcscription = Client.shared.subscribe(query)
+                subcscription.handleEvent { query, event in
+                    self.delegate?.didRequestSynchronization(self)
                 }
             }
         }else{

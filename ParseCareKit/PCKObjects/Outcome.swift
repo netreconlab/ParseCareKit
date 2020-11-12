@@ -140,7 +140,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
         completion(true,nil)
     }
     
-    public func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void) -> PFQuery<PFObject> {
         
         let query = Outcome.query()!
         query.whereKey(kPCKObjectClockKey, greaterThanOrEqualTo: localClock)
@@ -169,6 +169,7 @@ open class Outcome: PCKObject, PCKRemoteSynchronized {
             let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
             mergeRevision(revision)
         }
+        return query
     }
     
     public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
