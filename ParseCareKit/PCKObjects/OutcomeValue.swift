@@ -140,6 +140,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         self.value = outcomeValue.value
         self.units = outcomeValue.units
         
+        self.asset = outcomeValue.asset
         self.groupIdentifier = outcomeValue.groupIdentifier
         self.tags = outcomeValue.tags
         self.source = outcomeValue.source
@@ -147,8 +148,7 @@ open class OutcomeValue: PCKObject, PFSubclassing {
         self.remoteID = outcomeValue.remoteID
         self.createdDate = outcomeValue.createdDate
         self.notes = outcomeValue.notes?.compactMap{Note(careKitEntity: $0)}
-        
-        
+
         return self
     }
     
