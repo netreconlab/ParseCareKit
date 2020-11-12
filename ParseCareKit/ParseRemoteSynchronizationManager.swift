@@ -9,9 +9,7 @@
 import Foundation
 import CareKitStore
 import Parse
-#if !os(watchOS)
-import ParseLiveQuery
-#endif
+
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
 */
@@ -23,6 +21,7 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
     func successfullyPushedDataToCloud()
+    func subscribe(_ query: PFQuery<PFObject>)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -123,16 +122,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
             }
         }
-        
-        #if !os(watchOS)
-        if !subscriptions.contains(newConcreteClass.parseClassName) {
-            subscriptions.insert(newConcreteClass.parseClassName)
-            let subcscription = Client.shared.subscribe(query)
-            subcscription.handleEvent { query, event in
-                self.delegate?.didRequestSynchronization(self)
-            }
-        }
-        #endif
+        self.parseDelegate?.subscribe(query)
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
@@ -159,16 +149,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 }
             }
-            
-            #if !os(watchOS)
-            if !subscriptions.contains(newCustomClass.parseClassName) {
-                subscriptions.insert(newCustomClass.parseClassName)
-                let subcscription = Client.shared.subscribe(query)
-                subcscription.handleEvent { query, event in
-                    self.delegate?.didRequestSynchronization(self)
-                }
-            }
-            #endif
+            self.parseDelegate?.subscribe(query)
         }else{
             completion(previousError)
         }

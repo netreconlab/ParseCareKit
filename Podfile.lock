@@ -1,29 +1,19 @@
 PODS:
-  - Bolts-Swift (1.5.0)
   - Bolts/Tasks (1.9.1)
   - CareKitStore (2.0)
   - Parse (1.19.1):
     - Parse/Core (= 1.19.1)
   - Parse/Core (1.19.1):
     - Bolts/Tasks (= 1.9.1)
-  - ParseLiveQuery (2.7.2):
-    - Bolts-Swift (~> 1.5.0)
-    - Parse (~> 1.19.0)
-    - Starscream (= 3.1.0)
-  - Starscream (3.1.0)
 
 DEPENDENCIES:
   - CareKitStore (from `https://github.com/cbaker6/CareKit.git`, branch `pod`)
   - Parse (~> 1.19.1)
-  - ParseLiveQuery (~> 2.7)
 
 SPEC REPOS:
   trunk:
     - Bolts
-    - Bolts-Swift
     - Parse
-    - ParseLiveQuery
-    - Starscream
 
 EXTERNAL SOURCES:
   CareKitStore:
@@ -37,12 +27,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
-  Bolts-Swift: afbbaf8c8186e7f769be4afa656949c14087ba44
   CareKitStore: a25e631eee3b5649427b05cbe685b4522cf86d47
   Parse: e40fdb9c7d665823b7fe9865949cac9a53eb2ce7
-  ParseLiveQuery: 937da9ac5b4ae3d0483d06f24d16b962224cbe93
-  Starscream: 08172b481e145289c4930cb567230fb55897cfa4
 
-PODFILE CHECKSUM: 8787093661e74f6104afa2fc6aed908d977029f5
+PODFILE CHECKSUM: 6e0c85034af5a3585b3f5cba1e1732b352d94540
 
 COCOAPODS: 1.9.3
