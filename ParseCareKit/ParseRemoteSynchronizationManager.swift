@@ -39,7 +39,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
-    private var subscriptions = Set<String>()
     
     public init(uuid:UUID, auto: Bool) {
         self.uuid = uuid
