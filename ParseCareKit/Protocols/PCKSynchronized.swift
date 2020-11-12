@@ -25,6 +25,6 @@ public protocol PCKSynchronized: PFObject, PFSubclassing {
  Protocol that defines the properties and methods for parse carekit entities that are synchronized using a knowledge vector.
  */
 public protocol PCKRemoteSynchronized: PCKSynchronized {
-    func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
+    func pullRevisions(_ localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void) -> PFQuery<PFObject>
     func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void)
 }

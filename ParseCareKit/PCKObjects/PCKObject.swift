@@ -43,6 +43,11 @@ open class PCKObject: PFObject {
         self.createdDate = other.createdDate
         self.notes = other.notes
         self.logicalClock = other.logicalClock
+        self.asset = other.asset
+        self.tags = other.tags
+        self.schemaVersion = other.schemaVersion
+        self.groupIdentifier = other.groupIdentifier
+        self.source = other.source
     }
     
     open func copyRelationalEntities(_ parse: PCKObject){

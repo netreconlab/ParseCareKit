@@ -21,6 +21,7 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
     func successfullyPushedDataToCloud()
+    func subscribe(_ query: PFQuery<PFObject>)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -107,7 +108,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
         }
         
         var currentError = previousError
-        newConcreteClass.pullRevisions(localClock, cloudClock: cloudClock){
+        let query = newConcreteClass.pullRevisions(localClock, cloudClock: cloudClock){
             customRevision in
             mergeRevision(customRevision){
                 error in
@@ -120,6 +121,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
             }
         }
+        self.parseDelegate?.subscribe(query)
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
@@ -134,7 +136,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     return
             }
             var currentError = previousError
-            newCustomClass.pullRevisions(localClock, cloudClock: cloudClock){
+            let query = newCustomClass.pullRevisions(localClock, cloudClock: cloudClock){
                 customRevision in
                 mergeRevision(customRevision){
                     error in
@@ -146,6 +148,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 }
             }
+            self.parseDelegate?.subscribe(query)
         }else{
             completion(previousError)
         }
