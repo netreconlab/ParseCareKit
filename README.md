@@ -26,6 +26,8 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 ## CareKit Sample App with ParseCareKit
 A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKitSample-ParseCareKit), connects to the aforementioned [parse-hipaa](https://github.com/netreconlab/parse-hipaa) and demonstrates how CareKit data can be easily synched to the Cloud using ParseCareKit.
 
+<img src="https://user-images.githubusercontent.com/8621344/99022137-1ec7ca80-2530-11eb-897c-ace7c70536f2.png" width="300"> <img src="https://user-images.githubusercontent.com/8621344/99022190-3bfc9900-2530-11eb-8ad1-c1e8ba2e7f55.png" width="300">
+
 ### ParseCareKit.plist with server connection information
 ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/ParseCareKitUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
 
