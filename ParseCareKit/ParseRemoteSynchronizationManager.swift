@@ -9,9 +9,7 @@
 import Foundation
 import CareKitStore
 import Parse
-#if canImport(ParseLiveQuery)
 import ParseLiveQuery
-#endif
 
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
@@ -124,7 +122,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
             }
         }
-        #if canImport(ParseLiveQuery)
+        
         if !subscriptions.contains(query.parseClassName) {
             subscriptions.insert(query.parseClassName)
             let subcscription = Client.shared.subscribe(query)
@@ -135,7 +133,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 }
             }
         }
-        #endif
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
@@ -162,7 +159,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 }
             }
-            #if canImport(ParseLiveQuery)
             if !subscriptions.contains(query.parseClassName) {
                 subscriptions.insert(query.parseClassName)
                 let subcscription = Client.shared.subscribe(query)
@@ -173,7 +169,6 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     }
                 }
             }
-            #endif
         }else{
             completion(previousError)
         }
