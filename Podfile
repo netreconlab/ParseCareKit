@@ -5,7 +5,6 @@ def shared_pods
   # Pods for ParseCareKit
   pod 'CareKitStore', :git => 'https://github.com/cbaker6/CareKit.git', :branch => 'pod'
   pod 'Parse', '~>1.19.1'
-  pod 'ParseLiveQuery', :git => 'https://github.com/cbaker6/ParseLiveQuery-iOS-OSX.git', :branch => 'latest'
 end
 
 target 'ParseCareKit' do
