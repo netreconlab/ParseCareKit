@@ -9,6 +9,9 @@
 import Foundation
 import CareKitStore
 import Parse
+#if canImport(ParseLiveQuery)
+import ParseLiveQuery
+#endif
 
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
@@ -21,7 +24,6 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
     func successfullyPushedDataToCloud()
-    func subscribe(_ query: PFQuery<PFObject>)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -39,6 +41,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
+    private var subscriptions = Set<String>()
     
     public init(uuid:UUID, auto: Bool) {
         self.uuid = uuid
@@ -121,7 +124,18 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
             }
         }
-        self.parseDelegate?.subscribe(query)
+        #if canImport(ParseLiveQuery)
+        if !subscriptions.contains(query.parseClassName) {
+            subscriptions.insert(query.parseClassName)
+            let subcscription = Client.shared.subscribe(query)
+            subcscription.handleEvent { query, event in
+                DispatchQueue.main.async {
+                    print("Remote requested syncronization...")
+                    NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "requestSync")))
+                }
+            }
+        }
+        #endif
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
@@ -148,7 +162,18 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 }
             }
-            self.parseDelegate?.subscribe(query)
+            #if canImport(ParseLiveQuery)
+            if !subscriptions.contains(query.parseClassName) {
+                subscriptions.insert(query.parseClassName)
+                let subcscription = Client.shared.subscribe(query)
+                subcscription.handleEvent { query, event in
+                    DispatchQueue.main.async {
+                        print("Remote requested syncronization...")
+                        NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "requestSync")))
+                    }
+                }
+            }
+            #endif
         }else{
             completion(previousError)
         }
