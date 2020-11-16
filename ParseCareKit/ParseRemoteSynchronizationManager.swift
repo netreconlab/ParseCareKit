@@ -9,6 +9,7 @@
 import Foundation
 import CareKitStore
 import Parse
+import ParseLiveQuery
 
 /**
 Protocol that defines the properties to conform to when updates a needed and conflict resolution.
@@ -21,7 +22,6 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
     func successfullyPushedDataToCloud()
-    func subscribe(_ query: PFQuery<PFObject>)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -39,23 +39,26 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var customClassesToSynchronize:[String:PCKRemoteSynchronized]?
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
+    private var subscriptions = Set<String>()
+    private var subscribeToServerUpdates: Bool
     
-    public init(uuid:UUID, auto: Bool) {
+    public init(uuid:UUID, auto: Bool, subscribeToServerUpdates: Bool = false) {
         self.uuid = uuid
         self.automaticallySynchronizes = auto
+        self.subscribeToServerUpdates = subscribeToServerUpdates
         super.init()
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
-        self.init(uuid: uuid, auto: auto)
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized], subscribeToServerUpdates: Bool = false) {
+        self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
-        self.init(uuid: uuid, auto: auto)
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized], subscribeToServerUpdates: Bool = false){
+        self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         if replacePCKStoreClasses != nil{
             self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
         }else{
@@ -121,7 +124,13 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
             }
         }
-        self.parseDelegate?.subscribe(query)
+        if !subscriptions.contains(query.parseClassName) && subscribeToServerUpdates {
+            subscriptions.insert(query.parseClassName)
+            let subcscription = Client.shared.subscribe(query)
+            subcscription.handleEvent { query, event in
+                self.delegate?.didRequestSynchronization(self)
+            }
+        }
     }
     
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled:Int=0, previousError: Error?, localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void, completion: @escaping (Error?) -> Void){
@@ -148,7 +157,13 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 }
             }
-            self.parseDelegate?.subscribe(query)
+            if !subscriptions.contains(query.parseClassName) && subscribeToServerUpdates {
+                subscriptions.insert(query.parseClassName)
+                let subcscription = Client.shared.subscribe(query)
+                subcscription.handleEvent { query, event in
+                    self.delegate?.didRequestSynchronization(self)
+                }
+            }
         }else{
             completion(previousError)
         }
