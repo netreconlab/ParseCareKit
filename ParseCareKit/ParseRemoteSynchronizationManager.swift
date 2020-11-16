@@ -40,23 +40,25 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
     public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKRemoteSynchronized]!
     private var parseDelegate: ParseRemoteSynchronizationDelegate?
     private var subscriptions = Set<String>()
+    private var subscribeToServerUpdates: Bool
     
-    public init(uuid:UUID, auto: Bool) {
+    public init(uuid:UUID, auto: Bool, subscribeToServerUpdates: Bool = false) {
         self.uuid = uuid
         self.automaticallySynchronizes = auto
+        self.subscribeToServerUpdates = subscribeToServerUpdates
         super.init()
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.getRemoteConcrete()
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]) {
-        self.init(uuid: uuid, auto: auto)
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized], subscribeToServerUpdates: Bool = false) {
+        self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
     
-    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized]){
-        self.init(uuid: uuid, auto: auto)
+    convenience public init(uuid:UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKRemoteSynchronized]?, customClasses: [String:PCKRemoteSynchronized], subscribeToServerUpdates: Bool = false){
+        self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         if replacePCKStoreClasses != nil{
             self.pckStoreClassesToSynchronize = PCKStoreClass.patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
         }else{
@@ -122,11 +124,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 
             }
         }
-        if !subscriptions.contains(query.parseClassName) {
+        if !subscriptions.contains(query.parseClassName) && subscribeToServerUpdates {
             subscriptions.insert(query.parseClassName)
             let subcscription = Client.shared.subscribe(query)
             subcscription.handleEvent { query, event in
-                self.parseDelegate?.didRequestSynchronization(self)
+                self.delegate?.didRequestSynchronization(self)
             }
         }
     }
@@ -155,11 +157,11 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                     self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1, previousError: currentError, localClock: localClock, cloudClock: cloudClock, mergeRevision: mergeRevision, completion: completion)
                 }
             }
-            if !subscriptions.contains(query.parseClassName) {
+            if !subscriptions.contains(query.parseClassName) && subscribeToServerUpdates {
                 subscriptions.insert(query.parseClassName)
                 let subcscription = Client.shared.subscribe(query)
                 subcscription.handleEvent { query, event in
-                    self.parseDelegate?.didRequestSynchronization(self)
+                    self.delegate?.didRequestSynchronization(self)
                 }
             }
         }else{
