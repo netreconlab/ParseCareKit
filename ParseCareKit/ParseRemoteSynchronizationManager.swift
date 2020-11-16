@@ -24,6 +24,7 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func storeUpdatedPatient(_ patient: OCKPatient)
     func storeUpdatedTask(_ task: OCKTask)
     func successfullyPushedDataToCloud()
+    func subscribe(_ query: PFQuery<PFObject>)
 }
 
 open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable {
@@ -129,10 +130,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
             subscriptions.insert(query.parseClassName)
             let subcscription = Client.shared.subscribe(query)
             subcscription.handleEvent { query, event in
-                DispatchQueue.main.async {
-                    print("Remote requested syncronization...")
-                    NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "requestSync")))
-                }
+                self.parseDelegate?.didRequestSynchronization(self)
             }
         }
         #endif
@@ -167,10 +165,7 @@ open class ParseRemoteSynchronizationManager: NSObject, OCKRemoteSynchronizable 
                 subscriptions.insert(query.parseClassName)
                 let subcscription = Client.shared.subscribe(query)
                 subcscription.handleEvent { query, event in
-                    DispatchQueue.main.async {
-                        print("Remote requested syncronization...")
-                        NotificationCenter.default.post(.init(name: Notification.Name(rawValue: "requestSync")))
-                    }
+                    self.parseDelegate?.didRequestSynchronization(self)
                 }
             }
             #endif
