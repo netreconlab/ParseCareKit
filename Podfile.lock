@@ -37,7 +37,7 @@ CHECKOUT OPTIONS:
     :commit: 25686733fb9ca1f7e4bec9aafe63ce13f17678f3
     :git: https://github.com/cbaker6/CareKit.git
   ParseLiveQuery:
-    :commit: e7fbd7f66a5bcd032fee52a14acc9cc2e7496761
+    :commit: 1a7c46524442467c37c6094f0b7d825fc02b8bde
     :git: https://github.com/cbaker6/ParseLiveQuery-iOS-OSX.git
 
 SPEC CHECKSUMS:
