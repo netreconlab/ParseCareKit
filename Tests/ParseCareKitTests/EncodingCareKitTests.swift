@@ -1076,7 +1076,7 @@ class ParseCareKitTests: XCTestCase {
     }*/
 }
 
-extension ParseCareKitTests: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizationDelegate{
+extension ParseCareKitTests: ParseRemoteSynchronizationDelegate {
     func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
         print("Implement")
     }
@@ -1093,26 +1093,4 @@ extension ParseCareKitTests: OCKRemoteSynchronizationDelegate, ParseRemoteSynchr
         let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
         completion(conflictPolicy)
     }
-    
-    func storeUpdatedOutcome(_ outcome: OCKOutcome) {
-        store.updateOutcome(outcome, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
-        store.updateAnyCarePlan(carePlan, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedContact(_ contact: OCKContact) {
-        store.updateAnyContact(contact, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedPatient(_ patient: OCKPatient) {
-        store.updateAnyPatient(patient, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedTask(_ task: OCKTask) {
-        store.updateAnyTask(task, callbackQueue: .main, completion: nil)
-    }
-    
-    
 }

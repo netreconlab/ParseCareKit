@@ -141,39 +141,13 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
         print("Implement")
     }
     
+    func successfullyPushedDataToCloud(){
+        print("Notified when data is succefully pushed to the cloud")
+    }
+
     func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
         let conflictPolicy = OCKMergeConflictResolutionPolicy.keepDevice
         completion(conflictPolicy)
-    }
-    
-    func storeUpdatedOutcome(_ outcome: OCKOutcome) {
-        //This is a workaround for a CareKit bug that doesn't allow you to query by id
-        store.updateOutcome(outcome, callbackQueue: .main){
-            results in
-            switch results{
-            
-            case .success(_):
-                store.synchronize(){_ in} //Force synchronize after fix
-            case .failure(let error):
-                print("Error storing fix \(error)")
-            }
-        }
-    }
-    
-    func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
-        dataStore.updateAnyCarePlan(carePlan, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedContact(_ contact: OCKContact) {
-        dataStore.updateAnyContact(contact, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedPatient(_ patient: OCKPatient) {
-        dataStore.updateAnyPatient(patient, callbackQueue: .main, completion: nil)
-    }
-    
-    func storeUpdatedTask(_ task: OCKTask) {
-        dataStore.updateAnyTask(task, callbackQueue: .main, completion: nil)
     }
 }
 
