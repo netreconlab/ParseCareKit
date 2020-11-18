@@ -209,39 +209,13 @@ This works with 1 or many devices per patient.*/</span>
         <span class="nf">print</span><span class="p">(</span><span class="s">"Implement"</span><span class="p">)</span>
     <span class="p">}</span>
 
+    <span class="kd">func</span> <span class="nf">successfullyPushedDataToCloud</span><span class="p">(){</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Notified when data is succefully pushed to the cloud"</span><span class="p">)</span>
+    <span class="p">}</span>
+
     <span class="kd">func</span> <span class="nf">chooseConflictResolutionPolicy</span><span class="p">(</span><span class="n">_</span> <span class="nv">conflict</span><span class="p">:</span> <span class="kt">OCKMergeConflictDescription</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">OCKMergeConflictResolutionPolicy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">let</span> <span class="nv">conflictPolicy</span> <span class="o">=</span> <span class="kt">OCKMergeConflictResolutionPolicy</span><span class="o">.</span><span class="n">keepDevice</span>
         <span class="nf">completion</span><span class="p">(</span><span class="n">conflictPolicy</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">storeUpdatedOutcome</span><span class="p">(</span><span class="n">_</span> <span class="nv">outcome</span><span class="p">:</span> <span class="kt">OCKOutcome</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//This is a workaround for a CareKit bug that doesn't allow you to query by id</span>
-        <span class="n">store</span><span class="o">.</span><span class="nf">updateOutcome</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span>
-            <span class="n">results</span> <span class="k">in</span>
-            <span class="k">switch</span> <span class="n">results</span><span class="p">{</span>
-
-            <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
-                <span class="n">store</span><span class="o">.</span><span class="nf">synchronize</span><span class="p">(){</span><span class="n">_</span> <span class="k">in</span><span class="p">}</span> <span class="c1">//Force synchronize after fix</span>
-            <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
-                <span class="nf">print</span><span class="p">(</span><span class="s">"Error storing fix </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">storeUpdatedCarePlan</span><span class="p">(</span><span class="n">_</span> <span class="nv">carePlan</span><span class="p">:</span> <span class="kt">OCKCarePlan</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyCarePlan</span><span class="p">(</span><span class="n">carePlan</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">storeUpdatedContact</span><span class="p">(</span><span class="n">_</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">OCKContact</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyContact</span><span class="p">(</span><span class="n">contact</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">storeUpdatedPatient</span><span class="p">(</span><span class="n">_</span> <span class="nv">patient</span><span class="p">:</span> <span class="kt">OCKPatient</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyPatient</span><span class="p">(</span><span class="n">patient</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">storeUpdatedTask</span><span class="p">(</span><span class="n">_</span> <span class="nv">task</span><span class="p">:</span> <span class="kt">OCKTask</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">dataStore</span><span class="o">.</span><span class="nf">updateAnyTask</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -444,7 +418,7 @@ This works with 1 or many devices per patient.*/</span>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-11-13)</p>
+      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-11-18)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -681,56 +681,21 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 19,
+      "line": 18,
       "symbol": "ParseRemoteSynchronizationDelegate.chooseConflictResolutionPolicy(_:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 20,
-      "symbol": "ParseRemoteSynchronizationDelegate.storeUpdatedOutcome(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 21,
-      "symbol": "ParseRemoteSynchronizationDelegate.storeUpdatedCarePlan(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 22,
-      "symbol": "ParseRemoteSynchronizationDelegate.storeUpdatedContact(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 23,
-      "symbol": "ParseRemoteSynchronizationDelegate.storeUpdatedPatient(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 24,
-      "symbol": "ParseRemoteSynchronizationDelegate.storeUpdatedTask(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 25,
+      "line": 19,
       "symbol": "ParseRemoteSynchronizationDelegate.successfullyPushedDataToCloud()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseRemoteSynchronizationManager.swift",
-      "line": 28,
+      "line": 22,
       "symbol": "ParseRemoteSynchronizationManager",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
