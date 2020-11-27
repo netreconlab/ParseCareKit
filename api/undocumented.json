@@ -926,14 +926,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKVersionable.swift",
-      "line": 264,
+      "line": 265,
       "symbol": "PCKVersionable",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKVersionable.swift",
-      "line": 325,
+      "line": 326,
       "symbol": "PCKVersionable",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
