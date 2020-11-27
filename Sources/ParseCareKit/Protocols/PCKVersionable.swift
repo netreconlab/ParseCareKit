@@ -249,9 +249,10 @@ extension PCKVersionable {
                             }
                         }
                     }
-
-                    completion(.success(versionedObject))
                 }
+                
+                completion(.success(savedObject))
+
             case .failure(let error):
                 print("Error in \(versionedObject.className).save(). \(String(describing: error))")
                 completion(.failure(error))
