@@ -16,7 +16,7 @@ import CareKitStore
 public protocol PCKSynchronizable {
     
     /**
-     Determines if two objects have the same objectId.
+     Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps it synchronized with the CareKitStore.
 
      - parameter overwriteRemote: Whether data should be overwritten if it's already present on the Parse Server.
      - parameter completion: The block to execute.
@@ -25,7 +25,7 @@ public protocol PCKSynchronizable {
     func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable,Error>) -> Void)
     
     /**
-     Determines if two objects have the same objectId.
+     Updates an object that conforms to PCKSynchronizable that is already on the Parse Server and keeps it synchronized with the CareKitStore.
 
      - parameter overwriteRemote: Whether data should be overwritten if it's already present on the Parse Server.
      - parameter completion: The block to execute.
