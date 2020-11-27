@@ -9,8 +9,10 @@
 import Foundation
 import ParseSwift
 
+/// Utility functions designed to make things easier.
 public struct ParseCareKitUtility {
     
+    /// Can setup a connection to Parse Server based on a ParseCareKit.plist
     public static func setupServer() {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration:[String: AnyObject]
@@ -36,6 +38,7 @@ public struct ParseCareKitUtility {
         ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
     }
     
+    /// Converts a date to a String.
     public static func dateToString(_ date:Date)->String{
         let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -44,6 +47,7 @@ public struct ParseCareKitUtility {
         return dateFormatter.string(from: date)
     }
     
+    /// Converts a String to a Date.
     public static func stringToDate(_ date:String)->Date?{
         let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -52,14 +56,17 @@ public struct ParseCareKitUtility {
         return dateFormatter.date(from: date)
     }
     
+    /// Get the current Parse Encoder with custom date strategy.
     public static func encoder() -> ParseEncoder {
         Note().getEncoder()
     }
 
+    /// Get the current JSON Encoder with custom date strategy.
     public static func jsonEncoder() -> JSONEncoder {
         Note().getJSONEncoder()
     }
     
+    /// Get the current JSON Decoder with custom date strategy.
     public static func decoder() -> JSONDecoder {
         Note().getDecoder()
     }

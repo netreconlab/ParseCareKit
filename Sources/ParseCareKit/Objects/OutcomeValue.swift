@@ -10,7 +10,10 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-
+/// An `OutcomeValue` is the ParseCareKit equivalent of `OCKOutcomeValue`.  An
+/// `OCKOutcomeValue` is a representation of any response of measurement that a user gives
+/// in response to a task. The underlying type could be any of a number of types including
+/// integers, booleans, dates, text, and binary data, among others.
 final public class OutcomeValue: PCKObjectable {
     
     public internal(set) var uuid: UUID?
@@ -55,10 +58,18 @@ final public class OutcomeValue: PCKObjectable {
     
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
+    /// The index can be used to track the order or arrangement of outcomes values, when relevant.
     public var index:Int?
+    
+    /// An optional property that can be used to specify what kind of value this is (e.g. blood pressure, qualitative stress, weight)
     public var kind:String?
+    
+    /// The units for this measurement.
     public var units:String?
+    
+    /// The underlying value.
     public var value: OCKOutcomeValueUnderlyingType?
+
     /// The underlying value as an integer.
     var integerValue: Int? { return value as? Int }
 

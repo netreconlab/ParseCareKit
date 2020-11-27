@@ -17,9 +17,11 @@ internal protocol PCKObjectable: ParseObject {
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
     var id:String { get }
     
-    /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
+    /// A human readable unique identifier (same as `id`, but this is what's on the Parse server, `id` is
+    /// already taken in Parse). It is used strictly by the developer and will never be shown to a user
     var entityId: String? {get set}
     
+    // The clock value of when this object was added to the Parse server.
     var logicalClock: Int? {get set}
     
     /// The semantic version of the database schema when this object was created.
@@ -64,8 +66,10 @@ internal protocol PCKObjectable: ParseObject {
     /// determined by the remote database, but it is generally not expected to be human readable.
     var remoteID: String? {get set}
     
+    /// A boolean that is `true` when encoding the object for Parse. If `false` the object is encoding for CareKit.
     var encodingForParse: Bool {get set}
 
+    /// Copy the values of a ParseCareKit object
     static func copyValues(from other: Self, to here: Self) throws -> Self
 }
 
@@ -77,6 +81,8 @@ extension PCKObjectable {
         return current
     }
     
+    /// Copies the common values of another PCKObjectable object.
+    /// - parameter from: The PCKObjectable object to copy from.
     mutating public func copyCommonValues(from other: Self) {
         uuid = other.uuid
         entityId = other.entityId
@@ -94,6 +100,7 @@ extension PCKObjectable {
         tags = other.tags
     }
 
+    /// Stamps all related entities with the current `logicalClock` value
     mutating public func stampRelationalEntities() throws -> Self {
         guard let logicalClock = self.logicalClock else {
             throw ParseCareKitError.cantUnwrapSelf
@@ -102,24 +109,33 @@ extension PCKObjectable {
         return self
     }
 
-    public func canConvertToCareKit()->Bool {
+    /// Determines if this PCKObjectable object can be converted to CareKit
+    public func canConvertToCareKit() -> Bool {
         guard let _ = self.entityId else {
             return false
         }
         return true
     }
 
-    static public func first(_ uuid:UUID?, relatedObject:Self?=nil, include:Bool=true, completion: @escaping(Bool,Self?) -> Void) {
+    /**
+     Finds the first object on the server that has the same `uuid`.
+     - Parameters:
+        - uuid: The UUID to search for.
+        - relatedObject: An object that has the same `uuid` as the one being searched for.
+        - completion: The block to execute.
+     It should have the following argument signature: `(Result<Self,Error>)`.
+    */
+    static public func first(_ uuid:UUID?, relatedObject:Self?=nil, completion: @escaping(Result<Self,Error>) -> Void) {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else{
-                completion(false,nil)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
                 return
         }
             
         guard relatedObject == nil else{
             //No need to query the Cloud, it's already present
-            completion(false,relatedObject)
+            completion(.success(relatedObject!))
             return
         }
              
@@ -130,15 +146,22 @@ extension PCKObjectable {
             switch result {
             
             case .success(let object):
-                completion(true, object)
-            case .failure(_):
-                completion(false,nil)
+                completion(.success(object))
+            case .failure(let error):
+                completion(.failure(error))
             }
             
         }
     }
     
-    public func find(_ uuid:UUID?, include:Bool=true,
+    /**
+     Finds all objects on the server that has the same `uuid`.
+     - Parameters:
+        - uuid: The UUID to search for.
+        - completion: The block to execute.
+     It should have the following argument signature: `(Result<Self,Error>)`.
+    */
+    public func find(_ uuid:UUID?,
                          completion: @escaping(Result<[Self],Error>) -> Void) {
           
         guard let _ = PCKUser.current,
@@ -165,7 +188,14 @@ extension PCKObjectable {
         }
     }
     
-    public static func createCurrentDateInterval(for date: Date)->DateInterval{
+    /**
+     Create a `DateInterval` like how CareKit generates one.
+     - Parameters:
+        - for: the date to start the interval.
+    
+     - returns: a interval from `for` to the next day.
+    */
+    public static func createCurrentDateInterval(for date: Date) -> DateInterval {
         let startOfDay = Calendar.current.startOfDay(for: date)
         let endOfDay = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
         return DateInterval(start: startOfDay, end: endOfDay)
@@ -193,6 +223,11 @@ extension PCKObjectable {
 //Encodable
 extension PCKObjectable {
     
+    /**
+     Encodes the PCKObjectable properties of the object
+     - Parameters:
+        - to: the encoder the properties should be encoded to.
+    */
     public func encodeObjectable(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         

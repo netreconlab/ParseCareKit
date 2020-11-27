@@ -10,8 +10,8 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-
-public final class Patient: PCKVersionable, PCKSynchronizable {
+/// An `Patient` is the ParseCareKit equivalent of `OCKPatient`.  An `OCKPatient` represents a patient.
+public final class Patient: PCKVersionable {
     public internal(set) var nextVersion: Patient? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
@@ -86,10 +86,14 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
-    
+    /// A list of substances this patient is allergic to.
     public var allergies:[String]?
     public var birthday:Date?
+    
+    /// The patient's name.
     public var name: PersonNameComponents?
+    
+    /// The patient's biological sex.
     public var sex: OCKBiologicalSex?
     
     public static var className: String {
@@ -113,7 +117,7 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         encodingForParse = true
     }
     
-    public func new(with careKitEntity: OCKEntity) throws ->PCKSynchronizable {
+    public func new(with careKitEntity: OCKEntity) throws -> Patient {
     
         switch careKitEntity {
         case .patient(let entity):
@@ -124,10 +128,10 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
-            completion(false, ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
 
@@ -140,11 +144,16 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
                     //This object has a duplicate uuid but isn't the same object
-                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
-                //This object already exists on server, ignore gracefully
-                completion(true,ParseCareKitError.uuidAlreadyExists)
+                
+                if overwriteRemote {
+                    self.updateCloud(completion: completion)
+                } else {
+                    //This object already exists on server, ignore gracefully
+                    completion(.success(foundEntity))
+                }
 
             case .failure(let error):
                 
@@ -154,18 +163,18 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
                 default:
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
-                    completion(false,error)
+                    completion(.failure(error))
                 }
                 return
             }
         }
     }
     
-    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid,
             let previousPatientUUID = self.previousVersionUUID else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
         
@@ -180,37 +189,30 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
                 switch foundObjects.count{
                 case 0:
                     print("Warning in \(self.className).updateCloud(). A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
-                    self.addToCloud(completion: completion)
+                    self.addToCloud(overwriteRemote: false, completion: completion)
                 case 1:
                     //This is the typical case
                     guard let previousVersion = foundObjects.first(where: {$0.uuid == previousPatientUUID}) else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
-                        completion(false,ParseCareKitError.uuidAlreadyExists)
+                        completion(.failure(ParseCareKitError.uuidAlreadyExists))
                         return
                     }
                     var updated = self
                     updated = updated.copyRelationalEntities(previousVersion)
-                    updated.addToCloud(completion: completion)
+                    updated.addToCloud(overwriteRemote: false, completion: completion)
 
                 default:
                     print("Error in \(self.className).updateCloud(). UUID already exists in Cloud")
-                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
                 }
             case .failure(let error):
                 print("Error in \(self.className).updateCloud(). \(error.localizedDescription)")
-                completion(false,error)
+                completion(.failure(error))
             }
         }
     }
     
-    
-    
-    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        //Handled with update, marked for deletion
-        completion(true,nil)
-    }
-    
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
@@ -221,10 +223,10 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
             case .success(let carePlans):
                 let pulled = carePlans.compactMap{try? $0.convertToCareKit()}
                 let entities = pulled.compactMap{OCKEntity.patient($0)}
-                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(revision)
             case .failure(let error):
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
                 
                 switch error.code{
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
@@ -239,27 +241,31 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void){
         
         self.logicalClock = cloudClock //Stamp Entity
         
         guard let _ = self.previousVersionUUID else{
-            self.addToCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
+            self.addToCloud(overwriteRemote: false) { result in
+                
+                switch result {
+                
+                case .success(_):
                     completion(nil)
-                }else{
+                case .failure(let error):
                     completion(error)
                 }
             }
             return
         }
         
-        self.updateCloud(true, overwriteRemote: overwriteRemote){
-            (success,error) in
-            if success{
+        self.updateCloud { result in
+            
+            switch result {
+            
+            case .success(_):
                 completion(nil)
-            }else{
+            case .failure(let error):
                 completion(error)
             }
         }
@@ -291,8 +297,8 @@ public final class Patient: PCKVersionable, PCKSynchronizable {
     }
 
     func prepareEncodingRelational(_ encodingForParse: Bool) {
-        /*previousVersion?.encodingForParse = encodingForParse
-        nextVersion?.encodingForParse = encodingForParse*/
+        previousVersion?.encodingForParse = encodingForParse
+        nextVersion?.encodingForParse = encodingForParse
         notes?.forEach {
             $0.encodingForParse = encodingForParse
         }

@@ -10,6 +10,10 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
+/// An `Note` is the ParseCareKit equivalent of `OCKNote`.  `OCKNote` can be attached to all other
+/// CareKit objects and values. Use cases may include a physician leaving a note on a task when it is modified
+/// to explain why a medication dose was changed, or a note left from a patient to a care provider explaining why they weren't able to complete a
+/// task on a certain occasion.
 open class Note: PCKObjectable {
     
     public internal(set) var uuid: UUID?
@@ -54,9 +58,13 @@ open class Note: PCKObjectable {
     
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
-
+    /// The note content.
     public var content:String?
+    
+    /// A title for the note.
     public var title:String?
+    
+    /// The person who created this note.
     public var author:String?
     
     enum CodingKeys: String, CodingKey {

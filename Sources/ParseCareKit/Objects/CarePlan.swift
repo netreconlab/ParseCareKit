@@ -10,8 +10,12 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-
-public final class CarePlan: PCKVersionable, PCKSynchronizable {
+/// An `CarePlan` is the ParseCareKit equivalent of `OCKCarePlan`.  An `OCKCarePlan` represents a set of tasks, including both
+/// interventions and assesments, that a patient is supposed to complete as part of his
+/// or her treatment for a specific condition. For example, a care plan for obesity may include tasks requiring the patient to exercise, record their
+/// weight, and log meals. As the care plan evolves with the patient's progress, the care provider may modify the exercises and include notes each
+/// time about why the changes were made.
+public final class CarePlan: PCKVersionable {
     public var effectiveDate: Date?
     
     public internal(set) var uuid: UUID?
@@ -87,12 +91,14 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
     }
 
+    /// The patient to whom this care plan belongs.
     public var patient:Patient? {
         didSet {
             patientUUID = patient?.uuid
         }
     }
     
+    /// The UUID of the patient to whom this care plan belongs.
     public var patientUUID:UUID? {
         didSet{
             if patientUUID != patient?.uuid {
@@ -101,6 +107,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
     }
     
+    /// A title describing this care plan.
     public var title:String?
     
     enum CodingKeys: String, CodingKey {
@@ -110,7 +117,7 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         case title, patient, patientUUID
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
+    public func new(with careKitEntity: OCKEntity) throws -> CarePlan {
         switch careKitEntity {
         case .carePlan(let entity):
             return try Self.copyCareKit(entity)
@@ -120,10 +127,10 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
         
@@ -136,11 +143,16 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
                     //This object has a duplicate uuid but isn't the same object
-                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
-                //This object already exists on server, ignore gracefully
-                completion(true,ParseCareKitError.uuidAlreadyExists)
+                
+                if overwriteRemote {
+                    self.updateCloud(completion: completion)
+                } else {
+                    //This object already exists on server, ignore gracefully
+                    completion(.success(foundEntity))
+                }
 
             case .failure(let error):
 
@@ -150,17 +162,17 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                 default:
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
-                    completion(false,error)
+                    completion(.failure(error))
                 }
             }
         }
     }
     
-    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         guard let _ = PCKUser.current,
               let uuid = self.uuid,
             let previousCarePlanUUID = self.previousVersionUUID else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
         
@@ -176,36 +188,31 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
                 switch foundObjects.count{
                 case 0:
                     print("Warning in \(self.className).updateCloud(). A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
-                    self.addToCloud(completion: completion)
+                    self.addToCloud(overwriteRemote: false, completion: completion)
                 case 1:
                     //This is the typical case
                     guard let previousVersion = foundObjects.first(where: {$0.uuid == self.previousVersionUUID}) else {
                         print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
-                        completion(false,ParseCareKitError.uuidAlreadyExists)
+                        completion(.failure(ParseCareKitError.uuidAlreadyExists))
                         return
                     }
                     var updated = self
                     updated = updated.copyRelationalEntities(previousVersion)
-                    updated.addToCloud(completion: completion)
+                    updated.addToCloud(overwriteRemote: false, completion: completion)
 
                 default:
                     print("Error in \(self.className).updateCloud(). UUID already exists in Cloud")
-                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
                 }
             case .failure(let error):
                 print("Error in \(self.className).updateCloud(). \(error.localizedDescription)")
-                completion(false,error)
+                completion(.failure(error))
             }
             
         }
     }
     
-    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        //Handled with update, marked for deletion
-        completion(true,nil)
-    }
-    
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
@@ -217,10 +224,10 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
             case .success(let carePlans):
                 let pulled = carePlans.compactMap{try? $0.convertToCareKit()}
                 let entities = pulled.compactMap{OCKEntity.carePlan($0)}
-                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(revision)
             case .failure(let error):
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
                 
                 switch error.code{
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
@@ -235,30 +242,33 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
         }
     }
     
-    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void){
         self.logicalClock = cloudClock //Stamp Entity
         
         guard let _ = self.previousVersionUUID else{
-            self.addToCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
+            self.addToCloud(overwriteRemote: overwriteRemote) { result in
+                
+                switch result {
+                
+                case .success(_):
                     completion(nil)
-                }else{
+                case .failure(let error):
                     completion(error)
                 }
             }
             return
         }
         
-        self.updateCloud(true, overwriteRemote: overwriteRemote){
-            (success,error) in
-            if success{
+        self.updateCloud { result in
+            
+            switch result {
+            
+            case .success(_):
                 completion(nil)
-            }else{
+            case .failure(let error):
                 completion(error)
             }
         }
-        
     }
     
     public static func copyValues(from other: CarePlan, to here: CarePlan) throws -> Self {
@@ -285,9 +295,9 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     }
 
     func prepareEncodingRelational(_ encodingForParse: Bool) {
-        /*previousVersion?.encodingForParse = encodingForParse
+        previousVersion?.encodingForParse = encodingForParse
         nextVersion?.encodingForParse = encodingForParse
-        patient?.encodingForParse = encodingForParse*/
+        patient?.encodingForParse = encodingForParse
         notes?.forEach {
             $0.encodingForParse = encodingForParse
         }
@@ -301,30 +311,33 @@ public final class CarePlan: PCKVersionable, PCKSynchronizable {
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,CarePlan)->Void){
-        self.linkVersions {
-            (isNew, linked) in
+    public func linkRelated(completion: @escaping(Result<CarePlan,Error>)->Void){
+        self.linkVersions { result in
             
-            var linkedNew = isNew
+            var updatedCarePlan: CarePlan
+            
+            switch result {
+            
+            case .success(let linked):
+                updatedCarePlan = linked
+                
+            case .failure(_):
+                updatedCarePlan = self
+            }
             
             guard let patientUUID = self.patientUUID else{
-                //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                completion(linkedNew,self)
+                //Finished if there's no Patient, otherwise see if it's in the cloud
+                completion(.success(updatedCarePlan))
                 return
             }
             
-            Patient.first(patientUUID, relatedObject: linked.patient, include: true){ (isNew,patient) in
+            Patient.first(patientUUID, relatedObject: updatedCarePlan.patient) { result in
                 
-                guard let patient = patient else{
-                    completion(linkedNew,self)
-                    return
+                if case let .success(patient) = result {
+                    updatedCarePlan.patient = patient
                 }
                 
-                linked.patient = patient
-                if self.patient != nil{
-                    linkedNew = true
-                }
-                completion(linkedNew,linked)
+                completion(.success(updatedCarePlan))
             }
         }
     }
