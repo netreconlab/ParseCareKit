@@ -188,9 +188,7 @@ extension PCKVersionable {
                 
                 self.linkVersions { result in
                     
-                    switch result {
-                    
-                    case .success(let modifiedObject):
+                    if case let .success(modifiedObject) = result {
 
                         modifiedObject.save(callbackQueue: .main) { _ in }
                         
@@ -250,11 +248,9 @@ extension PCKVersionable {
                                 }
                             }
                         }
-                        completion(.success(versionedObject))
-
-                    case .failure(let error):
-                        print("Warning: didn't link version: \(error)")
                     }
+
+                    completion(.success(versionedObject))
                 }
             case .failure(let error):
                 print("Error in \(versionedObject.className).save(). \(String(describing: error))")
