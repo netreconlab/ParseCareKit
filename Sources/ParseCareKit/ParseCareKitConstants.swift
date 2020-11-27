@@ -10,6 +10,7 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
+// #Mark - Custom Enums
 public enum PCKCodingKeys: String, CodingKey { // swiftlint:disable:this nesting
     case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock, className, ACL, objectId, updatedAt, createdAt
@@ -22,6 +23,7 @@ enum ParseCareKitError: Error {
     case relatedEntityNotInCloud
     case requiredValueCantBeUnwrapped
     case objectIdDoesntMatchRemoteId
+    case objectNotFoundOnParseServer
     case cloudClockLargerThanLocalWhilePushRevisions
     case couldntUnwrapClock
     case cantUnwrapSelf
@@ -59,10 +61,13 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("PCKClass type isn't an eligible type", comment: "PCKClass type isn't an eligible type")
         case .couldntCreateConcreteClasses:
             return NSLocalizedString("Couldn't create concrete classes", comment: "Couldn't create concrete classes")
+        case .objectNotFoundOnParseServer:
+            return NSLocalizedString("Object couldn't be found on the Parse Server", comment: "Object couldn't be found on the Parse Server")
         }
     }
 }
 
+/// Types of ParseCareKit classes.
 public enum PCKStoreClass {
     case carePlan
     case contact
@@ -93,26 +98,6 @@ public enum PCKStoreClass {
     func orderedArray() -> [PCKStoreClass]{
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
-    /*
-    func getRemoteConcrete() -> [PCKStoreClass: PCKSynchronizable]? {
-        var remoteClasses = [PCKStoreClass: PCKSynchronizable]()
-        
-        guard let regularClasses = getConcrete() else{return nil}
-        
-        for (key,value) in regularClasses{
-            guard let remoteClass = value as? PCKSynchronizable else{
-                continue
-            }
-            remoteClasses[key] = remoteClass
-        }
-        
-        //Ensure all default classes are created
-        guard remoteClasses.count == orderedArray().count else{
-            return nil
-        }
-        
-        return remoteClasses
-    }*/
     
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable])throws -> [PCKStoreClass: PCKSynchronizable] {
         var updatedClasses = try getConcrete()
@@ -322,303 +307,3 @@ public let kPCKOutcomUserInfoIDKey              = "entityId"
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
 public let kPCKOutcomeValueUserInfoRelatedOutcomeIDKey = "relatedOutcomeID"
-
-//#Mark - Custom Enums
-public enum CareKitPersonNameComponents:String{
- 
-    case familyName = "familyName"
-    case givenName = "givenName"
-    case middleName = "middleName"
-    case namePrefix = "namePrefix"
-    case nameSuffix = "nameSuffix"
-    case nickname = "nickname"
-    
-    public func convertToDictionary(_ components: PersonNameComponents) -> [String:String]{
-        
-        var returnDictionary = [String:String]()
-        
-        if let name = components.familyName{
-            returnDictionary[CareKitPersonNameComponents.familyName.rawValue] = name
-        }
-        
-        if let name = components.givenName{
-            returnDictionary[CareKitPersonNameComponents.givenName.rawValue] = name
-        }
-        
-        if let name = components.middleName{
-            returnDictionary[CareKitPersonNameComponents.middleName.rawValue] = name
-        }
-        
-        if let name = components.namePrefix{
-            returnDictionary[CareKitPersonNameComponents.namePrefix.rawValue] = name
-        }
-        
-        if let name = components.nameSuffix{
-            returnDictionary[CareKitPersonNameComponents.nameSuffix.rawValue] = name
-        }
-        
-        if let name = components.nickname{
-            returnDictionary[CareKitPersonNameComponents.nickname.rawValue] = name
-        }
-        
-        return returnDictionary
-    }
-    
-    public func convertToPersonNameComponents(_ dictionary: [String:String])->PersonNameComponents{
-     
-        var components = PersonNameComponents()
-        
-        for (key,value) in dictionary{
-            
-            guard let componentType = CareKitPersonNameComponents(rawValue: key) else{
-                continue
-            }
-            
-            switch componentType {
-            case .familyName:
-                components.familyName = value
-            case .givenName:
-                components.givenName = value
-            case .middleName:
-                components.middleName = value
-            case .namePrefix:
-                components.namePrefix = value
-            case .nameSuffix:
-                components.nameSuffix = value
-            case .nickname:
-                components.nickname = value
-            //@unknown default:
-            //    continue
-            }
-            
-        }
-        return components
-    }
-    
-}
-
-public enum CareKitPostalAddress:String{
-    /** multi-street address is delimited with carriage returns “\n” */
-    case street = "street"
-    case subLocality = "subLocality"
-    case city = "city"
-    case subAdministrativeArea = "subAdministrativeArea"
-    case state = "state"
-    case postalCode = "postalCode"
-    case country = "country"
-    case isoCountryCode = "isoCountryCode"
-    
-    public func convertToDictionary(_ address: OCKPostalAddress?) -> [String:String]?{
-        
-        guard let address = address else{
-            return nil
-        }
-        
-        return [
-            CareKitPostalAddress.street.rawValue: address.street,
-            CareKitPostalAddress.subLocality.rawValue: address.subLocality,
-            CareKitPostalAddress.city.rawValue: address.city,
-            CareKitPostalAddress.subAdministrativeArea.rawValue: address.subAdministrativeArea,
-            CareKitPostalAddress.state.rawValue: address.state,
-            CareKitPostalAddress.postalCode.rawValue: address.postalCode,
-            CareKitPostalAddress.country.rawValue: address.country,
-            CareKitPostalAddress.isoCountryCode.rawValue: address.isoCountryCode
-        ]
-    }
-    
-    public func convertToPostalAddress(_ dictionary:[String:String]?)->OCKPostalAddress?{
-        
-        guard let dictionary = dictionary else{
-            return nil
-        }
-        
-        let address = OCKPostalAddress()
-        
-        for (key,value) in dictionary{
-            
-            guard let componentType = CareKitPostalAddress(rawValue: key) else{
-                continue
-            }
-            
-            switch componentType {
-            case .street:
-                address.street = value
-            case .subLocality:
-                address.subLocality = value
-            case .city:
-                address.city = value
-            case .subAdministrativeArea:
-                address.subAdministrativeArea = value
-            case .state:
-                address.state = value
-            case .postalCode:
-                address.postalCode = value
-            case .country:
-                address.country = value
-            case .isoCountryCode:
-                address.isoCountryCode = value
-            }
-            
-        }
-        
-        return address
-    }
-}
-
-public enum CareKitInterval:String{
-    case calendar = "calendar"
-    case timeZone = "timeZone"
-    case era = "era"
-    case year = "year"
-    case month = "month"
-    case day = "day"
-    case hour = "hour"
-    case minute = "minute"
-    case second = "second"
-    case nanosecond = "nanosecond"
-    case weekday = "weekday"
-    case weekdayOrdinal = "weekdayOrdinal"
-    case quarter = "quarter"
-    case weekOfMonth = "weekOfMonth"
-    case weekOfYear = "weekOfYear"
-    case yearForWeekOfYear = "yearForWeekOfYear"
-    
-    public func convertToDictionary(_ components:DateComponents)->[String:Any]{
-        
-        return [
-        
-            CareKitInterval.calendar.rawValue: components.calendar?.identifier.hashValue as Any,
-            CareKitInterval.timeZone.rawValue: components.timeZone?.abbreviation() as Any,
-            CareKitInterval.era.rawValue: components.era as Any,
-            CareKitInterval.year.rawValue: components.year as Any,
-            CareKitInterval.month.rawValue: components.month as Any,
-            CareKitInterval.day.rawValue: components.day as Any,
-            CareKitInterval.hour.rawValue: components.hour as Any,
-            CareKitInterval.minute.rawValue: components.minute as Any,
-            CareKitInterval.second.rawValue: components.second as Any,
-            CareKitInterval.nanosecond.rawValue: components.nanosecond as Any,
-            CareKitInterval.weekday.rawValue: components.weekday as Any,
-            CareKitInterval.weekdayOrdinal.rawValue: components.weekdayOrdinal as Any,
-            CareKitInterval.quarter.rawValue: components.quarter as Any,
-            CareKitInterval.weekOfMonth.rawValue: components.weekOfMonth as Any,
-            CareKitInterval.weekOfYear.rawValue: components.weekOfYear as Any,
-            CareKitInterval.yearForWeekOfYear.rawValue: components.yearForWeekOfYear as Any
-        ]
-    }
-    
-    public func convertToDateComponents(_ dictionary:[String:Any])->DateComponents{
-        
-        var calendar:Calendar? = nil
-        var timeZone:TimeZone? = nil
-        var era:Int? = nil
-        var year:Int? = nil
-        var month:Int? = nil
-        var day:Int? = nil
-        var hour:Int? = nil
-        var minute:Int? = nil
-        var second:Int? = nil
-        var nanosecond:Int? = nil
-        var weekday:Int? = nil
-        var weekdayOrdinal:Int? = nil
-        var quarter:Int? = nil
-        var weekOfMonth:Int? = nil
-        var weekOfYear:Int? = nil
-        var yearForWeekOfYear:Int? = nil
-        
-        for (key,value) in dictionary{
-            guard let componentsVariable = CareKitInterval(rawValue: key) else{
-                continue
-            }
-            
-            switch componentsVariable{
-                
-            case .calendar:
-                calendar = .init(identifier: .gregorian)
-            case .timeZone:
-                
-                guard let abbreviation = value as? String else{
-                    continue
-                }
-                
-                timeZone = TimeZone(abbreviation: abbreviation)
-            case .era:
-                
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                
-                era = Int(convertedValue)
-            case .year:
-                
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                year = Int(convertedValue)
-            case .month:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                month = Int(convertedValue)
-            case .day:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                day = Int(convertedValue)
-            case .hour:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                hour = Int(convertedValue)
-            case .minute:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                minute = Int(convertedValue)
-            case .second:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                second = Int(convertedValue)
-            case .nanosecond:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                nanosecond = Int(convertedValue)
-            case .weekday:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                weekday = Int(convertedValue)
-            case .weekdayOrdinal:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                weekdayOrdinal = Int(convertedValue)
-            case .quarter:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                quarter = Int(convertedValue)
-            case .weekOfMonth:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                weekOfMonth = Int(convertedValue)
-            case .weekOfYear:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                weekOfYear = Int(convertedValue)
-            case .yearForWeekOfYear:
-                guard let convertedValue = value as? Int else{
-                    continue
-                }
-                yearForWeekOfYear = Int(convertedValue)
-            //@unknown default:
-            //    continue
-            }
-        }
-        
-        return DateComponents(calendar: calendar, timeZone: timeZone, era: era, year: year, month: month, day: day, hour: hour, minute: minute, second: second, nanosecond: nanosecond, weekday: weekday, weekdayOrdinal: weekdayOrdinal, quarter: quarter, weekOfMonth: weekOfMonth, weekOfYear: weekOfYear, yearForWeekOfYear: yearForWeekOfYear)
-    }
-}

@@ -10,7 +10,10 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
-
+/// An `Outcome` is the ParseCareKit equivalent of `OCKOutcome`.  An `OCKOutcome` represents the
+/// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
+/// For example, a task that asks a patient to measure their temperature will have events whose outcome will contain a single value representing
+/// the patient's temperature.
 final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var uuid: UUID?
@@ -58,13 +61,29 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
     
     var date: Date? //Custom added, check if needed
+    
+    /// Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then
+    /// the 2nd outcome on the 2nd day will have a `taskOccurrenceIndex` of 3.
+    ///
+    /// - Note: The task occurrence references a specific version of a task, so if a new version the task is created, the task occurrence index
+    ///  will start again from 0.
     public var taskOccurrenceIndex: Int?
+    
+    /// An array of values associated with this outcome. Most outcomes will have 0 or 1 values, but some may have more.
+    /// - Examples:
+    ///   - A task to call a physician might have 0 values, or 1 value containing the time stamp of when the call was placed.
+    ///   - A task to walk 2,000 steps might have 1 value, with that value being the number of steps that were actually taken.
+    ///   - A task to complete a survey might have multiple values corresponding to the answers to the questions in the survey.
     public var values: [OutcomeValue]?
+    
+    /// The version of the task to which this outcomes belongs.
     public var task: Task? {
         didSet {
             taskUUID = task?.uuid
         }
     }
+    
+    /// The version ID of the task to which this outcomes belongs.
     public var taskUUID: UUID? {
         didSet {
             if taskUUID != task?.uuid {
@@ -79,7 +98,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> PCKSynchronizable {
+    public func new(with careKitEntity: OCKEntity) throws -> Outcome {
         
         switch careKitEntity {
         case .outcome(let entity):
@@ -90,17 +109,12 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    public func addToCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
             
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
-        }
-        
-        //Make wall.logicalClock level entities compatible with Clock by setting it's initial .logicalClock to 0
-        if !usingClock{
-            self.logicalClock = 0
         }
         
         //Check to see if already in the cloud
@@ -112,11 +126,18 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
                     //This object has a duplicate uuid but isn't the same object
-                    completion(false,ParseCareKitError.uuidAlreadyExists)
+                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
-                //This object already exists on server, ignore gracefully
-                completion(true,ParseCareKitError.uuidAlreadyExists)
+                
+                if overwriteRemote {
+                    //The tombsone method can handle the overwrite
+                    self.tombstone(completion: completion)
+                } else {
+                    //This object already exists on server, ignore gracefully
+                    completion(.success(foundEntity))
+                }
+                
             case .failure(let error):
                 switch error.code{
                 case .internalServer: //1 - this column hasn't been added.
@@ -138,30 +159,24 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
 
                         case .failure(_):
                             self.save(completion: completion)
-                            completion(false,nil)
                         }
                     }
                     
                 default:
                     //There was a different issue that we don't know how to handle
                     print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
-                    completion(false,error)
+                    completion(.failure(error))
                 }
             }
         }
     }
     
-    public func updateCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
+    public func updateCloud(completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         //Handled with tombstone, marked for deletion
-        completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+        completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
     }
     
-    public func deleteFromCloud(_ usingClock:Bool=false, overwriteRemote: Bool=false, completion: @escaping(Bool,Error?) -> Void){
-        //Handled with update, marked for deletion
-        completion(true,nil)
-    }
-    
-    public func pullRevisions(_ localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
+    public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
         let query = Self.query(kPCKObjectableClockKey >= localClock)
             .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
@@ -172,10 +187,10 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             case .success(let outcomes):
                 let pulled = outcomes.compactMap{try? $0.convertToCareKit()}
                 let entities = pulled.compactMap{OCKEntity.outcome($0)}
-                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(revision)
             case .failure(let error):
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudVector)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
                 
                 switch error.code{
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
@@ -190,37 +205,42 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
     
-    public func pushRevision(_ overwriteRemote: Bool, cloudClock: Int, completion: @escaping (Error?) -> Void){
+    public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void){
         
         self.logicalClock = cloudClock //Stamp Entity
         
         guard self.deletedDate != nil else {
-            self.addToCloud(true, overwriteRemote: overwriteRemote){
-                (success,error) in
-                if success{
+            
+            self.addToCloud(overwriteRemote: overwriteRemote) { result in
+            
+                switch result {
+                
+                case .success(_):
                     completion(nil)
-                }else{
+                case .failure(let error):
                     completion(error)
                 }
             }
             return
         }
         
-        self.tombstsone(){
-            (success,error) in
-            if success{
+        self.tombstone { result in
+            
+            switch result {
+            
+            case .success(_):
                 completion(nil)
-            }else{
+            case .failure(let error):
                 completion(error)
             }
         }
     }
     
-    public func tombstsone(completion: @escaping(Bool,Error?) -> Void){
+    public func tombstone(completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         
         guard let _ = PCKUser.current,
               let uuid = self.uuid else{
-            completion(false,ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
                 
@@ -240,20 +260,22 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 foundObject.notes?.forEach{ $0.delete(callbackQueue: .main){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
                 
                 guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
-                    print("Error in \(self.className).tombstsone(). Couldn't cast to self")
-                    completion(false,ParseCareKitError.cantCastToNeededClassType)
+                    print("Error in \(self.className).tombstone(). Couldn't cast to self")
+                    completion(.failure(ParseCareKitError.cantCastToNeededClassType))
                     return
                 }
                 copied.save(completion: completion)
     
             case .failure(let error):
                 switch error.code {
+                
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
-                        self.save(completion: completion)
+                    self.save(completion: completion)
+
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.className).tombstsone(). \(error.localizedDescription)")
-                    completion(false,error)
+                    print("Error in \(self.className).tombstone(). \(error.localizedDescription)")
+                    completion(.failure(error))
                 }
             }
         }
@@ -297,7 +319,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     }
         
     public func prepareEncodingRelational(_ encodingForParse: Bool) {
-        //task?.encodingForParse = encodingForParse
+        task?.encodingForParse = encodingForParse
         values?.forEach {
             $0.encodingForParse = encodingForParse
         }
@@ -313,9 +335,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
     
-    public func save(completion: @escaping(Bool,Error?) -> Void){
+    public func save(completion: @escaping(Result<PCKSynchronizable,Error>) -> Void){
         guard let stamped = try? self.stampRelational() else {
-            completion(false, ParseCareKitError.cantUnwrapSelf)
+            completion(.failure(ParseCareKitError.cantUnwrapSelf))
             return
         }
         stamped.save(callbackQueue: .main){ results in
@@ -324,48 +346,54 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             case .success(let saved):
                 print("Successfully saved \(saved) in Cloud.")
                 
-                saved.linkRelated{
-                    (success, linkedObject) in
+                saved.linkRelated { result in
                     
-                    if success{
+                    switch result {
+                    
+                    case .success(let linkedObject):
                         linkedObject.save(callbackQueue: .main){ _ in }
+                        completion(.success(linkedObject))
+
+                    case .failure(_):
+                        completion(.success(saved))
                     }
-                    completion(true,nil)
                 }
             case .failure(let error):
                 print("Error in CarePlan.addToCloud(). \(error)")
-                completion(false,error)
+                completion(.failure(error))
             }
         }
     }
     
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Bool,Outcome)->Void){
+    public func linkRelated(completion: @escaping(Result<Outcome,Error>)->Void){
         guard let taskUUID = self.taskUUID,
               let taskOccurrenceIndex = self.taskOccurrenceIndex else{
             //Finished if there's no Task, otherwise see if it's in the cloud
-            completion(false,self)
+            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
-        if self.task == nil {
-            Task.first(taskUUID, relatedObject: self.task, include: true){
-                (isNew,foundTask) in
-                
-                guard let foundTask = foundTask else{
-                    completion(isNew,self)
-                    return
-                }
-                
+        
+        Task.first(taskUUID, relatedObject: self.task) { result in
+            
+            switch result {
+            
+            case .success(let foundTask):
+            
                 self.task = foundTask
                 
                 guard let currentTask = self.task else{
                     self.date = nil
-                    completion(false,self)
+                    completion(.success(self))
                     return
                 }
                 
                 self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
-                completion(true,self)
+                completion(.success(self))
+
+            case .failure(_):
+                //We still keep going if the link was unsuccessfull
+                completion(.success(self))
             }
         }
     }
