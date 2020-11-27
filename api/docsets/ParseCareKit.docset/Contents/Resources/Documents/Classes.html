@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classes  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
+
+    <a title="Classes  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          ParseCareKit 1.0 Docs
+        </a>
+         (65% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/netreconlab/ParseCareKit">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fnetreconlab.github.io%2Fapi%2Fdocsets%2FParseCareKit.xml">
+            <img class="header-icon" src="img/dash.png"/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">ParseCareKit Reference</a>
+      <img class="carat" src="img/carat.png" />
+      Classes  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/CarePlan.html">CarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Contact.html">Contact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Note.html">Note</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Outcome.html">Outcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/OutcomeValue.html">OutcomeValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Patient.html">Patient</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Task.html">Task</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols.html#/s:12ParseCareKit0A29RemoteSynchronizationDelegateP">ParseRemoteSynchronizationDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>Classes</h1>
+            <p>The following classes are available globally.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0B4PlanC"></a>
+                    <a name="//apple_ref/swift/Class/CarePlan" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0B4PlanC">CarePlan</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>CarePlan</code> is the ParseCareKit equivalent of <code>OCKCarePlan</code>.  An <code>OCKCarePlan</code> represents a set of tasks, including both
+interventions and assesments, that a patient is supposed to complete as part of his
+or her treatment for a specific condition. For example, a care plan for obesity may include tasks requiring the patient to exercise, record their
+weight, and log meals. As the care plan evolves with the patient&rsquo;s progress, the care provider may modify the exercises and include notes each
+time about why the changes were made.</p>
+
+                        <a href="Classes/CarePlan.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">CarePlan</span> <span class="p">:</span> <span class="kt">PCKVersionable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit7ContactC"></a>
+                    <a name="//apple_ref/swift/Class/Contact" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit7ContactC">Contact</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Contact</code> is the ParseCareKit equivalent of <code>OCKContact</code>.  An <code>OCKContact</code>represents a contact that a user
+may want to get in touch with. A contact may be a care provider, a friend, or a family
+member. Contacts must have at least a name, and may optionally have numerous other addresses at which to be contacted.</p>
+
+                        <a href="Classes/Contact.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Contact</span> <span class="p">:</span> <span class="kt">PCKVersionable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit4NoteC"></a>
+                    <a name="//apple_ref/swift/Class/Note" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4NoteC">Note</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Note</code> is the ParseCareKit equivalent of <code>OCKNote</code>.  <code>OCKNote</code> can be attached to all other
+CareKit objects and values. Use cases may include a physician leaving a note on a task when it is modified
+to explain why a medication dose was changed, or a note left from a patient to a care provider explaining why they weren&rsquo;t able to complete a
+task on a certain occasion.</p>
+
+                        <a href="Classes/Note.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Note</span> <span class="p">:</span> <span class="kt">PCKObjectable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit7OutcomeC"></a>
+                    <a name="//apple_ref/swift/Class/Outcome" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit7OutcomeC">Outcome</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Outcome</code> is the ParseCareKit equivalent of <code>OCKOutcome</code>.  An <code>OCKOutcome</code> represents the
+outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
+For example, a task that asks a patient to measure their temperature will have events whose outcome will contain a single value representing
+the patient&rsquo;s temperature.</p>
+
+                        <a href="Classes/Outcome.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Outcome</span> <span class="p">:</span> <span class="kt">PCKObjectable</span><span class="p">,</span> <span class="kt"><a href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit12OutcomeValueC"></a>
+                    <a name="//apple_ref/swift/Class/OutcomeValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit12OutcomeValueC">OutcomeValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>OutcomeValue</code> is the ParseCareKit equivalent of <code>OCKOutcomeValue</code>.  An
+<code>OCKOutcomeValue</code> is a representation of any response of measurement that a user gives
+in response to a task. The underlying type could be any of a number of types including
+integers, booleans, dates, text, and binary data, among others.</p>
+
+                        <a href="Classes/OutcomeValue.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">OutcomeValue</span> <span class="p">:</span> <span class="kt">PCKObjectable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit7PatientC"></a>
+                    <a name="//apple_ref/swift/Class/Patient" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit7PatientC">Patient</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Patient</code> is the ParseCareKit equivalent of <code>OCKPatient</code>.  An <code>OCKPatient</code> represents a patient.</p>
+
+                        <a href="Classes/Patient.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Patient</span> <span class="p">:</span> <span class="kt">PCKVersionable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit4TaskC"></a>
+                    <a name="//apple_ref/swift/Class/Task" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4TaskC">Task</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Task</code> is the ParseCareKit equivalent of <code>OCKTask</code>.  An <code>OCKTask</code> represents some task or action that a
+patient is supposed to perform. Tasks are optionally associable with an <code>OCKCarePlan</code>
+and must have a unique id and schedule. The schedule determines when and how often the task should be performed, and the
+<code>impactsAdherence</code> flag may be used to specify whether or not the patients adherence to this task will affect their daily completion rings.</p>
+
+                        <a href="Classes/Task.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Task</span> <span class="p">:</span> <span class="kt">PCKVersionable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A28RemoteSynchronizationManagerC"></a>
+                    <a name="//apple_ref/swift/Class/ParseRemoteSynchronizationManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A28RemoteSynchronizationManagerC">ParseRemoteSynchronizationManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows the CareKitStore to synchronize against a Parse Server.</p>
+
+                        <a href="Classes/ParseRemoteSynchronizationManager.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ParseRemoteSynchronizationManager</span> <span class="p">:</span> <span class="kt">OCKRemoteSynchronizable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-11-27)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

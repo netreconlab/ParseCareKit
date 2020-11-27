@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (1% documented)
+         (65% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -56,13 +56,58 @@
       <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/CarePlan.html">CarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Contact.html">Contact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Note.html">Note</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Outcome.html">Outcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/OutcomeValue.html">OutcomeValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Patient.html">Patient</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Task.html">Task</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols.html#/s:12ParseCareKit17PCKSynchronizableP">PCKSynchronizable</a>
+                <a class="nav-group-task-link" href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols.html#/s:12ParseCareKit0A29RemoteSynchronizationDelegateP">ParseRemoteSynchronizationDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
               </li>
             </ul>
           </li>
@@ -122,7 +167,7 @@
 <li>Need to use ParseCareKit for iOS13+ and will be using <a href="https://github.com/carekit-apple/CareKit#carekit-">CareKit &lt;= 2.0.1</a>, <a href="https://github.com/carekit-apple/CareKit#carekitui-">CareKitUI &lt;= 2.0.1</a>, and <a href="https://github.com/carekit-apple/CareKit#carekitstore-">CareKitStore &lt;= 2.0.1</a> (using <code>OCKStore</code> or conforming to <code>OCKAnyStoreProtocol</code>) within your app? You should use the <a href="https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1">carekit_2.0.1</a> branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a &ldquo;wall clock&rdquo; instead of &ldquo;knowledge vectors&rdquo;. You will also have to use the <a href="https://github.com/parse-community/Parse-SDK-iOS-OSX">Parse Objc SDK</a>) and Cocoapods. You should use <code>ParseSynchronizedStoreManager()</code> see <a href="https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1#synchronizing-your-data">here</a> for more details.</li>
 </ul>
 
-<p><strong>Note that it is recommended to use Knowledge Vectors (<code>ParseRemoteSynchronizationManager</code>) over Wall Clocks (<code>ParseSynchronizedStoreManager</code>) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how Knowledge Vectors work by looking at <a href="https://en.wikipedia.org/wiki/Vector_clock">vector clocks</a>.</strong></p>
+<p><strong>Note that it is recommended to use Knowledge Vectors (<code><a href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a></code>) over Wall Clocks (<code>ParseSynchronizedStoreManager</code>) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how Knowledge Vectors work by looking at <a href="https://en.wikipedia.org/wiki/Vector_clock">vector clocks</a>.</strong></p>
 <h2 id='install-parsecarekit' class='heading'>Install ParseCareKit</h2>
 <h3 id='swift-package-manager-spm' class='heading'>Swift Package Manager (SPM)</h3>
 
@@ -164,7 +209,7 @@
 <h2 id='synchronizing-your-data' class='heading'>Synchronizing Your Data</h2>
 
 <p>Assuming you are already familiar with <a href="https://github.com/carekit-apple/CareKit">CareKit</a> (look at their documentation for details). Using ParseCareKit is simple, especially if you are using <code>OCKStore</code> out-of-the-box. If you are using a custom <code>OCKStore</code> you will need to subclass and write some additional code to synchronize your care-store with parse-server.</p>
-<h3 id='using-vector-clocks-aka-carekit-39-s-knowledgevector-code-parseremotesynchronizationmanager-code' class='heading'>Using vector clocks aka CareKit&rsquo;s KnowledgeVector (<code>ParseRemoteSynchronizationManager</code>)</h3>
+<h3 id='using-vector-clocks-aka-carekit-39-s-knowledgevector-code-parseremotesynchronizationmanager-code' class='heading'>Using vector clocks aka CareKit&rsquo;s KnowledgeVector (<code><a href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a></code>)</h3>
 
 <p>ParseCareKit stays synchronized with the <code>OCKStore</code> by leveraging <code>OCKRemoteSynchronizable</code>.  I recommend having this as a singleton, as it can handle all syncs from the carestore. An example is below:</p>
 <pre class="highlight swift"><code><span class="cm">/*Use Clock and OCKRemoteSynchronizable to keep data synced. 
@@ -176,7 +221,7 @@ This works with 1 or many devices per patient.*/</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">parseRemoteDelegate</span> <span class="o">=</span> <span class="k">self</span> <span class="c1">//Conform to this protocol to resolve conflicts</span>
 </code></pre>
 
-<p>The <code>uuid</code> being passed to <code>ParseRemoteSynchronizationManager</code> is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one <code>ParseUser</code> that can be a &ldquo;Doctor&rdquo; and a &ldquo;Patient&rdquo;. You should generate a different uuid for this particular ParseUser&rsquo;s <code>Doctor</code> and <code>Patient</code> type. You can save all types to ParseUser:</p>
+<p>The <code>uuid</code> being passed to <code><a href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a></code> is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one <code>ParseUser</code> that can be a &ldquo;Doctor&rdquo; and a &ldquo;Patient&rdquo;. You should generate a different uuid for this particular ParseUser&rsquo;s <code>Doctor</code> and <code><a href="Classes/Patient.html">Patient</a></code> type. You can save all types to ParseUser:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">userTypeUUIDDictionary</span> <span class="o">=</span> <span class="p">[</span>
 <span class="s">"doctor"</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span><span class="p">,</span>
 <span class="s">"patient"</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span>
@@ -284,7 +329,7 @@ This works with 1 or many devices per patient.*/</span>
 
 <p>Of course, you can customize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.</p>
 
-<p>You can also map &ldquo;custom&rdquo; <code>Parse</code> classes to concrete <code>OCKStore</code> classes. This is useful when you want to have <code>Doctor</code>&lsquo;s and <code>Patient</code>&rsquo;s in the same app, but would like to map them both locally to the <code>OCKPatient</code> table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating <code>CancerPatient</code> above, but add the <code>kPCKCustomClassKey</code> key to <code>userInfo</code> with <code>Doctor.className()</code> as the value. See below:</p>
+<p>You can also map &ldquo;custom&rdquo; <code>Parse</code> classes to concrete <code>OCKStore</code> classes. This is useful when you want to have <code>Doctor</code>&lsquo;s and <code><a href="Classes/Patient.html">Patient</a></code>&rsquo;s in the same app, but would like to map them both locally to the <code>OCKPatient</code> table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating <code>CancerPatient</code> above, but add the <code>kPCKCustomClassKey</code> key to <code>userInfo</code> with <code>Doctor.className()</code> as the value. See below:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Doctor</span><span class="p">:</span> <span class="kt">Patient</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span>
 
@@ -376,7 +421,7 @@ This works with 1 or many devices per patient.*/</span>
 </code></pre>
 <h3 id='querying-parse-like-ockquery-in-carekit' class='heading'>Querying Parse Like OCKQuery in CareKit</h3>
 
-<p>There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because <code>Patient</code>, <code>CarePlan</code>, <code>Contact</code>, and <code>Task</code> are versioned entities and <code>Outcome</code>&rsquo;s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for &ldquo;versioned&rdquo; entities or tombstoned and not tombstoned <code>Outcome</code>s. A description of how versioning works in CareKit can be found <a href="https://github.com/carekit-apple/CareKit#carekitstore-">here</a>.</p>
+<p>There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because <code><a href="Classes/Patient.html">Patient</a></code>, <code><a href="Classes/CarePlan.html">CarePlan</a></code>, <code><a href="Classes/Contact.html">Contact</a></code>, and <code><a href="Classes/Task.html">Task</a></code> are versioned entities and <code><a href="Classes/Outcome.html">Outcome</a></code>&rsquo;s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for &ldquo;versioned&rdquo; entities or tombstoned and not tombstoned <code><a href="Classes/Outcome.html">Outcome</a></code>s. A description of how versioning works in CareKit can be found <a href="https://github.com/carekit-apple/CareKit#carekitstore-">here</a>.</p>
 <pre class="highlight swift"><code><span class="c1">//To query the most recent version</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Patient</span><span class="o">.</span><span class="nf">query</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())</span>
 
@@ -392,7 +437,7 @@ This works with 1 or many devices per patient.*/</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>For <code>Outcome</code>:</p>
+<p>For <code><a href="Classes/Outcome.html">Outcome</a></code>:</p>
 <pre class="highlight swift"><code><span class="c1">//To query all current outcomes</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Outcome</span><span class="o">.</span><span class="nf">queryNotDeleted</span><span class="p">()</span>
 <span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span> <span class="n">results</span> <span class="k">in</span>
@@ -409,7 +454,7 @@ This works with 1 or many devices per patient.*/</span>
 </code></pre>
 <h3 id='custom-ockstores' class='heading'>Custom OCKStores</h3>
 
-<p>If you have a custom store, and have created your own entities, you simply need to conform to either <code>PCKObjectable</code> (OCKNote, OCKOutcome, OCKOutcomeValue) or <code>PCKVersionable</code> (OCKPatient, OCKCarePlan, OCKTask, OCKContact) protocols. In additionm you will need to conform to <code><a href="Protocols.html#/s:12ParseCareKit17PCKSynchronizableP">PCKSynchronizable</a></code>. You can look through ParseCareKit entities such as <code>Note</code>(<code>PCKObjectable</code>) and <code>CarePlan</code>(<code>PCKVersionable</code>) as a reference for building your own. </p>
+<p>If you have a custom store, and have created your own entities, you simply need to conform to either <code>PCKObjectable</code> (OCKNote, OCKOutcome, OCKOutcomeValue) or <code>PCKVersionable</code> (OCKPatient, OCKCarePlan, OCKTask, OCKContact) protocols. In additionm you will need to conform to <code><a href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a></code>. You can look through ParseCareKit entities such as <code>Note</code>(<code>PCKObjectable</code>) and <code>CarePlan</code>(<code>PCKVersionable</code>) as a reference for building your own. </p>
 
           </div>
         </section>
@@ -418,7 +463,7 @@ This works with 1 or many devices per patient.*/</span>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-11-18)</p>
+      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-11-27)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
