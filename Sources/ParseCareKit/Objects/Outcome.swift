@@ -466,13 +466,6 @@ extension Outcome {
         try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encodeIfPresent(values, forKey: .values)
-        /*guard let valuesToEncode = values else {
-            throw ParseCareKitError.requiredValueCantBeUnwrapped
-        }
-        try valuesToEncode.forEach { value in
-            var nestedUnkeyedContainer = container.nestedUnkeyedContainer(forKey: .values)
-            try nestedUnkeyedContainer.encode(value)
-        }*/
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
         if id.count > 0 {
             entityId = id
