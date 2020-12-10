@@ -72,8 +72,8 @@ extension PCKVersionable {
                         versionedObject.nextVersion = nextObject
                         completion(.success(versionedObject))
                         
-                    case .failure(let error):
-                        completion(.failure(error))
+                    case .failure(_):
+                        completion(.success(versionedObject))
                     }
                 }
                 
