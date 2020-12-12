@@ -48,9 +48,9 @@ struct Clock: ParseObject {
             cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.clock.error("Clock.decodeClock(): \(error.localizedDescription). Vector \(data).")
+                Logger.clock.error("Clock.decodeClock(): \(error.localizedDescription, privacy: .private). Vector \(data, privacy: .private).")
             } else {
-                os_log("Clock.decodeClock(): %{public}@. Vector %{public}@.", log: .clock, type: .error, error.localizedDescription, data.description)
+                os_log("Clock.decodeClock(): %{private}@. Vector %{private}@.", log: .clock, type: .error, error.localizedDescription, data.description)
             }
             cloudVector = nil
         }
@@ -65,9 +65,9 @@ struct Clock: ParseObject {
             return self.vector
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription).")
+                Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription, privacy: .private).")
             } else {
-                os_log("Clock.decodeClock(): %{public}@.", log: .clock, type: .error, error.localizedDescription)
+                os_log("Clock.decodeClock(): %{private}@.", log: .clock, type: .error, error.localizedDescription)
             }
             return nil
         }

@@ -124,9 +124,9 @@ public final class CarePlan: PCKVersionable {
             return try Self.copyCareKit(entity)
         default:
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType)) of entity was passed as an argument.")
+                Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             } else {
-                os_log("new(with:) The wrong type (%{public}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
+                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
             }
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
@@ -167,9 +167,9 @@ public final class CarePlan: PCKVersionable {
                 default:
                     //There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.carePlan.error("addToCloud(), \(error.localizedDescription)")
+                        Logger.carePlan.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("addToCloud(), %{public}@", log: .carePlan, type: .error, error.localizedDescription)
+                        os_log("addToCloud(), %{private}@", log: .carePlan, type: .error, error.localizedDescription)
                     }
                     completion(.failure(error))
                 }
@@ -227,9 +227,9 @@ public final class CarePlan: PCKVersionable {
                 }
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.carePlan.error("updateCloud(), \(error.localizedDescription)")
+                    Logger.carePlan.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
                 } else {
-                    os_log("updateCloud(), %{public}", log: .carePlan, type: .error, error.localizedDescription)
+                    os_log("updateCloud(), %{private}", log: .carePlan, type: .error, error.localizedDescription)
                 }
                 completion(.failure(error))
             }
@@ -259,15 +259,15 @@ public final class CarePlan: PCKVersionable {
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.carePlan.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription)")
+                        Logger.carePlan.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{public}", log: .carePlan, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .carePlan, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
                     }
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.carePlan.debug("An unexpected error occured \(error.localizedDescription)")
+                        Logger.carePlan.debug("An unexpected error occured \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("An unexpected error occured \"%{public}", log: .carePlan, type: .debug, error.localizedDescription)
+                        os_log("An unexpected error occured \"%{private}", log: .carePlan, type: .debug, error.localizedDescription)
                     }
                 }
                 mergeRevision(revision)

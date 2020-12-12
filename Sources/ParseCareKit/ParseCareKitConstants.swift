@@ -108,9 +108,9 @@ public enum PCKStoreClass: String {
                 updatedClasses[key] = value
             }else{
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.debug("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key.rawValue)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
+                    Logger.pullRevisions.debug("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
                 } else {
-                    os_log("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `%{public}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.", log: .pullRevisions, type: .debug, key.rawValue)
+                    os_log("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `%{private}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.", log: .pullRevisions, type: .debug, key.rawValue)
                 }
             }
         }
@@ -149,9 +149,9 @@ public enum PCKStoreClass: String {
                 updatedClasses[key] = value
             }else{
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.debug("PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key.rawValue)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
+                    Logger.pullRevisions.debug("PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
                 } else {
-                    os_log("PCKStoreClass.replaceConcreteClasses(). Discarding class for `%{public}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> %{public}@.", log: .pullRevisions, type: .debug, key.rawValue)
+                    os_log("PCKStoreClass.replaceConcreteClasses(). Discarding class for `%{private}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.", log: .pullRevisions, type: .debug, key.rawValue)
                 }
             }
         }
@@ -316,34 +316,3 @@ public let kPCKOutcomUserInfoIDKey              = "entityId"
 //OutcomeValue Class
 public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
 public let kPCKOutcomeValueUserInfoRelatedOutcomeIDKey = "relatedOutcomeID"
-
-extension OSLog {
-    private static var subsystem = Bundle.main.bundleIdentifier!
-    
-    static let carePlan = OSLog(subsystem: subsystem, category: "carePlan")
-    static let contact = OSLog(subsystem: subsystem, category: "carePlan")
-    static let patient = OSLog(subsystem: subsystem, category: "patient")
-    static let task = OSLog(subsystem: subsystem, category: "task")
-    static let outcome = OSLog(subsystem: subsystem, category: "outcome")
-    static let versionable = OSLog(subsystem: subsystem, category: "versionable")
-    static let objectable = OSLog(subsystem: subsystem, category: "objectable")
-    static let pullRevisions = OSLog(subsystem: subsystem, category: "pullRevisions")
-    static let pushRevisions = OSLog(subsystem: subsystem, category: "pushRevisions")
-    static let clock = OSLog(subsystem: subsystem, category: "clock")
-}
-
-@available(iOS 14.0, watchOS 7.0, *)
-extension Logger {
-    private static var subsystem = Bundle.main.bundleIdentifier!
-    
-    static let carePlan = Logger(subsystem: subsystem, category: "carePlan")
-    static let contact = Logger(subsystem: subsystem, category: "carePlan")
-    static let patient = Logger(subsystem: subsystem, category: "patient")
-    static let task = Logger(subsystem: subsystem, category: "task")
-    static let outcome = Logger(subsystem: subsystem, category: "outcome")
-    static let versionable = Logger(subsystem: subsystem, category: "versionable")
-    static let objectable = Logger(subsystem: subsystem, category: "objectable")
-    static let pullRevisions = Logger(subsystem: subsystem, category: "pullRevisions")
-    static let pushRevisions = Logger(subsystem: subsystem, category: "pushRevisions")
-    static let clock = Logger(subsystem: subsystem, category: "clock")
-}

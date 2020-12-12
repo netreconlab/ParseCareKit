@@ -115,9 +115,9 @@ extension PCKVersionable {
                                             self.fixVersionLinkedList(previousFound, backwards: backwards)
                                         case .failure(let error):
                                             if #available(iOS 14.0, watchOS 7.0, *) {
-                                                Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription). Object: \(versionFixed, privacy: .private)")
+                                                Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription, privacy: .private). Object: \(versionFixed, privacy: .private)")
                                             } else {
-                                                os_log("Couldn't save in fixVersionLinkedList(). Error: %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
+                                                os_log("Couldn't save in fixVersionLinkedList(). Error: %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
                                             }
                                         }
                                     }
@@ -126,9 +126,9 @@ extension PCKVersionable {
                                 }
                             case .failure(let error):
                                 if #available(iOS 14.0, watchOS 7.0, *) {
-                                    Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription). Object: \(versionFixed, privacy: .private)")
+                                    Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription, privacy: .private). Object: \(versionFixed, privacy: .private)")
                                 } else {
-                                    os_log("Couldn't save in fixVersionLinkedList(). Error: %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
+                                    os_log("Couldn't save in fixVersionLinkedList(). Error: %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
                                 }
                             }
                         }
@@ -162,9 +162,9 @@ extension PCKVersionable {
                                             self.fixVersionLinkedList(nextFound, backwards: backwards)
                                         case .failure(let error):
                                             if #available(iOS 14.0, watchOS 7.0, *) {
-                                                Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription). Object: \(versionFixed, privacy: .private)")
+                                                Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription, privacy: .private). Object: \(versionFixed, privacy: .private)")
                                             } else {
-                                                os_log("Couldn't save in fixVersionLinkedList(), %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
+                                                os_log("Couldn't save in fixVersionLinkedList(), %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
                                             }
                                         }
                                     }
@@ -173,9 +173,9 @@ extension PCKVersionable {
                                 }
                             case .failure(let error):
                                 if #available(iOS 14.0, watchOS 7.0, *) {
-                                    Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription). Object: \(versionFixed, privacy: .private)")
+                                    Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription, privacy: .private). Object: \(versionFixed, privacy: .private)")
                                 } else {
-                                    os_log("Couldn't save in fixVersionLinkedList(), %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
+                                    os_log("Couldn't save in fixVersionLinkedList(), %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, versionFixed.description)
                                 }
                             }
                         }
@@ -233,17 +233,17 @@ extension PCKVersionable {
                                                 self.fixVersionLinkedList(previousObjectFound, backwards: true)
                                             case .failure(let error):
                                                 if #available(iOS 14.0, watchOS 7.0, *) {
-                                                    Logger.versionable.error("Couldn't save(), \(error.localizedDescription). Object: \(self, privacy: .private)")
+                                                    Logger.versionable.error("Couldn't save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
                                                 } else {
-                                                    os_log("Couldn't save(), %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
+                                                    os_log("Couldn't save(), %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
                                                 }
                                             }
                                         }
                                     case .failure(let error):
                                         if #available(iOS 14.0, watchOS 7.0, *) {
-                                            Logger.versionable.error("Couldn't find object in save(), \(error.localizedDescription). Object: \(self, privacy: .private)")
+                                            Logger.versionable.error("Couldn't find object in save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
                                         } else {
-                                            os_log("Couldn't find object in save(), %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
+                                            os_log("Couldn't find object in save(), %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
                                         }
                                     }
                                 }
@@ -269,17 +269,17 @@ extension PCKVersionable {
                                                 self.fixVersionLinkedList(nextObjectFound, backwards: true)
                                             case .failure(let error):
                                                 if #available(iOS 14.0, watchOS 7.0, *) {
-                                                    Logger.versionable.error("Couldn't save(), \(error.localizedDescription). Object: \(self, privacy: .private)")
+                                                    Logger.versionable.error("Couldn't save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
                                                 } else {
-                                                    os_log("Couldn't save(), %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
+                                                    os_log("Couldn't save(), %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
                                                 }
                                             }
                                         }
                                     case .failure(let error):
                                         if #available(iOS 14.0, watchOS 7.0, *) {
-                                            Logger.versionable.error("Couldn't find object in save(), \(error.localizedDescription). Object: \(self, privacy: .private)")
+                                            Logger.versionable.error("Couldn't find object in save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
                                         } else {
-                                            os_log("Couldn't find object in save(), %{public}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
+                                            os_log("Couldn't find object in save(), %{private}@. Object: %{private}@", log: .versionable, type: .error, error.localizedDescription, self.description)
                                         }
                                     }
                                 }
@@ -292,9 +292,9 @@ extension PCKVersionable {
 
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.versionable.error("\(versionedObject.className).save(), \(error.localizedDescription). Object: \(self, privacy: .private)")
+                    Logger.versionable.error("\(versionedObject.className, privacy: .private).save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
                 } else {
-                    os_log("%{public}@.save(), %{public}@. Object: %{private}@", log: .versionable, type: .error, versionedObject.className, error.localizedDescription, versionedObject.description)
+                    os_log("%{private}@.save(), %{private}@. Object: %{private}@", log: .versionable, type: .error, versionedObject.className, error.localizedDescription, versionedObject.description)
                 }
                 completion(.failure(error))
             }

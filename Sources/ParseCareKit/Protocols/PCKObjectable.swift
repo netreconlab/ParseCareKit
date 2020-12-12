@@ -169,9 +169,9 @@ extension PCKObjectable {
             let uuidString = uuid?.uuidString else {
 
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.objectable.error("\(self.className).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription).")
+                Logger.objectable.error("\(self.className, privacy: .private).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription, privacy: .private).")
             } else {
-                os_log("%{public}@.find(), : %{public}@", log: .objectable, type: .error, self.className, ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription)
+                os_log("%{private}@.find(), : %{private}@", log: .objectable, type: .error, self.className, ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription)
             }
             completion(.failure(ParseCareKitError.couldntUnwrapClock))
                 return
@@ -188,9 +188,9 @@ extension PCKObjectable {
                 completion(.success(foundObjects))
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.objectable.error("\(self.className).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription). UUID: \(uuid!, privacy: .private)")
+                    Logger.objectable.error("\(self.className, privacy: .private).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription, privacy: .private). UUID: \(uuid!, privacy: .private)")
                 } else {
-                    os_log("%{public}@.find(), %{public}@. UUID: %{private}@", log: .objectable, type: .error, self.className, error.localizedDescription, uuidString)
+                    os_log("%{private}@.find(), %{private}@. UUID: %{private}@", log: .objectable, type: .error, self.className, error.localizedDescription, uuidString)
                 }
                 completion(.failure(error))
             }

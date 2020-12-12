@@ -106,9 +106,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             return try Self.copyCareKit(entity)
         default:
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.outcome.error("new(with:) The wrong type (\(careKitEntity.entityType)) of entity was passed as an argument.")
+                Logger.outcome.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             } else {
-                os_log("new(with:) The wrong type (%{public}@) of entity was passed.", log: .outcome, type: .error, careKitEntity.entityType.debugDescription)
+                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .outcome, type: .error, careKitEntity.entityType.debugDescription)
             }
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
@@ -170,9 +170,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 default:
                     //There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.error("addToCloud(), \(error.localizedDescription)")
+                        Logger.outcome.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("addToCloud(), %{public}@", log: .outcome, type: .error, error.localizedDescription)
+                        os_log("addToCloud(), %{private}@", log: .outcome, type: .error, error.localizedDescription)
                     }
                     completion(.failure(error))
                 }
@@ -206,15 +206,15 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription)")
+                        Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{public}", log: .outcome, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .outcome, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
                     }
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.debug("An unexpected error occured \(error.localizedDescription)")
+                        Logger.outcome.debug("An unexpected error occured \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("An unexpected error occured \"%{public}", log: .outcome, type: .debug, error.localizedDescription)
+                        os_log("An unexpected error occured \"%{private}", log: .outcome, type: .debug, error.localizedDescription)
                     }
                 }
                 mergeRevision(revision)
@@ -296,9 +296,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 default:
                     //There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.error("updateCloud(), \(error.localizedDescription)")
+                        Logger.outcome.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("updateCloud(), %{public}", log: .outcome, type: .error, error.localizedDescription)
+                        os_log("updateCloud(), %{private}", log: .outcome, type: .error, error.localizedDescription)
                     }
                     completion(.failure(error))
                 }
@@ -389,9 +389,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 }
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.error("save(), \(error.localizedDescription)")
+                    Logger.outcome.error("save(), \(error.localizedDescription, privacy: .private)")
                 } else {
-                    os_log("save(), %{public}", log: .outcome, type: .error, error.localizedDescription)
+                    os_log("save(), %{private}", log: .outcome, type: .error, error.localizedDescription)
                 }
                 completion(.failure(error))
             }
