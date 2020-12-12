@@ -9,6 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
+import os.log
 
 struct Clock: ParseObject {
     var objectId: String?
@@ -23,23 +24,34 @@ struct Clock: ParseObject {
 
     var vector:String?
 
+    public var localizedDescription: String {
+        "\(debugDescription) vector: \(String(describing: vector))"
+    }
+
     init(uuid: UUID) {
         self.uuid = uuid
         self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
     }
     
     func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
-        guard let data = self.vector?.data(using: .utf8) else{
-            print("Error in Clock. Couldn't get data as utf8")
+        guard let data = self.vector?.data(using: .utf8) else {
+            if #available(iOS 14.0, *) {
+                Logger.clock.error("Error in Clock. Couldn't get data as utf8")
+            } else {
+                os_log("Error in Clock. Couldn't get data as utf8", log: .clock, type: .error)
+            }
             return
         }
         
         let cloudVector:OCKRevisionRecord.KnowledgeVector?
         do {
             cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
-        }catch{
-            let error = error
-            print("Error in Clock.decodeClock(). Couldn't decode vector \(data). Error: \(error)")
+        } catch {
+            if #available(iOS 14.0, *) {
+                Logger.clock.error("Clock.decodeClock(): \(error.localizedDescription). Vector \(data).")
+            } else {
+                os_log("Clock.decodeClock(): %{public}@. Vector %{public}@.", log: .clock, type: .error, error.localizedDescription, data.description)
+            }
             cloudVector = nil
         }
         completion(cloudVector)
@@ -51,9 +63,12 @@ struct Clock: ParseObject {
             let cloudVectorString = String(data: json, encoding: .utf8)!
             self.vector = cloudVectorString
             return self.vector
-        }catch{
-            let error = error
-            print("Error in Clock.encodeClock(). Couldn't encode vector \(clock). Error: \(error)")
+        } catch {
+            if #available(iOS 14.0, *) {
+                Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription).")
+            } else {
+                os_log("Clock.decodeClock(): %{public}@.", log: .clock, type: .error, error.localizedDescription)
+            }
             return nil
         }
     }

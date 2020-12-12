@@ -9,6 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
+import os.log
 
 /// An `Outcome` is the ParseCareKit equivalent of `OCKOutcome`.  An `OCKOutcome` represents the
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
@@ -104,7 +105,11 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         case .outcome(let entity):
             return try Self.copyCareKit(entity)
         default:
-            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            if #available(iOS 14.0, *) {
+                Logger.outcome.error("new(with:) The wrong type (\(careKitEntity.entityType)) of entity was passed as an argument.")
+            } else {
+                os_log("new(with:) The wrong type (%{public}@) of entity was passed.", log: .outcome, type: .error, careKitEntity.entityType.debugDescription)
+            }
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
@@ -164,7 +169,11 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                     
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.outcome.error("addToCloud(), \(error.localizedDescription)")
+                    } else {
+                        os_log("addToCloud(), %{public}@", log: .outcome, type: .error, error.localizedDescription)
+                    }
                     completion(.failure(error))
                 }
             }
@@ -196,9 +205,17 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectableClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription)")
+                    } else {
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{public}", log: .outcome, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
+                    }
                 default:
-                    print("An unexpected error occured \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.outcome.debug("An unexpected error occured \(error.localizedDescription)")
+                    } else {
+                        os_log("An unexpected error occured \"%{public}", log: .outcome, type: .debug, error.localizedDescription)
+                    }
                 }
                 mergeRevision(revision)
             }
@@ -260,7 +277,11 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 foundObject.notes?.forEach{ $0.delete(callbackQueue: .main){ _ in } } //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
                 
                 guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
-                    print("Error in \(self.className).tombstone(). Couldn't cast to self")
+                    if #available(iOS 14.0, *) {
+                        Logger.outcome.debug("tombstone(), Couldn't cast to self")
+                    } else {
+                        os_log("tombstone(), Couldn't cast to self", log: .outcome, type: .debug)
+                    }
                     completion(.failure(ParseCareKitError.cantCastToNeededClassType))
                     return
                 }
@@ -274,7 +295,11 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
 
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.className).tombstone(). \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.outcome.error("updateCloud(), \(error.localizedDescription)")
+                    } else {
+                        os_log("updateCloud(), %{public}", log: .outcome, type: .error, error.localizedDescription)
+                    }
                     completion(.failure(error))
                 }
             }
@@ -344,8 +369,12 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             switch results {
             
             case .success(let saved):
-                print("Successfully saved \(saved) in Cloud.")
-                
+                if #available(iOS 14.0, *) {
+                    Logger.outcome.debug("save(), Saved: \(saved, privacy: .private)")
+                } else {
+                    os_log("save(), Saved: %{private}", log: .outcome, type: .debug, saved.description)
+                }
+
                 saved.linkRelated { result in
                     
                     switch result {
@@ -359,7 +388,11 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                     }
                 }
             case .failure(let error):
-                print("Error in CarePlan.addToCloud(). \(error)")
+                if #available(iOS 14.0, *) {
+                    Logger.outcome.error("save(), \(error.localizedDescription)")
+                } else {
+                    os_log("save(), %{public}", log: .outcome, type: .error, error.localizedDescription)
+                }
                 completion(.failure(error))
             }
         }

@@ -9,6 +9,7 @@
 import Foundation
 import ParseSwift
 import CareKitStore
+import os.log
 
 /// An `Contact` is the ParseCareKit equivalent of `OCKContact`.  An `OCKContact`represents a contact that a user
 /// may want to get in touch with. A contact may be a care provider, a friend, or a family
@@ -150,7 +151,11 @@ public final class Contact: PCKVersionable {
         case .contact(let entity):
             return try Self.copyCareKit(entity)
         default:
-            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            if #available(iOS 14.0, *) {
+                Logger.contact.error("new(with:) The wrong type (\(careKitEntity.entityType)) of entity was passed as an argument.")
+            } else {
+                os_log("new(with:) The wrong type (%{public}@) of entity was passed.", log: .contact, type: .error, careKitEntity.entityType.debugDescription)
+            }
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
@@ -189,7 +194,11 @@ public final class Contact: PCKVersionable {
                         self.save(completion: completion)
                 default:
                     //There was a different issue that we don't know how to handle
-                    print("Error in \(self.className).addToCloud(). \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.contact.error("addToCloud(), \(error.localizedDescription)")
+                    } else {
+                        os_log("addToCloud(), %{public}@", log: .contact, type: .error, error.localizedDescription)
+                    }
                     completion(.failure( error))
                 }
             }
@@ -214,12 +223,20 @@ public final class Contact: PCKVersionable {
             case .success(let foundObjects):
                 switch foundObjects.count{
                 case 0:
-                    print("Warning in \(self.className).updateCloud(). A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
+                    if #available(iOS 14.0, *) {
+                        Logger.contact.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
+                    } else {
+                        os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .contact, type: .debug)
+                    }
                     self.addToCloud(overwriteRemote: false, completion: completion)
                 case 1:
                     //This is the typical case
                     guard let previousVersion = foundObjects.first(where: {$0.uuid == previousVersionUUID}) else {
-                        print("Error in \(self.className).updateCloud(). Didn't find previousVersion and this UUID already exists in Cloud")
+                        if #available(iOS 14.0, *) {
+                            Logger.contact.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUID, privacy: .private)) already exists in Cloud")
+                        } else {
+                            os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud", log: .contact, type: .error, previousVersionUUID.uuidString)
+                        }
                         completion(.failure(ParseCareKitError.uuidAlreadyExists))
                         return
                     }
@@ -228,11 +245,19 @@ public final class Contact: PCKVersionable {
                     updated.addToCloud(overwriteRemote: false, completion: completion)
 
                 default:
-                    print("Error in \(self.className).updateCloud(). UUID already exists in Cloud")
+                    if #available(iOS 14.0, *) {
+                        Logger.contact.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
+                    } else {
+                        os_log("updateCloud(), UUID (%{private}) already exists in Cloud", log: .contact, type: .error, uuid.uuidString)
+                    }
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                 }
             case .failure(let error):
-                print("Error in \(self.className).updateCloud(). \(error.localizedDescription))")
+                if #available(iOS 14.0, *) {
+                    Logger.contact.error("updateCloud(), \(error.localizedDescription)")
+                } else {
+                    os_log("updateCloud(), %{public}", log: .contact, type: .error, error.localizedDescription)
+                }
                 completion(.failure(error))
             }
         }
@@ -260,9 +285,17 @@ public final class Contact: PCKVersionable {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    print("Warning, table CarePlan either doesn't exist or is missing the column \(kPCKObjectableClockKey). It should be fixed during the first sync of an Outcome... \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.contact.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription)")
+                    } else {
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{public}", log: .contact, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
+                    }
                 default:
-                    print("An unexpected error occured \(error.localizedDescription)")
+                    if #available(iOS 14.0, *) {
+                        Logger.contact.debug("An unexpected error occured \(error.localizedDescription)")
+                    } else {
+                        os_log("An unexpected error occured \"%{public}", log: .contact, type: .debug, error.localizedDescription)
+                    }
                 }
                 mergeRevision(revision)
             }
@@ -336,7 +369,6 @@ public final class Contact: PCKVersionable {
         }
     }
 
-    //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)

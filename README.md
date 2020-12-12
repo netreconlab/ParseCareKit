@@ -235,7 +235,11 @@ class Doctor: Patient {
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            if #available(iOS 14.0, *) {
+                Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType)) of entity was passed as an argument.")
+            } else {
+                os_log("new(with:) The wrong type (%{public}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
+            }
             completion(nil)
         }
     }

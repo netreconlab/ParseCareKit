@@ -9,8 +9,9 @@
 import Foundation
 import ParseSwift
 import CareKitStore
+import os.log
 
-internal protocol PCKObjectable: ParseObject {
+internal protocol PCKObjectable: ParseObject, CustomStringConvertible {
     /// A universally unique identifier for this object.
     var uuid: UUID? {get set}
 
@@ -166,8 +167,13 @@ extension PCKObjectable {
           
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else {
-                print("Error in \(self.className).find(). \(ParseCareKitError.requiredValueCantBeUnwrapped)")
-                completion(.failure(ParseCareKitError.couldntUnwrapClock))
+
+            if #available(iOS 14.0, *) {
+                Logger.objectable.error("\(self.className).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription).")
+            } else {
+                os_log("%{public}@.find(), : %{public}@", log: .objectable, type: .error, self.className, ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription)
+            }
+            completion(.failure(ParseCareKitError.couldntUnwrapClock))
                 return
         }
             
@@ -181,7 +187,11 @@ extension PCKObjectable {
             case .success(let foundObjects):
                 completion(.success(foundObjects))
             case .failure(let error):
-                print("Error in \(self.className).find(). \(error.localizedDescription)")
+                if #available(iOS 14.0, *) {
+                    Logger.objectable.error("\(self.className).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription). UUID: \(uuid!, privacy: .private)")
+                } else {
+                    os_log("%{public}@.find(), %{public}@. UUID: %{private}@", log: .objectable, type: .error, self.className, error.localizedDescription, uuidString)
+                }
                 completion(.failure(error))
             }
             
@@ -217,6 +227,11 @@ extension PCKObjectable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.uuid)
+    }
+    
+    //CustomStringConvertible
+    public var description: String {
+        "className=\(className) uuid=\(String(describing: uuid)) id=\(id) createdDate=\(String(describing: createdDate)) updatedDate=\(String(describing: updatedDate)) timezone=\(String(describing: timezone)) objectId=\(String(describing: objectId)) createdAt=\(String(describing: createdAt)) updatedAt=\(String(describing: updatedAt)) logicalClock=\(String(describing: logicalClock)) encodingForParse=\(encodingForParse) ACL=\(String(describing: ACL))"
     }
 }
 
