@@ -124,7 +124,7 @@ public final class Patient: PCKVersionable {
         case .patient(let entity):
             return try Self.copyCareKit(entity)
         default:
-            if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.patient.error("new(with:) The wrong type (\(careKitEntity.entityType)) of entity was passed as an argument.")
             } else {
                 os_log("new(with:) The wrong type (%{public}@) of entity was passed.", log: .patient, type: .error, careKitEntity.entityType.debugDescription)
@@ -167,7 +167,7 @@ public final class Patient: PCKVersionable {
                     self.save(completion: completion)
                 default:
                     //There was a different issue that we don't know how to handle
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.patient.error("addToCloud(), \(error.localizedDescription)")
                     } else {
                         os_log("addToCloud(), %{public}@", log: .patient, type: .error, error.localizedDescription)
@@ -197,7 +197,7 @@ public final class Patient: PCKVersionable {
             case .success(let foundObjects):
                 switch foundObjects.count{
                 case 0:
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.patient.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
                     } else {
                         os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .patient, type: .debug)
@@ -206,7 +206,7 @@ public final class Patient: PCKVersionable {
                 case 1:
                     //This is the typical case
                     guard let previousVersion = foundObjects.first(where: {$0.uuid == previousVersionUUID}) else {
-                        if #available(iOS 14.0, *) {
+                        if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.patient.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUID, privacy: .private)) already exists in Cloud")
                         } else {
                             os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud", log: .patient, type: .error, previousVersionUUID.uuidString)
@@ -219,7 +219,7 @@ public final class Patient: PCKVersionable {
                     updated.addToCloud(overwriteRemote: false, completion: completion)
 
                 default:
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.patient.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
                     } else {
                         os_log("updateCloud(), UUID (%{private}) already exists in Cloud", log: .patient, type: .error, uuid.uuidString)
@@ -227,7 +227,7 @@ public final class Patient: PCKVersionable {
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                 }
             case .failure(let error):
-                if #available(iOS 14.0, *) {
+                if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.patient.error("updateCloud(), \(error.localizedDescription)")
                 } else {
                     os_log("updateCloud(), %{public}", log: .patient, type: .error, error.localizedDescription)
@@ -257,13 +257,13 @@ public final class Patient: PCKVersionable {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.patient.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription)")
                     } else {
                         os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{public}", log: .patient, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
                     }
                 default:
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.patient.debug("An unexpected error occured \(error.localizedDescription)")
                     } else {
                         os_log("An unexpected error occured \"%{public}", log: .patient, type: .debug, error.localizedDescription)

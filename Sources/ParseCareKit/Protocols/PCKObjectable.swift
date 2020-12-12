@@ -168,7 +168,7 @@ extension PCKObjectable {
         guard let _ = PCKUser.current,
             let uuidString = uuid?.uuidString else {
 
-            if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.objectable.error("\(self.className).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription).")
             } else {
                 os_log("%{public}@.find(), : %{public}@", log: .objectable, type: .error, self.className, ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription)
@@ -187,7 +187,7 @@ extension PCKObjectable {
             case .success(let foundObjects):
                 completion(.success(foundObjects))
             case .failure(let error):
-                if #available(iOS 14.0, *) {
+                if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.objectable.error("\(self.className).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription). UUID: \(uuid!, privacy: .private)")
                 } else {
                     os_log("%{public}@.find(), %{public}@. UUID: %{private}@", log: .objectable, type: .error, self.className, error.localizedDescription, uuidString)

@@ -107,7 +107,7 @@ public enum PCKStoreClass: String {
             if isCorrectType(key, check: value){
                 updatedClasses[key] = value
             }else{
-                if #available(iOS 14.0, *) {
+                if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pullRevisions.debug("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key.rawValue)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
                 } else {
                     os_log("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `%{public}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.", log: .pullRevisions, type: .debug, key.rawValue)
@@ -148,7 +148,7 @@ public enum PCKStoreClass: String {
             if isCorrectType(key, check: value){
                 updatedClasses[key] = value
             }else{
-                if #available(iOS 14.0, *) {
+                if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pullRevisions.debug("PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key.rawValue)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
                 } else {
                     os_log("PCKStoreClass.replaceConcreteClasses(). Discarding class for `%{public}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> %{public}@.", log: .pullRevisions, type: .debug, key.rawValue)
@@ -332,7 +332,7 @@ extension OSLog {
     static let clock = OSLog(subsystem: subsystem, category: "clock")
 }
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, watchOS 7.0, *)
 extension Logger {
     private static var subsystem = Bundle.main.bundleIdentifier!
     

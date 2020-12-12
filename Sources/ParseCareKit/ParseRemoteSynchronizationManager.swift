@@ -129,7 +129,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         
         guard concreteClassesAlreadyPulled < classNames.count,
             let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else{
-                if #available(iOS 14.0, *) {
+                if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pullRevisions.debug("Finished pulling revisions for default classes")
                 } else {
                     os_log("Finished pulling revisions for default classes", log: .pullRevisions, type: .debug)
@@ -145,7 +145,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 error in
                 if error != nil {
                     currentError = error!
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(currentError!.localizedDescription)")
                     } else {
                         os_log("pullRevisionsForConcreteClasses: %{public}@.", log: .pullRevisions, type: .error, currentError!.localizedDescription)
@@ -164,7 +164,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else {
-                    if #available(iOS 14.0, *) {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.pullRevisions.debug("Finished pulling custom revision classes")
                     } else {
                         // Fallback on earlier versions
@@ -180,7 +180,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     error in
                     if error != nil {
                         currentError = error!
-                        if #available(iOS 14.0, *) {
+                        if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.pullRevisions.error("pullRevisionsForCustomClasses: \(currentError!.localizedDescription)")
                         } else {
                             // Fallback on earlier versions
@@ -219,13 +219,13 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     guard let parseError = error else{
                         //There was a different issue that we don't know how to handle
                         if let error = error {
-                            if #available(iOS 14.0, *) {
+                            if #available(iOS 14.0, watchOS 7.0, *) {
                                 Logger.pushRevisions.error("\(error.localizedDescription)")
                             } else {
                                 os_log("%{public}@.", log: .pushRevisions, type: .error, error.localizedDescription)
                             }
                         } else {
-                            if #available(iOS 14.0, *) {
+                            if #available(iOS 14.0, watchOS 7.0, *) {
                                 Logger.pushRevisions.error("Error in pushRevisions.")
                             } else {
                                 os_log("Error in pushRevisions.", log: .pushRevisions, type: .error)
@@ -239,7 +239,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         if potentialPCKClock != nil{
                             potentialPCKClock!.save(callbackQueue: .main) {
                                 _ in
-                                if #available(iOS 14.0, *) {
+                                if #available(iOS 14.0, watchOS 7.0, *) {
                                     Logger.pushRevisions.error("Error in pushRevisions.")
                                 } else {
                                     os_log("Saved Clock. Try to sync again. %{public}@.", log: .pushRevisions, type: .debug, potentialPCKClock! as! CVarArg)
@@ -251,7 +251,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     default:
                         //There was a different issue that we don't know how to handle
-                        if #available(iOS 14.0, *) {
+                        if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.pushRevisions.error("\(parseError.localizedDescription)")
                         } else {
                             os_log("%{public}@.", log: .pushRevisions, type: .error, parseError.localizedDescription)
@@ -468,7 +468,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 completion(nil)
             case .failure(let error):
-                if #available(iOS 14.0, *) {
+                if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pushRevisions.error("finishedRevisions: \(error.localizedDescription)")
                 } else {
                     os_log("finishedRevisions: %{public}@.", log: .pushRevisions, type: .error, error.localizedDescription)

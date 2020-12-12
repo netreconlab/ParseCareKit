@@ -35,7 +35,7 @@ struct Clock: ParseObject {
     
     func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?)->Void){
         guard let data = self.vector?.data(using: .utf8) else {
-            if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Error in Clock. Couldn't get data as utf8")
             } else {
                 os_log("Error in Clock. Couldn't get data as utf8", log: .clock, type: .error)
@@ -47,7 +47,7 @@ struct Clock: ParseObject {
         do {
             cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
         } catch {
-            if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Clock.decodeClock(): \(error.localizedDescription). Vector \(data).")
             } else {
                 os_log("Clock.decodeClock(): %{public}@. Vector %{public}@.", log: .clock, type: .error, error.localizedDescription, data.description)
@@ -64,7 +64,7 @@ struct Clock: ParseObject {
             self.vector = cloudVectorString
             return self.vector
         } catch {
-            if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription).")
             } else {
                 os_log("Clock.decodeClock(): %{public}@.", log: .clock, type: .error, error.localizedDescription)
