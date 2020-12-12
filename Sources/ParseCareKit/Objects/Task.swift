@@ -89,7 +89,7 @@ public final class Task: PCKVersionable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
     
 
     public var impactsAdherence:Bool?
@@ -337,6 +337,7 @@ public final class Task: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(task)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
+        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

@@ -61,7 +61,7 @@ public final class CarePlan: PCKVersionable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
     
 
     public internal(set) var nextVersion: CarePlan? {
@@ -329,6 +329,7 @@ public final class CarePlan: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(carePlan)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
+        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

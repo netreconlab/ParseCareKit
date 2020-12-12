@@ -57,7 +57,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
     
     var date: Date? //Custom added, check if needed
     
@@ -335,6 +335,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         let encoded = try ParseCareKitUtility.encoder().encode(outcome)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
+        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
     

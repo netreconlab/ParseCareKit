@@ -56,7 +56,7 @@ open class Note: PCKObjectable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
     
     /// The note content.
     public var content:String?
@@ -97,7 +97,9 @@ open class Note: PCKObjectable {
     
     open class func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try ParseCareKitUtility.encoder().encode(note)
-        return try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        decoded.ACL = try? ParseACL.defaultACL()
+        return decoded
     }
     
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit

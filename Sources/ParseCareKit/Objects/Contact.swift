@@ -87,7 +87,7 @@ public final class Contact: PCKVersionable {
     
     public var updatedAt: Date?
     
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
     
     /// The contact's postal address.
     public var address:OCKPostalAddress?
@@ -362,6 +362,7 @@ public final class Contact: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(contact)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
+        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
     
