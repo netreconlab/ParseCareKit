@@ -370,9 +370,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             
             case .success(let saved):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.debug("save(), Saved: \(saved, privacy: .private)")
+                    Logger.outcome.debug("save(), Object: \(saved, privacy: .private)")
                 } else {
-                    os_log("save(), Saved: %{private}", log: .outcome, type: .debug, saved.description)
+                    os_log("save(), Object: %{private}", log: .outcome, type: .debug, saved.description)
                 }
 
                 saved.linkRelated { result in
