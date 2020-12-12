@@ -268,7 +268,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 switch entity{
                 case .patient(let patient):
                     
-                    if let customClassName = patient.userInfo?[kPCKCustomClassKey] {
+                    if let customClassName = patient.userInfo?[CustomKey.customClass] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) {
                             error in
                             
@@ -301,7 +301,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     }
                     
                 case .carePlan(let carePlan):
-                    if let customClassName = carePlan.userInfo?[kPCKCustomClassKey] {
+                    if let customClassName = carePlan.userInfo?[CustomKey.customClass] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) {
                             error in
                             
@@ -333,7 +333,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }
                 case .contact(let contact):
-                    if let customClassName = contact.userInfo?[kPCKCustomClassKey] {
+                    if let customClassName = contact.userInfo?[CustomKey.customClass] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) {
                             error in
                             
@@ -364,7 +364,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }
                 case .task(let task):
-                    if let customClassName = task.userInfo?[kPCKCustomClassKey] {
+                    if let customClassName = task.userInfo?[CustomKey.customClass] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) {
                             error in
                             
@@ -398,7 +398,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     }
                 case .outcome(let outcome):
                     
-                    if let customClassName = outcome.userInfo?[kPCKCustomClassKey] {
+                    if let customClassName = outcome.userInfo?[CustomKey.customClass] {
                         self.pushRevisionForCustomClass(entity, className: customClassName, cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) {
                             error in
                             

@@ -76,7 +76,7 @@ struct Clock: ParseObject {
     static func fetchFromCloud(uuid:UUID, createNewIfNeeded:Bool, completion:@escaping(Clock?, OCKRevisionRecord.KnowledgeVector?, ParseError?)->Void){
         
         //Fetch Clock from Cloud
-        let query = Clock.query(kPCKClockPatientTypeUUIDKey == uuid)
+        let query = Clock.query(ClockKey.uuid == uuid)
         query.first(callbackQueue: .main) { result in
             
             switch result {

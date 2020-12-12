@@ -148,7 +148,7 @@ public final class Task: PCKVersionable {
         }
         
         //Check to see if already in the cloud
-        let query = Task.query(kPCKObjectableUUIDKey == uuid)
+        let query = Task.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -194,8 +194,8 @@ public final class Task: PCKVersionable {
         }
         
         //Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Task.query(containedIn(key: kPCKObjectableUUIDKey, array: [uuid, previousVersionUUID]))
-            .include([kPCKTaskCarePlanKey, kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+        let query = Task.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
+            .include([TaskKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
         query.find(callbackQueue: .main){ results in
             
             switch results {
@@ -245,9 +245,9 @@ public final class Task: PCKVersionable {
     
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Task.query(kPCKObjectableClockKey >= localClock)
-            .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+        let query = Task.query(ObjectableKey.logicalClock >= localClock)
+            .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
+            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
         query.find(callbackQueue: .main){ results in
             switch results {
             
@@ -264,9 +264,9 @@ public final class Task: PCKVersionable {
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
+                        Logger.task.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .task, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .task, type: .debug, ObjectableKey.logicalClock, error.localizedDescription)
                     }
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {

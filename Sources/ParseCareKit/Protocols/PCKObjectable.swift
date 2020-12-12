@@ -140,8 +140,8 @@ extension PCKObjectable {
             return
         }
              
-        let query = Self.query(kPCKObjectableUUIDKey == uuidString)
-            .include([kPCKObjectableNotesKey])
+        let query = Self.query(ObjectableKey.uuid == uuidString)
+            .include([ObjectableKey.notes])
         query.first(callbackQueue: .main) { result in
             
             switch result {
@@ -177,8 +177,8 @@ extension PCKObjectable {
                 return
         }
             
-        let query = Self.query(kPCKObjectableUUIDKey == uuidString)
-            .include([kPCKObjectableNotesKey])
+        let query = Self.query(ObjectableKey.uuid == uuidString)
+            .include([ObjectableKey.notes])
         query.find(callbackQueue: .main){
             results in
             

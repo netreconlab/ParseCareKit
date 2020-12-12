@@ -149,8 +149,8 @@ open class Note: PCKObjectable {
             completion(nil)
             return
         }
-        let query = Self.query(containedIn(key: kPCKObjectableUUIDKey, array: uuids))
-            .include([kPCKObjectableNotesKey])
+        let query = Self.query(containedIn(key: ObjectableKey.uuid, array: uuids))
+            .include([ObjectableKey.notes])
         query.find(callbackQueue: .main){ results in
             
             switch results {

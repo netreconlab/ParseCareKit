@@ -307,18 +307,18 @@ extension PCKVersionable {
         let interval = createCurrentDateInterval(for: date)
     
         let query = queryToAndWith
-            .where(doesNotExist(key: kPCKObjectableDeletedDateKey)) //Only consider non deleted keys
-            .where(kPCKVersionedObjectEffectiveDateKey < interval.end)
-            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+            .where(doesNotExist(key: VersionableKey.deletedDate)) //Only consider non deleted keys
+            .where(VersionableKey.effectiveDate < interval.end)
+            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
         return query
     }
     
     private static func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> Query<Self> {
         
-        let query = Self.query(doesNotExist(key: kPCKVersionedObjectNextKey))
-            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+        let query = Self.query(doesNotExist(key: VersionableKey.next))
+            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
         let interval = createCurrentDateInterval(for: date)
-        let greaterEqualEffectiveDate = self.query(kPCKVersionedObjectEffectiveDateKey >= interval.end)
+        let greaterEqualEffectiveDate = self.query(VersionableKey.effectiveDate >= interval.end)
         return Self.query(or(queries: [query,greaterEqualEffectiveDate]))
     }
     
@@ -336,7 +336,7 @@ extension PCKVersionable {
     //This query doesn't filter nextVersion effectiveDate >= interval.end
     public static func query(for date: Date) -> Query<Self> {
         let query = queryVersion(for: date, queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
         return query
     }
 
@@ -349,7 +349,7 @@ extension PCKVersionable {
     */
     public func find(for date: Date, completion: @escaping(Result<[Self],ParseError>) -> Void) {
         let query = Self.query(for: date)
-            .include([kPCKVersionedObjectNextKey, kPCKVersionedObjectPreviousKey, kPCKObjectableNotesKey])
+            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
         query.find(callbackQueue: .main) { results in
             switch results {
             

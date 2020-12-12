@@ -130,7 +130,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         }
         
         //Check to see if already in the cloud
-        let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
+        let query = Outcome.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -158,8 +158,8 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                     guard self.id.count > 0 else {
                         return
                     }
-                    let query = Outcome.query(kPCKObjectableEntityIdKey == self.id, doesNotExist(key: kPCKObjectableDeletedDateKey))
-                        .include([kPCKOutcomeValuesKey, kPCKObjectableNotesKey])
+                    let query = Outcome.query(ObjectableKey.entityId == self.id, doesNotExist(key: OutcomeKey.deletedDate))
+                        .include([OutcomeKey.values, ObjectableKey.notes])
                     query.first(callbackQueue: .main){ result in
                         
                         switch result {
@@ -194,9 +194,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void){
         
-        let query = Self.query(kPCKObjectableClockKey >= localClock)
-            .order([.ascending(kPCKObjectableClockKey), .ascending(kPCKParseCreatedAtKey)])
-            .include([kPCKOutcomeValuesKey, kPCKObjectableNotesKey])
+        let query = Self.query(ObjectableKey.logicalClock >= localClock)
+            .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
+            .include([OutcomeKey.values, ObjectableKey.notes])
         query.find(callbackQueue: .main){ results in
             switch results {
             
@@ -213,9 +213,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                     //If the query was looking in a column that wasn't a default column, it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(kPCKObjectableClockKey, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
+                        Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .outcome, type: .debug, kPCKObjectableClockKey, error.localizedDescription)
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .outcome, type: .debug, ObjectableKey.logicalClock, error.localizedDescription)
                     }
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
@@ -269,8 +269,8 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         }
                 
         //Get latest item from the Cloud to compare against
-        let query = Outcome.query(kPCKObjectableUUIDKey == uuid)
-            .include([kPCKOutcomeValuesKey, kPCKObjectableNotesKey])
+        let query = Outcome.query(ObjectableKey.uuid == uuid)
+            .include([OutcomeKey.values, ObjectableKey.notes])
         query.first(callbackQueue: .main){ result in
             
             switch result {
@@ -470,10 +470,10 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     }
     
     public static func queryNotDeleted()-> Query<Outcome>{
-        let taskQuery = Task.query(doesNotExist(key: kPCKObjectableDeletedDateKey))
+        let taskQuery = Task.query(doesNotExist(key: OutcomeKey.deletedDate))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        let query = Outcome.query(doesNotExist(key: kPCKObjectableDeletedDateKey), matchesKeyInQuery(key: kPCKOutcomeTaskKey, queryKey: kPCKOutcomeTaskKey, query: taskQuery))
-            .include([kPCKOutcomeValuesKey, kPCKObjectableNotesKey])
+        let query = Outcome.query(doesNotExist(key: OutcomeKey.deletedDate), matchesKeyInQuery(key: OutcomeKey.task, queryKey: OutcomeKey.task, query: taskQuery))
+            .include([OutcomeKey.values, ObjectableKey.notes])
         return query
     }
    
