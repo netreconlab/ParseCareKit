@@ -113,6 +113,11 @@ public final class Task: PCKVersionable {
         }
     }
 
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) impactsAdherence=\(String(describing: impactsAdherence)) title=\(String(describing: title)) instructions=\(String(describing: instructions)) schedule=\(String(describing: schedule)) carePlanUUID=\(String(describing: carePlanUUID)) carePlan=\(String(describing: carePlan))"
+    }
+
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock

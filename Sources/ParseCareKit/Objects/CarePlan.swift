@@ -111,6 +111,11 @@ public final class CarePlan: PCKVersionable {
     /// A title describing this care plan.
     public var title:String?
     
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) title=\(String(describing: title)) patientUUID=\(String(describing: patientUUID)) patient=\(String(describing: patient))"
+    }
+    
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock

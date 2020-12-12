@@ -25,7 +25,7 @@ struct Clock: ParseObject {
     var vector:String?
 
     public var localizedDescription: String {
-        "\(debugDescription) vector: \(String(describing: vector))"
+        "\(debugDescription) vector=\(String(describing: vector))"
     }
 
     init(uuid: UUID) {
@@ -50,7 +50,7 @@ struct Clock: ParseObject {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Clock.decodeClock(): \(error.localizedDescription, privacy: .private). Vector \(data, privacy: .private).")
             } else {
-                os_log("Clock.decodeClock(): %{private}@. Vector %{private}@.", log: .clock, type: .error, error.localizedDescription, data.description)
+                os_log("Clock.decodeClock(): %{private}@. Vector %{private}@.", log: .clock, type: .error, error.localizedDescription, data.debugDescription)
             }
             cloudVector = nil
         }

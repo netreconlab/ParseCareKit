@@ -98,7 +98,12 @@ final public class OutcomeValue: PCKObjectable {
         if value is Date { return .date }
         fatalError("Unknown type!")
     }
-    
+
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) value=\(String(describing: value)) kind=\(String(describing: kind)) units=\(String(describing: units)) index=\(String(describing: index))"
+    }
+
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock

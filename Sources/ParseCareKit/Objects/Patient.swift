@@ -89,6 +89,8 @@ public final class Patient: PCKVersionable {
     
     /// A list of substances this patient is allergic to.
     public var allergies:[String]?
+
+    /// The patient's birthday, used to compute their age.
     public var birthday:Date?
     
     /// The patient's name.
@@ -97,8 +99,9 @@ public final class Patient: PCKVersionable {
     /// The patient's biological sex.
     public var sex: OCKBiologicalSex?
     
-    public static var className: String {
-        kPCKPatientClassKey
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) name=\(String(describing: name)) birthday=\(String(describing: birthday)) sex=\(String(describing: sex)) allergies=\(String(describing: allergies))"
     }
     
     enum CodingKeys: String, CodingKey {

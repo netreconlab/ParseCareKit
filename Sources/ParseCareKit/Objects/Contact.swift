@@ -137,6 +137,11 @@ public final class Contact: PCKVersionable {
     /// An array of other information that could be used reach this contact.
     public var otherContactInfo: [OCKLabeledValue]?
 
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) title=\(String(describing: title)) role=\(String(describing: role)) organization=\(String(describing: organization)) category=\(String(describing: category)) address=\(String(describing: address)) messagingNumbers=\(String(describing: messagingNumbers)) emailAddresses=\(String(describing: emailAddresses)) phoneNumbers=\(String(describing: phoneNumbers)) otherContactInfo=\(String(describing: otherContactInfo)) carePlanUUID=\(String(describing: carePlanUUID)) carePlan=\(String(describing: carePlan))"
+    }
+
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock

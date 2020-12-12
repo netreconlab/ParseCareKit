@@ -67,6 +67,11 @@ open class Note: PCKObjectable {
     /// The person who created this note.
     public var author:String?
     
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) title=\(String(describing: title)) content=\(String(describing: content)) author=\(String(describing: author))"
+    }
+    
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes

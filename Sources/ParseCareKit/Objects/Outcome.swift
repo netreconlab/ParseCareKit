@@ -29,8 +29,6 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     public internal(set) var updatedDate: Date?
     
-    public internal(set) var deletedDate: Date?
-    
     public var timezone: TimeZone?
     
     public var userInfo: [String : String]?
@@ -63,6 +61,10 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     
     var date: Date? //Custom added, check if needed
     
+    /// The date on which this object was tombstoned. Note that objects are never actually deleted,
+    /// but rather they are tombstoned and will no longer be returned from queries.
+    public internal(set) var deletedDate: Date?
+    
     /// Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then
     /// the 2nd outcome on the 2nd day will have a `taskOccurrenceIndex` of 3.
     ///
@@ -91,6 +93,11 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
                 task = nil
             }
         }
+    }
+
+    /// A textual representation of this instance, suitable for debugging.
+    public var localizedDescription: String {
+        "\(debugDescription) taskOccurrenceIndex=\(String(describing: taskOccurrenceIndex)) values=\(String(describing: values)) taskUUID=\(String(describing: taskUUID)) task=\(String(describing: task)) date=\(String(describing: date)) deletedDate=\(String(describing: deletedDate))"
     }
 
     enum CodingKeys: String, CodingKey {
@@ -370,9 +377,9 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
             
             case .success(let saved):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.debug("save(), Object: \(saved, privacy: .private)")
+                    Logger.outcome.debug("save(), Object: \(saved.localizedDescription, privacy: .private)")
                 } else {
-                    os_log("save(), Object: %{private}", log: .outcome, type: .debug, saved.description)
+                    os_log("save(), Object: %{private}", log: .outcome, type: .debug, saved.localizedDescription)
                 }
 
                 saved.linkRelated { result in
