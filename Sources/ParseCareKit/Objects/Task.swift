@@ -345,7 +345,7 @@ public final class Task: PCKVersionable {
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKTask {
+    public func convertToCareKit() throws -> OCKTask {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKTask.self, from: encoded)

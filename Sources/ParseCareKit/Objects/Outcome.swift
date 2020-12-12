@@ -354,7 +354,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKOutcome {
+    public func convertToCareKit() throws -> OCKOutcome {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)

@@ -369,7 +369,7 @@ public final class Contact: PCKVersionable {
         }
     }
 
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKContact {
+    public func convertToCareKit() throws -> OCKContact {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)

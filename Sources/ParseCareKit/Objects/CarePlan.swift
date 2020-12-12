@@ -337,7 +337,7 @@ public final class CarePlan: PCKVersionable {
     }
     
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKCarePlan {
+    public func convertToCareKit() throws -> OCKCarePlan {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKCarePlan.self, from: encoded)

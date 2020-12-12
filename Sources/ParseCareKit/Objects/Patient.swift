@@ -337,7 +337,7 @@ public final class Patient: PCKVersionable {
         }
     }
     
-    public func convertToCareKit(fromCloud:Bool=true) throws -> OCKPatient {
+    public func convertToCareKit() throws -> OCKPatient {
         self.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKPatient.self, from: encoded)
