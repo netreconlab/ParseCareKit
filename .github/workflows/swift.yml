@@ -8,6 +8,7 @@ on:
 
 env:
   CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
+  CI_XCODE_VER_11: '/Applications/Xcode_11.7.app/Contents/Developer'
 
 jobs:
   xcode-test-ios:
@@ -16,6 +17,17 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
+
+  xcode-test-ios-11:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
+      env: 
+        DEVELOPER_DIR: ${{ env.CI_XCODE_VER_11 }}
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
 
