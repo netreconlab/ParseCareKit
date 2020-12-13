@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (78% documented)
+         (83% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -91,7 +91,13 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PCKObjectable.html">PCKObjectable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PCKVersionable.html">PCKVersionable</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols.html#/s:12ParseCareKit0A29RemoteSynchronizationDelegateP">ParseRemoteSynchronizationDelegate</a>
@@ -120,7 +126,11 @@
 
                 </div>
               </div>
-            <p>Objects that conform to the <code>PCKSynchronizable</code> protocol are synchronized between the OCKStore and the Parse Cloud.</p>
+            <p>Objects that conform to the <code>PCKSynchronizable</code> protocol are synchronized between the <code>OCKStore</code> and the Parse Cloud.
+In order to synchronize objects, they must also conform to either <code><a href="../Protocols/PCKObjectable.html">PCKObjectable</a></code> or <code><a href="../Protocols/PCKVersionable.html">PCKVersionable</a></code>. For examples, see
+<code><a href="../Classes/Patient.html">Patient</a></code>, <code><a href="../Classes/CarePlan.html">CarePlan</a></code>, <code><a href="../Classes/Task.html">Task</a></code>, <code>Contact</code>, and <code>Outcome</code>. Note that objects such as <code><a href="../Classes/OutcomeValue.html">OutcomeValue</a></code> and
+<code><a href="../Classes/Note.html">Note</a></code> are indirectly synced as part of the aforementioned objects and therefore don&rsquo;t need to conform to
+<code>PCKSynchronizable</code>.</p>
 
           </div>
         </section>
