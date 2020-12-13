@@ -185,8 +185,8 @@ class CancerPatient: Patient {
         self.comorbidities = cancerPatient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
     }
     
-    override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
-        guard var partiallyConvertedPatient = super.convertToCareKit(fromCloud: fromCloud) else{return nil}
+    override func convertToCareKit() -> OCKPatient? {
+        guard var partiallyConvertedPatient = super.convertToCareKit() else{return nil}
         
         var userInfo: [String:String]!
         if partiallyConvertedPatient.userInfo == nil{
@@ -235,7 +235,11 @@ class Doctor: Patient {
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
+            } else {
+                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
+            }
             completion(nil)
         }
     }
@@ -258,8 +262,8 @@ class Doctor: Patient {
         return seld
     }
     
-    override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
-        guard var partiallyConvertedDoctor = super.convertToCareKit(fromCloud: fromCloud) else{return nil}
+    override func convertToCareKit() -> OCKPatient? {
+        guard var partiallyConvertedDoctor = super.convertToCareKit() else{return nil}
         
         var userInfo: [String:String]!
         if partiallyConvertedDoctor.userInfo == nil{
@@ -297,7 +301,7 @@ _ = Doctor(careKitEntity: newCareKitDoctor){
    newParseDoctor.sex = "Female" //This default from OCKPatient, Doctor has all defaults of it's CareKit counterpart
    
    
-   guard let updatedCareKitDoctor = newParseDoctor.convertToCareKit(fromCloud: false) else {
+   guard let updatedCareKitDoctor = newParseDoctor.convertToCareKit() else {
        completion(nil,nil)
        return
    }

@@ -23,6 +23,11 @@
 		709752EF250D27320020EA70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 709752ED250D27320020EA70 /* LaunchScreen.storyboard */; };
 		709752FA250D351B0020EA70 /* ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */; };
 		709752FB250D351B0020EA70 /* ParseCareKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		709D175D258551D20002E772 /* ParseCareKitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D175C258551D20002E772 /* ParseCareKitLog.swift */; };
+		709D175E258551D20002E772 /* ParseCareKitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D175C258551D20002E772 /* ParseCareKitLog.swift */; };
+		709D176B258579090002E772 /* ParseCareKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D176A258579090002E772 /* ParseCareKitError.swift */; };
+		709D176C258579090002E772 /* ParseCareKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D176A258579090002E772 /* ParseCareKitError.swift */; };
+		709D18072586903C0002E772 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D18062586903C0002E772 /* LoggerTests.swift */; };
 		70B326BE251EBE610028B229 /* PCKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B326BD251EBE610028B229 /* PCKUser.swift */; };
 		70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		70F2E182254EFC8000B2EA5C /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Patient.swift */; };
@@ -113,6 +118,9 @@
 		7098A7762524E92900DDF53D /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		7098A7772524E92900DDF53D /* MockURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLResponse.swift; sourceTree = "<group>"; };
 		7098A7782524E92900DDF53D /* EncodingCareKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingCareKitTests.swift; sourceTree = "<group>"; };
+		709D175C258551D20002E772 /* ParseCareKitLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitLog.swift; sourceTree = "<group>"; };
+		709D176A258579090002E772 /* ParseCareKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitError.swift; sourceTree = "<group>"; };
+		709D18062586903C0002E772 /* LoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTests.swift; sourceTree = "<group>"; };
 		70B326BD251EBE610028B229 /* PCKUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKUser.swift; sourceTree = "<group>"; };
 		70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParseCareKit_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70F2E179254EFC6100B2EA5C /* ParseCareKit_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseCareKit_watchOS.h; sourceTree = "<group>"; };
@@ -201,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				7098A7782524E92900DDF53D /* EncodingCareKitTests.swift */,
+				709D18062586903C0002E772 /* LoggerTests.swift */,
 				7098A7752524E92900DDF53D /* NetworkMocking */,
 			);
 			path = ParseCareKitTests;
@@ -301,9 +310,10 @@
 				918F080B248040AA00C3A205 /* Objects */,
 				703CDA0725243D230027AB82 /* Parse */,
 				91D52878248128700022292B /* Protocols */,
-				91AA07222466F0CD00B39452 /* Clock.swift */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
+				709D176A258579090002E772 /* ParseCareKitError.swift */,
+				709D175C258551D20002E772 /* ParseCareKitLog.swift */,
 				9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */,
 				916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */,
 			);
@@ -314,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
+				91AA07222466F0CD00B39452 /* Clock.swift */,
 				9119D5F824561A28001B7AA3 /* Contact.swift */,
 				9119D5FD24561A28001B7AA3 /* Note.swift */,
 				9119D5FF24561A28001B7AA3 /* Outcome.swift */,
@@ -424,6 +435,7 @@
 				9119D5E8245618D7001B7AA3 /* Frameworks */,
 				9119D5E9245618D7001B7AA3 /* Resources */,
 				9119D62124562933001B7AA3 /* Embed Frameworks */,
+				709D177F258580620002E772 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -523,6 +535,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		709D177F258580620002E772 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		705DC9192526A4B80035BBE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -531,6 +563,7 @@
 				705DC9292526A55E0035BBE3 /* EncodingCareKitTests.swift in Sources */,
 				705DC92B2526A5610035BBE3 /* MockURLProtocol.swift in Sources */,
 				705DC92D2526A5650035BBE3 /* MockURLResponse.swift in Sources */,
+				709D18072586903C0002E772 /* LoggerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,11 +581,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				709D175E258551D20002E772 /* ParseCareKitLog.swift in Sources */,
 				70F2E187254EFC8000B2EA5C /* ParseCareKitConstants.swift in Sources */,
 				70F2E189254EFC8000B2EA5C /* ParseRemoteSynchronizationManager.swift in Sources */,
 				70F2E183254EFC8000B2EA5C /* Contact.swift in Sources */,
 				70F2E184254EFC8000B2EA5C /* PCKUser.swift in Sources */,
 				70F2E186254EFC8000B2EA5C /* Outcome.swift in Sources */,
+				709D176C258579090002E772 /* ParseCareKitError.swift in Sources */,
 				70F2E18D254EFC8000B2EA5C /* Clock.swift in Sources */,
 				70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */,
 				70F2E18F254EFC8000B2EA5C /* Task.swift in Sources */,
@@ -570,11 +605,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				709D175D258551D20002E772 /* ParseCareKitLog.swift in Sources */,
 				9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */,
 				9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */,
 				700775AA2522686D00EC0EDA /* PCKVersionable.swift in Sources */,
 				9119D60324561A28001B7AA3 /* Task.swift in Sources */,
 				9119D60824561A28001B7AA3 /* Outcome.swift in Sources */,
+				709D176B258579090002E772 /* ParseCareKitError.swift in Sources */,
 				70B326BE251EBE610028B229 /* PCKUser.swift in Sources */,
 				9119D60624561A28001B7AA3 /* Note.swift in Sources */,
 				918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */,

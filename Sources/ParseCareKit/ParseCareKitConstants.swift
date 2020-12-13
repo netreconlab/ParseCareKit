@@ -9,72 +9,31 @@
 import Foundation
 import ParseSwift
 import CareKitStore
+import os.log
+
+// swiftlint:disable line_length
 
 // #Mark - Custom Enums
-public enum PCKCodingKeys: String, CodingKey { // swiftlint:disable:this nesting
-    case entityId, id
-    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock, className, ACL, objectId, updatedAt, createdAt
+enum CustomKey {
+    static let customClass                                  = "customClass"
+}
+
+public enum PCKCodingKeys: String, CodingKey {
+    case entityId, id // swiftlint:disable:this identifier_name
+    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
+         userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
+         logicalClock, className, ACL, objectId, updatedAt, createdAt
     case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
 }
 
-
-enum ParseCareKitError: Error {
-    case userNotLoggedIn
-    case relatedEntityNotInCloud
-    case requiredValueCantBeUnwrapped
-    case objectIdDoesntMatchRemoteId
-    case objectNotFoundOnParseServer
-    case cloudClockLargerThanLocalWhilePushRevisions
-    case couldntUnwrapClock
-    case cantUnwrapSelf
-    case cloudVersionNewerThanLocal
-    case uuidAlreadyExists
-    case cantCastToNeededClassType
-    case classTypeNotAnEligibleType
-    case couldntCreateConcreteClasses
-}
-
-extension ParseCareKitError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .userNotLoggedIn:
-            return NSLocalizedString("ParseCareKit: Parse User isn't logged in.", comment: "Login error")
-        case .relatedEntityNotInCloud:
-            return NSLocalizedString("ParseCareKit: Related entity isn't in cloud.", comment: "Related entity error")
-        case .requiredValueCantBeUnwrapped:
-            return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
-        case .couldntUnwrapClock:
-            return NSLocalizedString("ParseCareKit: Clock can't be unwrapped.", comment: "Clock Unwrapping error")
-        case .objectIdDoesntMatchRemoteId:
-            return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
-        case .cloudClockLargerThanLocalWhilePushRevisions:
-            return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing", comment: "Knowledge vector larger in Cloud")
-        case .cantUnwrapSelf:
-            return NSLocalizedString("Can't unwrap self. This class has already been deallocated", comment: "Can't unwrap self, class deallocated")
-        case .cloudVersionNewerThanLocal:
-            return NSLocalizedString("Can't sync, the Cloud version newere than local version", comment: "Cloud version newer than local version")
-        case .uuidAlreadyExists:
-            return NSLocalizedString("Can't sync, the uuid already exists in the Cloud", comment: "UUID isn't unique")
-        case .cantCastToNeededClassType:
-            return NSLocalizedString("Can't cast to needed class type", comment: "Can't cast to needed class type")
-        case .classTypeNotAnEligibleType:
-            return NSLocalizedString("PCKClass type isn't an eligible type", comment: "PCKClass type isn't an eligible type")
-        case .couldntCreateConcreteClasses:
-            return NSLocalizedString("Couldn't create concrete classes", comment: "Couldn't create concrete classes")
-        case .objectNotFoundOnParseServer:
-            return NSLocalizedString("Object couldn't be found on the Parse Server", comment: "Object couldn't be found on the Parse Server")
-        }
-    }
-}
-
 /// Types of ParseCareKit classes.
-public enum PCKStoreClass {
+public enum PCKStoreClass: String {
     case carePlan
     case contact
     case outcome
     case patient
     case task
-    
+
     func getDefault() throws -> PCKSynchronizable {
         switch self {
         case .carePlan:
@@ -90,30 +49,35 @@ public enum PCKStoreClass {
             let patient = OCKPatient(id: "", givenName: "", familyName: "")
             return try Patient.copyCareKit(patient)
         case .task:
-            let task = OCKTask(id: "", title: "", carePlanUUID: nil, schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
+            let task = OCKTask(id: "", title: "", carePlanUUID: nil,
+                               schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
             return try Task.copyCareKit(task)
         }
     }
-    
-    func orderedArray() -> [PCKStoreClass]{
+
+    func orderedArray() -> [PCKStoreClass] {
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
-    
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable])throws -> [PCKStoreClass: PCKSynchronizable] {
+
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
         var updatedClasses = try getConcrete()
 
-        for (key,value) in newClasses{
-            if isCorrectType(key, check: value){
+        for (key, value) in newClasses {
+            if isCorrectType(key, check: value) {
                 updatedClasses[key] = value
-            }else{
-                print("**** Warning in PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> \(value)")
+            } else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.debug("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
+                } else {
+                    os_log("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `%{private}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.", log: .pullRevisions, type: .debug, key.rawValue)
+                }
             }
         }
         return updatedClasses
     }
-    
+
     func getConcrete() throws -> [PCKStoreClass: PCKSynchronizable] {
-        
+
         var concreteClasses: [PCKStoreClass: PCKSynchronizable] = [
             .carePlan: try PCKStoreClass.carePlan.getDefault(),
             .contact: try PCKStoreClass.contact.getDefault(),
@@ -121,58 +85,62 @@ public enum PCKStoreClass {
             .patient: try PCKStoreClass.patient.getDefault(),
             .task: try PCKStoreClass.task.getDefault()
         ]
-        
-        for (key,value) in concreteClasses{
-            if !isCorrectType(key, check: value){
+
+        for (key, value) in concreteClasses {
+            if !isCorrectType(key, check: value) {
                 concreteClasses.removeValue(forKey: key)
             }
         }
-        
+
         //Ensure all default classes are created
-        guard concreteClasses.count == orderedArray().count else{
+        guard concreteClasses.count == orderedArray().count else {
             throw ParseCareKitError.couldntCreateConcreteClasses
         }
-        
+
         return concreteClasses
     }
-    
+
     func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
         var updatedClasses = try getConcrete()
 
-        for (key,value) in newClasses{
-            if isCorrectType(key, check: value){
+        for (key, value) in newClasses {
+            if isCorrectType(key, check: value) {
                 updatedClasses[key] = value
-            }else{
-                print("**** Warning in PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile -> \(value)")
+            } else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.debug("PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
+                } else {
+                    os_log("PCKStoreClass.replaceConcreteClasses(). Discarding class for `%{private}@` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.", log: .pullRevisions, type: .debug, key.rawValue)
+                }
             }
         }
         return updatedClasses
     }
-    
-    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool{
+
+    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
         switch type {
         case .carePlan:
-            guard let _ = check as? CarePlan else{
+            guard (check as? CarePlan) != nil else {
                 return false
             }
             return true
         case .contact:
-            guard let _ = check as? Contact else{
+            guard (check as? Contact) != nil else {
                 return false
             }
             return true
         case .outcome:
-            guard let _ = check as? Outcome else{
+            guard (check as? Outcome) != nil else {
                 return false
             }
             return true
         case .patient:
-            guard let _ = check as? Patient else{
+            guard (check as? Patient) != nil else {
                 return false
             }
             return true
         case .task:
-            guard let _ = check as? Task else{
+            guard (check as? Task) != nil else {
                 return false
             }
             return true
@@ -180,130 +148,106 @@ public enum PCKStoreClass {
     }
 }
 
-public let kPCKCustomClassKey                                       = "customClass"
-
 //#Mark - Parse Database Keys
+public enum ParseKey {
+    static let objectId = "objectId"
+    static let createdAt = "createdAt"
+    static let ACL = "ACL"
+}
 
-public let kPCKParseObjectIdKey                                     = "objectId"
-public let kPCKParseCreatedAtKey                                    = "createdAt"
-public let kPCKParseUpdatedAtKey                                    = "updatedAt"
+public enum ObjectableKey {
+    static let uuid                                       = "uuid"
+    static let entityId                                   = "entityId"
+    static let asset                                      = "asset"
+    static let groupIdentifier                            = "groupIdentifier"
+    static let notes                                      = "notes"
+    static let timezone                                   = "timezone"
+    static let logicalClock                               = "logicalClock"
+    static let createdDate                                = "createdDate"
+    static let updatedDate                                = "updatedDate"
+    static let tags                                       = "tags"
+    static let userInfo                                   = "userInfo"
+    static let source                                     = "source"
+    static let remoteID                                   = "remoteID"
+}
 
-public let kPCKObjectableUUIDKey                                        = "uuid"
-public let kPCKObjectableEntityIdKey                                    = "entityId"
-public let kPCKObjectableAssetKey                                       = "asset"
-public let kPCKObjectableGroupIdentifierKey                             = "groupIdentifier"
-public let kPCKObjectableNotesKey                                       = "notes"
-public let kPCKObjectableTimezoneKey                                    = "timezone"
-public let kPCKObjectableClockKey                                       = "logicalClock"
-public let kPCKObjectableCreatedDateKey                                 = "createdDate"
-public let kPCKObjectableUpdatedDateKey                                 = "updatedDate"
-public let kPCKObjectableTagsKey                                        = "tags"
-public let kPCKObjectableUserInfoKey                                    = "userInfo"
-public let kPCKObjectableSourceKey                                      = "source"
-public let kPCKObjectableDeletedDateKey                                 = "deletedDate"
-public let kPCKObjectableRemoteIDKey                                    = "remoteID"
-
-public let kPCKVersionedObjectEffectiveDateKey                      = "effectiveDate"
-
-public let kPCKVersionedObjectNextKey                               = "next"
-public let kPCKVersionedObjectPreviousKey                           = "previous"
+public enum VersionableKey {
+    static let deletedDate                                = "deletedDate"
+    static let effectiveDate                              = "effectiveDate"
+    static let next                                       = "next"
+    static let previous                                   = "previous"
+}
 
 //#Mark - Patient Class
-public let kPCKPatientClassKey                                 = "Patient"
-
-// Field keys
-public let kPCKPatientAllergiesKey                                  = "alergies"
-public let kPCKPatientBirthdayKey                                   = "birthday"
-public let kPCKPatientSexKey                                        = "sex"
-public let kPCKPatientNameKey                                       = "name"
+public enum PatientKey {
+    static let className                                = "Patient"
+    static let allergies                                = "alergies"
+    static let birthday                                 = "birthday"
+    static let sex                                      = "sex"
+    static let name                                     = "name"
+}
 
 //#Mark - CarePlan Class
-public let kPCKCarePlanClassKey                                = "CarePlan"
-
-// Field keys
-public let kPCKCarePlanPatientKey                                 = "patient"
-public let kPCKCarePlanTitleKey                                   = "title"
+public enum CarePlanKey {
+    static let className                                = "CarePlan"
+    static let patient                                  = "patient"
+    static let title                                    = "title"
+}
 
 //#Mark - Contact Class
-public let kPCKContactClassKey                                 = "Contact"
-
-// Field keys
-public let kPCKContactCarePlanKey                                 = "carePlan"
-public let kPCKContactTitleKey                                    = "title"
-public let kPCKContactRoleKey                                     = "role"
-public let kPCKContactOrganizationKey                             = "organization"
-public let kPCKContactCategoryKey                                 = "category"
-public let kPCKContactNameKey                                     = "name"
-public let kPCKContactAddressKey                                  = "address"
-public let kPCKContactEmailAddressesKey                           = "emailAddressesDictionary"
-public let kPCKContactPhoneNumbersKey                             = "phoneNumbersDictionary"
-public let kPCKContactMessagingNumbersKey                         = "messagingNumbersDictionary"
-public let kPCKContactOtherContactInfoKey                         = "otherContactInfoDictionary"
-
+public enum ContactKey {
+    static let className                                = "Contact"
+    static let carePlan                                 = "carePlan"
+    static let title                                    = "title"
+    static let role                                     = "role"
+    static let organization                             = "organization"
+    static let category                                 = "category"
+    static let name                                     = "name"
+    static let address                                  = "address"
+    static let emailAddresses                           = "emailAddresses"
+    static let phoneNumbers                             = "phoneNumbers"
+    static let messagingNumbers                         = "messagingNumbers"
+    static let otherContactInfo                         = "otherContactInfo"
+}
 
 //#Mark - Task Class
-public let kPCKTaskClassKey                                    = "Task"
-
-// Field keys
-public let kPCKTaskTitleKey                                       = "title"
-public let kPCKTaskCarePlanKey                                    = "carePlan"
-public let kPCKTaskImpactsAdherenceKey                         = "impactsAdherence"
-public let kPCKTaskInstructionsKey                             = "instructions"
-public let kPCKTaskElementsKey                                 = "elements"
-
-//#Mark - Schedule Element Class
-public let kAScheduleElementClassKey                           = "ScheduleElement"
-// Field keys
-public let kPCKScheduleElementTextKey                             = "text"
-public let kPCKScheduleElementStartKey                            = "start"
-public let kPCKScheduleElementEndKey                              = "end"
-public let kPCKScheduleElementIntervalKey                         = "interval"
-public let kPCKScheduleElementTargetValuesKey                     = "targetValues"
-public let kPCKScheduleElementElementsKey                         = "elements"
+public enum TaskKey {
+    static let className                                = "Task"
+    static let title                                    = "title"
+    static let carePlan                                 = "carePlan"
+    static let impactsAdherence                         = "impactsAdherence"
+    static let instructions                             = "instructions"
+    static let elements                                 = "elements"
+}
 
 //#Mark - Outcome Class
-public let kPCKOutcomeClassKey                                    = "Outcome"
-
-// Field keys
-public let kPCKOutcomeTaskKey                                     = "task"
-public let kPCKOutcomeTaskOccurrenceIndexKey                   = "taskOccurrenceIndex"
-public let kPCKOutcomeValuesKey                                = "values"
-
+public enum OutcomeKey {
+    static let className                                = "Outcome"
+    static let deletedDate                              = "deletedDate"
+    static let task                                     = "task"
+    static let taskOccurrenceIndex                      = "taskOccurrenceIndex"
+    static let values                                   = "values"
+}
 
 //#Mark - OutcomeValue Class
-public let kPCKOutcomeValueClassKey                            = "OutcomeValue"
-
-// Field keys
-public let kPCKOutcomeValueIndexKey                               = "index"
-public let kPCKOutcomeValueKindKey                             = "kind"
-public let kPCKOutcomeValueUnitsKey                            = "units"
-public let kPCKOutcomeValueValueKey                            = "textValue"
-public let kPCKOutcomeValueBinaryValueKey                            = "binaryValue"
-public let kPCKOutcomeValueBooleanValueKey                            = "booleanValue"
-public let kPCKOutcomeValueIntegerValueKey                            = "integerValue"
-public let kPCKOutcomeValueDoubleValueKey                            = "doubleValue"
-public let kPCKOutcomeValueDateValueKey                            = "dateValue"
-
+public enum OutcomeValueKey {
+    static let className                                = "OutcomeValue"
+    static let indexKey                                 = "index"
+    static let kindKey                                  = "kind"
+    static let unitsKey                                 = "units"
+}
 
 //#Mark - Note Class
-public let kPCKNoteClassKey                                    = "Note"
-// Field keys
-public let kPCKNoteContentKey                                  = "content"
-public let kPCKNoteTitleKey                                    = "title"
-public let kPCKNoteAuthorKey                                   = "author"
+public enum NoteKey {
+    static let className                                = "Note"
+    static let contentKey                               = "content"
+    static let titleKey                                 = "title"
+    static let authorKey                                = "author"
+}
 
 //#Mark - Clock Class
-public let kPCKClockClassKey                         = "Clock"
-// Field keys
-public let kPCKClockPatientTypeUUIDKey               = "uuid"
-public let kPCKClockVectorKey                        = "vector"
-
-
-//#Mark - CareKit UserInfo Database Keys
-
-//Outcome Class (keep this as Outcome has had issues querying multiple times)
-public let kPCKOutcomUserInfoIDKey              = "entityId"
-
-//OutcomeValue Class
-public let kPCKOutcomeValueUserInfoUUIDKey              = "uuid"
-public let kPCKOutcomeValueUserInfoRelatedOutcomeIDKey = "relatedOutcomeID"
+public enum ClockKey {
+    static let className                                = "Clock"
+    static let uuid                                     = "uuid"
+    static let vectorKey                                = "vector"
+}
