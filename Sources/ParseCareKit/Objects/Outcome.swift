@@ -13,12 +13,12 @@ import os.log
 
 // swiftlint:disable cyclomatic_complexity
 // swiftlint:disable line_length
+// swiftlint:disable type_body_length
 
 /// An `Outcome` is the ParseCareKit equivalent of `OCKOutcome`.  An `OCKOutcome` represents the
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
-// swiftlint:disable:next type_body_length
 open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public var uuid: UUID?

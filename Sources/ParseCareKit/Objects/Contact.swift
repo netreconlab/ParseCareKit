@@ -14,11 +14,11 @@ import os.log
 // swiftlint:disable cyclomatic_complexity
 // swiftlint:disable line_length
 // swiftlint:disable function_body_length
+// swiftlint:disable type_body_length
 
 /// An `Contact` is the ParseCareKit equivalent of `OCKContact`.  An `OCKContact`represents a contact that a user
 /// may want to get in touch with. A contact may be a care provider, a friend, or a family member. Contacts must have at
 /// least a name, and may optionally have numerous other addresses at which to be contacted.
-// swiftlint:disable:next type_body_length
 public final class Contact: PCKVersionable {
     public var nextVersion: Contact? {
         didSet {
