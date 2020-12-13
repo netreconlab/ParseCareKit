@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (65% documented)
+         (78% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -62,13 +62,7 @@
                 <a class="nav-group-task-link" href="Classes/CarePlan.html">CarePlan</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/Contact.html">Contact</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Note.html">Note</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/Outcome.html">Outcome</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/OutcomeValue.html">OutcomeValue</a>
@@ -295,8 +289,8 @@ This works with 1 or many devices per patient.*/</span>
         <span class="k">self</span><span class="o">.</span><span class="n">comorbidities</span> <span class="o">=</span> <span class="n">cancerPatient</span><span class="o">.</span><span class="n">userInfo</span><span class="p">?[</span><span class="s">"CustomPatientUserInfoComorbiditiesKey"</span><span class="p">]</span>
     <span class="p">}</span>
 
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">(</span><span class="nv">fromCloud</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">guard</span> <span class="k">var</span> <span class="nv">partiallyConvertedPatient</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">(</span><span class="nv">fromCloud</span><span class="p">:</span> <span class="n">fromCloud</span><span class="p">)</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span> <span class="kc">nil</span><span class="p">}</span>
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">var</span> <span class="nv">partiallyConvertedPatient</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">()</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span> <span class="kc">nil</span><span class="p">}</span>
 
         <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">String</span><span class="p">]</span><span class="o">!</span>
         <span class="k">if</span> <span class="n">partiallyConvertedPatient</span><span class="o">.</span><span class="n">userInfo</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">{</span>
@@ -339,7 +333,11 @@ This works with 1 or many devices per patient.*/</span>
         <span class="k">case</span> <span class="o">.</span><span class="nf">patient</span><span class="p">(</span><span class="k">let</span> <span class="nv">entity</span><span class="p">):</span>
             <span class="k">return</span> <span class="kt">Doctor</span><span class="p">(</span><span class="nv">careKitEntity</span><span class="p">:</span> <span class="n">entity</span><span class="p">)</span>
         <span class="k">default</span><span class="p">:</span>
-            <span class="nf">print</span><span class="p">(</span><span class="s">"Error in </span><span class="se">\(</span><span class="n">className</span><span class="se">)</span><span class="s">.new(with:). The wrong type of entity was passed </span><span class="se">\(</span><span class="n">careKitEntity</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="kd">#available(iOS 14.0, watchOS 7.0, *)</span> <span class="p">{</span>
+                <span class="kt">Logger</span><span class="o">.</span><span class="n">carePlan</span><span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="s">"new(with:) The wrong type (</span><span class="se">\(</span><span class="n">careKitEntity</span><span class="o">.</span><span class="n">entityType</span><span class="p">,</span> <span class="nv">privacy</span><span class="p">:</span> <span class="o">.</span><span class="kd">private</span><span class="se">)</span><span class="s">) of entity was passed as an argument."</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nf">os_log</span><span class="p">(</span><span class="s">"new(with:) The wrong type (%{private}@) of entity was passed."</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="o">.</span><span class="n">carePlan</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">careKitEntity</span><span class="o">.</span><span class="n">entityType</span><span class="o">.</span><span class="n">debugDescription</span><span class="p">)</span>
+            <span class="p">}</span>
             <span class="nf">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -362,8 +360,8 @@ This works with 1 or many devices per patient.*/</span>
         <span class="k">return</span> <span class="n">seld</span>
     <span class="p">}</span>
 
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">(</span><span class="nv">fromCloud</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">guard</span> <span class="k">var</span> <span class="nv">partiallyConvertedDoctor</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">(</span><span class="nv">fromCloud</span><span class="p">:</span> <span class="n">fromCloud</span><span class="p">)</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span> <span class="kc">nil</span><span class="p">}</span>
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">var</span> <span class="nv">partiallyConvertedDoctor</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">()</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span> <span class="kc">nil</span><span class="p">}</span>
 
         <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">String</span><span class="p">]</span><span class="o">!</span>
         <span class="k">if</span> <span class="n">partiallyConvertedDoctor</span><span class="o">.</span><span class="n">userInfo</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">{</span>
@@ -399,7 +397,7 @@ This works with 1 or many devices per patient.*/</span>
    <span class="n">newParseDoctor</span><span class="o">.</span><span class="n">sex</span> <span class="o">=</span> <span class="s">"Female"</span> <span class="c1">//This default from OCKPatient, Doctor has all defaults of it's CareKit counterpart</span>
 
 
-   <span class="k">guard</span> <span class="k">let</span> <span class="nv">updatedCareKitDoctor</span> <span class="o">=</span> <span class="n">newParseDoctor</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">(</span><span class="nv">fromCloud</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+   <span class="k">guard</span> <span class="k">let</span> <span class="nv">updatedCareKitDoctor</span> <span class="o">=</span> <span class="n">newParseDoctor</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
        <span class="nf">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">,</span><span class="kc">nil</span><span class="p">)</span>
        <span class="k">return</span>
    <span class="p">}</span>
@@ -421,7 +419,7 @@ This works with 1 or many devices per patient.*/</span>
 </code></pre>
 <h3 id='querying-parse-like-ockquery-in-carekit' class='heading'>Querying Parse Like OCKQuery in CareKit</h3>
 
-<p>There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because <code><a href="Classes/Patient.html">Patient</a></code>, <code><a href="Classes/CarePlan.html">CarePlan</a></code>, <code><a href="Classes/Contact.html">Contact</a></code>, and <code><a href="Classes/Task.html">Task</a></code> are versioned entities and <code><a href="Classes/Outcome.html">Outcome</a></code>&rsquo;s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for &ldquo;versioned&rdquo; entities or tombstoned and not tombstoned <code><a href="Classes/Outcome.html">Outcome</a></code>s. A description of how versioning works in CareKit can be found <a href="https://github.com/carekit-apple/CareKit#carekitstore-">here</a>.</p>
+<p>There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because <code><a href="Classes/Patient.html">Patient</a></code>, <code><a href="Classes/CarePlan.html">CarePlan</a></code>, <code>Contact</code>, and <code><a href="Classes/Task.html">Task</a></code> are versioned entities and <code>Outcome</code>&rsquo;s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for &ldquo;versioned&rdquo; entities or tombstoned and not tombstoned <code>Outcome</code>s. A description of how versioning works in CareKit can be found <a href="https://github.com/carekit-apple/CareKit#carekitstore-">here</a>.</p>
 <pre class="highlight swift"><code><span class="c1">//To query the most recent version</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Patient</span><span class="o">.</span><span class="nf">query</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())</span>
 
@@ -437,7 +435,7 @@ This works with 1 or many devices per patient.*/</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>For <code><a href="Classes/Outcome.html">Outcome</a></code>:</p>
+<p>For <code>Outcome</code>:</p>
 <pre class="highlight swift"><code><span class="c1">//To query all current outcomes</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Outcome</span><span class="o">.</span><span class="nf">queryNotDeleted</span><span class="p">()</span>
 <span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span> <span class="n">results</span> <span class="k">in</span>
@@ -463,7 +461,7 @@ This works with 1 or many devices per patient.*/</span>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-12-13)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (65% documented)
+         (78% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -63,13 +63,7 @@
                 <a class="nav-group-task-link" href="../Classes/CarePlan.html">CarePlan</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Contact.html">Contact</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Note.html">Note</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Outcome.html">Outcome</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/OutcomeValue.html">OutcomeValue</a>
@@ -127,9 +121,10 @@
                 </div>
               </div>
             <p>An <code>Task</code> is the ParseCareKit equivalent of <code>OCKTask</code>.  An <code>OCKTask</code> represents some task or action that a
-patient is supposed to perform. Tasks are optionally associable with an <code>OCKCarePlan</code>
-and must have a unique id and schedule. The schedule determines when and how often the task should be performed, and the
-<code>impactsAdherence</code> flag may be used to specify whether or not the patients adherence to this task will affect their daily completion rings.</p>
+patient is supposed to perform. Tasks are optionally associable with an <code>OCKCarePlan</code> and must have a unique
+id and schedule. The schedule determines when and how often the task should be performed, and the
+<code>impactsAdherence</code> flag may be used to specify whether or not the patients adherence to this task will affect
+their daily completion rings.</p>
 
           </div>
         </section>
@@ -157,7 +152,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">nextVersion</span><span class="p">:</span> <span class="kt">Task</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">nextVersion</span><span class="p">:</span> <span class="kt">Task</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -183,7 +178,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">nextVersionUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">nextVersionUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -209,7 +204,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">previousVersion</span><span class="p">:</span> <span class="kt">Task</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">previousVersion</span><span class="p">:</span> <span class="kt">Task</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -235,7 +230,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">previousVersionUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">previousVersionUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -287,7 +282,33 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit13PCKObjectableP8entityIdSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/entityId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit13PCKObjectableP8entityIdSSSgvp">entityId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">entityId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -313,7 +334,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">schemaVersion</span><span class="p">:</span> <span class="kt">OCKSemanticVersion</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">schemaVersion</span><span class="p">:</span> <span class="kt">OCKSemanticVersion</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -339,7 +360,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">createdDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">createdDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -365,7 +386,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">updatedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updatedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -391,7 +412,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">deletedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">deletedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -609,6 +630,32 @@ and must have a unique id and schedule. The schedule determines when and how oft
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12ParseCareKit13PCKObjectableP011encodingForA0Sbvp"></a>
+                    <a name="//apple_ref/swift/Property/encodingForParse" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit13PCKObjectableP011encodingForA0Sbvp">encodingForParse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">encodingForParse</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:10ParseSwift10ObjectableP8objectIdSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/objectId" class="dashAnchor"></a>
                     <a class="token" href="#/s:10ParseSwift10ObjectableP8objectIdSSSgvp">objectId</a>
@@ -713,6 +760,114 @@ and must have a unique id and schedule. The schedule determines when and how oft
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12ParseCareKit4TaskC16impactsAdherenceSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/impactsAdherence" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4TaskC16impactsAdherenceSbSgvp">impactsAdherence</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If true, completion of this task will be factored into the patient&rsquo;s overall adherence. True by default.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">impactsAdherence</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit4TaskC12instructionsSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/instructions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4TaskC12instructionsSSSgvp">instructions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instructions about how this task should be performed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">instructions</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit4TaskC5titleSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/title" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4TaskC5titleSSSgvp">title</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A title that will be used to represent this task to the patient.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit4TaskC8schedule0bC5Store11OCKScheduleVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/schedule" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4TaskC8schedule0bC5Store11OCKScheduleVSgvp">schedule</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A schedule that specifies how often this task occurs.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">schedule</span><span class="p">:</span> <span class="kt">OCKSchedule</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12ParseCareKit4TaskC8carePlanAA0bF0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/carePlan" class="dashAnchor"></a>
                     <a class="token" href="#/s:12ParseCareKit4TaskC8carePlanAA0bF0CSgvp">carePlan</a>
@@ -758,6 +913,33 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">carePlanUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit4TaskC20localizedDescriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/localizedDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit4TaskC20localizedDescriptionSSvp">localizedDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A textual representation of this instance, suitable for debugging.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">localizedDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -861,7 +1043,8 @@ and must have a unique id and schedule. The schedule determines when and how oft
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">localClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span> <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">OCKRevisionRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">localClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span>
+                          <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">OCKRevisionRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -981,7 +1164,7 @@ and must have a unique id and schedule. The schedule determines when and how oft
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-12-10)</p>
+      <p>&copy; 2020 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2020-12-13)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
