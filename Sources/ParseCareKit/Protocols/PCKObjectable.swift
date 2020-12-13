@@ -14,6 +14,9 @@ import os.log
 // swiftlint:disable line_length
 // swiftlint:disable identifier_name
 
+/**
+ Objects that conform to the `PCKObjectable` protocol are Parse interpretations of `OCKObjectCompatible` objects.
+*/
 public protocol PCKObjectable: ParseObject, CustomStringConvertible {
     /// A universally unique identifier for this object.
     var uuid: UUID? {get set}

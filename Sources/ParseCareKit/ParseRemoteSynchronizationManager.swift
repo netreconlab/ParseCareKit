@@ -13,15 +13,6 @@ import os.log
 
 // swiftlint:disable line_length
 
-/**
-Protocol that defines the properties to conform to when updates and conflict resolution is needed.
-*/
-public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDelegate {
-    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription,
-                                        completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
-    func successfullyPushedDataToCloud()
-}
-
 /// Allows the CareKitStore to synchronize against a Parse Server.
 public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
