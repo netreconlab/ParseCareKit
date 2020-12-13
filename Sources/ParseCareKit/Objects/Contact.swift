@@ -20,13 +20,13 @@ import os.log
 /// least a name, and may optionally have numerous other addresses at which to be contacted.
 // swiftlint:disable:next type_body_length
 public final class Contact: PCKVersionable {
-    public internal(set) var nextVersion: Contact? {
+    public var nextVersion: Contact? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
         }
     }
 
-    public internal(set) var nextVersionUUID: UUID? {
+    public var nextVersionUUID: UUID? {
         didSet {
             if nextVersionUUID != nextVersion?.uuid {
                 nextVersion = nil
@@ -34,13 +34,13 @@ public final class Contact: PCKVersionable {
         }
     }
 
-    public internal(set) var previousVersion: Contact? {
+    public var previousVersion: Contact? {
         didSet {
             previousVersionUUID = previousVersion?.uuid
         }
     }
 
-    public internal(set) var previousVersionUUID: UUID? {
+    public var previousVersionUUID: UUID? {
         didSet {
             if previousVersionUUID != previousVersion?.uuid {
                 previousVersion = nil
@@ -50,19 +50,19 @@ public final class Contact: PCKVersionable {
 
     public var effectiveDate: Date?
 
-    public internal(set) var uuid: UUID?
+    public var uuid: UUID?
 
-    var entityId: String?
+    public var entityId: String?
 
-    public internal(set) var logicalClock: Int?
+    public var logicalClock: Int?
 
-    public internal(set) var schemaVersion: OCKSemanticVersion?
+    public var schemaVersion: OCKSemanticVersion?
 
-    public internal(set) var createdDate: Date?
+    public var createdDate: Date?
 
-    public internal(set) var updatedDate: Date?
+    public var updatedDate: Date?
 
-    public internal(set) var deletedDate: Date?
+    public var deletedDate: Date?
 
     public var timezone: TimeZone?
 
@@ -80,7 +80,7 @@ public final class Contact: PCKVersionable {
 
     public var remoteID: String?
 
-    var encodingForParse: Bool = true {
+    public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }

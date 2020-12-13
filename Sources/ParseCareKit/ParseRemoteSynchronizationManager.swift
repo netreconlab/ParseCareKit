@@ -42,14 +42,14 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     public var automaticallySynchronizes: Bool
 
     /// The unique identifier of the remote clock.
-    public internal(set) var uuid: UUID!
+    public var uuid: UUID!
 
     /// A dictionary of any custom classes to synchronize between the CareKitStore and the Parse Server.
-    public internal(set) var customClassesToSynchronize: [String: PCKSynchronizable]?
+    public var customClassesToSynchronize: [String: PCKSynchronizable]?
 
     /// A dictionary of any default classes to synchronize between the CareKitStore and the Parse Server. These
     /// are `Patient`, `Task`, `CarePlan`, `Contact`, and `Outcome`.
-    public internal(set) var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
+    public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
     private weak var parseDelegate: ParseRemoteSynchronizationDelegate?
 

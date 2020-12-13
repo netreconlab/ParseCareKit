@@ -19,17 +19,17 @@ import CareKitStore
 /// integers, booleans, dates, text, and binary data, among others.
 final public class OutcomeValue: PCKObjectable {
 
-    public internal(set) var uuid: UUID?
+    public var uuid: UUID?
 
-    var entityId: String?
+    public var entityId: String?
 
-    public internal(set) var logicalClock: Int?
+    public var logicalClock: Int?
 
-    public internal(set) var schemaVersion: OCKSemanticVersion?
+    public var schemaVersion: OCKSemanticVersion?
 
-    public internal(set) var createdDate: Date?
+    public var createdDate: Date?
 
-    public internal(set) var updatedDate: Date?
+    public var updatedDate: Date?
 
     public var timezone: TimeZone?
 
@@ -47,7 +47,7 @@ final public class OutcomeValue: PCKObjectable {
 
     public var remoteID: String?
 
-    var encodingForParse: Bool = true {
+    public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }

@@ -14,7 +14,7 @@ import os.log
 // swiftlint:disable cyclomatic_complexity
 // swiftlint:disable function_body_length
 
-internal protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
+public protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
     /// The UUID of the previous version of this object, or nil if there is no previous version.
     var previousVersionUUID: UUID? { get set }
 

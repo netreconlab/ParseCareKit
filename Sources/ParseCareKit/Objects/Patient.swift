@@ -17,13 +17,13 @@ import os.log
 
 /// An `Patient` is the ParseCareKit equivalent of `OCKPatient`.  An `OCKPatient` represents a patient.
 public final class Patient: PCKVersionable {
-    public internal(set) var nextVersion: Patient? {
+    public var nextVersion: Patient? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
         }
     }
 
-    public internal(set) var nextVersionUUID: UUID? {
+    public var nextVersionUUID: UUID? {
         didSet {
             if nextVersionUUID != nextVersion?.uuid {
                 nextVersion = nil
@@ -31,13 +31,13 @@ public final class Patient: PCKVersionable {
         }
     }
 
-    public internal(set) var previousVersion: Patient? {
+    public var previousVersion: Patient? {
         didSet {
             previousVersionUUID = previousVersion?.uuid
         }
     }
 
-    public internal(set) var previousVersionUUID: UUID? {
+    public var previousVersionUUID: UUID? {
         didSet {
             if previousVersionUUID != previousVersion?.uuid {
                 previousVersion = nil
@@ -47,19 +47,19 @@ public final class Patient: PCKVersionable {
 
     public var effectiveDate: Date?
 
-    public internal(set) var uuid: UUID?
+    public var uuid: UUID?
 
-    var entityId: String?
+    public var entityId: String?
 
-    public internal(set) var logicalClock: Int?
+    public var logicalClock: Int?
 
-    public internal(set) var schemaVersion: OCKSemanticVersion?
+    public var schemaVersion: OCKSemanticVersion?
 
-    public internal(set) var createdDate: Date?
+    public var createdDate: Date?
 
-    public internal(set) var updatedDate: Date?
+    public var updatedDate: Date?
 
-    public internal(set) var deletedDate: Date?
+    public var deletedDate: Date?
 
     public var timezone: TimeZone?
 
@@ -77,7 +77,7 @@ public final class Patient: PCKVersionable {
 
     public var remoteID: String?
 
-    var encodingForParse: Bool = true {
+    public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }

@@ -23,13 +23,13 @@ import os.log
 /// their daily completion rings.
 public final class Task: PCKVersionable {
 
-    public internal(set) var nextVersion: Task? {
+    public var nextVersion: Task? {
         didSet {
             nextVersionUUID = nextVersion?.uuid
         }
     }
 
-    public internal(set) var nextVersionUUID: UUID? {
+    public var nextVersionUUID: UUID? {
         didSet {
             if nextVersionUUID != nextVersion?.uuid {
                 nextVersion = nil
@@ -37,13 +37,13 @@ public final class Task: PCKVersionable {
         }
     }
 
-    public internal(set) var previousVersion: Task? {
+    public var previousVersion: Task? {
         didSet {
             previousVersionUUID = previousVersion?.uuid
         }
     }
 
-    public internal(set) var previousVersionUUID: UUID? {
+    public var previousVersionUUID: UUID? {
         didSet {
             if previousVersionUUID != previousVersion?.uuid {
                 previousVersion = nil
@@ -53,19 +53,19 @@ public final class Task: PCKVersionable {
 
     public var effectiveDate: Date?
 
-    public internal(set) var uuid: UUID?
+    public var uuid: UUID?
 
-    var entityId: String?
+    public var entityId: String?
 
-    public internal(set) var logicalClock: Int?
+    public var logicalClock: Int?
 
-    public internal(set) var schemaVersion: OCKSemanticVersion?
+    public var schemaVersion: OCKSemanticVersion?
 
-    public internal(set) var createdDate: Date?
+    public var createdDate: Date?
 
-    public internal(set) var updatedDate: Date?
+    public var updatedDate: Date?
 
-    public internal(set) var deletedDate: Date?
+    public var deletedDate: Date?
 
     public var timezone: TimeZone?
 
@@ -83,7 +83,7 @@ public final class Task: PCKVersionable {
 
     public var remoteID: String?
 
-    var encodingForParse: Bool = true {
+    public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }
@@ -97,9 +97,16 @@ public final class Task: PCKVersionable {
 
     public var ACL: ParseACL?
 
+    /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?
+
+    /// Instructions about how this task should be performed.
     public var instructions: String?
+
+    /// A title that will be used to represent this task to the patient.
     public var title: String?
+
+    /// A schedule that specifies how often this task occurs.
     public var schedule: OCKSchedule?
 
     /// The care plan to which this task belongs.

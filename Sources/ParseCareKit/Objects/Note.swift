@@ -16,17 +16,17 @@ import CareKitStore
 /// why they weren't able to complete a task on a certain occasion.
 open class Note: PCKObjectable {
 
-    public internal(set) var uuid: UUID?
+    public var uuid: UUID?
 
-    var entityId: String?
+    public var entityId: String?
 
-    public internal(set) var logicalClock: Int?
+    public var logicalClock: Int?
 
-    public internal(set) var schemaVersion: OCKSemanticVersion?
+    public var schemaVersion: OCKSemanticVersion?
 
-    public internal(set) var createdDate: Date?
+    public var createdDate: Date?
 
-    public internal(set) var updatedDate: Date?
+    public var updatedDate: Date?
 
     public var timezone: TimeZone?
 
@@ -44,7 +44,7 @@ open class Note: PCKObjectable {
 
     public var remoteID: String?
 
-    var encodingForParse: Bool = true {
+    public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }

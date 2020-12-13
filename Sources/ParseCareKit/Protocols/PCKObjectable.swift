@@ -14,7 +14,7 @@ import os.log
 // swiftlint:disable line_length
 // swiftlint:disable identifier_name
 
-internal protocol PCKObjectable: ParseObject, CustomStringConvertible {
+public protocol PCKObjectable: ParseObject, CustomStringConvertible {
     /// A universally unique identifier for this object.
     var uuid: UUID? {get set}
 

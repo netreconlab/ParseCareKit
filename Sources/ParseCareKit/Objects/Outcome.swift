@@ -21,17 +21,17 @@ import os.log
 // swiftlint:disable:next type_body_length
 final public class Outcome: PCKObjectable, PCKSynchronizable {
 
-    public internal(set) var uuid: UUID?
+    public var uuid: UUID?
 
-    var entityId: String?
+    public var entityId: String?
 
-    public internal(set) var logicalClock: Int?
+    public var logicalClock: Int?
 
-    public internal(set) var schemaVersion: OCKSemanticVersion?
+    public var schemaVersion: OCKSemanticVersion?
 
-    public internal(set) var createdDate: Date?
+    public var createdDate: Date?
 
-    public internal(set) var updatedDate: Date?
+    public var updatedDate: Date?
 
     public var timezone: TimeZone?
 
@@ -49,7 +49,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
 
     public var remoteID: String?
 
-    var encodingForParse: Bool = true {
+    public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }
@@ -67,7 +67,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
 
     /// The date on which this object was tombstoned. Note that objects are never actually deleted,
     /// but rather they are tombstoned and will no longer be returned from queries.
-    public internal(set) var deletedDate: Date?
+    public var deletedDate: Date?
 
     /// Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then
     /// the 2nd outcome on the 2nd day will have a `taskOccurrenceIndex` of 3.
