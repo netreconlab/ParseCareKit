@@ -20,15 +20,6 @@ jobs:
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
 
-  xcode-test-ios-13:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,OS=13.7,name\=iPhone\ 11\ Pro\ Max test | xcpretty
-    - name: Codecov
-      run: bash <(curl https://codecov.io/bash)
-
   spm-test:
     runs-on: macos-latest
     steps:
