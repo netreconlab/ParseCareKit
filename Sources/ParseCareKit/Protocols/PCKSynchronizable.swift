@@ -14,25 +14,27 @@ import CareKitStore
  Objects that conform to the `PCKSynchronizable` protocol are synchronized between the OCKStore and the Parse Cloud.
 */
 public protocol PCKSynchronizable {
-    
+
     /**
-     Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps it synchronized with the CareKitStore.
+     Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps
+     it synchronized with the CareKitStore.
 
      - parameter overwriteRemote: Whether data should be overwritten if it's already present on the Parse Server.
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
-    func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable,Error>) -> Void)
-    
+    func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
+
     /**
-     Updates an object that conforms to PCKSynchronizable that is already on the Parse Server and keeps it synchronized with the CareKitStore.
+     Updates an object that conforms to PCKSynchronizable that is already on the Parse
+     Server and keeps it synchronized with the CareKitStore.
 
      - parameter overwriteRemote: Whether data should be overwritten if it's already present on the Parse Server.
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
-    func updateCloud(completion: @escaping(Result<PCKSynchronizable,Error>) -> Void)
-    
+    func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
+
     /**
      Creates a new ParseCareKit object from a specified CareKit entity.
 
@@ -41,7 +43,7 @@ public protocol PCKSynchronizable {
      - returns: Returns a new version of `Self`
     */
     func new(with careKitEntity: OCKEntity) throws -> Self
-    
+
     /**
      Fetch all objects from the server that have been made on since the last time synchronization was performed.
 
@@ -54,8 +56,8 @@ public protocol PCKSynchronizable {
        Wait until one merge has completed before starting another.
      
     */
-    func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, mergeRevision: @escaping (OCKRevisionRecord) -> Void)
-    
+    func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
+                       mergeRevision: @escaping (OCKRevisionRecord) -> Void)
 
     /**
      Push a revision from a device up to the server.

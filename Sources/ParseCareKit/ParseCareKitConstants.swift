@@ -11,14 +11,18 @@ import ParseSwift
 import CareKitStore
 import os.log
 
+// swiftlint:disable line_length
+
 // #Mark - Custom Enums
 enum CustomKey {
     static let customClass                                  = "customClass"
 }
 
-public enum PCKCodingKeys: String, CodingKey { // swiftlint:disable:this nesting
-    case entityId, id
-    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock, className, ACL, objectId, updatedAt, createdAt
+public enum PCKCodingKeys: String, CodingKey {
+    case entityId, id // swiftlint:disable:this identifier_name
+    case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
+         userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
+         logicalClock, className, ACL, objectId, updatedAt, createdAt
     case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
 }
 
@@ -29,7 +33,7 @@ public enum PCKStoreClass: String {
     case outcome
     case patient
     case task
-    
+
     func getDefault() throws -> PCKSynchronizable {
         switch self {
         case .carePlan:
@@ -45,22 +49,23 @@ public enum PCKStoreClass: String {
             let patient = OCKPatient(id: "", givenName: "", familyName: "")
             return try Patient.copyCareKit(patient)
         case .task:
-            let task = OCKTask(id: "", title: "", carePlanUUID: nil, schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
+            let task = OCKTask(id: "", title: "", carePlanUUID: nil,
+                               schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
             return try Task.copyCareKit(task)
         }
     }
-    
-    func orderedArray() -> [PCKStoreClass]{
+
+    func orderedArray() -> [PCKStoreClass] {
         return [.patient, .carePlan, .contact, .task, .outcome]
     }
-    
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable])throws -> [PCKStoreClass: PCKSynchronizable] {
+
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
         var updatedClasses = try getConcrete()
 
-        for (key,value) in newClasses{
-            if isCorrectType(key, check: value){
+        for (key, value) in newClasses {
+            if isCorrectType(key, check: value) {
                 updatedClasses[key] = value
-            }else{
+            } else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pullRevisions.debug("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
                 } else {
@@ -70,9 +75,9 @@ public enum PCKStoreClass: String {
         }
         return updatedClasses
     }
-    
+
     func getConcrete() throws -> [PCKStoreClass: PCKSynchronizable] {
-        
+
         var concreteClasses: [PCKStoreClass: PCKSynchronizable] = [
             .carePlan: try PCKStoreClass.carePlan.getDefault(),
             .contact: try PCKStoreClass.contact.getDefault(),
@@ -80,28 +85,28 @@ public enum PCKStoreClass: String {
             .patient: try PCKStoreClass.patient.getDefault(),
             .task: try PCKStoreClass.task.getDefault()
         ]
-        
-        for (key,value) in concreteClasses{
-            if !isCorrectType(key, check: value){
+
+        for (key, value) in concreteClasses {
+            if !isCorrectType(key, check: value) {
                 concreteClasses.removeValue(forKey: key)
             }
         }
-        
+
         //Ensure all default classes are created
-        guard concreteClasses.count == orderedArray().count else{
+        guard concreteClasses.count == orderedArray().count else {
             throw ParseCareKitError.couldntCreateConcreteClasses
         }
-        
+
         return concreteClasses
     }
-    
+
     func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
         var updatedClasses = try getConcrete()
 
-        for (key,value) in newClasses{
-            if isCorrectType(key, check: value){
+        for (key, value) in newClasses {
+            if isCorrectType(key, check: value) {
                 updatedClasses[key] = value
-            }else{
+            } else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pullRevisions.debug("PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class isn't compatibile.")
                 } else {
@@ -111,31 +116,31 @@ public enum PCKStoreClass: String {
         }
         return updatedClasses
     }
-    
-    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool{
+
+    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
         switch type {
         case .carePlan:
-            guard let _ = check as? CarePlan else{
+            guard (check as? CarePlan) != nil else {
                 return false
             }
             return true
         case .contact:
-            guard let _ = check as? Contact else{
+            guard (check as? Contact) != nil else {
                 return false
             }
             return true
         case .outcome:
-            guard let _ = check as? Outcome else{
+            guard (check as? Outcome) != nil else {
                 return false
             }
             return true
         case .patient:
-            guard let _ = check as? Patient else{
+            guard (check as? Patient) != nil else {
                 return false
             }
             return true
         case .task:
-            guard let _ = check as? Task else{
+            guard (check as? Task) != nil else {
                 return false
             }
             return true

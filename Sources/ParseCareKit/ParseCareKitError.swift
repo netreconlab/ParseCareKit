@@ -14,7 +14,7 @@ enum ParseCareKitError: Error {
     case requiredValueCantBeUnwrapped
     case objectIdDoesntMatchRemoteId
     case objectNotFoundOnParseServer
-    case cloudClockLargerThanLocalWhilePushRevisions
+    case cloudClockLargerThanLocal
     case couldntUnwrapClock
     case cantUnwrapSelf
     case cloudVersionNewerThanLocal
@@ -36,23 +36,31 @@ extension ParseCareKitError: LocalizedError {
         case .couldntUnwrapClock:
             return NSLocalizedString("ParseCareKit: Clock can't be unwrapped.", comment: "Clock Unwrapping error")
         case .objectIdDoesntMatchRemoteId:
-            return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.", comment: "Remote/Local mismatch error")
-        case .cloudClockLargerThanLocalWhilePushRevisions:
-            return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing", comment: "Knowledge vector larger in Cloud")
+            return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.",
+                                     comment: "Remote/Local mismatch error")
+        case .cloudClockLargerThanLocal:
+            return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing",
+                                     comment: "Knowledge vector larger in Cloud")
         case .cantUnwrapSelf:
-            return NSLocalizedString("Can't unwrap self. This class has already been deallocated", comment: "Can't unwrap self, class deallocated")
+            return NSLocalizedString("Can't unwrap self. This class has already been deallocated",
+                                     comment: "Can't unwrap self, class deallocated")
         case .cloudVersionNewerThanLocal:
-            return NSLocalizedString("Can't sync, the Cloud version newere than local version", comment: "Cloud version newer than local version")
+            return NSLocalizedString("Can't sync, the Cloud version newere than local version",
+                                     comment: "Cloud version newer than local version")
         case .uuidAlreadyExists:
             return NSLocalizedString("Can't sync, the uuid already exists in the Cloud", comment: "UUID isn't unique")
         case .cantCastToNeededClassType:
-            return NSLocalizedString("Can't cast to needed class type", comment: "Can't cast to needed class type")
+            return NSLocalizedString("Can't cast to needed class type",
+                                     comment: "Can't cast to needed class type")
         case .classTypeNotAnEligibleType:
-            return NSLocalizedString("PCKClass type isn't an eligible type", comment: "PCKClass type isn't an eligible type")
+            return NSLocalizedString("PCKClass type isn't an eligible type",
+                                     comment: "PCKClass type isn't an eligible type")
         case .couldntCreateConcreteClasses:
-            return NSLocalizedString("Couldn't create concrete classes", comment: "Couldn't create concrete classes")
+            return NSLocalizedString("Couldn't create concrete classes",
+                                     comment: "Couldn't create concrete classes")
         case .objectNotFoundOnParseServer:
-            return NSLocalizedString("Object couldn't be found on the Parse Server", comment: "Object couldn't be found on the Parse Server")
+            return NSLocalizedString("Object couldn't be found on the Parse Server",
+                                     comment: "Object couldn't be found on the Parse Server")
         }
     }
 }

@@ -10,63 +10,67 @@ import Foundation
 import ParseSwift
 import CareKitStore
 
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable line_length
+
 /// An `OutcomeValue` is the ParseCareKit equivalent of `OCKOutcomeValue`.  An
 /// `OCKOutcomeValue` is a representation of any response of measurement that a user gives
 /// in response to a task. The underlying type could be any of a number of types including
 /// integers, booleans, dates, text, and binary data, among others.
 final public class OutcomeValue: PCKObjectable {
-    
+
     public internal(set) var uuid: UUID?
-    
+
     var entityId: String?
-    
+
     public internal(set) var logicalClock: Int?
-    
+
     public internal(set) var schemaVersion: OCKSemanticVersion?
-    
+
     public internal(set) var createdDate: Date?
-    
+
     public internal(set) var updatedDate: Date?
-    
+
     public var timezone: TimeZone?
-    
-    public var userInfo: [String : String]?
-    
+
+    public var userInfo: [String: String]?
+
     public var groupIdentifier: String?
-    
+
     public var tags: [String]?
-    
+
     public var source: String?
-    
+
     public var asset: String?
-    
+
     public var notes: [Note]?
-    
+
     public var remoteID: String?
-    
+
     var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }
     }
-    
+
     public var objectId: String?
-    
+
     public var createdAt: Date?
-    
+
     public var updatedAt: Date?
-    
+
     public var ACL: ParseACL?
-    
+
     /// The index can be used to track the order or arrangement of outcomes values, when relevant.
-    public var index:Int?
-    
-    /// An optional property that can be used to specify what kind of value this is (e.g. blood pressure, qualitative stress, weight)
-    public var kind:String?
-    
+    public var index: Int?
+
+    /// An optional property that can be used to specify what kind of
+    /// value this is (e.g. blood pressure, qualitative stress, weight)
+    public var kind: String?
+
     /// The units for this measurement.
-    public var units:String?
-    
+    public var units: String?
+
     /// The underlying value.
     public var value: OCKOutcomeValueUnderlyingType?
 
@@ -87,7 +91,7 @@ final public class OutcomeValue: PCKObjectable {
 
     /// The underlying value as a date.
     var dateValue: Date? { return value as? Date }
-    
+
     /// Holds information about the type of this value.
     public var type: OCKOutcomeValueType {
         if value is Int { return .integer }
@@ -106,18 +110,20 @@ final public class OutcomeValue: PCKObjectable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
+        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo,
+             groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case index, kind, units, value, type
     }
 
+    // swiftlint:disable:next function_body_length
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         //Decode Parse first
         objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
         updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
-        
+
         guard let valueType = try container.decodeIfPresent(OCKOutcomeValueType.self, forKey: .type) else {
             return
         }
@@ -154,7 +160,7 @@ final public class OutcomeValue: PCKObjectable {
                 value = try container.decode(Date.self, forKey: .value)
             }
         }
-        
+
         kind = try container.decodeIfPresent(String.self, forKey: .kind)
         units = try container.decodeIfPresent(String.self, forKey: .units)
         index = try container.decodeIfPresent(Int.self, forKey: .index)
@@ -180,42 +186,42 @@ final public class OutcomeValue: PCKObjectable {
         here.kind = other.kind
         here.units = other.units
         here.value = other.value
-       
+
         guard let copied = here as? Self else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         return copied
     }
-    
+
     public class func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
         let encoded = try ParseCareKitUtility.encoder().encode(outcomeValue)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
-    
+
     public func convertToCareKit() throws -> OCKOutcomeValue {
         encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
         return try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: encoded)
     }
-    
+
     public func prepareEncodingRelational(_ encodingForParse: Bool) {
         notes?.forEach {
             $0.encodingForParse = encodingForParse
         }
     }
 
-    func stamp(_ clock: Int){
+    func stamp(_ clock: Int) {
         self.logicalClock = clock
-        self.notes?.forEach{
+        self.notes?.forEach {
             $0.logicalClock = self.logicalClock
         }
     }
-    
-    public class func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud:[OutcomeValue]){
-        for (index,value) in local.enumerated(){
-            guard let cloudNote = cloud.first(where: {$0.uuid == value.uuid}) else{
+
+    public class func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud: [OutcomeValue]) {
+        for (index, value) in local.enumerated() {
+            guard let cloudNote = cloud.first(where: {$0.uuid == value.uuid}) else {
                 continue
             }
             local[index] = cloudNote
@@ -255,7 +261,8 @@ extension OutcomeValue {
 
             guard encodedValue else {
                 let message = "Value could not be converted to a concrete type."
-                throw EncodingError.invalidValue(value ?? "", EncodingError.Context(codingPath: [CodingKeys.value], debugDescription: message))
+                throw EncodingError.invalidValue(value ?? "",
+                                                 EncodingError.Context(codingPath: [CodingKeys.value], debugDescription: message))
             }
         }
         try self.encodeObjectable(to: encoder)
