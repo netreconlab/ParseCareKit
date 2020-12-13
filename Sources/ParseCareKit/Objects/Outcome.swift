@@ -19,7 +19,7 @@ import os.log
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
 // swiftlint:disable:next type_body_length
-final public class Outcome: PCKObjectable, PCKSynchronizable {
+open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public var uuid: UUID?
 
@@ -111,7 +111,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> Outcome {
+    public func new(with careKitEntity: OCKEntity) throws -> Self {
 
         switch careKitEntity {
         case .outcome(let entity):
@@ -338,7 +338,7 @@ final public class Outcome: PCKObjectable, PCKSynchronizable {
         return copied
     }
 
-    public class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Outcome {
+    public class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Self {
 
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType

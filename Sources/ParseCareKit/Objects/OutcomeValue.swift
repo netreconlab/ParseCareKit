@@ -17,7 +17,7 @@ import CareKitStore
 /// `OCKOutcomeValue` is a representation of any response of measurement that a user gives
 /// in response to a task. The underlying type could be any of a number of types including
 /// integers, booleans, dates, text, and binary data, among others.
-final public class OutcomeValue: PCKObjectable {
+open class OutcomeValue: PCKObjectable {
 
     public var uuid: UUID?
 
@@ -116,7 +116,7 @@ final public class OutcomeValue: PCKObjectable {
     }
 
     // swiftlint:disable:next function_body_length
-    public init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         //Decode Parse first
