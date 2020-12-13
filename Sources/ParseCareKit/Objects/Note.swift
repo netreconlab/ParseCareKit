@@ -56,7 +56,7 @@ open class Note: PCKObjectable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     /// The note content.
     public var content: String?
@@ -66,12 +66,6 @@ open class Note: PCKObjectable {
 
     /// The person who created this note.
     public var author: String?
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        // swiftlint:disable:next line_length
-        "\(debugDescription) title=\(String(describing: title)) content=\(String(describing: content)) author=\(String(describing: author))"
-    }
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
@@ -100,7 +94,6 @@ open class Note: PCKObjectable {
     open class func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try ParseCareKitUtility.encoder().encode(note)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

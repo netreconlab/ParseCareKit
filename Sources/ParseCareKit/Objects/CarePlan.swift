@@ -64,7 +64,7 @@ public final class CarePlan: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     public var nextVersion: CarePlan? {
         didSet {
@@ -112,11 +112,6 @@ public final class CarePlan: PCKVersionable {
 
     /// A title describing this care plan.
     public var title: String?
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        "\(debugDescription) title=\(String(describing: title)) patientUUID=\(String(describing: patientUUID)) patient=\(String(describing: patient))"
-    }
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
@@ -339,7 +334,6 @@ public final class CarePlan: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(carePlan)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

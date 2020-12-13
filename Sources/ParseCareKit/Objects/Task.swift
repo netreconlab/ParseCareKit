@@ -95,7 +95,7 @@ public final class Task: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?
@@ -123,11 +123,6 @@ public final class Task: PCKVersionable {
                 carePlan = nil
             }
         }
-    }
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        "\(debugDescription) impactsAdherence=\(String(describing: impactsAdherence)) title=\(String(describing: title)) instructions=\(String(describing: instructions)) schedule=\(String(describing: schedule)) carePlanUUID=\(String(describing: carePlanUUID)) carePlan=\(String(describing: carePlan))"
     }
 
     enum CodingKeys: String, CodingKey {
@@ -354,7 +349,6 @@ public final class Task: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(task)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

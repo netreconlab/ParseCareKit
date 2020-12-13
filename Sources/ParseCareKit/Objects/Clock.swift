@@ -24,10 +24,6 @@ struct Clock: ParseObject {
 
     var vector: String?
 
-    public var localizedDescription: String {
-        "\(debugDescription) vector=\(String(describing: vector))"
-    }
-
     init(uuid: UUID) {
         self.uuid = uuid
         self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"

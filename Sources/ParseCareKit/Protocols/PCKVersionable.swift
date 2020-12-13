@@ -409,11 +409,4 @@ extension PCKVersionable {
         try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
         try encodeObjectable(to: encoder)
     }
-}
-
-//CustomStringConvertible
-extension PCKVersionable {
-    public var description: String {
-        "className=\(className) uuid=\(String(describing: uuid)) id=\(id) createdDate=\(String(describing: createdDate)) updatedDate=\(String(describing: updatedDate)) schemaVersion=\(String(describing: schemaVersion))  timezone=\(String(describing: timezone)) userInfo=\(String(describing: userInfo)) groupIdentifier=\(String(describing: groupIdentifier)) tags=\(String(describing: tags)) source=\(String(describing: source)) asset=\(String(describing: asset)) remoteID=\(String(describing: remoteID)) notes=\(String(describing: notes)) previousVersionUUID=\(String(describing: previousVersionUUID)) previousVersion=\(String(describing: previousVersion)) nextVersionUUID=\(String(describing: nextVersionUUID)) nextVersion=\(String(describing: nextVersion)) effectiveDate=\(String(describing: effectiveDate)) deletedDate=\(String(describing: deletedDate)) objectId=\(String(describing: objectId)) createdAt=\(String(describing: createdAt)) updatedAt=\(String(describing: updatedAt)) logicalClock=\(String(describing: logicalClock)) encodingForParse=\(encodingForParse) ACL=\(String(describing: ACL))"
-    }
 } // swiftlint:disable:this file_length
