@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,OS=13.0,name\=iPhone\ 11\ Pro\ Max test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,OS=13.7,name\=iPhone\ 11\ Pro\ Max test | xcpretty
       env: 
         DEVELOPER_DIR: ${{ env.CI_XCODE_VER_11 }}
     - name: Codecov
