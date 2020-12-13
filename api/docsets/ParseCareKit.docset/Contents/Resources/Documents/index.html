@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (83% documented)
+         (85% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -62,7 +62,13 @@
                 <a class="nav-group-task-link" href="Classes/CarePlan.html">CarePlan</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Contact.html">Contact</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Note.html">Note</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Outcome.html">Outcome</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/OutcomeValue.html">OutcomeValue</a>
@@ -425,7 +431,7 @@ This works with 1 or many devices per patient.*/</span>
 </code></pre>
 <h3 id='querying-parse-like-ockquery-in-carekit' class='heading'>Querying Parse Like OCKQuery in CareKit</h3>
 
-<p>There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because <code><a href="Classes/Patient.html">Patient</a></code>, <code><a href="Classes/CarePlan.html">CarePlan</a></code>, <code>Contact</code>, and <code><a href="Classes/Task.html">Task</a></code> are versioned entities and <code>Outcome</code>&rsquo;s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for &ldquo;versioned&rdquo; entities or tombstoned and not tombstoned <code>Outcome</code>s. A description of how versioning works in CareKit can be found <a href="https://github.com/carekit-apple/CareKit#carekitstore-">here</a>.</p>
+<p>There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because <code><a href="Classes/Patient.html">Patient</a></code>, <code><a href="Classes/CarePlan.html">CarePlan</a></code>, <code><a href="Classes/Contact.html">Contact</a></code>, and <code><a href="Classes/Task.html">Task</a></code> are versioned entities and <code><a href="Classes/Outcome.html">Outcome</a></code>&rsquo;s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for &ldquo;versioned&rdquo; entities or tombstoned and not tombstoned <code><a href="Classes/Outcome.html">Outcome</a></code>s. A description of how versioning works in CareKit can be found <a href="https://github.com/carekit-apple/CareKit#carekitstore-">here</a>.</p>
 <pre class="highlight swift"><code><span class="c1">//To query the most recent version</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Patient</span><span class="o">.</span><span class="nf">query</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())</span>
 
@@ -441,7 +447,7 @@ This works with 1 or many devices per patient.*/</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>For <code>Outcome</code>:</p>
+<p>For <code><a href="Classes/Outcome.html">Outcome</a></code>:</p>
 <pre class="highlight swift"><code><span class="c1">//To query all current outcomes</span>
 <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Outcome</span><span class="o">.</span><span class="nf">queryNotDeleted</span><span class="p">()</span>
 <span class="n">query</span><span class="o">.</span><span class="nf">find</span><span class="p">(</span><span class="nv">callbackQueue</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">){</span> <span class="n">results</span> <span class="k">in</span>

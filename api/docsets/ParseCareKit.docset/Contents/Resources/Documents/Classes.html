@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (83% documented)
+         (85% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -63,7 +63,13 @@
                 <a class="nav-group-task-link" href="Classes/CarePlan.html">CarePlan</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Contact.html">Contact</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Note.html">Note</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Outcome.html">Outcome</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/OutcomeValue.html">OutcomeValue</a>
@@ -164,6 +170,36 @@ time about why the changes were made.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12ParseCareKit7ContactC"></a>
+                    <a name="//apple_ref/swift/Class/Contact" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit7ContactC">Contact</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Contact</code> is the ParseCareKit equivalent of <code>OCKContact</code>.  An <code>OCKContact</code>represents a contact that a user
+may want to get in touch with. A contact may be a care provider, a friend, or a family member. Contacts must have at
+least a name, and may optionally have numerous other addresses at which to be contacted.</p>
+
+                        <a href="Classes/Contact.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Contact</span> <span class="p">:</span> <span class="kt"><a href="Protocols/PCKVersionable.html">PCKVersionable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12ParseCareKit4NoteC"></a>
                     <a name="//apple_ref/swift/Class/Note" class="dashAnchor"></a>
                     <a class="token" href="#/s:12ParseCareKit4NoteC">Note</a>
@@ -186,6 +222,37 @@ why they weren&rsquo;t able to complete a task on a certain occasion.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Note</span> <span class="p">:</span> <span class="kt"><a href="Protocols/PCKObjectable.html">PCKObjectable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit7OutcomeC"></a>
+                    <a name="//apple_ref/swift/Class/Outcome" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit7OutcomeC">Outcome</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An <code>Outcome</code> is the ParseCareKit equivalent of <code>OCKOutcome</code>.  An <code>OCKOutcome</code> represents the
+outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
+For example, a task that asks a patient to measure their temperature will have events whose outcome
+will contain a single value representing the patient&rsquo;s temperature.</p>
+
+                        <a href="Classes/Outcome.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Outcome</span> <span class="p">:</span> <span class="kt"><a href="Protocols/PCKObjectable.html">PCKObjectable</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span></code></pre>
 
                         </div>
                       </div>
