@@ -9,14 +9,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/CarePlan.swift",
-      "line": 334,
+      "line": 329,
       "symbol": "CarePlan.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/CarePlan.swift",
-      "line": 356,
+      "line": 350,
       "symbol": "CarePlan.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -30,14 +30,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Contact.swift",
-      "line": 373,
+      "line": 368,
       "symbol": "Contact.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Contact.swift",
-      "line": 394,
+      "line": 388,
       "symbol": "Contact.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -51,35 +51,35 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Note.swift",
-      "line": 100,
+      "line": 94,
       "symbol": "Note.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Note.swift",
-      "line": 108,
+      "line": 101,
       "symbol": "Note.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Note.swift",
-      "line": 114,
+      "line": 107,
       "symbol": "Note.prepareEncodingRelational(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Note.swift",
-      "line": 127,
+      "line": 120,
       "symbol": "Note.replaceWithCloudVersion(_:cloud:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Note.swift",
-      "line": 141,
+      "line": 134,
       "symbol": "Note.fetchAndReplace(_:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
@@ -93,70 +93,70 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 274,
+      "line": 269,
       "symbol": "Outcome.tombstone(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 341,
+      "line": 336,
       "symbol": "Outcome.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 354,
+      "line": 348,
       "symbol": "Outcome.copyRelational(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 366,
+      "line": 360,
       "symbol": "Outcome.prepareEncodingRelational(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 377,
+      "line": 371,
       "symbol": "Outcome.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 383,
+      "line": 377,
       "symbol": "Outcome.save(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 454,
+      "line": 448,
       "symbol": "Outcome.tagWithId(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 476,
+      "line": 470,
       "symbol": "Outcome.stampRelational()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 484,
+      "line": 478,
       "symbol": "Outcome.queryNotDeleted()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
-      "line": 499,
+      "line": 493,
       "symbol": "Outcome.findOutcomesInBackground(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -170,28 +170,28 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/OutcomeValue.swift",
-      "line": 196,
+      "line": 191,
       "symbol": "OutcomeValue.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/OutcomeValue.swift",
-      "line": 203,
+      "line": 197,
       "symbol": "OutcomeValue.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/OutcomeValue.swift",
-      "line": 209,
+      "line": 203,
       "symbol": "OutcomeValue.prepareEncodingRelational(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/OutcomeValue.swift",
-      "line": 222,
+      "line": 216,
       "symbol": "OutcomeValue.replaceWithCloudVersion(_:cloud:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
@@ -205,14 +205,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Patient.swift",
-      "line": 333,
+      "line": 328,
       "symbol": "Patient.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Patient.swift",
-      "line": 354,
+      "line": 348,
       "symbol": "Patient.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -226,21 +226,21 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Task.swift",
-      "line": 348,
+      "line": 343,
       "symbol": "Task.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Task.swift",
-      "line": 371,
+      "line": 365,
       "symbol": "Task.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Task.swift",
-      "line": 410,
+      "line": 404,
       "symbol": "Task.stampRelational()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
