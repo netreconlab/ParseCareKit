@@ -20,14 +20,12 @@ jobs:
     - name: Codecov
       run: bash <(curl https://codecov.io/bash)
 
-  spm-test:
+  xcode-build-watchos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Run tests
-      run: make test
-    - name: Codecov
-      run: bash <(curl https://codecov.io/bash)
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 5\ -\ 44mm | xcpretty
 
   deploy_docs:
     
