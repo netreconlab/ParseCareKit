@@ -61,7 +61,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     var date: Date? //Custom added, check if needed
 
@@ -97,11 +97,6 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
                 task = nil
             }
         }
-    }
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        "\(debugDescription) taskOccurrenceIndex=\(String(describing: taskOccurrenceIndex)) values=\(String(describing: values)) taskUUID=\(String(describing: taskUUID)) task=\(String(describing: task)) date=\(String(describing: date)) deletedDate=\(String(describing: deletedDate))"
     }
 
     enum CodingKeys: String, CodingKey {
@@ -347,7 +342,6 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         let encoded = try ParseCareKitUtility.encoder().encode(outcome)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 
@@ -390,9 +384,9 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
             case .success(let saved):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.debug("save(), Object: \(saved.localizedDescription, privacy: .private)")
+                    Logger.outcome.debug("save(), Object: \(saved, privacy: .private)")
                 } else {
-                    os_log("save(), Object: %{private}", log: .outcome, type: .debug, saved.localizedDescription)
+                    os_log("save(), Object: %{private}", log: .outcome, type: .debug, saved.description)
                 }
 
                 saved.linkRelated { result in

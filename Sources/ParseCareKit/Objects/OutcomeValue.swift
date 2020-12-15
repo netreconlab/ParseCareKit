@@ -59,7 +59,7 @@ open class OutcomeValue: PCKObjectable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     /// The index can be used to track the order or arrangement of outcomes values, when relevant.
     public var index: Int?
@@ -101,11 +101,6 @@ open class OutcomeValue: PCKObjectable {
         if value is Data { return .binary }
         if value is Date { return .date }
         fatalError("Unknown type!")
-    }
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        "\(debugDescription) value=\(String(describing: value)) kind=\(String(describing: kind)) units=\(String(describing: units)) index=\(String(describing: index))"
     }
 
     enum CodingKeys: String, CodingKey {
@@ -196,7 +191,6 @@ open class OutcomeValue: PCKObjectable {
     public class func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
         let encoded = try ParseCareKitUtility.encoder().encode(outcomeValue)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

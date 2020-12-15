@@ -89,7 +89,7 @@ public final class Patient: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     /// A list of substances this patient is allergic to.
     public var allergies: [String]?
@@ -102,11 +102,6 @@ public final class Patient: PCKVersionable {
 
     /// The patient's biological sex.
     public var sex: OCKBiologicalSex?
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        "\(debugDescription) name=\(String(describing: name)) birthday=\(String(describing: birthday)) sex=\(String(describing: sex)) allergies=\(String(describing: allergies))"
-    }
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
@@ -339,7 +334,6 @@ public final class Patient: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(patient)
         let decoded = try ParseCareKitUtility.decoder().decode(Patient.self, from: encoded)
         decoded.entityId = patient.id
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

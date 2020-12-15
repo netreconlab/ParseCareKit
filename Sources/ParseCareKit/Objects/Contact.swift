@@ -92,7 +92,7 @@ public final class Contact: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL?
+    public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
     /// The contact's postal address.
     public var address: OCKPostalAddress?
@@ -141,11 +141,6 @@ public final class Contact: PCKVersionable {
 
     /// An array of other information that could be used reach this contact.
     public var otherContactInfo: [OCKLabeledValue]?
-
-    /// A textual representation of this instance, suitable for debugging.
-    public var localizedDescription: String {
-        "\(debugDescription) title=\(String(describing: title)) role=\(String(describing: role)) organization=\(String(describing: organization)) category=\(String(describing: category)) address=\(String(describing: address)) messagingNumbers=\(String(describing: messagingNumbers)) emailAddresses=\(String(describing: emailAddresses)) phoneNumbers=\(String(describing: phoneNumbers)) otherContactInfo=\(String(describing: otherContactInfo)) carePlanUUID=\(String(describing: carePlanUUID)) carePlan=\(String(describing: carePlan))"
-    }
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
@@ -378,7 +373,6 @@ public final class Contact: PCKVersionable {
         let encoded = try ParseCareKitUtility.encoder().encode(contact)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
-        decoded.ACL = try? ParseACL.defaultACL()
         return decoded
     }
 

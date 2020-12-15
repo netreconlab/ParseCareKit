@@ -259,10 +259,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         if potentialPCKClock != nil {
                             potentialPCKClock!.save(callbackQueue: .main) { _ in
                                 if #available(iOS 14.0, watchOS 7.0, *) {
-                                    Logger.pushRevisions.error("Saved Clock. Try to sync again \(potentialPCKClock!.localizedDescription, privacy: .private).")
+                                    Logger.pushRevisions.error("Saved Clock. Try to sync again \(potentialPCKClock!.debugDescription, privacy: .private).")
                                 } else {
                                     os_log("Saved Clock. Try to sync again. %{private}@.",
-                                           log: .pushRevisions, type: .debug, potentialPCKClock!.localizedDescription)
+                                           log: .pushRevisions, type: .debug, potentialPCKClock!.debugDescription)
                                 }
                                 completion(error)
                             }
