@@ -1,5 +1,7 @@
 version: 1
 builder:
   configs:
+  - platform: ios
+    scheme: ParseCareKit
   - platform: watchos
     scheme: ParseCareKit-watchOS
