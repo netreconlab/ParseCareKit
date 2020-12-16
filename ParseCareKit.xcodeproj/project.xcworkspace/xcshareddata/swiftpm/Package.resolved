@@ -5,8 +5,8 @@
         "package": "CareKit",
         "repositoryURL": "https://github.com/cbaker6/CareKit",
         "state": {
-          "branch": null,
-          "revision": "9c8a95aeb18c3fc290b742e2a9e15ae96a8bafdb",
+          "branch": "pod-ios11",
+          "revision": "f831a3c1d3b34c2eb5ca63c11a419f8d1f2c4173",
           "version": null
         }
       },
