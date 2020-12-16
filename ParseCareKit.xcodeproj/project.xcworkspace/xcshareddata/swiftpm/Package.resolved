@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/apple/FHIRModels.git",
         "state": {
           "branch": null,
-          "revision": "1d34af2339e49ed5d9dd2d084f5f4f42cf4a7927",
-          "version": "0.3.1"
+          "revision": "c91e5bb74397136f79656bebdfda76a523d3e88c",
+          "version": "0.3.2"
         }
       },
       {
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
           "branch": "main",
-          "revision": "e382516bcf5997b5281dc734540fc89f58daad9e",
+          "revision": "0e917539289d6f15c86febb4156da2d4eda8360b",
           "version": null
         }
       }

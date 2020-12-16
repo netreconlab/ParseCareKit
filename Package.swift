@@ -9,12 +9,12 @@ let package = Package(
     products: [
         .library(
             name: "ParseCareKit",
-            targets: ["ParseCareKit"]),
+            targets: ["ParseCareKit"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/carekit-apple/CareKit.git", .branch("main")),
-        .package(url: "https://github.com/parse-community/Parse-Swift.git", .branch("main")),
+        .package(url: "https://github.com/parse-community/Parse-Swift", .branch("main"))
     ],
     targets: [
         .target(
@@ -22,6 +22,6 @@ let package = Package(
             dependencies: ["ParseSwift", "CareKitStore"]),
         .testTarget(
             name: "ParseCareKitTests",
-            dependencies: ["ParseCareKit"]),
+            dependencies: ["ParseCareKit"])
     ]
 )

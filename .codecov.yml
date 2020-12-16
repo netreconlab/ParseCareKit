@@ -2,7 +2,9 @@ coverage:
   ignore:
     - Tests/.*
   status:
-    patch: true
+    patch:
+      default:
+        target: auto
     changes: false
     project:
       default:

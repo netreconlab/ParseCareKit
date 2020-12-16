@@ -26,6 +26,8 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 ## CareKit Sample App with ParseCareKit
 A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKitSample-ParseCareKit), connects to the aforementioned [parse-hipaa](https://github.com/netreconlab/parse-hipaa) and demonstrates how CareKit data can be easily synched to the Cloud using ParseCareKit.
 
+<img src="https://user-images.githubusercontent.com/8621344/99022137-1ec7ca80-2530-11eb-897c-ace7c70536f2.png" width="300"> <img src="https://user-images.githubusercontent.com/8621344/99022190-3bfc9900-2530-11eb-8ad1-c1e8ba2e7f55.png" width="300">
+
 ### ParseCareKit.plist with server connection information
 ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/ParseCareKitUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
 
@@ -139,39 +141,13 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
         print("Implement")
     }
     
+    func successfullyPushedDataToCloud(){
+        print("Notified when data is succefully pushed to the cloud")
+    }
+
     func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
         let conflictPolicy = OCKMergeConflictResolutionPolicy.keepDevice
         completion(conflictPolicy)
-    }
-    
-    func storeUpdatedOutcome(_ outcome: OCKOutcome) {
-        //This is a workaround for a CareKit bug that doesn't allow you to query by id
-        store.updateOutcome(outcome, callbackQueue: .global(qos: .background)){
-            results in
-            switch results{
-            
-            case .success(_):
-                store.synchronize(){_ in} //Force synchronize after fix
-            case .failure(let error):
-                print("Error storing fix \(error)")
-            }
-        }
-    }
-    
-    func storeUpdatedCarePlan(_ carePlan: OCKCarePlan) {
-        dataStore.updateAnyCarePlan(carePlan, callbackQueue: .global(qos: .background), completion: nil)
-    }
-    
-    func storeUpdatedContact(_ contact: OCKContact) {
-        dataStore.updateAnyContact(contact, callbackQueue: .global(qos: .background), completion: nil)
-    }
-    
-    func storeUpdatedPatient(_ patient: OCKPatient) {
-        dataStore.updateAnyPatient(patient, callbackQueue: .global(qos: .background), completion: nil)
-    }
-    
-    func storeUpdatedTask(_ task: OCKTask) {
-        dataStore.updateAnyTask(task, callbackQueue: .global(qos: .background), completion: nil)
     }
 }
 
@@ -209,8 +185,8 @@ class CancerPatient: Patient {
         self.comorbidities = cancerPatient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
     }
     
-    override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
-        guard var partiallyConvertedPatient = super.convertToCareKit(fromCloud: fromCloud) else{return nil}
+    override func convertToCareKit() -> OCKPatient? {
+        guard var partiallyConvertedPatient = super.convertToCareKit() else{return nil}
         
         var userInfo: [String:String]!
         if partiallyConvertedPatient.userInfo == nil{
@@ -259,7 +235,11 @@ class Doctor: Patient {
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
+            } else {
+                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
+            }
             completion(nil)
         }
     }
@@ -282,8 +262,8 @@ class Doctor: Patient {
         return seld
     }
     
-    override func convertToCareKit(fromCloud: Bool=false) -> OCKPatient? {
-        guard var partiallyConvertedDoctor = super.convertToCareKit(fromCloud: fromCloud) else{return nil}
+    override func convertToCareKit() -> OCKPatient? {
+        guard var partiallyConvertedDoctor = super.convertToCareKit() else{return nil}
         
         var userInfo: [String:String]!
         if partiallyConvertedDoctor.userInfo == nil{
@@ -321,7 +301,7 @@ _ = Doctor(careKitEntity: newCareKitDoctor){
    newParseDoctor.sex = "Female" //This default from OCKPatient, Doctor has all defaults of it's CareKit counterpart
    
    
-   guard let updatedCareKitDoctor = newParseDoctor.convertToCareKit(fromCloud: false) else {
+   guard let updatedCareKitDoctor = newParseDoctor.convertToCareKit() else {
        completion(nil,nil)
        return
    }
@@ -349,7 +329,7 @@ There are some of helper methods provided in ParseCareKit to query parse in a si
 //To query the most recent version
 let query = Patient.query(for: Date())
 
-query.find(callbackQueue: .global(qos: .background)){ results in
+query.find(callbackQueue: .main){ results in
             
     switch results {
 
@@ -366,7 +346,7 @@ For `Outcome`:
 ```swift
 //To query all current outcomes
 let query = Outcome.queryNotDeleted()
-query.find(callbackQueue: .global(qos: .background)){ results in
+query.find(callbackQueue: .main){ results in
 
     switch results {
 
