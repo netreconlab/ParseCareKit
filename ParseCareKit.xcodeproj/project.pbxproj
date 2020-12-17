@@ -209,6 +209,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3ADA8C7132D6D64578C2BF06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		70640F76258BFD2700999BB8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,6 +237,13 @@
 			files = (
 				709752FA250D351B0020EA70 /* ParseCareKit.framework in Frameworks */,
 				1FDF5F5A67D599C1D9C54820 /* Pods_TestHost.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8103CC6180BE9513ED4F7412 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +450,7 @@
 			buildPhases = (
 				70640F65258BFD2600999BB8 /* Resources */,
 				70640F89258BFD2800999BB8 /* Embed Watch Content */,
+				3ADA8C7132D6D64578C2BF06 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -453,6 +468,7 @@
 			buildPhases = (
 				70640F68258BFD2600999BB8 /* Resources */,
 				70640F8C258BFD2800999BB8 /* Embed App Extensions */,
+				8103CC6180BE9513ED4F7412 /* Frameworks */,
 			);
 			buildRules = (
 			);

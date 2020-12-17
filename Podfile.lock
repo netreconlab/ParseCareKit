@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CareKitStore:
-    :commit: 25686733fb9ca1f7e4bec9aafe63ce13f17678f3
+    :commit: 759559cab8858faf6b3eee470fbe4b39773e4ead
     :git: https://github.com/cbaker6/CareKit.git
 
 SPEC CHECKSUMS:
