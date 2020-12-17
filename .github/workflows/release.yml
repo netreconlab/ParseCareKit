@@ -1,34 +1,12 @@
-name: build
-
+name: release
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: '*'
-
+  release:
+    types: [published]
 env:
   CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
-  CI_XCODE_VER_11: '/Applications/Xcode_11.7.app/Contents/Developer'
-
+  
 jobs:
-  xcode-test-ios:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
-    - name: Codecov
-      run: bash <(curl https://codecov.io/bash)
-
-  xcode-build-watchos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 5\ -\ 44mm | xcpretty
-
-  deploy_docs:
-    
+  docs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -60,7 +38,6 @@ jobs:
             --build-tool-arguments -scheme,ParseCareKit \
             --module ParseCareKit \
       - name: Deploy Jazzy Docs
-        if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
