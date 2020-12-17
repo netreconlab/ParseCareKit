@@ -283,11 +283,11 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
             case .success(let foundObject):
                 //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-                foundObject.values?.forEach {
-                    $0.delete(callbackQueue: .main) { _ in }
-                    $0.notes?.forEach { $0.delete(callbackQueue: .main) { _ in } }
+                try? foundObject.values?.forEach {
+                    _ = try $0.notes?.deleteAll()
                 }
-                foundObject.notes?.forEach { $0.delete(callbackQueue: .main) { _ in } }
+                _ = try? foundObject.values?.deleteAll()
+                _ = try? foundObject.notes?.deleteAll()
 
                 guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
                     if #available(iOS 14.0, watchOS 7.0, *) {
