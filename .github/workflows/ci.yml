@@ -1,0 +1,30 @@
+name: ci-objc
+on:
+  push:
+    branches: [ parse-objc ]
+  pull_request:
+    branches: [ parse-objc ]
+env:
+  CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
+  CI_XCODE_VER_11: '/Applications/Xcode_11.7.app/Contents/Developer'
+
+jobs:
+  xcode-test-ios:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Pods
+      run: pod install
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
+
+  xcode-build-watchos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Pods
+      run: pod install
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 5\ -\ 44mm | xcpretty
