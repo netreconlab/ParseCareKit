@@ -1,0 +1,64 @@
+name: ci
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: '*'
+env:
+  CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
+  CI_XCODE_VER_11: '/Applications/Xcode_11.7.app/Contents/Developer'
+
+jobs:
+  xcode-test-ios:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 11\ Pro\ Max test | xcpretty
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
+
+  xcode-build-watchos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 5\ -\ 44mm | xcpretty
+
+  docs:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache Gems
+        id: cache-gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+      - name: Install Bundle
+        run: |
+          bundle config path vendor/bundle
+          bundle install
+      - name: Create Jazzy Docs
+        run: |
+          ver=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" ParseCareKit/Info.plist`
+          bundle exec jazzy \
+            --clean \
+            --author "Corey E. Baker" \
+            --author_url https://www.cs.uky.edu/~baker \
+            --github_url https://github.com/netreconlab/ParseCareKit \
+            --root-url https://netreconlab.github.io/api/ \
+            --module-version ${ver} \
+            --theme fullwidth \
+            --skip-undocumented \
+            --output ./docs/api \
+            --build-tool-arguments -scheme,ParseCareKit \
+            --module ParseCareKit \
+      - name: Deploy Jazzy Docs
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
