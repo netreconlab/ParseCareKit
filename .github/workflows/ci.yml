@@ -9,7 +9,7 @@ env:
   CI_XCODE_VER_11: '/Applications/Xcode_11.7.app/Contents/Developer'
 
 jobs:
-  xcode-test-ios:
+  ios:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max test | xcpretty
 
-  xcode-build-watchos:
+  watchos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -29,4 +29,4 @@ jobs:
     - name: Install Pods
       run: pod install
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit-watchOS -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit-watchOS -destination platform\=iOS\ Simulator,name\=iPhone\ 12 | xcpretty
