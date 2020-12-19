@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CareKitStore:
-    :commit: 25686733fb9ca1f7e4bec9aafe63ce13f17678f3
+    :commit: d27e323c754a099c53035a34daea0fc060632d8c
     :git: https://github.com/cbaker6/CareKit.git
 
 SPEC CHECKSUMS:
@@ -45,4 +45,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1fd2dd419fb2c963ca6dfb6b4e1597fc3bc7db5c
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0
