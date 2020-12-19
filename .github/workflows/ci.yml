@@ -19,14 +19,3 @@ jobs:
       run: pod install
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max test | xcpretty
-
-  watchos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.ref }}
-    - name: Install Pods
-      run: pod install
-    - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace ParseCareKit.xcworkspace -scheme ParseCareKit-watchOS -destination platform\=iOS\ Simulator,name\=iPhone\ 12 | xcpretty
