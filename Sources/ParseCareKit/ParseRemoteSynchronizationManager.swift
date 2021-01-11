@@ -102,7 +102,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                               completion: @escaping (Error?) -> Void) {
 
         //Fetch Clock from Cloud
-        let clockQuery = Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
+        Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
             guard let cloudVector = potentialCKClock else {
                 //No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -122,6 +122,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                                    completion: completion)
             }
         }
+        let clockQuery = Clock.query(ClockKey.uuid == uuid)
         guard let subscription = clockQuery.subscribe else {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.pullRevisions.error("Couldn't subscribe to clock query.")
@@ -132,7 +133,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             }
             return
         }
-        subscription.handleSubscribe { (_, _) in
+        subscription.handleEvent { (_, _) in
             self.delegate?.didRequestSynchronization(self)
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger
@@ -246,7 +247,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         }
 
         //Fetch Clock from Cloud
-        _ = Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
+        Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
 
             guard let cloudParseVector = potentialPCKClock,
                 let cloudCareKitVector = potentialCKClock else {
