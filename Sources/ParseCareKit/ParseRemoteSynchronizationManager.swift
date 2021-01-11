@@ -51,8 +51,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
      - Parameters:
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
+        - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
+     Requires `ParseLiveQuery` server to be setup.
     */
-    public init(uuid: UUID, auto: Bool, subscribeToServerUpdates: Bool = false) throws {
+    public init(uuid: UUID, auto: Bool, subscribeToServerUpdates: Bool) throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
@@ -66,9 +68,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
-            by passing in the respective Key/Value pairs.
+        - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
+     Requires `ParseLiveQuery` server to be setup.
     */
-    convenience public init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable], subscribeToServerUpdates: Bool = false) throws {
+    convenience public init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable], subscribeToServerUpdates: Bool) throws {
         try self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
@@ -83,10 +86,12 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
             by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.
         - customClasses: Add custom classes to synchroniz by passing in the respective Key/Value pair.
+        - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
+     Requires `ParseLiveQuery` server to be setup.
     */
     convenience public init(uuid: UUID, auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]? = nil,
-                            customClasses: [String: PCKSynchronizable], subscribeToServerUpdates: Bool = false) throws {
+                            customClasses: [String: PCKSynchronizable], subscribeToServerUpdates: Bool) throws {
         try self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         if replacePCKStoreClasses != nil {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
@@ -121,29 +126,30 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                                    cloudVector: cloudVector, mergeRevision: mergeRevision,
                                                    completion: completion)
             }
-        }
-        if subscribeToServerUpdates && clockSubscription == nil {
-            let clockQuery = Clock.query(ClockKey.uuid == uuid)
-            guard let subscription = clockQuery.subscribe else {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.error("Couldn't subscribe to clock query.")
-                } else {
-                    os_log("Couldn't subscribe to clock query",
-                           log: .pullRevisions,
-                           type: .error)
+
+            if self.subscribeToServerUpdates && self.clockSubscription == nil {
+                let clockQuery = Clock.query(ClockKey.uuid == self.uuid)
+                guard let subscription = clockQuery.subscribe else {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.pullRevisions.error("Couldn't subscribe to clock query.")
+                    } else {
+                        os_log("Couldn't subscribe to clock query",
+                               log: .pullRevisions,
+                               type: .error)
+                    }
+                    return
                 }
-                return
-            }
-            self.clockSubscription = subscription
-            self.clockSubscription!.handleEvent { (_, _) in
-                self.delegate?.didRequestSynchronization(self)
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger
-                        .pullRevisions
-                        .log("Parse subscription is notifying that there are updates on the server.")
-                } else {
-                    os_log("Parse subscription is notifying that there are updates on the server.",
-                           log: .pullRevisions, type: .info)
+                self.clockSubscription = subscription
+                self.clockSubscription!.handleEvent { (_, _) in
+                    self.delegate?.didRequestSynchronization(self)
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger
+                            .pullRevisions
+                            .log("Parse subscription is notifying that there are updates on the server.")
+                    } else {
+                        os_log("Parse subscription is notifying that there are updates on the server.",
+                               log: .pullRevisions, type: .info)
+                    }
                 }
             }
         }
