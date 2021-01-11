@@ -105,7 +105,7 @@
                 <a class="nav-group-task-link" href="Protocols/PCKVersionable.html">PCKVersionable</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols.html#/s:12ParseCareKit0A29RemoteSynchronizationDelegateP">ParseRemoteSynchronizationDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/ParseRemoteSynchronizationDelegate.html">ParseRemoteSynchronizationDelegate</a>
               </li>
             </ul>
           </li>
@@ -255,15 +255,15 @@ This works with 1 or many devices per patient.*/</span>
 <p>Register as a delegate just in case ParseCareKit needs your application to update a CareKit entity. ParseCareKit doesn&rsquo;t have access to your CareKitStor, so your app will have to make the necessary update if ParseCareKit detects a problem and needs to make an update locally. Registering for the delegates also allows you to handle synching conflicts. An example is below:</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizationDelegate</span><span class="p">,</span> <span class="kt">ParseRemoteSynchronizationDelegate</span><span class="p">{</span>
     <span class="kd">func</span> <span class="nf">didRequestSynchronization</span><span class="p">(</span><span class="n">_</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizable</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"Implement"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Implement so ParseCareKit can tell your OCKStore to sync to the cloud"</span><span class="p">)</span>
+        <span class="c1">//example</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">synchronize</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">?</span><span class="o">.</span><span class="n">localizedDescription</span> <span class="p">??</span> <span class="s">"Successful sync with remote!"</span><span class="p">)</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">remote</span><span class="p">(</span><span class="n">_</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizable</span><span class="p">,</span> <span class="n">didUpdateProgress</span> <span class="nv">progress</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"Implement"</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">successfullyPushedDataToCloud</span><span class="p">(){</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"Notified when data is succefully pushed to the cloud"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Completed: </span><span class="se">\(</span><span class="n">progress</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
     <span class="p">}</span>
 
     <span class="kd">func</span> <span class="nf">chooseConflictResolutionPolicy</span><span class="p">(</span><span class="n">_</span> <span class="nv">conflict</span><span class="p">:</span> <span class="kt">OCKMergeConflictDescription</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">OCKMergeConflictResolutionPolicy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
