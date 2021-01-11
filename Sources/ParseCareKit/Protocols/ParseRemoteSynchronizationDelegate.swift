@@ -16,5 +16,10 @@ import CareKitStore
 public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDelegate {
     func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription,
                                         completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
+    /// Be notified when data has succesfully been pushed to the Cloud.
     func successfullyPushedDataToCloud()
+}
+
+extension ParseRemoteSynchronizationDelegate {
+    func successfullyPushedDataToCloud() { }
 }

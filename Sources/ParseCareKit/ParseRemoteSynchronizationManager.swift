@@ -141,7 +141,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 }
                 self.clockSubscription = subscription
                 self.clockSubscription!.handleEvent { (_, _) in
-                    self.delegate?.didRequestSynchronization(self)
+                    self.parseDelegate?.didRequestSynchronization(self)
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger
                             .pullRevisions
