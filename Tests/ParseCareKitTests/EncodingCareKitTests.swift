@@ -90,7 +90,7 @@ class ParseCareKitTests: XCTestCase {
         do {
         parse = try ParseRemoteSynchronizationManager(uuid:
                                                         // swiftlint:disable:next line_length
-                                                        UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!, auto: false)
+                                                        UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!, auto: false, subscribeToServerUpdates: false)
         } catch {
             print(error.localizedDescription)
         }
