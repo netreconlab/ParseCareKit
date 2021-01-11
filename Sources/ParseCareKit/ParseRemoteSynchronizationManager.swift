@@ -43,7 +43,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
     private weak var parseDelegate: ParseRemoteSynchronizationDelegate?
-    private var subscriptions = Set<String>()
+    private var clockSubscription: Subscription<Query<Clock>, Clock>?
     private var subscribeToServerUpdates: Bool
 
     /**
@@ -122,26 +122,29 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                                    completion: completion)
             }
         }
-        let clockQuery = Clock.query(ClockKey.uuid == uuid)
-        guard let subscription = clockQuery.subscribe else {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.pullRevisions.error("Couldn't subscribe to clock query.")
-            } else {
-                os_log("Couldn't subscribe to clock query",
-                       log: .pullRevisions,
-                       type: .error)
+        if subscribeToServerUpdates {
+            let clockQuery = Clock.query(ClockKey.uuid == uuid)
+            guard let subscription = clockQuery.subscribe else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.error("Couldn't subscribe to clock query.")
+                } else {
+                    os_log("Couldn't subscribe to clock query",
+                           log: .pullRevisions,
+                           type: .error)
+                }
+                return
             }
-            return
-        }
-        subscription.handleEvent { (_, _) in
-            self.delegate?.didRequestSynchronization(self)
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger
-                    .pullRevisions
-                    .log("Parse subscription is notifying that there are updates on the server.")
-            } else {
-                os_log("Parse subscription is notifying that there are updates on the server.",
-                       log: .pullRevisions, type: .info)
+            self.clockSubscription = subscription
+            self.clockSubscription!.handleEvent { (_, _) in
+                self.delegate?.didRequestSynchronization(self)
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger
+                        .pullRevisions
+                        .log("Parse subscription is notifying that there are updates on the server.")
+                } else {
+                    os_log("Parse subscription is notifying that there are updates on the server.",
+                           log: .pullRevisions, type: .info)
+                }
             }
         }
     }
