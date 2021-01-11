@@ -162,13 +162,15 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                          completion: @escaping (Error?) -> Void) {
 
         let classNames = PCKStoreClass.patient.orderedArray()
-        let ratioComplete = Double(concreteClassesAlreadyPulled/(classNames.count - 1))
-        self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.pullRevisions.info("pullRevisionsForConcreteClasses progress: \(ratioComplete, privacy: .private)")
-        } else {
-            os_log("pullRevisionsForConcreteClasses progress: %{private}@.",
-                   log: .pullRevisions, type: .default, ratioComplete)
+        if classNames.count > 0 {
+            let ratioComplete = Double(concreteClassesAlreadyPulled/(classNames.count - 1))
+            self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.pullRevisions.info("pullRevisionsForConcreteClasses progress: \(ratioComplete, privacy: .private)")
+            } else {
+                os_log("pullRevisionsForConcreteClasses progress: %{private}@.",
+                       log: .pullRevisions, type: .default, ratioComplete)
+            }
         }
 
         guard concreteClassesAlreadyPulled < classNames.count,
@@ -328,16 +330,16 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
             var revisionsCompletedCount = 0
             deviceRevision.entities.forEach {
-
-                let ratioComplete = Double(revisionsCompletedCount/(deviceRevision.entities.count - 1))
-                self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.info("pushRevisions progress: \(ratioComplete, privacy: .private)")
-                } else {
-                    os_log("pushRevisions progress: %{private}@.",
-                           log: .pullRevisions, type: .default, ratioComplete)
+                if deviceRevision.entities.count > 0 {
+                    let ratioComplete = Double(revisionsCompletedCount/(deviceRevision.entities.count - 1))
+                    self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.pullRevisions.info("pushRevisions progress: \(ratioComplete, privacy: .private)")
+                    } else {
+                        os_log("pushRevisions progress: %{private}@.",
+                               log: .pullRevisions, type: .default, ratioComplete)
+                    }
                 }
-
                 let entity = $0
                 switch entity {
                 case .patient(let patient):
