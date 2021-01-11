@@ -20,7 +20,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
     /// If set, the delegate will be alerted to important events delivered by the remote
     /// store (set this, don't set `delegate`).
-    public var parseRemoteDelegate: ParseRemoteSynchronizationDelegate? {
+    public weak var parseRemoteDelegate: ParseRemoteSynchronizationDelegate? {
         get {
             return parseDelegate
         }
@@ -162,6 +162,14 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                          completion: @escaping (Error?) -> Void) {
 
         let classNames = PCKStoreClass.patient.orderedArray()
+        let ratioComplete = Double(concreteClassesAlreadyPulled/(classNames.count - 1))
+        self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+        if #available(iOS 14.0, watchOS 7.0, *) {
+            Logger.pullRevisions.info("pullRevisionsForConcreteClasses progress: \(ratioComplete, privacy: .private)")
+        } else {
+            os_log("pullRevisionsForConcreteClasses progress: %{private}@.",
+                   log: .pullRevisions, type: .default, ratioComplete)
+        }
 
         guard concreteClassesAlreadyPulled < classNames.count,
             let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else {
@@ -173,7 +181,6 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 completion(previousError)
                 return
         }
-        //let newConcreteClass = concreteClass
         var currentError = previousError
         concreteClass.pullRevisions(since: localClock, cloudClock: cloudVector) { customRevision in
             mergeRevision(customRevision) { error in
@@ -204,6 +211,17 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
         if let customClassesToSynchronize = self.customClassesToSynchronize {
             let classNames = customClassesToSynchronize.keys.sorted()
+
+            if classNames.count > 0 {
+                let ratioComplete = Double(customClassesAlreadyPulled/(classNames.count - 1))
+                self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.info("pullRevisionsForCustomClasses progress: \(ratioComplete, privacy: .private)")
+                } else {
+                    os_log("pullRevisionsForCustomClasses progress: %{private}@.",
+                           log: .pullRevisions, type: .default, ratioComplete)
+                }
+            }
 
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else {
@@ -310,6 +328,16 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
             var revisionsCompletedCount = 0
             deviceRevision.entities.forEach {
+
+                let ratioComplete = Double(revisionsCompletedCount/(deviceRevision.entities.count - 1))
+                self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.info("pushRevisions progress: \(ratioComplete, privacy: .private)")
+                } else {
+                    os_log("pushRevisions progress: %{private}@.",
+                           log: .pullRevisions, type: .default, ratioComplete)
+                }
+
                 let entity = $0
                 switch entity {
                 case .patient(let patient):
@@ -531,7 +559,6 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             switch result {
 
             case .success:
-                self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 completion(nil)
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
@@ -547,7 +574,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
     public func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription,
                                                completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
-        if parseRemoteDelegate != nil {
+        if let parseDelegate = parseDelegate {
             parseRemoteDelegate!.chooseConflictResolutionPolicy(conflict, completion: completion)
         } else {
             let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
