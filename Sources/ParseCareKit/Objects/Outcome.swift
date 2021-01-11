@@ -124,8 +124,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        guard PCKUser.current != nil,
-              let uuid = self.uuid else {
+        guard let uuid = self.uuid else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
@@ -268,8 +267,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public func tombstone(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        guard PCKUser.current != nil,
-              let uuid = self.uuid else {
+        guard let uuid = self.uuid else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
@@ -339,7 +337,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
 
-        let encoded = try ParseCareKitUtility.encoder().encode(outcome)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(outcome)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
         return decoded

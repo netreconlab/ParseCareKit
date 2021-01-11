@@ -189,7 +189,7 @@ open class OutcomeValue: PCKObjectable {
     }
 
     public class func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
-        let encoded = try ParseCareKitUtility.encoder().encode(outcomeValue)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(outcomeValue)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         return decoded
     }

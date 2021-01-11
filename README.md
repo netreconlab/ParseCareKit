@@ -136,15 +136,15 @@ Register as a delegate just in case ParseCareKit needs your application to updat
 ```swift
 extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizationDelegate{
     func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
-        print("Implement")
+        print("Implement so ParseCareKit can tell your OCKStore to sync to the cloud")
+        //example
+        store.synchronize { error in
+            print(error?.localizedDescription ?? "Successful sync with remote!")
+        }
     }
     
     func remote(_ remote: OCKRemoteSynchronizable, didUpdateProgress progress: Double) {
-        print("Implement")
-    }
-    
-    func successfullyPushedDataToCloud(){
-        print("Notified when data is succefully pushed to the cloud")
+        print("Completed: \(progress)")
     }
 
     func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription, completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {

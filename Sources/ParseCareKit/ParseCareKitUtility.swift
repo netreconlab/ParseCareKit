@@ -39,7 +39,12 @@ public struct ParseCareKitUtility {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
         }
 
-        ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
+        if let liveQuery = parseDictionary["LiveQueryServer"] as? String,
+           let liveQueryURL = URL(string: liveQuery) {
+            ParseSwift.initialize(applicationId: appID, serverURL: serverURL, liveQueryServerURL: liveQueryURL)
+        } else {
+            ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
+        }
     }
 
     /// Converts a date to a String.
