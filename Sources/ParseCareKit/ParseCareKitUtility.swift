@@ -33,12 +33,14 @@ public struct ParseCareKitUtility {
 
         guard let parseDictionary = plistConfiguration["ParseClientConfiguration"] as? [String: AnyObject],
             let appID = parseDictionary["ApplicationID"] as? String,
-            let serverURL = parseDictionary["Server"] as? URL,
+            let server = parseDictionary["Server"] as? String,
+            let serverURL = URL(string: server),
             (parseDictionary["EnableLocalDataStore"] as? Bool) != nil else {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
         }
 
-        if let liveQueryURL = parseDictionary["LiveQueryServer"] as? URL {
+        if let liveQuery = parseDictionary["LiveQueryServer"] as? String,
+           let liveQueryURL = URL(string: liveQuery) {
             ParseSwift.initialize(applicationId: appID, serverURL: serverURL, liveQueryServerURL: liveQueryURL)
         } else {
             ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
