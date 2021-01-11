@@ -122,7 +122,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                                    completion: completion)
             }
         }
-        if subscribeToServerUpdates {
+        if subscribeToServerUpdates && clockSubscription == nil {
             let clockQuery = Clock.query(ClockKey.uuid == uuid)
             guard let subscription = clockQuery.subscribe else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
