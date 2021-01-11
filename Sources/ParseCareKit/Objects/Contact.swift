@@ -170,8 +170,7 @@ public final class Contact: PCKVersionable {
 
     public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        guard PCKUser.current != nil,
-              let uuid = self.uuid else {
+        guard let uuid = self.uuid else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
@@ -215,8 +214,7 @@ public final class Contact: PCKVersionable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard PCKUser.current != nil,
-              let uuid = self.uuid,
+        guard let uuid = self.uuid,
             let previousVersionUUID = self.previousVersionUUID else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
@@ -370,7 +368,7 @@ public final class Contact: PCKVersionable {
         guard let contact = contactAny as? OCKContact else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try ParseCareKitUtility.encoder().encode(contact)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(contact)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
         return decoded

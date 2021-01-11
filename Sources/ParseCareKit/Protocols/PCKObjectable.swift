@@ -134,8 +134,7 @@ extension PCKObjectable {
     */
     static public func first(_ uuid: UUID?, relatedObject: Self?=nil, completion: @escaping(Result<Self, Error>) -> Void) {
 
-        guard PCKUser.current != nil,
-            let uuidString = uuid?.uuidString else {
+        guard let uuidString = uuid?.uuidString else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
                 return
         }
@@ -171,8 +170,7 @@ extension PCKObjectable {
     public func find(_ uuid: UUID?,
                      completion: @escaping(Result<[Self], Error>) -> Void) {
 
-        guard PCKUser.current != nil,
-            let uuidString = uuid?.uuidString else {
+        guard let uuidString = uuid?.uuidString else {
 
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.objectable.error("\(self.className, privacy: .private).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription, privacy: .private).")

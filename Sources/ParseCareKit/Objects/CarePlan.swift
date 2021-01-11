@@ -138,8 +138,7 @@ public final class CarePlan: PCKVersionable {
     }
 
     public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard PCKUser.current != nil,
-              let uuid = self.uuid else {
+        guard let uuid = self.uuid else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
@@ -183,8 +182,7 @@ public final class CarePlan: PCKVersionable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard PCKUser.current != nil,
-              let uuid = self.uuid,
+        guard let uuid = self.uuid,
             let previousVersionUUID = self.previousVersionUUID else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
@@ -331,7 +329,7 @@ public final class CarePlan: PCKVersionable {
         guard let carePlan = carePlanAny as? OCKCarePlan else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try ParseCareKitUtility.encoder().encode(carePlan)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(carePlan)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
         return decoded

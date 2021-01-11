@@ -44,7 +44,7 @@ func userLogin() {
 
     MockURLProtocol.mockRequests { _ in
         do {
-            let encoded = try loginResponse.getEncoder(skipKeys: false).encode(loginResponse)
+            let encoded = try ParseCoding.jsonEncoder().encode(loginResponse)
             return MockURLResponse(data: encoded, statusCode: 200, delay: 0.0)
         } catch {
             return nil
@@ -85,7 +85,7 @@ class ParseCareKitTests: XCTestCase {
                                       clientKey: "clientKey",
                                       masterKey: "masterKey",
                                       serverURL: url)
-        userLogin()
+        //userLogin()
         //userLoginToRealServer()
         do {
         parse = try ParseRemoteSynchronizationManager(uuid:

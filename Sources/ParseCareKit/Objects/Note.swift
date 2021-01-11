@@ -92,7 +92,7 @@ open class Note: PCKObjectable {
     }
 
     open class func copyCareKit(_ note: OCKNote) throws -> Note {
-        let encoded = try ParseCareKitUtility.encoder().encode(note)
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(note)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         return decoded
     }
