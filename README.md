@@ -308,7 +308,7 @@ _ = Doctor(careKitEntity: newCareKitDoctor){
        return
    }
    
-   store.addPatient(updatedCareKitDoctor, callbackQueue: .main){
+   store.addPatient(updatedCareKitDoctor, callbackQueue: ParseRemoteSynchronizationManager.queue){
        result in
        
        switch result{

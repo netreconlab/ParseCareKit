@@ -155,7 +155,7 @@ public final class Task: PCKVersionable {
 
         //Check to see if already in the cloud
         let query = Task.query(ObjectableKey.uuid == uuid)
-        query.first(callbackQueue: .main) { result in
+        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
 
@@ -202,7 +202,7 @@ public final class Task: PCKVersionable {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Task.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
             .include([TaskKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
 
@@ -256,7 +256,7 @@ public final class Task: PCKVersionable {
         let query = Task.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let tasks):

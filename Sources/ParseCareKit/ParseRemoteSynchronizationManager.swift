@@ -45,7 +45,11 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     private weak var parseDelegate: ParseRemoteSynchronizationDelegate?
     private var clockSubscription: Subscription<Query<Clock>, Clock>?
     private var subscribeToServerUpdates: Bool
-
+    static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
+                                                     qos: .default,
+                                                     attributes: .concurrent,
+                                                     autoreleaseFrequency: .inherit,
+                                                     target: nil)
     /**
      Creates an instance of ParseRemoteSynchronizationManager.
      - Parameters:
@@ -106,8 +110,14 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                               mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void,
                               completion: @escaping (Error?) -> Void) {
 
+        guard PCKUser.current != nil else {
+            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+            return
+        }
+
+        ParseRemoteSynchronizationManager.queue.async {
         //Fetch Clock from Cloud
-        Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
+            Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
             guard let cloudVector = potentialCKClock else {
                 //No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -152,6 +162,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     }
                 }
             }
+        }
         }
     }
 
@@ -275,8 +286,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
 
+        ParseRemoteSynchronizationManager.queue.async {
+
         //Fetch Clock from Cloud
-        Clock.fetchFromCloud(uuid: uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
+            Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
 
             guard let cloudParseVector = potentialPCKClock,
                 let cloudCareKitVector = potentialCKClock else {
@@ -303,7 +316,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     case .internalServer, .objectNotFound:
                         //1 - this column hasn't been added. 101 - Query returned no results
                         if potentialPCKClock != nil {
-                            potentialPCKClock!.save(callbackQueue: .main) { _ in
+                            potentialPCKClock!.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { _ in
                                 if #available(iOS 14.0, watchOS 7.0, *) {
                                     Logger.pushRevisions.error("Saved Clock. Try to sync again \(potentialPCKClock!.debugDescription, privacy: .private).")
                                 } else {
@@ -526,6 +539,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 }
             }
         }
+        }
     }
 
     func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, cloudClock: Int,
@@ -557,7 +571,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        parseClock.save(callbackQueue: .main) { result in
+        parseClock.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
             switch result {
 
             case .success:
