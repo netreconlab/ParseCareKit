@@ -23,8 +23,8 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift",
         "state": {
-          "branch": "threading",
-          "revision": "005406fb9c17789acb4b933e09f603b848eaf4d6",
+          "branch": "main",
+          "revision": "f5ebaba81ef6b703ef4208d0d87c9dd91e240dcb",
           "version": null
         }
       }
