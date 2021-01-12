@@ -64,31 +64,8 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         self.uuid = uuid
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
-
-        if self.subscribeToServerUpdates && self.clockSubscription == nil {
-            let clockQuery = Clock.query(ClockKey.uuid == self.uuid)
-            guard let subscription = clockQuery.subscribe else {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.clock.error("Couldn't subscribe to clock query.")
-                } else {
-                    os_log("Couldn't subscribe to clock query",
-                           log: .clock,
-                           type: .error)
-                }
-                return
-            }
-            self.clockSubscription = subscription
-            self.clockSubscription!.handleEvent { (_, _) in
-                self.parseDelegate?.didRequestSynchronization(self)
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger
-                        .clock
-                        .log("Parse subscription is notifying that there are updates on the server.")
-                } else {
-                    os_log("Parse subscription is notifying that there are updates on the server.",
-                           log: .clock, type: .info)
-                }
-            }
+        if PCKUser.current != nil {
+            subscribeToClock()
         }
     }
 
@@ -132,6 +109,34 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         self.customClassesToSynchronize = customClasses
     }
 
+    func subscribeToClock() {
+        if self.subscribeToServerUpdates && self.clockSubscription == nil {
+            let clockQuery = Clock.query(ClockKey.uuid == self.uuid)
+            guard let subscription = clockQuery.subscribe else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.clock.error("Couldn't subscribe to clock query.")
+                } else {
+                    os_log("Couldn't subscribe to clock query",
+                           log: .clock,
+                           type: .error)
+                }
+                return
+            }
+            self.clockSubscription = subscription
+            self.clockSubscription!.handleEvent { (_, _) in
+                self.parseDelegate?.didRequestSynchronization(self)
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger
+                        .clock
+                        .log("Parse subscription is notifying that there are updates on the server.")
+                } else {
+                    os_log("Parse subscription is notifying that there are updates on the server.",
+                           log: .clock, type: .info)
+                }
+            }
+        }
+    }
+
     public func pullRevisions(since clock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void,
                               completion: @escaping (Error?) -> Void) {
@@ -153,7 +158,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 let returnError: Error? = nil
 
                 let localClock = clock.clock(for: self.uuid)
-
+                self.subscribeToClock()
                 self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock,
                                                      cloudVector: cloudVector,
                                                      mergeRevision: mergeRevision) { previosError in
