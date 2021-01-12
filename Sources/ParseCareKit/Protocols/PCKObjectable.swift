@@ -147,7 +147,7 @@ extension PCKObjectable {
 
         let query = Self.query(ObjectableKey.uuid == uuidString)
             .include([ObjectableKey.notes])
-        query.first(callbackQueue: .main) { result in
+        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
 
@@ -185,7 +185,7 @@ extension PCKObjectable {
 
         let query = Self.query(ObjectableKey.uuid == uuidString)
             .include([ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
 

@@ -108,13 +108,13 @@ extension PCKVersionable {
                     case .success(var previousFound):
 
                         versionFixed.previousVersion = previousFound
-                        versionFixed.save(callbackQueue: .main) { results in
+                        versionFixed.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                             switch results {
 
                             case .success:
                                 if previousFound.nextVersion == nil {
                                     previousFound.nextVersion = versionFixed
-                                    previousFound.save(callbackQueue: .main) { results in
+                                    previousFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                         switch results {
 
                                         case .success:
@@ -158,13 +158,13 @@ extension PCKVersionable {
                     case .success(var nextFound):
 
                         versionFixed.nextVersion = nextFound
-                        versionFixed.save(callbackQueue: .main) { results in
+                        versionFixed.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                             switch results {
 
                             case .success:
                                 if nextFound.previousVersion == nil {
                                     nextFound.previousVersion = versionFixed
-                                    nextFound.save(callbackQueue: .main) { results in
+                                    nextFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
                                         switch results {
 
@@ -211,7 +211,7 @@ extension PCKVersionable {
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         var versionedObject = self
         _ = try? versionedObject.stampRelationalEntities()
-        versionedObject.save(callbackQueue: .main) { results in
+        versionedObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let savedObject):
@@ -226,7 +226,7 @@ extension PCKVersionable {
 
                     if case let .success(modifiedObject) = result {
 
-                        modifiedObject.save(callbackQueue: .main) { _ in }
+                        modifiedObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { _ in }
 
                         //Fix versioning doubly linked list if it's broken in the cloud
                         if modifiedObject.previousVersion != nil {
@@ -240,7 +240,7 @@ extension PCKVersionable {
                                             return
                                         }
                                         previousObjectFound.nextVersion = modifiedObject
-                                        previousObjectFound.save(callbackQueue: .main) { results in
+                                        previousObjectFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                             switch results {
 
                                             case .success:
@@ -279,7 +279,7 @@ extension PCKVersionable {
                                             return
                                         }
                                         nextObjectFound.previousVersion = modifiedObject
-                                        nextObjectFound.save(callbackQueue: .main) { results in
+                                        nextObjectFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                             switch results {
 
                                             case .success:
@@ -375,7 +375,7 @@ extension PCKVersionable {
     public func find(for date: Date, completion: @escaping(Result<[Self], ParseError>) -> Void) {
         let query = Self.query(for: date)
             .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let entities):

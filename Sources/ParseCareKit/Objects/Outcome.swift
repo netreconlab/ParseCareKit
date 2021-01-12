@@ -131,7 +131,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
         //Check to see if already in the cloud
         let query = Outcome.query(ObjectableKey.uuid == uuid)
-        query.first(callbackQueue: .main) { result in
+        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
 
@@ -161,7 +161,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
                     let query = Outcome.query(ObjectableKey.entityId == self.id,
                                               doesNotExist(key: OutcomeKey.deletedDate))
                         .include([OutcomeKey.values, ObjectableKey.notes])
-                    query.first(callbackQueue: .main) { result in
+                    query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
                         switch result {
 
@@ -199,7 +199,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .include([OutcomeKey.values, ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let outcomes):
@@ -275,7 +275,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(ObjectableKey.uuid == uuid)
             .include([OutcomeKey.values, ObjectableKey.notes])
-        query.first(callbackQueue: .main) { result in
+        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
 
@@ -377,7 +377,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
             completion(.failure(ParseCareKitError.cantUnwrapSelf))
             return
         }
-        stamped.save(callbackQueue: .main) { results in
+        stamped.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let saved):
@@ -392,7 +392,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
                     switch result {
 
                     case .success(let linkedObject):
-                        linkedObject.save(callbackQueue: .main) { _ in }
+                        linkedObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { _ in }
                         completion(.success(linkedObject))
 
                     case .failure:
@@ -490,7 +490,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public func findOutcomesInBackground(completion: @escaping([Outcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
 

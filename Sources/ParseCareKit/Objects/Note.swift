@@ -146,7 +146,7 @@ open class Note: PCKObjectable {
         }
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: uuids))
             .include([ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
 

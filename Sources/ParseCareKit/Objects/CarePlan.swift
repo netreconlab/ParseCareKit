@@ -144,7 +144,7 @@ public final class CarePlan: PCKVersionable {
         }
 
         let query = Self.query(ObjectableKey.uuid == uuid)
-        query.first(callbackQueue: .main) { result in
+        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
 
@@ -191,7 +191,7 @@ public final class CarePlan: PCKVersionable {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
             .include([CarePlanKey.patient, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
 
@@ -247,7 +247,7 @@ public final class CarePlan: PCKVersionable {
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
-        query.find(callbackQueue: .main) { results in
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
 
