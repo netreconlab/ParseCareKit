@@ -580,6 +580,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             switch result {
 
             case .success:
+                self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 completion(nil)
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
