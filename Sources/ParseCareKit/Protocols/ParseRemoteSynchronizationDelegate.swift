@@ -21,3 +21,7 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     /// Receive a notification when data has been successfully pushed to the Cloud.
     func successfullyPushedDataToCloud()
 }
+
+extension ParseRemoteSynchronizationDelegate {
+    func successfullyPushedDataToCloud() { }
+}
