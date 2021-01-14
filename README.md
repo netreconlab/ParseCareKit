@@ -151,7 +151,11 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
         let conflictPolicy = OCKMergeConflictResolutionPolicy.keepDevice
         completion(conflictPolicy)
     }
-}
+
+    func successfullyPushedDataToCloud(){        
+             print("Notified when data is succefully pushed to the cloud")        
+         }
+    }
 
 ```
 
