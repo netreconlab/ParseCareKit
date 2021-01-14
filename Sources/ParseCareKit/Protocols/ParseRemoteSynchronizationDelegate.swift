@@ -17,7 +17,7 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     /// When a conflict occurs, decide if the device or cloud record should be kept.
     func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription,
                                         completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
-    
+
     /// Receive a notification when data has been successfully pushed to the Cloud.
     func successfullyPushedDataToCloud()
 }
