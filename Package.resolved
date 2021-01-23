@@ -5,7 +5,7 @@
         "package": "CareKit",
         "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "56796e8c7915b5813a47f54d746219a29685cb81",
           "version": null
         }
@@ -23,9 +23,9 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift",
         "state": {
-          "branch": "release_1_0",
-          "revision": "c2d4845e09bb4a0fa273e4d94a111073dd52d771",
-          "version": null
+          "branch": null,
+          "revision": "cb26d0f877187d1027902c44940201835304ad22",
+          "version": "1.0.1"
         }
       }
     ]
