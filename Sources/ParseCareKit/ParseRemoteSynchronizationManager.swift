@@ -43,7 +43,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
     private weak var parseDelegate: ParseRemoteSynchronizationDelegate?
-    private var clockSubscription: Subscription<Query<Clock>, Clock>?
+    private var clockSubscription: Subscription<Clock>?
     private var subscribeToServerUpdates: Bool
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
                                                      qos: .default,

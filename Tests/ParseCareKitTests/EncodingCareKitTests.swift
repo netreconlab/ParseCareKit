@@ -12,6 +12,7 @@ import XCTest
 @testable import ParseSwift
 
 struct LoginSignupResponse: ParseUser {
+    var authData: [String: [String: String]?]?
     var objectId: String?
     var createdAt: Date?
     var sessionToken: String
