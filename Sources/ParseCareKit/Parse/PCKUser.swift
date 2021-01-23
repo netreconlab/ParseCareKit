@@ -12,8 +12,6 @@ import ParseSwift
 struct PCKUser: ParseUser {
     var authData: [String: [String: String]?]?
 
-    var sessionToken: String?
-
     var username: String?
 
     var email: String?
