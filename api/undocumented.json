@@ -379,13 +379,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKObjectable.swift",
-      "line": 234,
-      "symbol": "PCKObjectable.hash(into:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKVersionable.swift",
       "line": 361,
       "symbol": "PCKVersionable.query(for:)",
