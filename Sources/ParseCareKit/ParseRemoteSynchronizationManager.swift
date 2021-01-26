@@ -43,7 +43,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
     private weak var parseDelegate: ParseRemoteSynchronizationDelegate?
-    private var clockSubscription: Subscription<Clock>?
+    private var clockSubscription: SubscriptionCallback<Clock>?
     private var subscribeToServerUpdates: Bool
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
                                                      qos: .default,
@@ -119,7 +119,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             }
 
             let clockQuery = Clock.query(ClockKey.uuid == self.uuid)
-            guard let subscription = clockQuery.subscribe else {
+            guard let subscription = clockQuery.subscribeCallback else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.clock.error("Couldn't subscribe to clock query.")
                 } else {
