@@ -95,7 +95,7 @@ class ParseCareKitTests: XCTestCase {
         } catch {
             print(error.localizedDescription)
         }
-        store = OCKStore(name: "SampleAppStore", type: .onDisk, remote: parse)
+        store = OCKStore(name: "SampleAppStore", type: .onDisk(), remote: parse)
         parse?.parseRemoteDelegate = self
 
     }

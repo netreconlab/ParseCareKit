@@ -63,7 +63,9 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
-    var date: Date? //Custom added, check if needed
+    var startDate: Date? //Custom added, check if needed
+
+    var endDate: Date? //Custom added, check if needed
 
     /// The date on which this object was tombstoned. Note that objects are never actually deleted,
     /// but rather they are tombstoned and will no longer be returned from queries.
@@ -103,7 +105,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
-        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
+        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> Self {
@@ -332,7 +334,6 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(outcome)
         var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
@@ -437,12 +438,14 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
                 mutableOutcome.task = foundTask
 
                 guard let currentTask = mutableOutcome.task else {
-                    mutableOutcome.date = nil
+                    mutableOutcome.startDate = nil
+                    mutableOutcome.endDate = nil
                     completion(.success(mutableOutcome))
                     return
                 }
 
-                mutableOutcome.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
+                mutableOutcome.startDate = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
+                mutableOutcome.endDate = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.end
                 completion(.success(mutableOutcome))
 
             case .failure:
@@ -523,7 +526,8 @@ extension Outcome {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
             try container.encodeIfPresent(task, forKey: .task)
-            try container.encodeIfPresent(date, forKey: .date)
+            try container.encodeIfPresent(startDate, forKey: .startDate)
+            try container.encodeIfPresent(endDate, forKey: .endDate)
             if id.count > 0 {
                 try container.encodeIfPresent(id, forKey: .entityId)
             }

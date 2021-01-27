@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -13,14 +13,14 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/carekit-apple/CareKit.git",
-                 .revision("56796e8c7915b5813a47f54d746219a29685cb81")),
-        .package(url: "https://github.com/parse-community/Parse-Swift", from: "1.1.2")
+        .package(name: "CareKit", url: "https://github.com/cbaker6/CareKit.git",
+                 .revision("d4fca9a3a61d8d3fb693329254a138613dbb9837")),
+        .package(name: "ParseSwift", url: "https://github.com/parse-community/Parse-Swift", from: "1.1.2")
     ],
     targets: [
         .target(
             name: "ParseCareKit",
-            dependencies: ["ParseSwift", "CareKitStore"]),
+            dependencies: ["ParseSwift", .product(name: "CareKitStore", package: "CareKit")]),
         .testTarget(
             name: "ParseCareKitTests",
             dependencies: ["ParseCareKit"])
