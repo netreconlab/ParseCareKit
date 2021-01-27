@@ -112,7 +112,13 @@ extension PCKObjectable {
         guard let logicalClock = self.logicalClock else {
             throw ParseCareKitError.cantUnwrapSelf
         }
-        self.notes?.forEach {$0.stamp(logicalClock)}
+        var updatedNotes = [Note]()
+        notes?.forEach {
+            var update = $0
+            update.stamp(logicalClock)
+            updatedNotes.append(update)
+        }
+        self.notes = updatedNotes
         return self
     }
 
@@ -132,18 +138,18 @@ extension PCKObjectable {
         - completion: The block to execute.
      It should have the following argument signature: `(Result<Self,Error>)`.
     */
-    static public func first(_ uuid: UUID?, relatedObject: Self?=nil, completion: @escaping(Result<Self, Error>) -> Void) {
+    static public func first(_ uuid: UUID?, /*relatedObject: Self?=nil,*/ completion: @escaping(Result<Self, Error>) -> Void) {
 
         guard let uuidString = uuid?.uuidString else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
                 return
         }
-
+        /*
         guard relatedObject == nil else {
             //No need to query the Cloud, it's already present
             completion(.success(relatedObject!))
             return
-        }
+        }*/
 
         let query = Self.query(ObjectableKey.uuid == uuidString)
             .include([ObjectableKey.notes])
@@ -253,7 +259,7 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
 
         if encodingForParse {
-            if !(self is Note) || !(self is OutcomeValue) {
+            if !(self is Note) || !(self is OutcomeValue) || !(self is Outcome) {
                 try container.encodeIfPresent(entityId, forKey: .entityId)
             }
             try container.encodeIfPresent(ACL, forKey: .ACL)

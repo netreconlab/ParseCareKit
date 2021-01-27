@@ -21,35 +21,11 @@ import os.log
 /// id and schedule. The schedule determines when and how often the task should be performed, and the
 /// `impactsAdherence` flag may be used to specify whether or not the patients adherence to this task will affect
 /// their daily completion rings.
-public final class Task: PCKVersionable {
+public struct Task: PCKVersionable {
 
-    public var nextVersion: Task? {
-        didSet {
-            nextVersionUUID = nextVersion?.uuid
-        }
-    }
+    public var nextVersionUUID: UUID?
 
-    public var nextVersionUUID: UUID? {
-        didSet {
-            if nextVersionUUID != nextVersion?.uuid {
-                nextVersion = nil
-            }
-        }
-    }
-
-    public var previousVersion: Task? {
-        didSet {
-            previousVersionUUID = previousVersion?.uuid
-        }
-    }
-
-    public var previousVersionUUID: UUID? {
-        didSet {
-            if previousVersionUUID != previousVersion?.uuid {
-                previousVersion = nil
-            }
-        }
-    }
+    public var previousVersionUUID: UUID?
 
     public var effectiveDate: Date?
 
@@ -128,7 +104,7 @@ public final class Task: PCKVersionable {
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, previousVersion, nextVersion, effectiveDate
+        case previousVersionUUID, nextVersionUUID, effectiveDate
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
 
@@ -292,11 +268,11 @@ public final class Task: PCKVersionable {
     }
 
     public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+        var mutableTask = self
+        mutableTask.logicalClock = cloudClock //Stamp Entity
 
-        self.logicalClock = cloudClock //Stamp Entity
-
-        guard self.previousVersionUUID != nil else {
-            self.addToCloud(overwriteRemote: overwriteRemote) { result in
+        guard mutableTask.previousVersionUUID != nil else {
+            mutableTask.addToCloud(overwriteRemote: overwriteRemote) { result in
 
                 switch result {
 
@@ -309,7 +285,7 @@ public final class Task: PCKVersionable {
             return
         }
 
-        self.updateCloud { result in
+        mutableTask.updateCloud { result in
 
             switch result {
 
@@ -321,7 +297,7 @@ public final class Task: PCKVersionable {
         }
     }
 
-    public class func copyValues(from other: Task, to here: Task) throws -> Task {
+    public static func copyValues(from other: Task, to here: Task) throws -> Task {
         var here = here
         here.copyVersionedValues(from: other)
 
@@ -331,71 +307,58 @@ public final class Task: PCKVersionable {
         here.schedule = other.schedule
         here.carePlan = other.carePlan
         here.carePlanUUID = other.carePlanUUID
-
-        guard let copied = here as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return here
     }
 
-    public class func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
+    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
 
         guard let task = taskAny as? OCKTask else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
 
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(task)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
         return decoded
     }
 
-    func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
-        nextVersion?.encodingForParse = encodingForParse
-        carePlan?.encodingForParse = encodingForParse
-        notes?.forEach {
-            $0.encodingForParse = encodingForParse
+    mutating func prepareEncodingRelational(_ encodingForParse: Bool) {
+        if carePlan != nil {
+            carePlan?.encodingForParse = encodingForParse
         }
+        var updatedNotes = [Note]()
+        notes?.forEach {
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
+        }
+        self.notes = updatedNotes
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit() throws -> OCKTask {
-        self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+        var mutableTask = self
+        mutableTask.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableTask)
         return try ParseCareKitUtility.decoder().decode(OCKTask.self, from: encoded)
     }
 
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Result<Task, Error>) -> Void) {
+        var updatedTask = self
+        guard let carePlanUUID = self.carePlanUUID else {
+            //Finished if there's no CarePlan, otherwise see if it's in the cloud
+            completion(.success(updatedTask))
+            return
+        }
 
-        self.linkVersions { result in
+        CarePlan.first(carePlanUUID/*, relatedObject: updatedTask.carePlan*/) { result in
 
-            var updatedTask: Task
-
-            switch result {
-
-            case .success(let linked):
-                updatedTask = linked
-
-            case .failure:
-                updatedTask = self
+            if case let .success(carePlan) = result {
+                updatedTask.carePlan = carePlan
             }
 
-            guard let carePlanUUID = self.carePlanUUID else {
-                //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                completion(.success(updatedTask))
-                return
-            }
-
-            CarePlan.first(carePlanUUID, relatedObject: updatedTask.carePlan) { result in
-
-                if case let .success(carePlan) = result {
-                    updatedTask.carePlan = carePlan
-                }
-
-                completion(.success(updatedTask))
-            }
+            completion(.success(updatedTask))
         }
     }
 
@@ -420,6 +383,5 @@ extension Task {
         try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encodeIfPresent(schedule, forKey: .schedule)
         try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
 }

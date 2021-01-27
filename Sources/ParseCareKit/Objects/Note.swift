@@ -14,7 +14,7 @@ import CareKitStore
 /// CareKit objects and values. Use cases may include a physician leaving a note on a task when it is modified
 /// to explain why a medication dose was changed, or a note left from a patient to a care provider explaining
 /// why they weren't able to complete a task on a certain occasion.
-open class Note: PCKObjectable {
+public struct Note: PCKObjectable {
 
     public var uuid: UUID?
 
@@ -79,45 +79,51 @@ open class Note: PCKObjectable {
         self.timezone = .current
     }
 
-    open class func copyValues(from other: Note, to here: Note) throws -> Self {
+    public static func copyValues(from other: Note, to here: Note) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
         here.content = other.content
         here.author = other.author
         here.title = other.title
-        guard let copied = here as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return here
     }
 
-    open class func copyCareKit(_ note: OCKNote) throws -> Note {
+    public static func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(note)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         return decoded
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    open func convertToCareKit() throws -> OCKNote {
-        encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+    public func convertToCareKit() throws -> OCKNote {
+        var mutableNote = self
+        mutableNote.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableNote)
         return try ParseCareKitUtility.decoder().decode(OCKNote.self, from: encoded)
     }
 
-    public func prepareEncodingRelational(_ encodingForParse: Bool) {
+    mutating public func prepareEncodingRelational(_ encodingForParse: Bool) {
+        var updatedNotes = [Note]()
         notes?.forEach {
-            $0.encodingForParse = encodingForParse
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
         }
+        self.notes = updatedNotes
     }
 
-    func stamp(_ clock: Int) {
+    mutating func stamp(_ clock: Int) {
         self.logicalClock = clock
-        self.notes?.forEach {
-            $0.logicalClock = self.logicalClock
+        var updatedNotes = [Note]()
+        notes?.forEach {
+            var update = $0
+            update.stamp(clock)
+            updatedNotes.append(update)
         }
+        self.notes = updatedNotes
     }
 
-    open class func replaceWithCloudVersion(_ local:inout [Note]?, cloud: [Note]?) {
+    public static func replaceWithCloudVersion(_ local:inout [Note]?, cloud: [Note]?) {
         guard local != nil,
             cloud != nil else {
             return
@@ -131,7 +137,7 @@ open class Note: PCKObjectable {
         }
     }
 
-    open class func fetchAndReplace(_ notes: [Note]?, completion: @escaping([Note]?) -> Void) {
+    public static func fetchAndReplace(_ notes: [Note]?, completion: @escaping([Note]?) -> Void) {
         let entitiesToFetch = notes?.compactMap { entity -> UUID? in
             if entity.objectId == nil {
                 return entity.uuid

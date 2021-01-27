@@ -16,34 +16,11 @@ import os.log
 // swiftlint:disable line_length
 
 /// An `Patient` is the ParseCareKit equivalent of `OCKPatient`.  An `OCKPatient` represents a patient.
-public final class Patient: PCKVersionable {
-    public var nextVersion: Patient? {
-        didSet {
-            nextVersionUUID = nextVersion?.uuid
-        }
-    }
+public struct Patient: PCKVersionable {
 
-    public var nextVersionUUID: UUID? {
-        didSet {
-            if nextVersionUUID != nextVersion?.uuid {
-                nextVersion = nil
-            }
-        }
-    }
+    public var nextVersionUUID: UUID?
 
-    public var previousVersion: Patient? {
-        didSet {
-            previousVersionUUID = previousVersion?.uuid
-        }
-    }
-
-    public var previousVersionUUID: UUID? {
-        didSet {
-            if previousVersionUUID != previousVersion?.uuid {
-                previousVersion = nil
-            }
-        }
-    }
+    public var previousVersionUUID: UUID?
 
     public var effectiveDate: Date?
 
@@ -106,7 +83,7 @@ public final class Patient: PCKVersionable {
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, previousVersion, nextVersion, effectiveDate
+        case previousVersionUUID, nextVersionUUID, /*previousVersion, nextVersion,*/ effectiveDate
         case allergies, birthday, name, sex
     }
 
@@ -117,7 +94,6 @@ public final class Patient: PCKVersionable {
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(sex, forKey: .sex)
         try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> Patient {
@@ -281,11 +257,11 @@ public final class Patient: PCKVersionable {
     }
 
     public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+        var mutatablePatient = self
+        mutatablePatient.logicalClock = cloudClock //Stamp Entity
 
-        self.logicalClock = cloudClock //Stamp Entity
-
-        guard self.previousVersionUUID != nil else {
-            self.addToCloud(overwriteRemote: false) { result in
+        guard mutatablePatient.previousVersionUUID != nil else {
+            mutatablePatient.addToCloud(overwriteRemote: false) { result in
 
                 switch result {
 
@@ -298,7 +274,7 @@ public final class Patient: PCKVersionable {
             return
         }
 
-        self.updateCloud { result in
+        mutatablePatient.updateCloud { result in
 
             switch result {
 
@@ -310,42 +286,42 @@ public final class Patient: PCKVersionable {
         }
     }
 
-    public class func copyValues(from other: Patient, to here: Patient) throws -> Self {
+    public static func copyValues(from other: Patient, to here: Patient) throws -> Self {
         var here = here
         here.copyVersionedValues(from: other)
         here.name = other.name
         here.birthday = other.birthday
         here.sex = other.sex
         here.allergies = other.allergies
-        guard let copied = here as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return here
     }
 
-    public class func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
+    public static func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
 
         guard let patient = patientAny as? OCKPatient else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
 
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(patient)
-        let decoded = try ParseCareKitUtility.decoder().decode(Patient.self, from: encoded)
+        var decoded = try ParseCareKitUtility.decoder().decode(Patient.self, from: encoded)
         decoded.entityId = patient.id
         return decoded
     }
 
-    func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
-        nextVersion?.encodingForParse = encodingForParse
+    mutating func prepareEncodingRelational(_ encodingForParse: Bool) {
+        var updatedNotes = [Note]()
         notes?.forEach {
-            $0.encodingForParse = encodingForParse
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
         }
+        self.notes = updatedNotes
     }
 
     public func convertToCareKit() throws -> OCKPatient {
-        self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+        var mutablePatient = self
+        mutablePatient.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutablePatient)
         return try ParseCareKitUtility.decoder().decode(OCKPatient.self, from: encoded)
     }
 }
