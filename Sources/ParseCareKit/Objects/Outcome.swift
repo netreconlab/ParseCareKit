@@ -525,7 +525,7 @@ extension Outcome {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encodeIfPresent(task, forKey: .task)
+            try container.encodeIfPresent(task?.toPointer(), forKey: .task)
             try container.encodeIfPresent(startDate, forKey: .startDate)
             try container.encodeIfPresent(endDate, forKey: .endDate)
             if id.count > 0 {
