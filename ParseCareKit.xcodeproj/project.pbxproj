@@ -29,7 +29,8 @@
 		709D18072586903C0002E772 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D18062586903C0002E772 /* LoggerTests.swift */; };
 		709D1818258699840002E772 /* ParseRemoteSynchronizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D1817258699840002E772 /* ParseRemoteSynchronizationDelegate.swift */; };
 		709D1819258699840002E772 /* ParseRemoteSynchronizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D1817258699840002E772 /* ParseRemoteSynchronizationDelegate.swift */; };
-		70A5301D25C22F57004EA980 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A5301C25C22F57004EA980 /* CareKitStore */; };
+		70A793C525C321020003F0FF /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A793C425C321020003F0FF /* CareKitStore */; };
+		70A793EC25C330730003F0FF /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A793EB25C330730003F0FF /* CareKitStore */; };
 		70B326BE251EBE610028B229 /* PCKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B326BD251EBE610028B229 /* PCKUser.swift */; };
 		70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		70F2E182254EFC8000B2EA5C /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Patient.swift */; };
@@ -167,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A793EC25C330730003F0FF /* CareKitStore in Frameworks */,
 				70755431255D89B800172F6B /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,7 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70A5301D25C22F57004EA980 /* CareKitStore in Frameworks */,
+				70A793C525C321020003F0FF /* CareKitStore in Frameworks */,
 				7075542D255D899E00172F6B /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,6 +416,7 @@
 				70F2E173254EFC6100B2EA5C /* Sources */,
 				70F2E174254EFC6100B2EA5C /* Frameworks */,
 				70F2E175254EFC6100B2EA5C /* Resources */,
+				70A793F125C330B20003F0FF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -422,6 +425,7 @@
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
 				70755430255D89B800172F6B /* ParseSwift */,
+				70A793EB25C330730003F0FF /* CareKitStore */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -445,7 +449,7 @@
 			name = ParseCareKit;
 			packageProductDependencies = (
 				7075542C255D899E00172F6B /* ParseSwift */,
-				70A5301C25C22F57004EA980 /* CareKitStore */,
+				70A793C425C321020003F0FF /* CareKitStore */,
 			);
 			productName = ParseCareKit;
 			productReference = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */;
@@ -487,7 +491,7 @@
 			mainGroup = 9119D5E1245618D7001B7AA3;
 			packageReferences = (
 				7075542B255D899E00172F6B /* XCRemoteSwiftPackageReference "Parse-Swift" */,
-				70A5301B25C22F57004EA980 /* XCRemoteSwiftPackageReference "CareKit" */,
+				70A793C325C321020003F0FF /* XCRemoteSwiftPackageReference "CareKit" */,
 			);
 			productRefGroup = 9119D5EC245618D7001B7AA3 /* Products */;
 			projectDirPath = "";
@@ -552,7 +556,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$BUILD_DIR/Debug-iphonesimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-iphonesimulator/*.bundle $BUILD_DIR/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
+		};
+		70A793F125C330B20003F0FF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -d \"$BUILD_DIR/Debug-watchsimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-watchsimulator/*.bundle $BUILD_DIR/Debug-watchsimulator/ParseCareKit.framework/\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1025,12 +1046,12 @@
 				minimumVersion = 1.1.2;
 			};
 		};
-		70A5301B25C22F57004EA980 /* XCRemoteSwiftPackageReference "CareKit" */ = {
+		70A793C325C321020003F0FF /* XCRemoteSwiftPackageReference "CareKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/cbaker6/CareKit.git";
+			repositoryURL = "https://github.com/carekit-apple/CareKit.git";
 			requirement = {
 				kind = revision;
-				revision = d4fca9a3a61d8d3fb693329254a138613dbb9837;
+				revision = 7dfcdef4de7e91449e86ac963043b44188a6ba31;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1046,9 +1067,14 @@
 			package = 7075542B255D899E00172F6B /* XCRemoteSwiftPackageReference "Parse-Swift" */;
 			productName = ParseSwift;
 		};
-		70A5301C25C22F57004EA980 /* CareKitStore */ = {
+		70A793C425C321020003F0FF /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70A5301B25C22F57004EA980 /* XCRemoteSwiftPackageReference "CareKit" */;
+			package = 70A793C325C321020003F0FF /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKitStore;
+		};
+		70A793EB25C330730003F0FF /* CareKitStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70A793C325C321020003F0FF /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
 		};
 /* End XCSwiftPackageProductDependency section */
