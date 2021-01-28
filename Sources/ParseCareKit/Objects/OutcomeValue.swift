@@ -17,7 +17,7 @@ import CareKitStore
 /// `OCKOutcomeValue` is a representation of any response of measurement that a user gives
 /// in response to a task. The underlying type could be any of a number of types including
 /// integers, booleans, dates, text, and binary data, among others.
-open class OutcomeValue: PCKObjectable {
+public struct OutcomeValue: PCKObjectable {
 
     public var uuid: UUID?
 
@@ -111,7 +111,7 @@ open class OutcomeValue: PCKObjectable {
     }
 
     // swiftlint:disable:next function_body_length
-    required public init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         //Decode Parse first
@@ -181,39 +181,44 @@ open class OutcomeValue: PCKObjectable {
         here.kind = other.kind
         here.units = other.units
         here.value = other.value
-
-        guard let copied = here as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return here
     }
 
-    public class func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
+    public static func copyCareKit(_ outcomeValue: OCKOutcomeValue) throws -> OutcomeValue {
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(outcomeValue)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         return decoded
     }
 
     public func convertToCareKit() throws -> OCKOutcomeValue {
-        encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+        var mutableOutcomeValue = self
+        mutableOutcomeValue.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableOutcomeValue)
         return try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: encoded)
     }
 
-    public func prepareEncodingRelational(_ encodingForParse: Bool) {
+    mutating public func prepareEncodingRelational(_ encodingForParse: Bool) {
+        var updatedNotes = [Note]()
         notes?.forEach {
-            $0.encodingForParse = encodingForParse
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
         }
+        self.notes = updatedNotes
     }
 
-    func stamp(_ clock: Int) {
+    mutating func stamp(_ clock: Int) {
         self.logicalClock = clock
-        self.notes?.forEach {
-            $0.logicalClock = self.logicalClock
+        var updatedNotes = [Note]()
+        notes?.forEach {
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
         }
+        self.notes = updatedNotes
     }
 
-    public class func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud: [OutcomeValue]) {
+    public static func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud: [OutcomeValue]) {
         for (index, value) in local.enumerated() {
             guard let cloudNote = cloud.first(where: {$0.uuid == value.uuid}) else {
                 continue
@@ -260,6 +265,5 @@ extension OutcomeValue {
             }
         }
         try self.encodeObjectable(to: encoder)
-        encodingForParse = true
     }
 }

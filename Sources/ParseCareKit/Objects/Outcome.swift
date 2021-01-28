@@ -19,7 +19,7 @@ import os.log
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
-open class Outcome: PCKObjectable, PCKSynchronizable {
+public struct Outcome: PCKObjectable, PCKSynchronizable {
 
     public var uuid: UUID?
 
@@ -63,7 +63,9 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
-    var date: Date? //Custom added, check if needed
+    var startDate: Date? //Custom added, check if needed
+
+    var endDate: Date? //Custom added, check if needed
 
     /// The date on which this object was tombstoned. Note that objects are never actually deleted,
     /// but rather they are tombstoned and will no longer be returned from queries.
@@ -103,7 +105,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
-        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, date
+        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> Self {
@@ -160,7 +162,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
                     }
                     let query = Outcome.query(ObjectableKey.entityId == self.id,
                                               doesNotExist(key: OutcomeKey.deletedDate))
-                        .include([OutcomeKey.values, ObjectableKey.notes])
+                        .includeAll()
                     query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
                         switch result {
@@ -198,7 +200,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([OutcomeKey.values, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
@@ -235,12 +237,12 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+        var mutableOutcome = self
+        mutableOutcome.logicalClock = cloudClock //Stamp Entity
 
-        self.logicalClock = cloudClock //Stamp Entity
+        guard mutableOutcome.deletedDate != nil else {
 
-        guard self.deletedDate != nil else {
-
-            self.addToCloud(overwriteRemote: overwriteRemote) { result in
+            mutableOutcome.addToCloud(overwriteRemote: overwriteRemote) { result in
 
                 switch result {
 
@@ -253,7 +255,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
             return
         }
 
-        self.tombstone { result in
+        mutableOutcome.tombstone { result in
 
             switch result {
 
@@ -274,7 +276,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(ObjectableKey.uuid == uuid)
-            .include([OutcomeKey.values, ObjectableKey.notes])
+            .includeAll()
         query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
@@ -318,27 +320,22 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
 
-    public class func copyValues(from other: Outcome, to here: Outcome) throws -> Self {
+    public static func copyValues(from other: Outcome, to here: Outcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
         here.taskOccurrenceIndex = other.taskOccurrenceIndex
         here.values = other.values
         here.task = other.task
-
-        guard let copied = here as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return here
     }
 
-    public class func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Self {
+    public static func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Self {
 
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(outcome)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
         return decoded
     }
@@ -355,20 +352,31 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         return copy
     }
 
-    public func prepareEncodingRelational(_ encodingForParse: Bool) {
-        task?.encodingForParse = encodingForParse
+    mutating public func prepareEncodingRelational(_ encodingForParse: Bool) {
+        if task != nil {
+            task!.encodingForParse = encodingForParse
+        }
+        var updatedValues = [OutcomeValue]()
         values?.forEach {
-            $0.encodingForParse = encodingForParse
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedValues.append(update)
         }
+        values = updatedValues
+        var updatedNotes = [Note]()
         notes?.forEach {
-            $0.encodingForParse = encodingForParse
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
         }
+        self.notes = updatedNotes
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit() throws -> OCKOutcome {
-        self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+        var mutableOutcome = self
+        mutableOutcome.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableOutcome)
         return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
 
@@ -419,26 +427,30 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
             return
         }
 
-        Task.first(taskUUID, relatedObject: self.task) { result in
+        var mutableOutcome = self
+
+        Task.first(taskUUID) { result in
 
             switch result {
 
             case .success(let foundTask):
 
-                self.task = foundTask
+                mutableOutcome.task = foundTask
 
-                guard let currentTask = self.task else {
-                    self.date = nil
-                    completion(.success(self))
+                guard let currentTask = mutableOutcome.task else {
+                    mutableOutcome.startDate = nil
+                    mutableOutcome.endDate = nil
+                    completion(.success(mutableOutcome))
                     return
                 }
 
-                self.date = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
-                completion(.success(self))
+                mutableOutcome.startDate = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
+                mutableOutcome.endDate = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.end
+                completion(.success(mutableOutcome))
 
             case .failure:
                 //We still keep going if the link was unsuccessfull
-                completion(.success(self))
+                completion(.success(mutableOutcome))
             }
         }
     }
@@ -468,7 +480,13 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
     public func stampRelational() throws -> Outcome {
         var stamped = self
         stamped = try stamped.stampRelationalEntities()
-        stamped.values?.forEach {$0.stamp(stamped.logicalClock!)}
+        var updatedOutcomeValues = [OutcomeValue]()
+        stamped.values?.forEach {
+            var update = $0
+            update.stamp(stamped.logicalClock!)
+            updatedOutcomeValues.append(update)
+        }
+        stamped.values = updatedOutcomeValues
 
         return stamped
     }
@@ -479,7 +497,7 @@ open class Outcome: PCKObjectable, PCKSynchronizable {
         let query = Outcome.query(doesNotExist(key: OutcomeKey.deletedDate),
                                   matchesKeyInQuery(key: OutcomeKey.task,
                                                     queryKey: OutcomeKey.task, query: taskQuery))
-            .include([OutcomeKey.values, ObjectableKey.notes])
+            .includeAll()
         return query
     }
 
@@ -508,16 +526,16 @@ extension Outcome {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
             try container.encodeIfPresent(task, forKey: .task)
-            try container.encodeIfPresent(date, forKey: .date)
+            try container.encodeIfPresent(startDate, forKey: .startDate)
+            try container.encodeIfPresent(endDate, forKey: .endDate)
+            if id.count > 0 {
+                try container.encodeIfPresent(id, forKey: .entityId)
+            }
         }
         try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encodeIfPresent(values, forKey: .values)
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
-        if id.count > 0 {
-            entityId = id
-        }
         try encodeObjectable(to: encoder)
-        encodingForParse = true
     }
 }// swiftlint:disable:this file_length

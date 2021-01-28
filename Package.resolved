@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "CareKit",
-        "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
+        "repositoryURL": "https://github.com/cbaker6/CareKit.git",
         "state": {
           "branch": null,
-          "revision": "56796e8c7915b5813a47f54d746219a29685cb81",
+          "revision": "d4fca9a3a61d8d3fb693329254a138613dbb9837",
           "version": null
         }
       },
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/parse-community/Parse-Swift",
         "state": {
           "branch": null,
-          "revision": "1db06743febe41708385d672271a8e51d2ecafe4",
-          "version": "1.1.1"
+          "revision": "d03861f7ea2aea66350aa9a2db4deb33926b35b9",
+          "version": "1.1.2"
         }
       }
     ]

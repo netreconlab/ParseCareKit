@@ -23,7 +23,7 @@ public enum PCKCodingKeys: String, CodingKey {
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
          logicalClock, className, ACL, objectId, updatedAt, createdAt
-    case nextVersion, previousVersion, effectiveDate, previousVersionUUID, nextVersionUUID
+    case effectiveDate, previousVersionUUID, nextVersionUUID
 }
 
 /// Types of ParseCareKit classes.
@@ -174,8 +174,8 @@ public enum ObjectableKey {
 public enum VersionableKey {
     static let deletedDate                                = "deletedDate"
     static let effectiveDate                              = "effectiveDate"
-    static let next                                       = "next"
-    static let previous                                   = "previous"
+    static let nextVersionUUID                            = "nextVersionUUID"
+    static let previousVersionUUID                        = "previousVersionUUID"
 }
 
 //#Mark - Patient Class

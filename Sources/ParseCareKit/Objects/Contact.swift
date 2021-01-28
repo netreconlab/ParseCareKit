@@ -19,34 +19,11 @@ import os.log
 /// An `Contact` is the ParseCareKit equivalent of `OCKContact`.  An `OCKContact`represents a contact that a user
 /// may want to get in touch with. A contact may be a care provider, a friend, or a family member. Contacts must have at
 /// least a name, and may optionally have numerous other addresses at which to be contacted.
-public final class Contact: PCKVersionable {
-    public var nextVersion: Contact? {
-        didSet {
-            nextVersionUUID = nextVersion?.uuid
-        }
-    }
+public struct Contact: PCKVersionable {
 
-    public var nextVersionUUID: UUID? {
-        didSet {
-            if nextVersionUUID != nextVersion?.uuid {
-                nextVersion = nil
-            }
-        }
-    }
+    public var nextVersionUUID: UUID?
 
-    public var previousVersion: Contact? {
-        didSet {
-            previousVersionUUID = previousVersion?.uuid
-        }
-    }
-
-    public var previousVersionUUID: UUID? {
-        didSet {
-            if previousVersionUUID != previousVersion?.uuid {
-                previousVersion = nil
-            }
-        }
-    }
+    public var previousVersionUUID: UUID?
 
     public var effectiveDate: Date?
 
@@ -147,7 +124,7 @@ public final class Contact: PCKVersionable {
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate,
              timezone, userInfo, groupIdentifier, tags, source, asset, remoteID,
              notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, previousVersion, nextVersion, effectiveDate
+        case previousVersionUUID, nextVersionUUID, effectiveDate
         case carePlan, title, carePlanUUID, address, category, name, organization, role
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
     }
@@ -222,7 +199,7 @@ public final class Contact: PCKVersionable {
 
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Contact.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
-            .include([ContactKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -278,7 +255,7 @@ public final class Contact: PCKVersionable {
 
         let query = Contact.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([ContactKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -317,11 +294,11 @@ public final class Contact: PCKVersionable {
     }
 
     public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+        var mutableContact = self
+        mutableContact.logicalClock = cloudClock //Stamp Entity
 
-        self.logicalClock = cloudClock //Stamp Entity
-
-        guard self.previousVersionUUID != nil else {
-            self.addToCloud(overwriteRemote: overwriteRemote) { result in
+        guard mutableContact.previousVersionUUID != nil else {
+            mutableContact.addToCloud(overwriteRemote: overwriteRemote) { result in
 
                 switch result {
 
@@ -334,7 +311,7 @@ public final class Contact: PCKVersionable {
             return
         }
 
-        self.updateCloud { result in
+        mutableContact.updateCloud { result in
 
             switch result {
 
@@ -346,7 +323,7 @@ public final class Contact: PCKVersionable {
         }
     }
 
-    public class func copyValues(from other: Contact, to here: Contact) throws -> Self {
+    public static func copyValues(from other: Contact, to here: Contact) throws -> Self {
         var copy = here
         copy.copyVersionedValues(from: other)
         copy.address = other.address
@@ -356,67 +333,57 @@ public final class Contact: PCKVersionable {
         copy.organization = other.organization
         copy.role = other.role
         copy.carePlan = other.carePlan
-
-        guard let copied = copy as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return copy
     }
 
-    public class func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
+    public static func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
 
         guard let contact = contactAny as? OCKContact else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(contact)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
         return decoded
     }
 
-    func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
-        nextVersion?.encodingForParse = encodingForParse
-        carePlan?.encodingForParse = encodingForParse
-        notes?.forEach {
-            $0.encodingForParse = encodingForParse
+    mutating func prepareEncodingRelational(_ encodingForParse: Bool) {
+        if carePlan != nil {
+            carePlan?.encodingForParse = encodingForParse
         }
+        var updatedNotes = [Note]()
+        notes?.forEach {
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
+        }
+        self.notes = updatedNotes
     }
 
     public func convertToCareKit() throws -> OCKContact {
-        self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+        var mutableContact = self
+        mutableContact.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableContact)
         return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
     }
 
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Result<Contact, Error>) -> Void) {
-        self.linkVersions { result in
+        var updatedContact = self
 
-            var updatedContact: Contact
+        guard let carePlanUUID = self.carePlanUUID else {
+            //Finished if there's no CarePlan, otherwise see if it's in the cloud
+            completion(.success(self))
+            return
+        }
 
-            switch result {
+        CarePlan.first(carePlanUUID) { result in
 
-            case .success(let linked):
-                updatedContact = linked
-            case .failure:
-                updatedContact = self
+            if case let .success(carePlan) = result {
+                updatedContact.carePlan = carePlan
             }
 
-            guard let carePlanUUID = self.carePlanUUID else {
-                //Finished if there's no CarePlan, otherwise see if it's in the cloud
-                completion(.success(updatedContact))
-                return
-            }
-
-            CarePlan.first(carePlanUUID, relatedObject: updatedContact.carePlan) { result in
-
-                if case let .success(carePlan) = result {
-                    updatedContact.carePlan = carePlan
-                }
-
-                completion(.success(updatedContact))
-            }
+            completion(.success(updatedContact))
         }
     }
 }
@@ -441,6 +408,5 @@ extension Contact {
         try container.encodeIfPresent(phoneNumbers, forKey: .phoneNumbers)
         try container.encodeIfPresent(otherContactInfo, forKey: .otherContactInfo)
         try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
 } // swiftlint:disable:this file_length

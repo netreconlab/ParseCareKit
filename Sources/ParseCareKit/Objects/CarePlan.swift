@@ -19,7 +19,7 @@ import os.log
 /// may include tasks requiring the patient to exercise, record their weight, and log meals. As the care
 /// plan evolves with the patient's progress, the care provider may modify the exercises and include notes each
 /// time about why the changes were made.
-public final class CarePlan: PCKVersionable {
+public struct CarePlan: PCKVersionable {
     public var effectiveDate: Date?
 
     public var uuid: UUID?
@@ -66,33 +66,9 @@ public final class CarePlan: PCKVersionable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
-    public var nextVersion: CarePlan? {
-        didSet {
-            nextVersionUUID = nextVersion?.uuid
-        }
-    }
+    public var nextVersionUUID: UUID?
 
-    public var nextVersionUUID: UUID? {
-        didSet {
-            if nextVersionUUID != nextVersion?.uuid {
-                nextVersion = nil
-            }
-        }
-    }
-
-    public var previousVersion: CarePlan? {
-        didSet {
-            previousVersionUUID = previousVersion?.uuid
-        }
-    }
-
-    public var previousVersionUUID: UUID? {
-        didSet {
-            if previousVersionUUID != previousVersion?.uuid {
-                previousVersion = nil
-            }
-        }
-    }
+    public var previousVersionUUID: UUID?
 
     /// The patient to whom this care plan belongs.
     public var patient: Patient? {
@@ -118,7 +94,7 @@ public final class CarePlan: PCKVersionable {
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate,
              timezone, userInfo, groupIdentifier, tags, source, asset, remoteID,
              notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, previousVersion, nextVersion, effectiveDate
+        case previousVersionUUID, nextVersionUUID, effectiveDate
         case title, patient, patientUUID
     }
 
@@ -190,7 +166,7 @@ public final class CarePlan: PCKVersionable {
 
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
-            .include([CarePlanKey.patient, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -246,7 +222,7 @@ public final class CarePlan: PCKVersionable {
 
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -284,10 +260,11 @@ public final class CarePlan: PCKVersionable {
     }
 
     public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
-        self.logicalClock = cloudClock //Stamp Entity
+        var mutableCarePlan = self
+        mutableCarePlan.logicalClock = cloudClock //Stamp Entity
 
-        guard self.previousVersionUUID != nil else {
-            self.addToCloud(overwriteRemote: overwriteRemote) { result in
+        guard mutableCarePlan.previousVersionUUID != nil else {
+            mutableCarePlan.addToCloud(overwriteRemote: overwriteRemote) { result in
 
                 switch result {
 
@@ -300,7 +277,7 @@ public final class CarePlan: PCKVersionable {
             return
         }
 
-        self.updateCloud { result in
+        mutableCarePlan.updateCloud { result in
 
             switch result {
 
@@ -315,71 +292,60 @@ public final class CarePlan: PCKVersionable {
     public static func copyValues(from other: CarePlan, to here: CarePlan) throws -> Self {
         var here = here
         here.copyVersionedValues(from: other)
-        //guard let other = other as? CarePlan else{return}
         here.patient = other.patient
         here.title = other.title
-        guard let copied = here as? Self else {
-            throw ParseCareKitError.cantCastToNeededClassType
-        }
-        return copied
+        return here
     }
 
-    public class func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
+    public static func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
 
         guard let carePlan = carePlanAny as? OCKCarePlan else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(carePlan)
-        let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
         return decoded
     }
 
-    func prepareEncodingRelational(_ encodingForParse: Bool) {
-        previousVersion?.encodingForParse = encodingForParse
-        nextVersion?.encodingForParse = encodingForParse
-        patient?.encodingForParse = encodingForParse
-        notes?.forEach {
-            $0.encodingForParse = encodingForParse
+    mutating func prepareEncodingRelational(_ encodingForParse: Bool) {
+        if patient != nil {
+            patient?.encodingForParse = encodingForParse
         }
+        var updatedNotes = [Note]()
+        notes?.forEach {
+            var update = $0
+            update.encodingForParse = encodingForParse
+            updatedNotes.append(update)
+        }
+        self.notes = updatedNotes
     }
 
     //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     public func convertToCareKit() throws -> OCKCarePlan {
-        self.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(self)
+        var mutableCarePlan = self
+        mutableCarePlan.encodingForParse = false
+        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableCarePlan)
         return try ParseCareKitUtility.decoder().decode(OCKCarePlan.self, from: encoded)
     }
 
     ///Link versions and related classes
     public func linkRelated(completion: @escaping(Result<CarePlan, Error>) -> Void) {
-        self.linkVersions { result in
+        var updatedCarePlan = self
 
-            var updatedCarePlan: CarePlan
+        guard let patientUUID = self.patientUUID else {
+            //Finished if there's no Patient, otherwise see if it's in the cloud
+            completion(.success(updatedCarePlan))
+            return
+        }
 
-            switch result {
+        Patient.first(patientUUID) { result in
 
-            case .success(let linked):
-                updatedCarePlan = linked
-
-            case .failure:
-                updatedCarePlan = self
+            if case let .success(patient) = result {
+                updatedCarePlan.patient = patient
             }
 
-            guard let patientUUID = self.patientUUID else {
-                //Finished if there's no Patient, otherwise see if it's in the cloud
-                completion(.success(updatedCarePlan))
-                return
-            }
-
-            Patient.first(patientUUID, relatedObject: updatedCarePlan.patient) { result in
-
-                if case let .success(patient) = result {
-                    updatedCarePlan.patient = patient
-                }
-
-                completion(.success(updatedCarePlan))
-            }
+            completion(.success(updatedCarePlan))
         }
     }
 }
@@ -393,6 +359,5 @@ extension CarePlan {
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(patientUUID, forKey: .patientUUID)
         try encodeVersionable(to: encoder)
-        encodingForParse = true
     }
 }
