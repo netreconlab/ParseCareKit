@@ -352,7 +352,7 @@ public struct Task: PCKVersionable {
             return
         }
 
-        CarePlan.first(carePlanUUID/*, relatedObject: updatedTask.carePlan*/) { result in
+        CarePlan.first(carePlanUUID) { result in
 
             if case let .success(carePlan) = result {
                 updatedTask.carePlan = carePlan

@@ -83,7 +83,7 @@ public struct Patient: PCKVersionable {
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, /*previousVersion, nextVersion,*/ effectiveDate
+        case previousVersionUUID, nextVersionUUID, effectiveDate
         case allergies, birthday, name, sex
     }
 

@@ -429,7 +429,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
         var mutableOutcome = self
 
-        Task.first(taskUUID/*, relatedObject: self.task*/) { result in
+        Task.first(taskUUID) { result in
 
             switch result {
 
