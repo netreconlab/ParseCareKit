@@ -199,7 +199,7 @@ public struct Contact: PCKVersionable {
 
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Contact.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
-            .include([ContactKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -255,7 +255,7 @@ public struct Contact: PCKVersionable {
 
         let query = Contact.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([ContactKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {

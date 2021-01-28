@@ -162,7 +162,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
                     }
                     let query = Outcome.query(ObjectableKey.entityId == self.id,
                                               doesNotExist(key: OutcomeKey.deletedDate))
-                        .include([OutcomeKey.values, ObjectableKey.notes])
+                        .includeAll()
                     query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
                         switch result {
@@ -200,7 +200,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([OutcomeKey.values, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
@@ -276,7 +276,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
         //Get latest item from the Cloud to compare against
         let query = Outcome.query(ObjectableKey.uuid == uuid)
-            .include([OutcomeKey.values, ObjectableKey.notes])
+            .includeAll()
         query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
 
             switch result {
@@ -497,7 +497,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         let query = Outcome.query(doesNotExist(key: OutcomeKey.deletedDate),
                                   matchesKeyInQuery(key: OutcomeKey.task,
                                                     queryKey: OutcomeKey.task, query: taskQuery))
-            .include([OutcomeKey.values, ObjectableKey.notes])
+            .includeAll()
         return query
     }
 

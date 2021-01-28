@@ -166,7 +166,7 @@ public struct CarePlan: PCKVersionable {
 
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
-            .include([CarePlanKey.patient, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -222,7 +222,7 @@ public struct CarePlan: PCKVersionable {
 
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {

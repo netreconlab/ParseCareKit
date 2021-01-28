@@ -151,7 +151,7 @@ public struct Note: PCKObjectable {
             return
         }
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: uuids))
-            .include([ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {

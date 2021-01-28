@@ -177,7 +177,7 @@ public struct Task: PCKVersionable {
 
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Task.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
-            .include([TaskKey.carePlan, VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
             switch results {
@@ -231,7 +231,7 @@ public struct Task: PCKVersionable {
 
         let query = Task.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 

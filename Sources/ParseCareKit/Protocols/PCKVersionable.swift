@@ -216,14 +216,14 @@ extension PCKVersionable {
         let query = queryToAndWith
             .where(doesNotExist(key: VersionableKey.deletedDate)) //Only consider non deleted keys
             .where(VersionableKey.effectiveDate < interval.end)
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         return query
     }
 
     private static func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> Query<Self> {
 
-        let query = Self.query(doesNotExist(key: VersionableKey.next))
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+        let query = Self.query(doesNotExist(key: VersionableKey.nextVersionUUID))
+            .includeAll()
         let interval = createCurrentDateInterval(for: date)
         let greaterEqualEffectiveDate = self.query(VersionableKey.effectiveDate >= interval.end)
         return Self.query(or(queries: [query, greaterEqualEffectiveDate]))
@@ -244,7 +244,7 @@ extension PCKVersionable {
     public static func query(for date: Date) -> Query<Self> {
         let query = queryVersion(for: date,
                                  queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         return query
     }
 
@@ -257,7 +257,7 @@ extension PCKVersionable {
     */
     public func find(for date: Date, completion: @escaping(Result<[Self], ParseError>) -> Void) {
         let query = Self.query(for: date)
-            .include([VersionableKey.next, VersionableKey.previous, ObjectableKey.notes])
+            .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
