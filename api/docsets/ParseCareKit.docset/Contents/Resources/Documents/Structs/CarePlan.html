@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Outcome Class Reference</title>
+    <title>CarePlan Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,16 +14,16 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/Outcome" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Struct/CarePlan" class="dashAnchor"></a>
 
-    <a title="Outcome Class Reference"></a>
+    <a title="CarePlan Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (85% documented)
+         (84% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -50,7 +50,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">ParseCareKit Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Outcome Class Reference
+      CarePlan Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -60,28 +60,7 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/CarePlan.html">CarePlan</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Contact.html">Contact</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Note.html">Note</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Outcome.html">Outcome</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/OutcomeValue.html">OutcomeValue</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Patient.html">Patient</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Task.html">Task</a>
               </li>
             </ul>
           </li>
@@ -114,7 +93,28 @@
             <a class="nav-group-name-link" href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/CarePlan.html">CarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Contact.html">Contact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Note.html">Note</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Outcome.html">Outcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/OutcomeValue.html">OutcomeValue</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Patient.html">Patient</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Task.html">Task</a>
               </li>
             </ul>
           </li>
@@ -124,18 +124,20 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>Outcome</h1>
+            <h1>CarePlan</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Outcome</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKObjectable.html">PCKObjectable</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CarePlan</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKVersionable.html">PCKVersionable</a></span></code></pre>
 
                 </div>
               </div>
-            <p>An <code>Outcome</code> is the ParseCareKit equivalent of <code>OCKOutcome</code>.  An <code>OCKOutcome</code> represents the
-outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
-For example, a task that asks a patient to measure their temperature will have events whose outcome
-will contain a single value representing the patient&rsquo;s temperature.</p>
+            <p>An <code>CarePlan</code> is the ParseCareKit equivalent of <code>OCKCarePlan</code>.  An <code>OCKCarePlan</code> represents
+a set of tasks, including both interventions and assesments, that a patient is supposed to
+complete as part of his or her treatment for a specific condition. For example, a care plan for obesity
+may include tasks requiring the patient to exercise, record their weight, and log meals. As the care
+plan evolves with the patient&rsquo;s progress, the care provider may modify the exercises and include notes each
+time about why the changes were made.</p>
 
           </div>
         </section>
@@ -144,6 +146,32 @@ will contain a single value representing the patient&rsquo;s temperature.</p>
           <div class="section-content">
             <div class="task-group">
               <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionableP13effectiveDate10Foundation0F0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/effectiveDate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP13effectiveDate10Foundation0F0VSgvp">effectiveDate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">effectiveDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -268,6 +296,32 @@ will contain a single value representing the patient&rsquo;s temperature.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updatedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionableP11deletedDate10Foundation0F0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/deletedDate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP11deletedDate10Foundation0F0VSgvp">deletedDate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">deletedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -433,9 +487,9 @@ will contain a single value representing the patient&rsquo;s temperature.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit13PCKObjectableP5notesSayAA4NoteCGSgvp"></a>
+                    <a name="/s:12ParseCareKit13PCKObjectableP5notesSayAA4NoteVGSgvp"></a>
                     <a name="//apple_ref/swift/Property/notes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit13PCKObjectableP5notesSayAA4NoteCGSgvp">notes</a>
+                    <a class="token" href="#/s:12ParseCareKit13PCKObjectableP5notesSayAA4NoteVGSgvp">notes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -449,7 +503,7 @@ will contain a single value representing the patient&rsquo;s temperature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">notes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Note.html">Note</a></span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">notes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Note.html">Note</a></span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -615,9 +669,9 @@ will contain a single value representing the patient&rsquo;s temperature.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit7OutcomeC11deletedDate10Foundation0F0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/deletedDate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit7OutcomeC11deletedDate10Foundation0F0VSgvp">deletedDate</a>
+                    <a name="/s:12ParseCareKit14PCKVersionableP15nextVersionUUID10Foundation0G0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/nextVersionUUID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP15nextVersionUUID10Foundation0G0VSgvp">nextVersionUUID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -625,15 +679,13 @@ will contain a single value representing the patient&rsquo;s temperature.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The date on which this object was tombstoned. Note that objects are never actually deleted,
-but rather they are tombstoned and will no longer be returned from queries.</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">deletedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">nextVersionUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -643,9 +695,9 @@ but rather they are tombstoned and will no longer be returned from queries.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit7OutcomeC19taskOccurrenceIndexSiSgvp"></a>
-                    <a name="//apple_ref/swift/Property/taskOccurrenceIndex" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit7OutcomeC19taskOccurrenceIndexSiSgvp">taskOccurrenceIndex</a>
+                    <a name="/s:12ParseCareKit14PCKVersionableP19previousVersionUUID10Foundation0G0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/previousVersionUUID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP19previousVersionUUID10Foundation0G0VSgvp">previousVersionUUID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -653,21 +705,13 @@ but rather they are tombstoned and will no longer be returned from queries.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then
-the 2nd outcome on the 2nd day will have a <code>taskOccurrenceIndex</code> of 3.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    The task occurrence references a specific version of a task, so if a new version the task is created, the task occurrence index
-will start again from 0.
-
-</div>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">taskOccurrenceIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">previousVersionUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -677,9 +721,9 @@ will start again from 0.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit7OutcomeC6valuesSayAA0D5ValueCGSgvp"></a>
-                    <a name="//apple_ref/swift/Property/values" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit7OutcomeC6valuesSayAA0D5ValueCGSgvp">values</a>
+                    <a name="/s:12ParseCareKit0B4PlanV7patientAA7PatientVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/patient" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0B4PlanV7patientAA7PatientVSgvp">patient</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -687,24 +731,14 @@ will start again from 0.
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An array of values associated with this outcome. Most outcomes will have 0 or 1 values, but some may have more.</p>
-
-<ul>
-<li>Examples:
-
-<ul>
-<li>A task to call a physician might have 0 values, or 1 value containing the time stamp of when the call was placed.</li>
-<li>A task to walk 2,000 steps might have 1 value, with that value being the number of steps that were actually taken.</li>
-<li>A task to complete a survey might have multiple values corresponding to the answers to the questions in the survey.</li>
-</ul></li>
-</ul>
+                        <p>The patient to whom this care plan belongs.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/OutcomeValue.html">OutcomeValue</a></span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">patient</span><span class="p">:</span> <span class="kt"><a href="../Structs/Patient.html">Patient</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -714,9 +748,9 @@ will start again from 0.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit7OutcomeC4taskAA4TaskCSgvp"></a>
-                    <a name="//apple_ref/swift/Property/task" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit7OutcomeC4taskAA4TaskCSgvp">task</a>
+                    <a name="/s:12ParseCareKit0B4PlanV11patientUUID10Foundation0F0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/patientUUID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0B4PlanV11patientUUID10Foundation0F0VSgvp">patientUUID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -724,14 +758,14 @@ will start again from 0.
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The version of the task to which this outcomes belongs.</p>
+                        <p>The UUID of the patient to whom this care plan belongs.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">task</span><span class="p">:</span> <span class="kt"><a href="../Classes/Task.html">Task</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">patientUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -741,9 +775,9 @@ will start again from 0.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit7OutcomeC8taskUUID10Foundation0F0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/taskUUID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit7OutcomeC8taskUUID10Foundation0F0VSgvp">taskUUID</a>
+                    <a name="/s:12ParseCareKit0B4PlanV5titleSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/title" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0B4PlanV5titleSSSgvp">title</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -751,14 +785,14 @@ will start again from 0.
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The version ID of the task to which this outcomes belongs.</p>
+                        <p>A title describing this care plan.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">taskUUID</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -784,7 +818,7 @@ will start again from 0.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">new</span><span class="p">(</span><span class="n">with</span> <span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKEntity</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">new</span><span class="p">(</span><span class="n">with</span> <span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKEntity</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">CarePlan</span></code></pre>
 
                         </div>
                       </div>
@@ -915,7 +949,7 @@ will start again from 0.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">copyValues</span><span class="p">(</span><span class="n">from</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Outcome</span><span class="p">,</span> <span class="n">to</span> <span class="nv">here</span><span class="p">:</span> <span class="kt">Outcome</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">copyValues</span><span class="p">(</span><span class="n">from</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">CarePlan</span><span class="p">,</span> <span class="n">to</span> <span class="nv">here</span><span class="p">:</span> <span class="kt">CarePlan</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">CarePlan</span></code></pre>
 
                         </div>
                       </div>
@@ -925,9 +959,9 @@ will start again from 0.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit7OutcomeC11linkRelated10completionyys6ResultOyACs5Error_pGc_tF"></a>
+                    <a name="/s:12ParseCareKit0B4PlanV11linkRelated10completionyys6ResultOyACs5Error_pGc_tF"></a>
                     <a name="//apple_ref/swift/Method/linkRelated(completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit7OutcomeC11linkRelated10completionyys6ResultOyACs5Error_pGc_tF">linkRelated(completion:<wbr>)</a>
+                    <a class="token" href="#/s:12ParseCareKit0B4PlanV11linkRelated10completionyys6ResultOyACs5Error_pGc_tF">linkRelated(completion:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -942,7 +976,7 @@ will start again from 0.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">linkRelated</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Outcome</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">linkRelated</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">CarePlan</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -983,7 +1017,7 @@ will start again from 0.
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-01-26)</p>
+      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-01-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
