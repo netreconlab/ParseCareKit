@@ -556,7 +556,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$SRCROOT/DerivedData/Build/Products/Debug-iphonesimulator/\" ]; then\n    cp -r $SRCROOT/DerivedData/Build/Products/Debug-iphonesimulator/*.bundle $SRCROOT/DerivedData/Build/Products/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$BUILD_DIR/Debug-iphonesimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-iphonesimulator/*.bundle $BUILD_DIR/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
 		};
 		70A793F125C330B20003F0FF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -573,7 +573,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -d \"$SRCROOT/DerivedData/Build/Products/Debug-watchsimulator/\" ]; then\n    cp -r $SRCROOT/DerivedData/Build/Products/Debug-watchsimulator/*.bundle $SRCROOT/DerivedData/Build/Products/Debug-watchsimulator/ParseCareKit.framework/\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -d \"$BUILD_DIR/Debug-watchsimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-watchsimulator/*.bundle $BUILD_DIR/Debug-watchsimulator/ParseCareKit.framework/\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
