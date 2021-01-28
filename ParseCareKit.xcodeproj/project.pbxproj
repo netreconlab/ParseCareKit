@@ -30,6 +30,7 @@
 		709D1818258699840002E772 /* ParseRemoteSynchronizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D1817258699840002E772 /* ParseRemoteSynchronizationDelegate.swift */; };
 		709D1819258699840002E772 /* ParseRemoteSynchronizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D1817258699840002E772 /* ParseRemoteSynchronizationDelegate.swift */; };
 		70A793C525C321020003F0FF /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A793C425C321020003F0FF /* CareKitStore */; };
+		70A793EC25C330730003F0FF /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A793EB25C330730003F0FF /* CareKitStore */; };
 		70B326BE251EBE610028B229 /* PCKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B326BD251EBE610028B229 /* PCKUser.swift */; };
 		70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		70F2E182254EFC8000B2EA5C /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Patient.swift */; };
@@ -167,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A793EC25C330730003F0FF /* CareKitStore in Frameworks */,
 				70755431255D89B800172F6B /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,6 +416,7 @@
 				70F2E173254EFC6100B2EA5C /* Sources */,
 				70F2E174254EFC6100B2EA5C /* Frameworks */,
 				70F2E175254EFC6100B2EA5C /* Resources */,
+				70A793F125C330B20003F0FF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -422,6 +425,7 @@
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
 				70755430255D89B800172F6B /* ParseSwift */,
+				70A793EB25C330730003F0FF /* CareKitStore */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -552,7 +556,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$SRCROOT/DerivedData/Build/Products/Debug-iphonesimulator/\" ]; then\n    cp -r $SRCROOT/DerivedData/Build/Products/Debug-iphonesimulator/*.bundle $SRCROOT/DerivedData/Build/Products/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
+		};
+		70A793F125C330B20003F0FF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -d \"$SRCROOT/DerivedData/Build/Products/Debug-watchsimulator/\" ]; then\n    cp -r $SRCROOT/DerivedData/Build/Products/Debug-watchsimulator/*.bundle $SRCROOT/DerivedData/Build/Products/Debug-watchsimulator/ParseCareKit.framework/\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1047,6 +1068,11 @@
 			productName = ParseSwift;
 		};
 		70A793C425C321020003F0FF /* CareKitStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70A793C325C321020003F0FF /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKitStore;
+		};
+		70A793EB25C330730003F0FF /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 70A793C325C321020003F0FF /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
