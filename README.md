@@ -25,6 +25,7 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKNote <-> Note
 - [x] OCKRevisionRecord.Clock <-> Clock
 
+iOS and watchOS devices belonging to the same user are reactively sychronized using [ParseLiveQuery](https://docs.parseplatform.org/parse-server/guide/#live-queries) assuming the [LiveQuery server has been configured](https://docs.parseplatform.org/parse-server/guide/#livequery-server). 
 
 ## CareKit Sample App with ParseCareKit
 A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKitSample-ParseCareKit), connects to the aforementioned [parse-hipaa](https://github.com/netreconlab/parse-hipaa) and demonstrates how CareKit data can be easily synched to the Cloud using ParseCareKit.
