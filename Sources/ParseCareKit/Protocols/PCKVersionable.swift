@@ -210,46 +210,47 @@ extension PCKVersionable {
 
 //Fetching
 extension PCKVersionable {
-    private static func queryVersion(for date: Date, queryToAndWith: Query<Self>)-> Query<Self> {
-        let interval = createCurrentDateInterval(for: date)
-
-        let query = queryToAndWith
-            .where(doesNotExist(key: VersionableKey.deletedDate)) //Only consider non deleted keys
-            .where(VersionableKey.effectiveDate < interval.end)
-            .includeAll()
-        return query
+    private static func queryNotDeleted() -> Query<Self> {
+        Self.query(doesNotExist(key: VersionableKey.deletedDate))
     }
 
-    private static func queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for date: Date)-> Query<Self> {
+    private static func queryNewestVersion(for date: Date)-> Query<Self> {
+        let interval = createCurrentDateInterval(for: date)
+
+        let startsBeforeEndOfQuery = Self.query(VersionableKey.effectiveDate < interval.end)
+        let noNextVersion = queryNoNextVersion(for: date)
+        
+        return .init(and(queries: [startsBeforeEndOfQuery, noNextVersion]))
+    }
+
+    private static func queryNoNextVersion(for date: Date)-> Query<Self> {
 
         let query = Self.query(doesNotExist(key: VersionableKey.nextVersionUUID))
-            .includeAll()
+
         let interval = createCurrentDateInterval(for: date)
         let greaterEqualEffectiveDate = self.query(VersionableKey.effectiveDate >= interval.end)
         return Self.query(or(queries: [query, greaterEqualEffectiveDate]))
     }
-
+    
     func find(for date: Date) throws -> [Self] {
         try Self.query(for: date).find()
     }
 
     /**
-     Querying Versioned objects the same way queries are done in CareKit.
+     Querying versioned objects the same way queries are as CareKit. Creates a query that finds
+     the newest version that hasn't been deleted.
      - Parameters:
         - for: The date the object is active.
-        - completion: The block to execute.
-     It should have the following argument signature: `(Query<Self>)`.
+        - returns: `Query<Self>`.
     */
-    //This query doesn't filter nextVersion effectiveDate >= interval.end
     public static func query(for date: Date) -> Query<Self> {
-        let query = queryVersion(for: date,
-                                 queryToAndWith: queryWhereNoNextVersionOrNextVersionGreaterThanEqualToDate(for: date))
+        let query = Self.query(and(queries: [queryNotDeleted(), queryNewestVersion(for: date)]))
             .includeAll()
         return query
     }
 
     /**
-     Fetch Versioned objects the same way queries are done in CareKit.
+     Fetch Versioned objects the same way as CareKit.
      - Parameters:
         - for: The date the objects are active.
         - completion: The block to execute.
