@@ -219,7 +219,6 @@ extension PCKVersionable {
 
         let startsBeforeEndOfQuery = Self.query(VersionableKey.effectiveDate < interval.end)
         let noNextVersion = queryNoNextVersion(for: date)
-        
         return .init(and(queries: [startsBeforeEndOfQuery, noNextVersion]))
     }
 
