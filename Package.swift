@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "ParseCareKit",
-    platforms: [.iOS(.v13), .watchOS(.v6), .macOS(.v10_13), .tvOS(.v11)],
+    platforms: [.iOS(.v13), .watchOS(.v6), .macOS(.v10_13), .tvOS(.v13)],
     products: [
         .library(
             name: "ParseCareKit",
@@ -14,8 +14,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(name: "CareKit", url: "https://github.com/carekit-apple/CareKit.git",
-                 .revision("7dfcdef4de7e91449e86ac963043b44188a6ba31")),
-        .package(name: "ParseSwift", url: "https://github.com/parse-community/Parse-Swift", from: "1.1.2")
+                 .revision("4d9200e0b2ad68e6d2c8502f10971200bccf8863")),
+        .package(name: "ParseSwift", url: "https://github.com/parse-community/Parse-Swift", from: "1.1.3")
     ],
     targets: [
         .target(

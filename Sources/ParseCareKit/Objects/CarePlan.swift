@@ -354,7 +354,7 @@ extension CarePlan {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
-            try container.encodeIfPresent(patient, forKey: .patient)
+            try container.encodeIfPresent(patient?.toPointer(), forKey: .patient)
         }
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(patientUUID, forKey: .patientUUID)

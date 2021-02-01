@@ -393,7 +393,7 @@ extension Contact {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         if encodingForParse {
-            try container.encodeIfPresent(carePlan, forKey: .carePlan)
+            try container.encodeIfPresent(carePlan?.toPointer(), forKey: .carePlan)
         }
 
         try container.encodeIfPresent(title, forKey: .title)
