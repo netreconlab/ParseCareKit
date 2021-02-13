@@ -156,98 +156,98 @@ public enum ParseKey {
 }
 
 public enum ObjectableKey {
-    static let uuid                                       = "uuid"
-    static let entityId                                   = "entityId"
-    static let asset                                      = "asset"
-    static let groupIdentifier                            = "groupIdentifier"
-    static let notes                                      = "notes"
-    static let timezone                                   = "timezone"
-    static let logicalClock                               = "logicalClock"
-    static let createdDate                                = "createdDate"
-    static let updatedDate                                = "updatedDate"
-    static let tags                                       = "tags"
-    static let userInfo                                   = "userInfo"
-    static let source                                     = "source"
-    static let remoteID                                   = "remoteID"
+    public static let uuid                                       = "uuid"
+    public static let entityId                                   = "entityId"
+    public static let asset                                      = "asset"
+    public static let groupIdentifier                            = "groupIdentifier"
+    public static let notes                                      = "notes"
+    public static let timezone                                   = "timezone"
+    public static let logicalClock                               = "logicalClock"
+    public static let createdDate                                = "createdDate"
+    public static let updatedDate                                = "updatedDate"
+    public static let tags                                       = "tags"
+    public static let userInfo                                   = "userInfo"
+    public static let source                                     = "source"
+    public static let remoteID                                   = "remoteID"
 }
 
 public enum VersionableKey {
-    static let deletedDate                                = "deletedDate"
-    static let effectiveDate                              = "effectiveDate"
-    static let nextVersionUUID                            = "nextVersionUUID"
-    static let previousVersionUUID                        = "previousVersionUUID"
+    public static let deletedDate                                = "deletedDate"
+    public static let effectiveDate                              = "effectiveDate"
+    public static let nextVersionUUID                            = "nextVersionUUID"
+    public static let previousVersionUUID                        = "previousVersionUUID"
 }
 
 //#Mark - Patient Class
 public enum PatientKey {
-    static let className                                = "Patient"
-    static let allergies                                = "alergies"
-    static let birthday                                 = "birthday"
-    static let sex                                      = "sex"
-    static let name                                     = "name"
+    public static let className                                = "Patient"
+    public static let allergies                                = "alergies"
+    public static let birthday                                 = "birthday"
+    public static let sex                                      = "sex"
+    public static let name                                     = "name"
 }
 
 //#Mark - CarePlan Class
 public enum CarePlanKey {
-    static let className                                = "CarePlan"
-    static let patient                                  = "patient"
-    static let title                                    = "title"
+    public static let className                                = "CarePlan"
+    public static let patient                                  = "patient"
+    public static let title                                    = "title"
 }
 
 //#Mark - Contact Class
 public enum ContactKey {
-    static let className                                = "Contact"
-    static let carePlan                                 = "carePlan"
-    static let title                                    = "title"
-    static let role                                     = "role"
-    static let organization                             = "organization"
-    static let category                                 = "category"
-    static let name                                     = "name"
-    static let address                                  = "address"
-    static let emailAddresses                           = "emailAddresses"
-    static let phoneNumbers                             = "phoneNumbers"
-    static let messagingNumbers                         = "messagingNumbers"
-    static let otherContactInfo                         = "otherContactInfo"
+    public static let className                                = "Contact"
+    public static let carePlan                                 = "carePlan"
+    public static let title                                    = "title"
+    public static let role                                     = "role"
+    public static let organization                             = "organization"
+    public static let category                                 = "category"
+    public static let name                                     = "name"
+    public static let address                                  = "address"
+    public static let emailAddresses                           = "emailAddresses"
+    public static let phoneNumbers                             = "phoneNumbers"
+    public static let messagingNumbers                         = "messagingNumbers"
+    public static let otherContactInfo                         = "otherContactInfo"
 }
 
 //#Mark - Task Class
 public enum TaskKey {
-    static let className                                = "Task"
-    static let title                                    = "title"
-    static let carePlan                                 = "carePlan"
-    static let impactsAdherence                         = "impactsAdherence"
-    static let instructions                             = "instructions"
-    static let elements                                 = "elements"
+    public static let className                                = "Task"
+    public static let title                                    = "title"
+    public static let carePlan                                 = "carePlan"
+    public static let impactsAdherence                         = "impactsAdherence"
+    public static let instructions                             = "instructions"
+    public static let elements                                 = "elements"
 }
 
 //#Mark - Outcome Class
 public enum OutcomeKey {
-    static let className                                = "Outcome"
-    static let deletedDate                              = "deletedDate"
-    static let task                                     = "task"
-    static let taskOccurrenceIndex                      = "taskOccurrenceIndex"
-    static let values                                   = "values"
+    public static let className                                = "Outcome"
+    public static let deletedDate                              = "deletedDate"
+    public static let task                                     = "task"
+    public static let taskOccurrenceIndex                      = "taskOccurrenceIndex"
+    public static let values                                   = "values"
 }
 
 //#Mark - OutcomeValue Class
 public enum OutcomeValueKey {
-    static let className                                = "OutcomeValue"
-    static let indexKey                                 = "index"
-    static let kindKey                                  = "kind"
-    static let unitsKey                                 = "units"
+    public static let className                                = "OutcomeValue"
+    public static let indexKey                                 = "index"
+    public static let kindKey                                  = "kind"
+    public static let unitsKey                                 = "units"
 }
 
 //#Mark - Note Class
 public enum NoteKey {
-    static let className                                = "Note"
-    static let contentKey                               = "content"
-    static let titleKey                                 = "title"
-    static let authorKey                                = "author"
+    public static let className                                = "Note"
+    public static let contentKey                               = "content"
+    public static let titleKey                                 = "title"
+    public static let authorKey                                = "author"
 }
 
 //#Mark - Clock Class
 public enum ClockKey {
-    static let className                                = "Clock"
-    static let uuid                                     = "uuid"
-    static let vectorKey                                = "vector"
+    public static let className                                = "Clock"
+    public static let uuid                                     = "uuid"
+    public static let vectorKey                                = "vector"
 }
