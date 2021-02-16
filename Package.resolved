@@ -23,8 +23,8 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift",
         "state": {
-          "branch": "improveACL",
-          "revision": "86ace5b2407a08d8d9fc6a14a47ce8f10fac5c17",
+          "branch": "improveAppleAuth",
+          "revision": "bd38ca31a81417b7578ccded97e70c050f5a4370",
           "version": null
         }
       }

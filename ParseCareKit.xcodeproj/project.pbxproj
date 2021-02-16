@@ -1047,7 +1047,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
 			requirement = {
-				branch = improveACL;
+				branch = improveAppleAuth;
 				kind = branch;
 			};
 		};
