@@ -23,8 +23,8 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
-          "branch": "improveAppleAuth",
-          "revision": "bd38ca31a81417b7578ccded97e70c050f5a4370",
+          "branch": null,
+          "revision": "8cee8aab12d594d153641ab83e3f692e22c91e55",
           "version": null
         }
       }
