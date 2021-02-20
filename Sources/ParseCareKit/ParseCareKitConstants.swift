@@ -88,7 +88,8 @@ public enum PCKStoreClass: String {
             .contact: try PCKStoreClass.contact.getDefault(),
             .outcome: try PCKStoreClass.outcome.getDefault(),
             .patient: try PCKStoreClass.patient.getDefault(),
-            .task: try PCKStoreClass.task.getDefault()
+            .task: try PCKStoreClass.task.getDefault(),
+            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault()
         ]
 
         for (key, value) in concreteClasses {
