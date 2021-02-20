@@ -149,6 +149,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
+                completion(.success(foundEntity))
 /*
                 if overwriteRemote {
                     //The tombsone method can handle the overwrite
@@ -160,7 +161,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 */
             case .failure(let error):
                 switch error.code {
-                case .internalServer: //1 - this column hasn't been added.
+                case .internalServer, .objectNotFound: //1 - this column hasn't been added.
                     self.save(completion: completion)
                 /*case .objectNotFound: //101 - Query returned no results
                     guard self.id.count > 0 else {

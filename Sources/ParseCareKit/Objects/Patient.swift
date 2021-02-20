@@ -121,6 +121,7 @@ public struct Patient: PCKVersionable {
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
+                completion(.success(foundEntity))
                 /*
                 if overwriteRemote {
                     self.updateCloud(completion: completion)
