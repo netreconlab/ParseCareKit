@@ -1056,8 +1056,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/carekit-apple/CareKit.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = 0ea1535364bfd96ebfd542bfeee15cf4ff8ae2ec;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
