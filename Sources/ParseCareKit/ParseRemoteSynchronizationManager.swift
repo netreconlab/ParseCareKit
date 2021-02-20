@@ -159,6 +159,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 //No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision)
+                completion(nil)
                 return
             }
             let returnError: Error? = nil
