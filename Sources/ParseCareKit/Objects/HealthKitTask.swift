@@ -73,6 +73,9 @@ public struct HealthKitTask: PCKVersionable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
+    /// A structure specifying how this task is linked with HealthKit.
+    public var healthKitLinkage: OCKHealthKitLinkage
+
     /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?
 
@@ -105,7 +108,7 @@ public struct HealthKitTask: PCKVersionable {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
-        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
+        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule, healthKitLinkage
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> HealthKitTask {
