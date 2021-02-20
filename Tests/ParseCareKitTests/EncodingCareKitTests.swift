@@ -233,8 +233,8 @@ class ParseCareKitTests: XCTestCase {
         careKit.notes = [careKitNote]
 
         //Versionable
-        careKit.previousVersionUUID = UUID()
-        careKit.nextVersionUUID = UUID()
+        careKit.previousVersionUUIDs = UUID()
+        careKit.nextVersionUUIDs = UUID()
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         //Test CareKit -> Parse
@@ -268,8 +268,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
@@ -301,8 +301,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse2.effectiveDate)
-        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Encode to cloud format
         guard var note = parse.notes?.first else {
@@ -338,8 +338,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
     // swiftlint:disable:next function_body_length
@@ -649,8 +649,8 @@ class ParseCareKitTests: XCTestCase {
         careKit.notes = [careKitNote]
 
         //Versionable
-        careKit.previousVersionUUID = UUID()
-        careKit.nextVersionUUID = UUID()
+        careKit.previousVersionUUIDs = UUID()
+        careKit.nextVersionUUIDs = UUID()
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         //Test CareKit -> Parse
@@ -684,8 +684,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
@@ -716,8 +716,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse2.effectiveDate)
-        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Encode to cloud format
         guard var note = parse.notes?.first else {
@@ -752,8 +752,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
     // swiftlint:disable:next function_body_length
@@ -777,8 +777,8 @@ class ParseCareKitTests: XCTestCase {
         careKit.notes = [careKitNote]
 
         //Versionable
-        careKit.previousVersionUUID = UUID()
-        careKit.nextVersionUUID = UUID()
+        careKit.previousVersionUUIDs = UUID()
+        careKit.nextVersionUUIDs = UUID()
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         //Test CareKit -> Parse
@@ -810,8 +810,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
@@ -841,8 +841,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse2.effectiveDate)
-        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Encode to cloud format
         guard var note = parse.notes?.first else {
@@ -876,8 +876,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
     // swiftlint:disable:next function_body_length
@@ -914,8 +914,8 @@ class ParseCareKitTests: XCTestCase {
         careKit.notes = [careKitNote]
 
         //Versionable
-        careKit.previousVersionUUID = UUID()
-        careKit.nextVersionUUID = UUID()
+        careKit.previousVersionUUIDs = UUID()
+        careKit.nextVersionUUIDs = UUID()
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         //Test CareKit -> Parse
@@ -954,8 +954,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
@@ -992,8 +992,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(parse2.effectiveDate)
-        XCTAssertEqual(parse2.previousVersionUUID, careKit.previousVersionUUID)
-        XCTAssertEqual(parse2.nextVersionUUID, careKit.nextVersionUUID)
+        XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
         //Encode to cloud format
         guard var note = parse.notes?.first else {
@@ -1034,8 +1034,8 @@ class ParseCareKitTests: XCTestCase {
 
         //Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
-        XCTAssertEqual(parse.previousVersionUUID, cloudDecoded.previousVersionUUID)
-        XCTAssertEqual(parse.nextVersionUUID, cloudDecoded.nextVersionUUID)
+        XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 /*
     func testAddContact() throws {

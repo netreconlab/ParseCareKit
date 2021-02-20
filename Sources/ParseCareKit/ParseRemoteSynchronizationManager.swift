@@ -144,8 +144,8 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         }
     }
 
-    public func pullRevisions(since clock: OCKRevisionRecord.KnowledgeVector,
-                              mergeRevision: @escaping (OCKRevisionRecord, @escaping (Error?) -> Void) -> Void,
+    public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector,
+                              mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                               completion: @escaping (Error?) -> Void) {
 
         guard PCKUser.current != nil else {
@@ -158,12 +158,12 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             guard let cloudVector = potentialCKClock else {
                 //No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                mergeRevision(revision, completion)
+                mergeRevision(revision)
                 return
             }
             let returnError: Error? = nil
 
-            let localClock = clock.clock(for: self.uuid)
+            let localClock = knowledgeVector.clock(for: self.uuid)
             self.subscribeToClock()
             ParseRemoteSynchronizationManager.queue.sync {
                 self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock,
@@ -180,8 +180,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
     func pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: Int=0, previousError: Error?,
                                          localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector,
-                                         mergeRevision: @escaping (OCKRevisionRecord,
-                                                                   @escaping (Error?) -> Void) -> Void,
+                                         mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                                          completion: @escaping (Error?) -> Void) {
 
         let classNames = PCKStoreClass.patient.orderedArray()
@@ -206,9 +205,15 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             completion(previousError)
             return
         }
-        var currentError = previousError
+
         concreteClass.pullRevisions(since: localClock, cloudClock: cloudVector) { customRevision in
-            mergeRevision(customRevision) { error in
+            mergeRevision(customRevision)
+
+            self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1,
+                                                 previousError: previousError, localClock: localClock,
+                                                 cloudVector: cloudVector, mergeRevision: mergeRevision,
+                                                 completion: completion)
+            /*{ error in
                 if error != nil {
                     currentError = error!
                     if #available(iOS 14.0, watchOS 7.0, *) {
@@ -218,20 +223,13 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                log: .pullRevisions, type: .error, currentError!.localizedDescription)
                     }
                 }
-
-                self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1,
-                                                     previousError: currentError, localClock: localClock,
-                                                     cloudVector: cloudVector, mergeRevision: mergeRevision,
-                                                     completion: completion)
-
-            }
+            }*/
         }
     }
 
     func pullRevisionsForCustomClasses(customClassesAlreadyPulled: Int=0, previousError: Error?,
                                        localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector,
-                                       mergeRevision: @escaping (OCKRevisionRecord,
-                                                                 @escaping (Error?) -> Void) -> Void,
+                                       mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                                        completion: @escaping (Error?) -> Void) {
 
         if let customClassesToSynchronize = self.customClassesToSynchronize {
@@ -259,9 +257,15 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 completion(previousError)
                 return
             }
-            var currentError = previousError
+
             customClass.pullRevisions(since: localClock, cloudClock: cloudVector) { customRevision in
-                mergeRevision(customRevision) { error in
+                mergeRevision(customRevision)
+                self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1,
+                                                   previousError: previousError, localClock: localClock,
+                                                   cloudVector: cloudVector, mergeRevision: mergeRevision,
+                                                   completion: completion)
+
+                /*{ error in
                     if error != nil {
                         currentError = error!
                         if #available(iOS 14.0, watchOS 7.0, *) {
@@ -273,11 +277,8 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         }
                     }
 
-                    self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1,
-                                                       previousError: currentError, localClock: localClock,
-                                                       cloudVector: cloudVector, mergeRevision: mergeRevision,
-                                                       completion: completion)
-                }
+                    
+                }*/
             }
         } else {
             completion(previousError)
@@ -285,7 +286,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     }
 
     public func pushRevisions(deviceRevision: OCKRevisionRecord,
-                              overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+                              completion: @escaping (Error?) -> Void) {
 
         guard PCKUser.current != nil else {
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
@@ -364,8 +365,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
                         if let customClassName = patient.userInfo?[CustomKey.customClass] {
                             self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                            cloudClock: cloudVectorClock,
-                                                            overwriteRemote: overwriteRemote) { error in
+                                                            cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -384,8 +384,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 return
                             }
 
-                            parse.pushRevision(cloudClock: cloudVectorClock,
-                                               overwriteRemote: overwriteRemote) { error in
+                            parse.pushRevision(cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -402,8 +401,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     case .carePlan(let carePlan):
                         if let customClassName = carePlan.userInfo?[CustomKey.customClass] {
                             self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                            cloudClock: cloudVectorClock,
-                                                            overwriteRemote: overwriteRemote) { error in
+                                                            cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -422,7 +420,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 return
                             }
 
-                            parse.pushRevision(cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) { error in
+                            parse.pushRevision(cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -438,8 +436,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     case .contact(let contact):
                         if let customClassName = contact.userInfo?[CustomKey.customClass] {
                             self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                            cloudClock: cloudVectorClock,
-                                                            overwriteRemote: overwriteRemote) { error in
+                                                            cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -456,7 +453,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) { error in
+                            parse.pushRevision(cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -473,8 +470,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                     case .task(let task):
                         if let customClassName = task.userInfo?[CustomKey.customClass] {
                             self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                            cloudClock: cloudVectorClock,
-                                                            overwriteRemote: overwriteRemote) { error in
+                                                            cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -492,8 +488,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 return
                             }
 
-                            parse.pushRevision(cloudClock: cloudVectorClock,
-                                               overwriteRemote: overwriteRemote) { error in
+                            parse.pushRevision(cloudClock: cloudVectorClock) { error in
 
                                 if error != nil {
                                     completion(error)
@@ -511,8 +506,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
                         if let customClassName = outcome.userInfo?[CustomKey.customClass] {
                             self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                            cloudClock: cloudVectorClock,
-                                                            overwriteRemote: overwriteRemote) { error in
+                                                            cloudClock: cloudVectorClock) { error in
                                 if error != nil {
                                     completion(error)
                                 }
@@ -528,7 +522,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
-                            parse.pushRevision(cloudClock: cloudVectorClock, overwriteRemote: overwriteRemote) { error in
+                            parse.pushRevision(cloudClock: cloudVectorClock) { error in
                                 if error != nil {
                                     completion(error)
                                 }
@@ -541,14 +535,48 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 }
                             }
                         }
+                    case .healthKitTask(let healthKit):
+                        if let customClassName = healthKit.userInfo?[CustomKey.customClass] {
+                            self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                            cloudClock: cloudVectorClock) { error in
+
+                                if error != nil {
+                                    completion(error)
+                                }
+                                revisionsCompletedCount += 1
+                                if revisionsCompletedCount == deviceRevision.entities.count {
+                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                           localClock: deviceRevision.knowledgeVector,
+                                                           completion: completion)
+                                }
+                            }
+                        } else {
+                            guard let parse = try?  self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
+                                completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                return
+                            }
+
+                            parse.pushRevision(cloudClock: cloudVectorClock) { error in
+
+                                if error != nil {
+                                    completion(error)
+                                }
+                                revisionsCompletedCount += 1
+                                if revisionsCompletedCount == deviceRevision.entities.count {
+                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                           localClock: deviceRevision.knowledgeVector,
+                                                           completion: completion)
+                                }
+                            }
+
+                        }
                     }
                 }
             }
         }
     }
 
-    func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, cloudClock: Int,
-                                    overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+    func pushRevisionForCustomClass(_ entity: OCKEntity, className: String, cloudClock: Int, completion: @escaping (Error?) -> Void) {
         guard let customClass = self.customClassesToSynchronize?[className] else {
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
@@ -558,7 +586,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
-        parse.pushRevision(cloudClock: cloudClock, overwriteRemote: overwriteRemote) { error in
+        parse.pushRevision(cloudClock: cloudClock) { error in
             completion(error)
         }
     }
@@ -594,13 +622,17 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         }
     }
 
-    public func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription,
-                                               completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void) {
+    public func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>) {
+
         if let parseDelegate = self.parseDelegate {
-            parseDelegate.chooseConflictResolutionPolicy(conflict, completion: completion)
+            parseDelegate
+                .chooseConflictResolution(conflicts: conflicts,
+                                          completion: completion)
         } else {
+
+            /*
             let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
-            completion(conflictPolicy)
+            completion(conflictPolicy)*/
         }
     }
 }

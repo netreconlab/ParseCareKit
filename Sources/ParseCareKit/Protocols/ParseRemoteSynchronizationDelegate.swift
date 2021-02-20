@@ -15,8 +15,7 @@ import CareKitStore
 */
 public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDelegate {
     /// When a conflict occurs, decide if the device or cloud record should be kept.
-    func chooseConflictResolutionPolicy(_ conflict: OCKMergeConflictDescription,
-                                        completion: @escaping (OCKMergeConflictResolutionPolicy) -> Void)
+    func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>)
 
     /// Receive a notification when data has been successfully pushed to the Cloud.
     func successfullyPushedDataToCloud()

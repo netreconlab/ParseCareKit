@@ -32,6 +32,8 @@
 		70A793C525C321020003F0FF /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A793C425C321020003F0FF /* CareKitStore */; };
 		70A793EC25C330730003F0FF /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70A793EB25C330730003F0FF /* CareKitStore */; };
 		70B326BE251EBE610028B229 /* PCKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B326BD251EBE610028B229 /* PCKUser.swift */; };
+		70D5A29425E0D2D30036A8AD /* HealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5A29325E0D2D30036A8AD /* HealthKitTask.swift */; };
+		70D5A29525E0D2D30036A8AD /* HealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5A29325E0D2D30036A8AD /* HealthKitTask.swift */; };
 		70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		70F2E182254EFC8000B2EA5C /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Patient.swift */; };
 		70F2E183254EFC8000B2EA5C /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F824561A28001B7AA3 /* Contact.swift */; };
@@ -125,6 +127,7 @@
 		709D18062586903C0002E772 /* LoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTests.swift; sourceTree = "<group>"; };
 		709D1817258699840002E772 /* ParseRemoteSynchronizationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemoteSynchronizationDelegate.swift; sourceTree = "<group>"; };
 		70B326BD251EBE610028B229 /* PCKUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKUser.swift; sourceTree = "<group>"; };
+		70D5A29325E0D2D30036A8AD /* HealthKitTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitTask.swift; sourceTree = "<group>"; };
 		70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParseCareKit_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70F2E179254EFC6100B2EA5C /* ParseCareKit_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseCareKit_watchOS.h; sourceTree = "<group>"; };
 		70F2E17A254EFC6100B2EA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -334,6 +337,7 @@
 				9119D60024561A28001B7AA3 /* OutcomeValue.swift */,
 				9119D5FB24561A28001B7AA3 /* Patient.swift */,
 				9119D5FA24561A28001B7AA3 /* Task.swift */,
+				70D5A29325E0D2D30036A8AD /* HealthKitTask.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -607,6 +611,7 @@
 				70F2E187254EFC8000B2EA5C /* ParseCareKitConstants.swift in Sources */,
 				70F2E189254EFC8000B2EA5C /* ParseRemoteSynchronizationManager.swift in Sources */,
 				70F2E183254EFC8000B2EA5C /* Contact.swift in Sources */,
+				70D5A29525E0D2D30036A8AD /* HealthKitTask.swift in Sources */,
 				70F2E184254EFC8000B2EA5C /* PCKUser.swift in Sources */,
 				70F2E186254EFC8000B2EA5C /* Outcome.swift in Sources */,
 				709D176C258579090002E772 /* ParseCareKitError.swift in Sources */,
@@ -632,6 +637,7 @@
 				9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */,
 				9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */,
 				700775AA2522686D00EC0EDA /* PCKVersionable.swift in Sources */,
+				70D5A29425E0D2D30036A8AD /* HealthKitTask.swift in Sources */,
 				9119D60324561A28001B7AA3 /* Task.swift in Sources */,
 				9119D60824561A28001B7AA3 /* Outcome.swift in Sources */,
 				709D176B258579090002E772 /* ParseCareKitError.swift in Sources */,
@@ -1050,8 +1056,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/carekit-apple/CareKit.git";
 			requirement = {
-				kind = revision;
-				revision = 4d9200e0b2ad68e6d2c8502f10971200bccf8863;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -14,42 +14,22 @@ import CareKitStore
 /// CareKit objects and values. Use cases may include a physician leaving a note on a task when it is modified
 /// to explain why a medication dose was changed, or a note left from a patient to a care provider explaining
 /// why they weren't able to complete a task on a certain occasion.
-public struct Note: PCKObjectable {
+public struct Note: Codable {
 
-    public var uuid: UUID?
-
-    public var entityId: String?
-
+    /*
     public var logicalClock: Int?
-
-    public var schemaVersion: OCKSemanticVersion?
 
     public var createdDate: Date?
 
     public var updatedDate: Date?
 
-    public var timezone: TimeZone?
-
-    public var userInfo: [String: String]?
-
-    public var groupIdentifier: String?
-
-    public var tags: [String]?
-
-    public var source: String?
-
-    public var asset: String?
-
-    public var notes: [Note]?
-
-    public var remoteID: String?
-
+    
     public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
         }
-    }
-
+    }*/
+/*
     public var objectId: String?
 
     public var createdAt: Date?
@@ -57,7 +37,7 @@ public struct Note: PCKObjectable {
     public var updatedAt: Date?
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
-
+*/
     /// The note content.
     public var content: String?
 
@@ -67,27 +47,32 @@ public struct Note: PCKObjectable {
     /// The person who created this note.
     public var author: String?
 
-    enum CodingKeys: String, CodingKey {
-        case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo,
-             groupIdentifier, tags, source, asset, remoteID, notes
-        case content, title, author
+    //CustomStringConvertible
+    /*public var description: String {
+        debugDescription
     }
 
+    enum CodingKeys: String, CodingKey {
+        case objectId, createdAt, updatedAt
+        case uuid, createdDate, updatedDate/*, timezone, userInfo,
+             groupIdentifier, tags, source, asset, remoteID, notes*/
+        case content, title, author
+    }*/
+
     //Used to get encoder/decoder for ParseCareKitUtility, don't remove
-    init() {
+    /*init() {
         self.timezone = .current
-    }
+    }*/
 
     public static func copyValues(from other: Note, to here: Note) throws -> Self {
         var here = here
-        here.copyCommonValues(from: other)
+        //here.copyCommonValues(from: other)
         here.content = other.content
         here.author = other.author
         here.title = other.title
         return here
     }
-
+/*
     public static func copyCareKit(_ note: OCKNote) throws -> Note {
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(note)
         let decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
@@ -103,32 +88,33 @@ public struct Note: PCKObjectable {
     }
 
     mutating public func prepareEncodingRelational(_ encodingForParse: Bool) {
-        var updatedNotes = [Note]()
+        var updatedNotes = [OCKNote]()
         notes?.forEach {
             var update = $0
             update.encodingForParse = encodingForParse
             updatedNotes.append(update)
         }
         self.notes = updatedNotes
-    }
-
+    }*/
+/*
     mutating func stamp(_ clock: Int) {
         self.logicalClock = clock
-        var updatedNotes = [Note]()
+        /*var updatedNotes = [OCKNote]()
         notes?.forEach {
             var update = $0
             update.stamp(clock)
             updatedNotes.append(update)
         }
-        self.notes = updatedNotes
+        self.notes = updatedNotes*/
     }
 
-    public static func replaceWithCloudVersion(_ local:inout [Note]?, cloud: [Note]?) {
+    public static func replaceWithCloudVersion(_ local:inout [OCKNote]?, cloud: [OCKNote]?) {
         guard local != nil,
             cloud != nil else {
             return
         }
-
+        local = cloud
+        
         for (index, note) in local!.enumerated() {
             guard let cloudNote = cloud!.first(where: {$0.uuid == note.uuid}) else {
                 continue
@@ -137,7 +123,7 @@ public struct Note: PCKObjectable {
         }
     }
 
-    public static func fetchAndReplace(_ notes: [Note]?, completion: @escaping([Note]?) -> Void) {
+    public static func fetchAndReplace(_ notes: [OCKNote]?, completion: @escaping([OCKNote]?) -> Void) {
         let entitiesToFetch = notes?.compactMap { entity -> UUID? in
             if entity.objectId == nil {
                 return entity.uuid
@@ -172,5 +158,5 @@ public struct Note: PCKObjectable {
                 completion(nil)
             }
         }
-    }
+    }*/
 }

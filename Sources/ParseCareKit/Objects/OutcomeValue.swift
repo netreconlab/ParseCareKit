@@ -17,52 +17,7 @@ import CareKitStore
 /// `OCKOutcomeValue` is a representation of any response of measurement that a user gives
 /// in response to a task. The underlying type could be any of a number of types including
 /// integers, booleans, dates, text, and binary data, among others.
-public struct OutcomeValue: PCKObjectable {
-
-    public var uuid: UUID?
-
-    public var entityId: String?
-
-    public var logicalClock: Int?
-
-    public var schemaVersion: OCKSemanticVersion?
-
-    public var createdDate: Date?
-
-    public var updatedDate: Date?
-
-    public var timezone: TimeZone?
-
-    public var userInfo: [String: String]?
-
-    public var groupIdentifier: String?
-
-    public var tags: [String]?
-
-    public var source: String?
-
-    public var asset: String?
-
-    public var notes: [Note]?
-
-    public var remoteID: String?
-
-    public var encodingForParse: Bool = true {
-        willSet {
-            prepareEncodingRelational(newValue)
-        }
-    }
-
-    public var objectId: String?
-
-    public var createdAt: Date?
-
-    public var updatedAt: Date?
-
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
-
-    /// The index can be used to track the order or arrangement of outcomes values, when relevant.
-    public var index: Int?
+public struct OutcomeValue: Codable {
 
     /// An optional property that can be used to specify what kind of
     /// value this is (e.g. blood pressure, qualitative stress, weight)
@@ -70,6 +25,8 @@ public struct OutcomeValue: PCKObjectable {
 
     /// The units for this measurement.
     public var units: String?
+
+    public var encodingForParse: Bool = true
 
     /// The underlying value.
     public var value: OCKOutcomeValueUnderlyingType?
@@ -104,20 +61,12 @@ public struct OutcomeValue: PCKObjectable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case objectId, createdAt, updatedAt
-        case uuid, schemaVersion, createdDate, updatedDate, timezone, userInfo,
-             groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case index, kind, units, value, type
     }
 
     // swiftlint:disable:next function_body_length
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        //Decode Parse first
-        objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
-        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
-        updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
 
         guard let valueType = try container.decodeIfPresent(OCKOutcomeValueType.self, forKey: .type) else {
             return
@@ -158,26 +107,10 @@ public struct OutcomeValue: PCKObjectable {
 
         kind = try container.decodeIfPresent(String.self, forKey: .kind)
         units = try container.decodeIfPresent(String.self, forKey: .units)
-        index = try container.decodeIfPresent(Int.self, forKey: .index)
-        uuid = try container.decodeIfPresent(UUID.self, forKey: .uuid)
-        createdDate = try container.decodeIfPresent(Date.self, forKey: .createdDate)
-        updatedDate = try container.decodeIfPresent(Date.self, forKey: .updatedDate)
-        schemaVersion = try container.decodeIfPresent(OCKSemanticVersion.self, forKey: .schemaVersion)
-        groupIdentifier = try container.decodeIfPresent(String.self, forKey: .groupIdentifier)
-        tags = try container.decodeIfPresent([String].self, forKey: .tags)
-        remoteID = try container.decodeIfPresent(String.self, forKey: .remoteID)
-        source = try container.decodeIfPresent(String.self, forKey: .source)
-        userInfo = try container.decodeIfPresent([String: String].self, forKey: .userInfo)
-        timezone = try container.decodeIfPresent(TimeZone.self, forKey: .timezone)
-        asset = try container.decodeIfPresent(String.self, forKey: .asset)
-        notes = try container.decodeIfPresent([Note].self, forKey: .notes)
-        logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
     }
 
     public static func copyValues(from other: OutcomeValue, to here: OutcomeValue) throws -> Self {
         var here = here
-        here.copyCommonValues(from: other)
-        here.index = other.index
         here.kind = other.kind
         here.units = other.units
         here.value = other.value
@@ -196,36 +129,6 @@ public struct OutcomeValue: PCKObjectable {
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableOutcomeValue)
         return try ParseCareKitUtility.decoder().decode(OCKOutcomeValue.self, from: encoded)
     }
-
-    mutating public func prepareEncodingRelational(_ encodingForParse: Bool) {
-        var updatedNotes = [Note]()
-        notes?.forEach {
-            var update = $0
-            update.encodingForParse = encodingForParse
-            updatedNotes.append(update)
-        }
-        self.notes = updatedNotes
-    }
-
-    mutating func stamp(_ clock: Int) {
-        self.logicalClock = clock
-        var updatedNotes = [Note]()
-        notes?.forEach {
-            var update = $0
-            update.encodingForParse = encodingForParse
-            updatedNotes.append(update)
-        }
-        self.notes = updatedNotes
-    }
-
-    public static func replaceWithCloudVersion(_ local:inout [OutcomeValue], cloud: [OutcomeValue]) {
-        for (index, value) in local.enumerated() {
-            guard let cloudNote = cloud.first(where: {$0.uuid == value.uuid}) else {
-                continue
-            }
-            local[index] = cloudNote
-        }
-    }
 }
 
 extension OutcomeValue {
@@ -235,7 +138,6 @@ extension OutcomeValue {
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(kind, forKey: .kind)
         try container.encodeIfPresent(units, forKey: .units)
-        try container.encodeIfPresent(index, forKey: .index)
         if encodingForParse {
             var encodedValue = false
             if let value = integerValue { try container.encodeIfPresent([type.rawValue: value], forKey: .value); encodedValue = true } else
@@ -264,6 +166,5 @@ extension OutcomeValue {
                                                  EncodingError.Context(codingPath: [CodingKeys.value], debugDescription: message))
             }
         }
-        try self.encodeObjectable(to: encoder)
     }
 }

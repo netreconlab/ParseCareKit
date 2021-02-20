@@ -19,9 +19,14 @@ import os.log
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
-public struct Outcome: PCKObjectable, PCKSynchronizable {
+public struct Outcome: PCKVersionable, PCKSynchronizable {
+    public var previousVersionUUIDs: [UUID]
 
-    public var uuid: UUID?
+    public var nextVersionUUIDs: [UUID]
+
+    public var effectiveDate: Date?
+
+    public var uuid: UUID
 
     public var entityId: String?
 
@@ -45,7 +50,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
     public var asset: String?
 
-    public var notes: [Note]?
+    public var notes: [OCKNote]?
 
     public var remoteID: String?
 
@@ -83,7 +88,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
     ///   - A task to call a physician might have 0 values, or 1 value containing the time stamp of when the call was placed.
     ///   - A task to walk 2,000 steps might have 1 value, with that value being the number of steps that were actually taken.
     ///   - A task to complete a survey might have multiple values corresponding to the answers to the questions in the survey.
-    public var values: [OutcomeValue]?
+    public var values: [OCKOutcomeValue]?
 
     /// The version of the task to which this outcomes belongs.
     public var task: Task? {
@@ -101,11 +106,17 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
 
+    internal init() {
+        uuid = UUID()
+        previousVersionUUIDs = []
+        nextVersionUUIDs = []
+    }
+
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
-        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
+        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate, previousVersionUUIDs, nextVersionUUIDs
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> Self {
@@ -124,12 +135,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
 
-    public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-
-        guard let uuid = self.uuid else {
-            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
-            return
-        }
+    public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         //Check to see if already in the cloud
         let query = Outcome.query(ObjectableKey.uuid == uuid)
@@ -143,7 +149,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
-
+/*
                 if overwriteRemote {
                     //The tombsone method can handle the overwrite
                     self.tombstone(completion: completion)
@@ -151,12 +157,12 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
                     //This object already exists on server, ignore gracefully
                     completion(.success(foundEntity))
                 }
-
+*/
             case .failure(let error):
                 switch error.code {
                 case .internalServer: //1 - this column hasn't been added.
                     self.save(completion: completion)
-                case .objectNotFound: //101 - Query returned no results
+                /*case .objectNotFound: //101 - Query returned no results
                     guard self.id.count > 0 else {
                         return
                     }
@@ -175,7 +181,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
                         case .failure:
                             self.save(completion: completion)
                         }
-                    }
+                    }*/
 
                 default:
                     //There was a different issue that we don't know how to handle
@@ -191,8 +197,59 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        //Handled with tombstone, marked for deletion
-        completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
+        var previousVersionUUIDs = self.previousVersionUUIDs
+        previousVersionUUIDs.append(uuid)
+        //Check to see if this entity is already in the Cloud, but not matched locally
+        let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+            .includeAll()
+        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+
+            switch results {
+
+            case .success(let foundObjects):
+                switch foundObjects.count {
+                case 0:
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.outcome.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
+                    } else {
+                        os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .outcome, type: .debug)
+                    }
+                    self.addToCloud(completion: completion)
+                case 1:
+                    //This is the typical case
+                    guard let previousVersion = foundObjects.first(where: {self.previousVersionUUIDs.contains($0.uuid)}) else {
+                        if #available(iOS 14.0, watchOS 7.0, *) {
+                            Logger.outcome.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
+                        } else {
+                            os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud",
+                                   log: .outcome, type: .error, previousVersionUUIDs)
+                        }
+                        completion(.failure(ParseCareKitError.uuidAlreadyExists))
+                        return
+                    }
+                    var updated = self
+                    updated = updated.copyRelationalEntities(previousVersion)
+                    updated.addToCloud(completion: completion)
+
+                default:
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.outcome.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
+                    } else {
+                        os_log("updateCloud(), UUID (%{private}) already exists in Cloud",
+                               log: .outcome, type: .error, uuid.uuidString)
+                    }
+                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
+                }
+            case .failure(let error):
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.outcome.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
+                } else {
+                    os_log("updateCloud(), %{private}", log: .outcome, type: .error, error.localizedDescription)
+                }
+                completion(.failure(error))
+            }
+
+        }
     }
 
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
@@ -236,13 +293,13 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         }
     }
 
-    public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+    public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
         var mutableOutcome = self
         mutableOutcome.logicalClock = cloudClock //Stamp Entity
 
         guard mutableOutcome.deletedDate != nil else {
 
-            mutableOutcome.addToCloud(overwriteRemote: overwriteRemote) { result in
+            mutableOutcome.addToCloud { result in
 
                 switch result {
 
@@ -255,7 +312,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
             return
         }
 
-        mutableOutcome.tombstone { result in
+        mutableOutcome.updateCloud { result in
 
             switch result {
 
@@ -265,8 +322,19 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
                 completion(error)
             }
         }
-    }
+        /*
+        mutableOutcome.tombstone { result in
 
+            switch result {
+
+            case .success:
+                completion(nil)
+            case .failure(let error):
+                completion(error)
+            }
+        }*/
+    }
+/*
     public func tombstone(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         guard let uuid = self.uuid else {
@@ -319,7 +387,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
             }
         }
     }
-
+*/
     public static func copyValues(from other: Outcome, to here: Outcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
@@ -347,7 +415,8 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
             copy.values = .init()
         }
         if let valuesToCopy = parse.values {
-            OutcomeValue.replaceWithCloudVersion(&copy.values!, cloud: valuesToCopy)
+            copy.values = valuesToCopy
+            /*OutcomeValue.replaceWithCloudVersion(&copy.values!, cloud: valuesToCopy)*/
         }
         return copy
     }
@@ -356,20 +425,13 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         if task != nil {
             task!.encodingForParse = encodingForParse
         }
-        var updatedValues = [OutcomeValue]()
+        /*var updatedValues = [OutcomeValue]()
         values?.forEach {
             var update = $0
             update.encodingForParse = encodingForParse
             updatedValues.append(update)
         }
-        values = updatedValues
-        var updatedNotes = [Note]()
-        notes?.forEach {
-            var update = $0
-            update.encodingForParse = encodingForParse
-            updatedNotes.append(update)
-        }
-        self.notes = updatedNotes
+        values = updatedValues*/
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -381,11 +443,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
     }
 
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard let stamped = try? self.stampRelational() else {
-            completion(.failure(ParseCareKitError.cantUnwrapSelf))
-            return
-        }
-        stamped.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        self.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let saved):
@@ -457,11 +515,6 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
     public static func tagWithId(_ outcome: OCKOutcome) -> OCKOutcome? {
 
-        //If this object has a createdDate, it's been stored locally before
-        guard outcome.uuid != nil else {
-            return nil
-        }
-
         var mutableOutcome = outcome
 
         if mutableOutcome.tags != nil {
@@ -476,7 +529,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
 
         return nil
     }
-
+/*
     public func stampRelational() throws -> Outcome {
         var stamped = self
         stamped = try stamped.stampRelationalEntities()
@@ -489,7 +542,7 @@ public struct Outcome: PCKObjectable, PCKSynchronizable {
         stamped.values = updatedOutcomeValues
 
         return stamped
-    }
+    }*/
 
     public static func queryNotDeleted()-> Query<Outcome> {
         let taskQuery = Task.query(doesNotExist(key: OutcomeKey.deletedDate))

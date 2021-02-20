@@ -23,7 +23,7 @@ public enum PCKCodingKeys: String, CodingKey {
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
          logicalClock, className, ACL, objectId, updatedAt, createdAt
-    case effectiveDate, previousVersionUUID, nextVersionUUID
+    case effectiveDate, previousVersionUUIDs, nextVersionUUIDs
 }
 
 /// Types of ParseCareKit classes.
@@ -33,6 +33,7 @@ public enum PCKStoreClass: String {
     case outcome
     case patient
     case task
+    case healthKitTask
 
     func getDefault() throws -> PCKSynchronizable {
         switch self {
@@ -52,11 +53,15 @@ public enum PCKStoreClass: String {
             let task = OCKTask(id: "", title: "", carePlanUUID: nil,
                                schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
             return try Task.copyCareKit(task)
+        case .healthKitTask:
+            let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
+                                        schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .activeEnergyBurned, quantityType: .cumulative, unit: .count()))
+            return try HealthKitTask.copyCareKit(healthKitTask)
         }
     }
 
     func orderedArray() -> [PCKStoreClass] {
-        return [.patient, .carePlan, .contact, .task, .outcome]
+        return [.patient, .carePlan, .contact, .task, .outcome, .healthKitTask]
     }
 
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
@@ -144,6 +149,11 @@ public enum PCKStoreClass: String {
                 return false
             }
             return true
+        case .healthKitTask:
+            guard (check as? HealthKitTask) != nil else {
+                return false
+            }
+            return true
         }
     }
 }
@@ -174,8 +184,8 @@ public enum ObjectableKey {
 public enum VersionableKey {
     public static let deletedDate                                = "deletedDate"
     public static let effectiveDate                              = "effectiveDate"
-    public static let nextVersionUUID                            = "nextVersionUUID"
-    public static let previousVersionUUID                        = "previousVersionUUID"
+    public static let nextVersionUUIDs                            = "nextVersionUUIDs"
+    public static let previousVersionUUIDs                        = "previousVersionUUIDs"
 }
 
 //#Mark - Patient Class

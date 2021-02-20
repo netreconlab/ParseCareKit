@@ -21,13 +21,13 @@ import os.log
 /// least a name, and may optionally have numerous other addresses at which to be contacted.
 public struct Contact: PCKVersionable {
 
-    public var nextVersionUUID: UUID?
+    public var nextVersionUUIDs: [UUID]
 
-    public var previousVersionUUID: UUID?
+    public var previousVersionUUIDs: [UUID]
 
     public var effectiveDate: Date?
 
-    public var uuid: UUID?
+    public var uuid: UUID
 
     public var entityId: String?
 
@@ -53,7 +53,7 @@ public struct Contact: PCKVersionable {
 
     public var asset: String?
 
-    public var notes: [Note]?
+    public var notes: [OCKNote]?
 
     public var remoteID: String?
 
@@ -124,7 +124,7 @@ public struct Contact: PCKVersionable {
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate,
              timezone, userInfo, groupIdentifier, tags, source, asset, remoteID,
              notes, logicalClock
-        case previousVersionUUID, nextVersionUUID, effectiveDate
+        case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
         case carePlan, title, carePlanUUID, address, category, name, organization, role
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
     }
@@ -145,12 +145,7 @@ public struct Contact: PCKVersionable {
         }
     }
 
-    public func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-
-        guard let uuid = self.uuid else {
-            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
-            return
-        }
+    public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         //Check to see if already in the cloud
         let query = Contact.query(ObjectableKey.uuid == uuid)
@@ -164,14 +159,14 @@ public struct Contact: PCKVersionable {
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
-
+/*
                 if overwriteRemote {
                     self.updateCloud(completion: completion)
                 } else {
                     //This object already exists on server, ignore gracefully
                     completion(.success(foundEntity))
                 }
-
+*/
             case .failure(let error):
                 switch error.code {
                 //1 - this column hasn't been added. 101 - Query returned no results
@@ -191,14 +186,12 @@ public struct Contact: PCKVersionable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard let uuid = self.uuid,
-            let previousVersionUUID = self.previousVersionUUID else {
-            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
-            return
-        }
+        var previousVersionUUIDs = self.previousVersionUUIDs
+
+        previousVersionUUIDs.append(uuid)
 
         //Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Contact.query(containedIn(key: ObjectableKey.uuid, array: [uuid, previousVersionUUID]))
+        let query = Contact.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
@@ -213,22 +206,22 @@ public struct Contact: PCKVersionable {
                         os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new",
                                log: .contact, type: .debug)
                     }
-                    self.addToCloud(overwriteRemote: false, completion: completion)
+                    self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.first(where: {$0.uuid == previousVersionUUID}) else {
+                    guard let previousVersion = foundObjects.first(where: {previousVersionUUIDs.contains($0.uuid)}) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.contact.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUID, privacy: .private)) already exists in Cloud")
+                            Logger.contact.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {
                             os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud",
-                                   log: .contact, type: .error, previousVersionUUID.uuidString)
+                                   log: .contact, type: .error, previousVersionUUIDs)
                         }
                         completion(.failure(ParseCareKitError.uuidAlreadyExists))
                         return
                     }
                     var updated = self
                     updated = updated.copyRelationalEntities(previousVersion)
-                    updated.addToCloud(overwriteRemote: false, completion: completion)
+                    updated.addToCloud(completion: completion)
 
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
@@ -293,12 +286,12 @@ public struct Contact: PCKVersionable {
         }
     }
 
-    public func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void) {
+    public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
         var mutableContact = self
         mutableContact.logicalClock = cloudClock //Stamp Entity
 
-        guard mutableContact.previousVersionUUID != nil else {
-            mutableContact.addToCloud(overwriteRemote: overwriteRemote) { result in
+        guard mutableContact.deletedDate != nil else {
+            mutableContact.addToCloud { result in
 
                 switch result {
 
@@ -351,13 +344,13 @@ public struct Contact: PCKVersionable {
         if carePlan != nil {
             carePlan?.encodingForParse = encodingForParse
         }
-        var updatedNotes = [Note]()
+        /*var updatedNotes = [OCKNote]()
         notes?.forEach {
             var update = $0
             update.encodingForParse = encodingForParse
             updatedNotes.append(update)
         }
-        self.notes = updatedNotes
+        self.notes = updatedNotes*/
     }
 
     public func convertToCareKit() throws -> OCKContact {
