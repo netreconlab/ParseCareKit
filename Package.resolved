@@ -5,7 +5,7 @@
         "package": "CareKit",
         "repositoryURL": "https://github.com/cbaker6/CareKit.git",
         "state": {
-          "branch": "fixOCKStoreInits",
+          "branch": null,
           "revision": "803dd2f46c7042c91820437ea5b64b0837cde12b",
           "version": null
         }
@@ -17,6 +17,15 @@
           "branch": null,
           "revision": "c91e5bb74397136f79656bebdfda76a523d3e88c",
           "version": "0.3.2"
+        }
+      },
+      {
+        "package": "ParseSwift",
+        "repositoryURL": "https://github.com/parse-community/Parse-Swift",
+        "state": {
+          "branch": null,
+          "revision": "0d81cd47819d36503cecda70a05bc9f02c13f036",
+          "version": "1.1.4"
         }
       }
     ]
