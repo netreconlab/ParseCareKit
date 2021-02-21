@@ -5,8 +5,8 @@
         "package": "CareKit",
         "repositoryURL": "https://github.com/cbaker6/CareKit.git",
         "state": {
-          "branch": "2.1-slider",
-          "revision": "519b10ca517f3ab50bc312962ec990aae061aa93",
+          "branch": null,
+          "revision": "d82934446573dc2f8cb68981350636b85f085d24",
           "version": null
         }
       },

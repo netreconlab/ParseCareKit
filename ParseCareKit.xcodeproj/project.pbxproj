@@ -164,7 +164,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				705B22B925E2426A00C472AC /* CareKitStore in Frameworks */,
 				70755431255D89B800172F6B /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,7 +419,6 @@
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
 				70755430255D89B800172F6B /* ParseSwift */,
-				705B22B825E2426A00C472AC /* CareKitStore */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -1035,8 +1033,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
-				branch = "2.1-slider";
-				kind = branch;
+				kind = revision;
+				revision = d82934446573dc2f8cb68981350636b85f085d24;
 			};
 		};
 		7075542B255D899E00172F6B /* XCRemoteSwiftPackageReference "Parse-Swift" */ = {
