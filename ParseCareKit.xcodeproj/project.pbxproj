@@ -44,20 +44,16 @@
 		70F2E188254EFC8000B2EA5C /* ParseCareKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */; };
 		70F2E189254EFC8000B2EA5C /* ParseRemoteSynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemoteSynchronizationManager.swift */; };
 		70F2E18A254EFC8000B2EA5C /* PCKSynchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D5287924813AF70022292B /* PCKSynchronizable.swift */; };
-		70F2E18B254EFC8000B2EA5C /* OutcomeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D60024561A28001B7AA3 /* OutcomeValue.swift */; };
 		70F2E18C254EFC8000B2EA5C /* PCKVersionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700775A92522686D00EC0EDA /* PCKVersionable.swift */; };
 		70F2E18D254EFC8000B2EA5C /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* Clock.swift */; };
-		70F2E18E254EFC8000B2EA5C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FD24561A28001B7AA3 /* Note.swift */; };
 		70F2E18F254EFC8000B2EA5C /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FA24561A28001B7AA3 /* Task.swift */; };
 		70F2E303254F4F3300B2EA5C /* ParseCareKit_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 70F2E179254EFC6100B2EA5C /* ParseCareKit_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9119D5F0245618D7001B7AA3 /* ParseCareKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9119D5EE245618D7001B7AA3 /* ParseCareKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9119D60124561A28001B7AA3 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F824561A28001B7AA3 /* Contact.swift */; };
 		9119D60324561A28001B7AA3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FA24561A28001B7AA3 /* Task.swift */; };
 		9119D60424561A28001B7AA3 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* Patient.swift */; };
-		9119D60624561A28001B7AA3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FD24561A28001B7AA3 /* Note.swift */; };
 		9119D60724561A28001B7AA3 /* CarePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FE24561A28001B7AA3 /* CarePlan.swift */; };
 		9119D60824561A28001B7AA3 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FF24561A28001B7AA3 /* Outcome.swift */; };
-		9119D60924561A28001B7AA3 /* OutcomeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D60024561A28001B7AA3 /* OutcomeValue.swift */; };
 		9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */; };
 		9119D60D24561B22001B7AA3 /* ParseCareKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */; };
 		9119D69A245689DA001B7AA3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9119D699245689D9001B7AA3 /* README.md */; };
@@ -137,10 +133,8 @@
 		9119D5F824561A28001B7AA3 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9119D5FA24561A28001B7AA3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		9119D5FB24561A28001B7AA3 /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
-		9119D5FD24561A28001B7AA3 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		9119D5FE24561A28001B7AA3 /* CarePlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarePlan.swift; sourceTree = "<group>"; };
 		9119D5FF24561A28001B7AA3 /* Outcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
-		9119D60024561A28001B7AA3 /* OutcomeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutcomeValue.swift; sourceTree = "<group>"; };
 		9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitConstants.swift; sourceTree = "<group>"; };
 		9119D60C24561B22001B7AA3 /* ParseCareKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCareKitUtility.swift; sourceTree = "<group>"; };
 		9119D699245689D9001B7AA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -332,9 +326,7 @@
 				9119D5FE24561A28001B7AA3 /* CarePlan.swift */,
 				91AA07222466F0CD00B39452 /* Clock.swift */,
 				9119D5F824561A28001B7AA3 /* Contact.swift */,
-				9119D5FD24561A28001B7AA3 /* Note.swift */,
 				9119D5FF24561A28001B7AA3 /* Outcome.swift */,
-				9119D60024561A28001B7AA3 /* OutcomeValue.swift */,
 				9119D5FB24561A28001B7AA3 /* Patient.swift */,
 				9119D5FA24561A28001B7AA3 /* Task.swift */,
 				70D5A29325E0D2D30036A8AD /* HealthKitTask.swift */,
@@ -620,11 +612,9 @@
 				70F2E18F254EFC8000B2EA5C /* Task.swift in Sources */,
 				70F2E182254EFC8000B2EA5C /* Patient.swift in Sources */,
 				70F2E188254EFC8000B2EA5C /* ParseCareKitUtility.swift in Sources */,
-				70F2E18E254EFC8000B2EA5C /* Note.swift in Sources */,
 				70F2E185254EFC8000B2EA5C /* CarePlan.swift in Sources */,
 				70F2E18A254EFC8000B2EA5C /* PCKSynchronizable.swift in Sources */,
 				709D1819258699840002E772 /* ParseRemoteSynchronizationDelegate.swift in Sources */,
-				70F2E18B254EFC8000B2EA5C /* OutcomeValue.swift in Sources */,
 				70F2E18C254EFC8000B2EA5C /* PCKVersionable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,9 +632,7 @@
 				9119D60824561A28001B7AA3 /* Outcome.swift in Sources */,
 				709D176B258579090002E772 /* ParseCareKitError.swift in Sources */,
 				70B326BE251EBE610028B229 /* PCKUser.swift in Sources */,
-				9119D60624561A28001B7AA3 /* Note.swift in Sources */,
 				918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */,
-				9119D60924561A28001B7AA3 /* OutcomeValue.swift in Sources */,
 				9119D60124561A28001B7AA3 /* Contact.swift in Sources */,
 				91AA07232466F0CD00B39452 /* Clock.swift in Sources */,
 				9119D60424561A28001B7AA3 /* Patient.swift in Sources */,

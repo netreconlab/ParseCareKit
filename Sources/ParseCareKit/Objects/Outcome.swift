@@ -151,39 +151,11 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                     return
                 }
                 completion(.success(foundEntity))
-/*
-                if overwriteRemote {
-                    //The tombsone method can handle the overwrite
-                    self.tombstone(completion: completion)
-                } else {
-                    //This object already exists on server, ignore gracefully
-                    completion(.success(foundEntity))
-                }
-*/
+
             case .failure(let error):
                 switch error.code {
                 case .internalServer, .objectNotFound: //1 - this column hasn't been added.
                     self.save(completion: completion)
-                /*case .objectNotFound: //101 - Query returned no results
-                    guard self.id.count > 0 else {
-                        return
-                    }
-                    let query = Outcome.query(ObjectableKey.entityId == self.id,
-                                              doesNotExist(key: OutcomeKey.deletedDate))
-                        .includeAll()
-                    query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
-
-                        switch result {
-
-                        case .success(let objectThatWillBeTombstoned):
-                            var objectToAdd = self
-                            objectToAdd = objectToAdd.copyRelational(objectThatWillBeTombstoned)
-                            objectToAdd.save(completion: completion)
-
-                        case .failure:
-                            self.save(completion: completion)
-                        }
-                    }*/
 
                 default:
                     //There was a different issue that we don't know how to handle
@@ -323,72 +295,8 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                 completion(error)
             }
         }
-        /*
-        mutableOutcome.tombstone { result in
-
-            switch result {
-
-            case .success:
-                completion(nil)
-            case .failure(let error):
-                completion(error)
-            }
-        }*/
     }
-/*
-    public func tombstone(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        guard let uuid = self.uuid else {
-            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
-            return
-        }
-
-        //Get latest item from the Cloud to compare against
-        let query = Outcome.query(ObjectableKey.uuid == uuid)
-            .includeAll()
-        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
-
-            switch result {
-
-            case .success(let foundObject):
-                //CareKit causes ParseCareKit to create new ones of these, this is removing duplicates
-                try? foundObject.values?.forEach {
-                    _ = try $0.notes?.deleteAll()
-                }
-                _ = try? foundObject.values?.deleteAll()
-                _ = try? foundObject.notes?.deleteAll()
-
-                guard let copied = try? Self.copyValues(from: self, to: foundObject) else {
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.debug("tombstone(), Couldn't cast to self")
-                    } else {
-                        os_log("tombstone(), Couldn't cast to self", log: .outcome, type: .debug)
-                    }
-                    completion(.failure(ParseCareKitError.cantCastToNeededClassType))
-                    return
-                }
-                copied.save(completion: completion)
-
-            case .failure(let error):
-                switch error.code {
-
-                case .internalServer, .objectNotFound:
-                    //1 - this column hasn't been added. 101 - Query returned no results
-                    self.save(completion: completion)
-
-                default:
-                    //There was a different issue that we don't know how to handle
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("updateCloud(), %{private}", log: .outcome, type: .error, error.localizedDescription)
-                    }
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-*/
     public static func copyValues(from other: Outcome, to here: Outcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
@@ -417,7 +325,6 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         }
         if let valuesToCopy = parse.values {
             copy.values = valuesToCopy
-            /*OutcomeValue.replaceWithCloudVersion(&copy.values!, cloud: valuesToCopy)*/
         }
         return copy
     }
@@ -426,13 +333,6 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         if task != nil {
             task!.encodingForParse = encodingForParse
         }
-        /*var updatedValues = [OutcomeValue]()
-        values?.forEach {
-            var update = $0
-            update.encodingForParse = encodingForParse
-            updatedValues.append(update)
-        }
-        values = updatedValues*/
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
@@ -530,20 +430,6 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
         return nil
     }
-/*
-    public func stampRelational() throws -> Outcome {
-        var stamped = self
-        stamped = try stamped.stampRelationalEntities()
-        var updatedOutcomeValues = [OutcomeValue]()
-        stamped.values?.forEach {
-            var update = $0
-            update.stamp(stamped.logicalClock!)
-            updatedOutcomeValues.append(update)
-        }
-        stamped.values = updatedOutcomeValues
-
-        return stamped
-    }*/
 
     public static func queryNotDeleted()-> Query<Outcome> {
         let taskQuery = Task.query(doesNotExist(key: OutcomeKey.deletedDate))

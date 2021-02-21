@@ -122,13 +122,6 @@ public struct Patient: PCKVersionable {
                     return
                 }
                 completion(.success(foundEntity))
-                /*
-                if overwriteRemote {
-                    self.updateCloud(completion: completion)
-                } else {
-                    //This object already exists on server, ignore gracefully
-                    completion(.success(foundEntity))
-                }*/
 
             case .failure(let error):
 
@@ -295,16 +288,6 @@ public struct Patient: PCKVersionable {
         decoded.entityId = patient.id
         return decoded
     }
-/*
-    mutating func prepareEncodingRelational(_ encodingForParse: Bool) {
-        var updatedNotes = [OCKNote]()
-        notes?.forEach {
-            var update = $0
-            update.encodingForParse = encodingForParse
-            updatedNotes.append(update)
-        }
-        self.notes = updatedNotes
-    }*/
 
     public func convertToCareKit() throws -> OCKPatient {
         var mutablePatient = self

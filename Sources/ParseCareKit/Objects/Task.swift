@@ -138,14 +138,7 @@ public struct Task: PCKVersionable {
                     return
                 }
                 completion(.success(foundEntity))
-/*
-                if overwriteRemote {
-                    self.updateCloud(completion: completion)
-                } else {
-                    //This object already exists on server, ignore gracefully
-                    completion(.success(foundEntity))
-                }
-*/
+
             case .failure(let error):
                 switch error.code {
                 case .internalServer, .objectNotFound:
