@@ -60,7 +60,7 @@ public protocol PCKSynchronizable {
      
     */
     func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
-                       mergeRevision: @escaping (OCKRevisionRecord) -> Void)
+                       mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void)
 
     /**
      Push a revision from a device up to the server.

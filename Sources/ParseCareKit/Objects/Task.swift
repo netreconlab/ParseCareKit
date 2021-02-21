@@ -222,7 +222,7 @@ public struct Task: PCKVersionable {
     }
 
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
-                              mergeRevision: @escaping (OCKRevisionRecord) -> Void) {
+                              mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
         let query = Task.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
@@ -234,9 +234,8 @@ public struct Task: PCKVersionable {
                 let pulled = tasks.compactMap {try? $0.convertToCareKit()}
                 let entities = pulled.compactMap {OCKEntity.task($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
-                mergeRevision(revision)
+                mergeRevision(.success(revision))
             case .failure(let error):
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
 
                 switch error.code {
                 case .internalServer, .objectNotFound:
@@ -257,7 +256,7 @@ public struct Task: PCKVersionable {
                                log: .task, type: .debug, error.localizedDescription)
                     }
                 }
-                mergeRevision(revision)
+                mergeRevision(.failure(error))
             }
         }
     }

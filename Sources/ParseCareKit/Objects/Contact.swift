@@ -245,7 +245,7 @@ public struct Contact: PCKVersionable {
     }
 
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
-                              mergeRevision: @escaping (OCKRevisionRecord) -> Void) {
+                              mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
         let query = Contact.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
@@ -258,10 +258,9 @@ public struct Contact: PCKVersionable {
                 let pulled = carePlans.compactMap {try? $0.convertToCareKit()}
                 let entities = pulled.compactMap {OCKEntity.contact($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
-                mergeRevision(revision)
+                mergeRevision(.success(revision))
 
             case .failure(let error):
-                let revision = OCKRevisionRecord(entities: [], knowledgeVector: cloudClock)
 
                 switch error.code {
                 //1 - this column hasn't been added. 101 - Query returned no results
@@ -282,7 +281,7 @@ public struct Contact: PCKVersionable {
                                log: .contact, type: .debug, error.localizedDescription)
                     }
                 }
-                mergeRevision(revision)
+                mergeRevision(.failure(error))
             }
         }
     }

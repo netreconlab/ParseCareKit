@@ -207,24 +207,29 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
 
-        concreteClass.pullRevisions(since: localClock, cloudClock: cloudVector) { customRevision in
-            mergeRevision(customRevision)
+        concreteClass.pullRevisions(since: localClock, cloudClock: cloudVector) { result in
+
+            var currentError = previousError
+
+            switch result {
+
+            case .success(let customRevision):
+                mergeRevision(customRevision)
+
+            case .failure(let error):
+                currentError = error
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(currentError!.localizedDescription, privacy: .private)")
+                } else {
+                    os_log("pullRevisionsForConcreteClasses: %{private}@.",
+                           log: .pullRevisions, type: .error, currentError!.localizedDescription)
+                }
+            }
 
             self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1,
-                                                 previousError: previousError, localClock: localClock,
+                                                 previousError: currentError, localClock: localClock,
                                                  cloudVector: cloudVector, mergeRevision: mergeRevision,
                                                  completion: completion)
-            /*{ error in
-                if error != nil {
-                    currentError = error!
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(currentError!.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("pullRevisionsForConcreteClasses: %{private}@.",
-                               log: .pullRevisions, type: .error, currentError!.localizedDescription)
-                    }
-                }
-            }*/
         }
     }
 
@@ -259,27 +264,28 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                 return
             }
 
-            customClass.pullRevisions(since: localClock, cloudClock: cloudVector) { customRevision in
-                mergeRevision(customRevision)
+            customClass.pullRevisions(since: localClock, cloudClock: cloudVector) { result in
+                var currentError = previousError
+
+                switch result {
+
+                case .success(let customRevision):
+                    mergeRevision(customRevision)
+
+                case .failure(let error):
+                    currentError = error
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(currentError!.localizedDescription, privacy: .private)")
+                    } else {
+                        os_log("pullRevisionsForConcreteClasses: %{private}@.",
+                               log: .pullRevisions, type: .error, currentError!.localizedDescription)
+                    }
+                }
+
                 self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1,
                                                    previousError: previousError, localClock: localClock,
                                                    cloudVector: cloudVector, mergeRevision: mergeRevision,
                                                    completion: completion)
-
-                /*{ error in
-                    if error != nil {
-                        currentError = error!
-                        if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.pullRevisions.error("pullRevisionsForCustomClasses: \(currentError!.localizedDescription, privacy: .private)")
-                        } else {
-                            // Fallback on earlier versions
-                            os_log("pullRevisionsForCustomClasses: %{private}@.",
-                                   log: .pullRevisions, type: .error, currentError!.localizedDescription)
-                        }
-                    }
-
-                    
-                }*/
             }
         } else {
             completion(previousError)
