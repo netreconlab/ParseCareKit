@@ -224,8 +224,8 @@ extension PCKVersionable {
     }
 
     private static func queryNoNextVersion(for date: Date)-> Query<Self> {
-
-        let query = Self.query(doesNotExist(key: VersionableKey.nextVersionUUIDs))
+        //Where empty array
+        let query = Self.query(VersionableKey.nextVersionUUIDs == [String]())
 
         let interval = createCurrentDateInterval(for: date)
         let greaterEqualEffectiveDate = self.query(VersionableKey.effectiveDate >= interval.end)
