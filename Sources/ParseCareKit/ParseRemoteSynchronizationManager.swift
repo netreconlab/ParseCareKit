@@ -552,7 +552,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                 }
                             }
                         } else {
-                            guard let parse = try?  self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
+                            guard let parse = try?  self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
