@@ -114,7 +114,7 @@ public struct HealthKitTask: PCKVersionable {
     public func new(with careKitEntity: OCKEntity) throws -> HealthKitTask {
 
         switch careKitEntity {
-        case .task(let entity):
+        case .healthKitTask(let entity):
             return try Self.copyCareKit(entity)
         default:
             if #available(iOS 14.0, watchOS 7.0, *) {
@@ -227,7 +227,7 @@ public struct HealthKitTask: PCKVersionable {
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (OCKRevisionRecord) -> Void) {
 
-        let query = Task.query(ObjectableKey.logicalClock >= localClock)
+        let query = HealthKitTask.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
@@ -235,7 +235,7 @@ public struct HealthKitTask: PCKVersionable {
 
             case .success(let tasks):
                 let pulled = tasks.compactMap {try? $0.convertToCareKit()}
-                let entities = pulled.compactMap {OCKEntity.task($0)}
+                let entities = pulled.compactMap {OCKEntity.healthKitTask($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(revision)
             case .failure(let error):
