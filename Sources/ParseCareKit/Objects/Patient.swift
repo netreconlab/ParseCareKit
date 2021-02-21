@@ -145,6 +145,7 @@ public struct Patient: PCKVersionable {
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         var previousVersionUUIDs = self.previousVersionUUIDs
         previousVersionUUIDs.append(uuid)
+
         //Check to see if this entity is already in the Cloud, but not paired locally
         let query = Patient.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
@@ -163,7 +164,7 @@ public struct Patient: PCKVersionable {
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.first(where: {previousVersionUUIDs.contains($0.uuid)}) else {
+                    guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid) }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.patient.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {

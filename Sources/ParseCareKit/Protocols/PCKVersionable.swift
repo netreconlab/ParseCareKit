@@ -20,9 +20,11 @@ import Combine
 */
 public protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
     /// The UUID of the previous version of this object, or nil if there is no previous version.
+    /// The UUIDs are in no particular order.
     var previousVersionUUIDs: [UUID] { get set }
 
     /// The UUID of the next version of this object, or nil if there is no next version.
+    /// The UUIDs are in no particular order.
     var nextVersionUUIDs: [UUID] { get set }
 
     /// The date that this version of the object begins to take precedence over the previous version.
@@ -95,7 +97,7 @@ extension PCKVersionable {
 
                     case .success(var nextFound):
                         if !nextFound.previousVersionUUIDs.contains(versionFixed.uuid) {
-                            nextFound.previousVersionUUIDs.insert(versionFixed.uuid, at: 0)
+                            nextFound.previousVersionUUIDs.append(versionFixed.uuid)
                             nextFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
                                 switch results {
@@ -171,7 +173,7 @@ extension PCKVersionable {
                     Self.first(nextVersionUUID) { result in
                         if case var .success(nextObject) = result {
                             if !nextObject.previousVersionUUIDs.contains(self.uuid) {
-                                nextObject.previousVersionUUIDs.insert(self.uuid, at: 0)
+                                nextObject.previousVersionUUIDs.append(self.uuid)
                                 nextObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                     switch results {
 
