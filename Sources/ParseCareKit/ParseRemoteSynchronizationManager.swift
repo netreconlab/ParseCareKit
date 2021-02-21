@@ -157,8 +157,8 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
         Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
             guard let cloudVector = potentialCKClock else {
                 //No Clock available, need to let CareKit know this is the first sync.
-                //let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                //mergeRevision(revision)
+                let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                mergeRevision(revision)
                 completion(nil)
                 return
             }
