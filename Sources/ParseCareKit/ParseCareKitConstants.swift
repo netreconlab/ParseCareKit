@@ -55,7 +55,7 @@ public enum PCKStoreClass: String {
             return try Task.copyCareKit(task)
         case .healthKitTask:
             let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
-                                        schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .activeEnergyBurned, quantityType: .cumulative, unit: .count()))
+                                                 schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .bodyTemperature, quantityType: .discrete, unit: .degreeCelsius()))
             return try HealthKitTask.copyCareKit(healthKitTask)
         }
     }

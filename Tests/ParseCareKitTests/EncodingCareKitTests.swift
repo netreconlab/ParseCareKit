@@ -520,7 +520,7 @@ class ParseCareKitTests: XCTestCase {
         var careKit = OCKHealthKitTask(id: "myId", title: "hello", carePlanUUID: UUID(),
                                        schedule: .init(composing: [careKitSchedule]),
                                        healthKitLinkage: .init(quantityIdentifier: .bodyTemperature,
-                                                               quantityType: .cumulative,
+                                                               quantityType: .discrete,
                                                                unit: .degreeCelsius()))
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
