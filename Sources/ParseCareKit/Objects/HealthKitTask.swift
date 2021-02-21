@@ -365,6 +365,7 @@ extension HealthKitTask {
         try container.encodeIfPresent(impactsAdherence, forKey: .impactsAdherence)
         try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encodeIfPresent(schedule, forKey: .schedule)
+        try container.encodeIfPresent(healthKitLinkage, forKey: .healthKitLinkage)
         try encodeVersionable(to: encoder)
     }
 }

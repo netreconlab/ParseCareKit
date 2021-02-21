@@ -116,7 +116,8 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
-        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate, previousVersionUUIDs, nextVersionUUIDs
+        case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
+        case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> Self {
@@ -590,6 +591,9 @@ extension Outcome {
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encodeIfPresent(values, forKey: .values)
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
+        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
+        try container.encodeIfPresent(previousVersionUUIDs, forKey: .previousVersionUUIDs)
+        try container.encodeIfPresent(nextVersionUUIDs, forKey: .nextVersionUUIDs)
         try encodeObjectable(to: encoder)
     }
 }// swiftlint:disable:this file_length
