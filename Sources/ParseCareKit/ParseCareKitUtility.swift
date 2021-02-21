@@ -67,16 +67,16 @@ public struct ParseCareKitUtility {
 
     /// Get the current Parse Encoder with custom date strategy.
     public static func encoder() -> ParseEncoder {
-        Note().getEncoder()
+        Outcome().getEncoder()
     }
 
     /// Get the current JSON Encoder with custom date strategy.
     public static func jsonEncoder() -> JSONEncoder {
-        Note().getJSONEncoder()
+        Outcome().getJSONEncoder()
     }
 
     /// Get the current JSON Decoder with custom date strategy.
     public static func decoder() -> JSONDecoder {
-        Note().getDecoder()
+        Outcome().getDecoder()
     }
 }

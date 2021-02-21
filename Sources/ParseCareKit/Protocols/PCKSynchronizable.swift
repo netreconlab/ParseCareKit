@@ -23,11 +23,10 @@ public protocol PCKSynchronizable {
      Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps
      it synchronized with the CareKitStore.
 
-     - parameter overwriteRemote: Whether data should be overwritten if it's already present on the Parse Server.
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
-    func addToCloud(overwriteRemote: Bool, completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
+    func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
 
     /**
      Updates an object that conforms to PCKSynchronizable that is already on the Parse
@@ -61,15 +60,15 @@ public protocol PCKSynchronizable {
      
     */
     func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
-                       mergeRevision: @escaping (OCKRevisionRecord) -> Void)
+                       mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void)
 
     /**
      Push a revision from a device up to the server.
     
      - Parameters:
        - cloudClock: The current clock value of the revision.
-       - overwriteRemote: If true, the contents of the remote should be completely overwritten.
        - completion: A closure that should be called once the push completes.
     */
-    func pushRevision(cloudClock: Int, overwriteRemote: Bool, completion: @escaping (Error?) -> Void)
+    func pushRevision(cloudClock: Int,
+                      completion: @escaping (Error?) -> Void)
 }

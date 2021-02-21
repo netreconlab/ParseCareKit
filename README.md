@@ -21,8 +21,6 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKTask <-> Task
 - [x] OCKContact <-> Contact
 - [x] OCKOutcome <-> Outcome
-- [x] OCKOutcomeValue <-> OutcomeValue
-- [x] OCKNote <-> Note
 - [x] OCKRevisionRecord.Clock <-> Clock
 
 iOS and watchOS devices belonging to the same user are reactively sychronized using [ParseLiveQuery](https://docs.parseplatform.org/parse-server/guide/#live-queries) assuming the [LiveQuery server has been configured](https://docs.parseplatform.org/parse-server/guide/#livequery-server). 
@@ -162,58 +160,31 @@ extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizat
 
 ## Customizing Parse Entities to Sync with CareKit
 
-There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below `new()`,  `copyCareKit(...)`, `convertToCarekit()`. For example, below shows how to add fields to OCKPatient<->Patient:
+There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the `userInfo: [String:String]` field of a CareKit entity. To do this, you simply extend the entity you want customize using `extension`. For example, below shows how to add fields to OCKPatient<->Patient:
 
 ```swift
-class CancerPatient: Patient {
-    public var primaryCondition:String?
-    public var comorbidities:String?
-    
-    override func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
-        
-        switch careKitEntity {
-        case .patient(let entity):
-            return CancerPatient(careKitEntity: entity)
-        default:
-            print("Error in \(className).new(with:). The wrong type of entity was passed \(careKitEntity)")
+extension Patient: Person {
+    var primaryCondition String? {
+        guard let userInfo = userInfo else {
             return nil
         }
+        return userInfo["CustomPatientUserInfoPrimaryConditionKey"]
     }
-    
-    override copyCareKit(_ patientAny: OCKAnyPatient)-> Patient? {
-        
-        guard let cancerPatient = patientAny as? OCKPatient else{
-            completion(nil)
-            return
-        }
-        
-        _ = super.copyCareKit(cancerPatient, clone: clone){
-        self.primaryCondition = cancerPatient.userInfo?["CustomPatientUserInfoPrimaryConditionKey"]
-        self.comorbidities = cancerPatient.userInfo?["CustomPatientUserInfoComorbiditiesKey"]
-    }
-    
-    override func convertToCareKit() -> OCKPatient? {
-        guard var partiallyConvertedPatient = super.convertToCareKit() else{return nil}
-        
-        var userInfo: [String:String]!
-        if partiallyConvertedPatient.userInfo == nil{
-            userInfo = [String:String]()
+
+    mutating func setPrimaryCondition(_ primaryCondition: String?) {
+        var mutableUserInfo = currentUserInfo()
+
+        if let primaryCondition = primaryCondition {
+            mutableUserInfo[PatientUserInfoKey.primaryCondition.rawValue] = primaryCondition
         }else{
-            userInfo = partiallyConvertedPatient.userInfo!
+            mutableUserInfo.removeValue(forKey: PatientUserInfoKey.primaryCondition.rawValue)
         }
-        if let primaryCondition = self.primaryCondition{
-            userInfo["CustomPatientUserInfoPrimaryConditionKey"] = primaryCondition
-        }
-        if let comorbidities = self.comorbidities{
-            userInfo["CustomPatientUserInfoComorbiditiesKey"] = comorbidities
-        }
-        partiallyConvertedPatient?.userInfo = userInfo
-        return partiallyConvertedPatient
+        userInfo = mutableUserInfo
     }
 }
 ```
 
-Then you need to pass your custom class when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
+If you want to make you own types and use them to replace the concrete CareKit ones. You should copy/paste the respective code from ParseCareKit, e.g. `Patient`, `Contact`, `Task`, etc. Then you need to pass your custom struct when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
 ```swift
 let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
@@ -221,7 +192,7 @@ let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
 ]
 
 remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
-dataStore = OCKStore(name: storeName, type: .onDisk, remote: remoteStoreManager)
+dataStore = OCKStore(name: storeName, type: .onDisk(), remote: remoteStoreManager)
 remoteStoreManager.delegate = self
 remoteStoreManager.parseRemoteDelegate = self
 ```
@@ -233,32 +204,28 @@ Of course, you can customize further by implementing your copyCareKit and conver
 You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.className()` as the value. See below:
 
 ```swift
-class Doctor: Patient {
+struct Doctor: Patient {
     public var type:String?
     
-    override func new(with careKitEntity: OCKEntity)-?PCKSynchronizable? {
+    func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
-            } else {
-                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
-            }
+            os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
             completion(nil)
         }
     }
     
     //Add a convienience initializer to to ensure that that the doctor class is always created correctly
-    convenience init(careKitEntity: OCKAnyPatient {
+    init(careKitEntity: OCKAnyPatient {
         self.init()
         self.copyCareKit(careKitEntity)
         self.userInfo = [kPCKCustomClassKey: self.className]
     }
     
-    override copyCareKit(_ patientAny: OCKAnyPatient)->Patient? {
+    copyCareKit(_ patientAny: OCKAnyPatient)->Patient? {
         
         guard let doctor = patientAny as? OCKPatient else{
             return nil
@@ -269,7 +236,7 @@ class Doctor: Patient {
         return seld
     }
     
-    override func convertToCareKit() -> OCKPatient? {
+    func convertToCareKit() -> OCKPatient? {
         guard var partiallyConvertedDoctor = super.convertToCareKit() else{return nil}
         
         var userInfo: [String:String]!
@@ -368,4 +335,4 @@ query.find(callbackQueue: .main){ results in
 
 ### Custom OCKStores
 
-If you have a custom store, and have created your own entities, you simply need to conform to either `PCKObjectable` (OCKNote, OCKOutcome, OCKOutcomeValue) or `PCKVersionable` (OCKPatient, OCKCarePlan, OCKTask, OCKContact) protocols. In additionm you will need to conform to `PCKSynchronizable`. You can look through ParseCareKit entities such as `Note`(`PCKObjectable`) and `CarePlan`(`PCKVersionable`) as a reference for building your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to  `PCKVersionable` (OCKPatient, OCKCarePlan, OCKTask, OCKContact, OCKOutcome) protocols. In addition you will need to conform to `PCKSynchronizable`. You can look through ParseCareKit entities such as `CarePlan`(`PCKVersionable`) as a reference for building your own. 
