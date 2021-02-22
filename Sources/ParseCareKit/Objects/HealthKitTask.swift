@@ -1,9 +1,9 @@
 //
-//  Task.swift
+//  HealthKitTask.swift
 //  ParseCareKit
 //
-//  Created by Corey Baker on 1/17/20.
-//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
+//  Created by Corey Baker on 2/20/21.
+//  Copyright © 2021 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Foundation
@@ -16,12 +16,12 @@ import os.log
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 
-/// An `Task` is the ParseCareKit equivalent of `OCKTask`.  An `OCKTask` represents some task or action that a
+/// An `Task` is the ParseCareKit equivalent of `OCKHealthKitTask`.  An `OCKHealthKitTask` represents some task or action that a
 /// patient is supposed to perform. Tasks are optionally associable with an `OCKCarePlan` and must have a unique
 /// id and schedule. The schedule determines when and how often the task should be performed, and the
 /// `impactsAdherence` flag may be used to specify whether or not the patients adherence to this task will affect
 /// their daily completion rings.
-public struct Task: PCKVersionable {
+public struct HealthKitTask: PCKVersionable {
 
     public var nextVersionUUIDs: [UUID]
 
@@ -73,6 +73,9 @@ public struct Task: PCKVersionable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
+    /// A structure specifying how this task is linked with HealthKit.
+    public var healthKitLinkage: OCKHealthKitLinkage
+
     /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?
 
@@ -105,19 +108,19 @@ public struct Task: PCKVersionable {
         case objectId, createdAt, updatedAt
         case uuid, entityId, schemaVersion, createdDate, updatedDate, deletedDate, timezone, userInfo, groupIdentifier, tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
-        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
+        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule, healthKitLinkage
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> Task {
+    public func new(with careKitEntity: OCKEntity) throws -> HealthKitTask {
 
         switch careKitEntity {
-        case .task(let entity):
+        case .healthKitTask(let entity):
             return try Self.copyCareKit(entity)
         default:
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.task.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
+                Logger.healthKitTask.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             } else {
-                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .task, type: .error, careKitEntity.entityType.debugDescription)
+                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .healthKitTask, type: .error, careKitEntity.entityType.debugDescription)
             }
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
@@ -147,9 +150,9 @@ public struct Task: PCKVersionable {
                 default:
                     //There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
+                        Logger.healthKitTask.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("addToCloud(), %{private}@", log: .task, type: .error, error.localizedDescription)
+                        os_log("addToCloud(), %{private}@", log: .healthKitTask, type: .error, error.localizedDescription)
                     }
                     completion(.failure(error))
                 }
@@ -163,7 +166,7 @@ public struct Task: PCKVersionable {
         previousVersionUUIDs.append(uuid)
 
         //Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Task.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = HealthKitTask.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
@@ -173,18 +176,18 @@ public struct Task: PCKVersionable {
                 switch foundObjects.count {
                 case 0:
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
+                        Logger.healthKitTask.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
                     } else {
-                        os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .task, type: .debug)
+                        os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .healthKitTask, type: .debug)
                     }
                     self.addToCloud(completion: completion)
                 case 1:
                     //This is the typical case
-                    guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid)}) else {
+                    guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid) }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.task.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
+                            Logger.healthKitTask.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {
-                            os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud", log: .task, type: .error, previousVersionUUIDs)
+                            os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud", log: .healthKitTask, type: .error, previousVersionUUIDs)
                         }
                         completion(.failure(ParseCareKitError.uuidAlreadyExists))
                         return
@@ -195,18 +198,18 @@ public struct Task: PCKVersionable {
 
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
+                        Logger.healthKitTask.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
                     } else {
                         os_log("updateCloud(), UUID (%{private}) already exists in Cloud",
-                               log: .task, type: .error, uuid.uuidString)
+                               log: .healthKitTask, type: .error, uuid.uuidString)
                     }
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                 }
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.task.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
+                    Logger.healthKitTask.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
                 } else {
-                    os_log("updateCloud(), %{private}", log: .task, type: .error, error.localizedDescription)
+                    os_log("updateCloud(), %{private}", log: .healthKitTask, type: .error, error.localizedDescription)
                 }
                 completion(.failure(error))
             }
@@ -216,7 +219,7 @@ public struct Task: PCKVersionable {
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = Task.query(ObjectableKey.logicalClock >= localClock)
+        let query = HealthKitTask.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
         query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
@@ -224,7 +227,7 @@ public struct Task: PCKVersionable {
 
             case .success(let tasks):
                 let pulled = tasks.compactMap {try? $0.convertToCareKit()}
-                let entities = pulled.compactMap {OCKEntity.task($0)}
+                let entities = pulled.compactMap {OCKEntity.healthKitTask($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(.success(revision))
             case .failure(let error):
@@ -236,16 +239,16 @@ public struct Task: PCKVersionable {
                     //it will return nil if the table doesn't contain the custom column
                     //Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
+                        Logger.healthKitTask.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .task, type: .debug, ObjectableKey.logicalClock, error.localizedDescription)
+                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .healthKitTask, type: .debug, ObjectableKey.logicalClock, error.localizedDescription)
                     }
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.debug("An unexpected error occured \(error.localizedDescription, privacy: .private)")
+                        Logger.healthKitTask.debug("An unexpected error occured \(error.localizedDescription, privacy: .private)")
                     } else {
                         os_log("An unexpected error occured \"%{private}",
-                               log: .task, type: .debug, error.localizedDescription)
+                               log: .healthKitTask, type: .debug, error.localizedDescription)
                     }
                 }
                 mergeRevision(.failure(error))
@@ -283,7 +286,7 @@ public struct Task: PCKVersionable {
         }
     }
 
-    public static func copyValues(from other: Task, to here: Task) throws -> Task {
+    public static func copyValues(from other: HealthKitTask, to here: HealthKitTask) throws -> HealthKitTask {
         var here = here
         here.copyVersionedValues(from: other)
 
@@ -296,9 +299,9 @@ public struct Task: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
+    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> HealthKitTask {
 
-        guard let task = taskAny as? OCKTask else {
+        guard let task = taskAny as? OCKHealthKitTask else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
 
@@ -315,15 +318,15 @@ public struct Task: PCKVersionable {
     }
 
     //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    public func convertToCareKit() throws -> OCKTask {
+    public func convertToCareKit() throws -> OCKHealthKitTask {
         var mutableTask = self
         mutableTask.encodingForParse = false
         let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableTask)
-        return try ParseCareKitUtility.decoder().decode(OCKTask.self, from: encoded)
+        return try ParseCareKitUtility.decoder().decode(OCKHealthKitTask.self, from: encoded)
     }
 
     ///Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<Task, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<HealthKitTask, Error>) -> Void) {
         var updatedTask = self
         guard let carePlanUUID = self.carePlanUUID else {
             //Finished if there's no CarePlan, otherwise see if it's in the cloud
@@ -342,7 +345,7 @@ public struct Task: PCKVersionable {
     }
 }
 
-extension Task {
+extension HealthKitTask {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
@@ -353,6 +356,7 @@ extension Task {
         try container.encodeIfPresent(impactsAdherence, forKey: .impactsAdherence)
         try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encodeIfPresent(schedule, forKey: .schedule)
+        try container.encodeIfPresent(healthKitLinkage, forKey: .healthKitLinkage)
         try encodeVersionable(to: encoder)
     }
 }

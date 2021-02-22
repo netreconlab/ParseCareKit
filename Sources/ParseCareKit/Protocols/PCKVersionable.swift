@@ -20,10 +20,12 @@ import Combine
 */
 public protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
     /// The UUID of the previous version of this object, or nil if there is no previous version.
-    var previousVersionUUID: UUID? { get set }
+    /// The UUIDs are in no particular order.
+    var previousVersionUUIDs: [UUID] { get set }
 
     /// The UUID of the next version of this object, or nil if there is no next version.
-    var nextVersionUUID: UUID? { get set }
+    /// The UUIDs are in no particular order.
+    var nextVersionUUIDs: [UUID] { get set }
 
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.
@@ -41,13 +43,13 @@ extension PCKVersionable {
     mutating public func copyVersionedValues(from other: Self) {
         self.effectiveDate = other.effectiveDate
         self.deletedDate = other.deletedDate
-        self.previousVersionUUID = other.previousVersionUUID
-        self.nextVersionUUID = other.nextVersionUUID
+        self.previousVersionUUIDs = other.previousVersionUUIDs
+        self.nextVersionUUIDs = other.nextVersionUUIDs
         self.copyCommonValues(from: other)
     }
 
     /**
-     Link the ParseCareKit versions of related objects. Fixex the link list between objects if they are broken.
+     Link the ParseCareKit versions of related objects. Fixes the link list between objects if they are broken.
      - Parameters:
         - versionFixed: An object that has been,
         - backwards: The direction in which the link list is being traversed. `true` is backwards, `false` is forwards.
@@ -55,15 +57,15 @@ extension PCKVersionable {
     func fixVersionLinkedList(_ versionFixed: Self, backwards: Bool) {
 
         if backwards {
-            if versionFixed.previousVersionUUID != nil {
-                Self.first(versionFixed.previousVersionUUID) { result in
+            if let previousVersionUUID = versionFixed.previousVersionUUIDs.last {
+                Self.first(previousVersionUUID) { result in
 
                     switch result {
 
                     case .success(var previousFound):
 
-                        if previousFound.nextVersionUUID == nil {
-                            previousFound.nextVersionUUID = versionFixed.uuid
+                        if !previousFound.nextVersionUUIDs.contains(versionFixed.uuid) {
+                            previousFound.nextVersionUUIDs.append(versionFixed.uuid)
                             previousFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                 switch results {
 
@@ -88,14 +90,14 @@ extension PCKVersionable {
             }
             //We are done fixing
         } else {
-            if versionFixed.nextVersionUUID != nil {
-                Self.first(versionFixed.nextVersionUUID) { result in
+            if let nextVersionUUID = versionFixed.nextVersionUUIDs.first {
+                Self.first(nextVersionUUID) { result in
 
                     switch result {
 
                     case .success(var nextFound):
-                        if nextFound.previousVersionUUID == nil {
-                            nextFound.previousVersionUUID = versionFixed.uuid
+                        if !nextFound.previousVersionUUIDs.contains(versionFixed.uuid) {
+                            nextFound.previousVersionUUIDs.append(versionFixed.uuid)
                             nextFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
 
                                 switch results {
@@ -130,9 +132,7 @@ extension PCKVersionable {
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        var versionedObject = self
-        _ = try? versionedObject.stampRelationalEntities()
-        versionedObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        self.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
             switch results {
 
             case .success(let savedObject):
@@ -144,11 +144,11 @@ extension PCKVersionable {
                 }
 
                 //Fix versioning doubly linked list if it's broken in the cloud
-                if savedObject.previousVersionUUID != nil {
-                    Self.first(savedObject.previousVersionUUID!) { result in
+                if let previousVersionUUID = savedObject.previousVersionUUIDs.last {
+                    Self.first(previousVersionUUID) { result in
                         if case var .success(previousObject) = result {
-                            if previousObject.nextVersionUUID == nil {
-                                previousObject.nextVersionUUID = versionedObject.uuid
+                            if !previousObject.nextVersionUUIDs.contains(self.uuid) {
+                                previousObject.nextVersionUUIDs.append(self.uuid)
                                 previousObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                     switch results {
 
@@ -169,11 +169,11 @@ extension PCKVersionable {
                     }
                 }
 
-                if savedObject.nextVersionUUID != nil {
-                    Self.first(savedObject.nextVersionUUID!) { result in
+                if let nextVersionUUID = savedObject.nextVersionUUIDs.first {
+                    Self.first(nextVersionUUID) { result in
                         if case var .success(nextObject) = result {
-                            if nextObject.previousVersionUUID == nil {
-                                nextObject.previousVersionUUID = savedObject.uuid
+                            if !nextObject.previousVersionUUIDs.contains(self.uuid) {
+                                nextObject.previousVersionUUIDs.append(self.uuid)
                                 nextObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
                                     switch results {
 
@@ -197,11 +197,11 @@ extension PCKVersionable {
 
             case .failure(let error):
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.versionable.error("\(versionedObject.className, privacy: .private).save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
+                    Logger.versionable.error("\(self.className, privacy: .private).save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
                 } else {
                     os_log("%{private}@.save(), %{private}@. Object: %{private}@",
-                           log: .versionable, type: .error, versionedObject.className,
-                           error.localizedDescription, versionedObject.description)
+                           log: .versionable, type: .error, self.className,
+                           error.localizedDescription, self.description)
                 }
                 completion(.failure(error))
             }
@@ -224,8 +224,8 @@ extension PCKVersionable {
     }
 
     private static func queryNoNextVersion(for date: Date)-> Query<Self> {
-
-        let query = Self.query(doesNotExist(key: VersionableKey.nextVersionUUID))
+        //Where empty array
+        let query = Self.query(VersionableKey.nextVersionUUIDs == [String]())
 
         let interval = createCurrentDateInterval(for: date)
         let greaterEqualEffectiveDate = self.query(VersionableKey.effectiveDate >= interval.end)
@@ -306,8 +306,8 @@ extension PCKVersionable {
     public func encodeVersionable(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
-        try container.encodeIfPresent(previousVersionUUID, forKey: .previousVersionUUID)
-        try container.encodeIfPresent(nextVersionUUID, forKey: .nextVersionUUID)
+        try container.encodeIfPresent(previousVersionUUIDs, forKey: .previousVersionUUIDs)
+        try container.encodeIfPresent(nextVersionUUIDs, forKey: .nextVersionUUIDs)
         try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
         try encodeObjectable(to: encoder)
     }

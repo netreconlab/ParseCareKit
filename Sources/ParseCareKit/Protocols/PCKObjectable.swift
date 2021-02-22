@@ -19,7 +19,7 @@ import os.log
 */
 public protocol PCKObjectable: ParseObject, CustomStringConvertible {
     /// A universally unique identifier for this object.
-    var uuid: UUID? {get set}
+    var uuid: UUID { get set }
 
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
     var id: String { get }
@@ -67,7 +67,7 @@ public protocol PCKObjectable: ParseObject, CustomStringConvertible {
     var asset: String? {get set}
 
     /// Any array of notes associated with this object.
-    var notes: [Note]? {get set}
+    var notes: [OCKNote]? {get set}
 
     /// A unique id optionally used by a remote database. Its precise format will be
     /// determined by the remote database, but it is generally not expected to be human readable.
@@ -84,7 +84,7 @@ extension PCKObjectable {
 
     mutating func copyRelationalEntities(_ parse: Self) -> Self {
         var current = self
-        Note.replaceWithCloudVersion(&current.notes, cloud: parse.notes)
+        current.notes = parse.notes
         return current
     }
 
@@ -108,11 +108,11 @@ extension PCKObjectable {
     }
 
     /// Stamps all related entities with the current `logicalClock` value
-    mutating public func stampRelationalEntities() throws -> Self {
+    /*mutating public func stampRelationalEntities() throws -> Self {
         guard let logicalClock = self.logicalClock else {
             throw ParseCareKitError.cantUnwrapSelf
         }
-        var updatedNotes = [Note]()
+        var updatedNotes = [OCKNote]()
         notes?.forEach {
             var update = $0
             update.stamp(logicalClock)
@@ -120,7 +120,7 @@ extension PCKObjectable {
         }
         self.notes = updatedNotes
         return self
-    }
+    }*/
 
     /// Determines if this PCKObjectable object can be converted to CareKit
     public func canConvertToCareKit() -> Bool {
@@ -253,7 +253,7 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
 
         if encodingForParse {
-            if !(self is Note) || !(self is OutcomeValue) || !(self is Outcome) {
+            if !(self is Outcome) {
                 try container.encodeIfPresent(entityId, forKey: .entityId)
             }
             try container.encodeIfPresent(ACL, forKey: .ACL)
