@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (85% documented)
+         (87% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -99,13 +99,10 @@
                 <a class="nav-group-task-link" href="../Structs/Contact.html">Contact</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/Note.html">Note</a>
+                <a class="nav-group-task-link" href="../Structs/HealthKitTask.html">HealthKitTask</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/Outcome.html">Outcome</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/OutcomeValue.html">OutcomeValue</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
@@ -134,8 +131,8 @@
               </div>
             <p>Objects that conform to the <code>PCKSynchronizable</code> protocol are synchronized between the <code>OCKStore</code> and the Parse Cloud.
 In order to synchronize objects, they must also conform to either <code><a href="../Protocols/PCKObjectable.html">PCKObjectable</a></code> or <code><a href="../Protocols/PCKVersionable.html">PCKVersionable</a></code>. For examples,
-see <code><a href="../Structs/Patient.html">Patient</a></code>, <code><a href="../Structs/CarePlan.html">CarePlan</a></code>, <code><a href="../Structs/Task.html">Task</a></code>, <code><a href="../Structs/Contact.html">Contact</a></code>, and <code><a href="../Structs/Outcome.html">Outcome</a></code>. Note that objects such as <code><a href="../Structs/OutcomeValue.html">OutcomeValue</a></code> and
-<code><a href="../Structs/Note.html">Note</a></code> are indirectly synced as part of the aforementioned objects and therefore don&rsquo;t need to conform to
+see <code><a href="../Structs/Patient.html">Patient</a></code>, <code><a href="../Structs/CarePlan.html">CarePlan</a></code>, <code><a href="../Structs/Task.html">Task</a></code>, <code><a href="../Structs/Contact.html">Contact</a></code>, and <code><a href="../Structs/Outcome.html">Outcome</a></code>. Note that objects such as <code>OutcomeValue</code> and
+<code>Note</code> are indirectly synced as part of the aforementioned objects and therefore don&rsquo;t need to conform to
 <code>PCKSynchronizable</code>.</p>
 
           </div>
@@ -148,9 +145,9 @@ see <code><a href="../Structs/Patient.html">Patient</a></code>, <code><a href=".
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit17PCKSynchronizableP10addToCloud15overwriteRemote10completionySb_ys6ResultOyAaB_ps5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/addToCloud(overwriteRemote:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP10addToCloud15overwriteRemote10completionySb_ys6ResultOyAaB_ps5Error_pGctF">addToCloud(overwriteRemote:<wbr>completion:<wbr>)</a>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP10addToCloud10completionyys6ResultOyAaB_ps5Error_pGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/addToCloud(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP10addToCloud10completionyys6ResultOyAaB_ps5Error_pGc_tF">addToCloud(completion:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -166,7 +163,7 @@ it synchronized with the CareKitStore.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addToCloud</span><span class="p">(</span><span class="nv">overwriteRemote</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">PCKSynchronizable</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addToCloud</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">PCKSynchronizable</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -174,18 +171,6 @@ it synchronized with the CareKitStore.</p>
                         <h4>Parameters</h4>
                         <table class="graybox">
                           <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>overwriteRemote</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Whether data should be overwritten if it&rsquo;s already present on the Parse Server.</p>
-                                </div>
-                              </td>
-                            </tr>
                             <tr>
                               <td>
                                 <code>
@@ -318,9 +303,9 @@ It should have the following argument signature: <code>(Result&lt;PCKSynchroniza
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVyAJctF"></a>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVys6ResultOyAJ0A5Swift0A5ErrorVGctF"></a>
                     <a name="//apple_ref/swift/Method/pullRevisions(since:cloudClock:mergeRevision:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVyAJctF">pullRevisions(since:<wbr>cloudClock:<wbr>mergeRevision:<wbr>)</a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVys6ResultOyAJ0A5Swift0A5ErrorVGctF">pullRevisions(since:<wbr>cloudClock:<wbr>mergeRevision:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -342,7 +327,7 @@ Wait until one merge has completed before starting another.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">localClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span>
-                   <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">OCKRevisionRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                   <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">OCKRevisionRecord</span><span class="p">,</span> <span class="kt">ParseError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -395,9 +380,9 @@ Wait until one merge has completed before starting another.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock15overwriteRemote10completionySi_Sbys5Error_pSgctF"></a>
-                    <a name="//apple_ref/swift/Method/pushRevision(cloudClock:overwriteRemote:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock15overwriteRemote10completionySi_Sbys5Error_pSgctF">pushRevision(cloudClock:<wbr>overwriteRemote:<wbr>completion:<wbr>)</a>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock10completionySi_ys5Error_pSgctF"></a>
+                    <a name="//apple_ref/swift/Method/pushRevision(cloudClock:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock10completionySi_ys5Error_pSgctF">pushRevision(cloudClock:<wbr>completion:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -412,7 +397,8 @@ Wait until one merge has completed before starting another.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pushRevision</span><span class="p">(</span><span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">overwriteRemote</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pushRevision</span><span class="p">(</span><span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+                  <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -429,18 +415,6 @@ Wait until one merge has completed before starting another.</p>
                               <td>
                                 <div>
                                   <p>The current clock value of the revision.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>overwriteRemote</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>If true, the contents of the remote should be completely overwritten.</p>
                                 </div>
                               </td>
                             </tr>
@@ -470,7 +444,7 @@ Wait until one merge has completed before starting another.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-02-15)</p>
+      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-02-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

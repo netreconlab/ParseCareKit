@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (85% documented)
+         (87% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -98,13 +98,10 @@
                 <a class="nav-group-task-link" href="Structs/Contact.html">Contact</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/Note.html">Note</a>
+                <a class="nav-group-task-link" href="Structs/HealthKitTask.html">HealthKitTask</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Outcome.html">Outcome</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/OutcomeValue.html">OutcomeValue</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
@@ -150,8 +147,6 @@
 <li>[x] OCKTask &lt;-&gt; Task</li>
 <li>[x] OCKContact &lt;-&gt; Contact</li>
 <li>[x] OCKOutcome &lt;-&gt; Outcome</li>
-<li>[x] OCKOutcomeValue &lt;-&gt; OutcomeValue</li>
-<li>[x] OCKNote &lt;-&gt; Note</li>
 <li>[x] OCKRevisionRecord.Clock &lt;-&gt; Clock</li>
 </ul>
 
@@ -281,62 +276,35 @@ This works with 1 or many devices per patient.*/</span>
 </code></pre>
 <h2 id='customizing-parse-entities-to-sync-with-carekit' class='heading'>Customizing Parse Entities to Sync with CareKit</h2>
 
-<p>There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the <code>userInfo: [String:String]</code> field of a CareKit entity. To do this, you simply need to subclass the entity you want customize and override all of the methods below <code>new()</code>,  <code>copyCareKit(...)</code>, <code>convertToCarekit()</code>. For example, below shows how to add fields to OCKPatient&lt;-&gt;Patient:</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">CancerPatient</span><span class="p">:</span> <span class="kt">Patient</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">primaryCondition</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">comorbidities</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span>
-
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">new</span><span class="p">(</span><span class="n">with</span> <span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKEntity</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">PCKSynchronizable</span><span class="p">?</span> <span class="p">{</span>
-
-        <span class="k">switch</span> <span class="n">careKitEntity</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="o">.</span><span class="nf">patient</span><span class="p">(</span><span class="k">let</span> <span class="nv">entity</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kt">CancerPatient</span><span class="p">(</span><span class="nv">careKitEntity</span><span class="p">:</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="k">default</span><span class="p">:</span>
-            <span class="nf">print</span><span class="p">(</span><span class="s">"Error in </span><span class="se">\(</span><span class="n">className</span><span class="se">)</span><span class="s">.new(with:). The wrong type of entity was passed </span><span class="se">\(</span><span class="n">careKitEntity</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<p>There will be times you need to customize entities by adding fields that are different from the standard CareKit entity fields. If the fields you want to add can be converted to strings, it is recommended to take advantage of the <code>userInfo: [String:String]</code> field of a CareKit entity. To do this, you simply extend the entity you want customize using <code>extension</code>. For example, below shows how to add fields to OCKPatient&lt;-&gt;Patient:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Patient</span><span class="p">:</span> <span class="kt">Person</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">primaryCondition</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">userInfo</span> <span class="o">=</span> <span class="n">userInfo</span> <span class="k">else</span> <span class="p">{</span>
             <span class="k">return</span> <span class="kc">nil</span>
         <span class="p">}</span>
+        <span class="k">return</span> <span class="n">userInfo</span><span class="p">[</span><span class="s">"CustomPatientUserInfoPrimaryConditionKey"</span><span class="p">]</span>
     <span class="p">}</span>
 
-    <span class="k">override</span> <span class="nf">copyCareKit</span><span class="p">(</span><span class="n">_</span> <span class="nv">patientAny</span><span class="p">:</span> <span class="kt">OCKAnyPatient</span><span class="p">)</span><span class="o">-&gt;</span> <span class="kt">Patient</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">setPrimaryCondition</span><span class="p">(</span><span class="n">_</span> <span class="nv">primaryCondition</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">mutableUserInfo</span> <span class="o">=</span> <span class="nf">currentUserInfo</span><span class="p">()</span>
 
-        <span class="k">guard</span> <span class="k">let</span> <span class="nv">cancerPatient</span> <span class="o">=</span> <span class="n">patientAny</span> <span class="k">as?</span> <span class="kt">OCKPatient</span> <span class="k">else</span><span class="p">{</span>
-            <span class="nf">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-
-        <span class="n">_</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">copyCareKit</span><span class="p">(</span><span class="n">cancerPatient</span><span class="p">,</span> <span class="nv">clone</span><span class="p">:</span> <span class="n">clone</span><span class="p">){</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">primaryCondition</span> <span class="o">=</span> <span class="n">cancerPatient</span><span class="o">.</span><span class="n">userInfo</span><span class="p">?[</span><span class="s">"CustomPatientUserInfoPrimaryConditionKey"</span><span class="p">]</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">comorbidities</span> <span class="o">=</span> <span class="n">cancerPatient</span><span class="o">.</span><span class="n">userInfo</span><span class="p">?[</span><span class="s">"CustomPatientUserInfoComorbiditiesKey"</span><span class="p">]</span>
-    <span class="p">}</span>
-
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">guard</span> <span class="k">var</span> <span class="nv">partiallyConvertedPatient</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">()</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span> <span class="kc">nil</span><span class="p">}</span>
-
-        <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">String</span><span class="p">]</span><span class="o">!</span>
-        <span class="k">if</span> <span class="n">partiallyConvertedPatient</span><span class="o">.</span><span class="n">userInfo</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">{</span>
-            <span class="n">userInfo</span> <span class="o">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">String</span><span class="p">]()</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">primaryCondition</span> <span class="o">=</span> <span class="n">primaryCondition</span> <span class="p">{</span>
+            <span class="n">mutableUserInfo</span><span class="p">[</span><span class="kt">PatientUserInfoKey</span><span class="o">.</span><span class="n">primaryCondition</span><span class="o">.</span><span class="n">rawValue</span><span class="p">]</span> <span class="o">=</span> <span class="n">primaryCondition</span>
         <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-            <span class="n">userInfo</span> <span class="o">=</span> <span class="n">partiallyConvertedPatient</span><span class="o">.</span><span class="n">userInfo</span><span class="o">!</span>
+            <span class="n">mutableUserInfo</span><span class="o">.</span><span class="nf">removeValue</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="kt">PatientUserInfoKey</span><span class="o">.</span><span class="n">primaryCondition</span><span class="o">.</span><span class="n">rawValue</span><span class="p">)</span>
         <span class="p">}</span>
-        <span class="k">if</span> <span class="k">let</span> <span class="nv">primaryCondition</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">primaryCondition</span><span class="p">{</span>
-            <span class="n">userInfo</span><span class="p">[</span><span class="s">"CustomPatientUserInfoPrimaryConditionKey"</span><span class="p">]</span> <span class="o">=</span> <span class="n">primaryCondition</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="k">let</span> <span class="nv">comorbidities</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">comorbidities</span><span class="p">{</span>
-            <span class="n">userInfo</span><span class="p">[</span><span class="s">"CustomPatientUserInfoComorbiditiesKey"</span><span class="p">]</span> <span class="o">=</span> <span class="n">comorbidities</span>
-        <span class="p">}</span>
-        <span class="n">partiallyConvertedPatient</span><span class="p">?</span><span class="o">.</span><span class="n">userInfo</span> <span class="o">=</span> <span class="n">userInfo</span>
-        <span class="k">return</span> <span class="n">partiallyConvertedPatient</span>
+        <span class="n">userInfo</span> <span class="o">=</span> <span class="n">mutableUserInfo</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>Then you need to pass your custom class when initializing <code>ParseRemoteSynchronizingManager</code>. The way to do this is below:</p>
+<p>If you want to make you own types and use them to replace the concrete CareKit ones. You should copy/paste the respective code from ParseCareKit, e.g. <code><a href="Structs/Patient.html">Patient</a></code>, <code><a href="Structs/Contact.html">Contact</a></code>, <code><a href="Structs/Task.html">Task</a></code>, etc. Then you need to pass your custom struct when initializing <code>ParseRemoteSynchronizingManager</code>. The way to do this is below:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">updatedConcreteClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt">PCKStoreClass</span><span class="p">:</span> <span class="kt">PCKSynchronizable</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="o">.</span><span class="nv">patient</span><span class="p">:</span> <span class="kt">CancerPatient</span><span class="p">()</span>
 <span class="p">]</span>
 
 <span class="n">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemoteSynchronizationManager</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">uuid</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="n">updatedConcreteClasses</span><span class="p">)</span>
-<span class="n">dataStore</span> <span class="o">=</span> <span class="kt">OCKStore</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="n">storeName</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">onDisk</span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="n">remoteStoreManager</span><span class="p">)</span>
+<span class="n">dataStore</span> <span class="o">=</span> <span class="kt">OCKStore</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="n">storeName</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="nf">onDisk</span><span class="p">(),</span> <span class="nv">remote</span><span class="p">:</span> <span class="n">remoteStoreManager</span><span class="p">)</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">parseRemoteDelegate</span> <span class="o">=</span> <span class="k">self</span>
 </code></pre>
@@ -344,32 +312,28 @@ This works with 1 or many devices per patient.*/</span>
 <p>Of course, you can customize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.</p>
 
 <p>You can also map &ldquo;custom&rdquo; <code>Parse</code> classes to concrete <code>OCKStore</code> classes. This is useful when you want to have <code>Doctor</code>&lsquo;s and <code><a href="Structs/Patient.html">Patient</a></code>&rsquo;s in the same app, but would like to map them both locally to the <code>OCKPatient</code> table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating <code>CancerPatient</code> above, but add the <code>kPCKCustomClassKey</code> key to <code>userInfo</code> with <code>Doctor.className()</code> as the value. See below:</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Doctor</span><span class="p">:</span> <span class="kt">Patient</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Doctor</span><span class="p">:</span> <span class="kt">Patient</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span>
 
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">new</span><span class="p">(</span><span class="n">with</span> <span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKEntity</span><span class="p">)</span><span class="o">-</span><span class="p">?</span><span class="kt">PCKSynchronizable</span><span class="p">?</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">new</span><span class="p">(</span><span class="n">with</span> <span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKEntity</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">PCKSynchronizable</span><span class="p">?</span> <span class="p">{</span>
 
         <span class="k">switch</span> <span class="n">careKitEntity</span> <span class="p">{</span>
         <span class="k">case</span> <span class="o">.</span><span class="nf">patient</span><span class="p">(</span><span class="k">let</span> <span class="nv">entity</span><span class="p">):</span>
             <span class="k">return</span> <span class="kt">Doctor</span><span class="p">(</span><span class="nv">careKitEntity</span><span class="p">:</span> <span class="n">entity</span><span class="p">)</span>
         <span class="k">default</span><span class="p">:</span>
-            <span class="k">if</span> <span class="kd">#available(iOS 14.0, watchOS 7.0, *)</span> <span class="p">{</span>
-                <span class="kt">Logger</span><span class="o">.</span><span class="n">carePlan</span><span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="s">"new(with:) The wrong type (</span><span class="se">\(</span><span class="n">careKitEntity</span><span class="o">.</span><span class="n">entityType</span><span class="p">,</span> <span class="nv">privacy</span><span class="p">:</span> <span class="o">.</span><span class="kd">private</span><span class="se">)</span><span class="s">) of entity was passed as an argument."</span><span class="p">)</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nf">os_log</span><span class="p">(</span><span class="s">"new(with:) The wrong type (%{private}@) of entity was passed."</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="o">.</span><span class="n">carePlan</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">careKitEntity</span><span class="o">.</span><span class="n">entityType</span><span class="o">.</span><span class="n">debugDescription</span><span class="p">)</span>
-            <span class="p">}</span>
+            <span class="nf">os_log</span><span class="p">(</span><span class="s">"new(with:) The wrong type (%{private}@) of entity was passed."</span><span class="p">,</span> <span class="nv">log</span><span class="p">:</span> <span class="o">.</span><span class="n">carePlan</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">careKitEntity</span><span class="o">.</span><span class="n">entityType</span><span class="o">.</span><span class="n">debugDescription</span><span class="p">)</span>
             <span class="nf">completion</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
     <span class="c1">//Add a convienience initializer to to ensure that that the doctor class is always created correctly</span>
-    <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKAnyPatient</span> <span class="p">{</span>
+    <span class="nf">init</span><span class="p">(</span><span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKAnyPatient</span> <span class="p">{</span>
         <span class="k">self</span><span class="o">.</span><span class="nf">init</span><span class="p">()</span>
         <span class="k">self</span><span class="o">.</span><span class="nf">copyCareKit</span><span class="p">(</span><span class="n">careKitEntity</span><span class="p">)</span>
         <span class="k">self</span><span class="o">.</span><span class="n">userInfo</span> <span class="o">=</span> <span class="p">[</span><span class="nv">kPCKCustomClassKey</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">className</span><span class="p">]</span>
     <span class="p">}</span>
 
-    <span class="k">override</span> <span class="nf">copyCareKit</span><span class="p">(</span><span class="n">_</span> <span class="nv">patientAny</span><span class="p">:</span> <span class="kt">OCKAnyPatient</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Patient</span><span class="p">?</span> <span class="p">{</span>
+    <span class="nf">copyCareKit</span><span class="p">(</span><span class="n">_</span> <span class="nv">patientAny</span><span class="p">:</span> <span class="kt">OCKAnyPatient</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Patient</span><span class="p">?</span> <span class="p">{</span>
 
         <span class="k">guard</span> <span class="k">let</span> <span class="nv">doctor</span> <span class="o">=</span> <span class="n">patientAny</span> <span class="k">as?</span> <span class="kt">OCKPatient</span> <span class="k">else</span><span class="p">{</span>
             <span class="k">return</span> <span class="kc">nil</span>
@@ -380,7 +344,7 @@ This works with 1 or many devices per patient.*/</span>
         <span class="k">return</span> <span class="n">seld</span>
     <span class="p">}</span>
 
-    <span class="k">override</span> <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">convertToCareKit</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">OCKPatient</span><span class="p">?</span> <span class="p">{</span>
         <span class="k">guard</span> <span class="k">var</span> <span class="nv">partiallyConvertedDoctor</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="nf">convertToCareKit</span><span class="p">()</span> <span class="k">else</span><span class="p">{</span><span class="k">return</span> <span class="kc">nil</span><span class="p">}</span>
 
         <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">String</span><span class="p">]</span><span class="o">!</span>
@@ -472,7 +436,7 @@ This works with 1 or many devices per patient.*/</span>
 </code></pre>
 <h3 id='custom-ockstores' class='heading'>Custom OCKStores</h3>
 
-<p>If you have a custom store, and have created your own entities, you simply need to conform to either <code><a href="Protocols/PCKObjectable.html">PCKObjectable</a></code> (OCKNote, OCKOutcome, OCKOutcomeValue) or <code><a href="Protocols/PCKVersionable.html">PCKVersionable</a></code> (OCKPatient, OCKCarePlan, OCKTask, OCKContact) protocols. In additionm you will need to conform to <code><a href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a></code>. You can look through ParseCareKit entities such as <code>Note</code>(<code>PCKObjectable</code>) and <code>CarePlan</code>(<code>PCKVersionable</code>) as a reference for building your own. </p>
+<p>If you have a custom store, and have created your own entities, you simply need to conform to  <code><a href="Protocols/PCKVersionable.html">PCKVersionable</a></code> (OCKPatient, OCKCarePlan, OCKTask, OCKContact, OCKOutcome) protocols. In addition you will need to conform to <code><a href="Protocols/PCKSynchronizable.html">PCKSynchronizable</a></code>. You can look through ParseCareKit entities such as <code>CarePlan</code>(<code>PCKVersionable</code>) as a reference for building your own. </p>
 
           </div>
         </section>
@@ -481,7 +445,7 @@ This works with 1 or many devices per patient.*/</span>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-02-15)</p>
+      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-02-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
