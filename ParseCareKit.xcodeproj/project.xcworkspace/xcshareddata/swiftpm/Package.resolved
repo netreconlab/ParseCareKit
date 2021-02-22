@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "CareKit",
-        "repositoryURL": "https://github.com/cbaker6/CareKit.git",
+        "repositoryURL": "https://github.com/carekit-apple/CareKit.git",
         "state": {
-          "branch": "fixOCKStoreInits",
-          "revision": "803dd2f46c7042c91820437ea5b64b0837cde12b",
+          "branch": null,
+          "revision": "6e7efbe17c6a4112c54abb7bf9c6387a0d2b132f",
           "version": null
         }
       },
