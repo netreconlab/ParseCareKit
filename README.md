@@ -16,13 +16,13 @@ For the backend, it is suggested to use [parse-hipaa](https://github.com/netreco
 You can also use ParseCareKit with any parse-server setup. If you devide to use your own parse-server, it's strongly recommended to add the following [CloudCode](https://github.com/netreconlab/parse-hipaa/tree/main/parse/cloud) to your server's "cloud" folder to ensure the necessary classes and fields are created as well as ensuring uniqueness of pushed entities. In addition, you should follow the [directions](https://github.com/netreconlab/parse-hipaa#running-in-production-for-parsecarekit) to setup additional indexes for optimized queries. ***Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance.***
 
 The following CareKit Entities are synchronized with Parse tables/classes:
-  - [x] OCKPatient <-> Patient
-  - [x] OCKCarePlan <-> CarePlan
-  - [x] OCKTask <-> Task
-  - [x] OCKHealthKitTask <-> HealthKitTask
-  - [x] OCKContact <-> Contact
-  - [x] OCKOutcome <-> Outcome
-  - [x] OCKRevisionRecord.Clock <-> Clock
+- [x] OCKPatient <-> Patient
+- [x] OCKCarePlan <-> CarePlan
+- [x] OCKTask <-> Task
+- [x] OCKHealthKitTask <-> HealthKitTask
+- [x] OCKContact <-> Contact
+- [x] OCKOutcome <-> Outcome
+- [x] OCKRevisionRecord.Clock <-> Clock
 
 ParseCareKit enables iOS and watchOS devices belonging to the same user to be reactively sychronized using [ParseLiveQuery](https://docs.parseplatform.org/parse-server/guide/#live-queries) without the need of push notifications assuming the [LiveQuery server has been configured](https://docs.parseplatform.org/parse-server/guide/#livequery-server). 
 
