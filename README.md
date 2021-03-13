@@ -19,6 +19,7 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKPatient <-> Patient
 - [x] OCKCarePlan <-> CarePlan
 - [x] OCKTask <-> Task
+- [x] OCKHealthKitTask <-> HealthKitTask
 - [x] OCKContact <-> Contact
 - [x] OCKOutcome <-> Outcome
 - [x] OCKRevisionRecord.Clock <-> Clock
