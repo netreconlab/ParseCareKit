@@ -360,10 +360,10 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         let ratioComplete = Double(revisionsCompletedCount)/Double(deviceRevision.entities.count)
                         self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
                         if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.pullRevisions.info("pushRevisions progress: \(ratioComplete, privacy: .private)")
+                            Logger.pushRevisions.info("pushRevisions progress: \(ratioComplete, privacy: .private)")
                         } else {
                             os_log("pushRevisions progress: %{private}@.",
-                                   log: .pullRevisions, type: .default, ratioComplete)
+                                   log: .pushRevisions, type: .default, ratioComplete)
                         }
                     }
                     let entity = $0
