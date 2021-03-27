@@ -66,7 +66,7 @@ extension PCKVersionable {
 
                         if !previousFound.nextVersionUUIDs.contains(versionFixed.uuid) {
                             previousFound.nextVersionUUIDs.append(versionFixed.uuid)
-                            previousFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+                            previousFound.save(callbackQueue: ParseRemote.queue) { results in
                                 switch results {
 
                                 case .success:
@@ -98,7 +98,7 @@ extension PCKVersionable {
                     case .success(var nextFound):
                         if !nextFound.previousVersionUUIDs.contains(versionFixed.uuid) {
                             nextFound.previousVersionUUIDs.append(versionFixed.uuid)
-                            nextFound.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+                            nextFound.save(callbackQueue: ParseRemote.queue) { results in
 
                                 switch results {
 
@@ -132,7 +132,7 @@ extension PCKVersionable {
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        self.save(callbackQueue: ParseRemote.queue) { results in
             switch results {
 
             case .success(let savedObject):
@@ -149,7 +149,7 @@ extension PCKVersionable {
                         if case var .success(previousObject) = result {
                             if !previousObject.nextVersionUUIDs.contains(self.uuid) {
                                 previousObject.nextVersionUUIDs.append(self.uuid)
-                                previousObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+                                previousObject.save(callbackQueue: ParseRemote.queue) { results in
                                     switch results {
 
                                     case .success:
@@ -174,7 +174,7 @@ extension PCKVersionable {
                         if case var .success(nextObject) = result {
                             if !nextObject.previousVersionUUIDs.contains(self.uuid) {
                                 nextObject.previousVersionUUIDs.append(self.uuid)
-                                nextObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+                                nextObject.save(callbackQueue: ParseRemote.queue) { results in
                                     switch results {
 
                                     case .success:

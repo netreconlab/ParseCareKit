@@ -1,5 +1,5 @@
 //
-//  ParseRemoteSynchronizationManager.swift
+//  ParseRemote.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 5/6/20.
@@ -14,13 +14,13 @@ import os.log
 // swiftlint:disable line_length
 
 /// Allows the CareKitStore to synchronize against a Parse Server.
-public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
+public class ParseRemote: OCKRemoteSynchronizable {
 
     public weak var delegate: OCKRemoteSynchronizationDelegate?
 
     /// If set, the delegate will be alerted to important events delivered by the remote
     /// store (set this, don't set `delegate`).
-    public weak var parseRemoteDelegate: ParseRemoteSynchronizationDelegate? {
+    public weak var parseRemoteDelegate: ParseRemoteDelegate? {
         get {
             return parseDelegate
         }
@@ -42,7 +42,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     /// are `Patient`, `Task`, `CarePlan`, `Contact`, and `Outcome`.
     public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
-    private weak var parseDelegate: ParseRemoteSynchronizationDelegate?
+    private weak var parseDelegate: ParseRemoteDelegate?
     private var clockSubscription: SubscriptionCallback<Clock>?
     private var subscribeToServerUpdates: Bool
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
@@ -51,7 +51,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                                                      autoreleaseFrequency: .inherit,
                                                      target: nil)
     /**
-     Creates an instance of ParseRemoteSynchronizationManager.
+     Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
@@ -70,7 +70,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     }
 
     /**
-     Creates an instance of ParseRemoteSynchronizationManager.
+     Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
@@ -86,7 +86,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
     }
 
     /**
-     Creates an instance of ParseRemoteSynchronizationManager.
+     Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
@@ -166,7 +166,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
 
             let localClock = knowledgeVector.clock(for: self.uuid)
             self.subscribeToClock()
-            ParseRemoteSynchronizationManager.queue.sync {
+            ParseRemote.queue.sync {
                 self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock,
                                                      cloudVector: cloudVector,
                                                      mergeRevision: mergeRevision) { previosError in
@@ -306,7 +306,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             return
         }
 
-        ParseRemoteSynchronizationManager.queue.async {
+        ParseRemote.queue.async {
             //Fetch Clock from Cloud
             Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
 
@@ -329,7 +329,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
                         case .internalServer, .objectNotFound:
                             //1 - this column hasn't been added. 101 - Query returned no results
                             if potentialPCKClock != nil {
-                                potentialPCKClock!.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { _ in
+                                potentialPCKClock!.save(callbackQueue: ParseRemote.queue) { _ in
                                     if #available(iOS 14.0, watchOS 7.0, *) {
                                         Logger.pushRevisions.error("Saved Clock. Try to sync again \(potentialPCKClock!.debugDescription, privacy: .private).")
                                     } else {
@@ -611,7 +611,7 @@ public class ParseRemoteSynchronizationManager: OCKRemoteSynchronizable {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        parseClock.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
+        parseClock.save(callbackQueue: ParseRemote.queue) { result in
             switch result {
 
             case .success:

@@ -140,7 +140,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
         //Check to see if already in the cloud
         let query = Outcome.query(ObjectableKey.uuid == uuid)
-        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
+        query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
 
@@ -177,7 +177,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
-        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        query.find(callbackQueue: ParseRemote.queue) { results in
 
             switch results {
 
@@ -233,7 +233,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
-        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        query.find(callbackQueue: ParseRemote.queue) { results in
             switch results {
 
             case .success(let outcomes):
@@ -345,7 +345,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     }
 
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        self.save(callbackQueue: ParseRemote.queue) { results in
             switch results {
 
             case .success(let saved):
@@ -360,7 +360,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                     switch result {
 
                     case .success(let linkedObject):
-                        linkedObject.save(callbackQueue: ParseRemoteSynchronizationManager.queue) { _ in }
+                        linkedObject.save(callbackQueue: ParseRemote.queue) { _ in }
                         completion(.success(linkedObject))
 
                     case .failure:
@@ -449,7 +449,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
     public func findOutcomesInBackground(completion: @escaping([Outcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
-        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        query.find(callbackQueue: ParseRemote.queue) { results in
 
             switch results {
 
