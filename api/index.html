@@ -59,7 +59,7 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a>
+                <a class="nav-group-task-link" href="Classes/ParseRemote.html">ParseRemote</a>
               </li>
             </ul>
           </li>
@@ -84,7 +84,7 @@
                 <a class="nav-group-task-link" href="Protocols/PCKVersionable.html">PCKVersionable</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/ParseRemoteSynchronizationDelegate.html">ParseRemoteSynchronizationDelegate</a>
+                <a class="nav-group-task-link" href="Protocols/ParseRemoteDelegate.html">ParseRemoteDelegate</a>
               </li>
             </ul>
           </li>
@@ -168,12 +168,12 @@
 <h2 id='what-version-of-parsecarekit-suits-your-needs' class='heading'>What version of ParseCareKit Suits Your Needs?</h2>
 
 <ul>
-<li>(Most cases) Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest (the minimal required commit is from <a href="https://github.com/carekit-apple/CareKit/commit/248c42c4e4ea97ff5fe349361fa6e0a849eab204">PR #508</a>) <a href="https://github.com/carekit-apple/CareKit#carekit-">CareKit 2.1</a>, <a href="https://github.com/carekit-apple/CareKit#carekitui-">CareKitUI</a>, and <a href="https://github.com/carekit-apple/CareKit#carekitstore-">CareKitStore</a> (using <code>OCKStore</code>) within your app? You should use the <a href="https://github.com/netreconlab/ParseCareKit">main</a> branch. You can take advantage of all of the capabilities of ParseCareKit. You should use <code>ParseRemoteSynchronizationManager()</code> see <a href="#synchronizing-your-data">below</a> more details. This branch uses the <a href="https://github.com/parse-community/Parse-Swift">Parse-Swift SDK</a> instead of the <a href="https://github.com/parse-community/Parse-SDK-iOS-OSX">Parse-Objc SDK</a>.</li>
+<li>(Most cases) Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest (the minimal required commit is from <a href="https://github.com/carekit-apple/CareKit/commit/248c42c4e4ea97ff5fe349361fa6e0a849eab204">PR #508</a>) <a href="https://github.com/carekit-apple/CareKit#carekit-">CareKit 2.1</a>, <a href="https://github.com/carekit-apple/CareKit#carekitui-">CareKitUI</a>, and <a href="https://github.com/carekit-apple/CareKit#carekitstore-">CareKitStore</a> (using <code>OCKStore</code>) within your app? You should use the <a href="https://github.com/netreconlab/ParseCareKit">main</a> branch. You can take advantage of all of the capabilities of ParseCareKit. You should use <code>ParseRemote()</code> see <a href="#synchronizing-your-data">below</a> more details. This branch uses the <a href="https://github.com/parse-community/Parse-Swift">Parse-Swift SDK</a> instead of the <a href="https://github.com/parse-community/Parse-SDK-iOS-OSX">Parse-Objc SDK</a>.</li>
 <li>Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest <a href="https://github.com/carekit-apple/CareKit#carekit-">CareKit</a>, <a href="https://github.com/carekit-apple/CareKit#carekitui-">CareKitUI</a>, and <a href="https://github.com/carekit-apple/CareKit#carekitstore-">CareKitStore</a> (but you would like to use the <a href="https://github.com/parse-community/Parse-SDK-iOS-OSX">Parse Objc SDK</a>) within your app? You will need to use Cocoapods and the <a href="https://github.com/netreconlab/ParseCareKit/tree/parse-objc">Parse-Objc SDK</a> branch. You can still use all of the capabilities of ParseCareKit. You should use <code>ParseSynchronizedStoreManager()</code> see <a href="https://github.com/netreconlab/ParseCareKit/tree/parse-objc#synchronizing-your-data">here</a> for more details.</li>
 <li>Need to use ParseCareKit for iOS13+ and will be using <a href="https://github.com/carekit-apple/CareKit#carekit-">CareKit &lt;= 2.0.1</a>, <a href="https://github.com/carekit-apple/CareKit#carekitui-">CareKitUI &lt;= 2.0.1</a>, and <a href="https://github.com/carekit-apple/CareKit#carekitstore-">CareKitStore &lt;= 2.0.1</a> (using <code>OCKStore</code> or conforming to <code>OCKAnyStoreProtocol</code>) within your app? You should use the <a href="https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1">carekit_2.0.1</a> branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a &ldquo;wall clock&rdquo; instead of &ldquo;knowledge vectors&rdquo;. You will also have to use the <a href="https://github.com/parse-community/Parse-SDK-iOS-OSX">Parse Objc SDK</a>) and Cocoapods. You should use <code>ParseSynchronizedStoreManager()</code> see <a href="https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1#synchronizing-your-data">here</a> for more details.</li>
 </ul>
 
-<p><strong>Note that it is recommended to use Vectors Clocks (<code><a href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a></code>) over Wall Clocks (<code>ParseSynchronizedStoreManager</code>) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how vector clocks work by looking at <a href="https://en.wikipedia.org/wiki/Vector_clock">vector clocks</a>.</strong></p>
+<p><strong>Note that it is recommended to use Vectors Clocks (<code><a href="Classes/ParseRemote.html">ParseRemote</a></code>) over Wall Clocks (<code>ParseSynchronizedStoreManager</code>) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how vector clocks work by looking at <a href="https://en.wikipedia.org/wiki/Vector_clock">vector clocks</a>.</strong></p>
 <h2 id='install-parsecarekit' class='heading'>Install ParseCareKit</h2>
 <h3 id='swift-package-manager-spm' class='heading'>Swift Package Manager (SPM)</h3>
 
@@ -215,19 +215,19 @@
 <h2 id='synchronizing-your-data' class='heading'>Synchronizing Your Data</h2>
 
 <p>Assuming you are already familiar with <a href="https://github.com/carekit-apple/CareKit">CareKit</a> (look at their documentation for details). Using ParseCareKit is simple, especially if you are using <code>OCKStore</code> out-of-the-box. If you are using a custom <code>OCKStore</code> you will need to subclass and write some additional code to synchronize your care-store with parse-server.</p>
-<h3 id='using-vector-clocks-aka-carekit-39-s-knowledgevector-code-parseremotesynchronizationmanager-code' class='heading'>Using vector clocks aka CareKit&rsquo;s KnowledgeVector (<code><a href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a></code>)</h3>
+<h3 id='using-vector-clocks-aka-carekit-39-s-knowledgevector-code-parseremote-code' class='heading'>Using vector clocks aka CareKit&rsquo;s KnowledgeVector (<code><a href="Classes/ParseRemote.html">ParseRemote</a></code>)</h3>
 
 <p>ParseCareKit stays synchronized with the <code>OCKStore</code> by leveraging <code>OCKRemoteSynchronizable</code>.  I recommend having this as a singleton, as it can handle all syncs from the carestore. An example is below:</p>
 <pre class="highlight swift"><code><span class="cm">/*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/</span>
 <span class="k">let</span> <span class="nv">uuid</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="s">"3B5FD9DA-C278-4582-90DC-101C08E7FC98"</span><span class="p">)</span><span class="o">!</span>
-<span class="k">let</span> <span class="nv">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemoteSynchronizationManager</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">uuid</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemote</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">uuid</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">dataStore</span> <span class="o">=</span> <span class="kt">OCKStore</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"myDataStore"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">onDisk</span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="n">remoteStoreManager</span><span class="p">)</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span> <span class="c1">//Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">parseRemoteDelegate</span> <span class="o">=</span> <span class="k">self</span> <span class="c1">//Conform to this protocol to resolve conflicts</span>
 </code></pre>
 
-<p>The <code>uuid</code> being passed to <code><a href="Classes/ParseRemoteSynchronizationManager.html">ParseRemoteSynchronizationManager</a></code> is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one <code>ParseUser</code> that can be a &ldquo;Doctor&rdquo; and a &ldquo;Patient&rdquo;. You should generate a different uuid for this particular ParseUser&rsquo;s <code>Doctor</code> and <code><a href="Structs/Patient.html">Patient</a></code> type. You can save all types to ParseUser:</p>
+<p>The <code>uuid</code> being passed to <code><a href="Classes/ParseRemote.html">ParseRemote</a></code> is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one <code>ParseUser</code> that can be a &ldquo;Doctor&rdquo; and a &ldquo;Patient&rdquo;. You should generate a different uuid for this particular ParseUser&rsquo;s <code>Doctor</code> and <code><a href="Structs/Patient.html">Patient</a></code> type. You can save all types to ParseUser:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">userTypeUUIDDictionary</span> <span class="o">=</span> <span class="p">[</span>
 <span class="s">"doctor"</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span><span class="p">,</span>
 <span class="s">"patient"</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span>
@@ -244,14 +244,14 @@ This works with 1 or many devices per patient.*/</span>
 <span class="k">let</span> <span class="nv">userTypeUUID</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">userTypeUUID</span><span class="p">)</span><span class="o">!</span>
 
 <span class="c1">//Start synching </span>
-<span class="k">let</span> <span class="nv">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemoteSynchronizationManager</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">userTypeUUID</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemote</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">userTypeUUID</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">dataStore</span> <span class="o">=</span> <span class="kt">OCKStore</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"myDataStore"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">onDisk</span><span class="p">,</span> <span class="nv">remote</span><span class="p">:</span> <span class="n">remoteStoreManager</span><span class="p">)</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span> <span class="c1">//Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">parseRemoteDelegate</span> <span class="o">=</span> <span class="k">self</span> <span class="c1">//Conform to this protocol to resolve conflicts</span>
 </code></pre>
 
 <p>Register as a delegate just in case ParseCareKit needs your application to update a CareKit entity. ParseCareKit doesn&rsquo;t have access to your CareKitStor, so your app will have to make the necessary update if ParseCareKit detects a problem and needs to make an update locally. Registering for the delegates also allows you to handle synching conflicts. An example is below:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizationDelegate</span><span class="p">,</span> <span class="kt">ParseRemoteSynchronizationDelegate</span><span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizationDelegate</span><span class="p">,</span> <span class="kt">ParseRemoteDelegate</span><span class="p">{</span>
     <span class="kd">func</span> <span class="nf">didRequestSynchronization</span><span class="p">(</span><span class="n">_</span> <span class="nv">remote</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizable</span><span class="p">)</span> <span class="p">{</span>
         <span class="nf">print</span><span class="p">(</span><span class="s">"Implement so ParseCareKit can tell your OCKStore to sync to the cloud"</span><span class="p">)</span>
         <span class="c1">//example</span>
@@ -304,7 +304,7 @@ This works with 1 or many devices per patient.*/</span>
     <span class="o">.</span><span class="nv">patient</span><span class="p">:</span> <span class="kt">CancerPatient</span><span class="p">()</span>
 <span class="p">]</span>
 
-<span class="n">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemoteSynchronizationManager</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">uuid</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="n">updatedConcreteClasses</span><span class="p">)</span>
+<span class="n">remoteStoreManager</span> <span class="o">=</span> <span class="kt">ParseRemote</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="n">uuid</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="n">updatedConcreteClasses</span><span class="p">)</span>
 <span class="n">dataStore</span> <span class="o">=</span> <span class="kt">OCKStore</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="n">storeName</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="nf">onDisk</span><span class="p">(),</span> <span class="nv">remote</span><span class="p">:</span> <span class="n">remoteStoreManager</span><span class="p">)</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
 <span class="n">remoteStoreManager</span><span class="o">.</span><span class="n">parseRemoteDelegate</span> <span class="o">=</span> <span class="k">self</span>
@@ -446,7 +446,7 @@ This works with 1 or many devices per patient.*/</span>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-03-22)</p>
+      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-03-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
