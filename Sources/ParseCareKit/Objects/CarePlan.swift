@@ -116,7 +116,7 @@ public struct CarePlan: PCKVersionable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         let query = Self.query(ObjectableKey.uuid == uuid)
-        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
+        query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
 
@@ -155,7 +155,7 @@ public struct CarePlan: PCKVersionable {
         //Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
-        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        query.find(callbackQueue: ParseRemote.queue) { results in
 
             switch results {
 
@@ -211,7 +211,7 @@ public struct CarePlan: PCKVersionable {
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
-        query.find(callbackQueue: ParseRemoteSynchronizationManager.queue) { results in
+        query.find(callbackQueue: ParseRemote.queue) { results in
 
             switch results {
 

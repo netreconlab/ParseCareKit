@@ -78,7 +78,7 @@ struct Clock: ParseObject {
 
         //Fetch Clock from Cloud
         let query = Clock.query(ClockKey.uuid == uuid)
-        query.first(callbackQueue: ParseRemoteSynchronizationManager.queue) { result in
+        query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
 

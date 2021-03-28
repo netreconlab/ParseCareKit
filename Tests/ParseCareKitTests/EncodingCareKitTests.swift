@@ -74,7 +74,7 @@ func userLoginToRealServer() {
 // swiftlint:disable:next type_body_length
 class ParseCareKitTests: XCTestCase {
 
-    private var parse: ParseRemoteSynchronizationManager!
+    private var parse: ParseRemote!
     private var store: OCKStore!
 
     override func setUpWithError() throws {
@@ -89,9 +89,9 @@ class ParseCareKitTests: XCTestCase {
         //userLogin()
         //userLoginToRealServer()
         do {
-        parse = try ParseRemoteSynchronizationManager(uuid:
-                                                        // swiftlint:disable:next line_length
-                                                        UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!, auto: false, subscribeToServerUpdates: false)
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
         } catch {
             print(error.localizedDescription)
         }
@@ -963,7 +963,7 @@ class ParseCareKitTests: XCTestCase {
     }*/
 }
 
-extension ParseCareKitTests: ParseRemoteSynchronizationDelegate {
+extension ParseCareKitTests: ParseRemoteDelegate {
     func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
         print("Implement")
     }

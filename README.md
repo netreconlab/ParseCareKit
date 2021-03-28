@@ -42,11 +42,11 @@ ParseCareKitUtility.setupServer() //Pulls from ParseCareKit.plist to connect to 
 ```
 
 ## What version of ParseCareKit Suits Your Needs?
-- (Most cases) Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest (the minimal required commit is from [PR #508](https://github.com/carekit-apple/CareKit/commit/248c42c4e4ea97ff5fe349361fa6e0a849eab204)) [CareKit 2.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [main](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemoteSynchronizationManager()` see [below](#synchronizing-your-data) more details. This branch uses the [Parse-Swift SDK](https://github.com/parse-community/Parse-Swift) instead of the [Parse-Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX).
+- (Most cases) Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest (the minimal required commit is from [PR #508](https://github.com/carekit-apple/CareKit/commit/248c42c4e4ea97ff5fe349361fa6e0a849eab204)) [CareKit 2.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [main](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemote()` see [below](#synchronizing-your-data) more details. This branch uses the [Parse-Swift SDK](https://github.com/parse-community/Parse-Swift) instead of the [Parse-Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX).
 - Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you would like to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) within your app? You will need to use Cocoapods and the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc) branch. You can still use all of the capabilities of ParseCareKit. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#synchronizing-your-data) for more details.
 - Need to use ParseCareKit for iOS13+ and will be using [CareKit <= 2.0.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore` or conforming to `OCKAnyStoreProtocol`) within your app? You should use the [carekit_2.0.1](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You will also have to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) and Cocoapods. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1#synchronizing-your-data) for more details.
 
-**Note that it is recommended to use Vectors Clocks (`ParseRemoteSynchronizationManager`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how vector clocks work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
+**Note that it is recommended to use Vectors Clocks (`ParseRemote`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how vector clocks work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
 
 ## Install ParseCareKit
 
@@ -91,7 +91,7 @@ When giving access to a CareTeam or other entities, special care should be taken
 ## Synchronizing Your Data
 Assuming you are already familiar with [CareKit](https://github.com/carekit-apple/CareKit) (look at their documentation for details). Using ParseCareKit is simple, especially if you are using `OCKStore` out-of-the-box. If you are using a custom `OCKStore` you will need to subclass and write some additional code to synchronize your care-store with parse-server.
 
-### Using vector clocks aka CareKit's KnowledgeVector (`ParseRemoteSynchronizationManager`)
+### Using vector clocks aka CareKit's KnowledgeVector (`ParseRemote`)
 
 ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSynchronizable`.  I recommend having this as a singleton, as it can handle all syncs from the carestore. An example is below:
 
@@ -99,13 +99,13 @@ ParseCareKit stays synchronized with the `OCKStore` by leveraging `OCKRemoteSync
 /*Use Clock and OCKRemoteSynchronizable to keep data synced. 
 This works with 1 or many devices per patient.*/
 let uuid = UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!
-let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true)
+let remoteStoreManager = ParseRemote(uuid: uuid, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemoteSynchronizationManager` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `ParseUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular ParseUser's `Doctor` and `Patient` type. You can save all types to ParseUser:
+The `uuid` being passed to `ParseRemote` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `ParseUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular ParseUser's `Doctor` and `Patient` type. You can save all types to ParseUser:
 
 ```swift
 let userTypeUUIDDictionary = [
@@ -124,7 +124,7 @@ let userTypeUUIDString = PCKUser.current.userTypes[lastLoggedInType] as! String
 let userTypeUUID = UUID(uuidString: userTypeUUID)!
 
 //Start synching 
-let remoteStoreManager = ParseRemoteSynchronizationManager(uuid: userTypeUUID, auto: true)
+let remoteStoreManager = ParseRemote(uuid: userTypeUUID, auto: true)
 let dataStore = OCKStore(name: "myDataStore", type: .onDisk, remote: remoteStoreManager)
 remoteStoreManager.delegate = self //Conform to this protocol if you are writing custom CloudCode in Parse and want to push syncs
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
@@ -134,7 +134,7 @@ Register as a delegate just in case ParseCareKit needs your application to updat
 
 
 ```swift
-extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteSynchronizationDelegate{
+extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteDelegate{
     func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
         print("Implement so ParseCareKit can tell your OCKStore to sync to the cloud")
         //example
@@ -192,7 +192,7 @@ let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
     .patient: CancerPatient()
 ]
 
-remoteStoreManager = ParseRemoteSynchronizationManager(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
+remoteStoreManager = ParseRemote(uuid: uuid, auto: true, replacePCKStoreClasses: updatedConcreteClasses)
 dataStore = OCKStore(name: storeName, type: .onDisk(), remote: remoteStoreManager)
 remoteStoreManager.delegate = self
 remoteStoreManager.parseRemoteDelegate = self

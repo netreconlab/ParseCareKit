@@ -1,5 +1,5 @@
 //
-//  ParseRemoteSynchronizationDelegate.swift
+//  ParseRemoteDelegate.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 12/13/20.
@@ -10,10 +10,10 @@ import Foundation
 import CareKitStore
 
 /**
- Objects that conform to the `ParseRemoteSynchronizationDelegate` protocol are
+ Objects that conform to the `ParseRemoteDelegate` protocol are
  able to respond to updates and resolve conflicts when needed.
 */
-public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDelegate {
+public protocol ParseRemoteDelegate: OCKRemoteSynchronizationDelegate {
     /// When a conflict occurs, decide if the device or cloud record should be kept.
     func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>)
 
@@ -21,6 +21,6 @@ public protocol ParseRemoteSynchronizationDelegate: OCKRemoteSynchronizationDele
     func successfullyPushedDataToCloud()
 }
 
-extension ParseRemoteSynchronizationDelegate {
+extension ParseRemoteDelegate {
     func successfullyPushedDataToCloud() { }
 }
