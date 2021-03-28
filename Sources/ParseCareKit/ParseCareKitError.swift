@@ -22,6 +22,7 @@ enum ParseCareKitError: Error {
     case cantCastToNeededClassType
     case classTypeNotAnEligibleType
     case couldntCreateConcreteClasses
+    case syncAlreadyInProgress
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -61,6 +62,8 @@ extension ParseCareKitError: LocalizedError {
         case .objectNotFoundOnParseServer:
             return NSLocalizedString("Object couldn't be found on the Parse Server",
                                      comment: "Object couldn't be found on the Parse Server")
+        case .syncAlreadyInProgress:
+            return NSLocalizedString("Sync already in progress!", comment: "Sync already in progress!")
         }
     }
 }

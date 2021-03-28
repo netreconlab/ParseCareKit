@@ -45,6 +45,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     private weak var parseDelegate: ParseRemoteDelegate?
     private var clockSubscription: SubscriptionCallback<Clock>?
     private var subscribeToServerUpdates: Bool
+    private var isSynchronizing = false
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
                                                      qos: .default,
                                                      attributes: .concurrent,
@@ -152,6 +153,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
+
+        if isSynchronizing {
+            completion(ParseCareKitError.syncAlreadyInProgress)
+            return
+        }
+        isSynchronizing = true
 
         //Fetch Clock from Cloud
         Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
@@ -612,6 +619,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             return
         }
         parseClock.save(callbackQueue: ParseRemote.queue) { result in
+            self.isSynchronizing = false
             switch result {
 
             case .success:
