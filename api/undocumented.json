@@ -170,13 +170,6 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseCareKitConstants.swift",
-      "line": 21,
-      "symbol": "PCKCodingKeys",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseCareKitConstants.swift",
       "line": 31,
       "symbol": "PCKStoreClass.carePlan",
       "symbol_kind": "source.lang.swift.decl.enumelement",
