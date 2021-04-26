@@ -10,11 +10,14 @@ import Foundation
 import ParseSwift
 
 struct PCKUser: ParseUser {
+
     var authData: [String: [String: String]?]?
 
     var username: String?
 
     var email: String?
+
+    var emailVerified: Bool?
 
     var password: String?
 
