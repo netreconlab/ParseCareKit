@@ -12,6 +12,7 @@ import XCTest
 @testable import ParseSwift
 
 struct LoginSignupResponse: ParseUser {
+    
     var authData: [String: [String: String]?]?
     var objectId: String?
     var createdAt: Date?
@@ -22,6 +23,7 @@ struct LoginSignupResponse: ParseUser {
     // provided by User
     var username: String?
     var email: String?
+    var emailVerified: Bool?
     var password: String?
 
     // Your custom keys
