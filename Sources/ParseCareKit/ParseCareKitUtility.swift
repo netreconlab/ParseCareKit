@@ -16,11 +16,11 @@ public struct ParseCareKitUtility {
     public static func setupServer() {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration: [String: AnyObject]
+        var useTransactionsInternally = false
         guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
                 fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
         }
-
         do {
             plistConfiguration =
                 try PropertyListSerialization.propertyList(from: xml,
@@ -34,16 +34,24 @@ public struct ParseCareKitUtility {
         guard let parseDictionary = plistConfiguration["ParseClientConfiguration"] as? [String: AnyObject],
             let appID = parseDictionary["ApplicationID"] as? String,
             let server = parseDictionary["Server"] as? String,
-            let serverURL = URL(string: server),
-            (parseDictionary["EnableLocalDataStore"] as? Bool) != nil else {
+            let serverURL = URL(string: server) else {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
+        }
+
+        if let internalTransactions = parseDictionary["UseTransactionsInternally"] as? Bool {
+            useTransactionsInternally = internalTransactions
         }
 
         if let liveQuery = parseDictionary["LiveQueryServer"] as? String,
            let liveQueryURL = URL(string: liveQuery) {
-            ParseSwift.initialize(applicationId: appID, serverURL: serverURL, liveQueryServerURL: liveQueryURL)
+            ParseSwift.initialize(applicationId: appID,
+                                  serverURL: serverURL,
+                                  liveQueryServerURL: liveQueryURL,
+                                  useTransactionsInternally: useTransactionsInternally)
         } else {
-            ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
+            ParseSwift.initialize(applicationId: appID,
+                                  serverURL: serverURL,
+                                  useTransactionsInternally: useTransactionsInternally)
         }
     }
 
