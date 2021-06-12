@@ -312,8 +312,8 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(outcome)
-        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(outcome)
+        var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
         return decoded
     }
@@ -340,8 +340,8 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     public func convertToCareKit() throws -> OCKOutcome {
         var mutableOutcome = self
         mutableOutcome.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableOutcome)
-        return try ParseCareKitUtility.decoder().decode(OCKOutcome.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(mutableOutcome)
+        return try PCKUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
 
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {

@@ -302,8 +302,8 @@ public struct Task: PCKVersionable {
             throw ParseCareKitError.cantCastToNeededClassType
         }
 
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(task)
-        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(task)
+        var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
         return decoded
     }
@@ -318,8 +318,8 @@ public struct Task: PCKVersionable {
     public func convertToCareKit() throws -> OCKTask {
         var mutableTask = self
         mutableTask.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableTask)
-        return try ParseCareKitUtility.decoder().decode(OCKTask.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(mutableTask)
+        return try PCKUtility.decoder().decode(OCKTask.self, from: encoded)
     }
 
     ///Link versions and related classes

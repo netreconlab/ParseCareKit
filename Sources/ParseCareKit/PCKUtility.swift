@@ -1,5 +1,5 @@
 //
-//  ParseCareKitUtility.swift
+//  PCKUtility.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 4/26/20.
@@ -12,7 +12,7 @@ import ParseSwift
 // swiftlint:disable line_length
 
 /// Utility functions designed to make things easier.
-public struct ParseCareKitUtility {
+public class PCKUtility {
 
     /** Can setup a connection to Parse Server based on a ParseCareKit.plist file.
     
@@ -28,7 +28,7 @@ public struct ParseCareKitUtility {
      completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void`.
      See Apple's [documentation](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession) for more for details.
      */
-    public static func setupServer(authentication: ((URLAuthenticationChallenge,
+    public class func setupServer(authentication: ((URLAuthenticationChallenge,
                                                      (URLSession.AuthChallengeDisposition,
                                                       URLCredential?) -> Void) -> Void)? = nil) {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
@@ -78,7 +78,7 @@ public struct ParseCareKitUtility {
     }
 
     /// Converts a date to a String.
-    public static func dateToString(_ date: Date) -> String {
+    public class func dateToString(_ date: Date) -> String {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
@@ -87,7 +87,7 @@ public struct ParseCareKitUtility {
     }
 
     /// Converts a String to a Date.
-    public static func stringToDate(_ date: String) -> Date? {
+    public class func stringToDate(_ date: String) -> Date? {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
@@ -96,17 +96,17 @@ public struct ParseCareKitUtility {
     }
 
     /// Get the current Parse Encoder with custom date strategy.
-    public static func encoder() -> ParseEncoder {
+    public class func encoder() -> ParseEncoder {
         Outcome().getEncoder()
     }
 
     /// Get the current JSON Encoder with custom date strategy.
-    public static func jsonEncoder() -> JSONEncoder {
+    public class func jsonEncoder() -> JSONEncoder {
         Outcome().getJSONEncoder()
     }
 
     /// Get the current JSON Decoder with custom date strategy.
-    public static func decoder() -> JSONDecoder {
+    public class func decoder() -> JSONDecoder {
         Outcome().getDecoder()
     }
 }
