@@ -13,14 +13,17 @@ import ParseSwift
 public struct ParseCareKitUtility {
 
     /// Can setup a connection to Parse Server based on a ParseCareKit.plist
-    public static func setupServer() {
+    public static func setupServer(authentication: ((URLAuthenticationChallenge,
+                                                     (URLSession.AuthChallengeDisposition,
+                                                      URLCredential?) -> Void) -> Void)? = nil) {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration: [String: AnyObject]
+        var liveQueryURL: URL?
+        var useTransactionsInternally = false
         guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
                 fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
         }
-
         do {
             plistConfiguration =
                 try PropertyListSerialization.propertyList(from: xml,
@@ -34,17 +37,23 @@ public struct ParseCareKitUtility {
         guard let parseDictionary = plistConfiguration["ParseClientConfiguration"] as? [String: AnyObject],
             let appID = parseDictionary["ApplicationID"] as? String,
             let server = parseDictionary["Server"] as? String,
-            let serverURL = URL(string: server),
-            (parseDictionary["EnableLocalDataStore"] as? Bool) != nil else {
+            let serverURL = URL(string: server) else {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
         }
 
-        if let liveQuery = parseDictionary["LiveQueryServer"] as? String,
-           let liveQueryURL = URL(string: liveQuery) {
-            ParseSwift.initialize(applicationId: appID, serverURL: serverURL, liveQueryServerURL: liveQueryURL)
-        } else {
-            ParseSwift.initialize(applicationId: appID, serverURL: serverURL)
+        if let liveQuery = parseDictionary["LiveQueryServer"] as? String {
+            liveQueryURL = URL(string: liveQuery)
         }
+
+        if let internalTransactions = parseDictionary["UseTransactionsInternally"] as? Bool {
+            useTransactionsInternally = internalTransactions
+        }
+
+        ParseSwift.initialize(applicationId: appID,
+                              serverURL: serverURL,
+                              liveQueryServerURL: liveQueryURL,
+                              useTransactionsInternally: useTransactionsInternally,
+                              authentication: authentication)
     }
 
     /// Converts a date to a String.
