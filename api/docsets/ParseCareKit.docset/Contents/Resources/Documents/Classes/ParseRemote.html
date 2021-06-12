@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (87% documented)
+         (93% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -60,6 +60,9 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PCKUtility.html">PCKUtility</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/ParseRemote.html">ParseRemote</a>
               </li>
             </ul>
@@ -68,7 +71,34 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a>
+                <a class="nav-group-task-link" href="../Enums/CarePlanKey.html">CarePlanKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ClockKey.html">ClockKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ContactKey.html">ContactKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ObjectableKey.html">ObjectableKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/OutcomeKey.html">OutcomeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/PCKStoreClass.html">PCKStoreClass</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ParseKey.html">ParseKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/PatientKey.html">PatientKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/TaskKey.html">TaskKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/VersionableKey.html">VersionableKey</a>
               </li>
             </ul>
           </li>
@@ -103,9 +133,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/Outcome.html">Outcome</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/Patient.html">Patient</a>
@@ -293,7 +320,7 @@ are <code><a href="../Structs/Patient.html">Patient</a></code>, <code><a href=".
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pckStoreClassesToSynchronize</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a></span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]</span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pckStoreClassesToSynchronize</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]</span><span class="o">!</span></code></pre>
 
                         </div>
                       </div>
@@ -391,7 +418,7 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a></span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span> <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span> <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -475,7 +502,7 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span> <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
-                        <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a></span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                        <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                         <span class="nv">customClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span> <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>

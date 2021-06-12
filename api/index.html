@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           ParseCareKit 1.0 Docs
         </a>
-         (87% documented)
+         (93% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -59,6 +59,9 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PCKUtility.html">PCKUtility</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/ParseRemote.html">ParseRemote</a>
               </li>
             </ul>
@@ -67,7 +70,34 @@
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums.html#/s:12ParseCareKit13PCKStoreClassO">PCKStoreClass</a>
+                <a class="nav-group-task-link" href="Enums/CarePlanKey.html">CarePlanKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/ClockKey.html">ClockKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/ContactKey.html">ContactKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/ObjectableKey.html">ObjectableKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/OutcomeKey.html">OutcomeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/PCKStoreClass.html">PCKStoreClass</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/ParseKey.html">ParseKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/PatientKey.html">PatientKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/TaskKey.html">TaskKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/VersionableKey.html">VersionableKey</a>
               </li>
             </ul>
           </li>
@@ -102,9 +132,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Outcome.html">Outcome</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/ParseCareKitUtility.html">ParseCareKitUtility</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Patient.html">Patient</a>
@@ -159,14 +186,14 @@
 <p><img src="https://user-images.githubusercontent.com/8621344/99022137-1ec7ca80-2530-11eb-897c-ace7c70536f2.png" width="300"> <img src="https://user-images.githubusercontent.com/8621344/99022190-3bfc9900-2530-11eb-8ad1-c1e8ba2e7f55.png" width="300"></p>
 <h3 id='parsecarekit-plist-with-server-connection-information' class='heading'>ParseCareKit.plist with server connection information</h3>
 
-<p>ParseCareKit comes with a helper method, <a href="https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/ParseCareKitUtility.swift#L14">ParseCareKitUtility.setupServer()</a> that easily helps apps connect to your parse-server. To leverage the helper method, copy the <a href="https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist">ParseCareKit.plist</a> file your &ldquo;Supporting Files&rdquo; folder in your Xcode project. Be sure to change <code>ApplicationID</code> and <code>Server</code> to the correct values for your server. Simply add the following inside <code>didFinishLaunchingWithOptions</code> in <code>AppDelegate.swift</code>:</p>
+<p>ParseCareKit comes with a helper method, <a href="https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/PCKUtility.swift#L14">PCKUtility.setupServer()</a> that easily helps apps connect to your parse-server. To leverage the helper method, copy the <a href="https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist">ParseCareKit.plist</a> file your &ldquo;Supporting Files&rdquo; folder in your Xcode project. Be sure to change <code>ApplicationID</code> and <code>Server</code> to the correct values for your server. Simply add the following inside <code>didFinishLaunchingWithOptions</code> in <code>AppDelegate.swift</code>:</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplication</span><span class="o">.</span><span class="kt">LaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
 
 <span class="c1">//Pulls from ParseCareKit.plist to connect to server</span>
-<span class="kt">ParseCareKitUtility</span><span class="o">.</span><span class="nf">setupServer</span><span class="p">()</span> 
+<span class="kt">PCKUtility</span><span class="o">.</span><span class="nf">setupServer</span><span class="p">()</span> 
 
 <span class="c1">//If you need certificate pinning:</span>
-<span class="kt">ParseCareKitUtility</span><span class="o">.</span><span class="n">setupServer</span> <span class="p">{</span> <span class="p">(</span><span class="n">challenge</span><span class="p">,</span> <span class="n">completionHandler</span><span class="p">)</span> <span class="k">in</span>
+<span class="kt">PCKUtility</span><span class="o">.</span><span class="n">setupServer</span> <span class="p">{</span> <span class="p">(</span><span class="n">challenge</span><span class="p">,</span> <span class="n">completionHandler</span><span class="p">)</span> <span class="k">in</span>
     <span class="c1">//Return how you want to handle the challenge. See docs for more information.</span>
     <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="n">performDefaultHandling</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
 <span class="p">}</span>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ParseRemoteDelegate Protocol Reference</title>
+    <title>ClockKey Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/ParseRemoteDelegate" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/ClockKey" class="dashAnchor"></a>
 
-    <a title="ParseRemoteDelegate Protocol Reference"></a>
+    <a title="ClockKey Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -50,7 +50,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">ParseCareKit Reference</a>
       <img class="carat" src="../img/carat.png" />
-      ParseRemoteDelegate Protocol Reference
+      ClockKey Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -148,16 +148,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>ParseRemoteDelegate</h1>
+            <h1>ClockKey</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ParseRemoteDelegate</span> <span class="p">:</span> <span class="kt">OCKRemoteSynchronizationDelegate</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ClockKey</span></code></pre>
 
                 </div>
               </div>
-            <p>Objects that conform to the <code>ParseRemoteDelegate</code> protocol are
-able to respond to updates and resolve conflicts when needed.</p>
+            <p>Keys for <code>Clock</code> objects. These keys can be used for querying Parse objects.</p>
 
           </div>
         </section>
@@ -169,9 +168,9 @@ able to respond to updates and resolve conflicts when needed.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit0A14RemoteDelegateP24chooseConflictResolution9conflicts10completionySay0bC5Store9OCKEntityOG_ys6ResultOyAiG13OCKStoreErrorOGctF"></a>
-                    <a name="//apple_ref/swift/Method/chooseConflictResolution(conflicts:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit0A14RemoteDelegateP24chooseConflictResolution9conflicts10completionySay0bC5Store9OCKEntityOG_ys6ResultOyAiG13OCKStoreErrorOGctF">chooseConflictResolution(conflicts:<wbr>completion:<wbr>)</a>
+                    <a name="/s:12ParseCareKit8ClockKeyO9classNameSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/className" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit8ClockKeyO9classNameSSvpZ">className</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -179,14 +178,14 @@ able to respond to updates and resolve conflicts when needed.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When a conflict occurs, decide if the device or cloud record should be kept.</p>
+                        <p>className key.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">chooseConflictResolution</span><span class="p">(</span><span class="nv">conflicts</span><span class="p">:</span> <span class="p">[</span><span class="kt">OCKEntity</span><span class="p">],</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">OCKResultClosure</span><span class="o">&lt;</span><span class="kt">OCKEntity</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">className</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -196,9 +195,9 @@ able to respond to updates and resolve conflicts when needed.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit0A14RemoteDelegateP29successfullyPushedDataToCloudyyF"></a>
-                    <a name="//apple_ref/swift/Method/successfullyPushedDataToCloud()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit0A14RemoteDelegateP29successfullyPushedDataToCloudyyF">successfullyPushedDataToCloud()</a>
+                    <a name="/s:12ParseCareKit8ClockKeyO4uuidSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/uuid" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit8ClockKeyO4uuidSSvpZ">uuid</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -206,14 +205,41 @@ able to respond to updates and resolve conflicts when needed.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Receive a notification when data has been successfully pushed to the Cloud.</p>
+                        <p>uuid key.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">successfullyPushedDataToCloud</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit8ClockKeyO06vectorE0SSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/vectorKey" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit8ClockKeyO06vectorE0SSvpZ">vectorKey</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>vectorKey key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">vectorKey</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
