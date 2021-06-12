@@ -37,8 +37,14 @@ ParseCareKit comes with a helper method, [ParseCareKitUtility.setupServer()](htt
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-ParseCareKitUtility.setupServer() //Pulls from ParseCareKit.plist to connect to server
+//Pulls from ParseCareKit.plist to connect to server
+ParseCareKitUtility.setupServer() 
 
+//If you need certificate pinning:
+ParseCareKitUtility.setupServer { (challenge, completionHandler) in
+    //Return how you want to handle the challenge. See docs for more information.
+    completionHandler(.performDefaultHandling, nil)
+}
 ```
 
 ## What version of ParseCareKit Suits Your Needs?
