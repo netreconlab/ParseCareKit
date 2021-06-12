@@ -289,8 +289,8 @@ public struct CarePlan: PCKVersionable {
         guard let carePlan = carePlanAny as? OCKCarePlan else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(carePlan)
-        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(carePlan)
+        var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
         return decoded
     }
@@ -305,8 +305,8 @@ public struct CarePlan: PCKVersionable {
     public func convertToCareKit() throws -> OCKCarePlan {
         var mutableCarePlan = self
         mutableCarePlan.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableCarePlan)
-        return try ParseCareKitUtility.decoder().decode(OCKCarePlan.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(mutableCarePlan)
+        return try PCKUtility.decoder().decode(OCKCarePlan.self, from: encoded)
     }
 
     ///Link versions and related classes
