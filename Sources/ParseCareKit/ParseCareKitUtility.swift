@@ -13,9 +13,12 @@ import ParseSwift
 public struct ParseCareKitUtility {
 
     /// Can setup a connection to Parse Server based on a ParseCareKit.plist
-    public static func setupServer() {
+    public static func setupServer(authentication: ((URLAuthenticationChallenge,
+                                                     (URLSession.AuthChallengeDisposition,
+                                                      URLCredential?) -> Void) -> Void)? = nil) {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration: [String: AnyObject]
+        var liveQueryURL: URL?
         var useTransactionsInternally = false
         guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
@@ -38,21 +41,19 @@ public struct ParseCareKitUtility {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
         }
 
+        if let liveQuery = parseDictionary["LiveQueryServer"] as? String {
+            liveQueryURL = URL(string: liveQuery)
+        }
+
         if let internalTransactions = parseDictionary["UseTransactionsInternally"] as? Bool {
             useTransactionsInternally = internalTransactions
         }
 
-        if let liveQuery = parseDictionary["LiveQueryServer"] as? String,
-           let liveQueryURL = URL(string: liveQuery) {
-            ParseSwift.initialize(applicationId: appID,
-                                  serverURL: serverURL,
-                                  liveQueryServerURL: liveQueryURL,
-                                  useTransactionsInternally: useTransactionsInternally)
-        } else {
-            ParseSwift.initialize(applicationId: appID,
-                                  serverURL: serverURL,
-                                  useTransactionsInternally: useTransactionsInternally)
-        }
+        ParseSwift.initialize(applicationId: appID,
+                              serverURL: serverURL,
+                              liveQueryServerURL: liveQueryURL,
+                              useTransactionsInternally: useTransactionsInternally,
+                              authentication: authentication)
     }
 
     /// Converts a date to a String.
