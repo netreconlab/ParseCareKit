@@ -326,8 +326,8 @@ public struct Contact: PCKVersionable {
         guard let contact = contactAny as? OCKContact else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(contact)
-        var decoded = try ParseCareKitUtility.decoder().decode(Self.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(contact)
+        var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
         return decoded
     }
@@ -341,8 +341,8 @@ public struct Contact: PCKVersionable {
     public func convertToCareKit() throws -> OCKContact {
         var mutableContact = self
         mutableContact.encodingForParse = false
-        let encoded = try ParseCareKitUtility.jsonEncoder().encode(mutableContact)
-        return try ParseCareKitUtility.decoder().decode(OCKContact.self, from: encoded)
+        let encoded = try PCKUtility.jsonEncoder().encode(mutableContact)
+        return try PCKUtility.decoder().decode(OCKContact.self, from: encoded)
     }
 
     ///Link versions and related classes
