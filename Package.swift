@@ -14,8 +14,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(name: "CareKit", url: "https://github.com/cbaker6/CareKit.git",
-                 .revision("6d0ee48ec6e0d2403626f9570e5065fec94e0d2b")),
-        .package(name: "ParseSwift", url: "https://github.com/parse-community/Parse-Swift", from: "1.8.1")
+                 .revision("99599c3b70cd9dcf4852665abaae0f5d54bda43a")),
+        .package(name: "ParseSwift", url: "https://github.com/parse-community/Parse-Swift", from: "1.8.3")
     ],
     targets: [
         .target(

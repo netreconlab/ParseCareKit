@@ -109,7 +109,7 @@ public struct Patient: PCKVersionable {
 
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        //Check to see if already in the cloud
+        // Check to see if already in the cloud
         let query = Self.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
@@ -117,7 +117,7 @@ public struct Patient: PCKVersionable {
 
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
-                    //This object has a duplicate uuid but isn't the same object
+                    // This object has a duplicate uuid but isn't the same object
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
@@ -126,10 +126,10 @@ public struct Patient: PCKVersionable {
             case .failure(let error):
 
                 switch error.code {
-                case .internalServer, .objectNotFound: //1 - this column hasn't been added. 101 - Query returned no results
+                case .internalServer, .objectNotFound: // 1 - this column hasn't been added. 101 - Query returned no results
                     self.save(completion: completion)
                 default:
-                    //There was a different issue that we don't know how to handle
+                    // There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.patient.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
@@ -146,7 +146,7 @@ public struct Patient: PCKVersionable {
         var previousVersionUUIDs = self.previousVersionUUIDs
         previousVersionUUIDs.append(uuid)
 
-        //Check to see if this entity is already in the Cloud, but not paired locally
+        // Check to see if this entity is already in the Cloud, but not paired locally
         let query = Patient.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -163,7 +163,7 @@ public struct Patient: PCKVersionable {
                     }
                     self.addToCloud(completion: completion)
                 case 1:
-                    //This is the typical case
+                    // This is the typical case
                     guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid) }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.patient.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
@@ -213,10 +213,10 @@ public struct Patient: PCKVersionable {
 
                 switch error.code {
                 case .internalServer, .objectNotFound:
-                    //1 - this column hasn't been added. 101 - Query returned no results
-                    //If the query was looking in a column that wasn't a default column,
-                    //it will return nil if the table doesn't contain the custom column
-                    //Saving the new item with the custom column should resolve the issue
+                    // 1 - this column hasn't been added. 101 - Query returned no results
+                    // If the query was looking in a column that wasn't a default column,
+                    // it will return nil if the table doesn't contain the custom column
+                    // Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         // swiftlint:disable:next line_length
                         Logger.patient.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
@@ -240,7 +240,7 @@ public struct Patient: PCKVersionable {
 
     public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
         var mutatablePatient = self
-        mutatablePatient.logicalClock = cloudClock //Stamp Entity
+        mutatablePatient.logicalClock = cloudClock // Stamp Entity
 
         guard mutatablePatient.deletedDate != nil else {
             mutatablePatient.addToCloud { result in

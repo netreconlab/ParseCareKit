@@ -2,12 +2,30 @@
   "object": {
     "pins": [
       {
+        "package": "CareKit",
+        "repositoryURL": "https://github.com/cbaker6/CareKit.git",
+        "state": {
+          "branch": null,
+          "revision": "99599c3b70cd9dcf4852665abaae0f5d54bda43a",
+          "version": null
+        }
+      },
+      {
+        "package": "FHIRModels",
+        "repositoryURL": "https://github.com/apple/FHIRModels.git",
+        "state": {
+          "branch": null,
+          "revision": "c91e5bb74397136f79656bebdfda76a523d3e88c",
+          "version": "0.3.2"
+        }
+      },
+      {
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift",
         "state": {
           "branch": null,
-          "revision": "973cf33e398ff14b7cecf9b664281cdac5eaac34",
-          "version": "1.8.1"
+          "revision": "f877b37bf4c4536d41b600791d6cbbae328c7575",
+          "version": "1.8.3"
         }
       }
     ]

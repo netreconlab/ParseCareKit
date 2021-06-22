@@ -76,7 +76,7 @@ struct Clock: ParseObject {
                                                     OCKRevisionRecord.KnowledgeVector?,
                                                     ParseError?) -> Void) {
 
-        //Fetch Clock from Cloud
+        // Fetch Clock from Cloud
         let query = Clock.query(ClockKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
@@ -90,7 +90,7 @@ struct Clock: ParseObject {
                 if !createNewIfNeeded {
                     completion(nil, nil, error)
                 } else {
-                    //This is the first time the Clock is user setup for this user
+                    // This is the first time the Clock is user setup for this user
                     let newVector = Clock(uuid: uuid)
                     newVector.decodeClock { possiblyDecoded in
                         completion(newVector, possiblyDecoded, error)
