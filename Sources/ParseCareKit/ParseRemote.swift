@@ -160,10 +160,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
         isSynchronizing = true
 
-        //Fetch Clock from Cloud
+        // Fetch Clock from Cloud
         Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
             guard let cloudVector = potentialCKClock else {
-                //No Clock available, need to let CareKit know this is the first sync.
+                // No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
                 mergeRevision(revision)
                 completion(nil)
@@ -308,21 +308,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
 
         guard deviceRevision.entities.count > 0 else {
-            //No revisions need to be pushed
+            // No revisions need to be pushed
             self.isSynchronizing = false
             completion(nil)
             return
         }
 
         ParseRemote.queue.async {
-            //Fetch Clock from Cloud
+            // Fetch Clock from Cloud
             Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
 
                 guard let cloudParseVector = potentialPCKClock,
                     let cloudCareKitVector = potentialCKClock else {
 
                         guard let parseError = error else {
-                            //There was a different issue that we don't know how to handle
+                            // There was a different issue that we don't know how to handle
                             if #available(iOS 14.0, watchOS 7.0, *) {
                                 Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock.")
                             } else {
@@ -335,7 +335,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                         switch parseError.code {
                         case .internalServer, .objectNotFound:
-                            //1 - this column hasn't been added. 101 - Query returned no results
+                            // 1 - this column hasn't been added. 101 - Query returned no results
                             if potentialPCKClock != nil {
                                 potentialPCKClock!.save(callbackQueue: ParseRemote.queue) { _ in
                                     if #available(iOS 14.0, watchOS 7.0, *) {
@@ -350,7 +350,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 completion(error)
                             }
                         default:
-                            //There was a different issue that we don't know how to handle
+                            // There was a different issue that we don't know how to handle
                             if #available(iOS 14.0, watchOS 7.0, *) {
                                 Logger.pushRevisions.error("\(parseError.localizedDescription, privacy: .private)")
                             } else {
@@ -611,7 +611,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                            completion: @escaping (Error?) -> Void) {
         var parseClock = parseClock
         var cloudVector = cloudClock
-        //Increment and merge Knowledge Vector
+        // Increment and merge Knowledge Vector
         cloudVector.increment(clockFor: uuid)
         cloudVector.merge(with: localClock)
 

@@ -218,7 +218,7 @@ extension PCKObjectable {
     }
 }
 
-//Defaults
+// Defaults
 extension PCKObjectable {
     public var id: String {
         guard let returnId = entityId else {
@@ -235,13 +235,13 @@ extension PCKObjectable {
         hasher.combine(self.uuid)
     }
 
-    //CustomStringConvertible
+    // CustomStringConvertible
     public var description: String {
         debugDescription
     }
 }
 
-//Encodable
+// Encodable
 extension PCKObjectable {
 
     /**

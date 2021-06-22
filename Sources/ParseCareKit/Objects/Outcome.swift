@@ -68,9 +68,9 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
-    var startDate: Date? //Custom added, check if needed
+    var startDate: Date? // Custom added, check if needed
 
-    var endDate: Date? //Custom added, check if needed
+    var endDate: Date? // Custom added, check if needed
 
     /// The date on which this object was tombstoned. Note that objects are never actually deleted,
     /// but rather they are tombstoned and will no longer be returned from queries.
@@ -138,7 +138,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        //Check to see if already in the cloud
+        // Check to see if already in the cloud
         let query = Outcome.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
@@ -146,7 +146,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
-                    //This object has a duplicate uuid but isn't the same object
+                    // This object has a duplicate uuid but isn't the same object
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
@@ -154,11 +154,11 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
             case .failure(let error):
                 switch error.code {
-                case .internalServer, .objectNotFound: //1 - this column hasn't been added.
+                case .internalServer, .objectNotFound: // 1 - this column hasn't been added.
                     self.save(completion: completion)
 
                 default:
-                    //There was a different issue that we don't know how to handle
+                    // There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.outcome.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
@@ -174,7 +174,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         var previousVersionUUIDs = self.previousVersionUUIDs
         previousVersionUUIDs.append(uuid)
 
-        //Check to see if this entity is already in the Cloud, but not matched locally
+        // Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -191,7 +191,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                     }
                     self.addToCloud(completion: completion)
                 case 1:
-                    //This is the typical case
+                    // This is the typical case
                     guard let previousVersion = foundObjects.first(where: { self.previousVersionUUIDs.contains($0.uuid) }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.outcome.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
@@ -245,10 +245,10 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
                 switch error.code {
                 case .internalServer, .objectNotFound:
-                    //1 - this column hasn't been added. 101 - Query returned no results
-                    //If the query was looking in a column that wasn't a default column,
-                    //it will return nil if the table doesn't contain the custom column
-                    //Saving the new item with the custom column should resolve the issue
+                    // 1 - this column hasn't been added. 101 - Query returned no results
+                    // If the query was looking in a column that wasn't a default column,
+                    // it will return nil if the table doesn't contain the custom column
+                    // Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
@@ -269,7 +269,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
     public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
         var mutableOutcome = self
-        mutableOutcome.logicalClock = cloudClock //Stamp Entity
+        mutableOutcome.logicalClock = cloudClock // Stamp Entity
 
         guard mutableOutcome.deletedDate != nil else {
 
@@ -336,7 +336,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    //Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
+    // Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
     public func convertToCareKit() throws -> OCKOutcome {
         var mutableOutcome = self
         mutableOutcome.encodingForParse = false
@@ -378,11 +378,11 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    ///Link versions and related classes
+    /// Link versions and related classes
     public func linkRelated(completion: @escaping(Result<Outcome, Error>) -> Void) {
         guard let taskUUID = self.taskUUID,
               let taskOccurrenceIndex = self.taskOccurrenceIndex else {
-            //Finished if there's no Task, otherwise see if it's in the cloud
+            // Finished if there's no Task, otherwise see if it's in the cloud
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
@@ -409,7 +409,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                 completion(.success(mutableOutcome))
 
             case .failure:
-                //We still keep going if the link was unsuccessfull
+                // We still keep going if the link was unsuccessfull
                 completion(.success(mutableOutcome))
             }
         }

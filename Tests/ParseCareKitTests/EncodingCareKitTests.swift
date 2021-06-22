@@ -88,8 +88,8 @@ class ParseCareKitTests: XCTestCase {
                                       clientKey: "clientKey",
                                       masterKey: "masterKey",
                                       serverURL: url)
-        //userLogin()
-        //userLoginToRealServer()
+        // userLogin()
+        // userLoginToRealServer()
         do {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
@@ -113,12 +113,12 @@ class ParseCareKitTests: XCTestCase {
     func testPatient() throws {
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
-        //Special
+        // Special
         careKit.birthday = Date().addingTimeInterval(-300)
         careKit.allergies = ["sneezing"]
         careKit.sex = .female
 
-        //Objectable
+        // Objectable
         careKit.uuid = UUID()
         careKit.createdDate = Date().addingTimeInterval(-200)
         careKit.deletedDate = Date().addingTimeInterval(-100)
@@ -133,21 +133,21 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKitNote]
 
-        //Versionable
+        // Versionable
         careKit.previousVersionUUIDs = [UUID()]
         careKit.nextVersionUUIDs = [UUID()]
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
-        //Test CareKit -> Parse
+        // Test CareKit -> Parse
         var parse = try Patient.copyCareKit(careKit)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.name, careKit.name)
         XCTAssertEqual(parse.sex, careKit.sex)
         XCTAssertNotNil(parse.birthday)
         XCTAssertEqual(parse.allergies, careKit.allergies)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, "Patient")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
@@ -167,21 +167,21 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.title, "hello")
         XCTAssertEqual(parse.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Test Parse -> CareKit
+        // Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
 
-        //Special
+        // Special
         XCTAssertEqual(parse2.name, careKit.name)
         XCTAssertEqual(parse2.sex, careKit.sex)
         XCTAssertNotNil(parse2.birthday)
         XCTAssertEqual(parse2.allergies, careKit.allergies)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
         XCTAssertNotNil(parse2.createdDate)
@@ -200,12 +200,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Encode to cloud format
+        // Encode to cloud format
         guard let note = parse.notes?.first else {
             XCTFail("Should have unwrapped note")
             return
@@ -214,7 +214,7 @@ class ParseCareKitTests: XCTestCase {
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Patient.self, from: cloudEncoded)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
@@ -230,13 +230,13 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.asset, cloudDecoded.asset)
         XCTAssertEqual(parse.notes, cloudDecoded.notes)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.name, cloudDecoded.name)
         XCTAssertEqual(parse.sex, cloudDecoded.sex)
         XCTAssertNotNil(cloudDecoded.birthday)
         XCTAssertEqual(parse.allergies, cloudDecoded.allergies)
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
@@ -247,7 +247,7 @@ class ParseCareKitTests: XCTestCase {
         var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
-        //Objectable
+        // Objectable
         careKit.uuid = UUID()
         careKit.createdDate = Date().addingTimeInterval(-200)
         careKit.updatedDate = Date().addingTimeInterval(-99)
@@ -262,15 +262,15 @@ class ParseCareKitTests: XCTestCase {
         careKit.notes = [careKitNote]
         careKit.timezone = .current
 
-        //Versionable
+        // Versionable
         careKit.previousVersionUUIDs = [UUID()]
         careKit.nextVersionUUIDs = [UUID()]
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
-        //Test CareKit -> Parse
+        // Test CareKit -> Parse
         var parse = try Outcome.copyCareKit(careKit)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
         XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
         XCTAssertEqual(parse.values?.count, 1)
@@ -282,7 +282,7 @@ class ParseCareKitTests: XCTestCase {
         }
         XCTAssertEqual(value, careKitValue)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, "Outcome")
         XCTAssertEqual(parse.uuid, careKit.uuid)
         XCTAssertEqual(parse.entityId, careKit.id)
@@ -301,10 +301,10 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.title, "hello")
         XCTAssertEqual(parse.notes?.first?.content, "world")
 
-        //Test Parse -> CareKit
+        // Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
 
-        //Special
+        // Special
         XCTAssertEqual(parse2.taskUUID, careKit.taskUUID)
         XCTAssertEqual(parse2.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
         XCTAssertEqual(parse2.values.count, 1)
@@ -315,7 +315,7 @@ class ParseCareKitTests: XCTestCase {
             XCTFail("Should have casted")
         }
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse2.uuid, careKit.uuid)
         XCTAssertNotNil(parse2.createdDate)
         XCTAssertNotNil(parse2.updatedDate)
@@ -332,12 +332,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Encode to cloud format
+        // Encode to cloud format
         guard let valueWithObjectId = parse.values?.first else {
             XCTFail("Should have unwrapped note")
             return
@@ -353,7 +353,7 @@ class ParseCareKitTests: XCTestCase {
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Outcome.self, from: cloudEncoded)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
@@ -369,12 +369,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.asset, cloudDecoded.asset)
         XCTAssertEqual(parse.notes, cloudDecoded.notes)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.taskUUID, cloudDecoded.taskUUID)
         XCTAssertEqual(parse.taskOccurrenceIndex, cloudDecoded.taskOccurrenceIndex)
         XCTAssertEqual(parse.values, cloudDecoded.values)
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
@@ -388,12 +388,12 @@ class ParseCareKitTests: XCTestCase {
                               schedule: .init(composing: [careKitSchedule]))
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
-        //Special
+        // Special
         careKit.impactsAdherence = true
         careKit.instructions = "sneezing"
         careKit.carePlanUUID = UUID()
 
-        //Objectable
+        // Objectable
         careKit.uuid = UUID()
         careKit.createdDate = Date().addingTimeInterval(-200)
         careKit.deletedDate = Date().addingTimeInterval(-100)
@@ -408,21 +408,21 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKitNote]
 
-        //Versionable
+        // Versionable
         careKit.previousVersionUUIDs = [UUID()]
         careKit.nextVersionUUIDs = [UUID()]
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
-        //Test CareKit -> Parse
+        // Test CareKit -> Parse
         var parse = try Task.copyCareKit(careKit)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
-        //XCTAssertEqual(parse.allergies, careKit.allergies)
+        // XCTAssertEqual(parse.allergies, careKit.allergies)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, "Task")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
@@ -442,20 +442,20 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.title, "hello")
         XCTAssertEqual(parse.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Test Parse -> CareKit
+        // Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
 
-        //Special
+        // Special
         XCTAssertEqual(parse2.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
         XCTAssertNotNil(parse2.createdDate)
@@ -474,12 +474,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Encode to cloud format
+        // Encode to cloud format
         guard let note = parse.notes?.first else {
             XCTFail("Should have unwrapped note")
             return
@@ -488,7 +488,7 @@ class ParseCareKitTests: XCTestCase {
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Task.self, from: cloudEncoded)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
@@ -504,12 +504,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.asset, cloudDecoded.asset)
         XCTAssertEqual(parse.notes, cloudDecoded.notes)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.impactsAdherence, cloudDecoded.impactsAdherence)
         XCTAssertEqual(parse.title, cloudDecoded.title)
         XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
@@ -526,12 +526,12 @@ class ParseCareKitTests: XCTestCase {
                                                                unit: .degreeCelsius()))
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
-        //Special
+        // Special
         careKit.impactsAdherence = true
         careKit.instructions = "sneezing"
         careKit.carePlanUUID = UUID()
 
-        //Objectable
+        // Objectable
         careKit.uuid = UUID()
         careKit.createdDate = Date().addingTimeInterval(-200)
         careKit.deletedDate = Date().addingTimeInterval(-100)
@@ -546,21 +546,21 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKitNote]
 
-        //Versionable
+        // Versionable
         careKit.previousVersionUUIDs = [UUID()]
         careKit.nextVersionUUIDs = [UUID()]
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
-        //Test CareKit -> Parse
+        // Test CareKit -> Parse
         var parse = try HealthKitTask.copyCareKit(careKit)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
-        //XCTAssertEqual(parse.allergies, careKit.allergies)
+        // XCTAssertEqual(parse.allergies, careKit.allergies)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, "HealthKitTask")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
@@ -580,20 +580,20 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.title, "hello")
         XCTAssertEqual(parse.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Test Parse -> CareKit
+        // Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
 
-        //Special
+        // Special
         XCTAssertEqual(parse2.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
         XCTAssertNotNil(parse2.createdDate)
@@ -612,12 +612,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Encode to cloud format
+        // Encode to cloud format
         guard let note = parse.notes?.first else {
             XCTFail("Should have unwrapped note")
             return
@@ -626,7 +626,7 @@ class ParseCareKitTests: XCTestCase {
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(HealthKitTask.self, from: cloudEncoded)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
@@ -642,12 +642,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.asset, cloudDecoded.asset)
         XCTAssertEqual(parse.notes, cloudDecoded.notes)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.impactsAdherence, cloudDecoded.impactsAdherence)
         XCTAssertEqual(parse.title, cloudDecoded.title)
         XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
@@ -658,7 +658,7 @@ class ParseCareKitTests: XCTestCase {
         var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
-        //Objectable
+        // Objectable
         careKit.uuid = UUID()
         careKit.createdDate = Date().addingTimeInterval(-200)
         careKit.deletedDate = Date().addingTimeInterval(-100)
@@ -673,19 +673,19 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKitNote]
 
-        //Versionable
+        // Versionable
         careKit.previousVersionUUIDs = [UUID()]
         careKit.nextVersionUUIDs = [UUID()]
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
-        //Test CareKit -> Parse
+        // Test CareKit -> Parse
         var parse = try CarePlan.copyCareKit(careKit)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.patientUUID, careKit.patientUUID)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, "CarePlan")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
@@ -705,19 +705,19 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.title, "hello")
         XCTAssertEqual(parse.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Test Parse -> CareKit
+        // Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
 
-        //Special
+        // Special
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.patientUUID, careKit.patientUUID)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
         XCTAssertNotNil(parse2.createdDate)
@@ -736,12 +736,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Encode to cloud format
+        // Encode to cloud format
         guard let note = parse.notes?.first else {
             XCTFail("Should have unwrapped note")
             return
@@ -750,7 +750,7 @@ class ParseCareKitTests: XCTestCase {
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(CarePlan.self, from: cloudEncoded)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
@@ -766,11 +766,11 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.asset, cloudDecoded.asset)
         XCTAssertEqual(parse.notes, cloudDecoded.notes)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.title, cloudDecoded.title)
         XCTAssertEqual(parse.patientUUID, cloudDecoded.patientUUID)
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
@@ -781,7 +781,7 @@ class ParseCareKitTests: XCTestCase {
         var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
-        //Special
+        // Special
         let address = OCKPostalAddress()
         address.state = "KY"
         careKit.address = address
@@ -794,7 +794,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.phoneNumbers = [.init(label: "wer", value: "232-45")]
         careKit.otherContactInfo = [.init(label: "qp", value: "rest")]
 
-        //Objectable
+        // Objectable
         careKit.uuid = UUID()
         careKit.createdDate = Date().addingTimeInterval(-200)
         careKit.deletedDate = Date().addingTimeInterval(-100)
@@ -809,15 +809,15 @@ class ParseCareKitTests: XCTestCase {
         careKit.asset = "pic"
         careKit.notes = [careKitNote]
 
-        //Versionable
+        // Versionable
         careKit.previousVersionUUIDs = [UUID()]
         careKit.nextVersionUUIDs = [UUID()]
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
-        //Test CareKit -> Parse
+        // Test CareKit -> Parse
         var parse = try Contact.copyCareKit(careKit)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
         XCTAssertEqual(parse.address, careKit.address)
@@ -828,7 +828,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.phoneNumbers, careKit.phoneNumbers)
         XCTAssertEqual(parse.otherContactInfo, careKit.otherContactInfo)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, "Contact")
         XCTAssertEqual(parse.entityId, careKit.id)
         XCTAssertEqual(parse.uuid, careKit.uuid)
@@ -848,15 +848,15 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.notes?.first?.title, "hello")
         XCTAssertEqual(parse.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Test Parse -> CareKit
+        // Test Parse -> CareKit
         let parse2 = try parse.convertToCareKit()
 
-        //Special
+        // Special
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
         XCTAssertEqual(parse2.address, careKit.address)
@@ -867,7 +867,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.phoneNumbers, careKit.phoneNumbers)
         XCTAssertEqual(parse2.otherContactInfo, careKit.otherContactInfo)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse2.id, careKit.id)
         XCTAssertEqual(parse2.uuid, careKit.uuid)
         XCTAssertNotNil(parse2.createdDate)
@@ -886,12 +886,12 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse2.notes?.first?.title, "hello")
         XCTAssertEqual(parse2.notes?.first?.content, "world")
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(parse2.effectiveDate)
         XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
         XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
 
-        //Encode to cloud format
+        // Encode to cloud format
         guard let note = parse.notes?.first else {
             XCTFail("Should have unwrapped note")
             return
@@ -900,7 +900,7 @@ class ParseCareKitTests: XCTestCase {
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(Contact.self, from: cloudEncoded)
 
-        //Objectable
+        // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
@@ -916,7 +916,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.asset, cloudDecoded.asset)
         XCTAssertEqual(parse.notes, cloudDecoded.notes)
 
-        //Special
+        // Special
         XCTAssertEqual(parse.title, cloudDecoded.title)
         XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
         XCTAssertEqual(parse.address, cloudDecoded.address)
@@ -927,7 +927,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.phoneNumbers, cloudDecoded.phoneNumbers)
         XCTAssertEqual(parse.otherContactInfo, cloudDecoded.otherContactInfo)
 
-        //Versionable
+        // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
