@@ -122,7 +122,7 @@ public struct CarePlan: PCKVersionable {
 
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
-                    //This object has a duplicate uuid but isn't the same object
+                    // This object has a duplicate uuid but isn't the same object
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
@@ -132,10 +132,10 @@ public struct CarePlan: PCKVersionable {
 
                 switch error.code {
                 case .internalServer, .objectNotFound:
-                    //1 - this column hasn't been added. 101 - Query returned no results
+                    // 1 - this column hasn't been added. 101 - Query returned no results
                     self.save(completion: completion)
                 default:
-                    //There was a different issue that we don't know how to handle
+                    // There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.carePlan.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
@@ -152,7 +152,7 @@ public struct CarePlan: PCKVersionable {
         var previousVersionUUIDs = self.previousVersionUUIDs
         previousVersionUUIDs.append(uuid)
 
-        //Check to see if this entity is already in the Cloud, but not matched locally
+        // Check to see if this entity is already in the Cloud, but not matched locally
         let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -169,7 +169,7 @@ public struct CarePlan: PCKVersionable {
                     }
                     self.addToCloud(completion: completion)
                 case 1:
-                    //This is the typical case
+                    // This is the typical case
                     guard let previousVersion = foundObjects.first(where: { self.previousVersionUUIDs.contains($0.uuid) }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.carePlan.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
@@ -224,10 +224,10 @@ public struct CarePlan: PCKVersionable {
 
                 switch error.code {
                 case .internalServer, .objectNotFound:
-                    //1 - this column hasn't been added. 101 - Query returned no results
-                    //If the query was looking in a column that wasn't a default column,
-                    //it will return nil if the table doesn't contain the custom column
-                    //Saving the new item with the custom column should resolve the issue
+                    // 1 - this column hasn't been added. 101 - Query returned no results
+                    // If the query was looking in a column that wasn't a default column,
+                    // it will return nil if the table doesn't contain the custom column
+                    // Saving the new item with the custom column should resolve the issue
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.carePlan.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                     } else {
@@ -248,7 +248,7 @@ public struct CarePlan: PCKVersionable {
 
     public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
         var mutableCarePlan = self
-        mutableCarePlan.logicalClock = cloudClock //Stamp Entity
+        mutableCarePlan.logicalClock = cloudClock // Stamp Entity
 
         guard mutableCarePlan.deletedDate != nil else {
             mutableCarePlan.addToCloud { result in
@@ -301,7 +301,7 @@ public struct CarePlan: PCKVersionable {
         }
     }
 
-    //Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
+    // Note that CarePlans have to be saved to CareKit first in order to properly convert to CareKit
     public func convertToCareKit() throws -> OCKCarePlan {
         var mutableCarePlan = self
         mutableCarePlan.encodingForParse = false
@@ -309,12 +309,12 @@ public struct CarePlan: PCKVersionable {
         return try PCKUtility.decoder().decode(OCKCarePlan.self, from: encoded)
     }
 
-    ///Link versions and related classes
+    /// Link versions and related classes
     public func linkRelated(completion: @escaping(Result<CarePlan, Error>) -> Void) {
         var updatedCarePlan = self
 
         guard let patientUUID = self.patientUUID else {
-            //Finished if there's no Patient, otherwise see if it's in the cloud
+            // Finished if there's no Patient, otherwise see if it's in the cloud
             completion(.success(updatedCarePlan))
             return
         }

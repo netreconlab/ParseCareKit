@@ -104,7 +104,7 @@ public enum PCKStoreClass: String {
             }
         }
 
-        //Ensure all default classes are created
+        // Ensure all default classes are created
         guard concreteClasses.count == orderedArray().count else {
             throw ParseCareKitError.couldntCreateConcreteClasses
         }
@@ -165,7 +165,7 @@ public enum PCKStoreClass: String {
     }
 }
 
-//#Mark - Parse Database Keys
+// #Mark - Parse Database Keys
 
 /// Parse business logic keys. These keys can be used for querying Parse objects.
 public enum ParseKey {
@@ -221,7 +221,7 @@ public enum VersionableKey {
     public static let previousVersionUUIDs                        = "previousVersionUUIDs"
 }
 
-//#Mark - Patient Class
+// #Mark - Patient Class
 /// Keys for `Patient` objects. These keys can be used for querying Parse objects.
 public enum PatientKey {
     /// className key.
@@ -236,7 +236,7 @@ public enum PatientKey {
     public static let name                                     = "name"
 }
 
-//#Mark - CarePlan Class
+// #Mark - CarePlan Class
 /// Keys for `CarePlan` objects. These keys can be used for querying Parse objects.
 public enum CarePlanKey {
     /// className key.
@@ -247,7 +247,7 @@ public enum CarePlanKey {
     public static let title                                    = "title"
 }
 
-//#Mark - Contact Class
+// #Mark - Contact Class
 /// Keys for `Contact` objects. These keys can be used for querying Parse objects.
 public enum ContactKey {
     /// className key.
@@ -276,7 +276,7 @@ public enum ContactKey {
     public static let otherContactInfo                         = "otherContactInfo"
 }
 
-//#Mark - Task Class
+// #Mark - Task Class
 /// Keys for `Task` objects. These keys can be used for querying Parse objects.
 public enum TaskKey {
     /// className key.
@@ -293,7 +293,7 @@ public enum TaskKey {
     public static let elements                                 = "elements"
 }
 
-//#Mark - Outcome Class
+// #Mark - Outcome Class
 /// Keys for `Outcome` objects. These keys can be used for querying Parse objects.
 public enum OutcomeKey {
     /// className key.
@@ -308,7 +308,7 @@ public enum OutcomeKey {
     public static let values                                   = "values"
 }
 
-//#Mark - Clock Class
+// #Mark - Clock Class
 /// Keys for `Clock` objects. These keys can be used for querying Parse objects.
 public enum ClockKey {
     /// className key.

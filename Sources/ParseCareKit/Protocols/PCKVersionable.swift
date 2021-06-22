@@ -88,7 +88,7 @@ extension PCKVersionable {
                     }
                 }
             }
-            //We are done fixing
+            // We are done fixing
         } else {
             if let nextVersionUUID = versionFixed.nextVersionUUIDs.first {
                 Self.first(nextVersionUUID) { result in
@@ -121,7 +121,7 @@ extension PCKVersionable {
                     }
                 }
             }
-            //We are done fixing
+            // We are done fixing
         }
     }
 
@@ -143,7 +143,7 @@ extension PCKVersionable {
                            log: .versionable, type: .debug, savedObject.description)
                 }
 
-                //Fix versioning doubly linked list if it's broken in the cloud
+                // Fix versioning doubly linked list if it's broken in the cloud
                 if let previousVersionUUID = savedObject.previousVersionUUIDs.last {
                     Self.first(previousVersionUUID) { result in
                         if case var .success(previousObject) = result {
@@ -209,7 +209,7 @@ extension PCKVersionable {
     }
 }
 
-//Fetching
+// Fetching
 extension PCKVersionable {
     private static func queryNotDeleted() -> Query<Self> {
         Self.query(doesNotExist(key: VersionableKey.deletedDate))
@@ -224,7 +224,7 @@ extension PCKVersionable {
     }
 
     private static func queryNoNextVersion(for date: Date)-> Query<Self> {
-        //Where empty array
+        // Where empty array
         let query = Self.query(VersionableKey.nextVersionUUIDs == [String]())
 
         let interval = createCurrentDateInterval(for: date)
@@ -295,7 +295,7 @@ extension PCKVersionable {
     }
 }
 
-//Encodable
+// Encodable
 extension PCKVersionable {
 
     /**

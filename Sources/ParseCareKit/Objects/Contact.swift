@@ -147,7 +147,7 @@ public struct Contact: PCKVersionable {
 
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        //Check to see if already in the cloud
+        // Check to see if already in the cloud
         let query = Contact.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
@@ -155,7 +155,7 @@ public struct Contact: PCKVersionable {
 
             case .success(let foundEntity):
                 guard foundEntity.entityId == self.entityId else {
-                    //This object has a duplicate uuid but isn't the same object
+                    // This object has a duplicate uuid but isn't the same object
                     completion(.failure(ParseCareKitError.uuidAlreadyExists))
                     return
                 }
@@ -163,11 +163,11 @@ public struct Contact: PCKVersionable {
 
             case .failure(let error):
                 switch error.code {
-                //1 - this column hasn't been added. 101 - Query returned no results
+                // 1 - this column hasn't been added. 101 - Query returned no results
                 case .internalServer, .objectNotFound:
                         self.save(completion: completion)
                 default:
-                    //There was a different issue that we don't know how to handle
+                    // There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.contact.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
                     } else {
@@ -183,7 +183,7 @@ public struct Contact: PCKVersionable {
         var previousVersionUUIDs = self.previousVersionUUIDs
         previousVersionUUIDs.append(uuid)
 
-        //Check to see if this entity is already in the Cloud, but not matched locally
+        // Check to see if this entity is already in the Cloud, but not matched locally
         let query = Contact.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -201,7 +201,7 @@ public struct Contact: PCKVersionable {
                     }
                     self.addToCloud(completion: completion)
                 case 1:
-                    //This is the typical case
+                    // This is the typical case
                     guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid) }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.contact.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
@@ -255,10 +255,10 @@ public struct Contact: PCKVersionable {
             case .failure(let error):
 
                 switch error.code {
-                //1 - this column hasn't been added. 101 - Query returned no results
-                //If the query was looking in a column that wasn't a default column,
-                //it will return nil if the table doesn't contain the custom column
-                //Saving the new item with the custom column should resolve the issue
+                // 1 - this column hasn't been added. 101 - Query returned no results
+                // If the query was looking in a column that wasn't a default column,
+                // it will return nil if the table doesn't contain the custom column
+                // Saving the new item with the custom column should resolve the issue
                 case .internalServer, .objectNotFound:
                     if #available(iOS 14.0, watchOS 7.0, *) {
                         Logger.contact.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
@@ -280,7 +280,7 @@ public struct Contact: PCKVersionable {
 
     public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
         var mutableContact = self
-        mutableContact.logicalClock = cloudClock //Stamp Entity
+        mutableContact.logicalClock = cloudClock // Stamp Entity
 
         guard mutableContact.deletedDate != nil else {
             mutableContact.addToCloud { result in
@@ -345,12 +345,12 @@ public struct Contact: PCKVersionable {
         return try PCKUtility.decoder().decode(OCKContact.self, from: encoded)
     }
 
-    ///Link versions and related classes
+    /// Link versions and related classes
     public func linkRelated(completion: @escaping(Result<Contact, Error>) -> Void) {
         var updatedContact = self
 
         guard let carePlanUUID = self.carePlanUUID else {
-            //Finished if there's no CarePlan, otherwise see if it's in the cloud
+            // Finished if there's no CarePlan, otherwise see if it's in the cloud
             completion(.success(self))
             return
         }
