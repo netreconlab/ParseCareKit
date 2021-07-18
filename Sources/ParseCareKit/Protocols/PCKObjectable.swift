@@ -17,7 +17,7 @@ import os.log
 /**
  Objects that conform to the `PCKObjectable` protocol are Parse interpretations of `OCKObjectCompatible` objects.
 */
-public protocol PCKObjectable: ParseObject, CustomStringConvertible {
+public protocol PCKObjectable: ParseObject {
     /// A universally unique identifier for this object.
     var uuid: UUID { get set }
 
@@ -233,11 +233,6 @@ extension PCKObjectable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.uuid)
-    }
-
-    // CustomStringConvertible
-    public var description: String {
-        debugDescription
     }
 }
 
