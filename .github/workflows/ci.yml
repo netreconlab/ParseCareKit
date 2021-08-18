@@ -39,11 +39,11 @@ jobs:
       - name: Copy files
         run: |
           DOCDIR=$(find DerivedData -type d -name 'ParseCareKit.doccarchive')
-          mkdir -p documentation
-          cp -rf "${DOCDIR}/" documentation
+          mkdir -p api/documentation
+          cp -rf "${DOCDIR}/" api/documentation
       - name: Deploy Docs
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./documentation
+          publish_dir: ./api
