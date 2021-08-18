@@ -14,6 +14,7 @@
 		705DC92D2526A5650035BBE3 /* MockURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7098A7772524E92900DDF53D /* MockURLResponse.swift */; };
 		7075542D255D899E00172F6B /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7075542C255D899E00172F6B /* ParseSwift */; };
 		70755431255D89B800172F6B /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70755430255D89B800172F6B /* ParseSwift */; };
+		7085DDAD26CDA2980033B977 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7085DDAC26CDA2980033B977 /* Documentation.docc */; };
 		709752E3250D27300020EA70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E2250D27300020EA70 /* AppDelegate.swift */; };
 		709752E5250D27300020EA70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E4250D27300020EA70 /* SceneDelegate.swift */; };
 		709752E7250D27300020EA70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709752E6250D27300020EA70 /* ContentView.swift */; };
@@ -107,6 +108,7 @@
 /* Begin PBXFileReference section */
 		700775A92522686D00EC0EDA /* PCKVersionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKVersionable.swift; sourceTree = "<group>"; };
 		705DC91D2526A4B80035BBE3 /* ParseCareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7085DDAC26CDA2980033B977 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		709752E0250D27300020EA70 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		709752E2250D27300020EA70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		709752E4250D27300020EA70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 		9119D5ED245618D7001B7AA3 /* ParseCareKit */ = {
 			isa = PBXGroup;
 			children = (
+				7085DDAC26CDA2980033B977 /* Documentation.docc */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
 				709D176A258579090002E772 /* ParseCareKitError.swift */,
@@ -636,6 +639,7 @@
 				9119D60124561A28001B7AA3 /* Contact.swift in Sources */,
 				91AA07232466F0CD00B39452 /* Clock.swift in Sources */,
 				9119D60424561A28001B7AA3 /* Patient.swift in Sources */,
+				7085DDAD26CDA2980033B977 /* Documentation.docc in Sources */,
 				91D5287A24813AF70022292B /* PCKSynchronizable.swift in Sources */,
 				709D1818258699840002E772 /* ParseRemoteDelegate.swift in Sources */,
 				916570D72462DABC008F2997 /* ParseRemote.swift in Sources */,
