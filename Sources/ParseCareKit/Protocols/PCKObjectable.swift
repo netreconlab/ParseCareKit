@@ -19,7 +19,7 @@ import os.log
 */
 public protocol PCKObjectable: ParseObject {
     /// A universally unique identifier for this object.
-    var uuid: UUID { get set }
+    var uuid: UUID? { get set }
 
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
     var id: String { get }
@@ -110,7 +110,7 @@ extension PCKObjectable {
     /// Stamps all related entities with the current `logicalClock` value
     /*mutating public func stampRelationalEntities() throws -> Self {
         guard let logicalClock = self.logicalClock else {
-            throw ParseCareKitError.cantUnwrapSelf
+            throw ParseCareKitError.couldntUnwrapSelf
         }
         var updatedNotes = [OCKNote]()
         notes?.forEach {

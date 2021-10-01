@@ -23,13 +23,13 @@ import os.log
 /// their daily completion rings.
 public struct Task: PCKVersionable {
 
-    public var nextVersionUUIDs: [UUID]
+    public var nextVersionUUIDs: [UUID]?
 
-    public var previousVersionUUIDs: [UUID]
+    public var previousVersionUUIDs: [UUID]?
 
     public var effectiveDate: Date?
 
-    public var uuid: UUID
+    public var uuid: UUID?
 
     public var entityId: String?
 
@@ -108,6 +108,8 @@ public struct Task: PCKVersionable {
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
 
+    public init() { }
+
     public func new(with careKitEntity: OCKEntity) throws -> Task {
 
         switch careKitEntity {
@@ -159,7 +161,11 @@ public struct Task: PCKVersionable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        var previousVersionUUIDs = self.previousVersionUUIDs
+        guard var previousVersionUUIDs = self.previousVersionUUIDs,
+                let uuid = self.uuid else {
+                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
+            return
+        }
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
@@ -180,7 +186,12 @@ public struct Task: PCKVersionable {
                     self.addToCloud(completion: completion)
                 case 1:
                     // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid)}) else {
+                    guard let previousVersion = foundObjects.first(where: {
+                        guard let foundUUID = $0.uuid else {
+                            return false
+                        }
+                        return previousVersionUUIDs.contains(foundUUID)
+                    }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.task.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {
