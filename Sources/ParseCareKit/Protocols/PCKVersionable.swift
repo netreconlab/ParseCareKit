@@ -21,11 +21,11 @@ import Combine
 public protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
     /// The UUID of the previous version of this object, or nil if there is no previous version.
     /// The UUIDs are in no particular order.
-    var previousVersionUUIDs: [UUID] { get set }
+    var previousVersionUUIDs: [UUID]? { get set }
 
     /// The UUID of the next version of this object, or nil if there is no next version.
     /// The UUIDs are in no particular order.
-    var nextVersionUUIDs: [UUID] { get set }
+    var nextVersionUUIDs: [UUID]? { get set }
 
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.
@@ -56,16 +56,27 @@ extension PCKVersionable {
     */
     func fixVersionLinkedList(_ versionFixed: Self, backwards: Bool) {
 
+        guard let versionFixedUUID = versionFixed.uuid else {
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.versionable.debug("Couldn't unwrap versionFixed.uuid")
+            } else {
+                os_log("Couldn't unwrap versionFixed.uuid",
+                       log: .versionable, type: .debug)
+            }
+            return
+        }
+
         if backwards {
-            if let previousVersionUUID = versionFixed.previousVersionUUIDs.last {
+            if let previousVersionUUID = versionFixed.previousVersionUUIDs?.last {
                 Self.first(previousVersionUUID) { result in
 
                     switch result {
 
                     case .success(var previousFound):
 
-                        if !previousFound.nextVersionUUIDs.contains(versionFixed.uuid) {
-                            previousFound.nextVersionUUIDs.append(versionFixed.uuid)
+                        if let previousNextVersionUUIDs = previousFound.nextVersionUUIDs,
+                            !previousNextVersionUUIDs.contains(versionFixedUUID) {
+                            previousFound.nextVersionUUIDs?.append(versionFixedUUID)
                             previousFound.save(callbackQueue: ParseRemote.queue) { results in
                                 switch results {
 
@@ -90,14 +101,14 @@ extension PCKVersionable {
             }
             // We are done fixing
         } else {
-            if let nextVersionUUID = versionFixed.nextVersionUUIDs.first {
+            if let nextVersionUUID = versionFixed.nextVersionUUIDs?.first {
                 Self.first(nextVersionUUID) { result in
 
                     switch result {
 
                     case .success(var nextFound):
-                        if !nextFound.previousVersionUUIDs.contains(versionFixed.uuid) {
-                            nextFound.previousVersionUUIDs.append(versionFixed.uuid)
+                        if let nextPreviousUUIDs = nextFound.previousVersionUUIDs, !nextPreviousUUIDs.contains(versionFixedUUID) {
+                            nextFound.previousVersionUUIDs?.append(versionFixedUUID)
                             nextFound.save(callbackQueue: ParseRemote.queue) { results in
 
                                 switch results {
@@ -143,12 +154,18 @@ extension PCKVersionable {
                            log: .versionable, type: .debug, savedObject.description)
                 }
 
+                guard let uuid = self.uuid else {
+                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
+                    return
+                }
+
                 // Fix versioning doubly linked list if it's broken in the cloud
-                if let previousVersionUUID = savedObject.previousVersionUUIDs.last {
+                if let previousVersionUUID = savedObject.previousVersionUUIDs?.last {
                     Self.first(previousVersionUUID) { result in
                         if case var .success(previousObject) = result {
-                            if !previousObject.nextVersionUUIDs.contains(self.uuid) {
-                                previousObject.nextVersionUUIDs.append(self.uuid)
+                            if let previousNextVersionUUIDs = previousObject.nextVersionUUIDs,
+                                !previousNextVersionUUIDs.contains(uuid) {
+                                previousObject.nextVersionUUIDs?.append(uuid)
                                 previousObject.save(callbackQueue: ParseRemote.queue) { results in
                                     switch results {
 
@@ -169,11 +186,12 @@ extension PCKVersionable {
                     }
                 }
 
-                if let nextVersionUUID = savedObject.nextVersionUUIDs.first {
+                if let nextVersionUUID = savedObject.nextVersionUUIDs?.first {
                     Self.first(nextVersionUUID) { result in
                         if case var .success(nextObject) = result {
-                            if !nextObject.previousVersionUUIDs.contains(self.uuid) {
-                                nextObject.previousVersionUUIDs.append(self.uuid)
+                            if let nextPreviousVersionUUIDs = nextObject.previousVersionUUIDs,
+                                !nextPreviousVersionUUIDs.contains(uuid) {
+                                nextObject.previousVersionUUIDs?.append(uuid)
                                 nextObject.save(callbackQueue: ParseRemote.queue) { results in
                                     switch results {
 

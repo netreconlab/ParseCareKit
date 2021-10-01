@@ -24,6 +24,8 @@ struct Clock: ParseObject {
 
     var vector: String?
 
+    public init() { }
+
     init(uuid: UUID) {
         self.uuid = uuid
         self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"

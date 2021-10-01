@@ -18,13 +18,13 @@ import os.log
 /// An `Patient` is the ParseCareKit equivalent of `OCKPatient`.  An `OCKPatient` represents a patient.
 public struct Patient: PCKVersionable {
 
-    public var nextVersionUUIDs: [UUID]
+    public var nextVersionUUIDs: [UUID]?
 
-    public var previousVersionUUIDs: [UUID]
+    public var previousVersionUUIDs: [UUID]?
 
     public var effectiveDate: Date?
 
-    public var uuid: UUID
+    public var uuid: UUID?
 
     public var entityId: String?
 
@@ -82,6 +82,8 @@ public struct Patient: PCKVersionable {
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
         case allergies, birthday, name, sex
     }
+
+    public init() { }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -143,7 +145,11 @@ public struct Patient: PCKVersionable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        var previousVersionUUIDs = self.previousVersionUUIDs
+        guard var previousVersionUUIDs = self.previousVersionUUIDs,
+                let uuid = self.uuid else {
+                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
+            return
+        }
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not paired locally
@@ -164,7 +170,12 @@ public struct Patient: PCKVersionable {
                     self.addToCloud(completion: completion)
                 case 1:
                     // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid) }) else {
+                    guard let previousVersion = foundObjects.first(where: {
+                        guard let foundUUID = $0.uuid else {
+                            return false
+                        }
+                        return previousVersionUUIDs.contains(foundUUID)
+                    }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.patient.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {
