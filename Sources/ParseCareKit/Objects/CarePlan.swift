@@ -20,9 +20,10 @@ import os.log
 /// plan evolves with the patient's progress, the care provider may modify the exercises and include notes each
 /// time about why the changes were made.
 public struct CarePlan: PCKVersionable {
+
     public var effectiveDate: Date?
 
-    public var uuid: UUID
+    public var uuid: UUID?
 
     public var entityId: String?
 
@@ -66,9 +67,9 @@ public struct CarePlan: PCKVersionable {
 
     public var ACL: ParseACL? = try? ParseACL.defaultACL()
 
-    public var nextVersionUUIDs: [UUID]
+    public var nextVersionUUIDs: [UUID]?
 
-    public var previousVersionUUIDs: [UUID]
+    public var previousVersionUUIDs: [UUID]?
 
     /// The patient to whom this care plan belongs.
     public var patient: Patient? {
@@ -97,6 +98,8 @@ public struct CarePlan: PCKVersionable {
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
         case title, patient, patientUUID
     }
+
+    public init() { }
 
     public func new(with careKitEntity: OCKEntity) throws -> CarePlan {
         switch careKitEntity {
@@ -149,7 +152,11 @@ public struct CarePlan: PCKVersionable {
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
-        var previousVersionUUIDs = self.previousVersionUUIDs
+        guard var previousVersionUUIDs = self.previousVersionUUIDs,
+                let uuid = self.uuid else {
+                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
+            return
+        }
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
@@ -170,7 +177,12 @@ public struct CarePlan: PCKVersionable {
                     self.addToCloud(completion: completion)
                 case 1:
                     // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: { self.previousVersionUUIDs.contains($0.uuid) }) else {
+                    guard let previousVersion = foundObjects.first(where: {
+                        guard let foundUUID = $0.uuid else {
+                            return false
+                        }
+                        return previousVersionUUIDs.contains(foundUUID)
+                    }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.carePlan.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {

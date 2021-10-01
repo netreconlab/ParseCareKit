@@ -16,7 +16,8 @@ enum ParseCareKitError: Error {
     case objectNotFoundOnParseServer
     case cloudClockLargerThanLocal
     case couldntUnwrapClock
-    case cantUnwrapSelf
+    case couldntUnwrapRequiredField
+    case couldntUnwrapSelf
     case cloudVersionNewerThanLocal
     case uuidAlreadyExists
     case cantCastToNeededClassType
@@ -36,13 +37,16 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
         case .couldntUnwrapClock:
             return NSLocalizedString("ParseCareKit: Clock can't be unwrapped.", comment: "Clock Unwrapping error")
+        case .couldntUnwrapRequiredField:
+            return NSLocalizedString("ParseCareKit: Couldn't unwrap required field.",
+                                     comment: "Couldn't unwrap required field")
         case .objectIdDoesntMatchRemoteId:
             return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.",
                                      comment: "Remote/Local mismatch error")
         case .cloudClockLargerThanLocal:
             return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing",
                                      comment: "Knowledge vector larger in Cloud")
-        case .cantUnwrapSelf:
+        case .couldntUnwrapSelf:
             return NSLocalizedString("Can't unwrap self. This class has already been deallocated",
                                      comment: "Can't unwrap self, class deallocated")
         case .cloudVersionNewerThanLocal:

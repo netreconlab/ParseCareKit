@@ -21,13 +21,13 @@ import os.log
 /// least a name, and may optionally have numerous other addresses at which to be contacted.
 public struct Contact: PCKVersionable {
 
-    public var nextVersionUUIDs: [UUID]
+    public var nextVersionUUIDs: [UUID]?
 
-    public var previousVersionUUIDs: [UUID]
+    public var previousVersionUUIDs: [UUID]?
 
     public var effectiveDate: Date?
 
-    public var uuid: UUID
+    public var uuid: UUID?
 
     public var entityId: String?
 
@@ -78,7 +78,7 @@ public struct Contact: PCKVersionable {
     public var category: OCKContactCategory?
 
     /// The contact's name.
-    public var name: PersonNameComponents
+    public var name: PersonNameComponents?
 
     /// The organization this contact belongs to.
     public var organization: String?
@@ -128,6 +128,8 @@ public struct Contact: PCKVersionable {
         case carePlan, title, carePlanUUID, address, category, name, organization, role
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
     }
+
+    public init() { }
 
     public func new(with careKitEntity: OCKEntity) throws -> Contact {
 
@@ -180,7 +182,11 @@ public struct Contact: PCKVersionable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        var previousVersionUUIDs = self.previousVersionUUIDs
+        guard var previousVersionUUIDs = self.previousVersionUUIDs,
+                let uuid = self.uuid else {
+                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
+            return
+        }
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
@@ -202,7 +208,12 @@ public struct Contact: PCKVersionable {
                     self.addToCloud(completion: completion)
                 case 1:
                     // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: { previousVersionUUIDs.contains($0.uuid) }) else {
+                    guard let previousVersion = foundObjects.first(where: {
+                        guard let foundUUID = $0.uuid else {
+                            return false
+                        }
+                        return previousVersionUUIDs.contains(foundUUID)
+                    }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.contact.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {

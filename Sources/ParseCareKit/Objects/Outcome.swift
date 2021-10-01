@@ -20,13 +20,13 @@ import os.log
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
 public struct Outcome: PCKVersionable, PCKSynchronizable {
-    public var previousVersionUUIDs: [UUID]
+    public var previousVersionUUIDs: [UUID]?
 
-    public var nextVersionUUIDs: [UUID]
+    public var nextVersionUUIDs: [UUID]?
 
     public var effectiveDate: Date?
 
-    public var uuid: UUID
+    public var uuid: UUID?
 
     public var entityId: String?
 
@@ -106,7 +106,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    internal init() {
+    public init() {
         uuid = UUID()
         previousVersionUUIDs = []
         nextVersionUUIDs = []
@@ -171,7 +171,11 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        var previousVersionUUIDs = self.previousVersionUUIDs
+        guard var previousVersionUUIDs = self.previousVersionUUIDs,
+                let uuid = self.uuid else {
+                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
+            return
+        }
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
@@ -192,7 +196,12 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
                     self.addToCloud(completion: completion)
                 case 1:
                     // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: { self.previousVersionUUIDs.contains($0.uuid) }) else {
+                    guard let previousVersion = foundObjects.first(where: {
+                        guard let foundUUID = $0.uuid else {
+                            return false
+                        }
+                        return previousVersionUUIDs.contains(foundUUID)
+                    }) else {
                         if #available(iOS 14.0, watchOS 7.0, *) {
                             Logger.outcome.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
                         } else {

@@ -24,11 +24,6 @@ struct Clock: ParseObject {
 
     var vector: String?
 
-    init(uuid: UUID) {
-        self.uuid = uuid
-        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
-    }
-
     func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?) -> Void) {
         guard let data = self.vector?.data(using: .utf8) else {
             if #available(iOS 14.0, watchOS 7.0, *) {
@@ -98,5 +93,12 @@ struct Clock: ParseObject {
                 }
             }
         }
+    }
+}
+
+extension Clock {
+    init(uuid: UUID) {
+        self.uuid = uuid
+        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
     }
 }
