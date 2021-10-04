@@ -9,6 +9,13 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/CarePlan.swift",
+      "line": 102,
+      "symbol": "CarePlan.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/CarePlan.swift",
       "line": 299,
       "symbol": "CarePlan.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
@@ -26,6 +33,13 @@
       "line": 34,
       "symbol": "Contact.logicalClock",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Contact.swift",
+      "line": 132,
+      "symbol": "Contact.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -51,6 +65,13 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/HealthKitTask.swift",
+      "line": 114,
+      "symbol": "HealthKitTask.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/HealthKitTask.swift",
       "line": 313,
       "symbol": "HealthKitTask.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
@@ -68,6 +89,13 @@
       "line": 33,
       "symbol": "Outcome.logicalClock",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Outcome.swift",
+      "line": 109,
+      "symbol": "Outcome.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -135,6 +163,13 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Patient.swift",
+      "line": 86,
+      "symbol": "Patient.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Patient.swift",
       "line": 292,
       "symbol": "Patient.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
@@ -152,6 +187,13 @@
       "line": 36,
       "symbol": "Task.logicalClock",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/Task.swift",
+      "line": 111,
+      "symbol": "Task.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
