@@ -39,7 +39,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public var customClassesToSynchronize: [String: PCKSynchronizable]?
 
     /// A dictionary of any default classes to synchronize between the CareKitStore and the Parse Server. These
-    /// are `Patient`, `Task`, `CarePlan`, `Contact`, and `Outcome`.
+    /// are `Patient`, `PCKTask`, `CarePlan`, `Contact`, and `Outcome`.
     public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
     private weak var parseDelegate: ParseRemoteDelegate?

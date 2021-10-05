@@ -191,7 +191,7 @@ extension Patient: Person {
 }
 ```
 
-If you want to make you own types and use them to replace the concrete CareKit ones. You should copy/paste the respective code from ParseCareKit, e.g. `Patient`, `Contact`, `Task`, etc. Then you need to pass your custom struct when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
+If you want to make you own types and use them to replace the concrete CareKit ones. You should copy/paste the respective code from ParseCareKit, e.g. `Patient`, `Contact`, `PCKTask`, etc. Then you need to pass your custom struct when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
 ```swift
 let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
@@ -304,7 +304,7 @@ _ = Doctor(careKitEntity: newCareKitDoctor){
 ```
 
 ### Querying Parse Like OCKQuery in CareKit
-There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because `Patient`, `CarePlan`, `Contact`, and `Task` are versioned entities and `Outcome`'s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for "versioned" entities or tombstoned and not tombstoned `Outcome`s. A description of how versioning works in CareKit can be found [here](https://github.com/carekit-apple/CareKit#carekitstore-).
+There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because `Patient`, `CarePlan`, `Contact`, and `PCKTask` are versioned entities and `Outcome`'s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for "versioned" entities or tombstoned and not tombstoned `Outcome`s. A description of how versioning works in CareKit can be found [here](https://github.com/carekit-apple/CareKit#carekitstore-).
 
 ```swift
 //To query the most recent version

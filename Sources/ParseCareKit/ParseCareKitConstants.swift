@@ -58,7 +58,7 @@ public enum PCKStoreClass: String {
         case .task:
             let task = OCKTask(id: "", title: "", carePlanUUID: nil,
                                schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
-            return try Task.copyCareKit(task)
+            return try PCKTask.copyCareKit(task)
         case .healthKitTask:
             let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
                                                  schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .bodyTemperature, quantityType: .discrete, unit: .degreeCelsius()))
@@ -152,7 +152,7 @@ public enum PCKStoreClass: String {
             }
             return true
         case .task:
-            guard (check as? Task) != nil else {
+            guard (check as? PCKTask) != nil else {
                 return false
             }
             return true
@@ -277,7 +277,7 @@ public enum ContactKey {
 }
 
 // #Mark - Task Class
-/// Keys for `Task` objects. These keys can be used for querying Parse objects.
+/// Keys for `PCKTask` objects. These keys can be used for querying Parse objects.
 public enum TaskKey {
     /// className key.
     public static let className                                = "Task"

@@ -91,7 +91,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     public var values: [OCKOutcomeValue]?
 
     /// The version of the task to which this outcomes belongs.
-    public var task: Task? {
+    public var task: PCKTask? {
         didSet {
             taskUUID = task?.uuid
         }
@@ -398,7 +398,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
         var mutableOutcome = self
 
-        Task.first(taskUUID) { result in
+        PCKTask.first(taskUUID) { result in
 
             switch result {
 
@@ -442,7 +442,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     }
 
     public static func queryNotDeleted()-> Query<Outcome> {
-        let taskQuery = Task.query(doesNotExist(key: OutcomeKey.deletedDate))
+        let taskQuery = PCKTask.query(doesNotExist(key: OutcomeKey.deletedDate))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Outcome.query(doesNotExist(key: OutcomeKey.deletedDate),
                                   matchesKeyInQuery(key: OutcomeKey.task,

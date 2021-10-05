@@ -16,7 +16,7 @@ import os.log
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 
-/// An `Task` is the ParseCareKit equivalent of `OCKHealthKitTask`.  An `OCKHealthKitTask` represents some task or action that a
+/// An `PCKTask` is the ParseCareKit equivalent of `OCKHealthKitTask`.  An `OCKHealthKitTask` represents some task or action that a
 /// patient is supposed to perform. Tasks are optionally associable with an `OCKCarePlan` and must have a unique
 /// id and schedule. The schedule determines when and how often the task should be performed, and the
 /// `impactsAdherence` flag may be used to specify whether or not the patients adherence to this task will affect
@@ -131,7 +131,7 @@ public struct HealthKitTask: PCKVersionable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         // Check to see if already in the cloud
-        let query = Task.query(ObjectableKey.uuid == uuid)
+        let query = PCKTask.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {

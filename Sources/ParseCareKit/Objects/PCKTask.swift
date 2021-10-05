@@ -16,12 +16,12 @@ import os.log
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 
-/// An `Task` is the ParseCareKit equivalent of `OCKTask`.  An `OCKTask` represents some task or action that a
+/// An `PCKTask` is the ParseCareKit equivalent of `OCKTask`.  An `OCKTask` represents some task or action that a
 /// patient is supposed to perform. Tasks are optionally associable with an `OCKCarePlan` and must have a unique
 /// id and schedule. The schedule determines when and how often the task should be performed, and the
 /// `impactsAdherence` flag may be used to specify whether or not the patients adherence to this task will affect
 /// their daily completion rings.
-public struct Task: PCKVersionable {
+public struct PCKTask: PCKVersionable {
 
     public var nextVersionUUIDs: [UUID]?
 
@@ -63,6 +63,10 @@ public struct Task: PCKVersionable {
         willSet {
             prepareEncodingRelational(newValue)
         }
+    }
+
+    public static var className: String {
+        "Task"
     }
 
     public var objectId: String?
@@ -110,7 +114,7 @@ public struct Task: PCKVersionable {
 
     public init() { }
 
-    public func new(with careKitEntity: OCKEntity) throws -> Task {
+    public func new(with careKitEntity: OCKEntity) throws -> PCKTask {
 
         switch careKitEntity {
         case .task(let entity):
@@ -128,7 +132,7 @@ public struct Task: PCKVersionable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         // Check to see if already in the cloud
-        let query = Task.query(ObjectableKey.uuid == uuid)
+        let query = PCKTask.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -169,7 +173,7 @@ public struct Task: PCKVersionable {
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Task.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = PCKTask.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -227,7 +231,7 @@ public struct Task: PCKVersionable {
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = Task.query(ObjectableKey.logicalClock >= localClock)
+        let query = PCKTask.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -294,7 +298,7 @@ public struct Task: PCKVersionable {
         }
     }
 
-    public static func copyValues(from other: Task, to here: Task) throws -> Task {
+    public static func copyValues(from other: PCKTask, to here: PCKTask) throws -> PCKTask {
         var here = here
         here.copyVersionedValues(from: other)
 
@@ -307,7 +311,7 @@ public struct Task: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> Task {
+    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> PCKTask {
 
         guard let task = taskAny as? OCKTask else {
             throw ParseCareKitError.cantCastToNeededClassType
@@ -334,7 +338,7 @@ public struct Task: PCKVersionable {
     }
 
     /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<Task, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<PCKTask, Error>) -> Void) {
         var updatedTask = self
         guard let carePlanUUID = self.carePlanUUID else {
             // Finished if there's no CarePlan, otherwise see if it's in the cloud
@@ -353,7 +357,7 @@ public struct Task: PCKVersionable {
     }
 }
 
-extension Task {
+extension PCKTask {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
