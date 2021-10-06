@@ -1,5 +1,5 @@
 //
-//  Patients.swift
+//  PCKPatients.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 10/5/19.
@@ -15,8 +15,8 @@ import os.log
 // swiftlint:disable type_body_length
 // swiftlint:disable line_length
 
-/// An `Patient` is the ParseCareKit equivalent of `OCKPatient`.  An `OCKPatient` represents a patient.
-public struct Patient: PCKVersionable {
+/// An `PCKPatient` is the ParseCareKit equivalent of `OCKPatient`.  An `OCKPatient` represents a patient.
+public struct PCKPatient: PCKVersionable {
 
     public var nextVersionUUIDs: [UUID]?
 
@@ -56,6 +56,10 @@ public struct Patient: PCKVersionable {
 
     public var encodingForParse: Bool = true
 
+    public static var className: String {
+        "Patient"
+    }
+
     public var objectId: String?
 
     public var createdAt: Date?
@@ -94,7 +98,7 @@ public struct Patient: PCKVersionable {
         try encodeVersionable(to: encoder)
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> Patient {
+    public func new(with careKitEntity: OCKEntity) throws -> PCKPatient {
 
         switch careKitEntity {
         case .patient(let entity):
@@ -153,7 +157,7 @@ public struct Patient: PCKVersionable {
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not paired locally
-        let query = Patient.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = PCKPatient.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -279,7 +283,7 @@ public struct Patient: PCKVersionable {
         }
     }
 
-    public static func copyValues(from other: Patient, to here: Patient) throws -> Self {
+    public static func copyValues(from other: PCKPatient, to here: PCKPatient) throws -> Self {
         var here = here
         here.copyVersionedValues(from: other)
         here.name = other.name
@@ -289,14 +293,14 @@ public struct Patient: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ patientAny: OCKAnyPatient) throws -> Patient {
+    public static func copyCareKit(_ patientAny: OCKAnyPatient) throws -> PCKPatient {
 
         guard let patient = patientAny as? OCKPatient else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
 
         let encoded = try PCKUtility.jsonEncoder().encode(patient)
-        var decoded = try PCKUtility.decoder().decode(Patient.self, from: encoded)
+        var decoded = try PCKUtility.decoder().decode(PCKPatient.self, from: encoded)
         decoded.entityId = patient.id
         return decoded
     }

@@ -11,7 +11,12 @@ import ParseSwift
 import CareKitStore
 import os.log
 
-struct Clock: ParseObject {
+struct PCKClock: ParseObject {
+
+    static var className: String {
+        "Clock"
+    }
+
     var objectId: String?
 
     var createdAt: Date?
@@ -67,12 +72,12 @@ struct Clock: ParseObject {
     }
 
     static func fetchFromCloud(uuid: UUID, createNewIfNeeded: Bool,
-                               completion:@escaping(Clock?,
+                               completion:@escaping(PCKClock?,
                                                     OCKRevisionRecord.KnowledgeVector?,
                                                     ParseError?) -> Void) {
 
         // Fetch Clock from Cloud
-        let query = Clock.query(ClockKey.uuid == uuid)
+        let query = PCKClock.query(ClockKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -86,7 +91,7 @@ struct Clock: ParseObject {
                     completion(nil, nil, error)
                 } else {
                     // This is the first time the Clock is user setup for this user
-                    let newVector = Clock(uuid: uuid)
+                    let newVector = PCKClock(uuid: uuid)
                     newVector.decodeClock { possiblyDecoded in
                         completion(newVector, possiblyDecoded, error)
                     }
@@ -96,7 +101,7 @@ struct Clock: ParseObject {
     }
 }
 
-extension Clock {
+extension PCKClock {
     init(uuid: UUID) {
         self.uuid = uuid
         self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"

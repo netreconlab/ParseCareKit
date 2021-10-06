@@ -1,5 +1,5 @@
 //
-//  CarePlan.swift
+//  PCKCarePlan.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/17/20.
@@ -13,13 +13,13 @@ import os.log
 
 // swiftlint:disable line_length
 
-/// An `CarePlan` is the ParseCareKit equivalent of `OCKCarePlan`.  An `OCKCarePlan` represents
+/// An `PCKCarePlan` is the ParseCareKit equivalent of `OCKCarePlan`.  An `OCKCarePlan` represents
 /// a set of tasks, including both interventions and assesments, that a patient is supposed to
 /// complete as part of his or her treatment for a specific condition. For example, a care plan for obesity
 /// may include tasks requiring the patient to exercise, record their weight, and log meals. As the care
 /// plan evolves with the patient's progress, the care provider may modify the exercises and include notes each
 /// time about why the changes were made.
-public struct CarePlan: PCKVersionable {
+public struct PCKCarePlan: PCKVersionable {
 
     public var effectiveDate: Date?
 
@@ -59,6 +59,10 @@ public struct CarePlan: PCKVersionable {
         }
     }
 
+    public static var className: String {
+        "CarePlan"
+    }
+
     public var objectId: String?
 
     public var createdAt: Date?
@@ -72,7 +76,7 @@ public struct CarePlan: PCKVersionable {
     public var previousVersionUUIDs: [UUID]?
 
     /// The patient to whom this care plan belongs.
-    public var patient: Patient? {
+    public var patient: PCKPatient? {
         didSet {
             patientUUID = patient?.uuid
         }
@@ -101,7 +105,7 @@ public struct CarePlan: PCKVersionable {
 
     public init() { }
 
-    public func new(with careKitEntity: OCKEntity) throws -> CarePlan {
+    public func new(with careKitEntity: OCKEntity) throws -> PCKCarePlan {
         switch careKitEntity {
         case .carePlan(let entity):
             return try Self.copyCareKit(entity)
@@ -288,7 +292,7 @@ public struct CarePlan: PCKVersionable {
         }
     }
 
-    public static func copyValues(from other: CarePlan, to here: CarePlan) throws -> Self {
+    public static func copyValues(from other: PCKCarePlan, to here: PCKCarePlan) throws -> Self {
         var here = here
         here.copyVersionedValues(from: other)
         here.patient = other.patient
@@ -296,7 +300,7 @@ public struct CarePlan: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> CarePlan {
+    public static func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> PCKCarePlan {
 
         guard let carePlan = carePlanAny as? OCKCarePlan else {
             throw ParseCareKitError.cantCastToNeededClassType
@@ -322,7 +326,7 @@ public struct CarePlan: PCKVersionable {
     }
 
     /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<CarePlan, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<PCKCarePlan, Error>) -> Void) {
         var updatedCarePlan = self
 
         guard let patientUUID = self.patientUUID else {
@@ -331,7 +335,7 @@ public struct CarePlan: PCKVersionable {
             return
         }
 
-        Patient.first(patientUUID) { result in
+        PCKPatient.first(patientUUID) { result in
 
             if case let .success(patient) = result {
                 updatedCarePlan.patient = patient
@@ -342,7 +346,7 @@ public struct CarePlan: PCKVersionable {
     }
 }
 
-extension CarePlan {
+extension PCKCarePlan {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {

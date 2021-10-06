@@ -1,5 +1,5 @@
 //
-//  Outcomes.swift
+//  PCKOutcomes.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/14/20.
@@ -15,11 +15,11 @@ import os.log
 // swiftlint:disable line_length
 // swiftlint:disable type_body_length
 
-/// An `Outcome` is the ParseCareKit equivalent of `OCKOutcome`.  An `OCKOutcome` represents the
+/// An `PCKOutcome` is the ParseCareKit equivalent of `OCKOutcome`.  An `OCKOutcome` represents the
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
-public struct Outcome: PCKVersionable, PCKSynchronizable {
+public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     public var previousVersionUUIDs: [UUID]?
 
     public var nextVersionUUIDs: [UUID]?
@@ -60,6 +60,10 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
+    public static var className: String {
+        "Outcome"
+    }
+
     public var objectId: String?
 
     public var createdAt: Date?
@@ -91,7 +95,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     public var values: [OCKOutcomeValue]?
 
     /// The version of the task to which this outcomes belongs.
-    public var task: Task? {
+    public var task: PCKTask? {
         didSet {
             taskUUID = task?.uuid
         }
@@ -139,7 +143,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         // Check to see if already in the cloud
-        let query = Outcome.query(ObjectableKey.uuid == uuid)
+        let query = PCKOutcome.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -307,7 +311,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    public static func copyValues(from other: Outcome, to here: Outcome) throws -> Self {
+    public static func copyValues(from other: PCKOutcome, to here: PCKOutcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
         here.taskOccurrenceIndex = other.taskOccurrenceIndex
@@ -327,7 +331,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         return decoded
     }
 
-    public func copyRelational(_ parse: Outcome) -> Outcome {
+    public func copyRelational(_ parse: PCKOutcome) -> PCKOutcome {
         var copy = self
         copy = copy.copyRelationalEntities(parse)
         if copy.values == nil {
@@ -388,7 +392,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     }
 
     /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<Outcome, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<PCKOutcome, Error>) -> Void) {
         guard let taskUUID = self.taskUUID,
               let taskOccurrenceIndex = self.taskOccurrenceIndex else {
             // Finished if there's no Task, otherwise see if it's in the cloud
@@ -398,7 +402,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
 
         var mutableOutcome = self
 
-        Task.first(taskUUID) { result in
+        PCKTask.first(taskUUID) { result in
 
             switch result {
 
@@ -441,22 +445,22 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
         return nil
     }
 
-    public static func queryNotDeleted()-> Query<Outcome> {
-        let taskQuery = Task.query(doesNotExist(key: OutcomeKey.deletedDate))
+    public static func queryNotDeleted()-> Query<PCKOutcome> {
+        let taskQuery = PCKTask.query(doesNotExist(key: OutcomeKey.deletedDate))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        let query = Outcome.query(doesNotExist(key: OutcomeKey.deletedDate),
+        let query = PCKOutcome.query(doesNotExist(key: OutcomeKey.deletedDate),
                                   matchesKeyInQuery(key: OutcomeKey.task,
                                                     queryKey: OutcomeKey.task, query: taskQuery))
             .includeAll()
         return query
     }
 
-    func findOutcomes() throws -> [Outcome] {
+    func findOutcomes() throws -> [PCKOutcome] {
         let query = Self.queryNotDeleted()
         return try query.find()
     }
 
-    public func findOutcomesInBackground(completion: @escaping([Outcome]?, Error?) -> Void) {
+    public func findOutcomesInBackground(completion: @escaping([PCKOutcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -471,7 +475,7 @@ public struct Outcome: PCKVersionable, PCKSynchronizable {
     }
 }
 
-extension Outcome {
+extension PCKOutcome {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {

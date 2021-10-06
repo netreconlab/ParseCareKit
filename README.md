@@ -111,7 +111,7 @@ remoteStoreManager.delegate = self //Conform to this protocol if you are writing
 remoteStoreManager.parseRemoteDelegate = self //Conform to this protocol to resolve conflicts
 ```
 
-The `uuid` being passed to `ParseRemote` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `ParseUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular ParseUser's `Doctor` and `Patient` type. You can save all types to ParseUser:
+The `uuid` being passed to `ParseRemote` is used for the Clock. A possibile solution that allows for high flexibity is to have 1 of these per user-type per user. This allows you to have have one `ParseUser` that can be a "Doctor" and a "Patient". You should generate a different uuid for this particular ParseUser's `Doctor` and `PCKPatient` type. You can save all types to ParseUser:
 
 ```swift
 let userTypeUUIDDictionary = [
@@ -191,7 +191,7 @@ extension Patient: Person {
 }
 ```
 
-If you want to make you own types and use them to replace the concrete CareKit ones. You should copy/paste the respective code from ParseCareKit, e.g. `Patient`, `Contact`, `Task`, etc. Then you need to pass your custom struct when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
+If you want to make you own types and use them to replace the concrete CareKit ones. You should copy/paste the respective code from ParseCareKit, e.g. `PCKPatient`, `PCKContact`, `PCKTask`, etc. Then you need to pass your custom struct when initializing `ParseRemoteSynchronizingManager`. The way to do this is below:
 
 ```swift
 let updatedConcreteClasses: [PCKStoreClass: PCKSynchronizable] = [
@@ -208,7 +208,7 @@ remoteStoreManager.parseRemoteDelegate = self
 Of course, you can customize further by implementing your copyCareKit and converToCareKit methods and not call the super methods.
 
 
-You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `Patient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.className()` as the value. See below:
+You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This is useful when you want to have `Doctor`'s and `PCKPatient`'s in the same app, but would like to map them both locally to the `OCKPatient` table on iOS devices.  ParseCareKit makes this simple. Follow the same process as creating `CancerPatient` above, but add the `kPCKCustomClassKey` key to `userInfo` with `Doctor.className()` as the value. See below:
 
 ```swift
 struct Doctor: Patient {
@@ -304,7 +304,7 @@ _ = Doctor(careKitEntity: newCareKitDoctor){
 ```
 
 ### Querying Parse Like OCKQuery in CareKit
-There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because `Patient`, `CarePlan`, `Contact`, and `Task` are versioned entities and `Outcome`'s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for "versioned" entities or tombstoned and not tombstoned `Outcome`s. A description of how versioning works in CareKit can be found [here](https://github.com/carekit-apple/CareKit#carekitstore-).
+There are some of helper methods provided in ParseCareKit to query parse in a similar way you would query in CareKit. This is important because `PCKPatient`, `PCKCarePlan`, `PCKContact`, and `PCKTask` are versioned entities and `PCKOutcome`'s are tombstoned. Querying each of the aforementioned classes with a reugular query will return all versions for "versioned" entities or tombstoned and not tombstoned `PCKOutcome`s. A description of how versioning works in CareKit can be found [here](https://github.com/carekit-apple/CareKit#carekitstore-).
 
 ```swift
 //To query the most recent version
@@ -322,7 +322,7 @@ query.find(callbackQueue: .main){ results in
 }
 ```
 
-For `Outcome`:
+For `PCKOutcome`:
 
 ```swift
 //To query all current outcomes
@@ -342,4 +342,4 @@ query.find(callbackQueue: .main){ results in
 
 ### Custom OCKStores
 
-If you have a custom store, and have created your own entities, you simply need to conform to  `PCKVersionable` (OCKPatient, OCKCarePlan, OCKTask, OCKContact, OCKOutcome) protocols. In addition you will need to conform to `PCKSynchronizable`. You can look through ParseCareKit entities such as `CarePlan`(`PCKVersionable`) as a reference for building your own. 
+If you have a custom store, and have created your own entities, you simply need to conform to  `PCKVersionable` (OCKPatient, OCKCarePlan, OCKTask, OCKContact, OCKOutcome) protocols. In addition you will need to conform to `PCKSynchronizable`. You can look through ParseCareKit entities such as `PCKCarePlan`(`PCKVersionable`) as a reference for building your own. 
