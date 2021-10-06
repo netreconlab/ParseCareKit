@@ -53,14 +53,12 @@ jobs:
             --author_url https://www.cs.uky.edu/~baker \
             --github_url https://github.com/netreconlab/ParseCareKit \
             --root-url https://netreconlab.github.io/api/ \
-            --module-version 1.0 \
+            --module-version ${ver} \
             --theme fullwidth \
             --skip-undocumented \
             --output ./docs/api \
-            --build-tool-arguments -scheme,ParseCareKit \
+            --build-tool-arguments -scheme,ParseCareKit,-destination,'platform=iOS Simulator','name=iPhone 12 Pro Max' \
             --module ParseCareKit \
-            '--xcodebuild-arguments ' \
-            "-destination,'platform=iOS Simulator'" \
         env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
       - name: Deploy Jazzy Docs

@@ -9,7 +9,7 @@
     }
   ],
   "defaultOptions" : {
-
+    "testExecutionOrdering" : "random"
   },
   "testTargets" : [
     {
@@ -19,7 +19,7 @@
       ],
       "target" : {
         "containerPath" : "container:ParseCareKit.xcodeproj",
-        "identifier" : "70854C3225218F9A00BA2179",
+        "identifier" : "705DC91C2526A4B80035BBE3",
         "name" : "ParseCareKitTests"
       }
     }
