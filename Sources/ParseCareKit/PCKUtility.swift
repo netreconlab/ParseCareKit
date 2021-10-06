@@ -97,16 +97,16 @@ public class PCKUtility {
 
     /// Get the current Parse Encoder with custom date strategy.
     public class func encoder() -> ParseEncoder {
-        Outcome().getEncoder()
+        PCKOutcome().getEncoder()
     }
 
     /// Get the current JSON Encoder with custom date strategy.
     public class func jsonEncoder() -> JSONEncoder {
-        Outcome().getJSONEncoder()
+        PCKOutcome().getJSONEncoder()
     }
 
     /// Get the current JSON Decoder with custom date strategy.
     public class func decoder() -> JSONDecoder {
-        Outcome().getDecoder()
+        PCKOutcome().getDecoder()
     }
 }

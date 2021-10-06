@@ -13,9 +13,7 @@ import CareKitStore
 /**
  Objects that conform to the `PCKSynchronizable` protocol are synchronized between the `OCKStore` and the Parse Cloud.
  In order to synchronize objects, they must also conform to either `PCKObjectable` or `PCKVersionable`. For examples,
- see `Patient`, `CarePlan`, `PCKTask`, `Contact`, and `Outcome`. Note that objects such as `OutcomeValue` and
- `Note` are indirectly synced as part of the aforementioned objects and therefore don't need to conform to
- `PCKSynchronizable`.
+ see `PCKPatient`, `PCKCarePlan`, `PCKTask`, `PCKContact`, and `PCKOutcome`. 
 */
 public protocol PCKSynchronizable {
 

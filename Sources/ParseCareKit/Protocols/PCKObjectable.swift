@@ -248,13 +248,13 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
 
         if encodingForParse {
-            if !(self is Outcome) {
+            if !(self is PCKOutcome) {
                 try container.encodeIfPresent(entityId, forKey: .entityId)
             }
             try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
         } else {
-            if !(self is Outcome) {
+            if !(self is PCKOutcome) {
                 try container.encodeIfPresent(entityId, forKey: .id)
             }
         }

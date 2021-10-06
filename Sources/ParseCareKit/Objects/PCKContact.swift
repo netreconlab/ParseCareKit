@@ -1,5 +1,5 @@
 //
-//  Contact.swift
+//  PCKContact.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 1/17/20.
@@ -16,10 +16,10 @@ import os.log
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 
-/// An `Contact` is the ParseCareKit equivalent of `OCKContact`.  An `OCKContact`represents a contact that a user
+/// An `PCKContact` is the ParseCareKit equivalent of `OCKContact`.  An `OCKContact`represents a contact that a user
 /// may want to get in touch with. A contact may be a care provider, a friend, or a family member. Contacts must have at
 /// least a name, and may optionally have numerous other addresses at which to be contacted.
-public struct Contact: PCKVersionable {
+public struct PCKContact: PCKVersionable {
 
     public var nextVersionUUIDs: [UUID]?
 
@@ -63,6 +63,10 @@ public struct Contact: PCKVersionable {
         }
     }
 
+    public static var className: String {
+        "Contact"
+    }
+
     public var objectId: String?
 
     public var createdAt: Date?
@@ -90,7 +94,7 @@ public struct Contact: PCKVersionable {
     public var title: String?
 
     /// The version in the local database for the care plan associated with this contact.
-    public var carePlan: CarePlan? {
+    public var carePlan: PCKCarePlan? {
         didSet {
             carePlanUUID = carePlan?.uuid
         }
@@ -131,7 +135,7 @@ public struct Contact: PCKVersionable {
 
     public init() { }
 
-    public func new(with careKitEntity: OCKEntity) throws -> Contact {
+    public func new(with careKitEntity: OCKEntity) throws -> PCKContact {
 
         switch careKitEntity {
         case .contact(let entity):
@@ -150,7 +154,7 @@ public struct Contact: PCKVersionable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         // Check to see if already in the cloud
-        let query = Contact.query(ObjectableKey.uuid == uuid)
+        let query = PCKContact.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -190,7 +194,7 @@ public struct Contact: PCKVersionable {
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Contact.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = PCKContact.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -250,7 +254,7 @@ public struct Contact: PCKVersionable {
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = Contact.query(ObjectableKey.logicalClock >= localClock)
+        let query = PCKContact.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -319,7 +323,7 @@ public struct Contact: PCKVersionable {
         }
     }
 
-    public static func copyValues(from other: Contact, to here: Contact) throws -> Self {
+    public static func copyValues(from other: PCKContact, to here: PCKContact) throws -> Self {
         var copy = here
         copy.copyVersionedValues(from: other)
         copy.address = other.address
@@ -332,7 +336,7 @@ public struct Contact: PCKVersionable {
         return copy
     }
 
-    public static func copyCareKit(_ contactAny: OCKAnyContact) throws -> Contact {
+    public static func copyCareKit(_ contactAny: OCKAnyContact) throws -> PCKContact {
 
         guard let contact = contactAny as? OCKContact else {
             throw ParseCareKitError.cantCastToNeededClassType
@@ -357,7 +361,7 @@ public struct Contact: PCKVersionable {
     }
 
     /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<Contact, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<PCKContact, Error>) -> Void) {
         var updatedContact = self
 
         guard let carePlanUUID = self.carePlanUUID else {
@@ -366,7 +370,7 @@ public struct Contact: PCKVersionable {
             return
         }
 
-        CarePlan.first(carePlanUUID) { result in
+        PCKCarePlan.first(carePlanUUID) { result in
 
             if case let .success(carePlan) = result {
                 updatedContact.carePlan = carePlan
@@ -377,7 +381,7 @@ public struct Contact: PCKVersionable {
     }
 }
 
-extension Contact {
+extension PCKContact {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 

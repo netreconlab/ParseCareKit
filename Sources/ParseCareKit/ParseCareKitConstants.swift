@@ -45,16 +45,16 @@ public enum PCKStoreClass: String {
         switch self {
         case .carePlan:
             let carePlan = OCKCarePlan(id: "", title: "", patientUUID: nil)
-            return try CarePlan.copyCareKit(carePlan)
+            return try PCKCarePlan.copyCareKit(carePlan)
         case .contact:
             let contact = OCKContact(id: "", givenName: "", familyName: "", carePlanUUID: nil)
-            return try Contact.copyCareKit(contact)
+            return try PCKContact.copyCareKit(contact)
         case .outcome:
             let outcome = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [])
-            return try Outcome.copyCareKit(outcome)
+            return try PCKOutcome.copyCareKit(outcome)
         case .patient:
             let patient = OCKPatient(id: "", givenName: "", familyName: "")
-            return try Patient.copyCareKit(patient)
+            return try PCKPatient.copyCareKit(patient)
         case .task:
             let task = OCKTask(id: "", title: "", carePlanUUID: nil,
                                schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
@@ -62,7 +62,7 @@ public enum PCKStoreClass: String {
         case .healthKitTask:
             let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
                                                  schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .bodyTemperature, quantityType: .discrete, unit: .degreeCelsius()))
-            return try HealthKitTask.copyCareKit(healthKitTask)
+            return try PCKHealthKitTask.copyCareKit(healthKitTask)
         }
     }
 
@@ -132,22 +132,22 @@ public enum PCKStoreClass: String {
     func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
         switch type {
         case .carePlan:
-            guard (check as? CarePlan) != nil else {
+            guard (check as? PCKCarePlan) != nil else {
                 return false
             }
             return true
         case .contact:
-            guard (check as? Contact) != nil else {
+            guard (check as? PCKContact) != nil else {
                 return false
             }
             return true
         case .outcome:
-            guard (check as? Outcome) != nil else {
+            guard (check as? PCKOutcome) != nil else {
                 return false
             }
             return true
         case .patient:
-            guard (check as? Patient) != nil else {
+            guard (check as? PCKPatient) != nil else {
                 return false
             }
             return true
@@ -157,7 +157,7 @@ public enum PCKStoreClass: String {
             }
             return true
         case .healthKitTask:
-            guard (check as? HealthKitTask) != nil else {
+            guard (check as? PCKHealthKitTask) != nil else {
                 return false
             }
             return true
@@ -222,7 +222,7 @@ public enum VersionableKey {
 }
 
 // #Mark - Patient Class
-/// Keys for `Patient` objects. These keys can be used for querying Parse objects.
+/// Keys for `PCKPatient` objects. These keys can be used for querying Parse objects.
 public enum PatientKey {
     /// className key.
     public static let className                                = "Patient"
@@ -237,7 +237,7 @@ public enum PatientKey {
 }
 
 // #Mark - CarePlan Class
-/// Keys for `CarePlan` objects. These keys can be used for querying Parse objects.
+/// Keys for `PCKCarePlan` objects. These keys can be used for querying Parse objects.
 public enum CarePlanKey {
     /// className key.
     public static let className                                = "CarePlan"
@@ -248,7 +248,7 @@ public enum CarePlanKey {
 }
 
 // #Mark - Contact Class
-/// Keys for `Contact` objects. These keys can be used for querying Parse objects.
+/// Keys for `PCKContact` objects. These keys can be used for querying Parse objects.
 public enum ContactKey {
     /// className key.
     public static let className                                = "Contact"
@@ -294,7 +294,7 @@ public enum TaskKey {
 }
 
 // #Mark - Outcome Class
-/// Keys for `Outcome` objects. These keys can be used for querying Parse objects.
+/// Keys for `PCKOutcome` objects. These keys can be used for querying Parse objects.
 public enum OutcomeKey {
     /// className key.
     public static let className                                = "Outcome"

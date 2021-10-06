@@ -1,5 +1,5 @@
 //
-//  HealthKitTask.swift
+//  PCKHealthKitTask.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 2/20/21.
@@ -16,12 +16,12 @@ import os.log
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 
-/// An `PCKTask` is the ParseCareKit equivalent of `OCKHealthKitTask`.  An `OCKHealthKitTask` represents some task or action that a
+/// An `PCKHealthKitTask` is the ParseCareKit equivalent of `OCKHealthKitTask`.  An `OCKHealthKitTask` represents some task or action that a
 /// patient is supposed to perform. Tasks are optionally associable with an `OCKCarePlan` and must have a unique
 /// id and schedule. The schedule determines when and how often the task should be performed, and the
 /// `impactsAdherence` flag may be used to specify whether or not the patients adherence to this task will affect
 /// their daily completion rings.
-public struct HealthKitTask: PCKVersionable {
+public struct PCKHealthKitTask: PCKVersionable {
 
     public var nextVersionUUIDs: [UUID]?
 
@@ -65,6 +65,10 @@ public struct HealthKitTask: PCKVersionable {
         }
     }
 
+    public static var className: String {
+        "HealthKitTask"
+    }
+
     public var objectId: String?
 
     public var createdAt: Date?
@@ -89,7 +93,7 @@ public struct HealthKitTask: PCKVersionable {
     public var schedule: OCKSchedule?
 
     /// The care plan to which this task belongs.
-    public var carePlan: CarePlan? {
+    public var carePlan: PCKCarePlan? {
         didSet {
             carePlanUUID = carePlan?.uuid
         }
@@ -113,7 +117,7 @@ public struct HealthKitTask: PCKVersionable {
 
     public init() { }
 
-    public func new(with careKitEntity: OCKEntity) throws -> HealthKitTask {
+    public func new(with careKitEntity: OCKEntity) throws -> PCKHealthKitTask {
 
         switch careKitEntity {
         case .healthKitTask(let entity):
@@ -172,7 +176,7 @@ public struct HealthKitTask: PCKVersionable {
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = HealthKitTask.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = PCKHealthKitTask.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -230,7 +234,7 @@ public struct HealthKitTask: PCKVersionable {
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = HealthKitTask.query(ObjectableKey.logicalClock >= localClock)
+        let query = PCKHealthKitTask.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -297,7 +301,7 @@ public struct HealthKitTask: PCKVersionable {
         }
     }
 
-    public static func copyValues(from other: HealthKitTask, to here: HealthKitTask) throws -> HealthKitTask {
+    public static func copyValues(from other: PCKHealthKitTask, to here: PCKHealthKitTask) throws -> PCKHealthKitTask {
         var here = here
         here.copyVersionedValues(from: other)
 
@@ -310,7 +314,7 @@ public struct HealthKitTask: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> HealthKitTask {
+    public static func copyCareKit(_ taskAny: OCKAnyTask) throws -> PCKHealthKitTask {
 
         guard let task = taskAny as? OCKHealthKitTask else {
             throw ParseCareKitError.cantCastToNeededClassType
@@ -337,7 +341,7 @@ public struct HealthKitTask: PCKVersionable {
     }
 
     /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<HealthKitTask, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<PCKHealthKitTask, Error>) -> Void) {
         var updatedTask = self
         guard let carePlanUUID = self.carePlanUUID else {
             // Finished if there's no CarePlan, otherwise see if it's in the cloud
@@ -345,7 +349,7 @@ public struct HealthKitTask: PCKVersionable {
             return
         }
 
-        CarePlan.first(carePlanUUID) { result in
+        PCKCarePlan.first(carePlanUUID) { result in
 
             if case let .success(carePlan) = result {
                 updatedTask.carePlan = carePlan
@@ -356,7 +360,7 @@ public struct HealthKitTask: PCKVersionable {
     }
 }
 
-extension HealthKitTask {
+extension PCKHealthKitTask {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {

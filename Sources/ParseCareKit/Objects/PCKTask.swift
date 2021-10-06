@@ -90,7 +90,7 @@ public struct PCKTask: PCKVersionable {
     public var schedule: OCKSchedule?
 
     /// The care plan to which this task belongs.
-    public var carePlan: CarePlan? {
+    public var carePlan: PCKCarePlan? {
         didSet {
             carePlanUUID = carePlan?.uuid
         }
@@ -346,7 +346,7 @@ public struct PCKTask: PCKVersionable {
             return
         }
 
-        CarePlan.first(carePlanUUID) { result in
+        PCKCarePlan.first(carePlanUUID) { result in
 
             if case let .success(carePlan) = result {
                 updatedTask.carePlan = carePlan

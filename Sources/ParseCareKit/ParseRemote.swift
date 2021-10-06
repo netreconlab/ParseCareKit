@@ -39,11 +39,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public var customClassesToSynchronize: [String: PCKSynchronizable]?
 
     /// A dictionary of any default classes to synchronize between the CareKitStore and the Parse Server. These
-    /// are `Patient`, `PCKTask`, `CarePlan`, `Contact`, and `Outcome`.
+    /// are `PCKPatient`, `PCKTask`, `PCKCarePlan`, `PCKContact`, and `PCKOutcome`.
     public var pckStoreClassesToSynchronize: [PCKStoreClass: PCKSynchronizable]!
 
     private weak var parseDelegate: ParseRemoteDelegate?
-    private var clockSubscription: SubscriptionCallback<Clock>?
+    private var clockSubscription: SubscriptionCallback<PCKClock>?
     private var subscribeToServerUpdates: Bool
     private var isSynchronizing = false
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
@@ -119,7 +119,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
-            let clockQuery = Clock.query(ClockKey.uuid == self.uuid)
+            let clockQuery = PCKClock.query(ClockKey.uuid == self.uuid)
             guard let subscription = clockQuery.subscribeCallback else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.clock.error("Couldn't subscribe to clock query.")
@@ -161,7 +161,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         isSynchronizing = true
 
         // Fetch Clock from Cloud
-        Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
+        PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
             guard let cloudVector = potentialCKClock else {
                 // No Clock available, need to let CareKit know this is the first sync.
                 let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
@@ -316,7 +316,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
         ParseRemote.queue.async {
             // Fetch Clock from Cloud
-            Clock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
+            PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
 
                 guard let cloudParseVector = potentialPCKClock,
                     let cloudCareKitVector = potentialCKClock else {
@@ -606,7 +606,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func finishedRevisions(_ parseClock: Clock, cloudClock: OCKRevisionRecord.KnowledgeVector,
+    func finishedRevisions(_ parseClock: PCKClock, cloudClock: OCKRevisionRecord.KnowledgeVector,
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
         var parseClock = parseClock
