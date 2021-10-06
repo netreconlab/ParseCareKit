@@ -4,7 +4,7 @@ on:
     types: [published]
 env:
   CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
-  CI_XCODE_BETA_VER: '/Applications/Xcode_13.0.app/Contents/Developer'
+  CI_XCODE_13: '/Applications/Xcode_13.0.app/Contents/Developer'
   
 jobs:
   docs:
@@ -38,6 +38,8 @@ jobs:
             --output ./docs/api \
             --build-tool-arguments -scheme,ParseCareKit \
             --module ParseCareKit \
+        env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
       - name: Deploy Jazzy Docs
         uses: peaceiris/actions-gh-pages@v3
         with:
