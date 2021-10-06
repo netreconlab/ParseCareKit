@@ -33,10 +33,10 @@ jobs:
             --github_url https://github.com/netreconlab/ParseCareKit \
             --root-url https://netreconlab.github.io/api/ \
             --module-version ${ver} \
-            --theme fullwidth \
+            --theme apple \
             --skip-undocumented \
             --output ./docs/api \
-            --build-tool-arguments -scheme,ParseCareKit \
+            --build-tool-arguments -scheme,ParseCareKit,-destination,'name=iPhone 12 Pro Max' \
             --module ParseCareKit \
         env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
