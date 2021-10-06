@@ -9,7 +9,6 @@
 import Foundation
 import ParseSwift
 import os.log
-import Combine
 
 // swiftlint:disable line_length
 // swiftlint:disable cyclomatic_complexity
@@ -137,13 +136,16 @@ extension PCKVersionable {
     }
 
     /**
-     Saving a `PCKVersionable` object.
+     Saves a `PCKVersionable` object.
      - Parameters:
+        - options: A set of header options sent to the server. Defaults to an empty set.
         - completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
-    public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(callbackQueue: ParseRemote.queue) { results in
+    public func save(options: API.Options = [],
+                     completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+        self.save(options: options,
+                  callbackQueue: ParseRemote.queue) { results in
             switch results {
 
             case .success(let savedObject):
@@ -295,21 +297,6 @@ extension PCKVersionable {
         query.find(options: options,
                    callbackQueue: callbackQueue,
                    completion: completion)
-    }
-
-    /**
-     Find versioned objects *asynchronously* like `fetch` in CareKit. Finds the newest version
-     that has not been deleted. Publishes when complete.
-     - Parameters:
-        - for: The date the objects are active.
-        - options: A set of header options sent to the server. Defaults to an empty set.
-        - returns: `Future<[Self],ParseError>`.
-    */
-    public func findPublisher(for date: Date,
-                              options: API.Options = []) -> Future<[Self], ParseError> {
-        let query = Self.query(for: date)
-            .includeAll()
-        return query.findPublisher(options: options)
     }
 }
 

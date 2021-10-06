@@ -139,7 +139,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try Patient.copyCareKit(careKit)
+        var parse = try PCKPatient.copyCareKit(careKit)
 
         // Special
         XCTAssertEqual(parse.name, careKit.name)
@@ -212,7 +212,7 @@ class ParseCareKitTests: XCTestCase {
         }
         parse.notes = [note]
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
-        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Patient.self, from: cloudEncoded)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKPatient.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
@@ -268,7 +268,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try Outcome.copyCareKit(careKit)
+        var parse = try PCKOutcome.copyCareKit(careKit)
 
         // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
@@ -351,7 +351,7 @@ class ParseCareKitTests: XCTestCase {
 
         parse.notes = [note]
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
-        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Outcome.self, from: cloudEncoded)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKOutcome.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
@@ -414,7 +414,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try Task.copyCareKit(careKit)
+        var parse = try PCKTask.copyCareKit(careKit)
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
@@ -486,7 +486,7 @@ class ParseCareKitTests: XCTestCase {
         }
         parse.notes = [note]
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
-        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Task.self, from: cloudEncoded)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKTask.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
@@ -552,7 +552,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try HealthKitTask.copyCareKit(careKit)
+        var parse = try PCKHealthKitTask.copyCareKit(careKit)
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
@@ -624,7 +624,7 @@ class ParseCareKitTests: XCTestCase {
         }
         parse.notes = [note]
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
-        let cloudDecoded = try ParseCoding.jsonDecoder().decode(HealthKitTask.self, from: cloudEncoded)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKHealthKitTask.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
@@ -679,7 +679,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try CarePlan.copyCareKit(careKit)
+        var parse = try PCKCarePlan.copyCareKit(careKit)
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
@@ -748,7 +748,7 @@ class ParseCareKitTests: XCTestCase {
         }
         parse.notes = [note]
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
-        let cloudDecoded = try ParseCoding.jsonDecoder().decode(CarePlan.self, from: cloudEncoded)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKCarePlan.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
@@ -815,7 +815,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try Contact.copyCareKit(careKit)
+        var parse = try PCKContact.copyCareKit(careKit)
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
@@ -898,7 +898,7 @@ class ParseCareKitTests: XCTestCase {
         }
         parse.notes = [note]
         let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
-        let cloudDecoded = try ParseCoding.jsonDecoder().decode(Contact.self, from: cloudEncoded)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKContact.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
