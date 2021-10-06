@@ -11,7 +11,6 @@ import ParseSwift
 import CareKitStore
 import os.log
 
-// swiftlint:disable line_length
 // swiftlint:disable identifier_name
 
 /**
@@ -134,11 +133,14 @@ extension PCKObjectable {
      Finds the first object on the server that has the same `uuid`.
      - Parameters:
         - uuid: The UUID to search for.
+        - options: A set of header options sent to the server. Defaults to an empty set.
         - relatedObject: An object that has the same `uuid` as the one being searched for.
         - completion: The block to execute.
      It should have the following argument signature: `(Result<Self,Error>)`.
     */
-    static public func first(_ uuid: UUID?, completion: @escaping(Result<Self, Error>) -> Void) {
+    static public func first(_ uuid: UUID?,
+                             options: API.Options = [],
+                             completion: @escaping(Result<Self, Error>) -> Void) {
 
         guard let uuidString = uuid?.uuidString else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
@@ -147,57 +149,14 @@ extension PCKObjectable {
 
         let query = Self.query(ObjectableKey.uuid == uuidString)
             .includeAll()
-        query.first(callbackQueue: ParseRemote.queue) { result in
+        query.first(options: options,
+                    callbackQueue: ParseRemote.queue) { result in
 
             switch result {
 
             case .success(let object):
                 completion(.success(object))
             case .failure(let error):
-                completion(.failure(error))
-            }
-
-        }
-    }
-
-    /**
-     Finds all objects on the server that has the same `uuid`.
-     - Parameters:
-        - uuid: The UUID to search for.
-        - completion: The block to execute.
-     It should have the following argument signature: `(Result<Self,Error>)`.
-    */
-    public func find(_ uuid: UUID?,
-                     completion: @escaping(Result<[Self], Error>) -> Void) {
-
-        guard let uuidString = uuid?.uuidString else {
-
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.objectable.error("\(self.className, privacy: .private).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription, privacy: .private).")
-            } else {
-                os_log("%{private}@.find(), : %{private}@",
-                       log: .objectable, type: .error, self.className,
-                       ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription)
-            }
-            completion(.failure(ParseCareKitError.couldntUnwrapClock))
-                return
-        }
-
-        let query = Self.query(ObjectableKey.uuid == uuidString)
-            .include([ObjectableKey.notes])
-        query.find(callbackQueue: ParseRemote.queue) { results in
-
-            switch results {
-
-            case .success(let foundObjects):
-                completion(.success(foundObjects))
-            case .failure(let error):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.objectable.error("\(self.className, privacy: .private).find(), \(ParseCareKitError.requiredValueCantBeUnwrapped.localizedDescription, privacy: .private). UUID: \(uuid!, privacy: .private)")
-                } else {
-                    os_log("%{private}@.find(), %{private}@. UUID: %{private}@",
-                           log: .objectable, type: .error, self.className, error.localizedDescription, uuidString)
-                }
                 completion(.failure(error))
             }
 

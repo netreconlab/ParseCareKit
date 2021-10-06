@@ -59,7 +59,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
      Requires `ParseLiveQuery` server to be setup.
     */
-    public init(uuid: UUID, auto: Bool, subscribeToServerUpdates: Bool) throws {
+    public init(uuid: UUID,
+                auto: Bool,
+                subscribeToServerUpdates: Bool) throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
@@ -79,7 +81,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
      Requires `ParseLiveQuery` server to be setup.
     */
-    convenience public init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable], subscribeToServerUpdates: Bool) throws {
+    convenience public init(uuid: UUID,
+                            auto: Bool,
+                            replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable],
+                            subscribeToServerUpdates: Bool) throws {
         try self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
@@ -97,9 +102,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
      Requires `ParseLiveQuery` server to be setup.
     */
-    convenience public init(uuid: UUID, auto: Bool,
+    convenience public init(uuid: UUID,
+                            auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]? = nil,
-                            customClasses: [String: PCKSynchronizable], subscribeToServerUpdates: Bool) throws {
+                            customClasses: [String: PCKSynchronizable],
+                            subscribeToServerUpdates: Bool) throws {
         try self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
         if replacePCKStoreClasses != nil {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
