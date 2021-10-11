@@ -1,0 +1,29 @@
+name: slider
+on:
+  push:
+    branches: [ slider ]
+  pull_request:
+    branches: [ slider ]
+env:
+  CI_XCODE_13: '/Applications/Xcode_13.0.app/Contents/Developer'
+
+jobs:
+  xcode-test-ios:
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max test | xcpretty
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
+    - name: Codecov
+      run: bash <(curl https://codecov.io/bash)
+
+  xcode-build-watchos:
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 6\ -\ 44mm | xcpretty
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
