@@ -54,7 +54,7 @@ jobs:
             --github_url https://github.com/netreconlab/ParseCareKit \
             --root-url https://netreconlab.github.io/api/ \
             --module-version ${ver} \
-            --theme apple \
+            --theme fullwidth \
             --skip-undocumented \
             --output ./docs/api \
             --build-tool-arguments -scheme,ParseCareKit,-destination,'name=iPhone 12 Pro Max' \
