@@ -1,6 +1,7 @@
 # ParseCareKit
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
+![Xcode 13.0+](https://img.shields.io/badge/xcode-13.0%2B-blue.svg)
 [![CI Status](https://github.com/netreconlab/ParseCareKit/workflows/ci/badge.svg?branch=main)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aci)
 [![CI-objc Status](https://github.com/netreconlab/ParseCareKit/workflows/ci-objc/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aci-objc)
 [![Release Status](https://github.com/netreconlab/ParseCareKit/workflows/release/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Arelease)
