@@ -1070,7 +1070,7 @@
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
 				kind = revision;
-				revision = 1eaedbb7249f895ca63f7bdac360e14ffca181b7;
+				revision = acc650a85ae5a1f6444c31bfd3a587661bdd814b;
 			};
 		};
 		70BA5C242613B018008E829E /* XCRemoteSwiftPackageReference "Parse-Swift" */ = {
@@ -1079,14 +1079,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.1;
-			};
-		};
-		70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/carekit-apple/CareKit.git";
-			requirement = {
-				kind = revision;
-				revision = c9682a7c0c1b617bcf07a25f9143cab1980e511c;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
