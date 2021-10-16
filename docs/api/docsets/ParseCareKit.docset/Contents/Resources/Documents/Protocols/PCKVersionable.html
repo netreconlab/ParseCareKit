@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PCKVersionable Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/PCKVersionable" class="dashAnchor"></a>
+    <a title="PCKVersionable Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ParseCareKit --theme Docs</a> (92% documented)</p>
+        <p class="header-right"><a href="https://github.com/netreconlab/ParseCareKit"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fnetreconlab.github.io%2Fapi%2Fdocsets%2FParseCareKit.xml"><img src="../img/dash.png" alt="Dash"/>Install in Dash</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ParseCareKit Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        PCKVersionable Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/PCKUtility.html">PCKUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ParseRemote.html">ParseRemote</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CarePlanKey.html">CarePlanKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ClockKey.html">ClockKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContactKey.html">ContactKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectableKey.html">ObjectableKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OutcomeKey.html">OutcomeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PCKStoreClass.html">PCKStoreClass</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ParseKey.html">ParseKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PatientKey.html">PatientKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TaskKey.html">TaskKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/VersionableKey.html">VersionableKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKObjectable.html">PCKObjectable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKVersionable.html">PCKVersionable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParseRemoteDelegate.html">ParseRemoteDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PCKCarePlan.html">PCKCarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKContact.html">PCKContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKHealthKitTask.html">PCKHealthKitTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKOutcome.html">PCKOutcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKPatient.html">PCKPatient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKTask.html">PCKTask</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PCKVersionable</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PCKVersionable</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKObjectable.html">PCKObjectable</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Objects that conform to the <code>PCKVersionable</code> protocol are Parse interpretations of <code>OCKVersionedObjectCompatible</code> objects.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionableP20previousVersionUUIDsSay10Foundation4UUIDVGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/previousVersionUUIDs" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP20previousVersionUUIDsSay10Foundation4UUIDVGSgvp">previousVersionUUIDs</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The UUID of the previous version of this object, or nil if there is no previous version.
+The UUIDs are in no particular order.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">previousVersionUUIDs</span><span class="p">:</span> <span class="p">[</span><span class="kt">UUID</span><span class="p">]?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionableP16nextVersionUUIDsSay10Foundation4UUIDVGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/nextVersionUUIDs" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP16nextVersionUUIDsSay10Foundation4UUIDVGSgvp">nextVersionUUIDs</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The UUID of the next version of this object, or nil if there is no next version.
+The UUIDs are in no particular order.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">nextVersionUUIDs</span><span class="p">:</span> <span class="p">[</span><span class="kt">UUID</span><span class="p">]?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionableP13effectiveDate10Foundation0F0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/effectiveDate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP13effectiveDate10Foundation0F0VSgvp">effectiveDate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The date that this version of the object begins to take precedence over the previous version.
+Often this will be the same as the <code>createdDate</code>, but is not required to be.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">effectiveDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionableP11deletedDate10Foundation0F0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/deletedDate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionableP11deletedDate10Foundation0F0VSgvp">deletedDate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The date on which this object was marked deleted. Note that objects are never actually deleted,
+but rather they are marked deleted and will no longer be returned from queries.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">deletedDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE4find3for7optionsSayxG10Foundation4DateV_Shy0A5Swift3APIV6OptionOGtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/find(for:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE4find3for7optionsSayxG10Foundation4DateV_Shy0A5Swift3APIV6OptionOGtYaKF">find(for:<wbr>options:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method, asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find versioned objects <em>asynchronously</em> like <code>fetch</code> in CareKit. Finds the newest version
+that has not been deleted.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">find</span><span class="p">(</span><span class="k">for</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span>
+          <span class="nv">options</span><span class="p">:</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Options</span> <span class="o">=</span> <span class="p">[])</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="k">Self</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>for</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The date the objects are active.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of header options sent to the server. Defaults to an empty set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callbackQueue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The queue to return to after completion. Default value of <code>.main</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>throws</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>ParseError</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of objects matching the query.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE4save7optionsxShy0A5Swift3APIV6OptionOG_tYaKF"></a>
+                    <a name="//apple_ref/swift/Method/save(options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE4save7optionsxShy0A5Swift3APIV6OptionOG_tYaKF">save(options:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method, asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves a <code>PCKVersionable</code> object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">save</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Options</span> <span class="o">=</span> <span class="p">[])</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The UUID to search for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of header options sent to the server. Defaults to an empty set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>relatedObject</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An object that has the same <code>uuid</code> as the one being searched for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>throws</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>ParseError</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The saved version.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE13findPublisher3for7options7Combine6FutureCySayxG0A5Swift0A5ErrorVG10Foundation4DateV_ShyAK3APIV6OptionOGtF"></a>
+                    <a name="//apple_ref/swift/Method/findPublisher(for:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE13findPublisher3for7options7Combine6FutureCySayxG0A5Swift0A5ErrorVG10Foundation4DateV_ShyAK3APIV6OptionOGtF">findPublisher(for:<wbr>options:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find versioned objects <em>asynchronously</em> like <code>fetch</code> in CareKit. Finds the newest version
+that has not been deleted. Publishes when complete.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">findPublisher</span><span class="p">(</span><span class="k">for</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span>
+                   <span class="nv">options</span><span class="p">:</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Options</span> <span class="o">=</span> <span class="p">[])</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="p">[</span><span class="k">Self</span><span class="p">],</span> <span class="kt">ParseError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>for</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The date the objects are active.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of header options sent to the server. Defaults to an empty set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Future&lt;[Self],ParseError&gt;</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE13savePublisher3for7options7Combine6FutureCyx0A5Swift0A5ErrorVG10Foundation4DateV_ShyAJ3APIV6OptionOGtF"></a>
+                    <a name="//apple_ref/swift/Method/savePublisher(for:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE13savePublisher3for7options7Combine6FutureCyx0A5Swift0A5ErrorVG10Foundation4DateV_ShyAJ3APIV6OptionOGtF">savePublisher(for:<wbr>options:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves a <code>PCKVersionable</code> object. <em>asynchronously</em>. Publishes when complete.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">savePublisher</span><span class="p">(</span><span class="k">for</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span>
+                   <span class="nv">options</span><span class="p">:</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Options</span> <span class="o">=</span> <span class="p">[])</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">,</span> <span class="kt">ParseError</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of header options sent to the server. Defaults to an empty set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Future&lt;[Self],ParseError&gt;</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE19copyVersionedValues4fromyx_tF"></a>
+                    <a name="//apple_ref/swift/Method/copyVersionedValues(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE19copyVersionedValues4fromyx_tF">copyVersionedValues(from:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Copies the common values of another PCKVersionable object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">copyVersionedValues</span><span class="p">(</span><span class="n">from</span> <span class="nv">other</span><span class="p">:</span> <span class="k">Self</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The PCKVersionable object to copy from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE4save7options10completionyShy0A5Swift3APIV6OptionOG_ys6ResultOyAA17PCKSynchronizable_ps5Error_pGctF"></a>
+                    <a name="//apple_ref/swift/Method/save(options:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE4save7options10completionyShy0A5Swift3APIV6OptionOG_ys6ResultOyAA17PCKSynchronizable_ps5Error_pGctF">save(options:<wbr>completion:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves a <code>PCKVersionable</code> object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">save</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Options</span> <span class="o">=</span> <span class="p">[],</span>
+                 <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span><span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of header options sent to the server. Defaults to an empty set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to execute.
+It should have the following argument signature: <code>(Result&lt;PCKSynchronizable,Error&gt;)</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE5query3for0A5Swift5QueryVyxG10Foundation4DateV_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/query(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE5query3for0A5Swift5QueryVyxG10Foundation4DateV_tFZ">query(for:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Querying versioned objects just like CareKit. Creates a query that finds
+the newest version that has not been deleted. This is the query used by <code>find(for date: Date)</code>.
+Use this query to build from if you desire a more intricate query.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">query</span><span class="p">(</span><span class="k">for</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Query</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>for</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The date the object is active.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Query&lt;Self&gt;</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE4find3for7options13callbackQueue10completiony10Foundation4DateV_Shy0A5Swift3APIV6OptionOGSo17OS_dispatch_queueCys6ResultOySayxGAL0A5ErrorVGctF"></a>
+                    <a name="//apple_ref/swift/Method/find(for:options:callbackQueue:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE4find3for7options13callbackQueue10completiony10Foundation4DateV_Shy0A5Swift3APIV6OptionOGSo17OS_dispatch_queueCys6ResultOySayxGAL0A5ErrorVGctF">find(for:<wbr>options:<wbr>callbackQueue:<wbr>completion:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find versioned objects <em>asynchronously</em> like <code>fetch</code> in CareKit. Finds the newest version
+that has not been deleted.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">find</span><span class="p">(</span><span class="k">for</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span>
+                 <span class="nv">options</span><span class="p">:</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Options</span> <span class="o">=</span> <span class="p">[],</span>
+                 <span class="nv">callbackQueue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span>
+                 <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span><span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="k">Self</span><span class="p">],</span> <span class="kt">ParseError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>for</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The date the objects are active.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of header options sent to the server. Defaults to an empty set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callbackQueue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The queue to return to after completion. Default value of <code>.main</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to execute.
+It should have the following argument signature: <code>(Result&lt;[Self],ParseError&gt;)</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit14PCKVersionablePAAE17encodeVersionable2toys7Encoder_p_tKF"></a>
+                    <a name="//apple_ref/swift/Method/encodeVersionable(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit14PCKVersionablePAAE17encodeVersionable2toys7Encoder_p_tKF">encodeVersionable(to:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Encodes the PCKVersionable properties of the object</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">encodeVersionable</span><span class="p">(</span><span class="n">to</span> <span class="nv">encoder</span><span class="p">:</span> <span class="kt">Encoder</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>to</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the encoder the properties should be encoded to.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external noopener">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-10-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

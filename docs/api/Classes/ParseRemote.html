@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ParseRemote Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/ParseRemote" class="dashAnchor"></a>
+    <a title="ParseRemote Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ParseCareKit --theme Docs</a> (92% documented)</p>
+        <p class="header-right"><a href="https://github.com/netreconlab/ParseCareKit"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fnetreconlab.github.io%2Fapi%2Fdocsets%2FParseCareKit.xml"><img src="../img/dash.png" alt="Dash"/>Install in Dash</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ParseCareKit Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        ParseRemote Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/PCKUtility.html">PCKUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ParseRemote.html">ParseRemote</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CarePlanKey.html">CarePlanKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ClockKey.html">ClockKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContactKey.html">ContactKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectableKey.html">ObjectableKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OutcomeKey.html">OutcomeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PCKStoreClass.html">PCKStoreClass</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ParseKey.html">ParseKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PatientKey.html">PatientKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TaskKey.html">TaskKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/VersionableKey.html">VersionableKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKObjectable.html">PCKObjectable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKVersionable.html">PCKVersionable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParseRemoteDelegate.html">ParseRemoteDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PCKCarePlan.html">PCKCarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKContact.html">PCKContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKHealthKitTask.html">PCKHealthKitTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKOutcome.html">PCKOutcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKPatient.html">PCKPatient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKTask.html">PCKTask</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ParseRemote</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ParseRemote</span> <span class="p">:</span> <span class="kt">OCKRemoteSynchronizable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Allows the CareKitStore to synchronize against a Parse Server.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12CareKitStore23OCKRemoteSynchronizableP8delegateAA0D23SynchronizationDelegate_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore23OCKRemoteSynchronizableP8delegateAA0D23SynchronizationDelegate_pSgvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt">OCKRemoteSynchronizationDelegate</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC05parseD8DelegateAA0adF0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/parseRemoteDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC05parseD8DelegateAA0adF0_pSgvp">parseRemoteDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If set, the delegate will be alerted to important events delivered by the remote
+store (set this, don&rsquo;t set <code><a href="../Classes/ParseRemote.html#/s:12CareKitStore23OCKRemoteSynchronizableP8delegateAA0D23SynchronizationDelegate_pSgvp">delegate</a></code>).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">parseRemoteDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ParseRemoteDelegate.html">ParseRemoteDelegate</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12CareKitStore23OCKRemoteSynchronizableP25automaticallySynchronizesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/automaticallySynchronizes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore23OCKRemoteSynchronizableP25automaticallySynchronizesSbvp">automaticallySynchronizes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">automaticallySynchronizes</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid10Foundation4UUIDVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid10Foundation4UUIDVSgvp">uuid</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The unique identifier of the remote clock.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC26customClassesToSynchronizeSDySSAA17PCKSynchronizable_pGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/customClassesToSynchronize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC26customClassesToSynchronizeSDySSAA17PCKSynchronizable_pGSgvp">customClassesToSynchronize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A dictionary of any custom classes to synchronize between the CareKitStore and the Parse Server.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">customClassesToSynchronize</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC28pckStoreClassesToSynchronizeSDyAA13PCKStoreClassOAA17PCKSynchronizable_pGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/pckStoreClassesToSynchronize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC28pckStoreClassesToSynchronizeSDyAA13PCKStoreClassOAA17PCKSynchronizable_pGSgvp">pckStoreClassesToSynchronize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A dictionary of any default classes to synchronize between the CareKitStore and the Parse Server. These
+are <code><a href="../Structs/PCKPatient.html">PCKPatient</a></code>, <code><a href="../Structs/PCKTask.html">PCKTask</a></code>, <code><a href="../Structs/PCKCarePlan.html">PCKCarePlan</a></code>, <code><a href="../Structs/PCKContact.html">PCKContact</a></code>, and <code><a href="../Structs/PCKOutcome.html">PCKOutcome</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pckStoreClassesToSynchronize</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span> <span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdatesAC10Foundation4UUIDV_S2btKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(uuid:auto:subscribeToServerUpdates:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdatesAC10Foundation4UUIDV_S2btKcfc">init(uuid:<wbr>auto:<wbr>subscribeToServerUpdates:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an instance of ParseRemote.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span>
+            <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+            <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The unique identifier of the remote clock.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>auto</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If set to <code>true</code>, then the store will attempt to synchronize every time it is modified locally.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subscribeToServerUpdates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Automatically receive updates from other devices linked to this Clock.
+Requires <code>ParseLiveQuery</code> server to be setup.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSbtKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSbtKcfc">init(uuid:<wbr>auto:<wbr>replacePCKStoreClasses:<wbr>subscribeToServerUpdates:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an instance of ParseRemote.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span>
+                        <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                        <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span>
+                        <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The unique identifier of the remote clock.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>auto</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If set to <code>true</code>, then the store will attempt to synchronize every time it is modified locally.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>replacePCKStoreClasses</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Replace some or all of the default classes that are synchronized</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subscribeToServerUpdates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Automatically receive updates from other devices linked to this Clock.
+Requires <code>ParseLiveQuery</code> server to be setup.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSgSDySSAaN_pGSbtKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSgSDySSAaN_pGSbtKcfc">init(uuid:<wbr>auto:<wbr>replacePCKStoreClasses:<wbr>customClasses:<wbr>subscribeToServerUpdates:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an instance of ParseRemote.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span>
+                        <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                        <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                        <span class="nv">customClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span>
+                        <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The unique identifier of the remote clock.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>auto</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If set to <code>true</code>, then the store will attempt to synchronize every time it is modified locally.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>replacePCKStoreClasses</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Replace some or all of the default classes that are synchronized
+by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>customClasses</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Add custom classes to synchroniz by passing in the respective Key/Value pair.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subscribeToServerUpdates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Automatically receive updates from other devices linked to this Clock.
+Requires <code>ParseLiveQuery</code> server to be setup.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12CareKitStore23OCKRemoteSynchronizableP13pullRevisions5since13mergeRevision10completionyAA17OCKRevisionRecordV15KnowledgeVectorV_yAIcys5Error_pSgctF"></a>
+                    <a name="//apple_ref/swift/Method/pullRevisions(since:mergeRevision:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore23OCKRemoteSynchronizableP13pullRevisions5since13mergeRevision10completionyAA17OCKRevisionRecordV15KnowledgeVectorV_yAIcys5Error_pSgctF">pullRevisions(since:<wbr>mergeRevision:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">knowledgeVector</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span>
+                          <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">OCKRevisionRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span>
+                          <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12CareKitStore23OCKRemoteSynchronizableP13pushRevisions14deviceRevision10completionyAA17OCKRevisionRecordV_ys5Error_pSgctF"></a>
+                    <a name="//apple_ref/swift/Method/pushRevisions(deviceRevision:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore23OCKRemoteSynchronizableP13pushRevisions14deviceRevision10completionyAA17OCKRevisionRecordV_ys5Error_pSgctF">pushRevisions(deviceRevision:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pushRevisions</span><span class="p">(</span><span class="nv">deviceRevision</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="p">,</span>
+                          <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12CareKitStore23OCKRemoteSynchronizableP24chooseConflictResolution9conflicts10completionySayAA9OCKEntityOG_ys6ResultOyAhA13OCKStoreErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/chooseConflictResolution(conflicts:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore23OCKRemoteSynchronizableP24chooseConflictResolution9conflicts10completionySayAA9OCKEntityOG_ys6ResultOyAhA13OCKStoreErrorOGctF">chooseConflictResolution(conflicts:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">chooseConflictResolution</span><span class="p">(</span><span class="nv">conflicts</span><span class="p">:</span> <span class="p">[</span><span class="kt">OCKEntity</span><span class="p">],</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">OCKResultClosure</span><span class="o">&lt;</span><span class="kt">OCKEntity</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external noopener">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-10-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

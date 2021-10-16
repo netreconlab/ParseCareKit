@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PCKSynchronizable Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/PCKSynchronizable" class="dashAnchor"></a>
+    <a title="PCKSynchronizable Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ParseCareKit --theme Docs</a> (92% documented)</p>
+        <p class="header-right"><a href="https://github.com/netreconlab/ParseCareKit"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fnetreconlab.github.io%2Fapi%2Fdocsets%2FParseCareKit.xml"><img src="../img/dash.png" alt="Dash"/>Install in Dash</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ParseCareKit Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        PCKSynchronizable Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/PCKUtility.html">PCKUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ParseRemote.html">ParseRemote</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CarePlanKey.html">CarePlanKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ClockKey.html">ClockKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContactKey.html">ContactKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectableKey.html">ObjectableKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OutcomeKey.html">OutcomeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PCKStoreClass.html">PCKStoreClass</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ParseKey.html">ParseKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PatientKey.html">PatientKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TaskKey.html">TaskKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/VersionableKey.html">VersionableKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKObjectable.html">PCKObjectable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PCKVersionable.html">PCKVersionable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ParseRemoteDelegate.html">ParseRemoteDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PCKCarePlan.html">PCKCarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKContact.html">PCKContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKHealthKitTask.html">PCKHealthKitTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKOutcome.html">PCKOutcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKPatient.html">PCKPatient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PCKTask.html">PCKTask</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PCKSynchronizable</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PCKSynchronizable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Objects that conform to the <code>PCKSynchronizable</code> protocol are synchronized between the <code>OCKStore</code> and the Parse Cloud.
+In order to synchronize objects, they must also conform to either <code><a href="../Protocols/PCKObjectable.html">PCKObjectable</a></code> or <code><a href="../Protocols/PCKVersionable.html">PCKVersionable</a></code>. For examples,
+see <code><a href="../Structs/PCKPatient.html">PCKPatient</a></code>, <code><a href="../Structs/PCKCarePlan.html">PCKCarePlan</a></code>, <code><a href="../Structs/PCKTask.html">PCKTask</a></code>, <code><a href="../Structs/PCKContact.html">PCKContact</a></code>, and <code><a href="../Structs/PCKOutcome.html">PCKOutcome</a></code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP10addToCloud10completionyys6ResultOyAaB_ps5Error_pGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/addToCloud(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP10addToCloud10completionyys6ResultOyAaB_ps5Error_pGc_tF">addToCloud(completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps
+it synchronized with the CareKitStore.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addToCloud</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">PCKSynchronizable</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to execute.
+It should have the following argument signature: <code>(Result&lt;PCKSynchronizable,Error&gt;)</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP11updateCloud10completionyys6ResultOyAaB_ps5Error_pGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/updateCloud(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP11updateCloud10completionyys6ResultOyAaB_ps5Error_pGc_tF">updateCloud(completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Updates an object that conforms to PCKSynchronizable that is already on the Parse
+Server and keeps it synchronized with the CareKitStore.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updateCloud</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">PCKSynchronizable</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>overwriteRemote</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Whether data should be overwritten if it&rsquo;s already present on the Parse Server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to execute.
+It should have the following argument signature: <code>(Result&lt;PCKSynchronizable,Error&gt;)</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP3new4withx0bC5Store9OCKEntityO_tKF"></a>
+                    <a name="//apple_ref/swift/Method/new(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP3new4withx0bC5Store9OCKEntityO_tKF">new(with:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new ParseCareKit object from a specified CareKit entity.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">new</span><span class="p">(</span><span class="n">with</span> <span class="nv">careKitEntity</span><span class="p">:</span> <span class="kt">OCKEntity</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>with</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The CareKit entity used to create the new ParseCareKit object.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Returns a new version of <code>Self</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVys6ResultOyAJ0A5Swift0A5ErrorVGctF"></a>
+                    <a name="//apple_ref/swift/Method/pullRevisions(since:cloudClock:mergeRevision:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVys6ResultOyAJ0A5Swift0A5ErrorVGctF">pullRevisions(since:<wbr>cloudClock:<wbr>mergeRevision:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch all objects from the server that have been made on since the last time synchronization was performed.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>The <code>mergeRevision</code> closure should never be called in parallel.
+Wait until one merge has completed before starting another.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">localClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span>
+                   <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">OCKRevisionRecord</span><span class="p">,</span> <span class="kt">ParseError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>since</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The last time a synchronization was performed locally</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cloudClock</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The server clock represented as a vector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mergeRevision</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that can be called multiple times to merge revisions.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock10completionySi_ys5Error_pSgctF"></a>
+                    <a name="//apple_ref/swift/Method/pushRevision(cloudClock:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock10completionySi_ys5Error_pSgctF">pushRevision(cloudClock:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Push a revision from a device up to the server.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pushRevision</span><span class="p">(</span><span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+                  <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cloudClock</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The current clock value of the revision.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that should be called once the push completes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external noopener">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-10-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
