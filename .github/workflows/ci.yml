@@ -23,10 +23,19 @@ jobs:
         xcrun llvm-cov export "${XCTEST}" -format="lcov" -instr-profile "${PROFDATA}" > info.lcov
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
+    - name: Prepare codecov
+      uses: sersoft-gmbh/swift-coverage-action@v2
+      id: coverage-files
+      with:
+        format: lcov
+        search-paths: ./DerivedData
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
-        fail_ci_if_error: false
+        files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
+        env_vars: IOS
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
 
