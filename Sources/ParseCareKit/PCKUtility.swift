@@ -71,8 +71,8 @@ public class PCKUtility {
             useTransactionsInternally = internalTransactions
         }
 
-        if let internalTransactions = parseDictionary["DeleteKeychainIfNeeded"] as? Bool {
-            deleteKeychainIfNeeded = internalTransactions
+        if let deleteKeychain = parseDictionary["DeleteKeychainIfNeeded"] as? Bool {
+            deleteKeychainIfNeeded = deleteKeychain
         }
 
         ParseSwift.initialize(applicationId: appID,
