@@ -317,6 +317,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         guard deviceRevision.entities.count > 0 else {
             // No revisions need to be pushed
             self.isSynchronizing = false
+            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
             completion(nil)
             return
         }
