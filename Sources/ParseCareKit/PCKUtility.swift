@@ -22,6 +22,7 @@ public class PCKUtility {
     - ClientKey - (String) The client key of your Parse application.
     - LiveQueryServer - (String) The live query server URL to connect to Parse Server.
     - UseTransactionsInternally - (Boolean) Use transactions inside the Client SDK.
+    - DeleteKeychainIfNeeded - (Boolean) Deletes the Parse Keychain when the app is running for the first time.
     - parameter authentication: A callback block that will be used to receive/accept/decline network challenges.
      Defaults to `nil` in which the SDK will use the default OS authentication methods for challenges.
      It should have the following argument signature: `(challenge: URLAuthenticationChallenge,
@@ -29,13 +30,14 @@ public class PCKUtility {
      See Apple's [documentation](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession) for more for details.
      */
     public class func setupServer(authentication: ((URLAuthenticationChallenge,
-                                                     (URLSession.AuthChallengeDisposition,
+                                                    (URLSession.AuthChallengeDisposition,
                                                       URLCredential?) -> Void) -> Void)? = nil) {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration: [String: AnyObject]
         var clientKey: String?
         var liveQueryURL: URL?
         var useTransactionsInternally = false
+        var deleteKeychainIfNeeded = false
         guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
                 fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
@@ -69,11 +71,16 @@ public class PCKUtility {
             useTransactionsInternally = internalTransactions
         }
 
+        if let deleteKeychain = parseDictionary["DeleteKeychainIfNeeded"] as? Bool {
+            deleteKeychainIfNeeded = deleteKeychain
+        }
+
         ParseSwift.initialize(applicationId: appID,
                               clientKey: clientKey,
                               serverURL: serverURL,
                               liveQueryServerURL: liveQueryURL,
                               useTransactionsInternally: useTransactionsInternally,
+                              deleteKeychainIfNeeded: deleteKeychainIfNeeded,
                               authentication: authentication)
     }
 
@@ -97,16 +104,16 @@ public class PCKUtility {
 
     /// Get the current Parse Encoder with custom date strategy.
     public class func encoder() -> ParseEncoder {
-        PCKOutcome().getEncoder()
+        PCKOutcome.getEncoder()
     }
 
     /// Get the current JSON Encoder with custom date strategy.
     public class func jsonEncoder() -> JSONEncoder {
-        PCKOutcome().getJSONEncoder()
+        PCKOutcome.getJSONEncoder()
     }
 
     /// Get the current JSON Decoder with custom date strategy.
     public class func decoder() -> JSONDecoder {
-        PCKOutcome().getDecoder()
+        PCKOutcome.getDecoder()
     }
 }

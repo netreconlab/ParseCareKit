@@ -455,7 +455,7 @@
 				9119D5E8245618D7001B7AA3 /* Frameworks */,
 				9119D5E9245618D7001B7AA3 /* Resources */,
 				9119D62124562933001B7AA3 /* Embed Frameworks */,
-				709D177F258580620002E772 /* ShellScript */,
+				709D177F258580620002E772 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -556,7 +556,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		709D177F258580620002E772 /* ShellScript */ = {
+		709D177F258580620002E772 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -565,13 +565,14 @@
 			);
 			inputPaths = (
 			);
+			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$BUILD_DIR/Debug-iphonesimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-iphonesimulator/*.bundle $BUILD_DIR/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n    swiftlint --fix && swiftlint --strict\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$BUILD_DIR/Debug-iphonesimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-iphonesimulator/*.bundle $BUILD_DIR/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
 		};
 		70A793F125C330B20003F0FF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1067,7 +1068,7 @@
 			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.1;
+				minimumVersion = 2.0.2;
 			};
 		};
 		70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */ = {
