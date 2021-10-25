@@ -219,14 +219,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKObjectable.swift",
-      "line": 31,
+      "line": 29,
       "symbol": "PCKObjectable.logicalClock",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKObjectable.swift",
-      "line": 182,
+      "line": 180,
       "symbol": "PCKObjectable.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
