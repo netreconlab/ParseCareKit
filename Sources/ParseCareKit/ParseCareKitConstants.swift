@@ -19,7 +19,7 @@ enum CustomKey {
 }
 
 enum PCKCodingKeys: String, CodingKey {
-    case entityId, id // swiftlint:disable:this identifier_name
+    case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
          logicalClock, className, ACL, objectId, updatedAt, createdAt
