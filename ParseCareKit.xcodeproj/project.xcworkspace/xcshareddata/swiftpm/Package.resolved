@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/cbaker6/CareKit.git",
         "state": {
           "branch": null,
-          "revision": "acc650a85ae5a1f6444c31bfd3a587661bdd814b",
+          "revision": "52f6b4e6734d49124db54c83f552a6a1c3e26469",
           "version": null
         }
       },
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
           "branch": null,
-          "revision": "2bda2fd4a98ce923d1dce5a9f90fd964357cdb00",
-          "version": "2.0.2"
+          "revision": "5860abdfc55414c89461f19a4ff83f98bb9645a7",
+          "version": "2.0.3"
         }
       }
     ]
