@@ -11,8 +11,6 @@ import ParseSwift
 import CareKitStore
 import os.log
 
-// swiftlint:disable identifier_name
-
 /**
  Objects that conform to the `PCKObjectable` protocol are Parse interpretations of `OCKObjectCompatible` objects.
 */
