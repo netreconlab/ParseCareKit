@@ -1068,7 +1068,7 @@
 			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
+				minimumVersion = 2.0.3;
 			};
 		};
 		70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */ = {
@@ -1076,7 +1076,7 @@
 			repositoryURL = "https://github.com/carekit-apple/CareKit.git";
 			requirement = {
 				kind = revision;
-				revision = c9682a7c0c1b617bcf07a25f9143cab1980e511c;
+				revision = a612482e4ba4f28d4c75129c0a9b70ca23098bd6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
