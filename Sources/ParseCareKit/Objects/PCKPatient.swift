@@ -219,8 +219,8 @@ public struct PCKPatient: PCKVersionable {
         query.find(callbackQueue: ParseRemote.queue) { results in
             switch results {
 
-            case .success(let carePlans):
-                let pulled = carePlans.compactMap {try? $0.convertToCareKit()}
+            case .success(let patients):
+                let pulled = patients.compactMap {try? $0.convertToCareKit()}
                 let entities = pulled.compactMap {OCKEntity.patient($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(.success(revision))
