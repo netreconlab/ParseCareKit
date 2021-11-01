@@ -261,8 +261,8 @@ public struct PCKContact: PCKVersionable {
 
             switch results {
 
-            case .success(let carePlans):
-                let pulled = carePlans.compactMap {try? $0.convertToCareKit()}
+            case .success(let contacts):
+                let pulled = contacts.compactMap {try? $0.convertToCareKit()}
                 let entities = pulled.compactMap {OCKEntity.contact($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(.success(revision))

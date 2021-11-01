@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 import os.log
 
-struct PCKClock: ParseObject {
+struct PCKClock: ParseObjectMutable {
 
     static var className: String {
         "Clock"
@@ -55,12 +55,15 @@ struct PCKClock: ParseObject {
         completion(cloudVector)
     }
 
-    mutating func encodeClock(_ clock: OCKRevisionRecord.KnowledgeVector) -> String? {
+    func encodeClock(_ clock: OCKRevisionRecord.KnowledgeVector) -> Self? {
         do {
             let json = try JSONEncoder().encode(clock)
-            let cloudVectorString = String(data: json, encoding: .utf8)!
-            self.vector = cloudVectorString
-            return self.vector
+            guard let cloudVectorString = String(data: json, encoding: .utf8) else {
+                return nil
+            }
+            var mutableClock = self.mutable
+            mutableClock.vector = cloudVectorString
+            return mutableClock
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription, privacy: .private).")
