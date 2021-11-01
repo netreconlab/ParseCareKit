@@ -617,17 +617,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
     func finishedRevisions(_ parseClock: PCKClock, cloudClock: OCKRevisionRecord.KnowledgeVector,
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
-        var parseClock = parseClock
         var cloudVector = cloudClock
         // Increment and merge Knowledge Vector
         cloudVector.increment(clockFor: uuid)
         cloudVector.merge(with: localClock)
 
-        guard parseClock.encodeClock(cloudVector) != nil else {
+        guard let updatedClock = parseClock.encodeClock(cloudVector) else {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        parseClock.save(callbackQueue: ParseRemote.queue) { result in
+        updatedClock.save(callbackQueue: ParseRemote.queue) { result in
             self.isSynchronizing = false
             switch result {
 
