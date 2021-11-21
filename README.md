@@ -128,7 +128,7 @@ let userTypeUUIDDictionary = [
 //Store the possible uuids for each type
 PCKUser.current.userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
 PCKUser.current.loggedInType = "doctor" 
-PCKUser.current.saveInBackground()
+PCKUser.current.save()
 
 //Start synch with the correct knowlege vector for the particular type of user
 let lastLoggedInType = PCKUser.current.loggedInType

@@ -285,6 +285,30 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
+    func testPatientACL() throws {
+        var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
+        XCTAssertNil(careKit.acl)
+        let user = try userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        try careKit.setACL(newACL)
+        guard let objectId = user.objectId,
+              let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+    }
+
     // swiftlint:disable:next function_body_length
     func testOutcome() throws {
         var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
@@ -423,6 +447,30 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
+    func testOutcomeACL() throws {
+        var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
+        XCTAssertNil(careKit.acl)
+        let user = try userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        try careKit.setACL(newACL)
+        guard let objectId = user.objectId,
+              let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+    }
+
     // swiftlint:disable:next function_body_length
     func testTask() throws {
         let careKitSchedule = OCKScheduleElement(start: Date(),
@@ -556,6 +604,33 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
+    }
+
+    func testTaskACL() throws {
+        let careKitSchedule = OCKScheduleElement(start: Date(),
+                                                 end: Date().addingTimeInterval(3000), interval: .init(day: 1))
+        var careKit = OCKTask(id: "myId", title: "hello", carePlanUUID: UUID(),
+                              schedule: .init(composing: [careKitSchedule]))
+        XCTAssertNil(careKit.acl)
+        let user = try userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        try careKit.setACL(newACL)
+        guard let objectId = user.objectId,
+              let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -696,6 +771,36 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
+    func testHealthKitTaskACL() throws {
+        let careKitSchedule = OCKScheduleElement(start: Date(),
+                                                 end: Date().addingTimeInterval(3000), interval: .init(day: 1))
+        var careKit = OCKHealthKitTask(id: "myId", title: "hello", carePlanUUID: UUID(),
+                                       schedule: .init(composing: [careKitSchedule]),
+                                       healthKitLinkage: .init(quantityIdentifier: .bodyTemperature,
+                                                               quantityType: .discrete,
+                                                               unit: .degreeCelsius()))
+        XCTAssertNil(careKit.acl)
+        let user = try userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        try careKit.setACL(newACL)
+        guard let objectId = user.objectId,
+              let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+    }
+
     // swiftlint:disable:next function_body_length
     func testCarePlan() throws {
         var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
@@ -817,6 +922,30 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNotNil(cloudDecoded.effectiveDate)
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
+    }
+
+    func testCarePlanACL() throws {
+        var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
+        XCTAssertNil(careKit.acl)
+        let user = try userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        try careKit.setACL(newACL)
+        guard let objectId = user.objectId,
+              let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -975,6 +1104,31 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
+
+    func testContactACL() throws {
+        var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
+        XCTAssertNil(careKit.acl)
+        let user = try userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        try careKit.setACL(newACL)
+        guard let objectId = user.objectId,
+              let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+    }
+
 /*
     func testAddContact() throws {
         let contact = OCKContact(id: "test", givenName: "hello", familyName: "world", carePlanUUID: nil)
