@@ -296,13 +296,16 @@ This works with 1 or many devices per patient.*/</span>
 <span class="p">]</span>
 
 <span class="c1">//Store the possible uuids for each type</span>
-<span class="kt">PCKUser</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">userTypes</span> <span class="o">=</span> <span class="n">userTypeUUIDDictionary</span> <span class="c1">//Note that you need to save the UUID in string form to Parse</span>
-<span class="kt">PCKUser</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">loggedInType</span> <span class="o">=</span> <span class="s">"doctor"</span> 
-<span class="kt">PCKUser</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="nf">save</span><span class="p">()</span>
+<span class="k">guard</span> <span class="k">var</span> <span class="nv">user</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="n">current</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+<span class="n">user</span><span class="o">.</span><span class="n">userTypes</span> <span class="o">=</span> <span class="n">userTypeUUIDDictionary</span> <span class="c1">//Note that you need to save the UUID in string form to Parse</span>
+<span class="n">user</span><span class="o">.</span><span class="n">loggedInType</span> <span class="o">=</span> <span class="s">"doctor"</span> 
+<span class="n">user</span><span class="o">.</span><span class="nf">save</span><span class="p">()</span>
 
 <span class="c1">//Start synch with the correct knowlege vector for the particular type of user</span>
-<span class="k">let</span> <span class="nv">lastLoggedInType</span> <span class="o">=</span> <span class="kt">PCKUser</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">loggedInType</span>
-<span class="k">let</span> <span class="nv">userTypeUUIDString</span> <span class="o">=</span> <span class="kt">PCKUser</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">userTypes</span><span class="p">[</span><span class="n">lastLoggedInType</span><span class="p">]</span> <span class="k">as!</span> <span class="kt">String</span>
+<span class="k">let</span> <span class="nv">lastLoggedInType</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="n">current</span><span class="p">?</span><span class="o">.</span><span class="n">loggedInType</span>
+<span class="k">let</span> <span class="nv">userTypeUUIDString</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="n">current</span><span class="p">?</span><span class="o">.</span><span class="n">userTypes</span><span class="p">[</span><span class="n">lastLoggedInType</span><span class="p">]</span> <span class="k">as!</span> <span class="kt">String</span>
 <span class="k">let</span> <span class="nv">userTypeUUID</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">(</span><span class="nv">uuidString</span><span class="p">:</span> <span class="n">userTypeUUID</span><span class="p">)</span><span class="o">!</span>
 
 <span class="c1">//Start synching </span>
