@@ -72,6 +72,12 @@
 		91226D58274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D57274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift */; };
 		91226D5A274AC23300B5C2DF /* OCKOutcome+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D59274AC23300B5C2DF /* OCKOutcome+Parse.swift */; };
 		91226D5C274AC24A00B5C2DF /* OCKTask+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */; };
+		91226D5D274AD9B600B5C2DF /* OCKCarePlan+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D53274AC1DB00B5C2DF /* OCKCarePlan+Parse.swift */; };
+		91226D5E274AD9B600B5C2DF /* OCKContact+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D55274AC1EF00B5C2DF /* OCKContact+Parse.swift */; };
+		91226D5F274AD9B600B5C2DF /* OCKHealthKitTask+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D57274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift */; };
+		91226D60274AD9B600B5C2DF /* OCKOutcome+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D59274AC23300B5C2DF /* OCKOutcome+Parse.swift */; };
+		91226D61274AD9B600B5C2DF /* OCKPatient+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D51274AC00500B5C2DF /* OCKPatient+Parse.swift */; };
+		91226D62274AD9B600B5C2DF /* OCKTask+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */; };
 		916570D72462DABC008F2997 /* ParseRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemote.swift */; };
 		918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		91AA07232466F0CD00B39452 /* PCKClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* PCKClock.swift */; };
@@ -654,6 +660,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91226D5D274AD9B600B5C2DF /* OCKCarePlan+Parse.swift in Sources */,
+				91226D5E274AD9B600B5C2DF /* OCKContact+Parse.swift in Sources */,
+				91226D5F274AD9B600B5C2DF /* OCKHealthKitTask+Parse.swift in Sources */,
+				91226D60274AD9B600B5C2DF /* OCKOutcome+Parse.swift in Sources */,
+				91226D61274AD9B600B5C2DF /* OCKPatient+Parse.swift in Sources */,
+				91226D62274AD9B600B5C2DF /* OCKTask+Parse.swift in Sources */,
 				709D175E258551D20002E772 /* ParseCareKitLog.swift in Sources */,
 				70F2E187254EFC8000B2EA5C /* ParseCareKitConstants.swift in Sources */,
 				700B0ED7270DD7D900EEF103 /* PCKVersionable+async.swift in Sources */,
