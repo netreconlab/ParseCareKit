@@ -25,6 +25,7 @@ public extension OCKCarePlan {
 
     /**
     Set the Parse ACL for this object.
+     - parameter acl: The Parse ACL for this object.
     */
     mutating func setACL(_ acl: ParseACL) throws {
         let encodedACL = try PCKUtility.jsonEncoder().encode(acl)
