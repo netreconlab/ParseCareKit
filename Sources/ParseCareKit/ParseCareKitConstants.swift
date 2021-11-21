@@ -13,17 +13,23 @@ import os.log
 
 // swiftlint:disable line_length
 
-// #Mark - Custom Enums
-enum CustomKey {
-    static let customClass                                  = "customClass"
+public enum ParseCareKitConstants {
+    static let defaultACL = "edu.uky.cs.netreconlab.ParseCareKit_defaultACL"
+    static let acl = "_acl"
 }
 
+// MARK: Coding
 enum PCKCodingKeys: String, CodingKey {
     case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
          logicalClock, className, ACL, objectId, updatedAt, createdAt
     case effectiveDate, previousVersionUUIDs, nextVersionUUIDs
+}
+
+// MARK: Custom Enums
+enum CustomKey {
+    static let customClass                                  = "customClass"
 }
 
 /// Types of ParseCareKit classes.
@@ -165,7 +171,7 @@ public enum PCKStoreClass: String {
     }
 }
 
-// #Mark - Parse Database Keys
+// MARK: Parse Database Keys
 
 /// Parse business logic keys. These keys can be used for querying Parse objects.
 public enum ParseKey {
@@ -221,7 +227,7 @@ public enum VersionableKey {
     public static let previousVersionUUIDs                        = "previousVersionUUIDs"
 }
 
-// #Mark - Patient Class
+// MARK: Patient Class
 /// Keys for `PCKPatient` objects. These keys can be used for querying Parse objects.
 public enum PatientKey {
     /// className key.
@@ -236,7 +242,7 @@ public enum PatientKey {
     public static let name                                     = "name"
 }
 
-// #Mark - CarePlan Class
+// MARK: CarePlan Class
 /// Keys for `PCKCarePlan` objects. These keys can be used for querying Parse objects.
 public enum CarePlanKey {
     /// className key.
@@ -247,7 +253,7 @@ public enum CarePlanKey {
     public static let title                                    = "title"
 }
 
-// #Mark - Contact Class
+// MARK: Contact Class
 /// Keys for `PCKContact` objects. These keys can be used for querying Parse objects.
 public enum ContactKey {
     /// className key.
@@ -276,7 +282,7 @@ public enum ContactKey {
     public static let otherContactInfo                         = "otherContactInfo"
 }
 
-// #Mark - Task Class
+// MARK: Task Class
 /// Keys for `PCKTask` objects. These keys can be used for querying Parse objects.
 public enum TaskKey {
     /// className key.
@@ -293,7 +299,7 @@ public enum TaskKey {
     public static let elements                                 = "elements"
 }
 
-// #Mark - Outcome Class
+// MARK: Outcome Class
 /// Keys for `PCKOutcome` objects. These keys can be used for querying Parse objects.
 public enum OutcomeKey {
     /// className key.
@@ -308,13 +314,13 @@ public enum OutcomeKey {
     public static let values                                   = "values"
 }
 
-// #Mark - Clock Class
+// MARK: Clock Class
 /// Keys for `Clock` objects. These keys can be used for querying Parse objects.
 public enum ClockKey {
     /// className key.
     public static let className                                = "Clock"
     /// uuid key.
     public static let uuid                                     = "uuid"
-    /// vectorKey key.
-    public static let vectorKey                                = "vector"
+    /// vector key.
+    public static let vector                                   = "vector"
 }

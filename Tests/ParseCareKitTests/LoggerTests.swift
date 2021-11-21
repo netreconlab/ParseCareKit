@@ -108,4 +108,13 @@ class LoggerTests: XCTestCase {
                    log: .clock, type: .error)
         }
     }
+
+    func testInitializer() throws {
+        if #available(iOS 14.0, watchOS 7.0, *) {
+            Logger.initializer.error("Testing")
+        } else {
+            os_log("Testing",
+                   log: .initializer, type: .error)
+        }
+    }
 }

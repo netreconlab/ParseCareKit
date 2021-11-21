@@ -21,6 +21,7 @@ enum ParseCareKitError: Error {
     case cloudVersionNewerThanLocal
     case uuidAlreadyExists
     case cantCastToNeededClassType
+    case cantEncodeACL
     case classTypeNotAnEligibleType
     case couldntCreateConcreteClasses
     case syncAlreadyInProgress
@@ -57,6 +58,9 @@ extension ParseCareKitError: LocalizedError {
         case .cantCastToNeededClassType:
             return NSLocalizedString("Can't cast to needed class type",
                                      comment: "Can't cast to needed class type")
+        case .cantEncodeACL:
+            return NSLocalizedString("Can't encode ACL",
+                                     comment: "Can't encode ACL")
         case .classTypeNotAnEligibleType:
             return NSLocalizedString("PCKClass type isn't an eligible type",
                                      comment: "PCKClass type isn't an eligible type")

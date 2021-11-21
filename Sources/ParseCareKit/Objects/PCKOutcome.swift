@@ -70,7 +70,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     var startDate: Date? // Custom added, check if needed
 
@@ -114,6 +114,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         uuid = UUID()
         previousVersionUUIDs = []
         nextVersionUUIDs = []
+        ACL = PCKUtility.getDefaultACL()
     }
 
     enum CodingKeys: String, CodingKey {
@@ -328,6 +329,11 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         let encoded = try PCKUtility.jsonEncoder().encode(outcome)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
+        if let acl = outcome.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

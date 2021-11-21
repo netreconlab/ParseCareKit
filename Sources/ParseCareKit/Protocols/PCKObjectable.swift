@@ -77,6 +77,24 @@ public protocol PCKObjectable: ParseObject {
     static func copyValues(from other: Self, to here: Self) throws -> Self
 }
 
+// MARK: Defaults
+extension PCKObjectable {
+    public var id: String {
+        guard let returnId = entityId else {
+            return ""
+        }
+        return returnId
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.uuid == rhs.uuid
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.uuid)
+    }
+}
+
 extension PCKObjectable {
 
     mutating func copyRelationalEntities(_ parse: Self) -> Self {
@@ -175,25 +193,7 @@ extension PCKObjectable {
     }
 }
 
-// Defaults
-extension PCKObjectable {
-    public var id: String {
-        guard let returnId = entityId else {
-            return ""
-        }
-        return returnId
-    }
-
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.uuid == rhs.uuid
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.uuid)
-    }
-}
-
-// Encodable
+// MARK: Encodable
 extension PCKObjectable {
 
     /**

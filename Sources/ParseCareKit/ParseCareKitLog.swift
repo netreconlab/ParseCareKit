@@ -23,6 +23,7 @@ extension OSLog {
     static let pullRevisions = OSLog(subsystem: subsystem, category: "\(category).pullRevisions")
     static let pushRevisions = OSLog(subsystem: subsystem, category: "\(category).pushRevisions")
     static let clock = OSLog(subsystem: subsystem, category: "\(category).clock")
+    static let initializer = OSLog(subsystem: subsystem, category: "\(category).initializer")
 }
 
 @available(iOS 14.0, watchOS 7.0, *)
@@ -40,4 +41,5 @@ extension Logger {
     static let pullRevisions = Logger(subsystem: subsystem, category: "\(category).pullRevisions")
     static let pushRevisions = Logger(subsystem: subsystem, category: "\(category).pushRevisions")
     static let clock = Logger(subsystem: subsystem, category: "\(category).clock")
+    static let initializer = Logger(subsystem: subsystem, category: "\(category).initializer")
 }
