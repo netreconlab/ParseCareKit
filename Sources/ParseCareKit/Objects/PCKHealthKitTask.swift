@@ -75,7 +75,7 @@ public struct PCKHealthKitTask: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     /// A structure specifying how this task is linked with HealthKit.
     public var healthKitLinkage: OCKHealthKitLinkage?

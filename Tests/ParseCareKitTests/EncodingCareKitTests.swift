@@ -42,7 +42,7 @@ struct LoginSignupResponse: ParseUser {
     }
 }
 
-func userLogin() {
+func userLogin() throws -> PCKUser {
     let loginResponse = LoginSignupResponse()
 
     MockURLProtocol.mockRequests { _ in
@@ -53,11 +53,10 @@ func userLogin() {
             return nil
         }
     }
-    do {
-       _ = try PCKUser.login(username: loginResponse.username!, password: loginResponse.password!)
-    } catch {
-        XCTFail(error.localizedDescription)
-    }
+    let user = try PCKUser.login(username: loginResponse.username!,
+                                 password: loginResponse.password!)
+    MockURLProtocol.removeAll()
+    return user
 }
 
 func userLoginToRealServer() {
@@ -81,15 +80,14 @@ class ParseCareKitTests: XCTestCase {
 
     override func setUpWithError() throws {
         guard let url = URL(string: "http://localhost:1337/1") else {
-                    XCTFail("Should create valid URL")
-                    return
-                }
-                ParseSwift.initialize(applicationId: "applicationId",
-                                      clientKey: "clientKey",
-                                      masterKey: "masterKey",
-                                      serverURL: url)
-        // userLogin()
-        // userLoginToRealServer()
+            XCTFail("Should create valid URL")
+            return
+        }
+        ParseSwift.initialize(applicationId: "applicationId",
+                              clientKey: "clientKey",
+                              masterKey: "masterKey",
+                              serverURL: url,
+                              testing: true)
         do {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
@@ -107,6 +105,47 @@ class ParseCareKitTests: XCTestCase {
         try KeychainStore.shared.deleteAll()
         try ParseStorage.shared.deleteAll()
         try store.delete()
+    }
+
+    func testSetDefaultACLLoggedIn() throws {
+        let user = try userLogin()
+        guard let objectId = user.objectId else {
+            XCTFail("Should have objectId")
+            return
+        }
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        let defaultACL = try ParseACL.defaultACL()
+        XCTAssertEqual(defaultACL.publicRead, false)
+        XCTAssertEqual(defaultACL.publicWrite, false)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+    }
+
+    func testDefaultACLAlreadySet() throws {
+        let user = try userLogin()
+        guard let objectId = user.objectId else {
+            XCTFail("Should have objectId")
+            return
+        }
+        var userSetACL = ParseACL()
+        userSetACL.publicRead = true
+        userSetACL.publicWrite = true
+        _ = try ParseACL.setDefaultACL(userSetACL, withAccessForCurrentUser: true)
+
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        let defaultACL = try ParseACL.defaultACL()
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+    }
+
+    func testDefaultACLNoLogin() throws {
+        XCTAssertThrowsError(try ParseACL.defaultACL())
     }
 
     // swiftlint:disable:next function_body_length

@@ -79,7 +79,7 @@ To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netrecon
 For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default. 
 
 ### Protecting Patients data in the Cloud using ACL's
-You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following in `AppDelegate.swift`:
+`ParseCareKit` will set a default ACL on every object saved to your Parse Server with read/write access only for the user who created the data. If you want different level of access by default, you should set the default ACL you prefer before initializing `ParseCareKit`. For example, to make all data created to only be read and written by the user who created at do the following in your `AppDelegate.swift`:
 
 ```swift
 //Set default ACL for all Parse Classes

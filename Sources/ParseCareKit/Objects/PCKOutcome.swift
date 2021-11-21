@@ -70,7 +70,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     var startDate: Date? // Custom added, check if needed
 

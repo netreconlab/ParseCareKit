@@ -87,6 +87,13 @@
 			remoteGlobalIDString = 9119D5EA245618D7001B7AA3;
 			remoteInfo = ParseCareKit;
 		};
+		91226D4E274A931400B5C2DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9119D5E2245618D7001B7AA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 709752DF250D27300020EA70;
+			remoteInfo = TestHost;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -398,6 +405,7 @@
 			);
 			dependencies = (
 				705DC9242526A4B80035BBE3 /* PBXTargetDependency */,
+				91226D4F274A931400B5C2DF /* PBXTargetDependency */,
 			);
 			name = ParseCareKitTests;
 			productName = ParseCareKitTests;
@@ -482,6 +490,7 @@
 				TargetAttributes = {
 					705DC91C2526A4B80035BBE3 = {
 						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 709752DF250D27300020EA70;
 					};
 					709752DF250D27300020EA70 = {
 						CreatedOnToolsVersion = 11.7;
@@ -685,6 +694,11 @@
 			target = 9119D5EA245618D7001B7AA3 /* ParseCareKit */;
 			targetProxy = 709752FC250D351B0020EA70 /* PBXContainerItemProxy */;
 		};
+		91226D4F274A931400B5C2DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 709752DF250D27300020EA70 /* TestHost */;
+			targetProxy = 91226D4E274A931400B5C2DF /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -702,6 +716,7 @@
 		705DC9252526A4B80035BBE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ParseCareKitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -714,12 +729,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
 		705DC9262526A4B80035BBE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ParseCareKitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -732,6 +749,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Release;
 		};
@@ -1068,7 +1086,7 @@
 			repositoryURL = "https://github.com/parse-community/Parse-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.4;
+				minimumVersion = 2.2.6;
 			};
 		};
 		70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */ = {

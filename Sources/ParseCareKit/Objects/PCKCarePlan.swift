@@ -69,7 +69,7 @@ public struct PCKCarePlan: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     public var nextVersionUUIDs: [UUID]?
 

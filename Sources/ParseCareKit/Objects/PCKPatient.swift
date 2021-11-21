@@ -66,7 +66,7 @@ public struct PCKPatient: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     /// A list of substances this patient is allergic to.
     public var allergies: [String]?

@@ -73,7 +73,7 @@ public struct PCKContact: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     /// The contact's postal address.
     public var address: OCKPostalAddress?

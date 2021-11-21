@@ -68,6 +68,24 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if PCKUser.current != nil {
+            if (try? ParseACL.defaultACL()) == nil {
+                var defaultACL = ParseACL()
+                defaultACL.publicRead = false
+                defaultACL.publicWrite = false
+                do {
+                    _ = try ParseACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+                } catch {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.initializer.error("\(error.localizedDescription)")
+                    } else {
+                        os_log("%{private}@.",
+                               log: .initializer,
+                               type: .error,
+                               error.localizedDescription)
+                    }
+
+                }
+            }
             subscribeToClock()
         }
     }
