@@ -6,6 +6,8 @@
 //  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
 //
 
+// swiftlint:disable type_body_length
+
 import XCTest
 @testable import ParseCareKit
 @testable import CareKitStore
@@ -72,7 +74,6 @@ func userLoginToRealServer() {
     }
 }
 
-// swiftlint:disable:next type_body_length
 class ParseCareKitTests: XCTestCase {
 
     private var parse: ParseRemote!
@@ -89,9 +90,10 @@ class ParseCareKitTests: XCTestCase {
                               serverURL: url,
                               testing: true)
         do {
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
+            _ = try userLogin()
+            parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                    auto: false,
+                                    subscribeToServerUpdates: false)
         } catch {
             print(error.localizedDescription)
         }
@@ -110,11 +112,8 @@ class ParseCareKitTests: XCTestCase {
     }
 
     func testSetDefaultACLLoggedIn() throws {
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+              let objectId = user.objectId,
               let defaultACL = PCKUtility.getDefaultACL() else {
             XCTFail("Should have objectId")
             return
@@ -133,10 +132,7 @@ class ParseCareKitTests: XCTestCase {
         userSetACL.setReadAccess(user: user, value: true)
         userSetACL.setWriteAccess(user: user, value: true)
 
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false,
-                                defaultACL: userSetACL)
+        ParseRemote.setDefaultACL(userSetACL, for: user)
         guard let objectId = user.objectId,
               let defaultACL = PCKUtility.getDefaultACL() else {
             XCTFail("Should have objectId")
@@ -146,10 +142,6 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
-    }
-
-    func testDefaultACLNoLogin() throws {
-        XCTAssertNil(PCKUtility.getDefaultACL())
     }
 
     // swiftlint:disable:next function_body_length
@@ -289,13 +281,10 @@ class ParseCareKitTests: XCTestCase {
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         XCTAssertNil(careKit.acl)
 
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
         // Should have default ACL
         let parse = try PCKPatient.copyCareKit(careKit)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
             let acl = parse.ACL else {
             XCTFail("Should have ACL")
             return
@@ -474,14 +463,11 @@ class ParseCareKitTests: XCTestCase {
     func testOutcomeACL() throws {
         var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
         XCTAssertNil(careKit.acl)
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
 
         // Should have default ACL
         let parse = try PCKOutcome.copyCareKit(careKit)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
             let acl = parse.ACL else {
             XCTFail("Should have ACL")
             return
@@ -660,14 +646,11 @@ class ParseCareKitTests: XCTestCase {
         var careKit = OCKTask(id: "myId", title: "hello", carePlanUUID: UUID(),
                               schedule: .init(composing: [careKitSchedule]))
         XCTAssertNil(careKit.acl)
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
 
         // Should have default ACL
         let parse = try PCKTask.copyCareKit(careKit)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
             let acl = parse.ACL else {
             XCTFail("Should have ACL")
             return
@@ -852,14 +835,11 @@ class ParseCareKitTests: XCTestCase {
                                                                quantityType: .discrete,
                                                                unit: .degreeCelsius()))
         XCTAssertNil(careKit.acl)
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
 
         // Should have default ACL
         let parse = try PCKHealthKitTask.copyCareKit(careKit)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
             let acl = parse.ACL else {
             XCTFail("Should have ACL")
             return
@@ -1023,14 +1003,11 @@ class ParseCareKitTests: XCTestCase {
     func testCarePlanACL() throws {
         var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
         XCTAssertNil(careKit.acl)
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
 
         // Should have default ACL
         let parse = try PCKCarePlan.copyCareKit(careKit)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
             let acl = parse.ACL else {
             XCTFail("Should have ACL")
             return
@@ -1228,14 +1205,11 @@ class ParseCareKitTests: XCTestCase {
     func testContactACL() throws {
         var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
         XCTAssertNil(careKit.acl)
-        let user = try userLogin()
-        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                auto: false,
-                                subscribeToServerUpdates: false)
 
         // Should have default ACL
         let parse = try PCKContact.copyCareKit(careKit)
-        guard let objectId = user.objectId,
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
             let acl = parse.ACL else {
             XCTFail("Should have ACL")
             return
