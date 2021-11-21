@@ -103,6 +103,29 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OCKCarePlan.html">OCKCarePlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OCKContact.html">OCKContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OCKHealthKitTask.html">OCKHealthKitTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OCKOutcome.html">OCKOutcome</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OCKPatient.html">OCKPatient</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OCKTask.html">OCKTask</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -330,9 +353,9 @@ are <code><a href="../Structs/PCKPatient.html">PCKPatient</a></code>, <code><a h
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdatesAC10Foundation4UUIDV_S2btKcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(uuid:auto:subscribeToServerUpdates:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdatesAC10Foundation4UUIDV_S2btKcfc">init(uuid:<wbr>auto:<wbr>subscribeToServerUpdates:<wbr>)</a>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_S2b0A5Swift0aL0VSgtKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(uuid:auto:subscribeToServerUpdates:defaultACL:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_S2b0A5Swift0aL0VSgtKcfc">init(uuid:<wbr>auto:<wbr>subscribeToServerUpdates:<wbr>defaultACL:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -349,7 +372,8 @@ are <code><a href="../Structs/PCKPatient.html">PCKPatient</a></code>, <code><a h
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span>
             <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
-            <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+            <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+            <span class="n">defaultACL</span><span class="p">:</span> <span class="kt">ParseACL</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -394,6 +418,22 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>defaultACL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The default access control list for which users can access or modify <code>ParseCareKit</code>
+objects. If no <code>defaultACL</code> is provided, the default is set to read/write for the user who created the data with
+no public read/write access. This <code>defaultACL</code> is not the same as <code>ParseACL.defaultACL</code>. If you want the
+the <code>ParseCareKit</code> <code>defaultACL</code> to match the <code>ParseACL.defaultACL</code>, you need to provide
+<code>ParseACL.defaultACL</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -403,9 +443,9 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSbtKcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSbtKcfc">init(uuid:<wbr>auto:<wbr>replacePCKStoreClasses:<wbr>subscribeToServerUpdates:<wbr>)</a>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSb0A5Swift0aO0VSgtKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSb0A5Swift0aO0VSgtKcfc">init(uuid:<wbr>auto:<wbr>replacePCKStoreClasses:<wbr>subscribeToServerUpdates:<wbr>defaultACL:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -423,7 +463,8 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                           <pre class="highlight swift"><code><span class="kd">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">UUID</span><span class="p">,</span>
                         <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
                         <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span>
-                        <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                        <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                        <span class="n">defaultACL</span><span class="p">:</span> <span class="kt">ParseACL</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -480,6 +521,22 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>defaultACL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The default access control list for which users can access or modify <code>ParseCareKit</code>
+objects. If no <code>defaultACL</code> is provided, the default is set to read/write for the user who created the data with
+no public read/write access. This <code>defaultACL</code> is not the same as <code>ParseACL.defaultACL</code>. If you want the
+the <code>ParseCareKit</code> <code>defaultACL</code> to match the <code>ParseACL.defaultACL</code>, you need to provide
+<code>ParseACL.defaultACL</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -489,9 +546,9 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSgSDySSAaN_pGSbtKcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdatesAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSgSDySSAaN_pGSbtKcfc">init(uuid:<wbr>auto:<wbr>replacePCKStoreClasses:<wbr>customClasses:<wbr>subscribeToServerUpdates:<wbr>)</a>
+                    <a name="/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSgSDySSAaO_pGSb0A5Swift0aP0VSgtKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSgSDySSAaO_pGSb0A5Swift0aP0VSgtKcfc">init(uuid:<wbr>auto:<wbr>replacePCKStoreClasses:<wbr>customClasses:<wbr>subscribeToServerUpdates:<wbr>defaultACL:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -510,7 +567,8 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
                         <span class="nv">auto</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
                         <span class="nv">replacePCKStoreClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/PCKStoreClass.html">PCKStoreClass</a></span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
                         <span class="nv">customClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PCKSynchronizable.html">PCKSynchronizable</a></span><span class="p">],</span>
-                        <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                        <span class="nv">subscribeToServerUpdates</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                        <span class="n">defaultACL</span><span class="p">:</span> <span class="kt">ParseACL</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -577,6 +635,22 @@ by passing in the respective Key/Value pairs. Defaults to nil, which uses the st
                                 <div>
                                   <p>Automatically receive updates from other devices linked to this Clock.
 Requires <code>ParseLiveQuery</code> server to be setup.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>defaultACL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The default access control list for which users can access or modify <code>ParseCareKit</code>
+objects. If no <code>defaultACL</code> is provided, the default is set to read/write for the user who created the data with
+no public read/write access. This <code>defaultACL</code> is not the same as <code>ParseACL.defaultACL</code>. If you want the
+the <code>ParseCareKit</code> <code>defaultACL</code> to match the <code>ParseACL.defaultACL</code>, you need to provide
+<code>ParseACL.defaultACL</code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -675,7 +749,7 @@ Requires <code>ParseLiveQuery</code> server to be setup.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external noopener">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-11-10)</p>
+      <p>&copy; 2021 <a class="link" href="https://www.cs.uky.edu/~baker" target="_blank" rel="external noopener">Corey E. Baker</a>. All rights reserved. (Last updated: 2021-11-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>

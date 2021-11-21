@@ -16,14 +16,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKCarePlan.swift",
-      "line": 303,
+      "line": 305,
       "symbol": "PCKCarePlan.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKCarePlan.swift",
-      "line": 321,
+      "line": 328,
       "symbol": "PCKCarePlan.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -44,14 +44,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKContact.swift",
-      "line": 339,
+      "line": 341,
       "symbol": "PCKContact.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKContact.swift",
-      "line": 356,
+      "line": 363,
       "symbol": "PCKContact.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -72,14 +72,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKHealthKitTask.swift",
-      "line": 317,
+      "line": 319,
       "symbol": "PCKHealthKitTask.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKHealthKitTask.swift",
-      "line": 336,
+      "line": 343,
       "symbol": "PCKHealthKitTask.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -100,56 +100,56 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 323,
+      "line": 324,
       "symbol": "PCKOutcome.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 334,
+      "line": 340,
       "symbol": "PCKOutcome.copyRelational(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 346,
+      "line": 352,
       "symbol": "PCKOutcome.prepareEncodingRelational(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 353,
+      "line": 359,
       "symbol": "PCKOutcome.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 360,
+      "line": 366,
       "symbol": "PCKOutcome.save(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 431,
+      "line": 437,
       "symbol": "PCKOutcome.tagWithId(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 448,
+      "line": 454,
       "symbol": "PCKOutcome.queryNotDeleted()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKOutcome.swift",
-      "line": 463,
+      "line": 469,
       "symbol": "PCKOutcome.findOutcomesInBackground(completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -170,14 +170,14 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKPatient.swift",
-      "line": 296,
+      "line": 298,
       "symbol": "PCKPatient.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKPatient.swift",
-      "line": 308,
+      "line": 315,
       "symbol": "PCKPatient.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -198,21 +198,28 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKTask.swift",
-      "line": 314,
+      "line": 316,
       "symbol": "PCKTask.copyCareKit(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Objects/PCKTask.swift",
-      "line": 333,
+      "line": 340,
       "symbol": "PCKTask.convertToCareKit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseCareKitConstants.swift",
+      "line": 16,
+      "symbol": "ParseCareKitConstants",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseCareKitError.swift",
-      "line": 29,
+      "line": 30,
       "symbol": "ParseCareKitError",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -226,7 +233,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/Protocols/PCKObjectable.swift",
-      "line": 180,
+      "line": 82,
       "symbol": "PCKObjectable.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

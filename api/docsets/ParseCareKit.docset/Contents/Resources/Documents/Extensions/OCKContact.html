@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PCKUtility Class Reference</title>
+    <title>OCKContact Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/PCKUtility" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Extension/OCKContact" class="dashAnchor"></a>
 
-    <a title="PCKUtility Class Reference"></a>
+    <a title="OCKContact Extension Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -50,7 +50,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">ParseCareKit Reference</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      PCKUtility Class Reference
+      OCKContact Extension Reference
     </p>
 
     <div class="content-wrapper">
@@ -171,16 +171,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>PCKUtility</h1>
+            <h1>OCKContact</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PCKUtility</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">OCKContact</span></code></pre>
 
                 </div>
               </div>
-            <p>Utility functions designed to make things easier.</p>
-
+            
           </div>
         </section>
 
@@ -191,9 +190,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit10PCKUtilityC11setupServer14authenticationyySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthI11DispositionV_So15NSURLCredentialCSgtXEtcSg_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/setupServer(authentication:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit10PCKUtilityC11setupServer14authenticationyySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthI11DispositionV_So15NSURLCredentialCSgtXEtcSg_tFZ">setupServer(authentication:<wbr>)</a>
+                    <a name="/s:12CareKitStore10OCKContactV05ParseaB0E3acl0E5Swift0E3ACLVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/acl" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore10OCKContactV05ParseaB0E3acl0E5Swift0E3ACLVSgvp">acl</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -201,27 +200,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Can setup a connection to Parse Server based on a ParseCareKit.plist file.</p>
-
-<p>The key/values supported in the file are a dictionary named <code>ParseClientConfiguration</code>:</p>
-
-<ul>
-<li>Server - (String) The server URL to connect to Parse Server.</li>
-<li>ApplicationID - (String) The application id of your Parse application.</li>
-<li>ClientKey - (String) The client key of your Parse application.</li>
-<li>LiveQueryServer - (String) The live query server URL to connect to Parse Server.</li>
-<li>UseTransactionsInternally - (Boolean) Use transactions inside the Client SDK.</li>
-<li>DeleteKeychainIfNeeded - (Boolean) Deletes the Parse Keychain when the app is running for the first time.</li>
-</ul>
+                        <p>The Parse ACL for this object.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">setupServer</span><span class="p">(</span><span class="nv">authentication</span><span class="p">:</span> <span class="p">((</span><span class="kt">URLAuthenticationChallenge</span><span class="p">,</span>
-                                                <span class="p">(</span><span class="kt">URLSession</span><span class="o">.</span><span class="kt">AuthChallengeDisposition</span><span class="p">,</span>
-                                                  <span class="kt">URLCredential</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">acl</span><span class="p">:</span> <span class="kt">ParseACL</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12CareKitStore10OCKContactV05ParseaB0E6setACLyy0E5Swift0eG0VKF"></a>
+                    <a name="//apple_ref/swift/Method/setACL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CareKitStore10OCKContactV05ParseaB0E6setACLyy0E5Swift0eG0VKF">setACL(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the Parse ACL for this object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">mutating</span> <span class="kd">func</span> <span class="nf">setACL</span><span class="p">(</span><span class="n">_</span> <span class="nv">acl</span><span class="p">:</span> <span class="kt">ParseACL</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -232,102 +245,17 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>authentication</em>
+                                <em>acl</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A callback block that will be used to receive/accept/decline network challenges.
-Defaults to <code>nil</code> in which the SDK will use the default OS authentication methods for challenges.
-It should have the following argument signature: <code>(challenge: URLAuthenticationChallenge,
-completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -&gt; Void) -&gt; Void</code>.
-See Apple&rsquo;s <a href="https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession">documentation</a> for more for details.</p>
+                                  <p>The Parse ACL for this object.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:12ParseCareKit10PCKUtilityC7encoder0A5Swift0A7EncoderVyFZ"></a>
-                    <a name="//apple_ref/swift/Method/encoder()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit10PCKUtilityC7encoder0A5Swift0A7EncoderVyFZ">encoder()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get the current Parse Encoder with custom date strategy.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">encoder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">ParseEncoder</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:12ParseCareKit10PCKUtilityC11jsonEncoder10Foundation11JSONEncoderCyFZ"></a>
-                    <a name="//apple_ref/swift/Method/jsonEncoder()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit10PCKUtilityC11jsonEncoder10Foundation11JSONEncoderCyFZ">jsonEncoder()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get the current JSON Encoder with custom date strategy.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">jsonEncoder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">JSONEncoder</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:12ParseCareKit10PCKUtilityC7decoder10Foundation11JSONDecoderCyFZ"></a>
-                    <a name="//apple_ref/swift/Method/decoder()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit10PCKUtilityC7decoder10Foundation11JSONDecoderCyFZ">decoder()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get the current JSON Decoder with custom date strategy.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">decoder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">JSONDecoder</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
