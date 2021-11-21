@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ApplicationID</key>
+	<string>3B5FD9DA-C278-4582-90DC-101C08E7FC98</string>
+	<key>ClientKey</key>
+	<string>hello</string>
+	<key>Server</key>
+	<string>http://localhost:1337/parse</string>
+	<key>LiveQueryServer</key>
+	<string>ws://localhost:1337/parse</string>
+	<key>UseTransactionsInternally</key>
+	<true/>
+	<key>DeleteKeychainIfNeeded</key>
+	<true/>
+</dict>
+</plist>

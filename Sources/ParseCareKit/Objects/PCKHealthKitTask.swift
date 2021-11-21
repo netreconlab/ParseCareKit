@@ -75,7 +75,7 @@ public struct PCKHealthKitTask: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     /// A structure specifying how this task is linked with HealthKit.
     public var healthKitLinkage: OCKHealthKitLinkage?
@@ -115,7 +115,9 @@ public struct PCKHealthKitTask: PCKVersionable {
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule, healthKitLinkage
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func new(with careKitEntity: OCKEntity) throws -> PCKHealthKitTask {
 
@@ -323,6 +325,11 @@ public struct PCKHealthKitTask: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(task)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
+        if let acl = task.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

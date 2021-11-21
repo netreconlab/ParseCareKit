@@ -79,15 +79,20 @@ To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netrecon
 For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default.
 
 ### Protecting Patients data in the Cloud using ACL's
-You should set the default access for information you placed on your parse-server using ParseCareKit. To do this, you can set the default read/write access for all classes. For example, to make all data created to only be read and written by the user who created at do the following in `AppDelegate.swift`:
+`ParseCareKit` will set a default ACL on every object saved to your Parse Server with read/write access only for the user who created the data. If you want different level of access by default, you should pass the default ACL you prefer while initializing `ParseCareKit`. For example, to make all data created to only be read and written by the user who created it, do the following:
 
 ```swift
 //Set default ACL for all Parse Classes
-var defaultACL = ParseACL()
-defaultACL.publicRead = false
-defaultACL.publicWrite = false
+var newACL = ParseACL()
+newACL.publicRead = false
+newACL.publicWrite = false        
+newACL.setReadAccess(user: user, value: true)
+newACL.setWriteAccess(user: user, value: true)
 do {
-    _ = try ParseACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+    let parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false,
+                                defaultACL: newACL)
 } catch {
     print(error.localizedDescription)
 }
@@ -121,9 +126,9 @@ let userTypeUUIDDictionary = [
 ]
 
 //Store the possible uuids for each type
-PCKUser.current.userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
-PCKUser.current.loggedInType = "doctor"
-PCKUser.current.saveInBackground()
+PCKUser.current?.userTypes = userTypeUUIDDictionary //Note that you need to save the UUID in string form to Parse
+PCKUser.current?.loggedInType = "doctor" 
+PCKUser.current?.save()
 
 //Start synch with the correct knowlege vector for the particular type of user
 let lastLoggedInType = PCKUser.current.loggedInType

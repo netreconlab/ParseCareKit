@@ -229,7 +229,7 @@ extension PCKVersionable {
     }
 }
 
-// Fetching
+// MARK: Fetching
 extension PCKVersionable {
     private static func queryNotDeleted() -> Query<Self> {
         Self.query(doesNotExist(key: VersionableKey.deletedDate))
@@ -300,7 +300,7 @@ extension PCKVersionable {
     }
 }
 
-// Encodable
+// MARK: Encodable
 extension PCKVersionable {
 
     /**

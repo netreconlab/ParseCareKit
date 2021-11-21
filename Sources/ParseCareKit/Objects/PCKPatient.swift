@@ -66,7 +66,7 @@ public struct PCKPatient: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     /// A list of substances this patient is allergic to.
     public var allergies: [String]?
@@ -87,7 +87,9 @@ public struct PCKPatient: PCKVersionable {
         case allergies, birthday, name, sex
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -302,6 +304,11 @@ public struct PCKPatient: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(patient)
         var decoded = try PCKUtility.decoder().decode(PCKPatient.self, from: encoded)
         decoded.entityId = patient.id
+        if let acl = patient.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

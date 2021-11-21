@@ -69,7 +69,7 @@ public struct PCKCarePlan: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     public var nextVersionUUIDs: [UUID]?
 
@@ -103,7 +103,9 @@ public struct PCKCarePlan: PCKVersionable {
         case title, patient, patientUUID
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func new(with careKitEntity: OCKEntity) throws -> PCKCarePlan {
         switch careKitEntity {
@@ -308,6 +310,11 @@ public struct PCKCarePlan: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(carePlan)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
+        if let acl = carePlan.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

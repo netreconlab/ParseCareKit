@@ -75,7 +75,7 @@ public struct PCKTask: PCKVersionable {
 
     public var updatedAt: Date?
 
-    public var ACL: ParseACL? = try? ParseACL.defaultACL()
+    public var ACL: ParseACL?
 
     /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?
@@ -112,7 +112,9 @@ public struct PCKTask: PCKVersionable {
         case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func new(with careKitEntity: OCKEntity) throws -> PCKTask {
 
@@ -320,6 +322,11 @@ public struct PCKTask: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(task)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
+        if let acl = task.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 
