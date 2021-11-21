@@ -18,6 +18,15 @@
           "revision": "c91e5bb74397136f79656bebdfda76a523d3e88c",
           "version": "0.3.2"
         }
+      },
+      {
+        "package": "ParseSwift",
+        "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "b4bdfb12ee980add480fcf30ddcead5a49509a72",
+          "version": "2.2.6"
+        }
       }
     ]
   },
