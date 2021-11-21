@@ -304,7 +304,11 @@ public struct PCKPatient: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(patient)
         var decoded = try PCKUtility.decoder().decode(PCKPatient.self, from: encoded)
         decoded.entityId = patient.id
-        decoded.ACL = PCKUtility.getDefaultACL()
+        if let acl = patient.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

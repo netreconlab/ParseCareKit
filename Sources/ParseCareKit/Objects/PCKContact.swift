@@ -346,7 +346,11 @@ public struct PCKContact: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(contact)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
-        decoded.ACL = PCKUtility.getDefaultACL()
+        if let acl = contact.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

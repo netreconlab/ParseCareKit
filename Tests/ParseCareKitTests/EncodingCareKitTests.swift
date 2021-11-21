@@ -288,18 +288,31 @@ class ParseCareKitTests: XCTestCase {
     func testPatientACL() throws {
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         XCTAssertNil(careKit.acl)
+
         let user = try userLogin()
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
+        // Should have default ACL
+        let parse = try PCKPatient.copyCareKit(careKit)
+        guard let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
         var newACL = ParseACL()
         newACL.publicRead = true
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
         try careKit.setACL(newACL)
-        guard let objectId = user.objectId,
-              let defaultACL = careKit.acl else {
+        guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
         }
@@ -307,6 +320,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKPatient.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -454,14 +478,27 @@ class ParseCareKitTests: XCTestCase {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
+
+        // Should have default ACL
+        let parse = try PCKOutcome.copyCareKit(careKit)
+        guard let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
         var newACL = ParseACL()
         newACL.publicRead = true
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
         try careKit.setACL(newACL)
-        guard let objectId = user.objectId,
-              let defaultACL = careKit.acl else {
+        guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
         }
@@ -469,6 +506,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKOutcome.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -616,14 +664,27 @@ class ParseCareKitTests: XCTestCase {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
+
+        // Should have default ACL
+        let parse = try PCKTask.copyCareKit(careKit)
+        guard let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
         var newACL = ParseACL()
         newACL.publicRead = true
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
         try careKit.setACL(newACL)
-        guard let objectId = user.objectId,
-              let defaultACL = careKit.acl else {
+        guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
         }
@@ -631,6 +692,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKTask.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -784,14 +856,27 @@ class ParseCareKitTests: XCTestCase {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
+
+        // Should have default ACL
+        let parse = try PCKHealthKitTask.copyCareKit(careKit)
+        guard let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
         var newACL = ParseACL()
         newACL.publicRead = true
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
         try careKit.setACL(newACL)
-        guard let objectId = user.objectId,
-              let defaultACL = careKit.acl else {
+        guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
         }
@@ -799,6 +884,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKHealthKitTask.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -931,14 +1027,27 @@ class ParseCareKitTests: XCTestCase {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
+
+        // Should have default ACL
+        let parse = try PCKCarePlan.copyCareKit(careKit)
+        guard let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
         var newACL = ParseACL()
         newACL.publicRead = true
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
         try careKit.setACL(newACL)
-        guard let objectId = user.objectId,
-              let defaultACL = careKit.acl else {
+        guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
         }
@@ -946,6 +1055,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKCarePlan.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
     // swiftlint:disable:next function_body_length
@@ -1112,14 +1232,27 @@ class ParseCareKitTests: XCTestCase {
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
+
+        // Should have default ACL
+        let parse = try PCKContact.copyCareKit(careKit)
+        guard let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
         var newACL = ParseACL()
         newACL.publicRead = true
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
         try careKit.setACL(newACL)
-        guard let objectId = user.objectId,
-              let defaultACL = careKit.acl else {
+        guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
         }
@@ -1127,6 +1260,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKContact.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
 /*

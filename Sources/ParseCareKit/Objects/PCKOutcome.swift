@@ -329,7 +329,11 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         let encoded = try PCKUtility.jsonEncoder().encode(outcome)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
-        decoded.ACL = PCKUtility.getDefaultACL()
+        if let acl = outcome.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 

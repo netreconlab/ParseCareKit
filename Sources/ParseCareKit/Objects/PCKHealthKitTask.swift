@@ -325,7 +325,11 @@ public struct PCKHealthKitTask: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(task)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = task.id
-        decoded.ACL = PCKUtility.getDefaultACL()
+        if let acl = task.acl {
+            decoded.ACL = acl
+        } else {
+            decoded.ACL = PCKUtility.getDefaultACL()
+        }
         return decoded
     }
 
