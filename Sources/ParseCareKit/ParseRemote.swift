@@ -98,7 +98,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable],
                             subscribeToServerUpdates: Bool,
                             defaultACL: ParseACL? = nil) throws {
-        try self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
+        try self.init(uuid: uuid,
+                      auto: auto,
+                      subscribeToServerUpdates: subscribeToServerUpdates,
+                      defaultACL: defaultACL)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
@@ -126,7 +129,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             customClasses: [String: PCKSynchronizable],
                             subscribeToServerUpdates: Bool,
                             defaultACL: ParseACL? = nil) throws {
-        try self.init(uuid: uuid, auto: auto, subscribeToServerUpdates: subscribeToServerUpdates)
+        try self.init(uuid: uuid,
+                      auto: auto,
+                      subscribeToServerUpdates: subscribeToServerUpdates,
+                      defaultACL: defaultACL)
         if replacePCKStoreClasses != nil {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
                 .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
