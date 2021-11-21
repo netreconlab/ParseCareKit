@@ -711,15 +711,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
     public func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>) {
 
-        if let parseDelegate = self.parseDelegate {
-            parseDelegate
-                .chooseConflictResolution(conflicts: conflicts,
-                                          completion: completion)
-        } else {
-
-            /*
-            let conflictPolicy = OCKMergeConflictResolutionPolicy.keepRemote
-            completion(conflictPolicy)*/
+        guard let parseDelegate = self.parseDelegate else {
+            guard let first = conflicts.first else {
+                completion(.failure(.remoteSynchronizationFailed(reason: "Error: no conflict available")))
+                return
+            }
+            completion(.success(first))
+            return
         }
+        parseDelegate
+            .chooseConflictResolution(conflicts: conflicts,
+                                      completion: completion)
     }
 }
