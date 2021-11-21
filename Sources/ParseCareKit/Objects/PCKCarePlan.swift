@@ -103,7 +103,9 @@ public struct PCKCarePlan: PCKVersionable {
         case title, patient, patientUUID
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func new(with careKitEntity: OCKEntity) throws -> PCKCarePlan {
         switch careKitEntity {
@@ -308,6 +310,7 @@ public struct PCKCarePlan: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(carePlan)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = carePlan.id
+        decoded.ACL = PCKUtility.getDefaultACL()
         return decoded
     }
 

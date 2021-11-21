@@ -114,6 +114,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         uuid = UUID()
         previousVersionUUIDs = []
         nextVersionUUIDs = []
+        ACL = PCKUtility.getDefaultACL()
     }
 
     enum CodingKeys: String, CodingKey {
@@ -328,6 +329,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         let encoded = try PCKUtility.jsonEncoder().encode(outcome)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = outcome.id
+        decoded.ACL = PCKUtility.getDefaultACL()
         return decoded
     }
 

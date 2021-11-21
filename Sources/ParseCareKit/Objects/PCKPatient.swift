@@ -87,7 +87,9 @@ public struct PCKPatient: PCKVersionable {
         case allergies, birthday, name, sex
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -302,6 +304,7 @@ public struct PCKPatient: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(patient)
         var decoded = try PCKUtility.decoder().decode(PCKPatient.self, from: encoded)
         decoded.entityId = patient.id
+        decoded.ACL = PCKUtility.getDefaultACL()
         return decoded
     }
 

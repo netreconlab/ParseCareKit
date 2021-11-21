@@ -105,18 +105,20 @@ class ParseCareKitTests: XCTestCase {
         try KeychainStore.shared.deleteAll()
         try ParseStorage.shared.deleteAll()
         try store.delete()
+        UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
+        UserDefaults.standard.synchronize()
     }
 
     func testSetDefaultACLLoggedIn() throws {
         let user = try userLogin()
-        guard let objectId = user.objectId else {
-            XCTFail("Should have objectId")
-            return
-        }
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
                                 subscribeToServerUpdates: false)
-        let defaultACL = try ParseACL.defaultACL()
+        guard let objectId = user.objectId,
+              let defaultACL = PCKUtility.getDefaultACL() else {
+            XCTFail("Should have objectId")
+            return
+        }
         XCTAssertEqual(defaultACL.publicRead, false)
         XCTAssertEqual(defaultACL.publicWrite, false)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
@@ -125,19 +127,21 @@ class ParseCareKitTests: XCTestCase {
 
     func testDefaultACLAlreadySet() throws {
         let user = try userLogin()
-        guard let objectId = user.objectId else {
-            XCTFail("Should have objectId")
-            return
-        }
         var userSetACL = ParseACL()
         userSetACL.publicRead = true
         userSetACL.publicWrite = true
-        _ = try ParseACL.setDefaultACL(userSetACL, withAccessForCurrentUser: true)
+        userSetACL.setReadAccess(user: user, value: true)
+        userSetACL.setWriteAccess(user: user, value: true)
 
         parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
-                                subscribeToServerUpdates: false)
-        let defaultACL = try ParseACL.defaultACL()
+                                subscribeToServerUpdates: false,
+                                defaultACL: userSetACL)
+        guard let objectId = user.objectId,
+              let defaultACL = PCKUtility.getDefaultACL() else {
+            XCTFail("Should have objectId")
+            return
+        }
         XCTAssertEqual(defaultACL.publicRead, true)
         XCTAssertEqual(defaultACL.publicWrite, true)
         XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
@@ -145,7 +149,7 @@ class ParseCareKitTests: XCTestCase {
     }
 
     func testDefaultACLNoLogin() throws {
-        XCTAssertThrowsError(try ParseACL.defaultACL())
+        XCTAssertNil(PCKUtility.getDefaultACL())
     }
 
     // swiftlint:disable:next function_body_length

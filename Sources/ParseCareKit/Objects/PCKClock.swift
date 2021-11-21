@@ -107,6 +107,7 @@ struct PCKClock: ParseObjectMutable {
 extension PCKClock {
     init(uuid: UUID) {
         self.uuid = uuid
-        self.vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
+        vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
+        ACL = PCKUtility.getDefaultACL()
     }
 }

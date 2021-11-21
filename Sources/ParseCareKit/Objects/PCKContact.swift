@@ -133,7 +133,9 @@ public struct PCKContact: PCKVersionable {
         case emailAddresses, messagingNumbers, phoneNumbers, otherContactInfo
     }
 
-    public init() { }
+    public init() {
+        ACL = PCKUtility.getDefaultACL()
+    }
 
     public func new(with careKitEntity: OCKEntity) throws -> PCKContact {
 
@@ -344,6 +346,7 @@ public struct PCKContact: PCKVersionable {
         let encoded = try PCKUtility.jsonEncoder().encode(contact)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.entityId = contact.id
+        decoded.ACL = PCKUtility.getDefaultACL()
         return decoded
     }
 
