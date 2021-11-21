@@ -78,6 +78,9 @@
 		91226D60274AD9B600B5C2DF /* OCKOutcome+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D59274AC23300B5C2DF /* OCKOutcome+Parse.swift */; };
 		91226D61274AD9B600B5C2DF /* OCKPatient+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D51274AC00500B5C2DF /* OCKPatient+Parse.swift */; };
 		91226D62274AD9B600B5C2DF /* OCKTask+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */; };
+		91226D64274ADCE100B5C2DF /* UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D63274ADCE100B5C2DF /* UtilityTests.swift */; };
+		91226D67274ADD4B00B5C2DF /* ParseCareKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */; };
+		91226D68274AE59400B5C2DF /* ParseCareKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */; };
 		916570D72462DABC008F2997 /* ParseRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemote.swift */; };
 		918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		91AA07232466F0CD00B39452 /* PCKClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* PCKClock.swift */; };
@@ -177,6 +180,8 @@
 		91226D57274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKHealthKitTask+Parse.swift"; sourceTree = "<group>"; };
 		91226D59274AC23300B5C2DF /* OCKOutcome+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKOutcome+Parse.swift"; sourceTree = "<group>"; };
 		91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKTask+Parse.swift"; sourceTree = "<group>"; };
+		91226D63274ADCE100B5C2DF /* UtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityTests.swift; sourceTree = "<group>"; };
+		91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParseCareKit.plist; sourceTree = "<group>"; };
 		916570D62462DABC008F2997 /* ParseRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemote.swift; sourceTree = "<group>"; };
 		918F07ED247D66C800C3A205 /* PCKObjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObjectable.swift; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* PCKClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKClock.swift; sourceTree = "<group>"; };
@@ -249,6 +254,7 @@
 			children = (
 				7098A7782524E92900DDF53D /* EncodingCareKitTests.swift */,
 				709D18062586903C0002E772 /* LoggerTests.swift */,
+				91226D63274ADCE100B5C2DF /* UtilityTests.swift */,
 				7098A7752524E92900DDF53D /* NetworkMocking */,
 			);
 			path = ParseCareKitTests;
@@ -273,12 +279,13 @@
 		709752E1250D27300020EA70 /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
+				709752F0250D27320020EA70 /* Info.plist */,
+				91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */,
 				709752E2250D27300020EA70 /* AppDelegate.swift */,
-				709752E4250D27300020EA70 /* SceneDelegate.swift */,
 				709752E6250D27300020EA70 /* ContentView.swift */,
+				709752E4250D27300020EA70 /* SceneDelegate.swift */,
 				709752E8250D27320020EA70 /* Assets.xcassets */,
 				709752ED250D27320020EA70 /* LaunchScreen.storyboard */,
-				709752F0250D27320020EA70 /* Info.plist */,
 				709752EA250D27320020EA70 /* Preview Content */,
 			);
 			path = TestHost;
@@ -576,6 +583,7 @@
 				709752EF250D27320020EA70 /* LaunchScreen.storyboard in Resources */,
 				709752EC250D27320020EA70 /* Preview Assets.xcassets in Resources */,
 				709752E9250D27320020EA70 /* Assets.xcassets in Resources */,
+				91226D68274AE59400B5C2DF /* ParseCareKit.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91226D67274ADD4B00B5C2DF /* ParseCareKit.plist in Resources */,
 				9119D69A245689DA001B7AA3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,6 +648,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91226D64274ADCE100B5C2DF /* UtilityTests.swift in Sources */,
 				705DC9292526A55E0035BBE3 /* EncodingCareKitTests.swift in Sources */,
 				705DC92B2526A5610035BBE3 /* MockURLProtocol.swift in Sources */,
 				705DC92D2526A5650035BBE3 /* MockURLResponse.swift in Sources */,

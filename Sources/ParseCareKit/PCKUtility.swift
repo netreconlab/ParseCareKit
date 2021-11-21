@@ -52,26 +52,25 @@ public class PCKUtility {
             fatalError("Error in ParseCareKit.setupServer(). Couldn't serialize plist. \(error)")
         }
 
-        guard let parseDictionary = plistConfiguration["ParseClientConfiguration"] as? [String: AnyObject],
-            let appID = parseDictionary["ApplicationID"] as? String,
-            let server = parseDictionary["Server"] as? String,
+        guard let appID = plistConfiguration["ApplicationID"] as? String,
+            let server = plistConfiguration["Server"] as? String,
             let serverURL = URL(string: server) else {
                 fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
         }
 
-        if let client = parseDictionary["ClientKey"] as? String {
+        if let client = plistConfiguration["ClientKey"] as? String {
             clientKey = client
         }
 
-        if let liveQuery = parseDictionary["LiveQueryServer"] as? String {
+        if let liveQuery = plistConfiguration["LiveQueryServer"] as? String {
             liveQueryURL = URL(string: liveQuery)
         }
 
-        if let internalTransactions = parseDictionary["UseTransactionsInternally"] as? Bool {
+        if let internalTransactions = plistConfiguration["UseTransactionsInternally"] as? Bool {
             useTransactionsInternally = internalTransactions
         }
 
-        if let deleteKeychain = parseDictionary["DeleteKeychainIfNeeded"] as? Bool {
+        if let deleteKeychain = plistConfiguration["DeleteKeychainIfNeeded"] as? Bool {
             deleteKeychainIfNeeded = deleteKeychain
         }
 
@@ -82,24 +81,6 @@ public class PCKUtility {
                               useTransactionsInternally: useTransactionsInternally,
                               deleteKeychainIfNeeded: deleteKeychainIfNeeded,
                               authentication: authentication)
-    }
-
-    /// Converts a date to a String.
-    public class func dateToString(_ date: Date) -> String {
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-
-        return dateFormatter.string(from: date)
-    }
-
-    /// Converts a String to a Date.
-    public class func stringToDate(_ date: String) -> Date? {
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-
-        return dateFormatter.date(from: date)
     }
 
     /// Get the current Parse Encoder with custom date strategy.
