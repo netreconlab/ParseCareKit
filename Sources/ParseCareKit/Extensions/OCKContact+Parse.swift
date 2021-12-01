@@ -9,33 +9,42 @@
 import Foundation
 import CareKitStore
 import ParseSwift
+import os.log
 
 public extension OCKContact {
     /**
     The Parse ACL for this object.
     */
     var acl: ParseACL? {
-        guard let aclString = userInfo?[ParseCareKitConstants.acl],
-              let aclData = aclString.data(using: .utf8),
-              let acl = try? PCKUtility.decoder().decode(ParseACL.self, from: aclData) else {
-                  return nil
-              }
-        return acl
-    }
-
-    /**
-    Set the Parse ACL for this object.
-     - parameter acl: The Parse ACL for this object.
-    */
-    mutating func setACL(_ acl: ParseACL) throws {
-        let encodedACL = try PCKUtility.jsonEncoder().encode(acl)
-        guard let aclString = String(data: encodedACL, encoding: .utf8) else {
-            throw ParseCareKitError.cantEncodeACL
+        get {
+            guard let aclString = userInfo?[ParseCareKitConstants.acl],
+                  let aclData = aclString.data(using: .utf8),
+                  let acl = try? PCKUtility.decoder().decode(ParseACL.self, from: aclData) else {
+                      return nil
+                  }
+            return acl
         }
-        if var userInfo = userInfo {
-            userInfo[ParseCareKitConstants.acl] = aclString
-        } else {
-            userInfo = [ParseCareKitConstants.acl: aclString]
+        set {
+            do {
+                let encodedACL = try PCKUtility.jsonEncoder().encode(newValue)
+                guard let aclString = String(data: encodedACL, encoding: .utf8) else {
+                    throw ParseCareKitError.cantEncodeACL
+                }
+                if var userInfo = userInfo {
+                    userInfo[ParseCareKitConstants.acl] = aclString
+                } else {
+                    userInfo = [ParseCareKitConstants.acl: aclString]
+                }
+            } catch {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.ockContact.error("Can't set ACL: \(error.localizedDescription)")
+                } else {
+                    os_log("Can't set ACL: `%{private}@`",
+                           log: .ockContact,
+                           type: .error,
+                           error.localizedDescription)
+                }
+            }
         }
     }
 }

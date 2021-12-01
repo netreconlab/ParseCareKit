@@ -300,7 +300,7 @@ class ParseCareKitTests: XCTestCase {
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
-        try careKit.setACL(newACL)
+        careKit.acl = newACL
         guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
@@ -483,7 +483,7 @@ class ParseCareKitTests: XCTestCase {
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
-        try careKit.setACL(newACL)
+        careKit.acl = newACL
         guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
@@ -666,7 +666,7 @@ class ParseCareKitTests: XCTestCase {
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
-        try careKit.setACL(newACL)
+        careKit.acl = newACL
         guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
@@ -855,7 +855,7 @@ class ParseCareKitTests: XCTestCase {
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
-        try careKit.setACL(newACL)
+        careKit.acl = newACL
         guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
@@ -1023,7 +1023,7 @@ class ParseCareKitTests: XCTestCase {
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
-        try careKit.setACL(newACL)
+        careKit.acl = newACL
         guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
@@ -1225,7 +1225,7 @@ class ParseCareKitTests: XCTestCase {
         newACL.publicWrite = true
         newACL.setReadAccess(user: user, value: true)
         newACL.setWriteAccess(user: user, value: true)
-        try careKit.setACL(newACL)
+        careKit.acl = newACL
         guard let defaultACL = careKit.acl else {
             XCTFail("Should have objectId")
             return
