@@ -24,6 +24,12 @@ extension OSLog {
     static let pushRevisions = OSLog(subsystem: subsystem, category: "\(category).pushRevisions")
     static let clock = OSLog(subsystem: subsystem, category: "\(category).clock")
     static let initializer = OSLog(subsystem: subsystem, category: "\(category).initializer")
+    static let ockCarePlan = OSLog(subsystem: subsystem, category: "\(category).OCKCarePlan")
+    static let ockContact = OSLog(subsystem: subsystem, category: "\(category).OCKContact")
+    static let ockHealthKitTask = OSLog(subsystem: subsystem, category: "\(category).OCKHealthKitTask")
+    static let ockOutcome = OSLog(subsystem: subsystem, category: "\(category).OCkOutcome")
+    static let ockPatient = OSLog(subsystem: subsystem, category: "\(category).OCkPatient")
+    static let ockTask = OSLog(subsystem: subsystem, category: "\(category).OCKTask")
 }
 
 @available(iOS 14.0, watchOS 7.0, *)
@@ -42,4 +48,10 @@ extension Logger {
     static let pushRevisions = Logger(subsystem: subsystem, category: "\(category).pushRevisions")
     static let clock = Logger(subsystem: subsystem, category: "\(category).clock")
     static let initializer = Logger(subsystem: subsystem, category: "\(category).initializer")
+    static let ockCarePlan = Logger(subsystem: subsystem, category: "\(category).OCKCarePlan")
+    static let ockContact = Logger(subsystem: subsystem, category: "\(category).OCKContact")
+    static let ockHealthKitTask = Logger(subsystem: subsystem, category: "\(category).OCKHealthKitTask")
+    static let ockOutcome = Logger(subsystem: subsystem, category: "\(category).OCkOutcome")
+    static let ockPatient = Logger(subsystem: subsystem, category: "\(category).OCkPatient")
+    static let ockTask = Logger(subsystem: subsystem, category: "\(category).OCKTask")
 }

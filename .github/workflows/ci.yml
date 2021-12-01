@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max -derivedDataPath DerivedData test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max -derivedDataPath DerivedData -test-iterations 10 -retry-tests-on-failure clean test | xcpretty
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
     - name: Prepare codecov
