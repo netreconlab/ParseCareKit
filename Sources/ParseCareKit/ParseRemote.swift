@@ -426,11 +426,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
 
                 let revisionsCompleted = RevisionsComplete()
-                Task {
-                    let count = await revisionsCompleted.count
-                    self.notifyRevisionProgress(count,
-                                                totalEntities: deviceRevision.entities.count)
+
+#if swift(>=5.5) && canImport(_Concurrency)
+                if #available(iOS 15.0, watchOS 8.0, *) {
+                    Task {
+                        let count = await revisionsCompleted.count
+                        self.notifyRevisionProgress(count,
+                                                    totalEntities: deviceRevision.entities.count)
+                    }
                 }
+#endif
 
                 deviceRevision.entities.forEach {
                     let entity = $0
@@ -444,17 +449,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         } else {
 
@@ -468,17 +477,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         }
 
@@ -490,17 +503,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         } else {
 
@@ -514,17 +531,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         }
                     case .contact(let contact):
@@ -535,17 +556,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
@@ -557,17 +582,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         }
                     case .task(let task):
@@ -578,17 +607,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
@@ -601,17 +634,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
 
                         }
@@ -623,17 +660,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else {
@@ -644,17 +685,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         }
                     case .healthKitTask(let healthKit):
@@ -665,17 +710,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
@@ -688,17 +737,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                Task {
-                                    await revisionsCompleted.incrementCompleted()
-                                    let revisionsCompletedCount = await revisionsCompleted.count
-                                    self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                totalEntities: deviceRevision.entities.count)
-                                    if revisionsCompletedCount == deviceRevision.entities.count {
-                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                               localClock: deviceRevision.knowledgeVector,
-                                                               completion: completion)
+#if swift(>=5.5) && canImport(_Concurrency)
+                                if #available(iOS 15.0, watchOS 8.0, *) {
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
+#endif
                             }
                         }
                     }

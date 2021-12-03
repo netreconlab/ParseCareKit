@@ -9,6 +9,8 @@
 import Foundation
 import ParseSwift
 
+#if swift(>=5.5) && canImport(_Concurrency)
+@available(iOS 15.0, watchOS 8.0, *)
 public extension PCKObjectable {
 
     /**
@@ -29,3 +31,4 @@ public extension PCKObjectable {
         }
     }
 }
+#endif
