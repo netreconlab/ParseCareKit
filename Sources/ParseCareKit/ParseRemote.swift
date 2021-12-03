@@ -426,6 +426,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                 let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
 
+                @available(iOS 15.0, watchOS 8.0, *)
                 let revisionsCompleted = RevisionsComplete()
                 if #available(iOS 15.0, watchOS 8.0, *) {
                     Task {
