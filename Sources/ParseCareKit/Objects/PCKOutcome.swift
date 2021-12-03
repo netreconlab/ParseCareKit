@@ -144,7 +144,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         // Check to see if already in the cloud
-        let query = PCKOutcome.query(ObjectableKey.uuid == uuid)
+        let query = Self.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -454,7 +454,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     public static func queryNotDeleted()-> Query<PCKOutcome> {
         let taskQuery = PCKTask.query(doesNotExist(key: OutcomeKey.deletedDate))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        let query = PCKOutcome.query(doesNotExist(key: OutcomeKey.deletedDate),
+        let query = Self.query(doesNotExist(key: OutcomeKey.deletedDate),
                                   matchesKeyInQuery(key: OutcomeKey.task,
                                                     queryKey: OutcomeKey.task, query: taskQuery))
             .includeAll()

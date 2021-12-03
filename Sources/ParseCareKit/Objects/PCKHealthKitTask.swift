@@ -137,7 +137,7 @@ public struct PCKHealthKitTask: PCKVersionable {
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
 
         // Check to see if already in the cloud
-        let query = PCKTask.query(ObjectableKey.uuid == uuid)
+        let query = Self.query(ObjectableKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -178,7 +178,7 @@ public struct PCKHealthKitTask: PCKVersionable {
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = PCKHealthKitTask.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -236,7 +236,7 @@ public struct PCKHealthKitTask: PCKVersionable {
     public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = PCKHealthKitTask.query(ObjectableKey.logicalClock >= localClock)
+        let query = Self.query(ObjectableKey.logicalClock >= localClock)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in

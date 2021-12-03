@@ -37,6 +37,7 @@ public class PCKUtility {
         var clientKey: String?
         var liveQueryURL: URL?
         var useTransactionsInternally = false
+        var useTransactions = false
         var deleteKeychainIfNeeded = false
         guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
@@ -68,6 +69,10 @@ public class PCKUtility {
 
         if let internalTransactions = plistConfiguration["UseTransactionsInternally"] as? Bool {
             useTransactionsInternally = internalTransactions
+        }
+
+        if let transactions = plistConfiguration["UseTransactions"] as? Bool {
+            useTransactions = transactions
         }
 
         if let deleteKeychain = plistConfiguration["DeleteKeychainIfNeeded"] as? Bool {

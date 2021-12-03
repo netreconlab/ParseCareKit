@@ -80,7 +80,7 @@ struct PCKClock: ParseObjectMutable {
                                                     ParseError?) -> Void) {
 
         // Fetch Clock from Cloud
-        let query = PCKClock.query(ClockKey.uuid == uuid)
+        let query = Self.query(ClockKey.uuid == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
