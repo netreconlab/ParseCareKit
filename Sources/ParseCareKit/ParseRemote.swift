@@ -369,6 +369,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             return
         }
 
+        @available(iOS 15.0, watchOS 8.0, *)
         actor RevisionsComplete {
             var count: Int = 0
 
@@ -426,8 +427,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
 
                 let revisionsCompleted = RevisionsComplete()
-
-#if swift(>=5.5) && canImport(_Concurrency)
                 if #available(iOS 15.0, watchOS 8.0, *) {
                     Task {
                         let count = await revisionsCompleted.count
@@ -435,7 +434,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                                     totalEntities: deviceRevision.entities.count)
                     }
                 }
-#endif
 
                 deviceRevision.entities.forEach {
                     let entity = $0
@@ -449,7 +447,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -463,7 +460,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         } else {
 
@@ -477,7 +473,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -491,7 +486,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         }
 
@@ -503,7 +497,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -517,7 +510,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         } else {
 
@@ -531,7 +523,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -545,7 +536,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         }
                     case .contact(let contact):
@@ -556,7 +546,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -570,7 +559,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
@@ -582,7 +570,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -596,7 +583,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         }
                     case .task(let task):
@@ -607,7 +593,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -621,7 +606,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
@@ -634,7 +618,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -648,9 +631,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
-
                         }
                     case .outcome(let outcome):
 
@@ -660,7 +641,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -674,7 +654,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else {
@@ -685,7 +664,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -699,7 +677,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         }
                     case .healthKitTask(let healthKit):
@@ -710,7 +687,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -724,7 +700,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         } else {
                             guard let parse = try? self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
@@ -737,7 +712,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-#if swift(>=5.5) && canImport(_Concurrency)
                                 if #available(iOS 15.0, watchOS 8.0, *) {
                                     Task {
                                         await revisionsCompleted.incrementCompleted()
@@ -751,7 +725,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                         }
                                     }
                                 }
-#endif
                             }
                         }
                     }
