@@ -6,11 +6,9 @@
 //  Copyright © 2021 Network Reconnaissance Lab. All rights reserved.
 //
 
-#if swift(>=5.5) && canImport(_Concurrency)
 import Foundation
 import ParseSwift
 
-@available(macOS 12.0, iOS 15.0, macCatalyst 15.0, watchOS 9.0, tvOS 15.0, *)
 public extension PCKObjectable {
 
     /**
@@ -31,5 +29,3 @@ public extension PCKObjectable {
         }
     }
 }
-
-#endif

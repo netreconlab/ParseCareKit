@@ -263,16 +263,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                          completion: @escaping (Error?) -> Void) {
 
         let classNames = PCKStoreClass.patient.orderedArray()
-        if classNames.count > 0 {
-            let ratioComplete = Double(concreteClassesAlreadyPulled)/Double(classNames.count)
-            self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.pullRevisions.info("pullRevisionsForConcreteClasses progress: \(ratioComplete, privacy: .private)")
-            } else {
-                os_log("pullRevisionsForConcreteClasses progress: %{private}@.",
-                       log: .pullRevisions, type: .default, ratioComplete)
-            }
-        }
+        self.notifyRevisionProgress(concreteClassesAlreadyPulled,
+                                    totalEntities: classNames.count)
 
         guard concreteClassesAlreadyPulled < classNames.count,
             let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else {
@@ -318,17 +310,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
         if let customClassesToSynchronize = self.customClassesToSynchronize {
             let classNames = customClassesToSynchronize.keys.sorted()
-
-            if classNames.count > 0 {
-                let ratioComplete = Double(customClassesAlreadyPulled)/Double(classNames.count)
-                self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.info("pullRevisionsForCustomClasses progress: \(ratioComplete, privacy: .private)")
-                } else {
-                    os_log("pullRevisionsForCustomClasses progress: %{private}@.",
-                           log: .pullRevisions, type: .default, ratioComplete)
-                }
-            }
+            self.notifyRevisionProgress(customClassesAlreadyPulled,
+                                        totalEntities: classNames.count)
 
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else {
@@ -386,13 +369,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
             return
         }
 
+        actor RevisionsComplete {
+            var count: Int = 0
+
+            func incrementCompleted() {
+                count += 1
+            }
+        }
+
         ParseRemote.queue.async {
             // Fetch Clock from Cloud
             PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
 
                 guard let cloudParseVector = potentialPCKClock,
                     let cloudCareKitVector = potentialCKClock else {
-
                         guard let parseError = error else {
                             // There was a different issue that we don't know how to handle
                             if #available(iOS 14.0, watchOS 7.0, *) {
@@ -434,18 +424,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
 
                 let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
-                var revisionsCompletedCount = 0
+
+                let revisionsCompleted = RevisionsComplete()
+                Task {
+                    let count = await revisionsCompleted.count
+                    self.notifyRevisionProgress(count,
+                                                totalEntities: deviceRevision.entities.count)
+                }
+
                 deviceRevision.entities.forEach {
-                    if deviceRevision.entities.count > 0 {
-                        let ratioComplete = Double(revisionsCompletedCount)/Double(deviceRevision.entities.count)
-                        self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
-                        if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.pushRevisions.info("pushRevisions progress: \(ratioComplete, privacy: .private)")
-                        } else {
-                            os_log("pushRevisions progress: %{private}@.",
-                                   log: .pushRevisions, type: .default, ratioComplete)
-                        }
-                    }
                     let entity = $0
                     switch entity {
                     case .patient(let patient):
@@ -457,11 +444,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         } else {
@@ -476,11 +468,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         }
@@ -493,16 +490,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         } else {
 
-                            guard let parse = try?  self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
+                            guard let parse = try? self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
@@ -512,11 +514,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         }
@@ -528,15 +535,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         } else {
-                            guard let parse = try?  self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
+                            guard let parse = try? self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
@@ -545,12 +557,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         }
@@ -562,15 +578,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         } else {
-                            guard let parse = try?  self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
+                            guard let parse = try? self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
@@ -580,11 +601,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
 
@@ -597,15 +623,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         } else {
-                            guard let parse = try?  self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else {
+                            guard let parse = try? self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
@@ -613,12 +644,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         }
@@ -630,15 +665,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
                         } else {
-                            guard let parse = try?  self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
+                            guard let parse = try? self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
                                 completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                 return
                             }
@@ -648,14 +688,18 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 if error != nil {
                                     completion(error)
                                 }
-                                revisionsCompletedCount += 1
-                                if revisionsCompletedCount == deviceRevision.entities.count {
-                                    self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
-                                                           localClock: deviceRevision.knowledgeVector,
-                                                           completion: completion)
+                                Task {
+                                    await revisionsCompleted.incrementCompleted()
+                                    let revisionsCompletedCount = await revisionsCompleted.count
+                                    self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                totalEntities: deviceRevision.entities.count)
+                                    if revisionsCompletedCount == deviceRevision.entities.count {
+                                        self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                               localClock: deviceRevision.knowledgeVector,
+                                                               completion: completion)
+                                    }
                                 }
                             }
-
                         }
                     }
                 }
@@ -705,6 +749,19 @@ public class ParseRemote: OCKRemoteSynchronizable {
                            log: .pushRevisions, type: .error, error.localizedDescription)
                 }
                 completion(error)
+            }
+        }
+    }
+
+    func notifyRevisionProgress(_ numberCompleted: Int, totalEntities: Int) {
+        if totalEntities > 0 {
+            let ratioComplete = Double(numberCompleted)/Double(totalEntities)
+            self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.pushRevisions.info("notifyRevisionProgress: \(ratioComplete, privacy: .private)")
+            } else {
+                os_log("notifyRevisionProgress: %{private}@.",
+                       log: .pushRevisions, type: .default, ratioComplete)
             }
         }
     }
