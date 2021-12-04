@@ -9,7 +9,6 @@
 import Foundation
 import ParseSwift
 
-@available(iOS 15.0, watchOS 8.0, *)
 public extension PCKObjectable {
 
     /**
