@@ -10,7 +10,7 @@
 	<string>http://localhost:1337/parse</string>
 	<key>LiveQueryServer</key>
 	<string>ws://localhost:1337/parse</string>
-	<key>UseTransactionsInternally</key>
+	<key>UseTransactions</key>
 	<true/>
 	<key>DeleteKeychainIfNeeded</key>
 	<true/>
