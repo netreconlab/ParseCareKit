@@ -31,7 +31,7 @@ class UtilityTests: XCTestCase {
         XCTAssertEqual(ParseSwift.configuration.clientKey, "hello")
         XCTAssertEqual(ParseSwift.configuration.serverURL, URL(string: "http://localhost:1337/parse"))
         XCTAssertEqual(ParseSwift.configuration.liveQuerysServerURL, URL(string: "ws://localhost:1337/parse"))
-        XCTAssertTrue(ParseSwift.configuration.useTransactionsInternally)
+        XCTAssertTrue(ParseSwift.configuration.useTransactions)
         XCTAssertTrue(ParseSwift.configuration.deleteKeychainIfNeeded)
     }
 }
