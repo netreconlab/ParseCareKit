@@ -115,7 +115,7 @@ extension PCKClock {
     init(uuid: UUID) {
         self.uuid = uuid
         self.objectId = UUID().uuidString
-        vector = "{\"processes\":[{\"id\":\"\(uuid.uuidString)\",\"clock\":0}]}"
+        vector = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
         ACL = PCKUtility.getDefaultACL()
     }
 }
