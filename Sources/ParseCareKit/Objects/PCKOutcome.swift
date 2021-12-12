@@ -26,8 +26,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public var effectiveDate: Date?
 
-    public var uuid: UUID?
-
     public var entityId: String?
 
     public var logicalClock: Int?
@@ -111,7 +109,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     public init() {
-        uuid = UUID()
         previousVersionUUIDs = []
         nextVersionUUIDs = []
         ACL = PCKUtility.getDefaultACL()
@@ -119,7 +116,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case uuid, entityId, schemaVersion, createdDate, updatedDate, timezone,
+        case entityId, schemaVersion, createdDate, updatedDate, timezone,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
@@ -142,37 +139,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-
-        // Check to see if already in the cloud
-        let query = Self.query(ObjectableKey.uuid == uuid)
-        query.first(callbackQueue: ParseRemote.queue) { result in
-
-            switch result {
-
-            case .success(let foundEntity):
-                guard foundEntity.entityId == self.entityId else {
-                    // This object has a duplicate uuid but isn't the same object
-                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
-                    return
-                }
-                completion(.success(foundEntity))
-
-            case .failure(let error):
-                switch error.code {
-                case .internalServer, .objectNotFound: // 1 - this column hasn't been added.
-                    self.save(completion: completion)
-
-                default:
-                    // There was a different issue that we don't know how to handle
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.error("addToCloud(), \(error.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("addToCloud(), %{private}@", log: .outcome, type: .error, error.localizedDescription)
-                    }
-                    completion(.failure(error))
-                }
-            }
-        }
+        self.save(completion: completion)
     }
 
     public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
@@ -184,7 +151,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         previousVersionUUIDs.append(uuid)
 
         // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Self.query(containedIn(key: ObjectableKey.uuid, array: previousVersionUUIDs))
+        let query = Self.query(containedIn(key: ParseKey.objectId, array: previousVersionUUIDs))
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -328,6 +295,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
         let encoded = try PCKUtility.jsonEncoder().encode(outcome)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
+        decoded.objectId = outcome.uuid.uuidString
         decoded.entityId = outcome.id
         if let acl = outcome.acl {
             decoded.ACL = acl
