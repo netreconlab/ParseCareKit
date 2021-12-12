@@ -229,7 +229,7 @@ struct Doctor: Patient {
         case .patient(let entity):
             return Doctor(careKitEntity: entity)
         default:
-            os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
+            os_log("new(with:) The wrong type (%{private}@) of entity was passed", log: .carePlan, type: .error, careKitEntity.entityType.debugDescription)
             completion(nil)
         }
     }

@@ -88,6 +88,7 @@ class ParseCareKitTests: XCTestCase {
                               clientKey: "clientKey",
                               masterKey: "masterKey",
                               serverURL: url,
+                              allowCustomObjectId: true,
                               testing: true)
         do {
             _ = try userLogin()
@@ -246,11 +247,13 @@ class ParseCareKitTests: XCTestCase {
             return
         }
         parse.notes = [note]
-        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse,
+                                                                 skipKeys: .customObjectId)
         let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKPatient.self, from: cloudEncoded)
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
         XCTAssertNotNil(cloudDecoded.createdDate)
@@ -435,6 +438,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
         XCTAssertNotNil(cloudDecoded.createdDate)
@@ -615,6 +619,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
         XCTAssertNotNil(cloudDecoded.createdDate)
@@ -801,6 +806,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
         XCTAssertNotNil(cloudDecoded.createdDate)
@@ -976,6 +982,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
         XCTAssertNotNil(cloudDecoded.createdDate)
@@ -1171,6 +1178,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Objectable
         XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
         XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
         XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
         XCTAssertNotNil(cloudDecoded.createdDate)
