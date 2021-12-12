@@ -25,7 +25,13 @@ struct PCKClock: ParseObjectMutable {
 
     var ACL: ParseACL?
 
-    var uuid: UUID?
+    var uuid: UUID? {
+        guard let objectId = objectId,
+            let uuid = UUID(uuidString: objectId) else {
+            return nil
+        }
+        return uuid
+    }
 
     var vector: String?
 
@@ -80,7 +86,7 @@ struct PCKClock: ParseObjectMutable {
                                                     ParseError?) -> Void) {
 
         // Fetch Clock from Cloud
-        let query = Self.query(ClockKey.uuid == uuid)
+        let query = Self.query(ParseKey.objectId == uuid)
         query.first(callbackQueue: ParseRemote.queue) { result in
 
             switch result {
@@ -106,8 +112,8 @@ struct PCKClock: ParseObjectMutable {
 
 extension PCKClock {
     init(uuid: UUID) {
-        self.uuid = uuid
-        vector = "{\"processes\":[{\"id\":\"\(self.uuid!.uuidString)\",\"clock\":0}]}"
+        self.objectId = uuid.uuidString
+        vector = "{\"processes\":[{\"id\":\"\(uuid.uuidString)\",\"clock\":0}]}"
         ACL = PCKUtility.getDefaultACL()
     }
 }

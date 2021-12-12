@@ -16,62 +16,62 @@ import os.log
 */
 public protocol PCKObjectable: ParseObject {
     /// A universally unique identifier for this object.
-    var uuid: UUID? { get set }
+    var uuid: UUID? { get }
 
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
     var id: String { get }
 
     /// A human readable unique identifier (same as `id`, but this is what's on the Parse server, `id` is
     /// already taken in Parse). It is used strictly by the developer and will never be shown to a user
-    var entityId: String? {get set}
+    var entityId: String? { get set }
 
     // The clock value of when this object was added to the Parse server.
-    var logicalClock: Int? {get set}
+    var logicalClock: Int? { get set }
 
     /// The semantic version of the database schema when this object was created.
     /// The value will be nil for objects that have not yet been persisted.
-    var schemaVersion: OCKSemanticVersion? {get set}
+    var schemaVersion: OCKSemanticVersion? { get set }
 
     /// The date at which the object was first persisted to the database.
     /// It will be nil for unpersisted values and objects.
-    var createdDate: Date? {get set}
+    var createdDate: Date? { get set }
 
     /// The last date at which the object was updated.
     /// It will be nil for unpersisted values and objects.
-    var updatedDate: Date? {get set}
+    var updatedDate: Date? { get set }
 
     /// The timezone this record was created in.
-    var timezone: TimeZone? {get set}
+    var timezone: TimeZone? { get set }
 
     /// A dictionary of information that can be provided by developers to support their own unique
     /// use cases.
-    var userInfo: [String: String]? {get set}
+    var userInfo: [String: String]? { get set }
 
     /// A user-defined group identifier that can be used both for querying and sorting results.
     /// Examples may include: "medications", "exercises", "family", "males", "diabetics", etc.
-    var groupIdentifier: String? {get set}
+    var groupIdentifier: String? { get set }
 
     /// An array of user-defined tags that can be used to sort or classify objects or values.
-    var tags: [String]? {get set}
+    var tags: [String]? { get set }
 
     /// Specifies where this object originated from. It could contain information about the device
     /// used to record the data, its software version, or the person who recorded the data.
-    var source: String? {get set}
+    var source: String? { get set }
 
     /// Specifies the location of some asset associated with this object. It could be the URL for
     /// an image or video, the bundle name of a audio asset, or any other representation the
     /// developer chooses.
-    var asset: String? {get set}
+    var asset: String? { get set }
 
     /// Any array of notes associated with this object.
-    var notes: [OCKNote]? {get set}
+    var notes: [OCKNote]? { get set }
 
     /// A unique id optionally used by a remote database. Its precise format will be
     /// determined by the remote database, but it is generally not expected to be human readable.
-    var remoteID: String? {get set}
+    var remoteID: String? { get set }
 
     /// A boolean that is `true` when encoding the object for Parse. If `false` the object is encoding for CareKit.
-    var encodingForParse: Bool {get set}
+    var encodingForParse: Bool { get set }
 
     /// Copy the values of a ParseCareKit object
     static func copyValues(from other: Self, to here: Self) throws -> Self
@@ -79,6 +79,14 @@ public protocol PCKObjectable: ParseObject {
 
 // MARK: Defaults
 extension PCKObjectable {
+    public var uuid: UUID? {
+        guard let objectId = objectId,
+            let uuid = UUID(uuidString: objectId) else {
+            return nil
+        }
+        return uuid
+    }
+
     public var id: String {
         guard let returnId = entityId else {
             return ""
@@ -106,7 +114,6 @@ extension PCKObjectable {
     /// Copies the common values of another PCKObjectable object.
     /// - parameter from: The PCKObjectable object to copy from.
     mutating public func copyCommonValues(from other: Self) {
-        uuid = other.uuid
         entityId = other.entityId
         updatedDate = other.updatedDate
         timezone = other.timezone
@@ -163,7 +170,7 @@ extension PCKObjectable {
                 return
         }
 
-        let query = Self.query(ObjectableKey.uuid == uuidString)
+        let query = Self.query(ParseKey.objectId == uuidString)
             .includeAll()
         query.first(options: options,
                     callbackQueue: ParseRemote.queue) { result in
@@ -208,14 +215,15 @@ extension PCKObjectable {
             if !(self is PCKOutcome) {
                 try container.encodeIfPresent(entityId, forKey: .entityId)
             }
+            try container.encodeIfPresent(objectId, forKey: .objectId)
             try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
         } else {
             if !(self is PCKOutcome) {
                 try container.encodeIfPresent(entityId, forKey: .id)
             }
+            try container.encodeIfPresent(uuid, forKey: .uuid)
         }
-        try container.encodeIfPresent(uuid, forKey: .uuid)
         try container.encodeIfPresent(schemaVersion, forKey: .schemaVersion)
         try container.encodeIfPresent(createdDate, forKey: .createdDate)
         try container.encodeIfPresent(updatedDate, forKey: .updatedDate)

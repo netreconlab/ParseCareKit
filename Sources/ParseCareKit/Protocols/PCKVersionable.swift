@@ -144,8 +144,8 @@ extension PCKVersionable {
     */
     public func save(options: API.Options = [],
                      completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(options: options,
-                  callbackQueue: ParseRemote.queue) { results in
+        self.create(options: options,
+                    callbackQueue: ParseRemote.queue) { results in
             switch results {
 
             case .success(let savedObject):
@@ -216,14 +216,18 @@ extension PCKVersionable {
                 completion(.success(savedObject))
 
             case .failure(let error):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.versionable.error("\(self.className, privacy: .private).save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
-                } else {
-                    os_log("%{private}@.save(), %{private}@. Object: %{private}@",
-                           log: .versionable, type: .error, self.className,
-                           error.localizedDescription, self.description)
+                guard error.code == .duplicateValue else {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.versionable.error("\(self.className, privacy: .private).save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
+                    } else {
+                        os_log("%{private}@.save(), %{private}@. Object: %{private}@",
+                               log: .versionable, type: .error, self.className,
+                               error.localizedDescription, self.description)
+                    }
+                    completion(.failure(error))
+                    return
                 }
-                completion(.failure(error))
+                completion(.success(self))
             }
         }
     }
@@ -235,7 +239,7 @@ extension PCKVersionable {
         Self.query(doesNotExist(key: VersionableKey.deletedDate))
     }
 
-    private static func queryNewestVersion(for date: Date)-> Query<Self> {
+    private static func queryNewestVersion(for date: Date) -> Query<Self> {
         let interval = createCurrentDateInterval(for: date)
 
         let startsBeforeEndOfQuery = Self.query(VersionableKey.effectiveDate < interval.end)
