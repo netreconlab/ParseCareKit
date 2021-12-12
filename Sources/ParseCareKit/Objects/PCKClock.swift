@@ -96,7 +96,14 @@ struct PCKClock: ParseObjectMutable {
                     // This is the first time the Clock is user setup for this user
                     let newVector = PCKClock(uuid: uuid)
                     newVector.decodeClock { possiblyDecoded in
-                        completion(newVector, possiblyDecoded, error)
+                        newVector.create(callbackQueue: ParseRemote.queue) { result in
+                            switch result {
+                            case .success(let savedVector):
+                                completion(savedVector, possiblyDecoded, nil)
+                            case .failure(let error):
+                                completion(nil, nil, error)
+                            }
+                        }
                     }
                 }
             }
@@ -107,6 +114,7 @@ struct PCKClock: ParseObjectMutable {
 extension PCKClock {
     init(uuid: UUID) {
         self.uuid = uuid
+        self.objectId = UUID().uuidString
         vector = "{\"processes\":[{\"id\":\"\(uuid.uuidString)\",\"clock\":0}]}"
         ACL = PCKUtility.getDefaultACL()
     }
