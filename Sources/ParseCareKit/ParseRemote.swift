@@ -394,32 +394,13 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
-
-                        switch parseError.code {
-                        case .internalServer, .objectNotFound:
-                            // 1 - this column hasn't been added. 101 - Query returned no results
-                            if potentialPCKClock != nil {
-                                potentialPCKClock!.save(callbackQueue: ParseRemote.queue) { _ in
-                                    if #available(iOS 14.0, watchOS 7.0, *) {
-                                        Logger.pushRevisions.error("Saved Clock. Try to sync again \(potentialPCKClock!.debugDescription, privacy: .private)")
-                                    } else {
-                                        os_log("Saved Clock. Try to sync again. %{private}@",
-                                               log: .pushRevisions, type: .debug, potentialPCKClock!.debugDescription)
-                                    }
-                                    completion(error)
-                                }
-                            } else {
-                                completion(error)
-                            }
-                        default:
-                            // There was a different issue that we don't know how to handle
-                            if #available(iOS 14.0, watchOS 7.0, *) {
-                                Logger.pushRevisions.error("\(parseError.localizedDescription, privacy: .private)")
-                            } else {
-                                os_log("%{private}@", log: .pushRevisions, type: .error, parseError.localizedDescription)
-                            }
-                            completion(error)
+                        if #available(iOS 14.0, watchOS 7.0, *) {
+                            Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
+                        } else {
+                            os_log("Error in pushRevisions. Couldn't unwrap clock: %{private}@",
+                                   log: .pushRevisions, type: .error, parseError.localizedDescription)
                         }
+                        completion(parseError)
                     return
                 }
 
@@ -733,7 +714,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        updatedClock.save(callbackQueue: ParseRemote.queue) { result in
+        updatedClock.replace(callbackQueue: ParseRemote.queue) { result in
             self.isSynchronizing = false
             switch result {
 

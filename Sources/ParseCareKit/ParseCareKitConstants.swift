@@ -317,6 +317,8 @@ public enum OutcomeKey {
 public enum ClockKey {
     /// className key.
     public static let className                                = "Clock"
+    /// uuid key.
+    public static let uuid                                     = "uuid"
     /// vector key.
     public static let vector                                   = "vector"
 }
