@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ slider ]
 env:
-  CI_XCODE_13: '/Applications/Xcode_13.0.app/Contents/Developer'
+  CI_XCODE_13: '/Applications/Xcode_13.2.app/Contents/Developer'
 
 jobs:
   xcode-test-ios:
@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max -derivedDataPath DerivedData test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 13\ Pro\ Max -derivedDataPath DerivedData test | xcpretty
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
     - name: Prepare codecov
