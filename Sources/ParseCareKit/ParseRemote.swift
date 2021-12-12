@@ -399,7 +399,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                         case .internalServer, .objectNotFound:
                             // 1 - this column hasn't been added. 101 - Query returned no results
                             if potentialPCKClock != nil {
-                                potentialPCKClock!.save(callbackQueue: ParseRemote.queue) { _ in
+                                potentialPCKClock!.create(callbackQueue: ParseRemote.queue) { _ in
                                     if #available(iOS 14.0, watchOS 7.0, *) {
                                         Logger.pushRevisions.error("Saved Clock. Try to sync again \(potentialPCKClock!.debugDescription, privacy: .private)")
                                     } else {
@@ -733,7 +733,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        updatedClock.save(callbackQueue: ParseRemote.queue) { result in
+        updatedClock.replace(callbackQueue: ParseRemote.queue) { result in
             self.isSynchronizing = false
             switch result {
 
