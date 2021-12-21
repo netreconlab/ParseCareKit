@@ -154,6 +154,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
             defaultACL.setWriteAccess(user: user, value: true)
             acl = defaultACL
         }
+        if let currentDefaultACL = PCKUtility.getDefaultACL() {
+            if acl == currentDefaultACL {
+                return
+            }
+        }
         do {
             let encodedACL = try PCKUtility.jsonEncoder().encode(acl)
             if let aclString = String(data: encodedACL, encoding: .utf8) {

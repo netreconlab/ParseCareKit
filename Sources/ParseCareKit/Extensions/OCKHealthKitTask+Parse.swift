@@ -30,8 +30,8 @@ public extension OCKHealthKitTask {
                 guard let aclString = String(data: encodedACL, encoding: .utf8) else {
                     throw ParseCareKitError.cantEncodeACL
                 }
-                if var userInfo = userInfo {
-                    userInfo[ParseCareKitConstants.acl] = aclString
+                if userInfo != nil {
+                    userInfo?[ParseCareKitConstants.acl] = aclString
                 } else {
                     userInfo = [ParseCareKitConstants.acl: aclString]
                 }
