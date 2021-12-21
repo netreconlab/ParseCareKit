@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ main ]
 env:
-  CI_XCODE_13: '/Applications/Xcode_13.2.app/Contents/Developer'
+  CI_XCODE_13: '/Applications/Xcode_13.2.1.app/Contents/Developer'
 
 jobs:
   xcode-test-ios:
