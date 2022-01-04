@@ -23,9 +23,9 @@
         "package": "ParseSwift",
         "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
         "state": {
-          "branch": "main",
-          "revision": "e9ba846c399257100b285d25d2bd055628b13b4b",
-          "version": null
+          "branch": null,
+          "revision": "e6c2db2f316d4c8a5954e342455359f7d854195a",
+          "version": "3.0.0"
         }
       }
     ]
