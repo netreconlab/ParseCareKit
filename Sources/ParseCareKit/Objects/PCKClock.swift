@@ -25,6 +25,8 @@ struct PCKClock: ParseObjectMutable {
 
     var ACL: ParseACL?
 
+    var score: Double?
+
     var uuid: UUID?
 
     var vector: String?
