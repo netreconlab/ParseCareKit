@@ -66,6 +66,8 @@ public struct PCKPatient: PCKVersionable {
 
     public var ACL: ParseACL?
 
+    public var score: Double?
+
     /// A list of substances this patient is allergic to.
     public var allergies: [String]?
 

@@ -28,4 +28,6 @@ struct PCKUser: ParseUser {
     var updatedAt: Date?
 
     var ACL: ParseACL?
+
+    var score: Double?
 }
