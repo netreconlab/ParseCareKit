@@ -69,6 +69,8 @@ public struct PCKCarePlan: PCKVersionable {
 
     public var ACL: ParseACL?
 
+    public var score: Double?
+
     public var nextVersionUUIDs: [UUID]?
 
     public var previousVersionUUIDs: [UUID]?

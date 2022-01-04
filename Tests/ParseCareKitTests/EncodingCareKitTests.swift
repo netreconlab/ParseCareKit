@@ -21,6 +21,7 @@ struct LoginSignupResponse: ParseUser {
     var sessionToken: String?
     var updatedAt: Date?
     var ACL: ParseACL?
+    var score: Double?
 
     // provided by User
     var username: String?
@@ -88,8 +89,8 @@ class ParseCareKitTests: XCTestCase {
                               clientKey: "clientKey",
                               masterKey: "masterKey",
                               serverURL: url,
-                              allowCustomObjectId: true,
-                              testing: true)
+                              isAllowingCustomObjectIds: true,
+                              isTesting: true)
         do {
             _ = try userLogin()
             parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,

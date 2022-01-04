@@ -78,9 +78,9 @@ public class PCKUtility {
                               clientKey: clientKey,
                               serverURL: serverURL,
                               liveQueryServerURL: liveQueryURL,
-                              allowCustomObjectId: true,
-                              useTransactions: useTransactions,
-                              deleteKeychainIfNeeded: deleteKeychainIfNeeded,
+                              isAllowingCustomObjectIds: true,
+                              isUsingTransactions: useTransactions,
+                              isDeletingKeychainIfNeeded: deleteKeychainIfNeeded,
                               authentication: authentication)
     }
 
