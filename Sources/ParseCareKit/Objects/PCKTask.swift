@@ -205,7 +205,7 @@ public struct PCKTask: PCKVersionable {
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
         let query = Self.query(ObjectableKey.logicalClock >= localClock)
-            .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
+            .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
             switch results {
