@@ -195,7 +195,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
-            let clockQuery = PCKClock.query(ParseKey.objectId == self.uuid)
+            let clockQuery = PCKClock.query(ClockKey.uuid == self.uuid)
             guard let subscription = clockQuery.subscribeCallback else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.clock.error("Couldn't subscribe to clock query")
