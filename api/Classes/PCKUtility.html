@@ -191,9 +191,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit10PCKUtilityC11setupServer14authenticationyySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthI11DispositionV_So15NSURLCredentialCSgtXEtcSg_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/setupServer(authentication:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit10PCKUtilityC11setupServer14authenticationyySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthI11DispositionV_So15NSURLCredentialCSgtXEtcSg_tFZ">setupServer(authentication:<wbr>)</a>
+                    <a name="/s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/setupServer(fileName:authentication:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtFZ">setupServer(fileName:<wbr>authentication:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -219,7 +219,8 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">setupServer</span><span class="p">(</span><span class="nv">authentication</span><span class="p">:</span> <span class="p">((</span><span class="kt">URLAuthenticationChallenge</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">setupServer</span><span class="p">(</span><span class="nv">fileName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"ParseCareKit"</span><span class="p">,</span>
+                              <span class="nv">authentication</span><span class="p">:</span> <span class="p">((</span><span class="kt">URLAuthenticationChallenge</span><span class="p">,</span>
                                                 <span class="p">(</span><span class="kt">URLSession</span><span class="o">.</span><span class="kt">AuthChallengeDisposition</span><span class="p">,</span>
                                                   <span class="kt">URLCredential</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
@@ -229,6 +230,18 @@
                         <h4>Parameters</h4>
                         <table class="graybox">
                           <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fileName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Name of <strong>.plist</strong> file that contains config. Defaults to &ldquo;ParseCareKit&rdquo;.</p>
+                                </div>
+                              </td>
+                            </tr>
                             <tr>
                               <td>
                                 <code>
