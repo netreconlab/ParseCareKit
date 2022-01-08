@@ -23,13 +23,15 @@ public class PCKUtility {
     - LiveQueryServer - (String) The live query server URL to connect to Parse Server.
     - UseTransactionsInternally - (Boolean) Use transactions inside the Client SDK.
     - DeleteKeychainIfNeeded - (Boolean) Deletes the Parse Keychain when the app is running for the first time.
+    - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
     - parameter authentication: A callback block that will be used to receive/accept/decline network challenges.
      Defaults to `nil` in which the SDK will use the default OS authentication methods for challenges.
      It should have the following argument signature: `(challenge: URLAuthenticationChallenge,
      completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void`.
      See Apple's [documentation](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession) for more for details.
      */
-    public class func setupServer(authentication: ((URLAuthenticationChallenge,
+    public class func setupServer(fileName: String = "ParseCareKit",
+                                  authentication: ((URLAuthenticationChallenge,
                                                     (URLSession.AuthChallengeDisposition,
                                                       URLCredential?) -> Void) -> Void)? = nil) {
         var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
@@ -38,7 +40,7 @@ public class PCKUtility {
         var liveQueryURL: URL?
         var useTransactions = false
         var deleteKeychainIfNeeded = false
-        guard let path = Bundle.main.path(forResource: "ParseCareKit", ofType: "plist"),
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
                 fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
         }
