@@ -73,7 +73,7 @@ public enum PCKStoreClass: String {
     }
 
     func orderedArray() -> [PCKStoreClass] {
-        return [.patient, .carePlan, .contact, .task, .outcome, .healthKitTask]
+        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome]
     }
 
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
