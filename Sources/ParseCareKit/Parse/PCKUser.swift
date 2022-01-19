@@ -29,5 +29,5 @@ struct PCKUser: ParseUser {
 
     var ACL: ParseACL?
 
-    var score: Double?
+    var originalData: Data?
 }

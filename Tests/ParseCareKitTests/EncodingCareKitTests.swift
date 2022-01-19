@@ -21,7 +21,7 @@ struct LoginSignupResponse: ParseUser {
     var sessionToken: String?
     var updatedAt: Date?
     var ACL: ParseACL?
-    var score: Double?
+    var originalData: Data?
 
     // provided by User
     var username: String?
