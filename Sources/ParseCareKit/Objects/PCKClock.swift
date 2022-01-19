@@ -11,7 +11,7 @@ import ParseSwift
 import CareKitStore
 import os.log
 
-struct PCKClock: ParseObjectMutable {
+struct PCKClock: ParseObject {
 
     static var className: String {
         "Clock"
@@ -25,11 +25,24 @@ struct PCKClock: ParseObjectMutable {
 
     var ACL: ParseACL?
 
-    var score: Double?
+    var originalData: Data?
 
     var uuid: UUID?
 
     var vector: String?
+
+    func merge(with object: PCKClock) throws -> PCKClock {
+        var updated = try mergeParse(with: object)
+        if updated.shouldRestoreKey(\.uuid,
+                                     original: object) {
+            updated.uuid = object.uuid
+        }
+        if updated.shouldRestoreKey(\.vector,
+                                     original: object) {
+            updated.vector = object.vector
+        }
+        return updated
+    }
 
     func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?) -> Void) {
         guard let data = self.vector?.data(using: .utf8) else {
@@ -63,7 +76,7 @@ struct PCKClock: ParseObjectMutable {
             guard let cloudVectorString = String(data: json, encoding: .utf8) else {
                 return nil
             }
-            var mutableClock = self
+            var mutableClock = self.mergeable
             mutableClock.vector = cloudVectorString
             return mutableClock
         } catch {
