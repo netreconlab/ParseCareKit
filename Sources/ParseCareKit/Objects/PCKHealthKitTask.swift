@@ -75,7 +75,7 @@ public struct PCKHealthKitTask: PCKVersionable {
 
     public var ACL: ParseACL?
 
-    public var score: Double?
+    public var originalData: Data?
 
     /// A structure specifying how this task is linked with HealthKit.
     public var healthKitLinkage: OCKHealthKitLinkage?

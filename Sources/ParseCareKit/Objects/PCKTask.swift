@@ -75,7 +75,7 @@ public struct PCKTask: PCKVersionable {
 
     public var ACL: ParseACL?
 
-    public var score: Double?
+    public var originalData: Data?
 
     /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?

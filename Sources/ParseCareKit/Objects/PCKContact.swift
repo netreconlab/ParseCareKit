@@ -73,7 +73,7 @@ public struct PCKContact: PCKVersionable {
 
     public var ACL: ParseACL?
 
-    public var score: Double?
+    public var originalData: Data?
 
     /// The contact's postal address.
     public var address: OCKPostalAddress?

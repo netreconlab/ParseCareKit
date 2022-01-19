@@ -70,7 +70,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public var ACL: ParseACL?
 
-    public var score: Double?
+    public var originalData: Data?
 
     var startDate: Date? // Custom added, check if needed
 
