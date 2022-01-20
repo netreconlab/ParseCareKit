@@ -89,8 +89,8 @@ class ParseCareKitTests: XCTestCase {
                               clientKey: "clientKey",
                               masterKey: "masterKey",
                               serverURL: url,
-                              isAllowingCustomObjectIds: true,
-                              isTesting: true)
+                              allowingCustomObjectIds: true,
+                              testing: true)
         do {
             _ = try userLogin()
             parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
