@@ -219,7 +219,7 @@
     },
     {
       "file": "/Users/runner/work/ParseCareKit/ParseCareKit/Sources/ParseCareKit/ParseCareKitError.swift",
-      "line": 30,
+      "line": 31,
       "symbol": "ParseCareKitError",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
