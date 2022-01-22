@@ -226,7 +226,27 @@ public class ParseRemote: OCKRemoteSynchronizable {
                               completion: @escaping (Error?) -> Void) {
 
         guard PCKUser.current != nil else {
-            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(ParseCareKitError.userNotLoggedIn)
+            return
+        }
+
+        do {
+            guard try ParseHealth.check().contains("ok") else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pullRevisions.error("Server health is not \"ok\"")
+                } else {
+                    os_log("Server health is not \"ok\"", log: .pullRevisions, type: .error)
+                }
+                completion(ParseCareKitError.parseHealthError)
+                return
+            }
+        } catch {
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.pullRevisions.error("Server health: \(error.localizedDescription)")
+            } else {
+                os_log("Server health: %{private}@", log: .pullRevisions, type: .error, error.localizedDescription)
+            }
+            completion(ParseCareKitError.parseHealthError)
             return
         }
 
@@ -362,7 +382,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                               completion: @escaping (Error?) -> Void) {
 
         guard PCKUser.current != nil else {
-            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+            completion(ParseCareKitError.userNotLoggedIn)
             return
         }
 
@@ -371,6 +391,26 @@ public class ParseRemote: OCKRemoteSynchronizable {
             self.isSynchronizing = false
             self.parseRemoteDelegate?.successfullyPushedDataToCloud()
             completion(nil)
+            return
+        }
+
+        do {
+            guard try ParseHealth.check().contains("ok") else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pushRevisions.error("Server health is not \"ok\"")
+                } else {
+                    os_log("Server health is not \"ok\"", log: .pushRevisions, type: .error)
+                }
+                completion(ParseCareKitError.parseHealthError)
+                return
+            }
+        } catch {
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.pushRevisions.error("Server health: \(error.localizedDescription)")
+            } else {
+                os_log("Server health: %{private}@", log: .pushRevisions, type: .error, error.localizedDescription)
+            }
+            completion(ParseCareKitError.parseHealthError)
             return
         }
 
