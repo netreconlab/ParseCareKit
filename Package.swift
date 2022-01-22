@@ -16,7 +16,7 @@ let package = Package(
         .package(name: "CareKit", url: "https://github.com/carekit-apple/CareKit.git",
                  .revision("a612482e4ba4f28d4c75129c0a9b70ca23098bd6")),
         .package(name: "ParseSwift", url: "https://github.com/parse-community/Parse-Swift.git",
-                 .revision("5966a4c3d75468ac8a031c08fecb52e3fda9d2f4"))
+                 .revision("c119033f44b91570997ad24f7b4b5af8e4d47b64"))
     ],
     targets: [
         .target(
