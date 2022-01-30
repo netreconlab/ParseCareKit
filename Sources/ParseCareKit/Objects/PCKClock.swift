@@ -89,6 +89,29 @@ struct PCKClock: ParseObject {
         }
     }
 
+    func setupACLWithRoles() async throws -> Self {
+        guard let currentUser = PCKUser.current else {
+            throw ParseCareKitError.errorString("No user is signed in")
+        }
+        var writeRole = try PCKWriteRole.create(with: currentUser)
+        writeRole = try await writeRole.create()
+        var readRole = try PCKReadRole.create(with: currentUser)
+        readRole = try await readRole.create()
+        guard let roles = try readRole.roles?.add([writeRole]) else {
+            throw ParseCareKitError.errorString("Should have roles for readRole")
+        }
+        _ = try await roles.save()
+        let writeRoleName = try PCKWriteRole.roleName(owner: currentUser)
+        let readRoleName = try PCKReadRole.roleName(owner: currentUser)
+        var mutatingClock = self
+        mutatingClock.ACL = ACL ?? ParseACL()
+        mutatingClock.ACL?.setWriteAccess(roleName: writeRoleName, value: true)
+        mutatingClock.ACL?.setReadAccess(roleName: readRoleName, value: true)
+        mutatingClock.ACL?.setWriteAccess(roleName: ParseCareKitConstants.administratorRole, value: true)
+        mutatingClock.ACL?.setReadAccess(roleName: ParseCareKitConstants.administratorRole, value: true)
+        return mutatingClock
+    }
+
     static func fetchFromCloud(uuid: UUID, createNewIfNeeded: Bool,
                                completion:@escaping(PCKClock?,
                                                     OCKRevisionRecord.KnowledgeVector?,
@@ -110,14 +133,36 @@ struct PCKClock: ParseObject {
                 } else {
                     // This is the first time the Clock is user setup for this user
                     let newVector = PCKClock(uuid: uuid)
-                    newVector.decodeClock { possiblyDecoded in
-                        newVector.create(callbackQueue: ParseRemote.queue) { result in
-                            switch result {
-                            case .success(let savedVector):
-                                completion(savedVector, possiblyDecoded, nil)
-                            case .failure(let error):
-                                completion(nil, nil, error)
+                    Task {
+                        do {
+                            let updatedVector = try await newVector.setupACLWithRoles()
+                            updatedVector.decodeClock { possiblyDecoded in
+                                updatedVector.create(callbackQueue: ParseRemote.queue) { result in
+                                    switch result {
+                                    case .success(let savedVector):
+                                        completion(savedVector, possiblyDecoded, nil)
+                                    case .failure(let error):
+                                        completion(nil, nil, error)
+                                    }
+                                }
                             }
+                        } catch {
+                            guard let parseError = error as? ParseError else {
+                                if #available(iOS 14.0, watchOS 7.0, *) {
+                                    Logger.clock.error("""
+                                        Couldn't cast error to
+                                        ParseError: \(error.localizedDescription)
+                                    """)
+                                } else {
+                                    os_log("Couldn't cast error to ParseError: %{private}@",
+                                           log: .clock,
+                                           type: .error,
+                                           error.localizedDescription)
+                                }
+                                completion(nil, nil, nil)
+                                return
+                            }
+                            completion(nil, nil, parseError)
                         }
                     }
                 }

@@ -16,6 +16,7 @@ import os.log
 public enum ParseCareKitConstants {
     static let defaultACL = "edu.uky.cs.netreconlab.ParseCareKit_defaultACL"
     static let acl = "_acl"
+    static let administratorRole = "Administrators"
 }
 
 // MARK: Coding
