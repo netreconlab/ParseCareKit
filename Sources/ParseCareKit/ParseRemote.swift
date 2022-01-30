@@ -759,7 +759,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             completion(ParseCareKitError.couldntUnwrapClock)
             return
         }
-        updatedClock.save(callbackQueue: ParseRemote.queue) { result in
+        updatedClock.replace(callbackQueue: ParseRemote.queue) { result in
             self.isSynchronizing = false
             switch result {
 
