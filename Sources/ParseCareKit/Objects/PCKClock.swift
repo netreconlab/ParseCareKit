@@ -89,20 +89,51 @@ struct PCKClock: ParseObject {
         }
     }
 
+    func setupWriteRole(_ owner: PCKUser) async throws -> PCKWriteRole {
+        var role: PCKWriteRole
+        let roleName = try PCKWriteRole.roleName(owner: owner)
+        do {
+            role = try await PCKWriteRole.query(ParseKey.name == roleName).first()
+        } catch {
+            role = try PCKWriteRole.create(with: owner)
+            role = try await role.create()
+        }
+        return role
+    }
+
+    func setupReadRole(_ owner: PCKUser) async throws -> PCKReadRole {
+        var role: PCKReadRole
+        let roleName = try PCKReadRole.roleName(owner: owner)
+        do {
+            role = try await PCKReadRole.query(ParseKey.name == roleName).first()
+        } catch {
+            role = try PCKReadRole.create(with: owner)
+            role = try await role.create()
+        }
+        return role
+    }
+
     func setupACLWithRoles() async throws -> Self {
         guard let currentUser = PCKUser.current else {
             throw ParseCareKitError.errorString("No user is signed in")
         }
-        var writeRole = try PCKWriteRole.create(with: currentUser)
-        writeRole = try await writeRole.create()
-        var readRole = try PCKReadRole.create(with: currentUser)
-        readRole = try await readRole.create()
-        guard let roles = try readRole.roles?.add([writeRole]) else {
-            throw ParseCareKitError.errorString("Should have roles for readRole")
-        }
-        _ = try await roles.save()
+
+        let writeRole = try await setupWriteRole(currentUser)
+        let readRole = try await setupReadRole(currentUser)
         let writeRoleName = try PCKWriteRole.roleName(owner: currentUser)
         let readRoleName = try PCKReadRole.roleName(owner: currentUser)
+        do {
+            _ = try await readRole
+                .queryRoles()
+                .where(ParseKey.name == writeRoleName)
+                .first()
+        } catch {
+            // Need to give write role read access.
+            guard let roles = try readRole.roles?.add([writeRole]) else {
+                throw ParseCareKitError.errorString("Should have roles for readRole")
+            }
+            _ = try await roles.save()
+        }
         var mutatingClock = self
         mutatingClock.ACL = ACL ?? ParseACL()
         mutatingClock.ACL?.setWriteAccess(roleName: writeRoleName, value: true)

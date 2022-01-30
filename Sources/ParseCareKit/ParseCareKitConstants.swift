@@ -184,6 +184,8 @@ public enum ParseKey {
     public static let updatedAt = "updatedAt"
     /// objectId key.
     public static let ACL = "ACL"
+    /// name key for ParseRole.
+    public static let name = "name"
 }
 
 /// Keys for all `PCKObjectable` objects. These keys can be used for querying Parse objects.
