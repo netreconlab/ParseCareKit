@@ -76,7 +76,7 @@ struct PCKClock: ParseObject {
             guard let cloudVectorString = String(data: json, encoding: .utf8) else {
                 return nil
             }
-            var mutableClock = self.mergeable
+            var mutableClock = self
             mutableClock.vector = cloudVectorString
             return mutableClock
         } catch {
