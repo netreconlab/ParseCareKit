@@ -26,6 +26,7 @@ enum ParseCareKitError: Error {
     case couldntCreateConcreteClasses
     case syncAlreadyInProgress
     case parseHealthError
+    case errorString(_ string: String)
 }
 
 extension ParseCareKitError: LocalizedError {
@@ -76,6 +77,7 @@ extension ParseCareKitError: LocalizedError {
         case .parseHealthError:
             return NSLocalizedString("There was a problem with the health of the server!",
                                      comment: "There was a problem with the health of the server!")
+        case .errorString(let string): return string
         }
     }
 }

@@ -89,6 +89,60 @@ struct PCKClock: ParseObject {
         }
     }
 
+    func setupWriteRole(_ owner: PCKUser) async throws -> PCKWriteRole {
+        var role: PCKWriteRole
+        let roleName = try PCKWriteRole.roleName(owner: owner)
+        do {
+            role = try await PCKWriteRole.query(ParseKey.name == roleName).first()
+        } catch {
+            role = try PCKWriteRole.create(with: owner)
+            role = try await role.create()
+        }
+        return role
+    }
+
+    func setupReadRole(_ owner: PCKUser) async throws -> PCKReadRole {
+        var role: PCKReadRole
+        let roleName = try PCKReadRole.roleName(owner: owner)
+        do {
+            role = try await PCKReadRole.query(ParseKey.name == roleName).first()
+        } catch {
+            role = try PCKReadRole.create(with: owner)
+            role = try await role.create()
+        }
+        return role
+    }
+
+    func setupACLWithRoles() async throws -> Self {
+        guard let currentUser = PCKUser.current else {
+            throw ParseCareKitError.errorString("No user is signed in")
+        }
+
+        let writeRole = try await setupWriteRole(currentUser)
+        let readRole = try await setupReadRole(currentUser)
+        let writeRoleName = try PCKWriteRole.roleName(owner: currentUser)
+        let readRoleName = try PCKReadRole.roleName(owner: currentUser)
+        do {
+            _ = try await readRole
+                .queryRoles()
+                .where(ParseKey.name == writeRoleName)
+                .first()
+        } catch {
+            // Need to give write role read access.
+            guard let roles = try readRole.roles?.add([writeRole]) else {
+                throw ParseCareKitError.errorString("Should have roles for readRole")
+            }
+            _ = try await roles.save()
+        }
+        var mutatingClock = self
+        mutatingClock.ACL = ACL ?? ParseACL()
+        mutatingClock.ACL?.setWriteAccess(roleName: writeRoleName, value: true)
+        mutatingClock.ACL?.setReadAccess(roleName: readRoleName, value: true)
+        mutatingClock.ACL?.setWriteAccess(roleName: ParseCareKitConstants.administratorRole, value: true)
+        mutatingClock.ACL?.setReadAccess(roleName: ParseCareKitConstants.administratorRole, value: true)
+        return mutatingClock
+    }
+
     static func fetchFromCloud(uuid: UUID, createNewIfNeeded: Bool,
                                completion:@escaping(PCKClock?,
                                                     OCKRevisionRecord.KnowledgeVector?,
@@ -110,14 +164,36 @@ struct PCKClock: ParseObject {
                 } else {
                     // This is the first time the Clock is user setup for this user
                     let newVector = PCKClock(uuid: uuid)
-                    newVector.decodeClock { possiblyDecoded in
-                        newVector.create(callbackQueue: ParseRemote.queue) { result in
-                            switch result {
-                            case .success(let savedVector):
-                                completion(savedVector, possiblyDecoded, nil)
-                            case .failure(let error):
-                                completion(nil, nil, error)
+                    Task {
+                        do {
+                            let updatedVector = try await newVector.setupACLWithRoles()
+                            updatedVector.decodeClock { possiblyDecoded in
+                                updatedVector.create(callbackQueue: ParseRemote.queue) { result in
+                                    switch result {
+                                    case .success(let savedVector):
+                                        completion(savedVector, possiblyDecoded, nil)
+                                    case .failure(let error):
+                                        completion(nil, nil, error)
+                                    }
+                                }
                             }
+                        } catch {
+                            guard let parseError = error as? ParseError else {
+                                if #available(iOS 14.0, watchOS 7.0, *) {
+                                    Logger.clock.error("""
+                                        Couldn't cast error to
+                                        ParseError: \(error.localizedDescription)
+                                    """)
+                                } else {
+                                    os_log("Couldn't cast error to ParseError: %{private}@",
+                                           log: .clock,
+                                           type: .error,
+                                           error.localizedDescription)
+                                }
+                                completion(nil, nil, nil)
+                                return
+                            }
+                            completion(nil, nil, parseError)
                         }
                     }
                 }

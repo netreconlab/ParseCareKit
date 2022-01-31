@@ -16,6 +16,7 @@ import os.log
 public enum ParseCareKitConstants {
     static let defaultACL = "edu.uky.cs.netreconlab.ParseCareKit_defaultACL"
     static let acl = "_acl"
+    static let administratorRole = "Administrators"
 }
 
 // MARK: Coding
@@ -183,6 +184,8 @@ public enum ParseKey {
     public static let updatedAt = "updatedAt"
     /// objectId key.
     public static let ACL = "ACL"
+    /// name key for ParseRole.
+    public static let name = "name"
 }
 
 /// Keys for all `PCKObjectable` objects. These keys can be used for querying Parse objects.
