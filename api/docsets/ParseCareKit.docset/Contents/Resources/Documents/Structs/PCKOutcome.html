@@ -1026,9 +1026,9 @@ will start again from 0.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVys6ResultOyAJ0A5Swift0A5ErrorVGctF"></a>
-                    <a name="//apple_ref/swift/Method/pullRevisions(since:cloudClock:mergeRevision:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVys6ResultOyAJ0A5Swift0A5ErrorVGctF">pullRevisions(since:<wbr>cloudClock:<wbr>mergeRevision:<wbr>)</a>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock8remoteID13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVSSys6ResultOyAK0A5Swift0A5ErrorVGctF"></a>
+                    <a name="//apple_ref/swift/Method/pullRevisions(since:cloudClock:remoteID:mergeRevision:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP13pullRevisions5since10cloudClock8remoteID13mergeRevisionySi_0bC5Store17OCKRevisionRecordV15KnowledgeVectorVSSys6ResultOyAK0A5Swift0A5ErrorVGctF">pullRevisions(since:<wbr>cloudClock:<wbr>remoteID:<wbr>mergeRevision:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1042,7 +1042,9 @@ will start again from 0.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">localClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pullRevisions</span><span class="p">(</span><span class="n">since</span> <span class="nv">localClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+                          <span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">OCKRevisionRecord</span><span class="o">.</span><span class="kt">KnowledgeVector</span><span class="p">,</span>
+                          <span class="nv">remoteID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                           <span class="nv">mergeRevision</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">OCKRevisionRecord</span><span class="p">,</span> <span class="kt">ParseError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
@@ -1053,9 +1055,9 @@ will start again from 0.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock10completionySi_ys5Error_pSgctF"></a>
-                    <a name="//apple_ref/swift/Method/pushRevision(cloudClock:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock10completionySi_ys5Error_pSgctF">pushRevision(cloudClock:<wbr>completion:<wbr>)</a>
+                    <a name="/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock8remoteID10completionySi_SSys5Error_pSgctF"></a>
+                    <a name="//apple_ref/swift/Method/pushRevision(cloudClock:remoteID:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12ParseCareKit17PCKSynchronizableP12pushRevision10cloudClock8remoteID10completionySi_SSys5Error_pSgctF">pushRevision(cloudClock:<wbr>remoteID:<wbr>completion:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1069,7 +1071,9 @@ will start again from 0.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pushRevision</span><span class="p">(</span><span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pushRevision</span><span class="p">(</span><span class="nv">cloudClock</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+                         <span class="nv">remoteID</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                         <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
