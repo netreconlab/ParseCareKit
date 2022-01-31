@@ -223,10 +223,13 @@ public struct PCKContact: PCKVersionable {
         }
     }
 
-    public func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
+    public func pullRevisions(since localClock: Int,
+                              cloudClock: OCKRevisionRecord.KnowledgeVector,
+                              remoteID: String,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = Self.query(ObjectableKey.logicalClock >= localClock)
+        let query = Self.query(ObjectableKey.logicalClock >= localClock,
+                               ObjectableKey.remoteID == remoteID)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
             .includeAll()
         query.find(callbackQueue: ParseRemote.queue) { results in
@@ -265,9 +268,12 @@ public struct PCKContact: PCKVersionable {
         }
     }
 
-    public func pushRevision(cloudClock: Int, completion: @escaping (Error?) -> Void) {
+    public func pushRevision(cloudClock: Int,
+                             remoteID: String,
+                             completion: @escaping (Error?) -> Void) {
         var mutableContact = self
         mutableContact.logicalClock = cloudClock // Stamp Entity
+        mutableContact.remoteID = remoteID
 
         guard mutableContact.deletedDate != nil else {
             mutableContact.addToCloud { result in

@@ -57,7 +57,9 @@ public protocol PCKSynchronizable {
        Wait until one merge has completed before starting another.
      
     */
-    func pullRevisions(since localClock: Int, cloudClock: OCKRevisionRecord.KnowledgeVector,
+    func pullRevisions(since localClock: Int,
+                       cloudClock: OCKRevisionRecord.KnowledgeVector,
+                       remoteID: String,
                        mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void)
 
     /**
@@ -68,5 +70,6 @@ public protocol PCKSynchronizable {
        - completion: A closure that should be called once the push completes.
     */
     func pushRevision(cloudClock: Int,
+                      remoteID: String,
                       completion: @escaping (Error?) -> Void)
 }
