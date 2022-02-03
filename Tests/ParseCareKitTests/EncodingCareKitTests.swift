@@ -45,7 +45,7 @@ struct LoginSignupResponse: ParseUser {
     }
 }
 
-func userLogin() throws -> PCKUser {
+func userLogin() async throws -> PCKUser {
     let loginResponse = LoginSignupResponse()
 
     MockURLProtocol.mockRequests { _ in
@@ -56,8 +56,8 @@ func userLogin() throws -> PCKUser {
             return nil
         }
     }
-    let user = try PCKUser.login(username: loginResponse.username!,
-                                 password: loginResponse.password!)
+    let user = try await PCKUser.login(username: loginResponse.username!,
+                                       password: loginResponse.password!)
     MockURLProtocol.removeAll()
     return user
 }
@@ -91,29 +91,31 @@ class ParseCareKitTests: XCTestCase {
                               serverURL: url,
                               allowingCustomObjectIds: true,
                               testing: true)
-        do {
-            _ = try userLogin()
-            parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                    auto: false,
-                                    subscribeToServerUpdates: false)
-        } catch {
-            print(error.localizedDescription)
-        }
-        store = OCKStore(name: "SampleAppStore", type: .onDisk(), remote: parse)
-        parse?.parseRemoteDelegate = self
-
     }
 
     override func tearDownWithError() throws {
         MockURLProtocol.removeAll()
         try KeychainStore.shared.deleteAll()
         try ParseStorage.shared.deleteAll()
-        try store.delete()
         UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
         UserDefaults.standard.synchronize()
     }
 
-    func testSetDefaultACLLoggedIn() throws {
+    func mockSignedUserWithRemote() async throws {
+        _ = try await userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        store = OCKStore(name: "SampleAppStore", type: .onDisk(), remote: parse)
+        parse?.parseRemoteDelegate = self
+    }
+
+    func cleanupMockServer() async throws {
+        try store.delete()
+    }
+
+    func testSetDefaultACLLoggedIn() async throws {
+        try await mockSignedUserWithRemote()
         guard let user = PCKUser.current,
               let objectId = user.objectId,
               let defaultACL = PCKUtility.getDefaultACL() else {
@@ -126,8 +128,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
     }
 
-    func testDefaultACLAlreadySet() throws {
-        let user = try userLogin()
+    func testDefaultACLAlreadySet() async throws {
+        let user = try await userLogin()
         var userSetACL = ParseACL()
         userSetACL.publicRead = true
         userSetACL.publicWrite = true
@@ -281,7 +283,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testPatientACL() throws {
+    func testPatientACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         XCTAssertNil(careKit.acl)
 
@@ -324,6 +327,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -465,7 +469,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testOutcomeACL() throws {
+    func testOutcomeACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
         XCTAssertNil(careKit.acl)
 
@@ -508,6 +513,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -646,7 +652,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testTaskACL() throws {
+    func testTaskACL() async throws {
+        try await mockSignedUserWithRemote()
         let careKitSchedule = OCKScheduleElement(start: Date(),
                                                  end: Date().addingTimeInterval(3000), interval: .init(day: 1))
         var careKit = OCKTask(id: "myId", title: "hello", carePlanUUID: UUID(),
@@ -692,6 +699,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -833,7 +841,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testHealthKitTaskACL() throws {
+    func testHealthKitTaskACL() async throws {
+        try await mockSignedUserWithRemote()
         let careKitSchedule = OCKScheduleElement(start: Date(),
                                                  end: Date().addingTimeInterval(3000), interval: .init(day: 1))
         var careKit = OCKHealthKitTask(id: "myId", title: "hello", carePlanUUID: UUID(),
@@ -882,6 +891,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -1008,7 +1018,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testCarePlanACL() throws {
+    func testCarePlanACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
         XCTAssertNil(careKit.acl)
 
@@ -1051,6 +1062,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -1211,7 +1223,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testContactACL() throws {
+    func testContactACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
         XCTAssertNil(careKit.acl)
 
@@ -1254,6 +1267,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
 /*
