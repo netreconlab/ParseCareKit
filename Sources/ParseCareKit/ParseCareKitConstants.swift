@@ -47,6 +47,8 @@ public enum PCKStoreClass: String {
     case task
     /// The ParseCareKit equivalent of `OCKHealthKitTask`.
     case healthKitTask
+    /// The ParseCareKit equivalent of `OCKHealthKitOutcome`.
+    case healthKitOutcome
 
     func getDefault() throws -> PCKSynchronizable {
         switch self {
@@ -70,6 +72,11 @@ public enum PCKStoreClass: String {
             let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
                                                  schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .bodyTemperature, quantityType: .discrete, unit: .degreeCelsius()))
             return try PCKHealthKitTask.copyCareKit(healthKitTask)
+        case .healthKitOutcome:
+            let outcome = OCKHealthKitOutcome(taskUUID: UUID(),
+                                              taskOccurrenceIndex: 0,
+                                              values: [])
+            return try PCKHealthKitOutcome.copyCareKit(outcome)
         }
     }
 
@@ -165,6 +172,11 @@ public enum PCKStoreClass: String {
             return true
         case .healthKitTask:
             guard (check as? PCKHealthKitTask) != nil else {
+                return false
+            }
+            return true
+        case .healthKitOutcome:
+            guard (check as? PCKHealthKitOutcome) != nil else {
                 return false
             }
             return true

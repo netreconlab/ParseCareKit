@@ -45,8 +45,6 @@
 		70B5578727A7439B002C39D4 /* PCKReadRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578527A7439B002C39D4 /* PCKReadRole.swift */; };
 		70B5578927A744A9002C39D4 /* PCKWriteRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578827A744A9002C39D4 /* PCKWriteRole.swift */; };
 		70B5578A27A744A9002C39D4 /* PCKWriteRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578827A744A9002C39D4 /* PCKWriteRole.swift */; };
-		70C0AFD5261286270056DE0C /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70C0AFD4261286270056DE0C /* CareKitStore */; };
-		70C0AFD926128D9D0056DE0C /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70C0AFD826128D9D0056DE0C /* CareKitStore */; };
 		70D5A29425E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5A29325E0D2D30036A8AD /* PCKHealthKitTask.swift */; };
 		70D5A29525E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5A29325E0D2D30036A8AD /* PCKHealthKitTask.swift */; };
 		70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
@@ -87,6 +85,12 @@
 		91226D64274ADCE100B5C2DF /* UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91226D63274ADCE100B5C2DF /* UtilityTests.swift */; };
 		91226D67274ADD4B00B5C2DF /* ParseCareKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */; };
 		91226D68274AE59400B5C2DF /* ParseCareKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */; };
+		9137A8F127AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */; };
+		9137A8F227AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */; };
+		9137A8F427AC7AFE0064DC00 /* PCKHealthKitOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8F327AC7AFE0064DC00 /* PCKHealthKitOutcome.swift */; };
+		9137A8F527AC7AFE0064DC00 /* PCKHealthKitOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8F327AC7AFE0064DC00 /* PCKHealthKitOutcome.swift */; };
+		9137A8FC27AC886C0064DC00 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9137A8FB27AC886C0064DC00 /* CareKitStore */; };
+		9137A8FE27AC888B0064DC00 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9137A8FD27AC888B0064DC00 /* CareKitStore */; };
 		916570D72462DABC008F2997 /* ParseRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemote.swift */; };
 		918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		91AA07232466F0CD00B39452 /* PCKClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* PCKClock.swift */; };
@@ -191,6 +195,8 @@
 		91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKTask+Parse.swift"; sourceTree = "<group>"; };
 		91226D63274ADCE100B5C2DF /* UtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityTests.swift; sourceTree = "<group>"; };
 		91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParseCareKit.plist; sourceTree = "<group>"; };
+		9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKHealthKitOutcome+Parse.swift"; sourceTree = "<group>"; };
+		9137A8F327AC7AFE0064DC00 /* PCKHealthKitOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKHealthKitOutcome.swift; sourceTree = "<group>"; };
 		916570D62462DABC008F2997 /* ParseRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemote.swift; sourceTree = "<group>"; };
 		918F07ED247D66C800C3A205 /* PCKObjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObjectable.swift; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* PCKClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKClock.swift; sourceTree = "<group>"; };
@@ -218,7 +224,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70C0AFD926128D9D0056DE0C /* CareKitStore in Frameworks */,
+				9137A8FE27AC888B0064DC00 /* CareKitStore in Frameworks */,
 				70755431255D89B800172F6B /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,7 +233,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70C0AFD5261286270056DE0C /* CareKitStore in Frameworks */,
+				9137A8FC27AC886C0064DC00 /* CareKitStore in Frameworks */,
 				7075542D255D899E00172F6B /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,6 +392,7 @@
 				91226D55274AC1EF00B5C2DF /* OCKContact+Parse.swift */,
 				91226D57274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift */,
 				91226D59274AC23300B5C2DF /* OCKOutcome+Parse.swift */,
+				9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */,
 				91226D51274AC00500B5C2DF /* OCKPatient+Parse.swift */,
 				91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */,
 			);
@@ -398,6 +405,7 @@
 				9119D5FE24561A28001B7AA3 /* PCKCarePlan.swift */,
 				91AA07222466F0CD00B39452 /* PCKClock.swift */,
 				9119D5F824561A28001B7AA3 /* PCKContact.swift */,
+				9137A8F327AC7AFE0064DC00 /* PCKHealthKitOutcome.swift */,
 				70D5A29325E0D2D30036A8AD /* PCKHealthKitTask.swift */,
 				9119D5FF24561A28001B7AA3 /* PCKOutcome.swift */,
 				9119D5FB24561A28001B7AA3 /* PCKPatient.swift */,
@@ -499,7 +507,7 @@
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
 				70755430255D89B800172F6B /* ParseSwift */,
-				70C0AFD826128D9D0056DE0C /* CareKitStore */,
+				9137A8FD27AC888B0064DC00 /* CareKitStore */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -523,7 +531,7 @@
 			name = ParseCareKit;
 			packageProductDependencies = (
 				7075542C255D899E00172F6B /* ParseSwift */,
-				70C0AFD4261286270056DE0C /* CareKitStore */,
+				9137A8FB27AC886C0064DC00 /* CareKitStore */,
 			);
 			productName = ParseCareKit;
 			productReference = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */;
@@ -566,7 +574,7 @@
 			mainGroup = 9119D5E1245618D7001B7AA3;
 			packageReferences = (
 				7075542B255D899E00172F6B /* XCRemoteSwiftPackageReference "Parse-Swift" */,
-				70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */,
+				9137A8FA27AC886C0064DC00 /* XCRemoteSwiftPackageReference "CareKit" */,
 			);
 			productRefGroup = 9119D5EC245618D7001B7AA3 /* Products */;
 			projectDirPath = "";
@@ -694,8 +702,10 @@
 				700B0ED7270DD7D900EEF103 /* PCKVersionable+async.swift in Sources */,
 				70F2E189254EFC8000B2EA5C /* ParseRemote.swift in Sources */,
 				70F2E183254EFC8000B2EA5C /* PCKContact.swift in Sources */,
+				9137A8F527AC7AFE0064DC00 /* PCKHealthKitOutcome.swift in Sources */,
 				70D5A29525E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */,
 				70F2E184254EFC8000B2EA5C /* PCKUser.swift in Sources */,
+				9137A8F227AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift in Sources */,
 				70F2E186254EFC8000B2EA5C /* PCKOutcome.swift in Sources */,
 				709D176C258579090002E772 /* ParseCareKitError.swift in Sources */,
 				70F2E18D254EFC8000B2EA5C /* PCKClock.swift in Sources */,
@@ -722,6 +732,7 @@
 				709D175D258551D20002E772 /* ParseCareKitLog.swift in Sources */,
 				700B0ED3270DD62200EEF103 /* PCKObjectable+async.swift in Sources */,
 				700B0ED6270DD7D900EEF103 /* PCKVersionable+async.swift in Sources */,
+				9137A8F427AC7AFE0064DC00 /* PCKHealthKitOutcome.swift in Sources */,
 				9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */,
 				700B0ED9270DDF5600EEF103 /* PCKObjectable+combine.swift in Sources */,
 				91226D5A274AC23300B5C2DF /* OCKOutcome+Parse.swift in Sources */,
@@ -742,6 +753,7 @@
 				91226D52274AC00500B5C2DF /* OCKPatient+Parse.swift in Sources */,
 				70B5578927A744A9002C39D4 /* PCKWriteRole.swift in Sources */,
 				7085DDAD26CDA2980033B977 /* Documentation.docc in Sources */,
+				9137A8F127AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift in Sources */,
 				91226D56274AC1EF00B5C2DF /* OCKContact+Parse.swift in Sources */,
 				91226D54274AC1DB00B5C2DF /* OCKCarePlan+Parse.swift in Sources */,
 				91D5287A24813AF70022292B /* PCKSynchronizable.swift in Sources */,
@@ -1161,12 +1173,12 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */ = {
+		9137A8FA27AC886C0064DC00 /* XCRemoteSwiftPackageReference "CareKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/carekit-apple/CareKit.git";
+			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
 				kind = revision;
-				revision = a612482e4ba4f28d4c75129c0a9b70ca23098bd6;
+				revision = 545d90fb6e70202063bca20701f8b9eb27a9e51b;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1182,14 +1194,14 @@
 			package = 7075542B255D899E00172F6B /* XCRemoteSwiftPackageReference "Parse-Swift" */;
 			productName = ParseSwift;
 		};
-		70C0AFD4261286270056DE0C /* CareKitStore */ = {
+		9137A8FB27AC886C0064DC00 /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */;
+			package = 9137A8FA27AC886C0064DC00 /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
 		};
-		70C0AFD826128D9D0056DE0C /* CareKitStore */ = {
+		9137A8FD27AC888B0064DC00 /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70C0AFD3261286270056DE0C /* XCRemoteSwiftPackageReference "CareKit" */;
+			package = 9137A8FA27AC886C0064DC00 /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
 		};
 /* End XCSwiftPackageProductDependency section */
