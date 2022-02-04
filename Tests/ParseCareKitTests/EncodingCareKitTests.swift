@@ -179,6 +179,8 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKPatient.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.patient, check: parse))
+        XCTAssertFalse(PCKStoreClass.patient.isCorrectType(.contact, check: parse))
 
         // Special
         XCTAssertEqual(parse.name, careKit.name)
@@ -357,6 +359,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKOutcome.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.outcome, check: parse))
 
         // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
@@ -543,6 +546,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKHealthKitOutcome.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.healthKitOutcome, check: parse))
 
         // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
@@ -740,6 +744,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKTask.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.task, check: parse))
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
@@ -929,6 +934,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKHealthKitTask.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.healthKitTask, check: parse))
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
@@ -1110,6 +1116,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKCarePlan.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.carePlan, check: parse))
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
@@ -1294,6 +1301,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKContact.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.contact, check: parse))
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
