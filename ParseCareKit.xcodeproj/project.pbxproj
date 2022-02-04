@@ -390,9 +390,9 @@
 			children = (
 				91226D53274AC1DB00B5C2DF /* OCKCarePlan+Parse.swift */,
 				91226D55274AC1EF00B5C2DF /* OCKContact+Parse.swift */,
+				9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */,
 				91226D57274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift */,
 				91226D59274AC23300B5C2DF /* OCKOutcome+Parse.swift */,
-				9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */,
 				91226D51274AC00500B5C2DF /* OCKPatient+Parse.swift */,
 				91226D5B274AC24A00B5C2DF /* OCKTask+Parse.swift */,
 			);

@@ -47,10 +47,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
     private var subscribeToServerUpdates: Bool
     private var isSynchronizing = false
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
-                                                     qos: .default,
-                                                     attributes: .concurrent,
-                                                     autoreleaseFrequency: .inherit,
-                                                     target: nil)
+                                     qos: .default,
+                                     attributes: .concurrent,
+                                     autoreleaseFrequency: .inherit,
+                                     target: nil)
+
     /**
      Creates an instance of ParseRemote.
      - Parameters:

@@ -81,7 +81,7 @@ public enum PCKStoreClass: String {
     }
 
     func orderedArray() -> [PCKStoreClass] {
-        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome]
+        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome, .healthKitOutcome]
     }
 
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
@@ -109,7 +109,8 @@ public enum PCKStoreClass: String {
             .outcome: try PCKStoreClass.outcome.getDefault(),
             .patient: try PCKStoreClass.patient.getDefault(),
             .task: try PCKStoreClass.task.getDefault(),
-            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault()
+            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault(),
+            .healthKitOutcome: try PCKStoreClass.healthKitOutcome.getDefault()
         ]
 
         for (key, value) in concreteClasses {
@@ -146,40 +147,19 @@ public enum PCKStoreClass: String {
     func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
         switch type {
         case .carePlan:
-            guard (check as? PCKCarePlan) != nil else {
-                return false
-            }
-            return true
+            return check is PCKCarePlan
         case .contact:
-            guard (check as? PCKContact) != nil else {
-                return false
-            }
-            return true
+            return check is PCKContact
         case .outcome:
-            guard (check as? PCKOutcome) != nil else {
-                return false
-            }
-            return true
+            return check is PCKOutcome
         case .patient:
-            guard (check as? PCKPatient) != nil else {
-                return false
-            }
-            return true
+            return check is PCKPatient
         case .task:
-            guard (check as? PCKTask) != nil else {
-                return false
-            }
-            return true
+            return check is PCKTask
         case .healthKitTask:
-            guard (check as? PCKHealthKitTask) != nil else {
-                return false
-            }
-            return true
+            return check is PCKHealthKitTask
         case .healthKitOutcome:
-            guard (check as? PCKHealthKitOutcome) != nil else {
-                return false
-            }
-            return true
+            return check is PCKHealthKitOutcome
         }
     }
 }
