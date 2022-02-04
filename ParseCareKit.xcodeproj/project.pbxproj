@@ -91,6 +91,8 @@
 		9137A8F527AC7AFE0064DC00 /* PCKHealthKitOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8F327AC7AFE0064DC00 /* PCKHealthKitOutcome.swift */; };
 		9137A8FC27AC886C0064DC00 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9137A8FB27AC886C0064DC00 /* CareKitStore */; };
 		9137A8FE27AC888B0064DC00 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9137A8FD27AC888B0064DC00 /* CareKitStore */; };
+		9137A90027ACB3060064DC00 /* RevisionsComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8FF27ACB3060064DC00 /* RevisionsComplete.swift */; };
+		9137A90127ACB3060064DC00 /* RevisionsComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137A8FF27ACB3060064DC00 /* RevisionsComplete.swift */; };
 		916570D72462DABC008F2997 /* ParseRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916570D62462DABC008F2997 /* ParseRemote.swift */; };
 		918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		91AA07232466F0CD00B39452 /* PCKClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* PCKClock.swift */; };
@@ -197,6 +199,7 @@
 		91226D66274ADD4B00B5C2DF /* ParseCareKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParseCareKit.plist; sourceTree = "<group>"; };
 		9137A8F027AC72640064DC00 /* OCKHealthKitOutcome+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKHealthKitOutcome+Parse.swift"; sourceTree = "<group>"; };
 		9137A8F327AC7AFE0064DC00 /* PCKHealthKitOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKHealthKitOutcome.swift; sourceTree = "<group>"; };
+		9137A8FF27ACB3060064DC00 /* RevisionsComplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevisionsComplete.swift; sourceTree = "<group>"; };
 		916570D62462DABC008F2997 /* ParseRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseRemote.swift; sourceTree = "<group>"; };
 		918F07ED247D66C800C3A205 /* PCKObjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKObjectable.swift; sourceTree = "<group>"; };
 		91AA07222466F0CD00B39452 /* PCKClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCKClock.swift; sourceTree = "<group>"; };
@@ -378,6 +381,7 @@
 				709D175C258551D20002E772 /* ParseCareKitLog.swift */,
 				916570D62462DABC008F2997 /* ParseRemote.swift */,
 				9119D60C24561B22001B7AA3 /* PCKUtility.swift */,
+				9137A8FF27ACB3060064DC00 /* RevisionsComplete.swift */,
 				918F080B248040AA00C3A205 /* Objects */,
 				703CDA0725243D230027AB82 /* Parse */,
 				91D52878248128700022292B /* Protocols */,
@@ -702,6 +706,7 @@
 				700B0ED7270DD7D900EEF103 /* PCKVersionable+async.swift in Sources */,
 				70F2E189254EFC8000B2EA5C /* ParseRemote.swift in Sources */,
 				70F2E183254EFC8000B2EA5C /* PCKContact.swift in Sources */,
+				9137A90127ACB3060064DC00 /* RevisionsComplete.swift in Sources */,
 				9137A8F527AC7AFE0064DC00 /* PCKHealthKitOutcome.swift in Sources */,
 				70D5A29525E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */,
 				70F2E184254EFC8000B2EA5C /* PCKUser.swift in Sources */,
@@ -744,6 +749,7 @@
 				709D176B258579090002E772 /* ParseCareKitError.swift in Sources */,
 				91226D5C274AC24A00B5C2DF /* OCKTask+Parse.swift in Sources */,
 				91226D58274AC20A00B5C2DF /* OCKHealthKitTask+Parse.swift in Sources */,
+				9137A90027ACB3060064DC00 /* RevisionsComplete.swift in Sources */,
 				70B326BE251EBE610028B229 /* PCKUser.swift in Sources */,
 				918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */,
 				700B0EDC270DE0C400EEF103 /* PCKVersionable+combine.swift in Sources */,
