@@ -22,7 +22,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     /// store (set this, don't set `delegate`).
     public weak var parseRemoteDelegate: ParseRemoteDelegate? {
         get {
-            return parseDelegate
+            parseDelegate
         }
         set {
             parseDelegate = newValue
@@ -191,7 +191,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         DispatchQueue.main.async {
 
             guard PCKUser.current != nil,
-                  self.subscribeToServerUpdates == true,
+                  self.subscribeToServerUpdates,
                   self.clockSubscription == nil else {
                 return
             }

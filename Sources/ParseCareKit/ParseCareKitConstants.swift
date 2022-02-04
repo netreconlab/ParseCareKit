@@ -20,7 +20,7 @@ public enum ParseCareKitConstants {
 }
 
 // MARK: Coding
-enum PCKCodingKeys: String, CodingKey {
+enum PCKCodingKeys: String, CodingKey, CaseIterable {
     case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
@@ -34,7 +34,7 @@ enum CustomKey {
 }
 
 /// Types of ParseCareKit classes.
-public enum PCKStoreClass: String {
+public enum PCKStoreClass: String, CaseIterable {
     /// The ParseCareKit equivalent of `OCKCarePlan`.
     case carePlan
     /// The ParseCareKit equivalent of `OCKContact`.
@@ -81,7 +81,7 @@ public enum PCKStoreClass: String {
     }
 
     func orderedArray() -> [PCKStoreClass] {
-        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome, .healthKitOutcome]
+        [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome, .healthKitOutcome]
     }
 
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
