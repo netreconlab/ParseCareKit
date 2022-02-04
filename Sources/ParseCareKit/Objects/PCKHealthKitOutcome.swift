@@ -120,7 +120,7 @@ public struct PCKHealthKitOutcome: PCKVersionable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case entityId, schemaVersion, createdDate, updatedDate, timezone,
+        case entityId, schemaVersion, createdDate, updatedDate, timezone, isOwnedByApp,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
@@ -471,6 +471,7 @@ extension PCKHealthKitOutcome {
                 try container.encodeIfPresent(id, forKey: .entityId)
             }
         }
+        try container.encodeIfPresent(isOwnedByApp, forKey: .isOwnedByApp)
         try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encodeIfPresent(values, forKey: .values)
