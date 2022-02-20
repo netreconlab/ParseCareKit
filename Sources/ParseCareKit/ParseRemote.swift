@@ -257,6 +257,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             isSynchronizing = true
 
+            self.parseDelegate?.isPullingDataFromCloud()
+
             // Fetch Clock from Cloud
             PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
                 guard let cloudVector = potentialCKClock else {

@@ -17,10 +17,15 @@ public protocol ParseRemoteDelegate: OCKRemoteSynchronizationDelegate {
     /// When a conflict occurs, decide if the device or cloud record should be kept.
     func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>)
 
+    /// Receive a notification when data is being pulled from the Cloud
+    func isPullingDataFromCloud()
+
     /// Receive a notification when data has been successfully pushed to the Cloud.
     func successfullyPushedDataToCloud()
 }
 
 extension ParseRemoteDelegate {
+    func isPullingDataFromCloud() { }
+
     func successfullyPushedDataToCloud() { }
 }
