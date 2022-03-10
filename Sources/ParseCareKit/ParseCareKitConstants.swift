@@ -20,7 +20,7 @@ public enum ParseCareKitConstants {
 }
 
 // MARK: Coding
-enum PCKCodingKeys: String, CodingKey, CaseIterable {
+enum PCKCodingKeys: String, CodingKey {
     case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
@@ -34,7 +34,7 @@ enum CustomKey {
 }
 
 /// Types of ParseCareKit classes.
-public enum PCKStoreClass: String, CaseIterable {
+public enum PCKStoreClass: String {
     /// The ParseCareKit equivalent of `OCKCarePlan`.
     case carePlan
     /// The ParseCareKit equivalent of `OCKContact`.
@@ -47,8 +47,6 @@ public enum PCKStoreClass: String, CaseIterable {
     case task
     /// The ParseCareKit equivalent of `OCKHealthKitTask`.
     case healthKitTask
-    /// The ParseCareKit equivalent of `OCKHealthKitOutcome`.
-    case healthKitOutcome
 
     func getDefault() throws -> PCKSynchronizable {
         switch self {
@@ -72,16 +70,11 @@ public enum PCKStoreClass: String, CaseIterable {
             let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
                                                  schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .bodyTemperature, quantityType: .discrete, unit: .degreeCelsius()))
             return try PCKHealthKitTask.copyCareKit(healthKitTask)
-        case .healthKitOutcome:
-            let outcome = OCKHealthKitOutcome(taskUUID: UUID(),
-                                              taskOccurrenceIndex: 0,
-                                              values: [])
-            return try PCKHealthKitOutcome.copyCareKit(outcome)
         }
     }
 
     func orderedArray() -> [PCKStoreClass] {
-        [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome, .healthKitOutcome]
+        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome]
     }
 
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
@@ -109,8 +102,7 @@ public enum PCKStoreClass: String, CaseIterable {
             .outcome: try PCKStoreClass.outcome.getDefault(),
             .patient: try PCKStoreClass.patient.getDefault(),
             .task: try PCKStoreClass.task.getDefault(),
-            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault(),
-            .healthKitOutcome: try PCKStoreClass.healthKitOutcome.getDefault()
+            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault()
         ]
 
         for (key, value) in concreteClasses {
@@ -147,19 +139,35 @@ public enum PCKStoreClass: String, CaseIterable {
     func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
         switch type {
         case .carePlan:
-            return check is PCKCarePlan
+            guard (check as? PCKCarePlan) != nil else {
+                return false
+            }
+            return true
         case .contact:
-            return check is PCKContact
+            guard (check as? PCKContact) != nil else {
+                return false
+            }
+            return true
         case .outcome:
-            return check is PCKOutcome
+            guard (check as? PCKOutcome) != nil else {
+                return false
+            }
+            return true
         case .patient:
-            return check is PCKPatient
+            guard (check as? PCKPatient) != nil else {
+                return false
+            }
+            return true
         case .task:
-            return check is PCKTask
+            guard (check as? PCKTask) != nil else {
+                return false
+            }
+            return true
         case .healthKitTask:
-            return check is PCKHealthKitTask
-        case .healthKitOutcome:
-            return check is PCKHealthKitOutcome
+            guard (check as? PCKHealthKitTask) != nil else {
+                return false
+            }
+            return true
         }
     }
 }

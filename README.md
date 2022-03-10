@@ -23,7 +23,6 @@ The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKHealthKitTask <-> HealthKitTask
 - [x] OCKContact <-> Contact
 - [x] OCKOutcome <-> Outcome
-- [x] OCKHealthKitOutcome <-> HealthKitOutcome
 - [x] OCKRevisionRecord.Clock <-> Clock
 
 ParseCareKit enables iOS and watchOS devices belonging to the same user to be reactively sychronized using [ParseLiveQuery](https://docs.parseplatform.org/parse-server/guide/#live-queries) without the need of push notifications assuming the [LiveQuery server has been configured](https://docs.parseplatform.org/parse-server/guide/#livequery-server). 

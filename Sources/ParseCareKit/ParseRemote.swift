@@ -22,7 +22,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     /// store (set this, don't set `delegate`).
     public weak var parseRemoteDelegate: ParseRemoteDelegate? {
         get {
-            parseDelegate
+            return parseDelegate
         }
         set {
             parseDelegate = newValue
@@ -48,11 +48,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
     private var isSynchronizing = false
     private let clockQuery: Query<PCKClock>
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
-                                     qos: .default,
-                                     attributes: .concurrent,
-                                     autoreleaseFrequency: .inherit,
-                                     target: nil)
-
+                                                     qos: .default,
+                                                     attributes: .concurrent,
+                                                     autoreleaseFrequency: .inherit,
+                                                     target: nil)
     /**
      Creates an instance of ParseRemote.
      - Parameters:
@@ -214,7 +213,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         DispatchQueue.main.async {
 
             guard PCKUser.current != nil,
-                  self.subscribeToServerUpdates,
+                  self.subscribeToServerUpdates == true,
                   self.clockSubscription == nil else {
                 return
             }
@@ -445,6 +444,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
+            actor RevisionsComplete {
+                var count: Int = 0
+
+                func incrementCompleted() {
+                    count += 1
+                }
+            }
+
             ParseRemote.queue.async {
                 // Fetch Clock from Cloud
                 PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
@@ -489,13 +496,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if let customClassName = patient.userInfo?[CustomKey.customClass] {
                                 self.pushRevisionForCustomClass(entity, className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             } else {
@@ -507,13 +521,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                                 parse.pushRevision(cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             }
@@ -522,13 +543,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if let customClassName = carePlan.userInfo?[CustomKey.customClass] {
                                 self.pushRevisionForCustomClass(entity, className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             } else {
@@ -540,13 +568,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                                 parse.pushRevision(cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             }
@@ -554,13 +589,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if let customClassName = contact.userInfo?[CustomKey.customClass] {
                                 self.pushRevisionForCustomClass(entity, className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             } else {
@@ -570,13 +612,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 }
                                 parse.pushRevision(cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             }
@@ -584,13 +633,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if let customClassName = task.userInfo?[CustomKey.customClass] {
                                 self.pushRevisionForCustomClass(entity, className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             } else {
@@ -601,13 +657,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                                 parse.pushRevision(cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             }
@@ -616,13 +679,19 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if let customClassName = outcome.userInfo?[CustomKey.customClass] {
                                 self.pushRevisionForCustomClass(entity, className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             } else {
@@ -632,13 +701,19 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 }
                                 parse.pushRevision(cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             }
@@ -646,13 +721,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if let customClassName = healthKit.userInfo?[CustomKey.customClass] {
                                 self.pushRevisionForCustomClass(entity, className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             } else {
@@ -663,44 +745,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                                 parse.pushRevision(cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
-                                    Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
-                                    }
-                                }
-                            }
-                        case .healthKitOutcome(let outcome):
 
-                            if let customClassName = outcome.userInfo?[CustomKey.customClass] {
-                                self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                cloudClock: cloudVectorClock) { error in
-                                    Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                    if error != nil {
+                                        completion(error)
                                     }
-                                }
-                            } else {
-                                guard let parse = try? self.pckStoreClassesToSynchronize[.healthKitOutcome]?.new(with: entity) else {
-                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                    return
-                                }
-                                parse.pushRevision(cloudClock: cloudVectorClock,
-                                                   remoteID: self.uuid.uuidString) { error in
                                     Task {
-                                        await self.pushedRevision(deviceRevision,
-                                                                  revisionsCompleted: revisionsCompleted,
-                                                                  parseVector: cloudParseVector,
-                                                                  careKitVector: cloudCareKitVector,
-                                                                  error: error,
-                                                                  completion: completion)
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                                   localClock: deviceRevision.knowledgeVector,
+                                                                   completion: completion)
+                                        }
                                     }
                                 }
                             }
@@ -708,28 +766,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
                 }
             }
-        }
-    }
-
-    // swiftlint:disable:next function_parameter_count
-    func pushedRevision(_ revision: OCKRevisionRecord,
-                        revisionsCompleted: RevisionsComplete,
-                        parseVector: PCKClock,
-                        careKitVector: OCKRevisionRecord.KnowledgeVector,
-                        error: Error?,
-                        completion: @escaping (Error?) -> Void) async {
-        if error != nil {
-            completion(error)
-        }
-        await revisionsCompleted.incrementCompleted()
-        let revisionsCompletedCount = await revisionsCompleted.count
-        self.notifyRevisionProgress(revisionsCompletedCount,
-                                    totalEntities: revision.entities.count)
-        if revisionsCompletedCount == revision.entities.count {
-            self.finishedRevisions(parseVector,
-                                   cloudClock: careKitVector,
-                                   localClock: revision.knowledgeVector,
-                                   completion: completion)
         }
     }
 
