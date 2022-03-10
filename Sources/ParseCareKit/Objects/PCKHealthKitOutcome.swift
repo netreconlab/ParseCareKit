@@ -1,9 +1,9 @@
 //
-//  PCKOutcomes.swift
+//  PCKHealthKitOutcome.swift
 //  ParseCareKit
 //
-//  Created by Corey Baker on 1/14/20.
-//  Copyright © 2020 Network Reconnaissance Lab. All rights reserved.
+//  Created by Corey Baker on 2/3/22.
+//  Copyright © 2022 Network Reconnaissance Lab. All rights reserved.
 //
 
 import Foundation
@@ -15,11 +15,11 @@ import os.log
 // swiftlint:disable line_length
 // swiftlint:disable type_body_length
 
-/// An `PCKOutcome` is the ParseCareKit equivalent of `OCKOutcome`.  An `OCKOutcome` represents the
+/// An `PCKHealthKitOutcome` is the ParseCareKit equivalent of `OCKHealthKitOutcome`.  An `OCKHealthKitOutcome` represents the
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
-public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
+public struct PCKHealthKitOutcome: PCKVersionable, PCKSynchronizable {
     public var previousVersionUUIDs: [UUID]?
 
     public var nextVersionUUIDs: [UUID]?
@@ -52,6 +52,8 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public var remoteID: String?
 
+    public var isOwnedByApp: Bool?
+
     public var encodingForParse: Bool = true {
         willSet {
             prepareEncodingRelational(newValue)
@@ -59,7 +61,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     public static var className: String {
-        "Outcome"
+        "HealthKitOutcome"
     }
 
     public var objectId: String?
@@ -95,7 +97,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     public var values: [OCKOutcomeValue]?
 
     /// The version of the task to which this outcomes belongs.
-    public var task: PCKTask? {
+    public var task: PCKHealthKitTask? {
         didSet {
             taskUUID = task?.uuid
         }
@@ -118,7 +120,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt
-        case entityId, schemaVersion, createdDate, updatedDate, timezone,
+        case entityId, schemaVersion, createdDate, updatedDate, timezone, isOwnedByApp,
              userInfo, groupIdentifier, tags, source, asset, remoteID, notes
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
@@ -224,7 +226,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
             case .success(let outcomes):
                 let pulled = outcomes.compactMap {try? $0.convertToCareKit()}
-                let entities = pulled.compactMap {OCKEntity.outcome($0)}
+                let entities = pulled.compactMap {OCKEntity.healthKitOutcome($0)}
                 let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
                 mergeRevision(.success(revision))
             case .failure(let error):
@@ -287,7 +289,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    public static func copyValues(from other: PCKOutcome, to here: PCKOutcome) throws -> Self {
+    public static func copyValues(from other: PCKHealthKitOutcome, to here: PCKHealthKitOutcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
         here.taskOccurrenceIndex = other.taskOccurrenceIndex
@@ -298,13 +300,14 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public static func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Self {
 
-        guard let outcome = outcomeAny as? OCKOutcome else {
+        guard let outcome = outcomeAny as? OCKHealthKitOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType
         }
         let encoded = try PCKUtility.jsonEncoder().encode(outcome)
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.objectId = outcome.uuid.uuidString
         decoded.entityId = outcome.id
+        decoded.isOwnedByApp = outcome.isOwnedByApp
         if let acl = outcome.acl {
             decoded.ACL = acl
         } else {
@@ -313,7 +316,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         return decoded
     }
 
-    public func copyRelational(_ parse: PCKOutcome) -> PCKOutcome {
+    public func copyRelational(_ parse: PCKHealthKitOutcome) -> PCKHealthKitOutcome {
         var copy = self
         copy = copy.copyRelationalEntities(parse)
         if copy.values == nil {
@@ -332,11 +335,11 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     // Note that Tasks have to be saved to CareKit first in order to properly convert Outcome to CareKit
-    public func convertToCareKit() throws -> OCKOutcome {
+    public func convertToCareKit() throws -> OCKHealthKitOutcome {
         var mutableOutcome = self
         mutableOutcome.encodingForParse = false
         let encoded = try PCKUtility.jsonEncoder().encode(mutableOutcome)
-        return try PCKUtility.decoder().decode(OCKOutcome.self, from: encoded)
+        return try PCKUtility.decoder().decode(OCKHealthKitOutcome.self, from: encoded)
     }
 
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
@@ -374,7 +377,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<PCKOutcome, Error>) -> Void) {
+    public func linkRelated(completion: @escaping(Result<PCKHealthKitOutcome, Error>) -> Void) {
         guard let taskUUID = self.taskUUID,
               let taskOccurrenceIndex = self.taskOccurrenceIndex else {
             // Finished if there's no Task, otherwise see if it's in the cloud
@@ -384,7 +387,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
         var mutableOutcome = self
 
-        PCKTask.first(taskUUID) { result in
+        PCKHealthKitTask.first(taskUUID) { result in
 
             switch result {
 
@@ -410,7 +413,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    public static func tagWithId(_ outcome: OCKOutcome) -> OCKOutcome? {
+    public static func tagWithId(_ outcome: OCKHealthKitOutcome) -> OCKHealthKitOutcome? {
 
         var mutableOutcome = outcome
 
@@ -427,8 +430,8 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         return nil
     }
 
-    public static func queryNotDeleted()-> Query<PCKOutcome> {
-        let taskQuery = PCKTask.query(doesNotExist(key: VersionableKey.deletedDate))
+    public static func queryNotDeleted()-> Query<PCKHealthKitOutcome> {
+        let taskQuery = PCKHealthKitTask.query(doesNotExist(key: VersionableKey.deletedDate))
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
         let query = Self.query(doesNotExist(key: VersionableKey.deletedDate),
                                   matchesKeyInQuery(key: OutcomeKey.task,
@@ -437,12 +440,12 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         return query
     }
 
-    func findOutcomes() throws -> [PCKOutcome] {
+    func findOutcomes() throws -> [PCKHealthKitOutcome] {
         let query = Self.queryNotDeleted()
         return try query.find()
     }
 
-    public func findOutcomesInBackground(completion: @escaping([PCKOutcome]?, Error?) -> Void) {
+    public func findOutcomesInBackground(completion: @escaping([PCKHealthKitOutcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
         query.find(callbackQueue: ParseRemote.queue) { results in
 
@@ -457,7 +460,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 }
 
-extension PCKOutcome {
+extension PCKHealthKitOutcome {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
@@ -468,6 +471,7 @@ extension PCKOutcome {
                 try container.encodeIfPresent(id, forKey: .entityId)
             }
         }
+        try container.encodeIfPresent(isOwnedByApp, forKey: .isOwnedByApp)
         try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encodeIfPresent(values, forKey: .values)

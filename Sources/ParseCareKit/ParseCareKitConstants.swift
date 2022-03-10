@@ -20,7 +20,7 @@ public enum ParseCareKitConstants {
 }
 
 // MARK: Coding
-enum PCKCodingKeys: String, CodingKey {
+enum PCKCodingKeys: String, CodingKey, CaseIterable {
     case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
@@ -34,7 +34,7 @@ enum CustomKey {
 }
 
 /// Types of ParseCareKit classes.
-public enum PCKStoreClass: String {
+public enum PCKStoreClass: String, CaseIterable {
     /// The ParseCareKit equivalent of `OCKCarePlan`.
     case carePlan
     /// The ParseCareKit equivalent of `OCKContact`.
@@ -47,6 +47,8 @@ public enum PCKStoreClass: String {
     case task
     /// The ParseCareKit equivalent of `OCKHealthKitTask`.
     case healthKitTask
+    /// The ParseCareKit equivalent of `OCKHealthKitOutcome`.
+    case healthKitOutcome
 
     func getDefault() throws -> PCKSynchronizable {
         switch self {
@@ -70,11 +72,16 @@ public enum PCKStoreClass: String {
             let healthKitTask = OCKHealthKitTask(id: "", title: "", carePlanUUID: nil,
                                                  schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]), healthKitLinkage: .init(quantityIdentifier: .bodyTemperature, quantityType: .discrete, unit: .degreeCelsius()))
             return try PCKHealthKitTask.copyCareKit(healthKitTask)
+        case .healthKitOutcome:
+            let outcome = OCKHealthKitOutcome(taskUUID: UUID(),
+                                              taskOccurrenceIndex: 0,
+                                              values: [])
+            return try PCKHealthKitOutcome.copyCareKit(outcome)
         }
     }
 
     func orderedArray() -> [PCKStoreClass] {
-        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome]
+        [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome, .healthKitOutcome]
     }
 
     func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
@@ -102,7 +109,8 @@ public enum PCKStoreClass: String {
             .outcome: try PCKStoreClass.outcome.getDefault(),
             .patient: try PCKStoreClass.patient.getDefault(),
             .task: try PCKStoreClass.task.getDefault(),
-            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault()
+            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault(),
+            .healthKitOutcome: try PCKStoreClass.healthKitOutcome.getDefault()
         ]
 
         for (key, value) in concreteClasses {
@@ -139,35 +147,19 @@ public enum PCKStoreClass: String {
     func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
         switch type {
         case .carePlan:
-            guard (check as? PCKCarePlan) != nil else {
-                return false
-            }
-            return true
+            return check is PCKCarePlan
         case .contact:
-            guard (check as? PCKContact) != nil else {
-                return false
-            }
-            return true
+            return check is PCKContact
         case .outcome:
-            guard (check as? PCKOutcome) != nil else {
-                return false
-            }
-            return true
+            return check is PCKOutcome
         case .patient:
-            guard (check as? PCKPatient) != nil else {
-                return false
-            }
-            return true
+            return check is PCKPatient
         case .task:
-            guard (check as? PCKTask) != nil else {
-                return false
-            }
-            return true
+            return check is PCKTask
         case .healthKitTask:
-            guard (check as? PCKHealthKitTask) != nil else {
-                return false
-            }
-            return true
+            return check is PCKHealthKitTask
+        case .healthKitOutcome:
+            return check is PCKHealthKitOutcome
         }
     }
 }

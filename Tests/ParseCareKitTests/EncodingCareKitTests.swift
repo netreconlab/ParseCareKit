@@ -45,7 +45,7 @@ struct LoginSignupResponse: ParseUser {
     }
 }
 
-func userLogin() throws -> PCKUser {
+func userLogin() async throws -> PCKUser {
     let loginResponse = LoginSignupResponse()
 
     MockURLProtocol.mockRequests { _ in
@@ -56,8 +56,8 @@ func userLogin() throws -> PCKUser {
             return nil
         }
     }
-    let user = try PCKUser.login(username: loginResponse.username!,
-                                 password: loginResponse.password!)
+    let user = try await PCKUser.login(username: loginResponse.username!,
+                                       password: loginResponse.password!)
     MockURLProtocol.removeAll()
     return user
 }
@@ -91,29 +91,31 @@ class ParseCareKitTests: XCTestCase {
                               serverURL: url,
                               allowingCustomObjectIds: true,
                               testing: true)
-        do {
-            _ = try userLogin()
-            parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                    auto: false,
-                                    subscribeToServerUpdates: false)
-        } catch {
-            print(error.localizedDescription)
-        }
-        store = OCKStore(name: "SampleAppStore", type: .onDisk(), remote: parse)
-        parse?.parseRemoteDelegate = self
-
     }
 
     override func tearDownWithError() throws {
         MockURLProtocol.removeAll()
         try KeychainStore.shared.deleteAll()
         try ParseStorage.shared.deleteAll()
-        try store.delete()
         UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
         UserDefaults.standard.synchronize()
     }
 
-    func testSetDefaultACLLoggedIn() throws {
+    func mockSignedUserWithRemote() async throws {
+        _ = try await userLogin()
+        parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                auto: false,
+                                subscribeToServerUpdates: false)
+        store = OCKStore(name: "SampleAppStore", type: .onDisk(), remote: parse)
+        parse?.parseRemoteDelegate = self
+    }
+
+    func cleanupMockServer() async throws {
+        try store.delete()
+    }
+
+    func testSetDefaultACLLoggedIn() async throws {
+        try await mockSignedUserWithRemote()
         guard let user = PCKUser.current,
               let objectId = user.objectId,
               let defaultACL = PCKUtility.getDefaultACL() else {
@@ -126,8 +128,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
     }
 
-    func testDefaultACLAlreadySet() throws {
-        let user = try userLogin()
+    func testDefaultACLAlreadySet() async throws {
+        let user = try await userLogin()
         var userSetACL = ParseACL()
         userSetACL.publicRead = true
         userSetACL.publicWrite = true
@@ -177,6 +179,8 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKPatient.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.patient, check: parse))
+        XCTAssertFalse(PCKStoreClass.patient.isCorrectType(.contact, check: parse))
 
         // Special
         XCTAssertEqual(parse.name, careKit.name)
@@ -281,7 +285,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testPatientACL() throws {
+    func testPatientACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         XCTAssertNil(careKit.acl)
 
@@ -324,6 +329,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -353,6 +359,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKOutcome.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.outcome, check: parse))
 
         // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
@@ -465,7 +472,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testOutcomeACL() throws {
+    func testOutcomeACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
         XCTAssertNil(careKit.acl)
 
@@ -508,6 +516,197 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
+    }
+
+    // swiftlint:disable:next function_body_length
+    func testHealthKitOutcome() throws {
+        var careKit = OCKHealthKitOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
+        let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
+
+        // Objectable
+        careKit.uuid = UUID()
+        careKit.createdDate = Date().addingTimeInterval(-200)
+        careKit.updatedDate = Date().addingTimeInterval(-99)
+        careKit.deletedDate = Date().addingTimeInterval(-1)
+        careKit.schemaVersion = .init(majorVersion: 4)
+        careKit.remoteID = "we"
+        careKit.groupIdentifier = "mine"
+        careKit.tags = ["one", "two"]
+        careKit.source = "yo"
+        careKit.userInfo = ["String": "String"]
+        careKit.asset = "pic"
+        careKit.notes = [careKitNote]
+        careKit.timezone = .current
+
+        // Versionable
+        careKit.previousVersionUUIDs = [UUID()]
+        careKit.nextVersionUUIDs = [UUID()]
+        careKit.effectiveDate = Date().addingTimeInterval(-199)
+
+        // Test CareKit -> Parse
+        var parse = try PCKHealthKitOutcome.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.healthKitOutcome, check: parse))
+
+        // Special
+        XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
+        XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
+        XCTAssertEqual(parse.values?.count, 1)
+        XCTAssertEqual(careKit.values.count, 1)
+        guard let value = parse.values?.first?.value as? Int,
+              let careKitValue = careKit.values.first?.value as? Int else {
+            XCTFail("Should have casted")
+            return
+        }
+        XCTAssertEqual(value, careKitValue)
+
+        // Objectable
+        XCTAssertEqual(parse.className, "HealthKitOutcome")
+        XCTAssertEqual(parse.uuid, careKit.uuid)
+        XCTAssertEqual(parse.entityId, careKit.id)
+        XCTAssertEqual(parse.isOwnedByApp, careKit.isOwnedByApp)
+        XCTAssertNotNil(parse.createdDate)
+        XCTAssertNotNil(parse.updatedDate)
+        XCTAssertEqual(parse.timezone, careKit.timezone)
+        XCTAssertEqual(parse.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse.source, careKit.source)
+        XCTAssertEqual(parse.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse.tags, careKit.tags)
+        XCTAssertEqual(parse.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse.asset, careKit.asset)
+        XCTAssertEqual(parse.notes?.count, 1)
+        XCTAssertEqual(parse.notes?.first?.author, "myId")
+        XCTAssertEqual(parse.notes?.first?.title, "hello")
+        XCTAssertEqual(parse.notes?.first?.content, "world")
+
+        // Test Parse -> CareKit
+        let parse2 = try parse.convertToCareKit()
+
+        // Special
+        XCTAssertEqual(parse2.taskUUID, careKit.taskUUID)
+        XCTAssertEqual(parse2.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
+        XCTAssertEqual(parse2.values.count, 1)
+        if let value2 = parse2.values.first?.value as? Int,
+            let careKitValue = careKit.values.first?.value as? Int {
+            XCTAssertEqual(value2, careKitValue)
+        } else {
+            XCTFail("Should have casted")
+        }
+
+        // Objectable
+        XCTAssertEqual(parse2.uuid, careKit.uuid)
+        XCTAssertNotNil(parse2.createdDate)
+        XCTAssertNotNil(parse2.updatedDate)
+        XCTAssertEqual(parse2.isOwnedByApp, careKit.isOwnedByApp)
+        XCTAssertEqual(parse2.timezone, careKit.timezone)
+        XCTAssertEqual(parse2.userInfo, careKit.userInfo)
+        XCTAssertEqual(parse2.remoteID, careKit.remoteID)
+        XCTAssertEqual(parse2.source, careKit.source)
+        XCTAssertEqual(parse2.schemaVersion, careKit.schemaVersion)
+        XCTAssertEqual(parse2.tags, careKit.tags)
+        XCTAssertEqual(parse2.groupIdentifier, careKit.groupIdentifier)
+        XCTAssertEqual(parse2.asset, careKit.asset)
+        XCTAssertEqual(parse2.notes?.count, 1)
+        XCTAssertEqual(parse2.notes?.first?.author, "myId")
+        XCTAssertEqual(parse2.notes?.first?.title, "hello")
+        XCTAssertEqual(parse2.notes?.first?.content, "world")
+
+        // Versionable
+        XCTAssertNotNil(parse2.effectiveDate)
+        XCTAssertEqual(parse2.previousVersionUUIDs, careKit.previousVersionUUIDs)
+        XCTAssertEqual(parse2.nextVersionUUIDs, careKit.nextVersionUUIDs)
+
+        // Encode to cloud format
+        guard let valueWithObjectId = parse.values?.first else {
+            XCTFail("Should have unwrapped note")
+            return
+        }
+
+        parse.values = [valueWithObjectId]
+        guard let note = parse.notes?.first else {
+            XCTFail("Should have unwrapped note")
+            return
+        }
+
+        parse.notes = [note]
+        let cloudEncoded = try ParseCoding.parseEncoder().encode(parse)
+        let cloudDecoded = try ParseCoding.jsonDecoder().decode(PCKHealthKitOutcome.self, from: cloudEncoded)
+
+        // Objectable
+        XCTAssertEqual(parse.className, cloudDecoded.className)
+        XCTAssertEqual(parse.objectId, cloudDecoded.objectId)
+        XCTAssertEqual(parse.uuid, cloudDecoded.uuid)
+        XCTAssertEqual(parse.entityId, cloudDecoded.entityId)
+        XCTAssertNotNil(cloudDecoded.createdDate)
+        XCTAssertNotNil(cloudDecoded.updatedDate)
+        XCTAssertEqual(parse.isOwnedByApp, cloudDecoded.isOwnedByApp)
+        XCTAssertEqual(parse.timezone, cloudDecoded.timezone)
+        XCTAssertEqual(parse.userInfo, cloudDecoded.userInfo)
+        XCTAssertEqual(parse.remoteID, cloudDecoded.remoteID)
+        XCTAssertEqual(parse.source, cloudDecoded.source)
+        XCTAssertEqual(parse.schemaVersion, cloudDecoded.schemaVersion)
+        XCTAssertEqual(parse.tags, cloudDecoded.tags)
+        XCTAssertEqual(parse.groupIdentifier, cloudDecoded.groupIdentifier)
+        XCTAssertEqual(parse.asset, cloudDecoded.asset)
+        XCTAssertEqual(parse.notes, cloudDecoded.notes)
+
+        // Special
+        XCTAssertEqual(parse.taskUUID, cloudDecoded.taskUUID)
+        XCTAssertEqual(parse.taskOccurrenceIndex, cloudDecoded.taskOccurrenceIndex)
+        XCTAssertEqual(parse.values, cloudDecoded.values)
+
+        // Versionable
+        XCTAssertNotNil(cloudDecoded.effectiveDate)
+        XCTAssertEqual(parse.previousVersionUUIDs, cloudDecoded.previousVersionUUIDs)
+        XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
+    }
+
+    func testHealthKitOutcomeACL() async throws {
+        try await mockSignedUserWithRemote()
+        var careKit = OCKHealthKitOutcome(taskUUID: UUID(), taskOccurrenceIndex: 0, values: [.init(10)])
+        XCTAssertNil(careKit.acl)
+
+        // Should have default ACL
+        let parse = try PCKHealthKitOutcome.copyCareKit(careKit)
+        guard let user = PCKUser.current,
+            let objectId = user.objectId,
+            let acl = parse.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl.publicRead, false)
+        XCTAssertEqual(acl.publicWrite, false)
+        XCTAssertTrue(acl.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl.getWriteAccess(objectId: objectId))
+
+        // Should have new ACL
+        var newACL = ParseACL()
+        newACL.publicRead = true
+        newACL.publicWrite = true
+        newACL.setReadAccess(user: user, value: true)
+        newACL.setWriteAccess(user: user, value: true)
+        careKit.acl = newACL
+        guard let defaultACL = careKit.acl else {
+            XCTFail("Should have objectId")
+            return
+        }
+        XCTAssertEqual(defaultACL.publicRead, true)
+        XCTAssertEqual(defaultACL.publicWrite, true)
+        XCTAssertTrue(defaultACL.getReadAccess(objectId: objectId))
+        XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
+
+        // ParseObject should have new ACL
+        let parse2 = try PCKHealthKitOutcome.copyCareKit(careKit)
+        guard let acl2 = parse2.ACL else {
+            XCTFail("Should have ACL")
+            return
+        }
+        XCTAssertEqual(acl2.publicRead, true)
+        XCTAssertEqual(acl2.publicWrite, true)
+        XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
+        XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -545,6 +744,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKTask.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.task, check: parse))
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
@@ -646,7 +846,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testTaskACL() throws {
+    func testTaskACL() async throws {
+        try await mockSignedUserWithRemote()
         let careKitSchedule = OCKScheduleElement(start: Date(),
                                                  end: Date().addingTimeInterval(3000), interval: .init(day: 1))
         var careKit = OCKTask(id: "myId", title: "hello", carePlanUUID: UUID(),
@@ -692,6 +893,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -732,6 +934,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKHealthKitTask.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.healthKitTask, check: parse))
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
@@ -833,7 +1036,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testHealthKitTaskACL() throws {
+    func testHealthKitTaskACL() async throws {
+        try await mockSignedUserWithRemote()
         let careKitSchedule = OCKScheduleElement(start: Date(),
                                                  end: Date().addingTimeInterval(3000), interval: .init(day: 1))
         var careKit = OCKHealthKitTask(id: "myId", title: "hello", carePlanUUID: UUID(),
@@ -882,6 +1086,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -911,6 +1116,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKCarePlan.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.carePlan, check: parse))
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
@@ -1008,7 +1214,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testCarePlanACL() throws {
+    func testCarePlanACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKCarePlan(id: "myId", title: "hello", patientUUID: UUID())
         XCTAssertNil(careKit.acl)
 
@@ -1051,6 +1258,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
     // swiftlint:disable:next function_body_length
@@ -1093,6 +1301,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Test CareKit -> Parse
         var parse = try PCKContact.copyCareKit(careKit)
+        XCTAssertTrue(PCKStoreClass.patient.isCorrectType(.contact, check: parse))
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
@@ -1211,7 +1420,8 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.nextVersionUUIDs, cloudDecoded.nextVersionUUIDs)
     }
 
-    func testContactACL() throws {
+    func testContactACL() async throws {
+        try await mockSignedUserWithRemote()
         var careKit = OCKContact(id: "myId", givenName: "hello", familyName: "world", carePlanUUID: UUID())
         XCTAssertNil(careKit.acl)
 
@@ -1254,6 +1464,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(acl2.publicWrite, true)
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
+        try await cleanupMockServer()
     }
 
 /*
