@@ -46,6 +46,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     private var clockSubscription: SubscriptionCallback<PCKClock>?
     private var subscribeToServerUpdates: Bool
     private var isSynchronizing = false
+    private let clockQuery: Query<PCKClock>
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
                                                      qos: .default,
                                                      attributes: .concurrent,
@@ -71,6 +72,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
+        self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = PCKUser.current {
@@ -142,6 +144,27 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.customClassesToSynchronize = customClasses
     }
 
+    deinit {
+        do {
+            try clockQuery.unsubscribe()
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.deinitializer.error("Unsubscribed from clock query")
+            } else {
+                os_log("Unsubscribed from clock query",
+                       log: .deinitializer,
+                       type: .error)
+            }
+        } catch {
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.deinitializer.error("Couldn't unsubscribe from clock query")
+            } else {
+                os_log("Couldn't unsubscribe from clock query",
+                       log: .deinitializer,
+                       type: .error)
+            }
+        }
+    }
+
     class func setDefaultACL(_ defaultACL: ParseACL?, for user: PCKUser) {
         let acl: ParseACL!
         if let defaultACL = defaultACL {
@@ -167,19 +190,19 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 UserDefaults.standard.synchronize()
             } else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.initializer.error("Couldn't encode defaultACL from user as string")
+                    Logger.defaultACL.error("Couldn't encode defaultACL from user as string")
                 } else {
                     os_log("Couldn't encode defaultACL from user as string",
-                           log: .initializer,
+                           log: .defaultACL,
                            type: .error)
                 }
             }
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.initializer.error("Couldn't encode defaultACL from user. \(error.localizedDescription)")
+                Logger.defaultACL.error("Couldn't encode defaultACL from user. \(error.localizedDescription)")
             } else {
                 os_log("Couldn't encode defaultACL from user. %{private}@",
-                       log: .initializer,
+                       log: .defaultACL,
                        type: .error,
                        error.localizedDescription)
             }
@@ -195,13 +218,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
-            let clockQuery = PCKClock.query(ClockKey.uuid == self.uuid)
-            guard let subscription = clockQuery.subscribeCallback else {
+            guard let subscription = self.clockQuery.subscribeCallback else {
                 if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.clock.error("Couldn't subscribe to clock query")
+                    Logger.clockSubscription.error("Couldn't subscribe to clock query")
                 } else {
                     os_log("Couldn't subscribe to clock query",
-                           log: .clock,
+                           log: .clockSubscription,
                            type: .error)
                 }
                 return
@@ -211,11 +233,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 self.parseDelegate?.didRequestSynchronization(self)
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger
-                        .clock
+                        .clockSubscription
                         .log("Parse subscription is notifying that there are updates on the server")
                 } else {
                     os_log("Parse subscription is notifying that there are updates on the server",
-                           log: .clock, type: .info)
+                           log: .clockSubscription,
+                           type: .info)
                 }
             }
         }
