@@ -57,5 +57,5 @@ jobs:
         env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
       - name: Deploy Docs
-        #if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: Scripts/update-gh-pages-documentation-site
