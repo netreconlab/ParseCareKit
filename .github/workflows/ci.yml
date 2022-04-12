@@ -5,13 +5,15 @@ on:
   pull_request:
     branches: [ main ]
 env:
-  CI_XCODE_13: '/Applications/Xcode_13.2.1.app/Contents/Developer'
+  CI_XCODE_13: '/Applications/Xcode_13.3.app/Contents/Developer'
 
 jobs:
   xcode-test-ios:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
     - uses: actions/checkout@v2
+    - name: Use multiple cores
+      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 12\ Pro\ Max -derivedDataPath DerivedData -test-iterations 10 -retry-tests-on-failure clean test | xcpretty
       env:
@@ -34,18 +36,22 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
 
   xcode-build-watchos:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
     - uses: actions/checkout@v2
+    - name: Use multiple cores
+      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 6\ -\ 44mm | xcpretty
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
 
   docs:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v2
+      - name: Use multiple cores
+        run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
       - name: Cache Gems
         id: cache-gems
         uses: actions/cache@v2
