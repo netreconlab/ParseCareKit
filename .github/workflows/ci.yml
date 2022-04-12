@@ -53,9 +53,11 @@ jobs:
       - name: Use multiple cores
         run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
       - name: Generate Docs
-        run: Scripts/generate-documentation
+        run: set -o pipefail && env NSUnbufferedIO=YES Scripts/generate-documentation
         env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
       - name: Deploy Docs
         if: github.ref == 'refs/heads/main'
-        run: Scripts/update-gh-pages-documentation-site
+        run: set -o pipefail && env NSUnbufferedIO=YES Scripts/update-gh-pages-documentation-site
+        env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE_13 }}
