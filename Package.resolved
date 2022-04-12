@@ -22,8 +22,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/parse-community/Parse-Swift.git",
       "state" : {
-        "revision" : "51e16d0764bc5f65b0b78b982b2c4febff421818",
-        "version" : "4.0.1"
+        "revision" : "4d2d509fc946ee70fbfcd75d7b0520cc7164d72e",
+        "version" : "4.2.0"
       }
     },
     {
