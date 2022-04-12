@@ -4,7 +4,7 @@ on:
     types: [published]
 env:
   CI_XCODE_VER: '/Applications/Xcode_12.app/Contents/Developer'
-  CI_XCODE_13: '/Applications/Xcode_13.2.1.app/Contents/Developer'
+  CI_XCODE_13: '/Applications/Xcode_13.3.app/Contents/Developer'
   
 jobs:
   docs:
@@ -23,6 +23,8 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install
+      - name: Use multiple cores
+         run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
       - name: Create Jazzy Docs
         run: |
           ver=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" ParseCareKit/Info.plist`
