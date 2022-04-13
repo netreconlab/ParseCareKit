@@ -1,34 +1,31 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "CareKit",
-        "repositoryURL": "https://github.com/cbaker6/CareKit.git",
-        "state": {
-          "branch": null,
-          "revision": "52f6b4e6734d49124db54c83f552a6a1c3e26469",
-          "version": null
-        }
-      },
-      {
-        "package": "FHIRModels",
-        "repositoryURL": "https://github.com/apple/FHIRModels.git",
-        "state": {
-          "branch": null,
-          "revision": "c91e5bb74397136f79656bebdfda76a523d3e88c",
-          "version": "0.3.2"
-        }
-      },
-      {
-        "package": "ParseSwift",
-        "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
-        "state": {
-          "branch": null,
-          "revision": "4d2d509fc946ee70fbfcd75d7b0520cc7164d72e",
-          "version": "4.2.0"
-        }
+  "pins" : [
+    {
+      "identity" : "carekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cbaker6/CareKit.git",
+      "state" : {
+        "revision" : "52f6b4e6734d49124db54c83f552a6a1c3e26469"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "fhirmodels",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/FHIRModels.git",
+      "state" : {
+        "revision" : "e115442fb3c5d44ffb1dc9b4e039b77fd143ad96",
+        "version" : "0.4.0"
+      }
+    },
+    {
+      "identity" : "parse-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/parse-community/Parse-Swift.git",
+      "state" : {
+        "revision" : "ca93e3accce539a484f8d0f4382e3a3e5bc9f0e5",
+        "version" : "4.3.1"
+      }
+    }
+  ],
+  "version" : 2
 }
