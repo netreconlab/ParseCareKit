@@ -226,7 +226,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Requires Parse Server 2.6.5+ for MongoDB and Parse Server 5.0.0+ for PostgreSQL.",
+                  "text" : "Requires Parse Server 2.6.5+ for MongoDB and Parse Server 5.1.0+ for PostgreSQL.",
                   "type" : "text"
                 }
               ],
