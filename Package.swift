@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "CareKit", url: "https://github.com/cbaker6/CareKit.git",
-                 .revision("ec157174bf77f95dcff53fd40d50bbfca5319b64")),
+                 .revision("ecfc06421d8e3b22896e954d40ef74c632d9b52f")),
         .package(url: "https://github.com/parse-community/Parse-Swift.git",
                  .upToNextMajor(from: "4.3.1"))
     ],
