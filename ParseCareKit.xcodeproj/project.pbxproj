@@ -1161,7 +1161,7 @@
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
 				kind = revision;
-				revision = ebffa9a52fc03c368399344d2931600892795fa2;
+				revision = adca4ac261b265e4fb7ded5a88e14deaed39592c;
 			};
 		};
 		70BA5C242613B018008E829E /* XCRemoteSwiftPackageReference "Parse-Swift" */ = {
