@@ -90,6 +90,7 @@ class ParseCareKitTests: XCTestCase {
                               masterKey: "masterKey",
                               serverURL: url,
                               allowingCustomObjectIds: true,
+                              usingPostForQuery: true,
                               testing: true)
         do {
             _ = try userLogin()

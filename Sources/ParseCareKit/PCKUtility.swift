@@ -82,6 +82,7 @@ public class PCKUtility {
                               liveQueryServerURL: liveQueryURL,
                               allowingCustomObjectIds: true,
                               usingTransactions: useTransactions,
+                              usingPostForQuery: true,
                               deletingKeychainIfNeeded: deleteKeychainIfNeeded,
                               authentication: authentication)
     }
