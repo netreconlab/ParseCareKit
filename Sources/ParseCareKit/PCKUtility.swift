@@ -37,8 +37,6 @@ public class PCKUtility {
      - LiveQueryServer - (String) The live query server URL to connect to Parse Server.
      - UseTransactionsInternally - (Boolean) Use transactions inside the Client SDK.
      - DeleteKeychainIfNeeded - (Boolean) Deletes the Parse Keychain when the app is running for the first time.
-     - AccessGroup - (String) The Keychain access group.
-     - SynchronizeKeychain - (Boolean) Whether or not to synchronize the Keychain across devices.
      - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
      - parameter authentication: A callback block that will be used to receive/accept/decline network challenges.
      Defaults to `nil` in which the SDK will use the default OS authentication methods for challenges.
@@ -55,8 +53,6 @@ public class PCKUtility {
         var liveQueryURL: URL?
         var useTransactions = false
         var deleteKeychainIfNeeded = false
-        var accessGroup: String?
-        var synchronizeKeychain = false
         do {
             plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
         } catch {
@@ -85,14 +81,6 @@ public class PCKUtility {
             deleteKeychainIfNeeded = deleteKeychain
         }
 
-        if let keychainAccessGroup = plistConfiguration["AccessGroup"] as? String {
-            accessGroup = keychainAccessGroup
-        }
-
-        if let synchronizeKeychainAcrossDevices = plistConfiguration["SynchronizeKeychain"] as? Bool {
-            synchronizeKeychain = synchronizeKeychainAcrossDevices
-        }
-
         ParseSwift.initialize(applicationId: appID,
                               clientKey: clientKey,
                               serverURL: serverURL,
@@ -100,8 +88,6 @@ public class PCKUtility {
                               allowingCustomObjectIds: true,
                               usingTransactions: useTransactions,
                               usingPostForQuery: true,
-                              accessGroup: accessGroup,
-                              syncingKeychainAcrossDevices: synchronizeKeychain,
                               deletingKeychainIfNeeded: deleteKeychainIfNeeded,
                               authentication: authentication)
     }
