@@ -11,10 +11,10 @@ let package = Package(
             targets: ["ParseCareKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/carekit-apple/CareKit.git",
-                 revision: "a612482e4ba4f28d4c75129c0a9b70ca23098bd6"),
-        .package(url: "https://github.com/parse-community/Parse-Swift.git",
-                 .upToNextMajor(from: "4.3.1"))
+        .package(url: "https://github.com/cbaker6/CareKit.git",
+                 revision: "adca4ac261b265e4fb7ded5a88e14deaed39592c"),
+         .package(url: "https://github.com/parse-community/Parse-Swift.git",
+                  .upToNextMajor(from: "4.9.0"))
     ],
     targets: [
         .target(
