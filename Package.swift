@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/cbaker6/CareKit.git",
                  revision: "adca4ac261b265e4fb7ded5a88e14deaed39592c"),
         .package(url: "https://github.com/cbaker6/Parse-Swift.git",
-                 revision: "4507f8bf3b26a358931c2efc2827d948aefdce22")
+                 revision: "b53023421204d850cbb63f5918b49a90b42c582c")
         // .package(url: "https://github.com/parse-community/Parse-Swift.git",
         //          .upToNextMajor(from: "4.9.0"))
     ],
