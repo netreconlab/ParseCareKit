@@ -21,11 +21,11 @@
       },
       {
         "package": "ParseSwift",
-        "repositoryURL": "https://github.com/parse-community/Parse-Swift.git",
+        "repositoryURL": "https://github.com/cbaker6/Parse-Swift.git",
         "state": {
           "branch": null,
-          "revision": "c57fc2e1e923c2373fcfcd52eac213a7c618ff92",
-          "version": "4.4.0"
+          "revision": "4a374a4c84092ea01aed091de38bef4645743251",
+          "version": null
         }
       }
     ]

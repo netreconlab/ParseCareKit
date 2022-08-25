@@ -14,17 +14,31 @@ import ParseSwift
 /// Utility functions designed to make things easier.
 public class PCKUtility {
 
-    /** Can setup a connection to Parse Server based on a ParseCareKit.plist file.
+    class func getPlistConfiguration(fileName: String) throws -> [String: AnyObject] {
+        var propertyListFormat = PropertyListSerialization.PropertyListFormat.xml
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
+            let xml = FileManager.default.contents(atPath: path) else {
+                fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
+        }
+
+        return try PropertyListSerialization.propertyList(from: xml,
+                                                          options: .mutableContainersAndLeaves,
+                                                          // swiftlint:disable:next force_cast
+                                                          format: &propertyListFormat) as! [String: AnyObject]
+    }
+
+    /**
+     Setup a connection to Parse Server based on a ParseCareKit.plist file.
     
-   The key/values supported in the file are a dictionary named `ParseClientConfiguration`:
-    - Server - (String) The server URL to connect to Parse Server.
-    - ApplicationID - (String) The application id of your Parse application.
-    - ClientKey - (String) The client key of your Parse application.
-    - LiveQueryServer - (String) The live query server URL to connect to Parse Server.
-    - UseTransactionsInternally - (Boolean) Use transactions inside the Client SDK.
-    - DeleteKeychainIfNeeded - (Boolean) Deletes the Parse Keychain when the app is running for the first time.
-    - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
-    - parameter authentication: A callback block that will be used to receive/accept/decline network challenges.
+     The key/values supported in the file are a dictionary named `ParseClientConfiguration`:
+     - Server - (String) The server URL to connect to Parse Server.
+     - ApplicationID - (String) The application id of your Parse application.
+     - ClientKey - (String) The client key of your Parse application.
+     - LiveQueryServer - (String) The live query server URL to connect to Parse Server.
+     - UseTransactionsInternally - (Boolean) Use transactions inside the Client SDK.
+     - DeleteKeychainIfNeeded - (Boolean) Deletes the Parse Keychain when the app is running for the first time.
+     - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
+     - parameter authentication: A callback block that will be used to receive/accept/decline network challenges.
      Defaults to `nil` in which the SDK will use the default OS authentication methods for challenges.
      It should have the following argument signature: `(challenge: URLAuthenticationChallenge,
      completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void`.
@@ -34,22 +48,13 @@ public class PCKUtility {
                                   authentication: ((URLAuthenticationChallenge,
                                                     (URLSession.AuthChallengeDisposition,
                                                       URLCredential?) -> Void) -> Void)? = nil) {
-        var propertyListFormat =  PropertyListSerialization.PropertyListFormat.xml
         var plistConfiguration: [String: AnyObject]
         var clientKey: String?
         var liveQueryURL: URL?
         var useTransactions = false
         var deleteKeychainIfNeeded = false
-        guard let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
-            let xml = FileManager.default.contents(atPath: path) else {
-                fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
-        }
         do {
-            plistConfiguration =
-                try PropertyListSerialization.propertyList(from: xml,
-                                                           options: .mutableContainersAndLeaves,
-                                                           // swiftlint:disable:next force_cast
-                                                           format: &propertyListFormat) as! [String: AnyObject]
+            plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
         } catch {
             fatalError("Error in ParseCareKit.setupServer(). Couldn't serialize plist. \(error)")
         }
@@ -82,8 +87,40 @@ public class PCKUtility {
                               liveQueryServerURL: liveQueryURL,
                               allowingCustomObjectIds: true,
                               usingTransactions: useTransactions,
+                              usingPostForQuery: true,
                               deletingKeychainIfNeeded: deleteKeychainIfNeeded,
                               authentication: authentication)
+    }
+
+    /**
+     Setup the Keychain access group and synchronization across devices.
+    
+     The key/values supported in the file are a dictionary named `ParseClientConfiguration`:
+     - AccessGroup - (String) The Keychain access group.
+     - SynchronizeKeychain - (Boolean) Whether or not to synchronize the Keychain across devices.
+     - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
+     */
+    public class func setAccessGroup(fileName: String = "ParseCareKit") throws {
+        var plistConfiguration: [String: AnyObject]
+        var accessGroup: String?
+        var synchronizeKeychain = false
+
+        do {
+            plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
+        } catch {
+            fatalError("Error in ParseCareKit.setupServer(). Couldn't serialize plist. \(error)")
+        }
+
+        if let keychainAccessGroup = plistConfiguration["AccessGroup"] as? String {
+            accessGroup = keychainAccessGroup
+        }
+
+        if let synchronizeKeychainAcrossDevices = plistConfiguration["SynchronizeKeychain"] as? Bool {
+            synchronizeKeychain = synchronizeKeychainAcrossDevices
+        }
+
+        try ParseSwift.setAccessGroup(accessGroup,
+                                      synchronizeAcrossDevices: synchronizeKeychain)
     }
 
     /// Get the current Parse Encoder with custom date strategy.
