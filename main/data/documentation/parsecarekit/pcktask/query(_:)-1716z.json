@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Create an instance with a variadic amount constraints.",
+      "text" : "Create a query with a variadic amount constraints.",
       "type" : "text"
     }
   ],
@@ -368,7 +368,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/query(_:)-1716z": {
   "abstract" : [
     {
-      "text" : "Create an instance with a variadic amount constraints.",
+      "text" : "Create a query with a variadic amount constraints.",
       "type" : "text"
     }
   ],

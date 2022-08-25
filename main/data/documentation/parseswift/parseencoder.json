@@ -122,7 +122,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "ParseType",
+                  "code" : "ParseEncodable",
                   "type" : "codeVoice"
                 },
                 {
@@ -295,7 +295,7 @@
       "type" : "text"
     },
     {
-      "code" : "ParseType",
+      "code" : "ParseEncodable",
       "type" : "codeVoice"
     },
     {
@@ -330,7 +330,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A7EncoderV6encode_8skipKeys10Foundation4DataVx_AC04SkipF0OtKAA0A4TypeRzlF1TL_xmfp",
+      "preciseIdentifier" : "s:10ParseSwift0A7EncoderV6encode_8skipKeys10Foundation4DataVx_AC04SkipF0OtKAA0A9EncodableRzlF1TL_xmfp",
       "text" : "T"
     },
     {

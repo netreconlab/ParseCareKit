@@ -317,7 +317,7 @@
                       "type" : "text"
                     },
                     {
-                      "text" : "When an instance is deinitialized it will automatically close it’s connection gracefully.",
+                      "text" : "When an instance is deinitialized it will automatically close it is connection gracefully.",
                       "type" : "text"
                     }
                   ],
@@ -800,6 +800,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -1771,6 +1772,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",

@@ -60,6 +60,9 @@
         "name" : "ParseSwift"
       }
     ],
+    "platforms" : [
+
+    ],
     "role" : "symbol",
     "roleHeading" : "Instance Property",
     "symbolKind" : "property",
@@ -135,7 +138,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "This will be deprecated in ParseSwift 5.0.0 in favor of ",
+                  "text" : "This will be removed in ParseSwift 5.0.0 in favor of ",
                   "type" : "text"
                 },
                 {
@@ -243,6 +246,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",

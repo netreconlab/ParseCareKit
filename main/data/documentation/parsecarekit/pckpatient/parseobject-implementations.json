@@ -84,7 +84,13 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/query()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/query"
+      ],
+      "title" : "Type Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/query(_:)-5kir3",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/query(_:)-ww3a",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/queryRelations(_:parent:)-22884",
@@ -548,7 +554,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with the current data from the server and sets an error if one occurs.",
+      "text" : " with the current data from the server.",
       "type" : "text"
     }
   ],
@@ -877,7 +883,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with the current data from the server and sets an error if one occurs.",
+      "text" : " with the current data from the server.",
       "type" : "text"
     }
   ],
@@ -1141,7 +1147,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with the current data from the server and sets an error if one occurs.",
+      "text" : " with the current data from the server.",
       "type" : "text"
     },
     {
@@ -1773,10 +1779,10 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckpatient\/operation"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/query()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/query": {
   "abstract" : [
     {
-      "text" : "Create an instance with no constraints.",
+      "text" : "Create a query with no constraints.",
       "type" : "text"
     }
   ],
@@ -1791,7 +1797,7 @@
     },
     {
       "kind" : "keyword",
-      "text" : "func"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -1803,7 +1809,7 @@
     },
     {
       "kind" : "text",
-      "text" : "() -> "
+      "text" : ": "
     },
     {
       "kind" : "typeIdentifier",
@@ -1823,17 +1829,17 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/query()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/query",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "query()",
+  "title" : "query",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckpatient\/query()"
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/query"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/query(_:)-5kir3": {
   "abstract" : [
     {
-      "text" : "Create an instance with a variadic amount constraints.",
+      "text" : "Create a query with a variadic amount constraints.",
       "type" : "text"
     }
   ],
@@ -1899,7 +1905,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/query(_:)-ww3a": {
   "abstract" : [
     {
-      "text" : "Create an instance with an array of constraints.",
+      "text" : "Create a query with an array of constraints.",
       "type" : "text"
     }
   ],
@@ -3397,7 +3403,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " and throws an error if there’s an issue.",
+      "text" : " and throws an error if there is an issue.",
       "type" : "text"
     }
   ],
@@ -3661,7 +3667,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " and throws an error if there’s an issue.",
+      "text" : " and throws an error if there is an issue.",
       "type" : "text"
     }
   ],
@@ -3971,7 +3977,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/toPointer()": {
   "abstract" : [
     {
-      "text" : "Gets a Pointer referencing this object.",
+      "text" : "Converts this ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to a Parse Pointer.",
       "type" : "text"
     }
   ],

@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Gets a Pointer referencing this object.",
+      "text" : "Converts this ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to a Parse Pointer.",
       "type" : "text"
     }
   ],
@@ -286,7 +294,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome/toPointer()": {
   "abstract" : [
     {
-      "text" : "Gets a Pointer referencing this object.",
+      "text" : "Converts this ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to a Parse Pointer.",
       "type" : "text"
     }
   ],

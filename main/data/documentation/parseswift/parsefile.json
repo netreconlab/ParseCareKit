@@ -99,7 +99,8 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Deletable",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseType",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseEncodable",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseTypeable",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
@@ -180,6 +181,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/Equatable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/Fetchable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/Identifiable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/ParseEncodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/Savable-Implementations"
       ],
       "title" : "Default Implementations"
@@ -291,6 +293,65 @@
   "title" : "Fetchable",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/fetchable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseEncodable": {
+  "abstract" : [
+    {
+      "text" : "Types that conform to ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "ParseEncodable",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : " should be encoded by the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseEncoder",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " when necessary.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseEncodable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseEncodable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseEncodable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseEncodable",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseencodable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile": {
   "abstract" : [
@@ -418,6 +479,17 @@
   "title" : "Identifiable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsefile\/identifiable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/ParseEncodable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/ParseEncodable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "ParseEncodable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsefile\/parseencodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/Savable-Implementations": {
   "abstract" : [
@@ -2624,7 +2696,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {
@@ -2732,7 +2804,7 @@
       "type" : "text"
     },
     {
-      "text" : "If the file hasn’t been downloaded, it will automatically be downloaded before saved.",
+      "text" : "If the file has not been downloaded, it will automatically be downloaded before saved.",
       "type" : "text"
     }
   ],
@@ -2894,7 +2966,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {
@@ -3090,7 +3162,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {
@@ -3421,7 +3493,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {
@@ -3530,7 +3602,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {
@@ -3759,9 +3831,12 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsefile\/url"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseType": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseTypeable": {
   "abstract" : [
-
+    {
+      "text" : "A special type that is considered a Parse type.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -3774,21 +3849,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseType"
+      "text" : "ParseTypeable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseType",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseTypeable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseType"
+      "text" : "ParseTypeable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseType",
+  "title" : "ParseTypeable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsetype"
+  "url" : "\/documentation\/parseswift\/parsetypeable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Savable": {
   "abstract" : [

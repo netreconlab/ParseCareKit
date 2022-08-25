@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Can setup a connection to Parse Server based on a ParseCareKit.plist file.",
+      "text" : "Setup a connection to Parse Server based on a ParseCareKit.plist file.",
       "type" : "text"
     }
   ],
@@ -317,7 +317,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "(challenge: URLAuthenticationChallenge,     completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void",
+                  "code" : "(challenge: URLAuthenticationChallenge, completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void",
                   "type" : "codeVoice"
                 },
                 {
@@ -534,7 +534,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/setupServer(fileName:authentication:)": {
   "abstract" : [
     {
-      "text" : "Can setup a connection to Parse Server based on a ParseCareKit.plist file.",
+      "text" : "Setup a connection to Parse Server based on a ParseCareKit.plist file.",
       "type" : "text"
     }
   ],
