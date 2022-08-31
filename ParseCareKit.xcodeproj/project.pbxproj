@@ -1166,7 +1166,7 @@
 			repositoryURL = "https://github.com/parse-community/Parse-Swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.9.1;
+				minimumVersion = 4.9.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
