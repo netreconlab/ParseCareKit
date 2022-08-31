@@ -1264,7 +1264,18 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseField": {
   "abstract" : [
-
+    {
+      "text" : "A type used to create internal fields for ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseSchema",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -2216,7 +2227,30 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushPayloadAny": {
   "abstract" : [
-
+    {
+      "text" : "The payload data for both a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParsePushPayloadApple",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParsePushPayloadFirebase",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " push notification.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -3048,7 +3082,31 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/QueryWhere": {
   "abstract" : [
-
+    {
+      "text" : "The ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "where",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : " of a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Query",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

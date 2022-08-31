@@ -147,7 +147,30 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushPayloadAny": {
   "abstract" : [
-
+    {
+      "text" : "The payload data for both a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParsePushPayloadApple",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParsePushPayloadFirebase",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " push notification.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

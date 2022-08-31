@@ -1,34 +1,33 @@
 {
   "abstract" : [
     {
-      "text" : "No overview available.",
+      "text" : "The current ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseConfiguration",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " for the ParseSwift client.",
       "type" : "text"
     }
   ],
   "hierarchy" : {
     "paths" : [
       [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseSwift"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseSwift\/configuration"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/configuration"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwiftAAV13configurationAA0A13ConfigurationVSgvpZ",
+    "externalID" : "s:10ParseSwift13configurationAA0A13ConfigurationVvp",
     "fragments" : [
-      {
-        "kind" : "keyword",
-        "text" : "static"
-      },
-      {
-        "kind" : "text",
-        "text" : " "
-      },
       {
         "kind" : "keyword",
         "text" : "var"
@@ -49,10 +48,6 @@
         "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:10ParseSwift0A13ConfigurationV",
         "text" : "ParseConfiguration"
-      },
-      {
-        "kind" : "text",
-        "text" : "!"
       }
     ],
     "modules" : [
@@ -61,8 +56,8 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Type Property",
-    "symbolKind" : "property",
+    "roleHeading" : "Global Variable",
+    "symbolKind" : "var",
     "title" : "configuration"
   },
   "primaryContentSections" : [
@@ -76,14 +71,6 @@
             "iOS"
           ],
           "tokens" : [
-            {
-              "kind" : "keyword",
-              "text" : "static"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
             {
               "kind" : "keyword",
               "text" : "var"
@@ -108,7 +95,15 @@
             },
             {
               "kind" : "text",
-              "text" : "! { get }"
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
@@ -127,7 +122,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parseswift\/configuration"
+        "\/documentation\/parseswift\/configuration"
       ],
       "traits" : [
         {
@@ -183,57 +178,22 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseconfiguration"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseSwift": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/configuration": {
   "abstract" : [
     {
-      "code" : "ParseSwift",
+      "text" : "The current ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseConfiguration",
       "type" : "codeVoice"
     },
     {
-      "text" : " contains static methods to handle global configuration for the Parse framework.",
+      "text" : " for the ParseSwift client.",
       "type" : "text"
     }
   ],
   "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "struct"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "ParseSwift"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseSwift",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "ParseSwift"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "ParseSwift",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseswift"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseSwift/configuration": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
     {
       "kind" : "keyword",
       "text" : "var"
@@ -254,18 +214,14 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:10ParseSwift0A13ConfigurationV",
       "text" : "ParseConfiguration"
-    },
-    {
-      "kind" : "text",
-      "text" : "!"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseSwift\/configuration",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/configuration",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "configuration",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseswift\/configuration"
+  "url" : "\/documentation\/parseswift\/configuration"
 }
 }
 }
