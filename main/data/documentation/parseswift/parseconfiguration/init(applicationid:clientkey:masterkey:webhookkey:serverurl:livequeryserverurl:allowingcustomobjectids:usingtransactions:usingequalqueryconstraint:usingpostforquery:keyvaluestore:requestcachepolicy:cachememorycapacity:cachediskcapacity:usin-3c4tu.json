@@ -1,48 +1,29 @@
 {
   "abstract" : [
     {
-      "text" : "Configure the Parse Swift client. This should only be used when starting your app. Typically in the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "code" : "application(... didFinishLaunchingWithOptions launchOptions...)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "Create a Parse Swift configuration.",
       "type" : "text"
     }
   ],
   "hierarchy" : {
     "paths" : [
       [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/initialize(applicationId:clientKey:masterKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift10initialize13applicationId9clientKey06masterG09serverURL015liveQueryServerJ023allowingCustomObjectIds17usingTransactions0r5EqualL10Constraint0r7PostForL013keyValueStore18requestCachePolicy19cacheMemoryCapacity17cacheDiskCapacity24deletingKeychainIfNeeded21httpAdditionalHeaders21maxConnectionAttempts14authenticationySS_SSSgAT10Foundation0J0VAWSgS4bAA0agyZ0_pSgSo23NSURLRequestCachePolicyVS2iSbSDys11AnyHashableVypGSgSiySo28NSURLAuthenticationChallengeC_ySo36NSURLSessionAuthChallengeDispositionV_So15NSURLCredentialCSgtXEtcSgtF",
+    "externalID" : "s:10ParseSwift0A13ConfigurationV13applicationId9clientKey06masterG007webhookG09serverURL015liveQueryServerK023allowingCustomObjectIds17usingTransactions0s5EqualM10Constraint0s7PostForM013keyValueStore18requestCachePolicy19cacheMemoryCapacity17cacheDiskCapacity0S22DataProtectionKeychain24deletingKeychainIfNeeded21httpAdditionalHeaders21maxConnectionAttempts14authenticationACSS_SSSgA2W10Foundation0K0VAZSgS4bAA0agZ5Store_pSgSo23NSURLRequestCachePolicyVS2iS2bSDys11AnyHashableVypGSgSiySo28NSURLAuthenticationChallengeC_ySo36NSURLSessionAuthChallengeDispositionV_So15NSURLCredentialCSgtXEtcSgtcfc",
     "fragments" : [
       {
-        "kind" : "keyword",
-        "text" : "func"
-      },
-      {
-        "kind" : "text",
-        "text" : " "
-      },
-      {
         "kind" : "identifier",
-        "text" : "initialize"
+        "text" : "init"
       },
       {
         "kind" : "text",
@@ -85,6 +66,23 @@
       {
         "kind" : "externalParam",
         "text" : "masterKey"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      },
+      {
+        "kind" : "text",
+        "text" : "?, "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "webhookKey"
       },
       {
         "kind" : "text",
@@ -280,6 +278,23 @@
       },
       {
         "kind" : "externalParam",
+        "text" : "usingDataProtectionKeychain"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
         "text" : "deletingKeychainIfNeeded"
       },
       {
@@ -406,9 +421,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Function",
-    "symbolKind" : "func",
-    "title" : "initialize(applicationId:clientKey:masterKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)"
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)"
   },
   "primaryContentSections" : [
     {
@@ -423,15 +438,7 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "func"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "identifier",
-              "text" : "initialize"
+              "text" : "init"
             },
             {
               "kind" : "text",
@@ -474,6 +481,23 @@
             {
               "kind" : "externalParam",
               "text" : "masterKey"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : "? = nil, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "webhookKey"
             },
             {
               "kind" : "text",
@@ -667,6 +691,23 @@
             {
               "kind" : "text",
               "text" : " = 10_000_000, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "usingDataProtectionKeychain"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
+            },
+            {
+              "kind" : "text",
+              "text" : " = false, "
             },
             {
               "kind" : "externalParam",
@@ -1125,6 +1166,115 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "If your app previously used the iOS Objective-C SDK, setting this value",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "to ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "true",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : " will attempt to migrate relevant data stored in the Keychain to ParseSwift. Defaults to ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "false",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "migratingFromObjcSDK"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Sets ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "kSecUseDataProtectionKeychain",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " to ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "true",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : ". See Apple’s ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "https:\/\/developer.apple.com\/documentation\/security\/ksecusedataprotectionkeychain",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "for more info. Defaults to ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "false",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "usingDataProtectionKeychain"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "Deletes the Parse Keychain when the app is running for the first time.",
                   "type" : "text"
                 },
@@ -1185,6 +1335,28 @@
             }
           ],
           "name" : "httpAdditionalHeaders"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Maximum number of times to try to connect to Parse Server.",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "Defaults to 5.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "maxConnectionAttempts"
         },
         {
           "content" : [
@@ -1264,15 +1436,15 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "",
+                  "text" : "It is recomended to only specify ",
                   "type" : "text"
                 },
                 {
-                  "code" : "usingTransactions",
+                  "code" : "masterKey",
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " is experimental.",
+                  "text" : " when using the SDK on a server. Do not use this key on the client.",
                   "type" : "text"
                 }
               ],
@@ -1287,15 +1459,15 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "It is recomended to only specify ",
+                  "text" : "",
                   "type" : "text"
                 },
                 {
-                  "code" : "masterKey",
+                  "code" : "usingTransactions",
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " when using the SDK on a server. Do not use this key on the client.",
+                  "text" : " is experimental.",
                   "type" : "text"
                 }
               ],
@@ -1348,6 +1520,50 @@
           ],
           "style" : "warning",
           "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Setting ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "usingDataProtectionKeychain",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " to ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "true",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : " is known to cause issues in Playgrounds or in",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "situtations when apps do not have credentials to setup a Keychain.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "style" : "warning",
+          "type" : "aside"
         }
       ],
       "kind" : "content"
@@ -1364,7 +1580,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/initialize(applicationid:clientkey:masterkey:serverurl:livequeryserverurl:allowingcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:keyvaluestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:deletingk-5az3n"
+        "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:masterkey:webhookkey:serverurl:livequeryserverurl:allowingcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:keyvaluestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:usin-3c4tu"
       ],
       "traits" : [
         {
@@ -1386,25 +1602,17 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration": {
   "abstract" : [
     {
-      "text" : "A store that supports key\/value storage. It should be able",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "to handle any object that conforms to encodable and decodable.",
+      "text" : "The Configuration for a Parse client.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "protocol"
+      "text" : "struct"
     },
     {
       "kind" : "text",
@@ -1412,53 +1620,33 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParseConfiguration"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParseConfiguration"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseKeyValueStore",
+  "title" : "ParseConfiguration",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsekeyvaluestore"
+  "url" : "\/documentation\/parseswift\/parseconfiguration"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/initialize(applicationId:clientKey:masterKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)": {
   "abstract" : [
     {
-      "text" : "Configure the Parse Swift client. This should only be used when starting your app. Typically in the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "code" : "application(... didFinishLaunchingWithOptions launchOptions...)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "Create a Parse Swift configuration.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "identifier",
-      "text" : "initialize"
+      "text" : "init"
     },
     {
       "kind" : "text",
@@ -1501,6 +1689,23 @@
     {
       "kind" : "externalParam",
       "text" : "masterKey"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "webhookKey"
     },
     {
       "kind" : "text",
@@ -1696,6 +1901,23 @@
     },
     {
       "kind" : "externalParam",
+      "text" : "usingDataProtectionKeychain"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
       "text" : "deletingKeychainIfNeeded"
     },
     {
@@ -1816,12 +2038,54 @@
       "text" : ")?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/initialize(applicationId:clientKey:masterKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "initialize(applicationId:clientKey:masterKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)",
+  "title" : "init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:authentication:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/initialize(applicationid:clientkey:masterkey:serverurl:livequeryserverurl:allowingcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:keyvaluestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:deletingk-5az3n"
+  "url" : "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:masterkey:webhookkey:serverurl:livequeryserverurl:allowingcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:keyvaluestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:usin-3c4tu"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore": {
+  "abstract" : [
+    {
+      "text" : "A store that supports key\/value storage. It should be able",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "to handle any object that conforms to encodable and decodable.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseKeyValueStore"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseKeyValueStore"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseKeyValueStore",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsekeyvaluestore"
 },
 "https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data": {
   "identifier" : "https:\/\/developer.apple.com\/documentation\/foundation\/url_loading_system\/accessing_cached_data",
@@ -1858,6 +2122,18 @@
   ],
   "type" : "link",
   "url" : "https:\/\/developer.apple.com\/documentation\/foundation\/urlsessiontaskdelegate\/1411595-urlsession"
+},
+"https://developer.apple.com/documentation/security/ksecusedataprotectionkeychain": {
+  "identifier" : "https:\/\/developer.apple.com\/documentation\/security\/ksecusedataprotectionkeychain",
+  "title" : "documentation",
+  "titleInlineContent" : [
+    {
+      "text" : "documentation",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/developer.apple.com\/documentation\/security\/ksecusedataprotectionkeychain"
 }
 }
 }
