@@ -1,10 +1,4 @@
 {
-  "abstract" : [
-    {
-      "text" : "No overview available.",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -29,7 +23,7 @@
   },
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -43,18 +37,6 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseVersion\/==(_:_:)"
       ],
       "title" : "Operators"
-    }
-  ],
-  "variants" : [
-    {
-      "paths" : [
-        "\/documentation\/parseswift\/parseversion\/equatable-implementations"
-      ],
-      "traits" : [
-        {
-          "interfaceLanguage" : "swift"
-        }
-      ]
     }
   ]
 , 
@@ -77,7 +59,15 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " is used to determine the version of the SDK.",
+      "text" : " is used to determine the version of the SDK. The current",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "version of the SDK is persisted to the Keychain.",
       "type" : "text"
     }
   ],

@@ -1,15 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "If set to ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "true",
+      "code" : "OCKRemoteSynchronizable.automaticallySynchronizes",
       "type" : "codeVoice"
     },
     {
-      "text" : ", then the store will attempt to synchronize every time it is modified locally.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -101,7 +101,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -171,18 +171,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/automaticallySynchronizes": {
   "abstract" : [
-    {
-      "text" : "If set to ",
-      "type" : "text"
-    },
-    {
-      "code" : "true",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", then the store will attempt to synchronize every time it is modified locally.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

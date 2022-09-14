@@ -132,6 +132,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Note",
           "style" : "note",
           "type" : "aside"
         }
@@ -184,7 +185,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -1320,7 +1321,7 @@
       "type" : "text"
     },
     {
-      "text" : "installation persisted to the Parse cloud. This protocol inherits from the",
+      "text" : "installation persisted to the Keychain and Parse Server. This protocol inherits from the",
       "type" : "text"
     },
     {
@@ -1398,7 +1399,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {
@@ -1720,7 +1721,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of a user persisted to the Parse Data.",
+      "text" : " protocol have a local representation of a user persisted to the",
       "type" : "text"
     },
     {
@@ -1728,7 +1729,7 @@
       "type" : "text"
     },
     {
-      "text" : "This protocol inherits from the ",
+      "text" : "Keychain and Parse Server. This protocol inherits from the ",
       "type" : "text"
     },
     {
@@ -1736,15 +1737,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol, and retains the same functionality of a ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ",",
+      "text" : " protocol, and retains the same",
       "type" : "text"
     },
     {
@@ -1752,7 +1745,23 @@
       "type" : "text"
     },
     {
-      "text" : "but also extends it with various user specific methods, like authentication, signing up, and validation uniqueness.",
+      "text" : "functionality of a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", but also extends it with various user specific methods, like",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "authentication, signing up, and validation uniqueness.",
       "type" : "text"
     }
   ],

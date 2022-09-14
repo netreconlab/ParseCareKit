@@ -26,6 +26,17 @@
       "type" : "text"
     }
   ],
+  "deprecationSummary" : [
+    {
+      "inlineContent" : [
+        {
+          "text" : "This does not work, use become() instead",
+          "type" : "text"
+        }
+      ],
+      "type" : "paragraph"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -175,6 +186,9 @@
       {
         "name" : "ParseSwift"
       }
+    ],
+    "platforms" : [
+
     ],
     "role" : "symbol",
     "roleHeading" : "Type Method",
@@ -563,6 +577,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Note",
           "style" : "note",
           "type" : "aside"
         },
@@ -603,6 +618,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Warning",
           "style" : "warning",
           "type" : "aside"
         },
@@ -632,13 +648,52 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "Parse Server before calling this method.",
+                  "text" : "Parse Server before calling this method. This method assumes ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "PFInstallation.installationId",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "is saved to the Keychain. If the ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "installationId",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : " is not saved to the Keychain, this method will",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "not work.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
+          "name" : "Warning",
           "style" : "warning",
           "type" : "aside"
         }
@@ -648,7 +703,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -800,7 +855,7 @@
       "type" : "text"
     },
     {
-      "text" : "installation persisted to the Parse cloud. This protocol inherits from the",
+      "text" : "installation persisted to the Keychain and Parse Server. This protocol inherits from the",
       "type" : "text"
     },
     {
@@ -895,6 +950,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",

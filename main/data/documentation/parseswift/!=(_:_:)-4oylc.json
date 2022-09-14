@@ -9,7 +9,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " constraint.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -293,7 +293,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "This only works where the key’s values are ",
+                  "text" : "This only works when the key’s values are ",
                   "type" : "text"
                 },
                 {
@@ -316,6 +316,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Warning",
           "style" : "warning",
           "type" : "aside"
         }
@@ -325,7 +326,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -367,7 +368,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " constraint.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -451,7 +452,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {

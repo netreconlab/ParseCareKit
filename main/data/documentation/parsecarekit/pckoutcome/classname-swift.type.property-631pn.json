@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "The class name of the object.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Objectable.className",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -121,7 +129,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -239,10 +247,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome/className-swift.type.property-631pn": {
   "abstract" : [
-    {
-      "text" : "The class name of the object.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

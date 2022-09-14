@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Create a new operation.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject.operation",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -128,7 +136,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -277,10 +285,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/operation": {
   "abstract" : [
-    {
-      "text" : "Create a new operation.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

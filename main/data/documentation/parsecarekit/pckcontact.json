@@ -146,7 +146,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -370,10 +370,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/ACL": {
   "abstract" : [
-    {
-      "text" : "The ACL for this object.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -870,10 +867,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/className-swift.type.property-2bf0l": {
   "abstract" : [
-    {
-      "text" : "The class name of the object.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -1103,10 +1097,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/createdAt": {
   "abstract" : [
-    {
-      "text" : "When the object was created.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -1507,18 +1498,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/init()": {
   "abstract" : [
-    {
-      "text" : "The default initializer to ensure all ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "’s can be encoded\/decoded properly.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -1937,10 +1917,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/objectId": {
   "abstract" : [
-    {
-      "text" : "The id of the object.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -2019,34 +1996,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/originalData": {
   "abstract" : [
-    {
-      "text" : "A JSON encoded version of this ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " before ",
-      "type" : "text"
-    },
-    {
-      "code" : "mergeable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " was called and",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "properties were changed.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -2846,10 +2796,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/updatedAt": {
   "abstract" : [
-    {
-      "text" : "When the object was last updated.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -3388,7 +3335,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {

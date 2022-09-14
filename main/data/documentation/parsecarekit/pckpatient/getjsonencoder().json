@@ -1,19 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "The JSON encoder setup with the correct ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "dateEncodingStrategy",
+      "code" : "ParseObject.getJSONEncoder()",
       "type" : "codeVoice"
     },
     {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "strategy to send data to a Parse Server.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -107,7 +103,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -212,22 +208,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/getJSONEncoder()": {
   "abstract" : [
-    {
-      "text" : "The JSON encoder setup with the correct ",
-      "type" : "text"
-    },
-    {
-      "code" : "dateEncodingStrategy",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "strategy to send data to a Parse Server.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

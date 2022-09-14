@@ -1,15 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Fetch a revision record from the server that documents the changes that have been made on",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "text" : " ",
-      "type" : "text"
+      "code" : "OCKRemoteSynchronizable.pullRevisions(since:mergeRevision:completion:)",
+      "type" : "codeVoice"
     },
     {
-      "text" : "the server since the last time synchronization was performed.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -270,58 +270,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "Revisions newer than those encoded by this vector will be pulled.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "knowledgeVector"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "A closure that can be called multiple times to merge revisions.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "mergeRevision"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "A closure that should be called with the results of the pull.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "completion"
-        }
-      ]
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -499,18 +452,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pullRevisions(since:mergeRevision:completion:)": {
   "abstract" : [
-    {
-      "text" : "Fetch a revision record from the server that documents the changes that have been made on",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the server since the last time synchronization was performed.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

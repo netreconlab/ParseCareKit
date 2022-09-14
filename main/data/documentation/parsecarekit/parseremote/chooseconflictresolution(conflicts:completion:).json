@@ -1,31 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "This method will be called when CareKit detects a conflict between changes made to an entity in",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "text" : " ",
-      "type" : "text"
+      "code" : "OCKRemoteSynchronizable.chooseConflictResolution(conflicts:completion:)",
+      "type" : "codeVoice"
     },
     {
-      "text" : "the device’s local store and the changes made to the same entity in other device’s stores. Inspect the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "conflicted and determine which version of the entity to keep, then call the completion closure with the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "chosen version.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -200,70 +184,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "An array of the entities that are in conflict.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "conflicts"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "A closure that should be called with the version to keep.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "completion"
-        }
-      ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "It is permissible to decide for the user, or to prompt the user to make a selection manually.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -398,34 +323,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/chooseConflictResolution(conflicts:completion:)": {
   "abstract" : [
-    {
-      "text" : "This method will be called when CareKit detects a conflict between changes made to an entity in",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the device’s local store and the changes made to the same entity in other device’s stores. Inspect the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "conflicted and determine which version of the entity to keep, then call the completion closure with the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "chosen version.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

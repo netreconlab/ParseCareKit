@@ -9,7 +9,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {
@@ -180,7 +180,20 @@
               "type" : "codeVoice"
             },
             {
-              "text" : "s to be “value types” (structs).",
+              "text" : "s to be ",
+              "type" : "text"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "value types (structures)",
+                  "type" : "text"
+                }
+              ],
+              "type" : "strong"
+            },
+            {
+              "text" : ".",
               "type" : "text"
             },
             {
@@ -188,7 +201,7 @@
               "type" : "text"
             },
             {
-              "text" : "If you are using value types the the compiler will assist you with conforming to ",
+              "text" : "Since you are using value types the compiler will assist you with conforming to the ",
               "type" : "text"
             },
             {
@@ -196,22 +209,13 @@
               "type" : "codeVoice"
             },
             {
-              "text" : " protocol. If you",
+              "text" : " protocol.",
               "type" : "text"
             },
             {
               "text" : " ",
               "type" : "text"
             },
-            {
-              "text" : "are thinking of using reference types, see the warning.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
             {
               "text" : "After a ",
               "type" : "text"
@@ -221,7 +225,7 @@
               "type" : "codeVoice"
             },
             {
-              "text" : "is saved\/created to a Parse Server. It is recommended to conduct the rest of your updates on a",
+              "text" : "is saved\/created to a Parse Server. It is recommended to conduct any updates on a",
               "type" : "text"
             },
             {
@@ -241,7 +245,15 @@
               "type" : "codeVoice"
             },
             {
-              "text" : ". This allows a subset of the fields to be updated (PATCH) of an object",
+              "text" : ". This can be accomplished by calling the ",
+              "type" : "text"
+            },
+            {
+              "code" : "mergeable",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " property",
               "type" : "text"
             },
             {
@@ -249,7 +261,31 @@
               "type" : "text"
             },
             {
-              "text" : "as oppose to replacing all of the fields of an object (PUT). This reduces the amount of data",
+              "text" : "of your ",
+              "type" : "text"
+            },
+            {
+              "code" : "ParseObject",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " or by calling the ",
+              "type" : "text"
+            },
+            {
+              "code" : "set()",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " method on your ",
+              "type" : "text"
+            },
+            {
+              "code" : "ParseObject",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ". This allows a subset",
               "type" : "text"
             },
             {
@@ -257,7 +293,15 @@
               "type" : "text"
             },
             {
-              "text" : "sent between client and server when using ",
+              "text" : "of the fields to be updated (PATCH) of an object as oppose to replacing all of the fields of an object (PUT).",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "This reduces the amount of data sent between client and server when using ",
               "type" : "text"
             },
             {
@@ -320,7 +364,28 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "It is required that all added properties be optional properties so they can eventually be used as",
+                  "text" : "It is required that all of your ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseObject",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : "’s be ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "value types (structures)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : " and all added",
                   "type" : "text"
                 },
                 {
@@ -328,7 +393,7 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "Parse ",
+                  "text" : "properties be optional so they can eventually be used as Parse ",
                   "type" : "text"
                 },
                 {
@@ -336,7 +401,7 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : "’s. If a developer really wants to have a required key, they should require it on the server-side or",
+                  "text" : "’s. If a developer really wants to",
                   "type" : "text"
                 },
                 {
@@ -344,7 +409,15 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "create methods to check the respective properties on the client-side before saving objects. See",
+                  "text" : "have a required key, they should require it on the server-side or create methods to check the respective properties",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "on the client-side before saving objects. See",
                   "type" : "text"
                 },
                 {
@@ -377,6 +450,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Important",
           "style" : "important",
           "type" : "aside"
         },
@@ -385,7 +459,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "To take advantage of ",
+                  "text" : "A developer can take advantage of ",
                   "type" : "text"
                 },
                 {
@@ -393,15 +467,15 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : ", the developer should implement the ",
+                  "text" : " updates in two ways: 1) By calling the ",
                   "type" : "text"
                 },
                 {
-                  "code" : "merge",
+                  "code" : "set()",
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " method in every",
+                  "text" : " method when starting",
                   "type" : "text"
                 },
                 {
@@ -409,7 +483,95 @@
                   "type" : "text"
                 },
                 {
+                  "text" : "to mutate a saved ",
+                  "type" : "text"
+                },
+                {
                   "code" : "ParseObject",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ", or 2) implement the ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "merge",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " method in each of your",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseObject",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " models.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Important",
+          "style" : "important",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "If you plan to use custom encoding\/decoding, be sure to add ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "objectId",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ", ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "createdAt",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ", ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "updatedAt",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ", and",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ACL",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " to your ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseObject",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : "’s ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "CodingKeys",
                   "type" : "codeVoice"
                 },
                 {
@@ -420,7 +582,8 @@
               "type" : "paragraph"
             }
           ],
-          "style" : "important",
+          "name" : "Note",
+          "style" : "note",
           "type" : "aside"
         },
         {
@@ -428,7 +591,28 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "If you plan to use “reference types” (classes), you are using at your risk as this SDK is not designed",
+                  "text" : "This SDK is not designed to use ",
+                  "type" : "text"
+                },
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "reference types(classes)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
+                },
+                {
+                  "text" : " for ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseObject",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : "’s. Doing so is at your",
                   "type" : "text"
                 },
                 {
@@ -436,7 +620,7 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "for reference types and may have unexpected behavior when it comes to threading. You will also need to implement",
+                  "text" : "risk and may have unexpected behavior when it comes to threading. You will also need to implement",
                   "type" : "text"
                 },
                 {
@@ -520,121 +704,15 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " as your unsaved objects will not have this value yet and is nil. A possible way to",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "address this is by creating a ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "UUID",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " for your objects locally and relying on that for ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "Equatable",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " and ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "Hashable",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ",",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "otherwise it is possible you will get “circular dependency errors” depending on your implementation.",
+                  "text" : " as your unsaved objects will not have this value yet and is nil.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
+          "name" : "Warning",
           "style" : "warning",
-          "type" : "aside"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "If you plan to use custom encoding\/decoding, be sure to add ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "objectId",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ", ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "createdAt",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ", ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "updatedAt",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ", and",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ACL",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " to your ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseObject",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "CodingKeys",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "style" : "note",
           "type" : "aside"
         }
       ],
@@ -695,7 +773,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -727,6 +805,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/deletePublisher(options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/fetch(includeKeys:options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/fetchPublisher(includeKeys:options:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/get(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/getDecoder()-swift.method",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/getEncoder()-swift.method",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/getJSONEncoder()-swift.method",
@@ -741,10 +820,15 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/replace(options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/replace(options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/replacePublisher(options:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revert()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revert(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revertKeyPath(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revertObject()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/save(ignoringCustomObjectIdConfig:options:)-6rol8",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/save(ignoringCustomObjectIdConfig:options:)-n7lr",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/save(ignoringCustomObjectIdConfig:options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/savePublisher(ignoringCustomObjectIdConfig:options:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/set(_:to:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/shouldRestoreKey(_:original:)-9ntkl",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/toPointer()"
       ],
@@ -1704,7 +1788,7 @@
       "type" : "text"
     },
     {
-      "text" : "installation persisted to the Parse cloud. This protocol inherits from the",
+      "text" : "installation persisted to the Keychain and Parse Server. This protocol inherits from the",
       "type" : "text"
     },
     {
@@ -1782,7 +1866,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {
@@ -2728,6 +2812,85 @@
   "title" : "fetchPublisher(includeKeys:options:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseobject\/fetchpublisher(includekeys:options:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/get(_:)": {
+  "abstract" : [
+    {
+      "text" : "Get the unwrapped property value.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "get"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s7KeyPathC",
+      "text" : "KeyPath"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE3getyqd__s7KeyPathCyxqd__SgGKSQRd__lF1WL_qd__mfp",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : "?>) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE3getyqd__s7KeyPathCyxqd__SgGKSQRd__lF1WL_qd__mfp",
+      "text" : "W"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/get(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "get(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/get(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/getDecoder()-swift.method": {
   "abstract" : [
@@ -5159,6 +5322,324 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseobject\/replacepublisher(options:)"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/revert()": {
+  "abstract" : [
+    {
+      "text" : "Reverts the ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " back to the original object before mutations began.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "revert"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revert()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "revert()",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/revert()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/revert(_:)": {
+  "abstract" : [
+    {
+      "text" : "Reverts the ",
+      "type" : "text"
+    },
+    {
+      "code" : "KeyPath",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " back to  the original ",
+      "type" : "text"
+    },
+    {
+      "code" : "KeyPath",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "before mutations began.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "revert"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15WritableKeyPathC",
+      "text" : "WritableKeyPath"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE6revertyxs15WritableKeyPathCyxqd__SgGKSQRd__lF1WL_qd__mfp",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : "?>) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revert(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "revert(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/revert(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/revertKeyPath(_:)": {
+  "abstract" : [
+    {
+      "text" : "Reverts the ",
+      "type" : "text"
+    },
+    {
+      "code" : "KeyPath",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of the ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " back to  the original ",
+      "type" : "text"
+    },
+    {
+      "code" : "KeyPath",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "before mutations began.",
+      "type" : "text"
+    }
+  ],
+  "deprecated" : true,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "revertKeyPath"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15WritableKeyPathC",
+      "text" : "WritableKeyPath"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE13revertKeyPathyxs08WritableeF0Cyxqd__SgGKSQRd__lF1WL_qd__mfp",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : "?>) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revertKeyPath(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "revertKeyPath(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/revertkeypath(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/revertObject()": {
+  "abstract" : [
+    {
+      "text" : "Reverts the ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " back to the original object before mutations began.",
+      "type" : "text"
+    }
+  ],
+  "deprecated" : true,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "revertObject"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/revertObject()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "revertObject()",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/revertobject()"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/save(ignoringCustomObjectIdConfig:options:)-6rol8": {
   "abstract" : [
     {
@@ -5660,6 +6141,109 @@
   "title" : "savePublisher(ignoringCustomObjectIdConfig:options:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseobject\/savepublisher(ignoringcustomobjectidconfig:options:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/set(_:to:)": {
+  "abstract" : [
+    {
+      "text" : "Set the value of a specific ",
+      "type" : "text"
+    },
+    {
+      "code" : "KeyPath",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " on a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "set"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15WritableKeyPathC",
+      "text" : "WritableKeyPath"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE3set_2toxs15WritableKeyPathCyxqd__SgG_qd__tSQRd__lF1WL_qd__mfp",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : "?>, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "to"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE3set_2toxs15WritableKeyPathCyxqd__SgG_qd__tSQRd__lF1WL_qd__mfp",
+      "text" : "W"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/set(_:to:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "set(_:to:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/set(_:to:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/shouldRestoreKey(_:original:)-9ntkl": {
   "abstract" : [
@@ -6164,7 +6748,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of a user persisted to the Parse Data.",
+      "text" : " protocol have a local representation of a user persisted to the",
       "type" : "text"
     },
     {
@@ -6172,7 +6756,7 @@
       "type" : "text"
     },
     {
-      "text" : "This protocol inherits from the ",
+      "text" : "Keychain and Parse Server. This protocol inherits from the ",
       "type" : "text"
     },
     {
@@ -6180,15 +6764,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol, and retains the same functionality of a ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ",",
+      "text" : " protocol, and retains the same",
       "type" : "text"
     },
     {
@@ -6196,7 +6772,23 @@
       "type" : "text"
     },
     {
-      "text" : "but also extends it with various user specific methods, like authentication, signing up, and validation uniqueness.",
+      "text" : "functionality of a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", but also extends it with various user specific methods, like",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "authentication, signing up, and validation uniqueness.",
       "type" : "text"
     }
   ],

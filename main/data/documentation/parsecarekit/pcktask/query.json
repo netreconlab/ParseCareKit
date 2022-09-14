@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Create a query with no constraints.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject.query",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -144,7 +152,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -293,10 +301,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/query": {
   "abstract" : [
-    {
-      "text" : "Create a query with no constraints.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

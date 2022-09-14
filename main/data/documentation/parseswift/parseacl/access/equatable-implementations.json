@@ -1,10 +1,4 @@
 {
-  "abstract" : [
-    {
-      "text" : "No overview available.",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -30,7 +24,7 @@
   },
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -43,18 +37,6 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseACL\/Access\/!=(_:_:)"
       ],
       "title" : "Operators"
-    }
-  ],
-  "variants" : [
-    {
-      "paths" : [
-        "\/documentation\/parseswift\/parseacl\/access\/equatable-implementations"
-      ],
-      "traits" : [
-        {
-          "interfaceLanguage" : "swift"
-        }
-      ]
     }
   ]
 , 
@@ -117,7 +99,16 @@
       "type" : "text"
     },
     {
-      "text" : "“the public” so that, for example, any user could read a particular object but only a",
+      "inlineContent" : [
+        {
+          "text" : "the public",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : " so that, for example, any user could read a particular object but only a",
       "type" : "text"
     },
     {
