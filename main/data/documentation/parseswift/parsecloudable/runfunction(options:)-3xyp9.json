@@ -7,7 +7,7 @@
     {
       "inlineContent" : [
         {
-          "text" : "asynchronously",
+          "text" : "synchronously",
           "type" : "text"
         }
       ],
@@ -16,32 +16,24 @@
     {
       "text" : " and returns a result of it is execution.",
       "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "Publishes when complete.",
-      "type" : "text"
     }
   ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud\/runFunctionPublisher(options:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable\/runFunction(options:)-3xyp9"
   },
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "ParseSwift",
-    "externalID" : "s:10ParseSwift0A5CloudPAAE20runFunctionPublisher7options7Combine6FutureCy10ReturnTypeQzAA0A5ErrorVGShyAA3APIV6OptionOG_tF",
+    "externalID" : "s:10ParseSwift0A9CloudablePAAE11runFunction7options10ReturnTypeQzShyAA3APIV6OptionOG_tKF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -53,7 +45,7 @@
       },
       {
         "kind" : "identifier",
-        "text" : "runFunctionPublisher"
+        "text" : "runFunction"
       },
       {
         "kind" : "text",
@@ -83,34 +75,20 @@
       },
       {
         "kind" : "text",
-        "text" : ") -> "
+        "text" : ") "
       },
       {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:7Combine6FutureC",
-        "text" : "Future"
+        "kind" : "keyword",
+        "text" : "throws"
       },
       {
         "kind" : "text",
-        "text" : "<"
+        "text" : " -> "
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift0A5CloudP10ReturnTypeQa",
+        "preciseIdentifier" : "s:10ParseSwift0A9CloudableP10ReturnTypeQa",
         "text" : "ReturnType"
-      },
-      {
-        "kind" : "text",
-        "text" : ", "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift0A5ErrorV",
-        "text" : "ParseError"
-      },
-      {
-        "kind" : "text",
-        "text" : ">"
       }
     ],
     "modules" : [
@@ -121,7 +99,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Method",
     "symbolKind" : "method",
-    "title" : "runFunctionPublisher(options:)"
+    "title" : "runFunction(options:)"
   },
   "primaryContentSections" : [
     {
@@ -144,7 +122,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "runFunctionPublisher"
+              "text" : "runFunction"
             },
             {
               "kind" : "text",
@@ -176,36 +154,21 @@
             },
             {
               "kind" : "text",
-              "text" : " = []) -> "
+              "text" : " = []) "
             },
             {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:7Combine6FutureC",
-              "text" : "Future"
+              "kind" : "keyword",
+              "text" : "throws"
             },
             {
               "kind" : "text",
-              "text" : "<"
+              "text" : " -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud\/ReturnType",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable\/ReturnType",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift0A5CloudP10ReturnTypeQa",
+              "preciseIdentifier" : "s:10ParseSwift0A9CloudableP10ReturnTypeQa",
               "text" : "ReturnType"
-            },
-            {
-              "kind" : "text",
-              "text" : ", "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift0A5ErrorV",
-              "text" : "ParseError"
-            },
-            {
-              "kind" : "text",
-              "text" : ">"
             }
           ]
         }
@@ -223,7 +186,15 @@
         {
           "inlineContent" : [
             {
-              "text" : "A publisher that eventually produces a single value and then finishes or fails.",
+              "text" : "Returns a ",
+              "type" : "text"
+            },
+            {
+              "code" : "Decodable",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " type.",
               "type" : "text"
             }
           ],
@@ -250,6 +221,41 @@
           "name" : "options"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "An error of type ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseError",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -263,7 +269,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsecloud\/runfunctionpublisher(options:)"
+        "\/documentation\/parseswift\/parsecloudable\/runfunction(options:)-3xyp9"
       ],
       "traits" : [
         {
@@ -353,14 +359,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/api\/options"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloud": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudable": {
   "abstract" : [
     {
       "text" : "Objects that conform to the ",
       "type" : "text"
     },
     {
-      "code" : "ParseCloud",
+      "code" : "ParseCloudable",
       "type" : "codeVoice"
     },
     {
@@ -380,7 +386,7 @@
       "type" : "text"
     },
     {
-      "code" : "ParseCloud",
+      "code" : "ParseCloudable",
       "type" : "codeVoice"
     },
     {
@@ -399,23 +405,23 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseCloud"
+      "text" : "ParseCloudable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseCloud"
+      "text" : "ParseCloudable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseCloud",
+  "title" : "ParseCloudable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsecloud"
+  "url" : "\/documentation\/parseswift\/parsecloudable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloud/ReturnType": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudable/ReturnType": {
   "abstract" : [
 
   ],
@@ -442,15 +448,15 @@
       "text" : "Decodable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud\/ReturnType",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable\/ReturnType",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "ReturnType",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsecloud\/returntype"
+  "url" : "\/documentation\/parseswift\/parsecloudable\/returntype"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloud/runFunctionPublisher(options:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudable/runFunction(options:)-3xyp9": {
   "abstract" : [
     {
       "text" : "Calls a Cloud Code function ",
@@ -459,7 +465,7 @@
     {
       "inlineContent" : [
         {
-          "text" : "asynchronously",
+          "text" : "synchronously",
           "type" : "text"
         }
       ],
@@ -467,14 +473,6 @@
     },
     {
       "text" : " and returns a result of it is execution.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "Publishes when complete.",
       "type" : "text"
     }
   ],
@@ -489,7 +487,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "runFunctionPublisher"
+      "text" : "runFunction"
     },
     {
       "kind" : "text",
@@ -519,76 +517,28 @@
     },
     {
       "kind" : "text",
-      "text" : ") -> "
+      "text" : ") "
     },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:7Combine6FutureC",
-      "text" : "Future"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A5CloudP10ReturnTypeQa",
-      "text" : "ReturnType"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A5ErrorV",
-      "text" : "ParseError"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud\/runFunctionPublisher(options:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "runFunctionPublisher(options:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsecloud\/runfunctionpublisher(options:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError": {
-  "abstract" : [
-    {
-      "text" : "An object with a Parse code and message.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "struct"
+      "text" : "throws"
     },
     {
       "kind" : "text",
-      "text" : " "
+      "text" : " -> "
     },
     {
-      "kind" : "identifier",
-      "text" : "ParseError"
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A9CloudableP10ReturnTypeQa",
+      "text" : "ReturnType"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable\/runFunction(options:)-3xyp9",
   "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "ParseError"
-    }
-  ],
   "role" : "symbol",
-  "title" : "ParseError",
+  "title" : "runFunction(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseerror"
+  "url" : "\/documentation\/parseswift\/parsecloudable\/runfunction(options:)-3xyp9"
 }
 }
 }

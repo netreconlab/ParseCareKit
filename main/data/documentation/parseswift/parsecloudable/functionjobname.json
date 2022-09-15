@@ -1,23 +1,29 @@
 {
+  "abstract" : [
+    {
+      "text" : "The name of the function or job.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud\/ReturnType"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable\/functionJobName"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift0A5CloudP10ReturnTypeQa",
+    "externalID" : "s:10ParseSwift0A9CloudableP15functionJobNameSSvp",
     "fragments" : [
       {
         "kind" : "keyword",
-        "text" : "associatedtype"
+        "text" : "var"
       },
       {
         "kind" : "text",
@@ -25,16 +31,16 @@
       },
       {
         "kind" : "identifier",
-        "text" : "ReturnType"
+        "text" : "functionJobName"
       },
       {
         "kind" : "text",
-        "text" : " : "
+        "text" : ": "
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:Se",
-        "text" : "Decodable"
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       }
     ],
     "modules" : [
@@ -44,9 +50,9 @@
     ],
     "required" : true,
     "role" : "symbol",
-    "roleHeading" : "Associated Type",
-    "symbolKind" : "associatedtype",
-    "title" : "ReturnType"
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "functionJobName"
   },
   "primaryContentSections" : [
     {
@@ -61,7 +67,7 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "associatedtype"
+              "text" : "var"
             },
             {
               "kind" : "text",
@@ -69,16 +75,36 @@
             },
             {
               "kind" : "identifier",
-              "text" : "ReturnType"
+              "text" : "functionJobName"
             },
             {
               "kind" : "text",
-              "text" : " : "
+              "text" : ": "
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:Se",
-              "text" : "Decodable"
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "set"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
@@ -97,7 +123,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsecloud\/returntype"
+        "\/documentation\/parseswift\/parsecloudable\/functionjobname"
       ],
       "traits" : [
         {
@@ -119,14 +145,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloud": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudable": {
   "abstract" : [
     {
       "text" : "Objects that conform to the ",
       "type" : "text"
     },
     {
-      "code" : "ParseCloud",
+      "code" : "ParseCloudable",
       "type" : "codeVoice"
     },
     {
@@ -146,7 +172,7 @@
       "type" : "text"
     },
     {
-      "code" : "ParseCloud",
+      "code" : "ParseCloudable",
       "type" : "codeVoice"
     },
     {
@@ -165,30 +191,33 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseCloud"
+      "text" : "ParseCloudable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseCloud"
+      "text" : "ParseCloudable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseCloud",
+  "title" : "ParseCloudable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsecloud"
+  "url" : "\/documentation\/parseswift\/parsecloudable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloud/ReturnType": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudable/functionJobName": {
   "abstract" : [
-
+    {
+      "text" : "The name of the function or job.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "associatedtype"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -196,25 +225,25 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ReturnType"
+      "text" : "functionJobName"
     },
     {
       "kind" : "text",
-      "text" : " : "
+      "text" : ": "
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Se",
-      "text" : "Decodable"
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloud\/ReturnType",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudable\/functionJobName",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "ReturnType",
+  "title" : "functionJobName",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsecloud\/returntype"
+  "url" : "\/documentation\/parseswift\/parsecloudable\/functionjobname"
 }
 }
 }

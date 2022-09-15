@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Stores an object in the store with a given ",
+      "text" : "Gets an object from the store based on its ",
       "type" : "text"
     },
     {
@@ -17,17 +17,17 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePrimitiveStorable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore\/set(_:for:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePrimitiveStorable\/get(valueFor:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift0A13KeyValueStoreP3set_3foryqd___SStKSERd__lF",
+    "externalID" : "s:10ParseSwift0A17PrimitiveStorableP3get8valueForqd__SgSS_tKSeRd__lF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,7 +39,7 @@
       },
       {
         "kind" : "identifier",
-        "text" : "set"
+        "text" : "get"
       },
       {
         "kind" : "text",
@@ -54,17 +54,8 @@
         "text" : ">("
       },
       {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStoreP3set_3foryqd___SStKSERd__lF1TL_qd__mfp",
-        "text" : "T"
-      },
-      {
-        "kind" : "text",
-        "text" : ", "
-      },
-      {
         "kind" : "externalParam",
-        "text" : "for"
+        "text" : "valueFor"
       },
       {
         "kind" : "text",
@@ -82,6 +73,19 @@
       {
         "kind" : "keyword",
         "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10ParseSwift0A17PrimitiveStorableP3get8valueForqd__SgSS_tKSeRd__lF1TL_qd__mfp",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -93,7 +97,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Method",
     "symbolKind" : "method",
-    "title" : "set(_:for:)"
+    "title" : "get(valueFor:)"
   },
   "primaryContentSections" : [
     {
@@ -124,7 +128,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "set"
+              "text" : "get"
             },
             {
               "kind" : "text",
@@ -140,32 +144,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "_"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "internalParam",
-              "text" : "object"
-            },
-            {
-              "kind" : "text",
-              "text" : ": "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStoreP3set_3foryqd___SStKSERd__lF1TL_qd__mfp",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : ", "
-            },
-            {
-              "kind" : "externalParam",
-              "text" : "for"
+              "text" : "valueFor"
             },
             {
               "kind" : "text",
@@ -194,7 +173,16 @@
             },
             {
               "kind" : "text",
-              "text" : " "
+              "text" : " -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10ParseSwift0A17PrimitiveStorableP3get8valueForqd__SgSS_tKSeRd__lF1TL_qd__mfp",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : "? "
             },
             {
               "kind" : "keyword",
@@ -214,8 +202,8 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:SE",
-              "text" : "Encodable"
+              "preciseIdentifier" : "s:Se",
+              "text" : "Decodable"
             }
           ]
         }
@@ -225,20 +213,6 @@
     {
       "kind" : "parameters",
       "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The object to store.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "object"
-        },
         {
           "content" : [
             {
@@ -267,7 +241,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsekeyvaluestore\/set(_:for:)"
+        "\/documentation\/parseswift\/parseprimitivestorable\/get(valuefor:)"
       ],
       "traits" : [
         {
@@ -289,7 +263,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePrimitiveStorable": {
   "abstract" : [
     {
       "text" : "A store that supports key\/value storage. It should be able",
@@ -315,26 +289,26 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParsePrimitiveStorable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePrimitiveStorable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParsePrimitiveStorable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseKeyValueStore",
+  "title" : "ParsePrimitiveStorable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsekeyvaluestore"
+  "url" : "\/documentation\/parseswift\/parseprimitivestorable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore/set(_:for:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePrimitiveStorable/get(valueFor:)": {
   "abstract" : [
     {
-      "text" : "Stores an object in the store with a given ",
+      "text" : "Gets an object from the store based on its ",
       "type" : "text"
     },
     {
@@ -357,7 +331,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "set"
+      "text" : "get"
     },
     {
       "kind" : "text",
@@ -372,17 +346,8 @@
       "text" : ">("
     },
     {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStoreP3set_3foryqd___SStKSERd__lF1TL_qd__mfp",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
       "kind" : "externalParam",
-      "text" : "for"
+      "text" : "valueFor"
     },
     {
       "kind" : "text",
@@ -400,15 +365,28 @@
     {
       "kind" : "keyword",
       "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A17PrimitiveStorableP3get8valueForqd__SgSS_tKSeRd__lF1TL_qd__mfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore\/set(_:for:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePrimitiveStorable\/get(valueFor:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "set(_:for:)",
+  "title" : "get(valueFor:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsekeyvaluestore\/set(_:for:)"
+  "url" : "\/documentation\/parseswift\/parseprimitivestorable\/get(valuefor:)"
 }
 }
 }

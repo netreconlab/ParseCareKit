@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Gets an object from the store based on its ",
-      "type" : "text"
-    },
-    {
-      "code" : "key",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "Check if a file exists in the Swift SDK download directory.",
       "type" : "text"
     }
   ],
@@ -17,18 +9,27 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileManager"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore\/get(valueFor:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileManager\/fileExists(_:)-3nh5r"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift0A13KeyValueStoreP3get8valueForqd__SgSS_tKSeRd__lF",
+    "extendedModule" : "ParseSwift",
+    "externalID" : "s:10ParseSwift0A11FileManagerV10fileExistsy10Foundation3URLVSSKFZ",
     "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
       {
         "kind" : "keyword",
         "text" : "func"
@@ -39,27 +40,11 @@
       },
       {
         "kind" : "identifier",
-        "text" : "get"
+        "text" : "fileExists"
       },
       {
         "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "genericParameter",
-        "text" : "T"
-      },
-      {
-        "kind" : "text",
-        "text" : ">("
-      },
-      {
-        "kind" : "externalParam",
-        "text" : "valueFor"
-      },
-      {
-        "kind" : "text",
-        "text" : ": "
+        "text" : "("
       },
       {
         "kind" : "typeIdentifier",
@@ -80,12 +65,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStoreP3get8valueForqd__SgSS_tKSeRd__lF1TL_qd__mfp",
-        "text" : "T"
-      },
-      {
-        "kind" : "text",
-        "text" : "?"
+        "preciseIdentifier" : "s:10Foundation3URLV",
+        "text" : "URL"
       }
     ],
     "modules" : [
@@ -93,11 +74,10 @@
         "name" : "ParseSwift"
       }
     ],
-    "required" : true,
     "role" : "symbol",
-    "roleHeading" : "Instance Method",
+    "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "get(valueFor:)"
+    "title" : "fileExists(_:)"
   },
   "primaryContentSections" : [
     {
@@ -112,7 +92,7 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "mutating"
+              "text" : "static"
             },
             {
               "kind" : "text",
@@ -128,23 +108,15 @@
             },
             {
               "kind" : "identifier",
-              "text" : "get"
+              "text" : "fileExists"
             },
             {
               "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "genericParameter",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : ">("
+              "text" : "("
             },
             {
               "kind" : "externalParam",
-              "text" : "valueFor"
+              "text" : "_"
             },
             {
               "kind" : "text",
@@ -152,7 +124,7 @@
             },
             {
               "kind" : "internalParam",
-              "text" : "key"
+              "text" : "name"
             },
             {
               "kind" : "text",
@@ -177,38 +149,33 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStoreP3get8valueForqd__SgSS_tKSeRd__lF1TL_qd__mfp",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : "? "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "where"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : " : "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:Se",
-              "text" : "Decodable"
+              "preciseIdentifier" : "s:10Foundation3URLV",
+              "text" : "URL"
             }
           ]
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The location of the file.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "kind" : "parameters",
@@ -218,16 +185,51 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The unique key value of the object.",
+                  "text" : "The name of the file to check.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "key"
+          "name" : "name"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "An error of type ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseError",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -241,7 +243,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsekeyvaluestore\/get(valuefor:)"
+        "\/documentation\/parseswift\/parsefilemanager\/fileexists(_:)-3nh5r"
       ],
       "traits" : [
         {
@@ -263,25 +265,17 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileManager": {
   "abstract" : [
     {
-      "text" : "A store that supports key\/value storage. It should be able",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "to handle any object that conforms to encodable and decodable.",
+      "text" : "Manages Parse files and directories.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "protocol"
+      "text" : "struct"
     },
     {
       "kind" : "text",
@@ -289,38 +283,38 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParseFileManager"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileManager",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParseFileManager"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseKeyValueStore",
+  "title" : "ParseFileManager",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsekeyvaluestore"
+  "url" : "\/documentation\/parseswift\/parsefilemanager"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore/get(valueFor:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileManager/fileExists(_:)-3nh5r": {
   "abstract" : [
     {
-      "text" : "Gets an object from the store based on its ",
-      "type" : "text"
-    },
-    {
-      "code" : "key",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "Check if a file exists in the Swift SDK download directory.",
       "type" : "text"
     }
   ],
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "func"
@@ -331,27 +325,11 @@
     },
     {
       "kind" : "identifier",
-      "text" : "get"
+      "text" : "fileExists"
     },
     {
       "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "valueFor"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
+      "text" : "("
     },
     {
       "kind" : "typeIdentifier",
@@ -372,21 +350,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStoreP3get8valueForqd__SgSS_tKSeRd__lF1TL_qd__mfp",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
+      "preciseIdentifier" : "s:10Foundation3URLV",
+      "text" : "URL"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore\/get(valueFor:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileManager\/fileExists(_:)-3nh5r",
   "kind" : "symbol",
-  "required" : true,
   "role" : "symbol",
-  "title" : "get(valueFor:)",
+  "title" : "fileExists(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsekeyvaluestore\/get(valuefor:)"
+  "url" : "\/documentation\/parseswift\/parsefilemanager\/fileexists(_:)-3nh5r"
 }
 }
 }
