@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -623,6 +623,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		709D177F258580620002E772 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1169,7 +1170,7 @@
 			repositoryURL = "https://github.com/parse-community/Parse-Swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.13.1;
+				minimumVersion = 4.14.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
