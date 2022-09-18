@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "When the object was created.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Objectable.createdAt",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -101,7 +109,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -239,10 +247,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/createdAt": {
   "abstract" : [
-    {
-      "text" : "When the object was created.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

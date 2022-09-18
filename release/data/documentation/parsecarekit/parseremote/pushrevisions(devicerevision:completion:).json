@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Push a revision from a device up to the server.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKRemoteSynchronizable.pushRevisions(deviceRevision:completion:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -174,58 +182,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "Revision from the device to be pushed to the remote.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "deviceRevision"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "If true, the contents of the remote should be completely overwritten.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "overwriteRemote"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "A closure that should be called once the push completes.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "completion"
-        }
-      ]
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -337,10 +298,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pushRevisions(deviceRevision:completion:)": {
   "abstract" : [
-    {
-      "text" : "Push a revision from a device up to the server.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

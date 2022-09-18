@@ -1,27 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "The JSON decoder setup with the correct ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "dateDecodingStrategy",
+      "code" : "ParseObject.getDecoder()",
       "type" : "codeVoice"
     },
     {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "strategy to decode data from a Parse Server. This encoder is used to decode all data received",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "from the server.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -115,7 +103,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -244,30 +232,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome/getDecoder()": {
   "abstract" : [
-    {
-      "text" : "The JSON decoder setup with the correct ",
-      "type" : "text"
-    },
-    {
-      "code" : "dateDecodingStrategy",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "strategy to decode data from a Parse Server. This encoder is used to decode all data received",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "from the server.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

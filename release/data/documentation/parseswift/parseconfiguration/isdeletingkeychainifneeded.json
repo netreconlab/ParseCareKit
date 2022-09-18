@@ -13,8 +13,13 @@
       "type" : "text"
     },
     {
-      "code" : "false",
-      "type" : "codeVoice"
+      "inlineContent" : [
+        {
+          "text" : "false",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
     },
     {
       "text" : ".",
@@ -113,7 +118,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -193,8 +198,13 @@
       "type" : "text"
     },
     {
-      "code" : "false",
-      "type" : "codeVoice"
+      "inlineContent" : [
+        {
+          "text" : "false",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
     },
     {
       "text" : ".",

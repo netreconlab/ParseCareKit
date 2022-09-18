@@ -22,7 +22,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with the current data from the server and sets an error if one occurs.",
+      "text" : " with the current data from the server.",
       "type" : "text"
     }
   ],
@@ -145,6 +145,14 @@
             "iOS"
           ],
           "tokens" : [
+            {
+              "kind" : "attribute",
+              "text" : "@discardableResult"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
             {
               "kind" : "keyword",
               "text" : "func"
@@ -287,7 +295,7 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " to include all keys. This is similar to ",
+                  "text" : " to include all keys one level deep. This is similar to ",
                   "type" : "text"
                 },
                 {
@@ -408,6 +416,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Note",
           "style" : "note",
           "type" : "aside"
         }
@@ -417,7 +426,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -658,7 +667,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with the current data from the server and sets an error if one occurs.",
+      "text" : " with the current data from the server.",
       "type" : "text"
     }
   ],

@@ -14,7 +14,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : ".",
+      "text" : ". Publishes when complete.",
       "type" : "text"
     }
   ],
@@ -245,7 +245,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -379,7 +379,15 @@
       "type" : "text"
     },
     {
-      "text" : "the server.",
+      "text" : "the server. The current ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseConfig",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is persisted to the Keychain and Parse Server.",
       "type" : "text"
     }
   ],
@@ -426,7 +434,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : ".",
+      "text" : ". Publishes when complete.",
       "type" : "text"
     }
   ],

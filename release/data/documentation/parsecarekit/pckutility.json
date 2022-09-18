@@ -80,7 +80,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -92,6 +92,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/decoder()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/encoder()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/jsonEncoder()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setAccessGroup(fileName:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setupServer(fileName:authentication:)"
       ],
       "title" : "Type Methods"
@@ -294,10 +295,71 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckutility\/jsonencoder()"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/setAccessGroup(fileName:)": {
+  "abstract" : [
+    {
+      "text" : "Setup the Keychain access group and synchronization across devices.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "setAccessGroup"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "fileName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setAccessGroup(fileName:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "setAccessGroup(fileName:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckutility\/setaccessgroup(filename:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/setupServer(fileName:authentication:)": {
   "abstract" : [
     {
-      "text" : "Can setup a connection to Parse Server based on a ParseCareKit.plist file.",
+      "text" : "Setup a connection to Parse Server based on a ParseCareKit.plist file.",
       "type" : "text"
     }
   ],

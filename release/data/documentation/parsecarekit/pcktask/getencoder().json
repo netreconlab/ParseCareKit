@@ -1,23 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "The Parse encoder is used to JSON encode all ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
+      "code" : "ParseObject.getEncoder()",
       "type" : "codeVoice"
     },
     {
-      "text" : "s and",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "types in a way meaninful for a Parse Server to consume.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -112,7 +104,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -261,26 +253,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/getEncoder()": {
   "abstract" : [
-    {
-      "text" : "The Parse encoder is used to JSON encode all ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "s and",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "types in a way meaninful for a Parse Server to consume.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

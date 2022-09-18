@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Add a constraint that requires a key  to not be equal to ",
+      "text" : "Add a constraint that requires a key to be equal to ",
       "type" : "text"
     },
     {
@@ -187,7 +187,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -255,7 +255,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/doesNotExist(key:)": {
   "abstract" : [
     {
-      "text" : "Add a constraint that requires a key  to not be equal to ",
+      "text" : "Add a constraint that requires a key to be equal to ",
       "type" : "text"
     },
     {

@@ -1,31 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Returns a ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "Query",
+      "code" : "ParseObject.queryRelations(_:parent:)",
       "type" : "codeVoice"
     },
     {
-      "text" : " for child objects that is limited to objects for a specific ",
-      "type" : "text"
-    },
-    {
-      "code" : "key",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and ",
-      "type" : "text"
-    },
-    {
-      "code" : "parent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " in this relation.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -276,115 +260,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "A relation query for child objects related to a ",
-              "type" : "text"
-            },
-            {
-              "code" : "parent",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " object with a specific ",
-              "type" : "text"
-            },
-            {
-              "code" : "key",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ".",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The key for the relation.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "key"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The parent object for the relation.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "parent"
-        }
-      ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "An error of type ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseError",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Throws",
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -489,34 +369,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/queryRelations(_:parent:)-22884": {
   "abstract" : [
-    {
-      "text" : "Returns a ",
-      "type" : "text"
-    },
-    {
-      "code" : "Query",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " for child objects that is limited to objects for a specific ",
-      "type" : "text"
-    },
-    {
-      "code" : "key",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and ",
-      "type" : "text"
-    },
-    {
-      "code" : "parent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " in this relation.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -620,7 +473,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {

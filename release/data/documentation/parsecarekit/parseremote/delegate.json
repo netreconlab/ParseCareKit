@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "If set, the delegate will be alerted to important events delivered by the remote store.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKRemoteSynchronizable.delegate",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -110,7 +118,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -222,10 +230,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/delegate": {
   "abstract" : [
-    {
-      "text" : "If set, the delegate will be alerted to important events delivered by the remote store.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

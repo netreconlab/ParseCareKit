@@ -1,15 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "An empty copy of the respective object that allows you to update a",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "text" : " ",
-      "type" : "text"
+      "code" : "ParseObject.mergeable",
+      "type" : "codeVoice"
     },
     {
-      "text" : "a subset of the fields (PATCH) of an object as oppose to replacing an object (PUT).",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -109,108 +109,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "It is recommended to use this to create a mergeable copy of your ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseObject",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "style" : "note",
-          "type" : "aside"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "",
-                  "type" : "text"
-                },
-                {
-                  "code" : "mergeable",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " should only be used on ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseObject",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : "’s that have already",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "been saved at least once to a Parse Server and have a valid ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "objectId",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ". In addition,",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "the developer should have implemented added all of their properties to ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "merge",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "style" : "warning",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -359,18 +262,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/mergeable": {
   "abstract" : [
-    {
-      "text" : "An empty copy of the respective object that allows you to update a",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "a subset of the fields (PATCH) of an object as oppose to replacing an object (PUT).",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

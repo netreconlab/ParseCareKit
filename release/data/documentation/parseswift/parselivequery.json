@@ -317,7 +317,7 @@
                       "type" : "text"
                     },
                     {
-                      "text" : "When an instance is deinitialized it will automatically close it’s connection gracefully.",
+                      "text" : "When an instance is deinitialized it will automatically close it is connection gracefully.",
                       "type" : "text"
                     }
                   ],
@@ -335,7 +335,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(cs)NSObject"
       ],
       "kind" : "relationships",
       "title" : "Inherits From",
@@ -357,7 +357,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -366,7 +366,6 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/init()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/init(serverURL:isDefault:notificationQueue:)"
       ],
       "title" : "Initializers"
@@ -800,6 +799,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -841,27 +841,6 @@
   "title" : "getDefault()",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parselivequery\/getdefault()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/init()": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "()"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/init()",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init()",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parselivequery\/init()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/init(serverURL:isDefault:notificationQueue:)": {
   "abstract" : [
@@ -1771,6 +1750,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -1871,6 +1851,11 @@
   "title" : "subscribe(_:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parselivequery\/subscribe(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(cs)NSObject": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(cs)NSObject",
+  "title" : "ObjectiveC.NSObject",
+  "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)NSObject": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)NSObject",

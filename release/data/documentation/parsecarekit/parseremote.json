@@ -90,7 +90,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -215,18 +215,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/automaticallySynchronizes": {
   "abstract" : [
-    {
-      "text" : "If set to ",
-      "type" : "text"
-    },
-    {
-      "code" : "true",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", then the store will attempt to synchronize every time it is modified locally.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -260,34 +249,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/chooseConflictResolution(conflicts:completion:)": {
   "abstract" : [
-    {
-      "text" : "This method will be called when CareKit detects a conflict between changes made to an entity in",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the device’s local store and the changes made to the same entity in other device’s stores. Inspect the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "conflicted and determine which version of the entity to keep, then call the completion closure with the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "chosen version.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -409,10 +371,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/delegate": {
   "abstract" : [
-    {
-      "text" : "If set, the delegate will be alerted to important events delivered by the remote store.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -605,18 +564,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pullRevisions(since:mergeRevision:completion:)": {
   "abstract" : [
-    {
-      "text" : "Fetch a revision record from the server that documents the changes that have been made on",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the server since the last time synchronization was performed.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -723,10 +671,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pushRevisions(deviceRevision:completion:)": {
   "abstract" : [
-    {
-      "text" : "Push a revision from a device up to the server.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

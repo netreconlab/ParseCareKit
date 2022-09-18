@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The application id of your Parse application.",
+      "text" : "The application id for your Parse application.",
       "type" : "text"
     }
   ],
@@ -97,7 +97,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -165,7 +165,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/applicationId": {
   "abstract" : [
     {
-      "text" : "The application id of your Parse application.",
+      "text" : "The application id for your Parse application.",
       "type" : "text"
     }
   ],

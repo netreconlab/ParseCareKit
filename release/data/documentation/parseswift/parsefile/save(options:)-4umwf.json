@@ -22,7 +22,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {
@@ -292,7 +292,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -465,7 +465,7 @@
       "type" : "text"
     },
     {
-      "text" : "A name will be assigned to it by the server. If the file hasn’t been downloaded, it will automatically",
+      "text" : "A name will be assigned to it by the server. If the file has not been downloaded, it will automatically",
       "type" : "text"
     },
     {

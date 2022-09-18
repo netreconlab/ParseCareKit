@@ -109,6 +109,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseTypeable",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
@@ -123,7 +124,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -142,7 +143,9 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/latitude",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/longitude"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/longitude",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D"
       ],
       "title" : "Instance Properties"
     },
@@ -151,8 +154,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInKilometers(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInMiles(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInRadians(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D()"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D(_:)"
       ],
       "title" : "Instance Methods"
     },
@@ -806,10 +809,10 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsegeopoint\/longitude"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocation()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocation": {
   "abstract" : [
     {
-      "text" : "Creates a new ",
+      "text" : "A ",
       "type" : "text"
     },
     {
@@ -817,7 +820,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " instance for the given ",
+      "text" : " instance created from the current ",
       "type" : "text"
     },
     {
@@ -825,10 +828,64 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", set to the location’s coordinates.",
+      "text" : ".",
       "type" : "text"
     }
   ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "toCLLocation"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)CLLocation",
+      "text" : "CLLocation"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "toCLLocation",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocation"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocation(_:)": {
+  "abstract" : [
+    {
+      "text" : "A ",
+      "type" : "text"
+    },
+    {
+      "code" : "CLLocation",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " instance created from the current ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseGeoPoint",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -844,7 +901,16 @@
     },
     {
       "kind" : "text",
-      "text" : "() -> "
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8GeoPointV",
+      "text" : "ParseGeoPoint"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
     },
     {
       "kind" : "typeIdentifier",
@@ -852,17 +918,17 @@
       "text" : "CLLocation"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation(_:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "toCLLocation()",
+  "title" : "toCLLocation(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocation()"
+  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocation(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocationCoordinate2D()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocationCoordinate2D": {
   "abstract" : [
     {
-      "text" : "Creates a new ",
+      "text" : "A ",
       "type" : "text"
     },
     {
@@ -870,7 +936,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " instance for the given ",
+      "text" : " instance created from the current ",
       "type" : "text"
     },
     {
@@ -878,10 +944,64 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", set to the location’s coordinates.",
+      "text" : ".",
       "type" : "text"
     }
   ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "toCLLocationCoordinate2D"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:@S@CLLocationCoordinate2D",
+      "text" : "CLLocationCoordinate2D"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "toCLLocationCoordinate2D",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocationcoordinate2d"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocationCoordinate2D(_:)": {
+  "abstract" : [
+    {
+      "text" : "A ",
+      "type" : "text"
+    },
+    {
+      "code" : "CLLocationCoordinate2D",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " instance created from the current ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseGeoPoint",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -897,7 +1017,16 @@
     },
     {
       "kind" : "text",
-      "text" : "() -> "
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8GeoPointV",
+      "text" : "ParseGeoPoint"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
     },
     {
       "kind" : "typeIdentifier",
@@ -905,12 +1034,46 @@
       "text" : "CLLocationCoordinate2D"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D(_:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "toCLLocationCoordinate2D()",
+  "title" : "toCLLocationCoordinate2D(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocationcoordinate2d()"
+  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocationcoordinate2d(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseTypeable": {
+  "abstract" : [
+    {
+      "text" : "A special type that is considered a Parse type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseTypeable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseTypeable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseTypeable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseTypeable",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsetypeable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",

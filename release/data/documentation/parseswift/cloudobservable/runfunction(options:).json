@@ -22,7 +22,7 @@
       "type" : "text"
     },
     {
-      "text" : "when the result of it’s execution.",
+      "text" : "when the result of it is execution.",
       "type" : "text"
     }
   ],
@@ -178,7 +178,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -359,7 +359,7 @@
       "type" : "text"
     },
     {
-      "text" : "when the result of it’s execution.",
+      "text" : "when the result of it is execution.",
       "type" : "text"
     }
   ],

@@ -1,15 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Establish a relation based on a stored relation with this ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
+      "code" : "ParseObject.relation(_:key:)",
       "type" : "codeVoice"
     },
     {
-      "text" : " as the parent.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -225,72 +225,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "A usable ",
-              "type" : "text"
-            },
-            {
-              "code" : "ParseRelation",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " based on the stored relation property.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The stored relation property.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "relation"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The key for the relation.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "key"
-        }
-      ]
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -439,18 +378,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/relation(_:key:)": {
   "abstract" : [
-    {
-      "text" : "Establish a relation based on a stored relation with this ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " as the parent.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

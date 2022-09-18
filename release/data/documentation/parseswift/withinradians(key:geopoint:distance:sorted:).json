@@ -349,16 +349,26 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "true",
-                  "type" : "codeVoice"
+                  "inlineContent" : [
+                    {
+                      "text" : "true",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
                 },
                 {
                   "text" : " if results should be sorted by distance ascending, ",
                   "type" : "text"
                 },
                 {
-                  "code" : "false",
-                  "type" : "codeVoice"
+                  "inlineContent" : [
+                    {
+                      "text" : "false",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "strong"
                 },
                 {
                   "text" : " is no sorting is required.",
@@ -383,7 +393,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [

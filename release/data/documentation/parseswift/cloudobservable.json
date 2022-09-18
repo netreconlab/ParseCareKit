@@ -131,7 +131,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -280,8 +280,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A5CloudP",
-      "text" : "ParseCloud"
+      "preciseIdentifier" : "s:10ParseSwift0A9CloudableP",
+      "text" : "ParseCloudable"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/CloudObservable\/CloudCodeType",
@@ -358,7 +358,7 @@
       "type" : "text"
     },
     {
-      "text" : "when the result of it’s execution.",
+      "text" : "when the result of it is execution.",
       "type" : "text"
     }
   ],

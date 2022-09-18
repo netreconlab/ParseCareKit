@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Create an instance with a variadic amount constraints.",
+      "text" : "Create a query with a variadic amount constraints.",
       "type" : "text"
     }
   ],
@@ -217,7 +217,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -259,7 +259,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse cloud.",
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
       "type" : "text"
     },
     {
@@ -301,7 +301,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/query(_:)-3tnph": {
   "abstract" : [
     {
-      "text" : "Create an instance with a variadic amount constraints.",
+      "text" : "Create a query with a variadic amount constraints.",
       "type" : "text"
     }
   ],

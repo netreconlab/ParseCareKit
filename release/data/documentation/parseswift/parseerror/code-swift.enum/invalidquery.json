@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "You tried to find values matching a datatype that doesn’t",
+      "text" : "You tried to find values matching a datatype that does not",
       "type" : "text"
     },
     {
@@ -84,7 +84,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -214,7 +214,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/Code-swift.enum/invalidQuery": {
   "abstract" : [
     {
-      "text" : "You tried to find values matching a datatype that doesn’t",
+      "text" : "You tried to find values matching a datatype that does not",
       "type" : "text"
     },
     {

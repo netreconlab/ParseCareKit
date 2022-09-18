@@ -1,31 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "A computed property that is the same value as ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "objectId",
+      "code" : "ParseObject.id",
       "type" : "codeVoice"
     },
     {
-      "text" : " and makes it easy to use ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "’s",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "as models in MVVM and SwiftUI.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -127,61 +111,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "",
-                  "type" : "text"
-                },
-                {
-                  "code" : "id",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " allows ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseObjects",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : "’s to be used even if they are unsaved and do not have an ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "objectId",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -302,34 +236,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/id-42eun": {
   "abstract" : [
-    {
-      "text" : "A computed property that is the same value as ",
-      "type" : "text"
-    },
-    {
-      "code" : "objectId",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and makes it easy to use ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "’s",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "as models in MVVM and SwiftUI.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

@@ -1,7 +1,19 @@
 {
   "abstract" : [
     {
-      "text" : "A list of fields to receive when receiving a ",
+      "text" : "A list of fields to receive updates on when the ",
+      "type" : "text"
+    },
+    {
+      "code" : "Query",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is used as a",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
       "type" : "text"
     },
     {
@@ -160,6 +172,26 @@
       "kind" : "declarations"
     },
     {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The mutated instance of query for easy chaining.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -272,6 +304,58 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "Setting ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "fields",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " will take precedence over ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "select",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ". If ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "fields",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " are not set, the",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "select",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " keys will be used.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "This is only for ",
                   "type" : "text"
                 },
@@ -287,6 +371,7 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Warning",
           "style" : "warning",
           "type" : "aside"
         }
@@ -296,7 +381,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -380,7 +465,19 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Query/fields(_:)-71x3d": {
   "abstract" : [
     {
-      "text" : "A list of fields to receive when receiving a ",
+      "text" : "A list of fields to receive updates on when the ",
+      "type" : "text"
+    },
+    {
+      "code" : "Query",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is used as a",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
       "type" : "text"
     },
     {

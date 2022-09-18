@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Create an instance with an array of constraints.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject.query(_:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -143,7 +151,7 @@
             },
             {
               "kind" : "text",
-              "text" : "]) -> "
+              "text" : "] = []) -> "
             },
             {
               "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Query",
@@ -167,58 +175,11 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "An instance of query for easy chaining.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "An array of ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "QueryConstraint",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : "’s.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "constraints"
-        }
-      ]
     }
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -363,10 +324,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/query(_:)-24h2u": {
   "abstract" : [
-    {
-      "text" : "Create an instance with an array of constraints.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

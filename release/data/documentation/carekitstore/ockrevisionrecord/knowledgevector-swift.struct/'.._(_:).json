@@ -19,7 +19,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRevisionRecord",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRevisionRecord\/KnowledgeVector-swift.struct",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRevisionRecord\/KnowledgeVector-swift.struct\/-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRevisionRecord\/KnowledgeVector-swift.struct\/Comparable-Implementations"
       ]
     ]
   },
@@ -176,7 +176,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -315,17 +315,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockrevisionrecord\/knowledgevector-swift.struct"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKRevisionRecord/KnowledgeVector-swift.struct/-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRevisionRecord\/KnowledgeVector-swift.struct\/-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : " Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockrevisionrecord\/knowledgevector-swift.struct\/-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKRevisionRecord/KnowledgeVector-swift.struct/.._(_:)": {
   "abstract" : [
 
@@ -391,6 +380,17 @@
   "title" : "..<(_:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockrevisionrecord\/knowledgevector-swift.struct\/'.._(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKRevisionRecord/KnowledgeVector-swift.struct/Comparable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRevisionRecord\/KnowledgeVector-swift.struct\/Comparable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Comparable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockrevisionrecord\/knowledgevector-swift.struct\/comparable-implementations"
 }
 }
 }

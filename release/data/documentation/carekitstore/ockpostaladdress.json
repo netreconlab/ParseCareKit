@@ -105,7 +105,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(cs)CNMutablePostalAddress"
       ],
       "kind" : "relationships",
       "title" : "Inherits From",
@@ -133,7 +133,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -361,6 +361,11 @@
   "title" : "init(from:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockpostaladdress\/init(from:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(cs)CNMutablePostalAddress": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(cs)CNMutablePostalAddress",
+  "title" : "Contacts.CNMutablePostalAddress",
+  "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)NSCoding": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)NSCoding",

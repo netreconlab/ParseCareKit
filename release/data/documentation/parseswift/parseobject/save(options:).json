@@ -22,7 +22,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " and throws an error if there’s an issue.",
+      "text" : " and throws an error if there is an issue.",
       "type" : "text"
     }
   ],
@@ -120,6 +120,14 @@
             "iOS"
           ],
           "tokens" : [
+            {
+              "kind" : "attribute",
+              "text" : "@discardableResult"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
             {
               "kind" : "keyword",
               "text" : "func"
@@ -266,7 +274,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -389,7 +397,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " and throws an error if there’s an issue.",
+      "text" : " and throws an error if there is an issue.",
       "type" : "text"
     }
   ],

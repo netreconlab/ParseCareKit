@@ -168,6 +168,26 @@
       "kind" : "declarations"
     },
     {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The mutated instance of query for easy chaining.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -175,7 +195,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A variadic list of keys include in the result.",
+                  "text" : "A variadic list of keys to include in the result.",
                   "type" : "text"
                 }
               ],
@@ -206,7 +226,80 @@
               "type" : "paragraph"
             }
           ],
+          "name" : "Warning",
           "style" : "warning",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "When using the ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Query",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " for ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseLiveQuery",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ", setting ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "fields",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " will take precedence",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "over ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "select",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ". If ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "fields",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " are not set, the ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "select",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " keys will be used.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
           "type" : "aside"
         }
       ],
@@ -215,7 +308,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [

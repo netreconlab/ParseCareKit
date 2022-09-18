@@ -1,15 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Create a new relation with this ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
+      "code" : "ParseObject.relation",
       "type" : "codeVoice"
     },
     {
-      "text" : " as the parent.",
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -136,7 +136,7 @@
   ],
   "schemaVersion" : {
     "major" : 0,
-    "minor" : 2,
+    "minor" : 3,
     "patch" : 0
   },
   "sections" : [
@@ -285,18 +285,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation": {
   "abstract" : [
-    {
-      "text" : "Create a new relation with this ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " as the parent.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
