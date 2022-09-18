@@ -1158,8 +1158,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
-				kind = revision;
-				revision = adca4ac261b265e4fb7ded5a88e14deaed39592c;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
 			};
 		};
 		70D41D8428B7EA7B00613510 /* XCRemoteSwiftPackageReference "Parse-Swift" */ = {
