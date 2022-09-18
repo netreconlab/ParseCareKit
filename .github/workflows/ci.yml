@@ -56,8 +56,3 @@ jobs:
         run: set -o pipefail && env NSUnbufferedIO=YES Scripts/generate-documentation
         env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
-      - name: Deploy Docs
-        if: github.ref == 'refs/heads/main'
-        run: set -o pipefail && env NSUnbufferedIO=YES Scripts/update-gh-pages-documentation-site
-        env:
-          DEVELOPER_DIR: ${{ env.CI_XCODE }}
