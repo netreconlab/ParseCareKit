@@ -106,6 +106,7 @@ public enum PCKStoreClass: String {
         ]
 
         for (key, value) in concreteClasses {
+            // swiftlint:disable for_where
             if !isCorrectType(key, check: value) {
                 concreteClasses.removeValue(forKey: key)
             }

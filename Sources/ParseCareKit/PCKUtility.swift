@@ -85,7 +85,7 @@ public class PCKUtility {
                               clientKey: clientKey,
                               serverURL: serverURL,
                               liveQueryServerURL: liveQueryURL,
-                              allowingCustomObjectIds: true,
+                              requiringCustomObjectIds: true,
                               usingTransactions: useTransactions,
                               usingPostForQuery: true,
                               deletingKeychainIfNeeded: deleteKeychainIfNeeded,
