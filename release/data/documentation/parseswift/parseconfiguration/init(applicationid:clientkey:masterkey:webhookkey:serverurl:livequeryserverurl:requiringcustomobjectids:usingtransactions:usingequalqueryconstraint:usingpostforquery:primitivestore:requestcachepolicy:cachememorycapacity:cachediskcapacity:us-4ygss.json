@@ -5,17 +5,6 @@
       "type" : "text"
     }
   ],
-  "deprecationSummary" : [
-    {
-      "inlineContent" : [
-        {
-          "text" : "Change: allowingCustomObjectIds->requiringCustomObjectIds and keyValueStore->primitiveStore",
-          "type" : "text"
-        }
-      ],
-      "type" : "paragraph"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -26,11 +15,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift0A13ConfigurationV13applicationId9clientKey06masterG007webhookG09serverURL015liveQueryServerK023allowingCustomObjectIds17usingTransactions0s5EqualM10Constraint0s7PostForM013keyValueStore18requestCachePolicy19cacheMemoryCapacity17cacheDiskCapacity0S22DataProtectionKeychain24deletingKeychainIfNeeded21httpAdditionalHeaders21maxConnectionAttempts17parseFileTransfer14authenticationACSS_SSSgA2X10Foundation0K0VA_SgS4bAA0A17PrimitiveStorable_pSgSo23NSURLRequestCachePolicyVS2iS2bSDys11AnyHashableVypGSgSiAA0A16FileTransferable_pSgySo28NSURLAuthenticationChallengeC_ySo36NSURLSessionAuthChallengeDispositionV_So15NSURLCredentialCSgtXEtcSgtcfc",
+    "externalID" : "s:10ParseSwift0A13ConfigurationV13applicationId9clientKey06masterG007webhookG09serverURL015liveQueryServerK024requiringCustomObjectIds17usingTransactions0s5EqualM10Constraint0s7PostForM014primitiveStore18requestCachePolicy19cacheMemoryCapacity17cacheDiskCapacity0S22DataProtectionKeychain24deletingKeychainIfNeeded21httpAdditionalHeaders21maxConnectionAttempts17parseFileTransfer14authenticationACSS_SSSgA2X10Foundation0K0VA_SgS4bAA0A17PrimitiveStorable_pSgSo23NSURLRequestCachePolicyVS2iS2bSDys11AnyHashableVypGSgSiAA0A16FileTransferable_pSgySo28NSURLAuthenticationChallengeC_ySo36NSURLSessionAuthChallengeDispositionV_So15NSURLCredentialCSgtXEtcSgtcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -144,7 +133,7 @@
       },
       {
         "kind" : "externalParam",
-        "text" : "allowingCustomObjectIds"
+        "text" : "requiringCustomObjectIds"
       },
       {
         "kind" : "text",
@@ -212,7 +201,7 @@
       },
       {
         "kind" : "externalParam",
-        "text" : "keyValueStore"
+        "text" : "primitiveStore"
       },
       {
         "kind" : "text",
@@ -220,8 +209,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStorea",
-        "text" : "ParseKeyValueStore"
+        "preciseIdentifier" : "s:10ParseSwift0A17PrimitiveStorableP",
+        "text" : "ParsePrimitiveStorable"
       },
       {
         "kind" : "text",
@@ -448,13 +437,10 @@
         "name" : "ParseSwift"
       }
     ],
-    "platforms" : [
-
-    ],
     "role" : "symbol",
     "roleHeading" : "Initializer",
     "symbolKind" : "init",
-    "title" : "init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)"
+    "title" : "init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)"
   },
   "primaryContentSections" : [
     {
@@ -579,7 +565,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "allowingCustomObjectIds"
+              "text" : "requiringCustomObjectIds"
             },
             {
               "kind" : "text",
@@ -592,7 +578,7 @@
             },
             {
               "kind" : "text",
-              "text" : ", "
+              "text" : " = false, "
             },
             {
               "kind" : "externalParam",
@@ -647,17 +633,17 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "keyValueStore"
+              "text" : "primitiveStore"
             },
             {
               "kind" : "text",
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePrimitiveStorable",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStorea",
-              "text" : "ParseKeyValueStore"
+              "preciseIdentifier" : "s:10ParseSwift0A17PrimitiveStorableP",
+              "text" : "ParsePrimitiveStorable"
             },
             {
               "kind" : "text",
@@ -993,7 +979,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "allowingCustomObjectIds"
+          "name" : "requiringCustomObjectIds"
         },
         {
           "content" : [
@@ -1106,7 +1092,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "ParseKeyValueStore",
+                  "code" : "ParsePrimitiveStorable",
                   "type" : "codeVoice"
                 },
                 {
@@ -1145,7 +1131,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "keyValueStore"
+          "name" : "primitiveStore"
         },
         {
           "content" : [
@@ -1671,7 +1657,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:masterkey:webhookkey:serverurl:livequeryserverurl:allowingcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:keyvaluestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:usin-54haa"
+        "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:masterkey:webhookkey:serverurl:livequeryserverurl:requiringcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:primitivestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:us-4ygss"
       ],
       "traits" : [
         {
@@ -1727,14 +1713,13 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseconfiguration"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)": {
   "abstract" : [
     {
       "text" : "Create a Parse Swift configuration.",
       "type" : "text"
     }
   ],
-  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "identifier",
@@ -1848,7 +1833,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "allowingCustomObjectIds"
+      "text" : "requiringCustomObjectIds"
     },
     {
       "kind" : "text",
@@ -1916,7 +1901,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "keyValueStore"
+      "text" : "primitiveStore"
     },
     {
       "kind" : "text",
@@ -1924,8 +1909,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A13KeyValueStorea",
-      "text" : "ParseKeyValueStore"
+      "preciseIdentifier" : "s:10ParseSwift0A17PrimitiveStorableP",
+      "text" : "ParsePrimitiveStorable"
     },
     {
       "kind" : "text",
@@ -2147,12 +2132,12 @@
       "text" : ")?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:allowingCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:keyValueStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)",
+  "title" : "init(applicationId:clientKey:masterKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:parseFileTransfer:authentication:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:masterkey:webhookkey:serverurl:livequeryserverurl:allowingcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:keyvaluestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:usin-54haa"
+  "url" : "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:masterkey:webhookkey:serverurl:livequeryserverurl:requiringcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:primitivestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:us-4ygss"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileTransferable": {
   "abstract" : [
@@ -2204,7 +2189,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsefiletransferable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseKeyValueStore": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePrimitiveStorable": {
   "abstract" : [
     {
       "text" : "A store that supports key\/value storage. It should be able",
@@ -2219,11 +2204,10 @@
       "type" : "text"
     }
   ],
-  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "typealias"
+      "text" : "protocol"
     },
     {
       "kind" : "text",
@@ -2231,21 +2215,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParsePrimitiveStorable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseKeyValueStore",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePrimitiveStorable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseKeyValueStore"
+      "text" : "ParsePrimitiveStorable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseKeyValueStore",
+  "title" : "ParsePrimitiveStorable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsekeyvaluestore"
+  "url" : "\/documentation\/parseswift\/parseprimitivestorable"
 },
 "https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data": {
   "identifier" : "https:\/\/developer.apple.com\/documentation\/foundation\/url_loading_system\/accessing_cached_data",

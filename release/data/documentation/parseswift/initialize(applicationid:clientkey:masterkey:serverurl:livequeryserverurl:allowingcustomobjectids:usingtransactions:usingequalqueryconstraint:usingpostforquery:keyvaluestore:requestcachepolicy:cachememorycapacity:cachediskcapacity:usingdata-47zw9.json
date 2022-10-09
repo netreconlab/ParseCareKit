@@ -17,6 +17,17 @@
       "type" : "text"
     }
   ],
+  "deprecationSummary" : [
+    {
+      "inlineContent" : [
+        {
+          "text" : "Change: allowingCustomObjectIds->requiringCustomObjectIds and keyValueStore->primitiveStore",
+          "type" : "text"
+        }
+      ],
+      "type" : "paragraph"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -439,6 +450,9 @@
         "name" : "ParseSwift"
       }
     ],
+    "platforms" : [
+
+    ],
     "role" : "symbol",
     "roleHeading" : "Function",
     "symbolKind" : "func",
@@ -571,7 +585,7 @@
             },
             {
               "kind" : "text",
-              "text" : " = false, "
+              "text" : ", "
             },
             {
               "kind" : "externalParam",
@@ -949,7 +963,15 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Allows objectIds to be created on the client.",
+                  "text" : "Requires ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "objectId",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : "’s to be created on the client",
                   "type" : "text"
                 },
                 {
@@ -1727,6 +1749,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
