@@ -89,7 +89,7 @@ class ParseCareKitTests: XCTestCase {
                               clientKey: "clientKey",
                               masterKey: "masterKey",
                               serverURL: url,
-                              allowingCustomObjectIds: true,
+                              requiringCustomObjectIds: true,
                               usingPostForQuery: true,
                               testing: true)
         do {

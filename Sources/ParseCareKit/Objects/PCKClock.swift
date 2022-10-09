@@ -44,7 +44,7 @@ struct PCKClock: ParseObject {
         return updated
     }
 
-    func decodeClock(completion:@escaping(OCKRevisionRecord.KnowledgeVector?) -> Void) {
+    func decodeClock(completion: @escaping(OCKRevisionRecord.KnowledgeVector?) -> Void) {
         guard let data = self.vector?.data(using: .utf8) else {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Error in Clock. Couldn't get data as utf8")
@@ -144,7 +144,7 @@ struct PCKClock: ParseObject {
     }
 
     static func fetchFromCloud(uuid: UUID, createNewIfNeeded: Bool,
-                               completion:@escaping(PCKClock?,
+                               completion: @escaping(PCKClock?,
                                                     OCKRevisionRecord.KnowledgeVector?,
                                                     ParseError?) -> Void) {
 
