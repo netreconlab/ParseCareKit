@@ -87,7 +87,7 @@ class ParseCareKitTests: XCTestCase {
         }
         ParseSwift.initialize(applicationId: "applicationId",
                               clientKey: "clientKey",
-                              masterKey: "masterKey",
+                              primaryKey: "primaryKey",
                               serverURL: url,
                               requiringCustomObjectIds: true,
                               usingPostForQuery: true,
