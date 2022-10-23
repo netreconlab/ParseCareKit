@@ -1472,7 +1472,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "masterKey",
+                  "code" : "primaryKey\/masterKey",
                   "type" : "codeVoice"
                 },
                 {

@@ -116,7 +116,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/removeMimeType",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/sessionToken(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/tags(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/useMasterKey"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/useMasterKey",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/usePrimaryKey"
       ],
       "title" : "Enumeration Cases"
     },
@@ -799,6 +800,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -819,6 +821,34 @@
   "title" : "API.Option.useMasterKey",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/api\/option\/usemasterkey"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/API/Option/usePrimaryKey": {
+  "abstract" : [
+    {
+      "text" : "Use the primaryKey\/masterKey if it was provided during initial configuraration.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "usePrimaryKey"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/usePrimaryKey",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "API.Option.usePrimaryKey",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/api\/option\/useprimarykey"
 },
 "https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data": {
   "identifier" : "https:\/\/developer.apple.com\/documentation\/foundation\/url_loading_system\/accessing_cached_data",
