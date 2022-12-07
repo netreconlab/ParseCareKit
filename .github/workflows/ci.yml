@@ -24,7 +24,7 @@ jobs:
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Prepare codecov
-      uses: sersoft-gmbh/swift-coverage-action@v2
+      uses: sersoft-gmbh/swift-coverage-action@v3
       id: coverage-files
       with:
         target-name-filter: '^ParseCareKit$'
