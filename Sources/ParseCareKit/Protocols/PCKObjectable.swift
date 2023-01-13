@@ -129,7 +129,7 @@ extension PCKObjectable {
         tags = other.tags
     }
 
-    /// Stamps all related entities with the current `logicalClock` value
+    // Stamps all related entities with the current `logicalClock` value
     /*mutating public func stampRelationalEntities() throws -> Self {
         guard let logicalClock = self.logicalClock else {
             throw ParseCareKitError.couldntUnwrapSelf

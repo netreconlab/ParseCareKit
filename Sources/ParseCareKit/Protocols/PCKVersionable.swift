@@ -247,7 +247,7 @@ extension PCKVersionable {
         return .init(and(queries: [startsBeforeEndOfQuery, noNextVersion]))
     }
 
-    private static func queryNoNextVersion(for date: Date)-> Query<Self> {
+    private static func queryNoNextVersion(for date: Date) -> Query<Self> {
         // Where empty array
         let query = Self.query(VersionableKey.nextVersionUUIDs == [String]())
 
