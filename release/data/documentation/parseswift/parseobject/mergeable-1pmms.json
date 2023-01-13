@@ -158,7 +158,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "mergeable",
+                  "code" : ".mergeable",
                   "type" : "codeVoice"
                 },
                 {

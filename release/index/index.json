@@ -10746,6 +10746,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -10841,6 +10850,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
@@ -11589,6 +11603,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcontact\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -11684,6 +11707,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcontact\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
@@ -12407,6 +12435,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -12502,6 +12539,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
@@ -13240,6 +13282,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -13335,6 +13386,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
@@ -14027,6 +14083,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckpatient\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -14122,6 +14187,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckpatient\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
@@ -14840,6 +14910,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pcktask\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -14935,6 +15014,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pcktask\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
@@ -16187,13 +16271,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)-2hvwx",
-                        "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)-9iop9",
+                        "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)-9iop9",
-                        "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
+                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)-2hvwx",
+                        "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
                         "type" : "method"
                       }
                     ],
@@ -17370,13 +17454,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
@@ -17393,13 +17477,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
@@ -17461,6 +17545,11 @@
               {
                 "path" : "\/documentation\/parseswift\/parseobject\/init()",
                 "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseobject\/init(objectid:)",
+                "title" : "init(objectId: String)",
                 "type" : "init"
               },
               {
@@ -17570,6 +17659,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/parseswift\/parseobject\/isdirtyforkey(_:)",
+                "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
+                "type" : "method"
+              },
+              {
                 "children" : [
                   {
                     "children" : [
@@ -17591,6 +17685,17 @@
                       }
                     ],
                     "title" : "ParseObject Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "path" : "\/documentation\/parseswift\/parserole\/merge(with:)",
+                        "title" : "func merge(with: Self) throws -> Self",
+                        "type" : "method"
+                      }
+                    ],
+                    "title" : "ParseRole Implementations",
                     "type" : "groupMarker"
                   },
                   {
@@ -17631,6 +17736,17 @@
                       }
                     ],
                     "title" : "ParseObject Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "path" : "\/documentation\/parseswift\/parserole\/mergeparse(with:)",
+                        "title" : "func mergeParse(with: Self) throws -> Self",
+                        "type" : "method"
+                      }
+                    ],
+                    "title" : "ParseRole Implementations",
                     "type" : "groupMarker"
                   },
                   {
@@ -25954,6 +26070,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsepushstatus\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
                     "title" : "Instance Properties",
                     "type" : "groupMarker"
                   },
@@ -26049,6 +26174,11 @@
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/hassameobjectid(as:)",
                     "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsepushstatus\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
                     "type" : "method"
                   },
                   {
