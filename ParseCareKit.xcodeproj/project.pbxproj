@@ -38,6 +38,7 @@
 		709D1819258699840002E772 /* ParseRemoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D1817258699840002E772 /* ParseRemoteDelegate.swift */; };
 		70B12C792904BA07002EE2FA /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70B12C782904BA07002EE2FA /* ParseSwift */; };
 		70B12C7B2904BA1E002EE2FA /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70B12C7A2904BA1E002EE2FA /* ParseSwift */; };
+		70B1CB022971A58E0009FDD7 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70B1CB012971A58E0009FDD7 /* CareKitStore */; };
 		70B326BE251EBE610028B229 /* PCKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B326BD251EBE610028B229 /* PCKUser.swift */; };
 		70B5578327A74113002C39D4 /* PCKRoleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578227A74113002C39D4 /* PCKRoleable.swift */; };
 		70B5578427A74113002C39D4 /* PCKRoleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578227A74113002C39D4 /* PCKRoleable.swift */; };
@@ -217,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B1CB022971A58E0009FDD7 /* CareKitStore in Frameworks */,
 				70B12C7B2904BA1E002EE2FA /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,6 +499,7 @@
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
 				70B12C7A2904BA1E002EE2FA /* ParseSwift */,
+				70B1CB012971A58E0009FDD7 /* CareKitStore */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -1179,6 +1182,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 70B12C772904BA07002EE2FA /* XCRemoteSwiftPackageReference "Parse-Swift" */;
 			productName = ParseSwift;
+		};
+		70B1CB012971A58E0009FDD7 /* CareKitStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70DF63DA29719D6E002FA5C5 /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKitStore;
 		};
 		70DF63DB29719D6E002FA5C5 /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
