@@ -38,6 +38,7 @@
 		709D1819258699840002E772 /* ParseRemoteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709D1817258699840002E772 /* ParseRemoteDelegate.swift */; };
 		70B12C792904BA07002EE2FA /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70B12C782904BA07002EE2FA /* ParseSwift */; };
 		70B12C7B2904BA1E002EE2FA /* ParseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 70B12C7A2904BA1E002EE2FA /* ParseSwift */; };
+		70B1CB022971A58E0009FDD7 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70B1CB012971A58E0009FDD7 /* CareKitStore */; };
 		70B326BE251EBE610028B229 /* PCKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B326BD251EBE610028B229 /* PCKUser.swift */; };
 		70B5578327A74113002C39D4 /* PCKRoleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578227A74113002C39D4 /* PCKRoleable.swift */; };
 		70B5578427A74113002C39D4 /* PCKRoleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578227A74113002C39D4 /* PCKRoleable.swift */; };
@@ -45,10 +46,9 @@
 		70B5578727A7439B002C39D4 /* PCKReadRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578527A7439B002C39D4 /* PCKReadRole.swift */; };
 		70B5578927A744A9002C39D4 /* PCKWriteRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578827A744A9002C39D4 /* PCKWriteRole.swift */; };
 		70B5578A27A744A9002C39D4 /* PCKWriteRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B5578827A744A9002C39D4 /* PCKWriteRole.swift */; };
-		70D41D7C28B453B500613510 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70D41D7B28B453B500613510 /* CareKitStore */; };
-		70D41D7E28B453C600613510 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70D41D7D28B453C600613510 /* CareKitStore */; };
 		70D5A29425E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5A29325E0D2D30036A8AD /* PCKHealthKitTask.swift */; };
 		70D5A29525E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5A29325E0D2D30036A8AD /* PCKHealthKitTask.swift */; };
+		70DF63DC29719D6E002FA5C5 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 70DF63DB29719D6E002FA5C5 /* CareKitStore */; };
 		70F2E181254EFC8000B2EA5C /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		70F2E182254EFC8000B2EA5C /* PCKPatient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5FB24561A28001B7AA3 /* PCKPatient.swift */; };
 		70F2E183254EFC8000B2EA5C /* PCKContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9119D5F824561A28001B7AA3 /* PCKContact.swift */; };
@@ -218,8 +218,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B1CB022971A58E0009FDD7 /* CareKitStore in Frameworks */,
 				70B12C7B2904BA1E002EE2FA /* ParseSwift in Frameworks */,
-				70D41D7E28B453C600613510 /* CareKitStore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,8 +227,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70DF63DC29719D6E002FA5C5 /* CareKitStore in Frameworks */,
 				70B12C792904BA07002EE2FA /* ParseSwift in Frameworks */,
-				70D41D7C28B453B500613510 /* CareKitStore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,8 +498,8 @@
 			);
 			name = "ParseCareKit-watchOS";
 			packageProductDependencies = (
-				70D41D7D28B453C600613510 /* CareKitStore */,
 				70B12C7A2904BA1E002EE2FA /* ParseSwift */,
+				70B1CB012971A58E0009FDD7 /* CareKitStore */,
 			);
 			productName = "ParseCareKit-watchOS";
 			productReference = 70F2E177254EFC6100B2EA5C /* ParseCareKit_watchOS.framework */;
@@ -522,8 +522,8 @@
 			);
 			name = ParseCareKit;
 			packageProductDependencies = (
-				70D41D7B28B453B500613510 /* CareKitStore */,
 				70B12C782904BA07002EE2FA /* ParseSwift */,
+				70DF63DB29719D6E002FA5C5 /* CareKitStore */,
 			);
 			productName = ParseCareKit;
 			productReference = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */;
@@ -565,8 +565,8 @@
 			);
 			mainGroup = 9119D5E1245618D7001B7AA3;
 			packageReferences = (
-				70D41D7A28B453B500613510 /* XCRemoteSwiftPackageReference "CareKit" */,
 				70B12C772904BA07002EE2FA /* XCRemoteSwiftPackageReference "Parse-Swift" */,
+				70DF63DA29719D6E002FA5C5 /* XCRemoteSwiftPackageReference "CareKit" */,
 			);
 			productRefGroup = 9119D5EC245618D7001B7AA3 /* Products */;
 			projectDirPath = "";
@@ -1159,15 +1159,15 @@
 			repositoryURL = "https://github.com/netreconlab/Parse-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.15.1;
+				minimumVersion = 4.16.2;
 			};
 		};
-		70D41D7A28B453B500613510 /* XCRemoteSwiftPackageReference "CareKit" */ = {
+		70DF63DA29719D6E002FA5C5 /* XCRemoteSwiftPackageReference "CareKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.1;
+				minimumVersion = 2.1.8;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1183,14 +1183,14 @@
 			package = 70B12C772904BA07002EE2FA /* XCRemoteSwiftPackageReference "Parse-Swift" */;
 			productName = ParseSwift;
 		};
-		70D41D7B28B453B500613510 /* CareKitStore */ = {
+		70B1CB012971A58E0009FDD7 /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70D41D7A28B453B500613510 /* XCRemoteSwiftPackageReference "CareKit" */;
+			package = 70DF63DA29719D6E002FA5C5 /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
 		};
-		70D41D7D28B453C600613510 /* CareKitStore */ = {
+		70DF63DB29719D6E002FA5C5 /* CareKitStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70D41D7A28B453B500613510 /* XCRemoteSwiftPackageReference "CareKit" */;
+			package = 70DF63DA29719D6E002FA5C5 /* XCRemoteSwiftPackageReference "CareKit" */;
 			productName = CareKitStore;
 		};
 /* End XCSwiftPackageProductDependency section */
