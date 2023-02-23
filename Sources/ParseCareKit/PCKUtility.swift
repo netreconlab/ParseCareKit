@@ -47,7 +47,7 @@ public class PCKUtility {
     public class func setupServer(fileName: String = "ParseCareKit",
                                   authentication: ((URLAuthenticationChallenge,
                                                     (URLSession.AuthChallengeDisposition,
-                                                      URLCredential?) -> Void) -> Void)? = nil) {
+                                                      URLCredential?) -> Void) -> Void)? = nil) throws {
         var plistConfiguration: [String: AnyObject]
         var clientKey: String?
         var liveQueryURL: URL?
@@ -81,15 +81,15 @@ public class PCKUtility {
             deleteKeychainIfNeeded = deleteKeychain
         }
 
-        ParseSwift.initialize(applicationId: appID,
-                              clientKey: clientKey,
-                              serverURL: serverURL,
-                              liveQueryServerURL: liveQueryURL,
-                              requiringCustomObjectIds: true,
-                              usingTransactions: useTransactions,
-                              usingPostForQuery: true,
-                              deletingKeychainIfNeeded: deleteKeychainIfNeeded,
-                              authentication: authentication)
+        try ParseSwift.initialize(applicationId: appID,
+                                  clientKey: clientKey,
+                                  serverURL: serverURL,
+                                  liveQueryServerURL: liveQueryURL,
+                                  requiringCustomObjectIds: true,
+                                  usingTransactions: useTransactions,
+                                  usingPostForQuery: true,
+                                  deletingKeychainIfNeeded: deleteKeychainIfNeeded,
+                                  authentication: authentication)
     }
 
     /**

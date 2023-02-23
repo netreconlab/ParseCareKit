@@ -34,7 +34,7 @@ struct MockURLResponse {
             let encoded = try JSONEncoder().encode(string)
             self.init(data: encoded, statusCode: statusCode, delay: delay, headerFields: headerFields)
         } catch {
-            throw ParseError(code: .unknownError, message: "unable to convert string to data")
+            throw ParseError(code: .otherCause, message: "unable to convert string to data")
         }
     }
 

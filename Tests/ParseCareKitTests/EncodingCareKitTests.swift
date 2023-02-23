@@ -85,13 +85,13 @@ class ParseCareKitTests: XCTestCase {
             XCTFail("Should create valid URL")
             return
         }
-        ParseSwift.initialize(applicationId: "applicationId",
-                              clientKey: "clientKey",
-                              primaryKey: "primaryKey",
-                              serverURL: url,
-                              requiringCustomObjectIds: true,
-                              usingPostForQuery: true,
-                              testing: true)
+        try ParseSwift.initialize(applicationId: "applicationId",
+                                  clientKey: "clientKey",
+                                  primaryKey: "primaryKey",
+                                  serverURL: url,
+                                  requiringCustomObjectIds: true,
+                                  usingPostForQuery: true,
+                                  testing: true)
         do {
             _ = try userLogin()
             parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,

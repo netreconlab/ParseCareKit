@@ -255,11 +255,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
         Task {
             do {
-                guard try await ParseHealth.check().contains("ok") else {
+                let status = try await ParseHealth.check()
+                guard status == .ok else {
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pullRevisions.error("Server health is not \"ok\"")
+                        Logger.pullRevisions.error("Server health is: \(status.rawValue)")
                     } else {
-                        os_log("Server health is not \"ok\"", log: .pullRevisions, type: .error)
+                        os_log("Server health is not ok", log: .pullRevisions, type: .error)
                     }
                     completion(ParseCareKitError.parseHealthError)
                     return
@@ -425,9 +426,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
         Task {
             do {
-                guard try await ParseHealth.check().contains("ok") else {
+                let status = try await ParseHealth.check()
+                guard status == .ok else {
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pushRevisions.error("Server health is not \"ok\"")
+                        Logger.pushRevisions.error("Server health is: \(status.rawValue)")
                     } else {
                         os_log("Server health is not \"ok\"", log: .pushRevisions, type: .error)
                     }
