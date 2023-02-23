@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Maximum number of times to try to connect to Parse Server.",
+      "text" : "Maximum number of times to try to connect to a Parse Server.",
       "type" : "text"
     },
     {
@@ -173,7 +173,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/maxConnectionAttempts": {
   "abstract" : [
     {
-      "text" : "Maximum number of times to try to connect to Parse Server.",
+      "text" : "Maximum number of times to try to connect to a Parse Server.",
       "type" : "text"
     },
     {

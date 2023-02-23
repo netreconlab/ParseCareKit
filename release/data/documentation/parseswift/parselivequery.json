@@ -403,13 +403,6 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/defaultClient"
       ],
       "title" : "Type Properties"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/getDefault()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/setDefault(_:)"
-      ],
-      "title" : "Type Methods"
     }
   ],
   "variants" : [
@@ -783,64 +776,6 @@
   "title" : "defaultClient",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parselivequery\/defaultclient"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/getDefault()": {
-  "abstract" : [
-    {
-      "text" : "Get the default ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseLiveQuery",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " client for all LiveQuery connections.",
-      "type" : "text"
-    }
-  ],
-  "deprecated" : true,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "class"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "getDefault"
-    },
-    {
-      "kind" : "text",
-      "text" : "() -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:@M@ParseSwift@objc(cs)ParseLiveQuery",
-      "text" : "ParseLiveQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/getDefault()",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "getDefault()",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parselivequery\/getdefault()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/init(serverURL:isDefault:notificationQueue:)": {
   "abstract" : [
@@ -1734,64 +1669,6 @@
   "title" : "sendPingPublisher()",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parselivequery\/sendpingpublisher()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/setDefault(_:)": {
-  "abstract" : [
-    {
-      "text" : "Set a specific ParseLiveQuery client to be the default for all ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseLiveQuery",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " connections.",
-      "type" : "text"
-    }
-  ],
-  "deprecated" : true,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "class"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "setDefault"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:@M@ParseSwift@objc(cs)ParseLiveQuery",
-      "text" : "ParseLiveQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/setDefault(_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "setDefault(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parselivequery\/setdefault(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/subscribe(_:)": {
   "abstract" : [

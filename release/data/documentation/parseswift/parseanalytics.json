@@ -115,7 +115,6 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAnalytics\/at",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAnalytics\/date",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAnalytics\/dimensions",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAnalytics\/name"
@@ -293,56 +292,6 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseanalytics\/equatable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAnalytics/at": {
-  "abstract" : [
-    {
-      "text" : "Explicitly set the time associated with a given event. If not provided the server",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "time will be used.",
-      "type" : "text"
-    }
-  ],
-  "deprecated" : true,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "at"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10Foundation4DateV",
-      "text" : "Date"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAnalytics\/at",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "at",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseanalytics\/at"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAnalytics/date": {
   "abstract" : [
@@ -1506,7 +1455,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : "], "
     },
     {
       "kind" : "externalParam",
@@ -1664,7 +1613,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : "], "
     },
     {
       "kind" : "externalParam",
@@ -2036,7 +1985,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : "], "
     },
     {
       "kind" : "externalParam",

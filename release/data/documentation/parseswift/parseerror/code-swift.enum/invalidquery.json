@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "You tried to find values matching a datatype that does not",
+      "text" : "There is a problem with the parameters used to",
       "type" : "text"
     },
     {
@@ -9,7 +9,23 @@
       "type" : "text"
     },
     {
-      "text" : "support exact database matching, like an array or a dictionary.",
+      "text" : "construct this query. This could be an invalid field name",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "or an invalid field type for a specific constraint. Check",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "error message for more details.",
       "type" : "text"
     }
   ],
@@ -214,7 +230,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/Code-swift.enum/invalidQuery": {
   "abstract" : [
     {
-      "text" : "You tried to find values matching a datatype that does not",
+      "text" : "There is a problem with the parameters used to",
       "type" : "text"
     },
     {
@@ -222,7 +238,23 @@
       "type" : "text"
     },
     {
-      "text" : "support exact database matching, like an array or a dictionary.",
+      "text" : "construct this query. This could be an invalid field name",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "or an invalid field type for a specific constraint. Check",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "error message for more details.",
       "type" : "text"
     }
   ],

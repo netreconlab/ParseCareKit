@@ -114,12 +114,18 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-4x9n3",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-q7uf",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-7gul1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-7id9f",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:callbackQueue:allowIntermediateResponses:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/checkPublisher(options:)"
       ],
       "title" : "Type Methods"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/Status"
+      ],
+      "title" : "Enumerations"
     },
     {
       "generated" : true,
@@ -242,7 +248,41 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehealth\/equatable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/check(options:)-4x9n3": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/Status": {
+  "abstract" : [
+    {
+      "text" : "The health status value of a Parse Server.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Status"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/Status",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Status"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseHealth.Status",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehealth\/status"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/check(options:)-7gul1": {
   "abstract" : [
     {
       "text" : "Calls the health check function ",
@@ -331,18 +371,18 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
+      "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+      "text" : "Status"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-4x9n3",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-7gul1",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "check(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsehealth\/check(options:)-4x9n3"
+  "url" : "\/documentation\/parseswift\/parsehealth\/check(options:)-7gul1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/check(options:)-q7uf": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/check(options:)-7id9f": {
   "abstract" : [
     {
       "text" : "Calls the health check function ",
@@ -358,7 +398,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " and returns a result of it is execution.",
+      "text" : " and returns a result of its execution.",
       "type" : "text"
     }
   ],
@@ -423,18 +463,18 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
+      "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+      "text" : "Status"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-q7uf",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:)-7id9f",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "check(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsehealth\/check(options:)-q7uf"
+  "url" : "\/documentation\/parseswift\/parsehealth\/check(options:)-7id9f"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/check(options:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/check(options:callbackQueue:allowIntermediateResponses:completion:)": {
   "abstract" : [
     {
       "text" : "Calls the health check function ",
@@ -450,7 +490,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " and returns a result of it is execution.",
+      "text" : " and returns the result of its execution.",
       "type" : "text"
     }
   ],
@@ -524,6 +564,23 @@
     },
     {
       "kind" : "externalParam",
+      "text" : "allowIntermediateResponses"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
       "text" : "completion"
     },
     {
@@ -541,8 +598,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
+      "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+      "text" : "Status"
     },
     {
       "kind" : "text",
@@ -567,12 +624,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/check(options:callbackQueue:allowIntermediateResponses:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "check(options:callbackQueue:completion:)",
+  "title" : "check(options:callbackQueue:allowIntermediateResponses:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsehealth\/check(options:callbackqueue:completion:)"
+  "url" : "\/documentation\/parseswift\/parsehealth\/check(options:callbackqueue:allowintermediateresponses:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/checkPublisher(options:)": {
   "abstract" : [
@@ -647,8 +704,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:7Combine6FutureC",
-      "text" : "Future"
+      "preciseIdentifier" : "s:7Combine12AnyPublisherV",
+      "text" : "AnyPublisher"
     },
     {
       "kind" : "text",
@@ -656,8 +713,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
+      "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+      "text" : "Status"
     },
     {
       "kind" : "text",

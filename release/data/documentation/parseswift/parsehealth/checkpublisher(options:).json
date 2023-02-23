@@ -33,7 +33,7 @@
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "ParseSwift",
-    "externalID" : "s:10ParseSwift0A6HealthV14checkPublisher7options7Combine6FutureCySSAA0A5ErrorVGShyAA3APIV6OptionOG_tFZ",
+    "externalID" : "s:10ParseSwift0A6HealthV14checkPublisher7options7Combine03AnyE0VyAC6StatusOAA0A5ErrorVGShyAA3APIV6OptionOG_tFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -87,8 +87,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:7Combine6FutureC",
-        "text" : "Future"
+        "preciseIdentifier" : "s:7Combine12AnyPublisherV",
+        "text" : "AnyPublisher"
       },
       {
         "kind" : "text",
@@ -96,8 +96,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:SS",
-        "text" : "String"
+        "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+        "text" : "Status"
       },
       {
         "kind" : "text",
@@ -188,17 +188,18 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:7Combine6FutureC",
-              "text" : "Future"
+              "preciseIdentifier" : "s:7Combine12AnyPublisherV",
+              "text" : "AnyPublisher"
             },
             {
               "kind" : "text",
               "text" : "<"
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/Status",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:SS",
-              "text" : "String"
+              "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+              "text" : "Status"
             },
             {
               "kind" : "text",
@@ -432,6 +433,40 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehealth"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/Status": {
+  "abstract" : [
+    {
+      "text" : "The health status value of a Parse Server.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Status"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHealth\/Status",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Status"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseHealth.Status",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehealth\/status"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHealth/checkPublisher(options:)": {
   "abstract" : [
     {
@@ -505,8 +540,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:7Combine6FutureC",
-      "text" : "Future"
+      "preciseIdentifier" : "s:7Combine12AnyPublisherV",
+      "text" : "AnyPublisher"
     },
     {
       "kind" : "text",
@@ -514,8 +549,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
+      "preciseIdentifier" : "s:10ParseSwift0A6HealthV6StatusO",
+      "text" : "Status"
     },
     {
       "kind" : "text",

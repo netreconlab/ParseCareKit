@@ -230,10 +230,10 @@
     },
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/functionName",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/headers",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/installationId",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/ipAddress",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/masterKey",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/parameters",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/primaryKey",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/user"
@@ -451,6 +451,47 @@
   "title" : "ParseHookFunctionRequest.UsertType",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehookfunctionrequest\/userttype"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunctionRequest/functionName": {
+  "abstract" : [
+    {
+      "text" : "The name of Parse Hook Function.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "functionName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/functionName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "functionName",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehookfunctionrequest\/functionname"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunctionRequest/getContext()": {
   "abstract" : [
@@ -844,45 +885,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehookfunctionrequest\/ipaddress"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunctionRequest/masterKey": {
-  "abstract" : [
-
-  ],
-  "deprecated" : true,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "masterKey"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunctionRequest\/masterKey",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "masterKey",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsehookfunctionrequest\/masterkey"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunctionRequest/parameters": {
   "abstract" : [
     {
@@ -945,7 +947,7 @@
     {
       "inlineContent" : [
         {
-          "text" : "masterKey",
+          "text" : "primaryKey",
           "type" : "text"
         }
       ],
@@ -1153,15 +1155,7 @@
       "type" : "text"
     },
     {
-      "text" : "can decode requests when ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseHookFunctionable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " functions are called.",
+      "text" : "can decode requests.",
       "type" : "text"
     }
   ],

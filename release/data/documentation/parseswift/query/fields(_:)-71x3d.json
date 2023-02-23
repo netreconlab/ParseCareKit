@@ -1,15 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "A list of fields to receive updates on when the ",
+      "text" : "A list of select keys to receive for a ",
       "type" : "text"
     },
     {
-      "code" : "Query",
+      "code" : "ParseObject",
       "type" : "codeVoice"
     },
     {
-      "text" : " is used as a",
+      "text" : " whenever an update occurs for a",
       "type" : "text"
     },
     {
@@ -199,7 +199,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of fields to receive back instead of the whole ",
+                  "text" : "An array of keys to receive back instead of the whole ",
                   "type" : "text"
                 },
                 {
@@ -371,8 +371,8 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "Warning",
-          "style" : "warning",
+          "name" : "Important",
+          "style" : "important",
           "type" : "aside"
         }
       ],
@@ -465,15 +465,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Query/fields(_:)-71x3d": {
   "abstract" : [
     {
-      "text" : "A list of fields to receive updates on when the ",
+      "text" : "A list of select keys to receive for a ",
       "type" : "text"
     },
     {
-      "code" : "Query",
+      "code" : "ParseObject",
       "type" : "codeVoice"
     },
     {
-      "text" : " is used as a",
+      "text" : " whenever an update occurs for a",
       "type" : "text"
     },
     {

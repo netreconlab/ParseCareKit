@@ -237,20 +237,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/QueryWhere": {
   "abstract" : [
     {
-      "text" : "The ",
-      "type" : "text"
-    },
-    {
-      "inlineContent" : [
-        {
-          "text" : "where",
-          "type" : "text"
-        }
-      ],
-      "type" : "strong"
-    },
-    {
-      "text" : " of a ",
+      "text" : "The specified criteria to constrain a ",
       "type" : "text"
     },
     {

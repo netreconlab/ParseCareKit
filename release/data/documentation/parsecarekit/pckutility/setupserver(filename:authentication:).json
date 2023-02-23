@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtFZ",
+    "externalID" : "s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -122,7 +122,11 @@
       },
       {
         "kind" : "text",
-        "text" : ")?)"
+        "text" : ")?) "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
       }
     ],
     "modules" : [
@@ -247,7 +251,11 @@
             },
             {
               "kind" : "text",
-              "text" : ")? = nil)"
+              "text" : ")? = nil) "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
             }
           ]
         }
@@ -640,7 +648,11 @@
     },
     {
       "kind" : "text",
-      "text" : ")?)"
+      "text" : ")?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setupServer(fileName:authentication:)",

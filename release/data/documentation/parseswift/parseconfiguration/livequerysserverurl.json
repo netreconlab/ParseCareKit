@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The live query server URL to connect to Parse Server.",
+      "text" : "The live query server URL to connect to a Parse LiveQuery Server.",
       "type" : "text"
     }
   ],
@@ -169,7 +169,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/liveQuerysServerURL": {
   "abstract" : [
     {
-      "text" : "The live query server URL to connect to Parse Server.",
+      "text" : "The live query server URL to connect to a Parse LiveQuery Server.",
       "type" : "text"
     }
   ],

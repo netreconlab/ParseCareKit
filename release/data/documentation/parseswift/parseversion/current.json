@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift0A7VersionV7currentSSSgvpZ",
+    "externalID" : "s:10ParseSwift0A7VersionV7currentACSgvpZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -43,12 +43,7 @@
       },
       {
         "kind" : "text",
-        "text" : ": "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:SS",
-        "text" : "String"
+        "text" : ": `Self`"
       },
       {
         "kind" : "text",
@@ -98,12 +93,7 @@
             },
             {
               "kind" : "text",
-              "text" : ": "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:SS",
-              "text" : "String"
+              "text" : ": `Self`"
             },
             {
               "kind" : "text",
@@ -240,12 +230,7 @@
     },
     {
       "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
+      "text" : ": `Self`"
     },
     {
       "kind" : "text",

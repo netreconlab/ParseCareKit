@@ -100,6 +100,30 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "An error of ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseError",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " type.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "ParseSwift uses a different Keychain. After migration, the iOS Objective-C SDK Keychain is no longer needed.",
                   "type" : "text"
                 }

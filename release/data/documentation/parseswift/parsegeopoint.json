@@ -153,9 +153,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInKilometers(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInMiles(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInRadians(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D(_:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/distanceInRadians(_:)"
       ],
       "title" : "Instance Methods"
     },
@@ -862,69 +860,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocation"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocation(_:)": {
-  "abstract" : [
-    {
-      "text" : "A ",
-      "type" : "text"
-    },
-    {
-      "code" : "CLLocation",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance created from the current ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseGeoPoint",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
-      "type" : "text"
-    }
-  ],
-  "deprecated" : true,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "toCLLocation"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8GeoPointV",
-      "text" : "ParseGeoPoint"
-    },
-    {
-      "kind" : "text",
-      "text" : "?) -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:objc(cs)CLLocation",
-      "text" : "CLLocation"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocation(_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "toCLLocation(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocation(_:)"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocationCoordinate2D": {
   "abstract" : [
     {
@@ -977,69 +912,6 @@
   "title" : "toCLLocationCoordinate2D",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocationcoordinate2d"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseGeoPoint/toCLLocationCoordinate2D(_:)": {
-  "abstract" : [
-    {
-      "text" : "A ",
-      "type" : "text"
-    },
-    {
-      "code" : "CLLocationCoordinate2D",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance created from the current ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseGeoPoint",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
-      "type" : "text"
-    }
-  ],
-  "deprecated" : true,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "toCLLocationCoordinate2D"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8GeoPointV",
-      "text" : "ParseGeoPoint"
-    },
-    {
-      "kind" : "text",
-      "text" : "?) -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:@S@CLLocationCoordinate2D",
-      "text" : "CLLocationCoordinate2D"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseGeoPoint\/toCLLocationCoordinate2D(_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "toCLLocationCoordinate2D(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsegeopoint\/tocllocationcoordinate2d(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseTypeable": {
   "abstract" : [
