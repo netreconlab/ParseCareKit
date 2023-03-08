@@ -169,7 +169,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 self.clockSubscription == nil else {
                 return
             }
-            
+
             do {
                 let subscription = try await self.clockQuery.subscribeCallback()
                 self.clockSubscription = subscription
