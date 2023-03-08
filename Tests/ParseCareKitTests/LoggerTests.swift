@@ -13,11 +13,9 @@ import os.log
 
 class LoggerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-    }
+    override func setUpWithError() throws {}
 
-    override func tearDownWithError() throws {
-    }
+    override func tearDownWithError() throws {}
 
     func testCarePlan() throws {
         if #available(iOS 14.0, watchOS 7.0, *) {

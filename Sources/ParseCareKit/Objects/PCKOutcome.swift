@@ -437,9 +437,9 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         return query
     }
 
-    func findOutcomes() throws -> [PCKOutcome] {
+    func findOutcomes() async throws -> [PCKOutcome] {
         let query = Self.queryNotDeleted()
-        return try query.find()
+        return try await query.find()
     }
 
     public func findOutcomesInBackground(completion: @escaping([PCKOutcome]?, Error?) -> Void) {

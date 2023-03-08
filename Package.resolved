@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/netreconlab/Parse-Swift.git",
         "state": {
           "branch": null,
-          "revision": "fd285005023271e615062cfad1d92261ee55fe4b",
-          "version": "5.0.0-beta.9"
+          "revision": "6fca92cb05356c88435ed186c20225129a82ffd5",
+          "version": "5.0.0"
         }
       }
     ]

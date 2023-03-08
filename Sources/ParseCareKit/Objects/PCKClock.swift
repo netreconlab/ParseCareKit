@@ -114,10 +114,7 @@ struct PCKClock: ParseObject {
     }
 
     func setupACLWithRoles() async throws -> Self {
-        guard let currentUser = PCKUser.current else {
-            throw ParseCareKitError.errorString("No user is signed in")
-        }
-
+        let currentUser = try await PCKUser.current()
         let writeRole = try await setupWriteRole(currentUser)
         let readRole = try await setupReadRole(currentUser)
         let writeRoleName = try PCKWriteRole.roleName(owner: currentUser)
