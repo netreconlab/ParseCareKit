@@ -62,8 +62,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     */
     public init(uuid: UUID,
                 auto: Bool,
-                subscribeToServerUpdates: Bool,
-                defaultACL: ParseACL? = nil) throws {
+                subscribeToServerUpdates: Bool) throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
@@ -83,21 +82,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
-        - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
-        objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
-        no public read/write access. This `defaultACL` is not the same as `ParseACL.defaultACL`. If you want the
-        the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`, you need to provide
-        `ParseACL.defaultACL`.
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable],
-                            subscribeToServerUpdates: Bool,
-                            defaultACL: ParseACL? = nil) throws {
+                            subscribeToServerUpdates: Bool) throws {
         try self.init(uuid: uuid,
                       auto: auto,
-                      subscribeToServerUpdates: subscribeToServerUpdates,
-                      defaultACL: defaultACL)
+                      subscribeToServerUpdates: subscribeToServerUpdates)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
@@ -113,22 +105,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - customClasses: Add custom classes to synchroniz by passing in the respective Key/Value pair.
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
-        - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
-        objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
-        no public read/write access. This `defaultACL` is not the same as `ParseACL.defaultACL`. If you want the
-        the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`, you need to provide
-        `ParseACL.defaultACL`.
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]? = nil,
                             customClasses: [String: PCKSynchronizable],
-                            subscribeToServerUpdates: Bool,
-                            defaultACL: ParseACL? = nil) throws {
+                            subscribeToServerUpdates: Bool) throws {
         try self.init(uuid: uuid,
                       auto: auto,
-                      subscribeToServerUpdates: subscribeToServerUpdates,
-                      defaultACL: defaultACL)
+                      subscribeToServerUpdates: subscribeToServerUpdates)
         if replacePCKStoreClasses != nil {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
                 .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
