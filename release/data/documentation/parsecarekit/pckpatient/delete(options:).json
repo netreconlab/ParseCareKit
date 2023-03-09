@@ -29,7 +29,7 @@
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "ParseSwift",
-    "externalID" : "s:10ParseSwift0A6ObjectPAAE6delete7optionsyShyAA3APIV6OptionOG_tKF::SYNTHESIZED::s:12ParseCareKit10PCKPatientV",
+    "externalID" : "s:10ParseSwift0A6ObjectPAAE6delete7optionsyShyAA3APIV6OptionOG_tYaKF::SYNTHESIZED::s:12ParseCareKit10PCKPatientV",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -72,6 +72,14 @@
       {
         "kind" : "text",
         "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
       },
       {
         "kind" : "keyword",
@@ -142,6 +150,14 @@
             {
               "kind" : "text",
               "text" : " = []) "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "async"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
             },
             {
               "kind" : "keyword",
@@ -304,6 +320,14 @@
     {
       "kind" : "text",
       "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
     },
     {
       "kind" : "keyword",

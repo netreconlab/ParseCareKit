@@ -34,7 +34,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Pointer\/fetch()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Pointer\/fetch(includeKeys:options:)-1otrx"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Pointer\/fetch(includeKeys:options:)"
       ],
       "title" : "Instance Methods"
     }
@@ -109,6 +109,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     },
     {
@@ -128,7 +136,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/pointer\/fetch()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Pointer/fetch(includeKeys:options:)-1otrx": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Pointer/fetch(includeKeys:options:)": {
   "abstract" : [
     {
       "text" : "Fetches the ",
@@ -145,7 +153,7 @@
     {
       "inlineContent" : [
         {
-          "text" : "synchronously",
+          "text" : "aynchronously",
           "type" : "text"
         }
       ],
@@ -250,6 +258,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     },
     {
@@ -262,12 +278,12 @@
       "text" : "T"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Pointer\/fetch(includeKeys:options:)-1otrx",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Pointer\/fetch(includeKeys:options:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "fetch(includeKeys:options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/pointer\/fetch(includekeys:options:)-1otrx"
+  "url" : "\/documentation\/parseswift\/pointer\/fetch(includekeys:options:)"
 }
 }
 }

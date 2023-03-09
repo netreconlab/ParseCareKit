@@ -18,7 +18,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSb0A5Swift0aO0VSgtKcfc",
+    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA17PCKSynchronizable_pGSb0A5Swift0aO0VSgtYaKcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -121,6 +121,14 @@
       {
         "kind" : "text",
         "text" : "?) "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
       },
       {
         "kind" : "keyword",
@@ -263,6 +271,14 @@
             },
             {
               "kind" : "keyword",
+              "text" : "async"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
               "text" : "throws"
             }
           ]
@@ -386,7 +402,31 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "no public read\/write access. This ",
+                  "text" : "no public read\/write access.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "defaultACL"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "This ",
                   "type" : "text"
                 },
                 {
@@ -402,15 +442,23 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : ". If you want the",
+                  "text" : ".",
                   "type" : "text"
-                },
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Important",
+          "style" : "important",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
                 {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "the ",
+                  "text" : "If you want the the ",
                   "type" : "text"
                 },
                 {
@@ -434,11 +482,15 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : ", you need to provide",
+                  "text" : ",",
                   "type" : "text"
                 },
                 {
                   "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "you need to provide ",
                   "type" : "text"
                 },
                 {
@@ -453,9 +505,12 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "defaultACL"
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
         }
-      ]
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -798,6 +853,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     }
   ],
@@ -920,6 +983,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     }
   ],
@@ -1013,6 +1084,14 @@
     {
       "kind" : "text",
       "text" : "?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
     },
     {
       "kind" : "keyword",

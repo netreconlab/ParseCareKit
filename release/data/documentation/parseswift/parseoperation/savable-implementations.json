@@ -34,7 +34,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperation\/save()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperation\/save(options:)-6qs6f"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperation\/save(options:)"
       ],
       "title" : "Instance Methods"
     }
@@ -153,6 +153,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     },
     {
@@ -172,7 +180,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseoperation\/save()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperation/save(options:)-6qs6f": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperation/save(options:)": {
   "abstract" : [
     {
       "text" : "Saves the operations on the ",
@@ -189,14 +197,14 @@
     {
       "inlineContent" : [
         {
-          "text" : "synchronously",
+          "text" : "asynchronously",
           "type" : "text"
         }
       ],
       "type" : "emphasis"
     },
     {
-      "text" : " and throws an error if there is an issue.",
+      "text" : " and executes the given callback block.",
       "type" : "text"
     }
   ],
@@ -277,6 +285,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     },
     {
@@ -289,12 +305,12 @@
       "text" : "T"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperation\/save(options:)-6qs6f",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperation\/save(options:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "save(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseoperation\/save(options:)-6qs6f"
+  "url" : "\/documentation\/parseswift\/parseoperation\/save(options:)"
 }
 }
 }

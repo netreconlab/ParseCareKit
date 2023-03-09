@@ -18,7 +18,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_S2b0A5Swift0aL0VSgtKcfc",
+    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_S2b0A5Swift0aL0VSgtYaKcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -95,6 +95,14 @@
       {
         "kind" : "text",
         "text" : "?) "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
       },
       {
         "kind" : "keyword",
@@ -198,6 +206,14 @@
             {
               "kind" : "text",
               "text" : "? = nil) "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "async"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
             },
             {
               "kind" : "keyword",
@@ -310,7 +326,21 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "no public read\/write access. This ",
+                  "text" : "no public read\/write access.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "defaultACL"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "This ",
                   "type" : "text"
                 },
                 {
@@ -326,15 +356,21 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : ". If you want the",
+                  "text" : ".",
                   "type" : "text"
-                },
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "important"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
                 {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "the ",
+                  "text" : "If you want the the ",
                   "type" : "text"
                 },
                 {
@@ -358,11 +394,15 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : ", you need to provide",
+                  "text" : ",",
                   "type" : "text"
                 },
                 {
                   "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "you need to provide ",
                   "type" : "text"
                 },
                 {
@@ -377,7 +417,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "defaultACL"
+          "name" : "note"
         }
       ]
     }
@@ -566,6 +606,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     }
   ],
@@ -688,6 +736,14 @@
     },
     {
       "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
       "text" : "throws"
     }
   ],
@@ -781,6 +837,14 @@
     {
       "kind" : "text",
       "text" : "?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
     },
     {
       "kind" : "keyword",

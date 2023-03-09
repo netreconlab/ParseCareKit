@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtKFZ",
+    "externalID" : "s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtYaKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -123,6 +123,14 @@
       {
         "kind" : "text",
         "text" : ")?) "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
       },
       {
         "kind" : "keyword",
@@ -252,6 +260,14 @@
             {
               "kind" : "text",
               "text" : ")? = nil) "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "async"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
             },
             {
               "kind" : "keyword",
@@ -649,6 +665,14 @@
     {
       "kind" : "text",
       "text" : ")?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
     },
     {
       "kind" : "keyword",

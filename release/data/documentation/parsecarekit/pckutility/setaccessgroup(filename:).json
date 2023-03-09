@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKUtilityC14setAccessGroup8fileNameySS_tKFZ",
+    "externalID" : "s:12ParseCareKit10PCKUtilityC14setAccessGroup8fileNameySS_tYaKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -61,6 +61,14 @@
       {
         "kind" : "text",
         "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
       },
       {
         "kind" : "keyword",
@@ -128,6 +136,14 @@
             {
               "kind" : "text",
               "text" : " = \"ParseCareKit\") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "async"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
             },
             {
               "kind" : "keyword",
@@ -348,6 +364,14 @@
     {
       "kind" : "text",
       "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
     },
     {
       "kind" : "keyword",

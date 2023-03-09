@@ -9684,17 +9684,17 @@
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, subscribeToServerUpdates: Bool, defaultACL: ParseACL?) throws",
+            "title" : "init(uuid: UUID, auto: Bool, subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : PCKSynchronizable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) throws",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : PCKSynchronizable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : PCKSynchronizable]?, customClasses: [String : PCKSynchronizable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) throws",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : PCKSynchronizable]?, customClasses: [String : PCKSynchronizable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
@@ -9724,12 +9724,12 @@
               },
               {
                 "path" : "\/documentation\/parsecarekit\/pckutility\/setaccessgroup(filename:)",
-                "title" : "class func setAccessGroup(fileName: String) throws",
+                "title" : "class func setAccessGroup(fileName: String) async throws",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parsecarekit\/pckutility\/setupserver(filename:authentication:)",
-                "title" : "class func setupServer(fileName: String, authentication: ((URLAuthenticationChallenge, (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)?) throws",
+                "title" : "class func setupServer(fileName: String, authentication: ((URLAuthenticationChallenge, (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)?) async throws",
                 "type" : "method"
               }
             ],
@@ -10485,7 +10485,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/delete()",
-                    "title" : "func delete() throws -> Self.DeletingType",
+                    "title" : "func delete() async throws -> Self.DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -10538,7 +10538,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/fetch()",
-                    "title" : "func fetch() throws -> Self.FetchingType",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -10587,6 +10587,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -10689,6 +10694,11 @@
                     "type" : "method"
                   },
                   {
+                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/find(for:options:)",
+                    "title" : "func find(for: Date, options: API.Options) async throws -> [Self]",
+                    "type" : "method"
+                  },
+                  {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/find(for:options:callbackqueue:completion:)",
                     "title" : "func find(for: Date, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[Self], ParseError>) -> Void)",
                     "type" : "method"
@@ -10696,6 +10706,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/findpublisher(for:options:)",
                     "title" : "func findPublisher(for: Date, options: API.Options) -> Future<[Self], ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -10799,7 +10814,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -10814,7 +10829,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -10919,17 +10934,12 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                     "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -11008,7 +11018,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/save()",
-                    "title" : "func save() throws -> Self.SavingType",
+                    "title" : "func save() async throws -> Self.SavingType",
                     "type" : "method"
                   }
                 ],
@@ -11332,7 +11342,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/delete()",
-                    "title" : "func delete() throws -> Self.DeletingType",
+                    "title" : "func delete() async throws -> Self.DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -11385,7 +11395,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/fetch()",
-                    "title" : "func fetch() throws -> Self.FetchingType",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -11434,6 +11444,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcontact\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -11536,6 +11551,11 @@
                     "type" : "method"
                   },
                   {
+                    "path" : "\/documentation\/parsecarekit\/pckcontact\/find(for:options:)",
+                    "title" : "func find(for: Date, options: API.Options) async throws -> [Self]",
+                    "type" : "method"
+                  },
+                  {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/find(for:options:callbackqueue:completion:)",
                     "title" : "func find(for: Date, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[Self], ParseError>) -> Void)",
                     "type" : "method"
@@ -11543,6 +11563,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/findpublisher(for:options:)",
                     "title" : "func findPublisher(for: Date, options: API.Options) -> Future<[Self], ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcontact\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -11646,7 +11671,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -11661,7 +11686,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -11766,17 +11791,12 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                     "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckcontact\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -11855,7 +11875,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/save()",
-                    "title" : "func save() throws -> Self.SavingType",
+                    "title" : "func save() async throws -> Self.SavingType",
                     "type" : "method"
                   }
                 ],
@@ -12154,7 +12174,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/delete()",
-                    "title" : "func delete() throws -> Self.DeletingType",
+                    "title" : "func delete() async throws -> Self.DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -12207,7 +12227,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/fetch()",
-                    "title" : "func fetch() throws -> Self.FetchingType",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -12256,6 +12276,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -12358,6 +12383,11 @@
                     "type" : "method"
                   },
                   {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/find(for:options:)",
+                    "title" : "func find(for: Date, options: API.Options) async throws -> [Self]",
+                    "type" : "method"
+                  },
+                  {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/find(for:options:callbackqueue:completion:)",
                     "title" : "func find(for: Date, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[Self], ParseError>) -> Void)",
                     "type" : "method"
@@ -12365,6 +12395,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/findpublisher(for:options:)",
                     "title" : "func findPublisher(for: Date, options: API.Options) -> Future<[Self], ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -12468,7 +12503,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -12483,7 +12518,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -12588,17 +12623,12 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                     "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -12677,7 +12707,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save()",
-                    "title" : "func save() throws -> Self.SavingType",
+                    "title" : "func save() async throws -> Self.SavingType",
                     "type" : "method"
                   }
                 ],
@@ -12991,7 +13021,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/delete()",
-                    "title" : "func delete() throws -> Self.DeletingType",
+                    "title" : "func delete() async throws -> Self.DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -13044,7 +13074,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/fetch()",
-                    "title" : "func fetch() throws -> Self.FetchingType",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -13093,6 +13123,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -13195,6 +13230,11 @@
                     "type" : "method"
                   },
                   {
+                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/find(for:options:)",
+                    "title" : "func find(for: Date, options: API.Options) async throws -> [Self]",
+                    "type" : "method"
+                  },
+                  {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/find(for:options:callbackqueue:completion:)",
                     "title" : "func find(for: Date, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[Self], ParseError>) -> Void)",
                     "type" : "method"
@@ -13202,6 +13242,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/findpublisher(for:options:)",
                     "title" : "func findPublisher(for: Date, options: API.Options) -> Future<[Self], ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -13305,7 +13350,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -13320,7 +13365,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -13425,17 +13470,12 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                     "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -13514,7 +13554,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/save()",
-                    "title" : "func save() throws -> Self.SavingType",
+                    "title" : "func save() async throws -> Self.SavingType",
                     "type" : "method"
                   }
                 ],
@@ -13798,7 +13838,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/delete()",
-                    "title" : "func delete() throws -> Self.DeletingType",
+                    "title" : "func delete() async throws -> Self.DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -13835,7 +13875,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/fetch()",
-                    "title" : "func fetch() throws -> Self.FetchingType",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -13884,6 +13924,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckpatient\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -13986,6 +14031,11 @@
                     "type" : "method"
                   },
                   {
+                    "path" : "\/documentation\/parsecarekit\/pckpatient\/find(for:options:)",
+                    "title" : "func find(for: Date, options: API.Options) async throws -> [Self]",
+                    "type" : "method"
+                  },
+                  {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/find(for:options:callbackqueue:completion:)",
                     "title" : "func find(for: Date, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[Self], ParseError>) -> Void)",
                     "type" : "method"
@@ -13993,6 +14043,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/findpublisher(for:options:)",
                     "title" : "func findPublisher(for: Date, options: API.Options) -> Future<[Self], ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckpatient\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -14096,7 +14151,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -14111,7 +14166,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -14216,17 +14271,12 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                     "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckpatient\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -14305,7 +14355,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/save()",
-                    "title" : "func save() throws -> Self.SavingType",
+                    "title" : "func save() async throws -> Self.SavingType",
                     "type" : "method"
                   }
                 ],
@@ -14599,7 +14649,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/delete()",
-                    "title" : "func delete() throws -> Self.DeletingType",
+                    "title" : "func delete() async throws -> Self.DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -14652,7 +14702,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/fetch()",
-                    "title" : "func fetch() throws -> Self.FetchingType",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -14701,6 +14751,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pcktask\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -14803,6 +14858,11 @@
                     "type" : "method"
                   },
                   {
+                    "path" : "\/documentation\/parsecarekit\/pcktask\/find(for:options:)",
+                    "title" : "func find(for: Date, options: API.Options) async throws -> [Self]",
+                    "type" : "method"
+                  },
+                  {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/find(for:options:callbackqueue:completion:)",
                     "title" : "func find(for: Date, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[Self], ParseError>) -> Void)",
                     "type" : "method"
@@ -14810,6 +14870,11 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/findpublisher(for:options:)",
                     "title" : "func findPublisher(for: Date, options: API.Options) -> Future<[Self], ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pcktask\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -14913,7 +14978,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -14928,7 +14993,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -15033,17 +15098,12 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                     "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pcktask\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -15122,7 +15182,7 @@
                   },
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/save()",
-                    "title" : "func save() throws -> Self.SavingType",
+                    "title" : "func save() async throws -> Self.SavingType",
                     "type" : "method"
                   }
                 ],
@@ -15715,7 +15775,7 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/parselivequery\/init(serverurl:isdefault:notificationqueue:)",
-                "title" : "init(serverURL: URL?, isDefault: Bool, notificationQueue: DispatchQueue) throws",
+                "title" : "init(serverURL: URL?, isDefault: Bool, notificationQueue: DispatchQueue) async throws",
                 "type" : "init"
               },
               {
@@ -15728,23 +15788,13 @@
                 "type" : "property"
               },
               {
-                "path" : "\/documentation\/parseswift\/parselivequery\/isconnected",
-                "title" : "var isConnected: Bool",
-                "type" : "property"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parselivequery\/isconnecting",
-                "title" : "var isConnecting: Bool",
-                "type" : "property"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parselivequery\/issocketestablished",
-                "title" : "var isSocketEstablished: Bool",
-                "type" : "property"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parselivequery\/receivedelegate",
                 "title" : "var receiveDelegate: ParseLiveQueryDelegate?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parselivequery\/status",
+                "title" : "var status: ConnectionStatus",
                 "type" : "property"
               },
               {
@@ -15752,23 +15802,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parselivequery\/close()",
-                "title" : "func close()",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parselivequery\/closeall()",
-                "title" : "func closeAll()",
+                "title" : "func closeAll() async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/parselivequery\/ispendingsubscription(_:)",
-                "title" : "func isPendingSubscription<T>(Query<T>) throws -> Bool",
+                "title" : "func isPendingSubscription<T>(Query<T>) async throws -> Bool",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/parselivequery\/issubscribed(_:)",
-                "title" : "func isSubscribed<T>(Query<T>) throws -> Bool",
+                "title" : "func isSubscribed<T>(Query<T>) async throws -> Bool",
                 "type" : "method"
               },
               {
@@ -15788,7 +15833,7 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/parselivequery\/removependingsubscription(_:)",
-                "title" : "func removePendingSubscription<T>(Query<T>) throws",
+                "title" : "func removePendingSubscription<T>(Query<T>) async throws",
                 "type" : "method"
               },
               {
@@ -15808,7 +15853,7 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/parselivequery\/subscribe(_:)",
-                "title" : "func subscribe<T>(T) throws -> T",
+                "title" : "func subscribe<T>(T) async throws -> T",
                 "type" : "method"
               },
               {
@@ -15824,6 +15869,146 @@
                 "path" : "\/documentation\/parseswift\/parselivequery\/defaultclient",
                 "title" : "class var defaultClient: ParseLiveQuery?",
                 "type" : "property"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/_(_:_:)-3ydrw",
+                    "title" : "static func < (`Self`, `Self`) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/connected",
+                    "title" : "case connected",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/connecting",
+                    "title" : "case connecting",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/disconnected",
+                    "title" : "case disconnected",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/socketestablished",
+                    "title" : "case socketEstablished",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/socketnotestablished",
+                    "title" : "case socketNotEstablished",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/'...(_:)-6uyv",
+                        "title" : "static func ... (Self) -> PartialRangeThrough<Self>",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/'...(_:)-99jnt",
+                        "title" : "static func ... (Self) -> PartialRangeFrom<Self>",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/'...(_:_:)",
+                        "title" : "static func ... (Self, Self) -> ClosedRange<Self>",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/'.._(_:)",
+                        "title" : "static func ..< (Self) -> PartialRangeUpTo<Self>",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/'.._(_:_:)",
+                        "title" : "static func ..< (Self, Self) -> Range<Self>",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/_(_:_:)-4vmc5",
+                        "title" : "static func > (Self, Self) -> Bool",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/_=(_:_:)-1mh6z",
+                        "title" : "static func >= (Self, Self) -> Bool",
+                        "type" : "op"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/_=(_:_:)-84tti",
+                        "title" : "static func <= (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/comparable-implementations",
+                    "title" : "Comparable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/parseswift\/parselivequery\/connectionstatus",
+                "title" : "ParseLiveQuery.ConnectionStatus",
+                "type" : "enum"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselivequery\/close()",
+                    "title" : "func close() async",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parseswift\/parselivequery\/livequerysocketdelegate-implementations",
+                "title" : "LiveQuerySocketDelegate Implementations",
+                "type" : "symbol"
               }
             ],
             "path" : "\/documentation\/parseswift\/parselivequery",
@@ -16118,8 +16303,8 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/deletable\/delete()-8ieqs",
-                        "title" : "func delete() throws -> DeletingType",
+                        "path" : "\/documentation\/parseswift\/deletable\/delete()-3qlhy",
+                        "title" : "func delete() async throws -> DeletingType",
                         "type" : "method"
                       }
                     ],
@@ -16127,8 +16312,8 @@
                     "type" : "groupMarker"
                   }
                 ],
-                "path" : "\/documentation\/parseswift\/deletable\/delete()-5tyw7",
-                "title" : "func delete() throws -> DeletingType",
+                "path" : "\/documentation\/parseswift\/deletable\/delete()-3wdvi",
+                "title" : "func delete() async throws -> DeletingType",
                 "type" : "method"
               },
               {
@@ -16136,13 +16321,8 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/delete(options:)-u8rk",
+                        "path" : "\/documentation\/parseswift\/parseobject\/delete(options:)",
                         "title" : "func delete(options: API.Options) async throws",
-                        "type" : "method"
-                      },
-                      {
-                        "path" : "\/documentation\/parseswift\/parseobject\/delete(options:)-2crgq",
-                        "title" : "func delete(options: API.Options) throws",
                         "type" : "method"
                       }
                     ],
@@ -16151,7 +16331,7 @@
                   }
                 ],
                 "path" : "\/documentation\/parseswift\/deletable\/delete(options:)",
-                "title" : "func delete(options: API.Options) throws -> DeletingType",
+                "title" : "func delete(options: API.Options) async throws -> DeletingType",
                 "type" : "method"
               }
             ],
@@ -16179,8 +16359,8 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/fetchable\/fetch()-sa5a",
-                        "title" : "func fetch() throws -> FetchingType",
+                        "path" : "\/documentation\/parseswift\/fetchable\/fetch()-1n2zp",
+                        "title" : "func fetch() async throws -> FetchingType",
                         "type" : "method"
                       }
                     ],
@@ -16188,8 +16368,8 @@
                     "type" : "groupMarker"
                   }
                 ],
-                "path" : "\/documentation\/parseswift\/fetchable\/fetch()-1h0qk",
-                "title" : "func fetch() throws -> FetchingType",
+                "path" : "\/documentation\/parseswift\/fetchable\/fetch()-2agid",
+                "title" : "func fetch() async throws -> FetchingType",
                 "type" : "method"
               },
               {
@@ -16197,12 +16377,7 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)-2hvwx",
-                        "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
-                        "type" : "method"
-                      },
-                      {
-                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)-9iop9",
+                        "path" : "\/documentation\/parseswift\/parseobject\/fetch(includekeys:options:)",
                         "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                         "type" : "method"
                       }
@@ -16212,7 +16387,7 @@
                   }
                 ],
                 "path" : "\/documentation\/parseswift\/fetchable\/fetch(includekeys:options:)",
-                "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> FetchingType",
+                "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> FetchingType",
                 "type" : "method"
               }
             ],
@@ -16234,6 +16409,24 @@
               {
                 "path" : "\/documentation\/parseswift\/objectable\/createdat",
                 "title" : "var createdAt: Date?",
+                "type" : "property"
+              },
+              {
+                "children" : [
+                  {
+                    "children" : [
+                      {
+                        "path" : "\/documentation\/parseswift\/objectable\/endpoint-6b5zy",
+                        "title" : "var endpoint: API.Endpoint",
+                        "type" : "property"
+                      }
+                    ],
+                    "title" : "Objectable Implementations",
+                    "type" : "groupMarker"
+                  }
+                ],
+                "path" : "\/documentation\/parseswift\/objectable\/endpoint-65g5f",
+                "title" : "var endpoint: API.Endpoint",
                 "type" : "property"
               },
               {
@@ -16304,28 +16497,6 @@
                 "type" : "init"
               },
               {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "children" : [
-                      {
-                        "path" : "\/documentation\/parseswift\/parseauthentication\/islinked-7zura",
-                        "title" : "var isLinked: Bool",
-                        "type" : "property"
-                      }
-                    ],
-                    "title" : "ParseAuthentication Implementations",
-                    "type" : "groupMarker"
-                  }
-                ],
-                "path" : "\/documentation\/parseswift\/parseauthentication\/islinked-82gc9",
-                "title" : "var isLinked: Bool",
-                "type" : "property"
-              },
-              {
                 "title" : "Instance Methods",
                 "type" : "groupMarker"
               },
@@ -16334,8 +16505,8 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseauthentication\/islinked(with:)-7da5x",
-                        "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                        "path" : "\/documentation\/parseswift\/parseauthentication\/islinked()-97br7",
+                        "title" : "func isLinked() async -> Bool",
                         "type" : "method"
                       }
                     ],
@@ -16343,8 +16514,8 @@
                     "type" : "groupMarker"
                   }
                 ],
-                "path" : "\/documentation\/parseswift\/parseauthentication\/islinked(with:)-1by57",
-                "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                "path" : "\/documentation\/parseswift\/parseauthentication\/islinked()-5a3xp",
+                "title" : "func isLinked() async -> Bool",
                 "type" : "method"
               },
               {
@@ -16377,8 +16548,8 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseauthentication\/strip()-779dg",
-                        "title" : "func strip()",
+                        "path" : "\/documentation\/parseswift\/parseauthentication\/strip()-li6i",
+                        "title" : "func strip() async throws -> AuthenticatedUser",
                         "type" : "method"
                       }
                     ],
@@ -16386,8 +16557,8 @@
                     "type" : "groupMarker"
                   }
                 ],
-                "path" : "\/documentation\/parseswift\/parseauthentication\/strip()-18xgc",
-                "title" : "func strip()",
+                "path" : "\/documentation\/parseswift\/parseauthentication\/strip()-7jyyz",
+                "title" : "func strip() async throws -> AuthenticatedUser",
                 "type" : "method"
               },
               {
@@ -16515,6 +16686,28 @@
                 "path" : "\/documentation\/parseswift\/parseauthentication\/unlinkpublisher(options:)-2wrer",
                 "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
                 "type" : "method"
+              },
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "children" : [
+                      {
+                        "path" : "\/documentation\/parseswift\/parseauthentication\/islinked(with:)-30q3o",
+                        "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
+                        "type" : "method"
+                      }
+                    ],
+                    "title" : "ParseAuthentication Implementations",
+                    "type" : "groupMarker"
+                  }
+                ],
+                "path" : "\/documentation\/parseswift\/parseauthentication\/islinked(with:)-7d4nj",
+                "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
+                "type" : "method"
               }
             ],
             "path" : "\/documentation\/parseswift\/parseauthentication",
@@ -16572,12 +16765,7 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsecloudable\/runfunction(options:)-3xyp9",
-                "title" : "func runFunction(options: API.Options) throws -> ReturnType",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsecloudable\/runfunction(options:)-584mt",
+                "path" : "\/documentation\/parseswift\/parsecloudable\/runfunction(options:)",
                 "title" : "func runFunction(options: API.Options) async throws -> ReturnType",
                 "type" : "method"
               },
@@ -16592,13 +16780,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsecloudable\/startjob(options:)-9px5c",
+                "path" : "\/documentation\/parseswift\/parsecloudable\/startjob(options:)",
                 "title" : "func startJob(options: API.Options) async throws -> ReturnType",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsecloudable\/startjob(options:)-9skq9",
-                "title" : "func startJob(options: API.Options) throws -> ReturnType",
                 "type" : "method"
               },
               {
@@ -16632,13 +16815,8 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseconfig\/fetch(options:)-1i1bl",
+                "path" : "\/documentation\/parseswift\/parseconfig\/fetch(options:)",
                 "title" : "func fetch(options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseconfig\/fetch(options:)-6cjty",
-                "title" : "func fetch(options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -16652,13 +16830,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseconfig\/save(options:)-1dzaf",
+                "path" : "\/documentation\/parseswift\/parseconfig\/save(options:)",
                 "title" : "func save(options: API.Options) async throws -> Bool",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseconfig\/save(options:)-6mata",
-                "title" : "func save(options: API.Options) throws -> Bool",
                 "type" : "method"
               },
               {
@@ -16672,13 +16845,13 @@
                 "type" : "method"
               },
               {
-                "title" : "Type Properties",
+                "title" : "Type Methods",
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseconfig\/current",
-                "title" : "static var current: Self?",
-                "type" : "property"
+                "path" : "\/documentation\/parseswift\/parseconfig\/current()",
+                "title" : "static func current() async throws -> Self",
+                "type" : "method"
               }
             ],
             "path" : "\/documentation\/parseswift\/parseconfig",
@@ -17205,12 +17378,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/delete(options:)-4mmu1",
-                "title" : "func delete(options: API.Options) throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/delete(options:)-6rpv",
+                "path" : "\/documentation\/parseswift\/parseinstallation\/delete(options:)",
                 "title" : "func delete(options: API.Options) async throws",
                 "type" : "method"
               },
@@ -17225,13 +17393,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/fetch(includekeys:options:)-33xzq",
+                "path" : "\/documentation\/parseswift\/parseinstallation\/fetch(includekeys:options:)",
                 "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/fetch(includekeys:options:)-556ma",
-                "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -17260,23 +17423,13 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/save(ignoringcustomobjectidconfig:options:)-1somq",
+                "path" : "\/documentation\/parseswift\/parseinstallation\/save(ignoringcustomobjectidconfig:options:)",
                 "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/save(ignoringcustomobjectidconfig:options:)-2rxbm",
-                "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/parseinstallation\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
                 "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/save(options:)",
-                "title" : "func save(options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -17288,15 +17441,6 @@
                 "path" : "\/documentation\/parseswift\/parseinstallation\/setdevicetoken(_:)",
                 "title" : "func setDeviceToken(Data)",
                 "type" : "method"
-              },
-              {
-                "title" : "Type Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseinstallation\/current",
-                "title" : "static var current: Self?",
-                "type" : "property"
               },
               {
                 "title" : "Type Methods",
@@ -17315,6 +17459,11 @@
               {
                 "path" : "\/documentation\/parseswift\/parseinstallation\/becomepublisher(_:copyentireinstallation:options:)",
                 "title" : "static func becomePublisher(String, copyEntireInstallation: Bool, options: API.Options) -> Future<Self, ParseError>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseinstallation\/current()",
+                "title" : "static func current() async throws -> Self",
                 "type" : "method"
               },
               {
@@ -17386,13 +17535,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       }
                     ],
@@ -17409,13 +17558,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
@@ -17748,13 +17897,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseobject\/save(ignoringcustomobjectidconfig:options:)-6rol8",
+                "path" : "\/documentation\/parseswift\/parseobject\/save(ignoringcustomobjectidconfig:options:)",
                 "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseobject\/save(ignoringcustomobjectidconfig:options:)-n7lr",
-                "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -18560,11 +18704,6 @@
                 "type" : "property"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/sessiontoken",
-                "title" : "var sessionToken: String?",
-                "type" : "property"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parseuser\/spotify-swift.property",
                 "title" : "var spotify: ParseSpotify<Self>",
                 "type" : "property"
@@ -18584,13 +18723,8 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)-1naqv",
+                "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)",
                 "title" : "func become(sessionToken: String, options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)-1s96n",
-                "title" : "func become(sessionToken: String, options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -18619,13 +18753,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/delete(options:)-3vgtv",
+                "path" : "\/documentation\/parseswift\/parseuser\/delete(options:)",
                 "title" : "func delete(options: API.Options) async throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/delete(options:)-64lxm",
-                "title" : "func delete(options: API.Options) throws",
                 "type" : "method"
               },
               {
@@ -18639,13 +18768,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/fetch(includekeys:options:)-12t7t",
+                "path" : "\/documentation\/parseswift\/parseuser\/fetch(includekeys:options:)",
                 "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/fetch(includekeys:options:)-6evh2",
-                "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -18679,12 +18803,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/save(ignoringcustomobjectidconfig:options:)-36qoi",
-                "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/save(ignoringcustomobjectidconfig:options:)-46n25",
+                "path" : "\/documentation\/parseswift\/parseuser\/save(ignoringcustomobjectidconfig:options:)",
                 "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                 "type" : "method"
               },
@@ -18694,23 +18813,13 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/save(options:)",
-                "title" : "func save(options: API.Options) throws -> Self",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parseuser\/savepublisher(options:ignoringcustomobjectidconfig:)",
                 "title" : "func savePublisher(options: API.Options, ignoringCustomObjectIdConfig: Bool) -> Future<Self, ParseError>",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/signup(options:)-1tz6b",
+                "path" : "\/documentation\/parseswift\/parseuser\/signup(options:)",
                 "title" : "func signup(options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/signup(options:)-8x6w8",
-                "title" : "func signup(options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -18755,11 +18864,6 @@
               {
                 "path" : "\/documentation\/parseswift\/parseuser\/apple-swift.type.property",
                 "title" : "static var apple: ParseApple<Self>",
-                "type" : "property"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/current",
-                "title" : "static var current: Self?",
                 "type" : "property"
               },
               {
@@ -18812,12 +18916,12 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/link(_:authdata:options:)-3utca",
-                "title" : "static func link(String, authData: [String : String], options: API.Options) throws -> Self",
+                "path" : "\/documentation\/parseswift\/parseuser\/current()",
+                "title" : "static func current() async throws -> Self",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/link(_:authdata:options:)-cniv",
+                "path" : "\/documentation\/parseswift\/parseuser\/link(_:authdata:options:)",
                 "title" : "static func link(String, authData: [String : String], options: API.Options) async throws -> Self",
                 "type" : "method"
               },
@@ -18832,13 +18936,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/login(_:authdata:options:)-44ibt",
+                "path" : "\/documentation\/parseswift\/parseuser\/login(_:authdata:options:)",
                 "title" : "static func login(String, authData: [String : String], options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/login(_:authdata:options:)-7qe5w",
-                "title" : "static func login(String, authData: [String : String], options: API.Options) throws -> Self",
                 "type" : "method"
               },
               {
@@ -18847,12 +18946,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/login(username:password:options:)-6vn6t",
-                "title" : "static func login(username: String, password: String, options: API.Options) throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/login(username:password:options:)-8l8z5",
+                "path" : "\/documentation\/parseswift\/parseuser\/login(username:password:options:)",
                 "title" : "static func login(username: String, password: String, options: API.Options) async throws -> Self",
                 "type" : "method"
               },
@@ -18887,12 +18981,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/logout(options:)-4ot9b",
-                "title" : "static func logout(options: API.Options) throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/logout(options:)-5l3vm",
+                "path" : "\/documentation\/parseswift\/parseuser\/logout(options:)",
                 "title" : "static func logout(options: API.Options) async throws",
                 "type" : "method"
               },
@@ -18907,12 +18996,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/passwordreset(email:options:)-6zwm1",
-                "title" : "static func passwordReset(email: String, options: API.Options) throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/passwordreset(email:options:)-8stvt",
+                "path" : "\/documentation\/parseswift\/parseuser\/passwordreset(email:options:)",
                 "title" : "static func passwordReset(email: String, options: API.Options) async throws",
                 "type" : "method"
               },
@@ -18927,12 +19011,12 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/signup(username:password:options:)-1v5qq",
-                "title" : "static func signup(username: String, password: String, options: API.Options) throws -> Self",
+                "path" : "\/documentation\/parseswift\/parseuser\/sessiontoken()",
+                "title" : "static func sessionToken() async throws -> String",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/signup(username:password:options:)-8x6os",
+                "path" : "\/documentation\/parseswift\/parseuser\/signup(username:password:options:)",
                 "title" : "static func signup(username: String, password: String, options: API.Options) async throws -> Self",
                 "type" : "method"
               },
@@ -18947,13 +19031,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/verificationemail(email:options:)-1ya7v",
+                "path" : "\/documentation\/parseswift\/parseuser\/verificationemail(email:options:)",
                 "title" : "static func verificationEmail(email: String, options: API.Options) async throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseuser\/verificationemail(email:options:)-3e3gg",
-                "title" : "static func verificationEmail(email: String, options: API.Options) throws",
                 "type" : "method"
               },
               {
@@ -19139,7 +19218,7 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/queryable\/count(options:)",
-                "title" : "func count(options: API.Options) throws -> Int",
+                "title" : "func count(options: API.Options) async throws -> Int",
                 "type" : "method"
               },
               {
@@ -19149,7 +19228,7 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/queryable\/find(options:)",
-                "title" : "func find(options: API.Options) throws -> [ResultType]",
+                "title" : "func find(options: API.Options) async throws -> [ResultType]",
                 "type" : "method"
               },
               {
@@ -19159,7 +19238,7 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/queryable\/first(options:)",
-                "title" : "func first(options: API.Options) throws -> ResultType",
+                "title" : "func first(options: API.Options) async throws -> ResultType",
                 "type" : "method"
               },
               {
@@ -19192,8 +19271,8 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/savable\/save()-28dnb",
-                        "title" : "func save() throws -> SavingType",
+                        "path" : "\/documentation\/parseswift\/savable\/save()-6n6v7",
+                        "title" : "func save() async throws -> SavingType",
                         "type" : "method"
                       }
                     ],
@@ -19201,8 +19280,8 @@
                     "type" : "groupMarker"
                   }
                 ],
-                "path" : "\/documentation\/parseswift\/savable\/save()-3stwk",
-                "title" : "func save() throws -> SavingType",
+                "path" : "\/documentation\/parseswift\/savable\/save()-51ej7",
+                "title" : "func save() async throws -> SavingType",
                 "type" : "method"
               },
               {
@@ -19211,7 +19290,7 @@
                     "children" : [
                       {
                         "path" : "\/documentation\/parseswift\/parseobject\/save(options:)",
-                        "title" : "func save(options: API.Options) throws -> Self",
+                        "title" : "func save(options: API.Options) async throws -> Self",
                         "type" : "method"
                       }
                     ],
@@ -19220,7 +19299,7 @@
                   }
                 ],
                 "path" : "\/documentation\/parseswift\/savable\/save(options:)",
-                "title" : "func save(options: API.Options) throws -> SavingType",
+                "title" : "func save(options: API.Options) async throws -> SavingType",
                 "type" : "method"
               }
             ],
@@ -19246,6 +19325,186 @@
               {
                 "title" : "Enumerations",
                 "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/aggregate(classname:)",
+                    "title" : "case aggregate(className: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/any(_:)",
+                    "title" : "case any(String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/batch",
+                    "title" : "case batch",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/config",
+                    "title" : "case config",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/event(event:)",
+                    "title" : "case event(event: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/file(filename:)",
+                    "title" : "case file(fileName: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/functions(name:)",
+                    "title" : "case functions(name: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/health",
+                    "title" : "case health",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/hookfunction(request:)",
+                    "title" : "case hookFunction(request: FunctionRequest)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/hookfunctions",
+                    "title" : "case hookFunctions",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/hooktrigger(request:)",
+                    "title" : "case hookTrigger(request: TriggerRequest)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/hooktriggers",
+                    "title" : "case hookTriggers",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/installation(objectid:)",
+                    "title" : "case installation(objectId: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/installations",
+                    "title" : "case installations",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/jobs(name:)",
+                    "title" : "case jobs(name: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/login",
+                    "title" : "case login",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/logout",
+                    "title" : "case logout",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/object(classname:objectid:)",
+                    "title" : "case object(className: String, objectId: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/objects(classname:)",
+                    "title" : "case objects(className: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/passwordreset",
+                    "title" : "case passwordReset",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/purge(classname:)",
+                    "title" : "case purge(className: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/push",
+                    "title" : "case push",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/role(objectid:)",
+                    "title" : "case role(objectId: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/roles",
+                    "title" : "case roles",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/schema(classname:)",
+                    "title" : "case schema(className: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/schemas",
+                    "title" : "case schemas",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/session(objectid:)",
+                    "title" : "case session(objectId: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/sessions",
+                    "title" : "case sessions",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/user(objectid:)",
+                    "title" : "case user(objectId: String)",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/users",
+                    "title" : "case users",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/verificationemail",
+                    "title" : "case verificationEmail",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/verifypassword",
+                    "title" : "case verifyPassword",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/encode(to:)",
+                    "title" : "func encode(to: Encoder) throws",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parseswift\/api\/endpoint",
+                "title" : "API.Endpoint",
+                "type" : "enum"
               },
               {
                 "children" : [
@@ -19354,6 +19613,11 @@
             ],
             "path" : "\/documentation\/parseswift\/api",
             "title" : "API",
+            "type" : "struct"
+          },
+          {
+            "path" : "\/documentation\/parseswift\/functionrequest",
+            "title" : "FunctionRequest",
             "type" : "struct"
           },
           {
@@ -19471,12 +19735,12 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/parseacl\/defaultacl()",
-                "title" : "static func defaultACL() throws -> ParseACL",
+                "title" : "static func defaultACL() async throws -> ParseACL",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/parseacl\/setdefaultacl(_:withaccessforcurrentuser:)",
-                "title" : "static func setDefaultACL(ParseACL, withAccessForCurrentUser: Bool) throws -> ParseACL",
+                "title" : "static func setDefaultACL(ParseACL, withAccessForCurrentUser: Bool) async throws -> ParseACL",
                 "type" : "method"
               },
               {
@@ -19909,23 +20173,13 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseanonymous\/login(authdata:options:)-26wxs",
+                "path" : "\/documentation\/parseswift\/parseanonymous\/login(authdata:options:)",
                 "title" : "func login(authData: [String : String], options: API.Options) async throws -> AuthenticatedUser",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseanonymous\/login(authdata:options:)-5qmf7",
-                "title" : "func login(authData: [String : String], options: API.Options) throws -> AuthenticatedUser",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseanonymous\/login(options:)-8u5g4",
+                "path" : "\/documentation\/parseswift\/parseanonymous\/login(options:)",
                 "title" : "func login(options: API.Options) async throws -> AuthenticatedUser",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parseanonymous\/login(options:)-97osl",
-                "title" : "func login(options: API.Options) throws -> AuthenticatedUser",
                 "type" : "method"
               },
               {
@@ -19945,21 +20199,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parseanonymous\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parseanonymous\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parseanonymous\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -19989,7 +20234,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parseanonymous\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -20025,6 +20270,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parseanonymous\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseanonymous\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -20099,21 +20353,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parseapple\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parseapple\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parseapple\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -20143,7 +20388,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parseapple\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -20179,6 +20424,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parseapple\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseapple\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -20917,6 +21171,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parseswift\/parseconfiguration\/primitivestore",
+                "title" : "var primitiveStore: ParsePrimitiveStorable",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parseswift\/parseconfiguration\/requestcachepolicy",
                 "title" : "var requestCachePolicy: URLRequest.CachePolicy",
                 "type" : "property"
@@ -20938,8 +21197,8 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseencoder\/encode(_:skipkeys:)",
-                "title" : "func encode<T>(T, skipKeys: SkipKeys) throws -> Data",
+                "path" : "\/documentation\/parseswift\/parseencoder\/encode(_:acl:skipkeys:)",
+                "title" : "func encode<T>(T, acl: ParseACL?, skipKeys: SkipKeys) throws -> Data",
                 "type" : "method"
               },
               {
@@ -20999,6 +21258,11 @@
                 "type" : "init"
               },
               {
+                "path" : "\/documentation\/parseswift\/parseerror\/init(code:message:swift:)",
+                "title" : "init(code: Code, message: String, swift: Swift.Error)",
+                "type" : "init"
+              },
+              {
                 "path" : "\/documentation\/parseswift\/parseerror\/init(othercode:message:)",
                 "title" : "init(otherCode: Int, message: String)",
                 "type" : "init"
@@ -21020,6 +21284,11 @@
               {
                 "path" : "\/documentation\/parseswift\/parseerror\/othercode",
                 "title" : "let otherCode: Int?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseerror\/swift",
+                "title" : "let swift: Swift.Error?",
                 "type" : "property"
               },
               {
@@ -21623,6 +21892,11 @@
                     "path" : "\/documentation\/parseswift\/parseerror\/!=(_:_:)",
                     "title" : "static func != (Self, Self) -> Bool",
                     "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseerror\/==(_:_:)",
+                    "title" : "static func == (`Self`, `Self`) -> Bool",
+                    "type" : "op"
                   }
                 ],
                 "path" : "\/documentation\/parseswift\/parseerror\/equatable-implementations",
@@ -21812,21 +22086,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsefacebook\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsefacebook\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parsefacebook\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -21856,7 +22121,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsefacebook\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -21892,6 +22157,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parsefacebook\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsefacebook\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -22250,16 +22524,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsefile\/delete(options:)-7ukf",
-                "title" : "func delete(options: API.Options) async throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsefile\/delete(options:callbackqueue:)",
-                "title" : "func delete(options: API.Options, callbackQueue: DispatchQueue) throws",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parsefile\/delete(options:callbackqueue:completion:)",
                 "title" : "func delete(options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Void, ParseError>) -> Void)",
                 "type" : "method"
@@ -22270,18 +22534,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsefile\/fetch(includekeys:options:callbackqueue:)",
-                "title" : "func fetch(includeKeys: [String]?, options: API.Options, callbackQueue: DispatchQueue) throws -> ParseFile",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parsefile\/fetch(options:)",
                 "title" : "func fetch(options: API.Options) async throws -> ParseFile",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsefile\/fetch(options:callbackqueue:progress:)",
-                "title" : "func fetch(options: API.Options, callbackQueue: DispatchQueue, progress: ((URLSessionDownloadTask, Int64, Int64, Int64) -> Void)) throws -> ParseFile",
                 "type" : "method"
               },
               {
@@ -22295,11 +22549,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsefile\/fetch(options:stream:callbackqueue:)",
-                "title" : "func fetch(options: API.Options, stream: InputStream, callbackQueue: DispatchQueue) throws",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parsefile\/fetchpublisher(options:)",
                 "title" : "func fetchPublisher(options: API.Options) -> Future<`Self`, ParseError>",
                 "type" : "method"
@@ -22307,16 +22556,6 @@
               {
                 "path" : "\/documentation\/parseswift\/parsefile\/fetchpublisher(options:progress:)",
                 "title" : "func fetchPublisher(options: API.Options, progress: ((URLSessionDownloadTask, Int64, Int64, Int64) -> Void)) -> Future<`Self`, ParseError>",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsefile\/save(options:)-4umwf",
-                "title" : "func save(options: API.Options) async throws -> ParseFile",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsefile\/save(options:callbackqueue:progress:)",
-                "title" : "func save(options: API.Options, callbackQueue: DispatchQueue, progress: ((URLSessionTask, Int64, Int64, Int64) -> Void)?) throws -> ParseFile",
                 "type" : "method"
               },
               {
@@ -22330,8 +22569,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsefile\/save(options:stream:callbackqueue:progress:)",
-                "title" : "func save(options: API.Options, stream: InputStream, callbackQueue: DispatchQueue, progress: ((URLSessionTask, Int64, Int64, Int64) -> Void)?) throws",
+                "path" : "\/documentation\/parseswift\/parsefile\/save(options:stream:callbackqueue:progress:completion:)",
+                "title" : "func save(options: API.Options, stream: InputStream, callbackQueue: DispatchQueue, progress: ((URLSessionTask, Int64, Int64, Int64) -> Void)?, completion: (ParseError?) -> Void) throws",
                 "type" : "method"
               },
               {
@@ -22414,12 +22653,12 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsefile\/delete()",
-                    "title" : "func delete() throws -> DeletingType",
+                    "title" : "func delete() async throws -> DeletingType",
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsefile\/delete(options:)-4jlth",
-                    "title" : "func delete(options: API.Options) throws",
+                    "path" : "\/documentation\/parseswift\/parsefile\/delete(options:)",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   }
                 ],
@@ -22441,27 +22680,6 @@
                 ],
                 "path" : "\/documentation\/parseswift\/parsefile\/equatable-implementations",
                 "title" : "Equatable Implementations",
-                "type" : "symbol"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsefile\/fetch()",
-                    "title" : "func fetch() throws -> FetchingType",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsefile\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> ParseFile",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/parseswift\/parsefile\/fetchable-implementations",
-                "title" : "Fetchable Implementations",
                 "type" : "symbol"
               },
               {
@@ -22509,12 +22727,12 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsefile\/save()",
-                    "title" : "func save() throws -> SavingType",
+                    "title" : "func save() async throws -> SavingType",
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsefile\/save(options:)-9u9ws",
-                    "title" : "func save(options: API.Options) throws -> ParseFile",
+                    "path" : "\/documentation\/parseswift\/parsefile\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> ParseFile",
                     "type" : "method"
                   }
                 ],
@@ -22791,21 +23009,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsegithub\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsegithub\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parsegithub\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -22835,7 +23044,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsegithub\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -22871,6 +23080,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parsegithub\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsegithub\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -22945,21 +23163,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsegoogle\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsegoogle\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parsegoogle\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -22989,7 +23198,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsegoogle\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -23026,6 +23235,15 @@
                     "path" : "\/documentation\/parseswift\/parsegoogle\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
                     "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsegoogle\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
+                    "type" : "method"
                   }
                 ],
                 "path" : "\/documentation\/parseswift\/parsegoogle\/parseauthentication-implementations",
@@ -23053,13 +23271,8 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsehealth\/check(options:)-7gul1",
+                "path" : "\/documentation\/parseswift\/parsehealth\/check(options:)",
                 "title" : "static func check(options: API.Options) async throws -> Status",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/parsehealth\/check(options:)-7id9f",
-                "title" : "static func check(options: API.Options) throws -> Status",
                 "type" : "method"
               },
               {
@@ -24041,21 +24254,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parseinstagram\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parseinstagram\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parseinstagram\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -24085,7 +24289,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parseinstagram\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -24121,6 +24325,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parseinstagram\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseinstagram\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -24195,21 +24408,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parseldap\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parseldap\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parseldap\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -24239,7 +24443,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parseldap\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -24275,6 +24479,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parseldap\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseldap\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -24349,21 +24562,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parselinkedin\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parselinkedin\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parselinkedin\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -24393,7 +24597,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parselinkedin\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -24429,6 +24633,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parselinkedin\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parselinkedin\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -24527,11 +24740,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseoperation\/save(options:)-2i4un",
-                "title" : "func save(options: API.Options) async throws -> T",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/parseoperation\/save(options:callbackqueue:completion:)",
                 "title" : "func save(options: API.Options, callbackQueue: DispatchQueue, completion: (Result<T, ParseError>) -> Void)",
                 "type" : "method"
@@ -24573,12 +24781,12 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parseoperation\/save()",
-                    "title" : "func save() throws -> SavingType",
+                    "title" : "func save() async throws -> SavingType",
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parseoperation\/save(options:)-6qs6f",
-                    "title" : "func save(options: API.Options) throws -> T",
+                    "path" : "\/documentation\/parseswift\/parseoperation\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> T",
                     "type" : "method"
                   }
                 ],
@@ -26125,7 +26333,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/delete()",
-                    "title" : "func delete() throws -> DeletingType",
+                    "title" : "func delete() async throws -> DeletingType",
                     "type" : "method"
                   }
                 ],
@@ -26157,7 +26365,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/fetch()",
-                    "title" : "func fetch() throws -> FetchingType",
+                    "title" : "func fetch() async throws -> FetchingType",
                     "type" : "method"
                   }
                 ],
@@ -26206,6 +26414,11 @@
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/classname-swift.property",
                     "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsepushstatus\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
                     "type" : "property"
                   },
                   {
@@ -26309,7 +26522,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/delete(options:)",
-                    "title" : "func delete(options: API.Options) throws",
+                    "title" : "func delete(options: API.Options) async throws",
                     "type" : "method"
                   },
                   {
@@ -26324,7 +26537,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/fetch(includekeys:options:)",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> Self",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -26429,7 +26642,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/save(ignoringcustomobjectidconfig:options:)",
-                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) throws -> Self",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -26439,7 +26652,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/save(options:)",
-                    "title" : "func save(options: API.Options) throws -> Self",
+                    "title" : "func save(options: API.Options) async throws -> Self",
                     "type" : "method"
                   },
                   {
@@ -26518,7 +26731,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/save()",
-                    "title" : "func save() throws -> SavingType",
+                    "title" : "func save() async throws -> SavingType",
                     "type" : "method"
                   }
                 ],
@@ -27018,21 +27231,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsespotify\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsespotify\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parsespotify\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -27062,7 +27266,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsespotify\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -27098,6 +27302,15 @@
                   {
                     "path" : "\/documentation\/parseswift\/parsespotify\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsespotify\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
                     "type" : "method"
                   }
                 ],
@@ -27151,13 +27364,13 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsetwitter\/login(userid:screenname:authtoken:authtokensecret:consumerkey:consumersecret:options:callbackqueue:completion:)",
-                "title" : "func login(userId: String, screenName: String?, authToken: String, authTokenSecret: String, consumerKey: String, consumerSecret: String, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<AuthenticatedUser, ParseError>) -> Void)",
+                "path" : "\/documentation\/parseswift\/parsetwitter\/login(userid:screenname:consumerkey:consumersecret:authtoken:authtokensecret:options:)",
+                "title" : "func login(userId: String, screenName: String?, consumerKey: String, consumerSecret: String, authToken: String, authTokenSecret: String, options: API.Options) async throws -> AuthenticatedUser",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parsetwitter\/login(userid:screenname:consumerkey:consumersecret:authtoken:authtokensecret:options:)",
-                "title" : "func login(userId: String, screenName: String?, consumerKey: String, consumerSecret: String, authToken: String, authTokenSecret: String, options: API.Options) async throws -> AuthenticatedUser",
+                "path" : "\/documentation\/parseswift\/parsetwitter\/login(userid:screenname:consumerkey:consumersecret:authtoken:authtokensecret:options:callbackqueue:completion:)",
+                "title" : "func login(userId: String, screenName: String?, consumerKey: String, consumerSecret: String, authToken: String, authTokenSecret: String, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<AuthenticatedUser, ParseError>) -> Void)",
                 "type" : "method"
               },
               {
@@ -27172,21 +27385,12 @@
               {
                 "children" : [
                   {
-                    "title" : "Instance Properties",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/parseswift\/parsetwitter\/islinked",
-                    "title" : "var isLinked: Bool",
-                    "type" : "property"
-                  },
-                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/parsetwitter\/islinked(with:)",
-                    "title" : "func isLinked(with: AuthenticatedUser) -> Bool",
+                    "path" : "\/documentation\/parseswift\/parsetwitter\/islinked()",
+                    "title" : "func isLinked() async -> Bool",
                     "type" : "method"
                   },
                   {
@@ -27216,7 +27420,7 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/parsetwitter\/strip()",
-                    "title" : "func strip()",
+                    "title" : "func strip() async throws -> AuthenticatedUser",
                     "type" : "method"
                   },
                   {
@@ -27253,6 +27457,15 @@
                     "path" : "\/documentation\/parseswift\/parsetwitter\/unlinkpublisher(options:)",
                     "title" : "func unlinkPublisher(options: API.Options) -> Future<AuthenticatedUser, ParseError>",
                     "type" : "method"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsetwitter\/islinked(with:)",
+                    "title" : "static func isLinked(with: AuthenticatedUser) -> Bool",
+                    "type" : "method"
                   }
                 ],
                 "path" : "\/documentation\/parseswift\/parsetwitter\/parseauthentication-implementations",
@@ -27276,13 +27489,13 @@
                 "type" : "init"
               },
               {
-                "title" : "Type Properties",
+                "title" : "Type Methods",
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseversion\/current",
-                "title" : "static var current: `Self`?",
-                "type" : "property"
+                "path" : "\/documentation\/parseswift\/parseversion\/current()",
+                "title" : "static func current() async throws -> ParseVersion",
+                "type" : "method"
               },
               {
                 "title" : "Default Implementations",
@@ -27457,11 +27670,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/pointer\/fetch(includekeys:options:)-f8pm",
-                "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> T",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/pointer\/fetch(includekeys:options:callbackqueue:completion:)",
                 "title" : "func fetch(includeKeys: [String]?, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<T, ParseError>) -> Void)",
                 "type" : "method"
@@ -27546,12 +27754,12 @@
                   },
                   {
                     "path" : "\/documentation\/parseswift\/pointer\/fetch()",
-                    "title" : "func fetch() throws -> FetchingType",
+                    "title" : "func fetch() async throws -> FetchingType",
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/pointer\/fetch(includekeys:options:)-1otrx",
-                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) throws -> T",
+                    "path" : "\/documentation\/parseswift\/pointer\/fetch(includekeys:options:)",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> T",
                     "type" : "method"
                   }
                 ],
@@ -27590,16 +27798,6 @@
                 "type" : "property"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/subscribe",
-                "title" : "var subscribe: Subscription<ResultType>?",
-                "type" : "property"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/subscribecallback",
-                "title" : "var subscribeCallback: SubscriptionCallback<ResultType>?",
-                "type" : "property"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/query\/viewmodel",
                 "title" : "var viewModel: QueryViewModel<ResultType>",
                 "type" : "property"
@@ -27609,12 +27807,7 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/aggregate(_:options:)-128p2",
-                "title" : "func aggregate([[String : Encodable]], options: API.Options) throws -> [ResultType]",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/aggregate(_:options:)-4ycg9",
+                "path" : "\/documentation\/parseswift\/query\/aggregate(_:options:)",
                 "title" : "func aggregate([[String : Encodable]], options: API.Options) async throws -> [ResultType]",
                 "type" : "method"
               },
@@ -27624,13 +27817,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/aggregateexplain(_:usingmongodb:options:)-28oui",
+                "path" : "\/documentation\/parseswift\/query\/aggregateexplain(_:usingmongodb:options:)",
                 "title" : "func aggregateExplain<U>([[String : Encodable]], usingMongoDB: Bool, options: API.Options) async throws -> [U]",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/aggregateexplain(_:usingmongodb:options:)-7k6n3",
-                "title" : "func aggregateExplain<U>([[String : Encodable]], usingMongoDB: Bool, options: API.Options) throws -> [U]",
                 "type" : "method"
               },
               {
@@ -27649,18 +27837,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/count(options:)-25obg",
-                "title" : "func count(options: API.Options) async throws -> Int",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/countexplain(usingmongodb:options:)-4fdb9",
+                "path" : "\/documentation\/parseswift\/query\/countexplain(usingmongodb:options:)",
                 "title" : "func countExplain<U>(usingMongoDB: Bool, options: API.Options) async throws -> [U]",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/countexplain(usingmongodb:options:)-97wa2",
-                "title" : "func countExplain<U>(usingMongoDB: Bool, options: API.Options) throws -> [U]",
                 "type" : "method"
               },
               {
@@ -27679,12 +27857,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/distinct(_:options:)-783te",
-                "title" : "func distinct(String, options: API.Options) throws -> [ResultType]",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/distinct(_:options:)-8r7nh",
+                "path" : "\/documentation\/parseswift\/query\/distinct(_:options:)",
                 "title" : "func distinct(String, options: API.Options) async throws -> [ResultType]",
                 "type" : "method"
               },
@@ -27694,13 +27867,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/distinctexplain(_:usingmongodb:options:)-4h769",
+                "path" : "\/documentation\/parseswift\/query\/distinctexplain(_:usingmongodb:options:)",
                 "title" : "func distinctExplain<U>(String, usingMongoDB: Bool, options: API.Options) async throws -> [U]",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/distinctexplain(_:usingmongodb:options:)-5q4cg",
-                "title" : "func distinctExplain<U>(String, usingMongoDB: Bool, options: API.Options) throws -> [U]",
                 "type" : "method"
               },
               {
@@ -27739,11 +27907,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/find(options:)-8vz5e",
-                "title" : "func find(options: API.Options) async throws -> [ResultType]",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parseswift\/query\/findall(batchlimit:options:)",
                 "title" : "func findAll(batchLimit: Int?, options: API.Options) async throws -> [ResultType]",
                 "type" : "method"
@@ -27759,13 +27922,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/findexplain(usingmongodb:options:)-58al",
+                "path" : "\/documentation\/parseswift\/query\/findexplain(usingmongodb:options:)",
                 "title" : "func findExplain<U>(usingMongoDB: Bool, options: API.Options) async throws -> [U]",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/findexplain(usingmongodb:options:)-ret0",
-                "title" : "func findExplain<U>(usingMongoDB: Bool, options: API.Options) throws -> [U]",
                 "type" : "method"
               },
               {
@@ -27784,17 +27942,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/query\/first(options:)-53w8y",
-                "title" : "func first(options: API.Options) async throws -> ResultType",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/firstexplain(usingmongodb:options:)-7sns5",
-                "title" : "func firstExplain<U>(usingMongoDB: Bool, options: API.Options) throws -> U",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parseswift\/query\/firstexplain(usingmongodb:options:)-ie81",
+                "path" : "\/documentation\/parseswift\/query\/firstexplain(usingmongodb:options:)",
                 "title" : "func firstExplain<U>(usingMongoDB: Bool, options: API.Options) async throws -> U",
                 "type" : "method"
               },
@@ -27874,43 +28022,53 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/parseswift\/query\/subscribe()",
+                "title" : "func subscribe() async throws -> Subscription<ResultType>",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/parseswift\/query\/subscribe(_:)-swift.method",
-                "title" : "func subscribe(ParseLiveQuery) throws -> Subscription<ResultType>",
+                "title" : "func subscribe(ParseLiveQuery) async throws -> Subscription<ResultType>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/query\/subscribecallback()",
+                "title" : "func subscribeCallback() async throws -> SubscriptionCallback<ResultType>",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/subscribecallback(_:)",
-                "title" : "func subscribeCallback(ParseLiveQuery) throws -> SubscriptionCallback<ResultType>",
+                "title" : "func subscribeCallback(ParseLiveQuery) async throws -> SubscriptionCallback<ResultType>",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/unsubscribe()",
-                "title" : "func unsubscribe() throws",
+                "title" : "func unsubscribe() async throws",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/unsubscribe(_:)",
-                "title" : "func unsubscribe<T>(T) throws",
+                "title" : "func unsubscribe<T>(T) async throws",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/unsubscribe(_:client:)",
-                "title" : "func unsubscribe<T>(T, client: ParseLiveQuery) throws",
+                "title" : "func unsubscribe<T>(T, client: ParseLiveQuery) async throws",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/unsubscribe(client:)",
-                "title" : "func unsubscribe(client: ParseLiveQuery) throws",
+                "title" : "func unsubscribe(client: ParseLiveQuery) async throws",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/update(_:)",
-                "title" : "func update<T>(T) throws",
+                "title" : "func update<T>(T) async throws",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/update(_:client:)",
-                "title" : "func update<T>(T, client: ParseLiveQuery) throws",
+                "title" : "func update<T>(T, client: ParseLiveQuery) async throws",
                 "type" : "method"
               },
               {
@@ -27978,12 +28136,12 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/subscribe(_:)-swift.type.method",
-                "title" : "static func subscribe<T>(T) throws -> T",
+                "title" : "static func subscribe<T>(T) async throws -> T",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/query\/subscribe(_:client:)",
-                "title" : "static func subscribe<T>(T, client: ParseLiveQuery) throws -> T",
+                "title" : "static func subscribe<T>(T, client: ParseLiveQuery) async throws -> T",
                 "type" : "method"
               },
               {
@@ -28145,8 +28303,8 @@
                     "type" : "groupMarker"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/query\/count(options:)-u7t5",
-                    "title" : "func count(options: API.Options) throws -> Int",
+                    "path" : "\/documentation\/parseswift\/query\/count(options:)",
+                    "title" : "func count(options: API.Options) async throws -> Int",
                     "type" : "method"
                   },
                   {
@@ -28155,8 +28313,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/query\/find(options:)-6imwh",
-                    "title" : "func find(options: API.Options) throws -> [ResultType]",
+                    "path" : "\/documentation\/parseswift\/query\/find(options:)",
+                    "title" : "func find(options: API.Options) async throws -> [ResultType]",
                     "type" : "method"
                   },
                   {
@@ -28165,8 +28323,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/parseswift\/query\/first(options:)-5jw7y",
-                    "title" : "func first(options: API.Options) throws -> ResultType",
+                    "path" : "\/documentation\/parseswift\/query\/first(options:)",
+                    "title" : "func first(options: API.Options) async throws -> ResultType",
                     "type" : "method"
                   },
                   {
@@ -28355,6 +28513,11 @@
             "type" : "struct"
           },
           {
+            "path" : "\/documentation\/parseswift\/triggerrequest",
+            "title" : "TriggerRequest",
+            "type" : "struct"
+          },
+          {
             "title" : "Variables",
             "type" : "groupMarker"
           },
@@ -28419,7 +28582,7 @@
           },
           {
             "path" : "\/documentation\/parseswift\/deleteobjectiveckeychain()",
-            "title" : "func deleteObjectiveCKeychain() throws",
+            "title" : "func deleteObjectiveCKeychain() async throws",
             "type" : "func"
           },
           {
@@ -28459,12 +28622,12 @@
           },
           {
             "path" : "\/documentation\/parseswift\/initialize(applicationid:clientkey:primarykey:serverurl:livequeryserverurl:requiringcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:primitivestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:usingd-5pbr0",
-            "title" : "func initialize(applicationId: String, clientKey: String?, primaryKey: String?, serverURL: URL, liveQueryServerURL: URL?, requiringCustomObjectIds: Bool, usingTransactions: Bool, usingEqualQueryConstraint: Bool, usingPostForQuery: Bool, primitiveStore: ParsePrimitiveStorable?, requestCachePolicy: URLRequest.CachePolicy, cacheMemoryCapacity: Int, cacheDiskCapacity: Int, usingDataProtectionKeychain: Bool, deletingKeychainIfNeeded: Bool, httpAdditionalHeaders: [AnyHashable : Any]?, maxConnectionAttempts: Int, liveQueryMaxConnectionAttempts: Int, parseFileTransfer: ParseFileTransferable?, authentication: ((URLAuthenticationChallenge, (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)?) throws",
+            "title" : "func initialize(applicationId: String, clientKey: String?, primaryKey: String?, serverURL: URL, liveQueryServerURL: URL?, requiringCustomObjectIds: Bool, usingTransactions: Bool, usingEqualQueryConstraint: Bool, usingPostForQuery: Bool, primitiveStore: ParsePrimitiveStorable?, requestCachePolicy: URLRequest.CachePolicy, cacheMemoryCapacity: Int, cacheDiskCapacity: Int, usingDataProtectionKeychain: Bool, deletingKeychainIfNeeded: Bool, httpAdditionalHeaders: [AnyHashable : Any]?, maxConnectionAttempts: Int, liveQueryMaxConnectionAttempts: Int, parseFileTransfer: ParseFileTransferable?, authentication: ((URLAuthenticationChallenge, (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)?) async throws",
             "type" : "func"
           },
           {
             "path" : "\/documentation\/parseswift\/initialize(configuration:)",
-            "title" : "func initialize(configuration: ParseConfiguration) throws",
+            "title" : "func initialize(configuration: ParseConfiguration) async throws",
             "type" : "func"
           },
           {
@@ -28569,7 +28732,7 @@
           },
           {
             "path" : "\/documentation\/parseswift\/setaccessgroup(_:synchronizeacrossdevices:)",
-            "title" : "func setAccessGroup(String?, synchronizeAcrossDevices: Bool) throws -> Bool",
+            "title" : "func setAccessGroup(String?, synchronizeAcrossDevices: Bool) async throws -> Bool",
             "type" : "func"
           },
           {
