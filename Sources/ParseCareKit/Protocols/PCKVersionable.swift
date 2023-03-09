@@ -270,19 +270,6 @@ extension PCKVersionable {
     }
 
     /**
-     Find versioned objects *synchronously* like `fetch` in CareKit. Finds the newest version
-     that has not been deleted.
-     - Parameters:
-        - for: The date the objects are active.
-        - options: A set of header options sent to the server. Defaults to an empty set.
-        - throws: `ParseError`.
-        - returns: An array of `PCKVersionable` objects fitting the description of the query.
-    */
-    func find(for date: Date, options: API.Options = []) throws -> [Self] {
-        try Self.query(for: date).find(options: options)
-    }
-
-    /**
      Find versioned objects *asynchronously* like `fetch` in CareKit. Finds the newest version
      that has not been deleted.
      - Parameters:

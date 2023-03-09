@@ -61,23 +61,24 @@ public class ParseRemote: OCKRemoteSynchronizable {
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
-        no public read/write access. This `defaultACL` is not the same as `ParseACL.defaultACL`. If you want the
-        the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`, you need to provide
-        `ParseACL.defaultACL`.
+        no public read/write access.
+        - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
+        - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+        you need to provide `ParseACL.defaultACL`.
     */
     public init(uuid: UUID,
                 auto: Bool,
                 subscribeToServerUpdates: Bool,
-                defaultACL: ParseACL? = nil) throws {
+                defaultACL: ParseACL? = nil) async throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
-        if let currentUser = PCKUser.current {
-            Self.setDefaultACL(defaultACL, for: currentUser)
-            subscribeToClock()
+        if let currentUser = try? await PCKUser.current() {
+            try Self.setDefaultACL(defaultACL, for: currentUser)
+            await subscribeToClock()
         }
     }
 
@@ -91,19 +92,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
-        no public read/write access. This `defaultACL` is not the same as `ParseACL.defaultACL`. If you want the
-        the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`, you need to provide
-        `ParseACL.defaultACL`.
+        no public read/write access.
+     - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
+     - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+     you need to provide `ParseACL.defaultACL`.
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable],
                             subscribeToServerUpdates: Bool,
-                            defaultACL: ParseACL? = nil) throws {
-        try self.init(uuid: uuid,
-                      auto: auto,
-                      subscribeToServerUpdates: subscribeToServerUpdates,
-                      defaultACL: defaultACL)
+                            defaultACL: ParseACL? = nil) async throws {
+        try await self.init(uuid: uuid,
+                            auto: auto,
+                            subscribeToServerUpdates: subscribeToServerUpdates,
+                            defaultACL: defaultACL)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
@@ -121,20 +123,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
-        no public read/write access. This `defaultACL` is not the same as `ParseACL.defaultACL`. If you want the
-        the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`, you need to provide
-        `ParseACL.defaultACL`.
+        no public read/write access.
+     - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
+     - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+     you need to provide `ParseACL.defaultACL`.
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]? = nil,
                             customClasses: [String: PCKSynchronizable],
                             subscribeToServerUpdates: Bool,
-                            defaultACL: ParseACL? = nil) throws {
-        try self.init(uuid: uuid,
-                      auto: auto,
-                      subscribeToServerUpdates: subscribeToServerUpdates,
-                      defaultACL: defaultACL)
+                            defaultACL: ParseACL? = nil) async throws {
+        try await self.init(uuid: uuid,
+                            auto: auto,
+                            subscribeToServerUpdates: subscribeToServerUpdates,
+                            defaultACL: defaultACL)
         if replacePCKStoreClasses != nil {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
                 .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
@@ -145,27 +148,29 @@ public class ParseRemote: OCKRemoteSynchronizable {
     }
 
     deinit {
-        do {
-            try clockQuery.unsubscribe()
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.deinitializer.error("Unsubscribed from clock query")
-            } else {
-                os_log("Unsubscribed from clock query",
-                       log: .deinitializer,
-                       type: .error)
-            }
-        } catch {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.deinitializer.error("Couldn't unsubscribe from clock query")
-            } else {
-                os_log("Couldn't unsubscribe from clock query",
-                       log: .deinitializer,
-                       type: .error)
+        Task {
+            do {
+                try await clockQuery.unsubscribe()
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.deinitializer.error("Unsubscribed from clock query")
+                } else {
+                    os_log("Unsubscribed from clock query",
+                           log: .deinitializer,
+                           type: .error)
+                }
+            } catch {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.deinitializer.error("Couldn't unsubscribe from clock query")
+                } else {
+                    os_log("Couldn't unsubscribe from clock query",
+                           log: .deinitializer,
+                           type: .error)
+                }
             }
         }
     }
 
-    class func setDefaultACL(_ defaultACL: ParseACL?, for user: PCKUser) {
+    class func setDefaultACL(_ defaultACL: ParseACL?, for user: PCKUser) throws {
         let acl: ParseACL!
         if let defaultACL = defaultACL {
             acl = defaultACL
@@ -206,19 +211,35 @@ public class ParseRemote: OCKRemoteSynchronizable {
                        type: .error,
                        error.localizedDescription)
             }
+            throw error
         }
     }
 
-    func subscribeToClock() {
-        DispatchQueue.main.async {
-
-            guard PCKUser.current != nil,
-                  self.subscribeToServerUpdates == true,
-                  self.clockSubscription == nil else {
+    @MainActor
+    func subscribeToClock() async {
+        do {
+            _ = try await PCKUser.current()
+            guard self.subscribeToServerUpdates == true,
+                self.clockSubscription == nil else {
                 return
             }
 
-            guard let subscription = self.clockQuery.subscribeCallback else {
+            do {
+                let subscription = try await self.clockQuery.subscribeCallback()
+                self.clockSubscription = subscription
+                self.clockSubscription?.handleEvent { (_, _) in
+                    self.parseDelegate?.didRequestSynchronization(self)
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger
+                            .clockSubscription
+                            .log("Parse subscription is notifying that there are updates on the server")
+                    } else {
+                        os_log("Parse subscription is notifying that there are updates on the server",
+                               log: .clockSubscription,
+                               type: .info)
+                    }
+                }
+            } catch {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.clockSubscription.error("Couldn't subscribe to clock query")
                 } else {
@@ -228,19 +249,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
                 return
             }
-            self.clockSubscription = subscription
-            self.clockSubscription?.handleEvent { (_, _) in
-                self.parseDelegate?.didRequestSynchronization(self)
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger
-                        .clockSubscription
-                        .log("Parse subscription is notifying that there are updates on the server")
-                } else {
-                    os_log("Parse subscription is notifying that there are updates on the server",
-                           log: .clockSubscription,
-                           type: .info)
-                }
-            }
+        } catch {
+            return
         }
     }
 
@@ -248,12 +258,13 @@ public class ParseRemote: OCKRemoteSynchronizable {
                               mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                               completion: @escaping (Error?) -> Void) {
 
-        guard PCKUser.current != nil else {
-            completion(ParseCareKitError.userNotLoggedIn)
-            return
-        }
-
         Task {
+            do {
+                _ = try await PCKUser.current()
+            } catch {
+                completion(ParseCareKitError.userNotLoggedIn)
+                return
+            }
             do {
                 let status = try await ParseHealth.check()
                 guard status == .ok else {
@@ -293,7 +304,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let returnError: Error? = nil
 
                 let localClock = knowledgeVector.clock(for: self.uuid)
-                self.subscribeToClock()
+                Task {
+                    await self.subscribeToClock()
+                }
                 ParseRemote.queue.sync {
                     self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock,
                                                          cloudVector: cloudVector,
@@ -411,20 +424,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public func pushRevisions(deviceRevision: OCKRevisionRecord,
                               completion: @escaping (Error?) -> Void) {
 
-        guard PCKUser.current != nil else {
-            completion(ParseCareKitError.userNotLoggedIn)
-            return
-        }
-
-        guard deviceRevision.entities.count > 0 else {
-            // No revisions need to be pushed
-            self.isSynchronizing = false
-            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-            completion(nil)
-            return
-        }
-
         Task {
+            do {
+                _ = try await PCKUser.current()
+            } catch {
+                completion(ParseCareKitError.userNotLoggedIn)
+                return
+            }
+
+            guard deviceRevision.entities.count > 0 else {
+                // No revisions need to be pushed
+                self.isSynchronizing = false
+                self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                completion(nil)
+                return
+            }
             do {
                 let status = try await ParseHealth.check()
                 guard status == .ok else {

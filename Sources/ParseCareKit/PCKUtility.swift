@@ -8,6 +8,7 @@
 
 import Foundation
 import ParseSwift
+import os.log
 
 // swiftlint:disable line_length
 
@@ -47,7 +48,7 @@ public class PCKUtility {
     public class func setupServer(fileName: String = "ParseCareKit",
                                   authentication: ((URLAuthenticationChallenge,
                                                     (URLSession.AuthChallengeDisposition,
-                                                      URLCredential?) -> Void) -> Void)? = nil) throws {
+                                                      URLCredential?) -> Void) -> Void)? = nil) async throws {
         var plistConfiguration: [String: AnyObject]
         var clientKey: String?
         var liveQueryURL: URL?
@@ -81,15 +82,15 @@ public class PCKUtility {
             deleteKeychainIfNeeded = deleteKeychain
         }
 
-        try ParseSwift.initialize(applicationId: appID,
-                                  clientKey: clientKey,
-                                  serverURL: serverURL,
-                                  liveQueryServerURL: liveQueryURL,
-                                  requiringCustomObjectIds: true,
-                                  usingTransactions: useTransactions,
-                                  usingPostForQuery: true,
-                                  deletingKeychainIfNeeded: deleteKeychainIfNeeded,
-                                  authentication: authentication)
+        try await ParseSwift.initialize(applicationId: appID,
+                                        clientKey: clientKey,
+                                        serverURL: serverURL,
+                                        liveQueryServerURL: liveQueryURL,
+                                        requiringCustomObjectIds: true,
+                                        usingTransactions: useTransactions,
+                                        usingPostForQuery: true,
+                                        deletingKeychainIfNeeded: deleteKeychainIfNeeded,
+                                        authentication: authentication)
     }
 
     /**
@@ -100,7 +101,7 @@ public class PCKUtility {
      - SynchronizeKeychain - (Boolean) Whether or not to synchronize the Keychain across devices.
      - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
      */
-    public class func setAccessGroup(fileName: String = "ParseCareKit") throws {
+    public class func setAccessGroup(fileName: String = "ParseCareKit") async throws {
         var plistConfiguration: [String: AnyObject]
         var accessGroup: String?
         var synchronizeKeychain = false
@@ -119,8 +120,8 @@ public class PCKUtility {
             synchronizeKeychain = synchronizeKeychainAcrossDevices
         }
 
-        try ParseSwift.setAccessGroup(accessGroup,
-                                      synchronizeAcrossDevices: synchronizeKeychain)
+        try await ParseSwift.setAccessGroup(accessGroup,
+                                            synchronizeAcrossDevices: synchronizeKeychain)
     }
 
     /// Get the current Parse Encoder with custom date strategy.

@@ -12,19 +12,18 @@ import XCTest
 
 class UtilityTests: XCTestCase {
 
-    override func setUpWithError() throws {
-    }
+    override func setUp() async throws {}
 
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         MockURLProtocol.removeAll()
-        try KeychainStore.shared.deleteAll()
-        try ParseStorage.shared.deleteAll()
+        try await KeychainStore.shared.deleteAll()
+        try await ParseStorage.shared.deleteAll()
         UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
         UserDefaults.standard.synchronize()
     }
 
-    func testSetupServer() throws {
-        try PCKUtility.setupServer { (_, completionHandler) in
+    func testSetupServer() async throws {
+        try await PCKUtility.setupServer { (_, completionHandler) in
             completionHandler(.performDefaultHandling, nil)
         }
         XCTAssertEqual(ParseSwift.configuration.applicationId, "3B5FD9DA-C278-4582-90DC-101C08E7FC98")
