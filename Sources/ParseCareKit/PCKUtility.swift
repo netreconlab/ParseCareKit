@@ -124,61 +124,6 @@ public class PCKUtility {
                                             synchronizeAcrossDevices: synchronizeKeychain)
     }
 
-    /**
-     Set the default ACL.
-     - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
-     objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
-     no public read/write access.
-     - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
-     - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
-     you need to provide `ParseACL.defaultACL`.
-     */
-    public class func setDefaultACL(_ defaultACL: ParseACL? = nil) async throws {
-        let user = try await PCKUser.current()
-        let acl: ParseACL!
-        if let defaultACL = defaultACL {
-            acl = defaultACL
-        } else {
-            var defaultACL = ParseACL()
-            defaultACL.publicRead = false
-            defaultACL.publicWrite = false
-            defaultACL.setReadAccess(user: user, value: true)
-            defaultACL.setWriteAccess(user: user, value: true)
-            acl = defaultACL
-        }
-        if let currentDefaultACL = PCKUtility.getDefaultACL() {
-            if acl == currentDefaultACL {
-                return
-            }
-        }
-        do {
-            let encodedACL = try PCKUtility.jsonEncoder().encode(acl)
-            if let aclString = String(data: encodedACL, encoding: .utf8) {
-                UserDefaults.standard.setValue(aclString,
-                                               forKey: ParseCareKitConstants.defaultACL)
-                UserDefaults.standard.synchronize()
-            } else {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.defaultACL.error("Couldn't encode defaultACL from user as string")
-                } else {
-                    os_log("Couldn't encode defaultACL from user as string",
-                           log: .defaultACL,
-                           type: .error)
-                }
-            }
-        } catch {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.defaultACL.error("Couldn't encode defaultACL from user. \(error.localizedDescription)")
-            } else {
-                os_log("Couldn't encode defaultACL from user. %{private}@",
-                       log: .defaultACL,
-                       type: .error,
-                       error.localizedDescription)
-            }
-            throw error
-        }
-    }
-
     /// Get the current Parse Encoder with custom date strategy.
     public class func encoder() -> ParseEncoder {
         PCKOutcome.getEncoder()

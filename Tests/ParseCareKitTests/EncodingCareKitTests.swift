@@ -13,71 +13,71 @@ import XCTest
 @testable import CareKitStore
 @testable import ParseSwift
 
-struct LoginSignupResponse: ParseUser {
-
-    var authData: [String: [String: String]?]?
-    var objectId: String?
-    var createdAt: Date?
-    var sessionToken: String?
-    var updatedAt: Date?
-    var ACL: ParseACL?
-    var originalData: Data?
-
-    // provided by User
-    var username: String?
-    var email: String?
-    var emailVerified: Bool?
-    var password: String?
-
-    // Your custom keys
-    var customKey: String?
-
-    init() {
-        self.createdAt = Date()
-        self.updatedAt = Date()
-        self.objectId = "yarr"
-        self.ACL = nil
-        self.customKey = "blah"
-        self.sessionToken = "myToken"
-        self.username = "hello10"
-        self.password = "world"
-        self.email = "hello@parse.com"
-    }
-}
-
-func userLogin() async throws -> PCKUser {
-    let loginResponse = LoginSignupResponse()
-
-    MockURLProtocol.mockRequests { _ in
-        do {
-            let encoded = try ParseCoding.jsonEncoder().encode(loginResponse)
-            return MockURLResponse(data: encoded, statusCode: 200, delay: 0.0)
-        } catch {
-            return nil
-        }
-    }
-    let user = try await PCKUser.login(username: loginResponse.username!,
-                                       password: loginResponse.password!)
-    MockURLProtocol.removeAll()
-    return user
-}
-
-func userLoginToRealServer() async {
-    let loginResponse = LoginSignupResponse()
-    do {
-        _ = try await PCKUser.signup(username: loginResponse.username!,
-                                     password: loginResponse.password!)
-    } catch {
-        do {
-            _ = try await PCKUser.login(username: loginResponse.username!,
-                                        password: loginResponse.password!)
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
-    }
-}
-
 class ParseCareKitTests: XCTestCase {
+
+    struct LoginSignupResponse: ParseUser {
+
+        var authData: [String: [String: String]?]?
+        var objectId: String?
+        var createdAt: Date?
+        var sessionToken: String?
+        var updatedAt: Date?
+        var ACL: ParseACL?
+        var originalData: Data?
+
+        // provided by User
+        var username: String?
+        var email: String?
+        var emailVerified: Bool?
+        var password: String?
+
+        // Your custom keys
+        var customKey: String?
+
+        init() {
+            self.createdAt = Date()
+            self.updatedAt = Date()
+            self.objectId = "yarr"
+            self.ACL = nil
+            self.customKey = "blah"
+            self.sessionToken = "myToken"
+            self.username = "hello10"
+            self.password = "world"
+            self.email = "hello@parse.com"
+        }
+    }
+
+    func userLogin() async throws -> PCKUser {
+        let loginResponse = LoginSignupResponse()
+
+        MockURLProtocol.mockRequests { _ in
+            do {
+                let encoded = try ParseCoding.jsonEncoder().encode(loginResponse)
+                return MockURLResponse(data: encoded, statusCode: 200, delay: 0.0)
+            } catch {
+                return nil
+            }
+        }
+        let user = try await PCKUser.login(username: loginResponse.username!,
+                                           password: loginResponse.password!)
+        MockURLProtocol.removeAll()
+        return user
+    }
+
+    func userLoginToRealServer() async {
+        let loginResponse = LoginSignupResponse()
+        do {
+            _ = try await PCKUser.signup(username: loginResponse.username!,
+                                         password: loginResponse.password!)
+        } catch {
+            do {
+                _ = try await PCKUser.login(username: loginResponse.username!,
+                                            password: loginResponse.password!)
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+        }
+    }
 
     private var parse: ParseRemote!
     private var store: OCKStore!
@@ -94,18 +94,12 @@ class ParseCareKitTests: XCTestCase {
                                         requiringCustomObjectIds: true,
                                         usingPostForQuery: true,
                                         testing: true)
-        do {
-            _ = try await userLogin()
-            parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                    auto: false,
-                                    subscribeToServerUpdates: false)
-            try await PCKUtility.setDefaultACL()
-        } catch {
-            print(error.localizedDescription)
-        }
-        store = OCKStore(name: "SampleAppStore", type: .onDisk(), remote: parse)
+        _ = try await userLogin()
+        parse = try await ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+                                      auto: false,
+                                      subscribeToServerUpdates: false)
+        store = OCKStore(name: "SampleAppStore", type: .inMemory, remote: parse)
         parse?.parseRemoteDelegate = self
-
     }
 
     override func tearDown() async throws {
@@ -138,7 +132,7 @@ class ParseCareKitTests: XCTestCase {
         userSetACL.setReadAccess(user: user, value: true)
         userSetACL.setWriteAccess(user: user, value: true)
 
-        try await PCKUtility.setDefaultACL(userSetACL)
+        try ParseRemote.setDefaultACL(userSetACL, for: user)
         guard let objectId = user.objectId,
               let defaultACL = PCKUtility.getDefaultACL() else {
             XCTFail("Should have objectId")

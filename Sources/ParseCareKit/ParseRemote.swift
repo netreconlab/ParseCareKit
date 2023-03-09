@@ -59,17 +59,25 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
+        - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
+        objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
+        no public read/write access.
+        - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
+        - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+        you need to provide `ParseACL.defaultACL`.
     */
     public init(uuid: UUID,
                 auto: Bool,
-                subscribeToServerUpdates: Bool) throws {
+                subscribeToServerUpdates: Bool,
+                defaultACL: ParseACL? = nil) async throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
-        Task {
+        if let currentUser = try? await PCKUser.current() {
+            try Self.setDefaultACL(defaultACL, for: currentUser)
             await subscribeToClock()
         }
     }
@@ -82,14 +90,22 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
+        - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
+        objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
+        no public read/write access.
+     - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
+     - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+     you need to provide `ParseACL.defaultACL`.
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable],
-                            subscribeToServerUpdates: Bool) throws {
-        try self.init(uuid: uuid,
-                      auto: auto,
-                      subscribeToServerUpdates: subscribeToServerUpdates)
+                            subscribeToServerUpdates: Bool,
+                            defaultACL: ParseACL? = nil) async throws {
+        try await self.init(uuid: uuid,
+                            auto: auto,
+                            subscribeToServerUpdates: subscribeToServerUpdates,
+                            defaultACL: defaultACL)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
@@ -105,15 +121,23 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - customClasses: Add custom classes to synchroniz by passing in the respective Key/Value pair.
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
+        - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
+        objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
+        no public read/write access.
+     - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
+     - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+     you need to provide `ParseACL.defaultACL`.
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: PCKSynchronizable]? = nil,
                             customClasses: [String: PCKSynchronizable],
-                            subscribeToServerUpdates: Bool) throws {
-        try self.init(uuid: uuid,
-                      auto: auto,
-                      subscribeToServerUpdates: subscribeToServerUpdates)
+                            subscribeToServerUpdates: Bool,
+                            defaultACL: ParseACL? = nil) async throws {
+        try await self.init(uuid: uuid,
+                            auto: auto,
+                            subscribeToServerUpdates: subscribeToServerUpdates,
+                            defaultACL: defaultACL)
         if replacePCKStoreClasses != nil {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
                 .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
@@ -143,6 +167,51 @@ public class ParseRemote: OCKRemoteSynchronizable {
                            type: .error)
                 }
             }
+        }
+    }
+
+    class func setDefaultACL(_ defaultACL: ParseACL?, for user: PCKUser) throws {
+        let acl: ParseACL!
+        if let defaultACL = defaultACL {
+            acl = defaultACL
+        } else {
+            var defaultACL = ParseACL()
+            defaultACL.publicRead = false
+            defaultACL.publicWrite = false
+            defaultACL.setReadAccess(user: user, value: true)
+            defaultACL.setWriteAccess(user: user, value: true)
+            acl = defaultACL
+        }
+        if let currentDefaultACL = PCKUtility.getDefaultACL() {
+            if acl == currentDefaultACL {
+                return
+            }
+        }
+        do {
+            let encodedACL = try PCKUtility.jsonEncoder().encode(acl)
+            if let aclString = String(data: encodedACL, encoding: .utf8) {
+                UserDefaults.standard.setValue(aclString,
+                                               forKey: ParseCareKitConstants.defaultACL)
+                UserDefaults.standard.synchronize()
+            } else {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.defaultACL.error("Couldn't encode defaultACL from user as string")
+                } else {
+                    os_log("Couldn't encode defaultACL from user as string",
+                           log: .defaultACL,
+                           type: .error)
+                }
+            }
+        } catch {
+            if #available(iOS 14.0, watchOS 7.0, *) {
+                Logger.defaultACL.error("Couldn't encode defaultACL from user. \(error.localizedDescription)")
+            } else {
+                os_log("Couldn't encode defaultACL from user. %{private}@",
+                       log: .defaultACL,
+                       type: .error,
+                       error.localizedDescription)
+            }
+            throw error
         }
     }
 
