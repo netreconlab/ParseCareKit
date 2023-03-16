@@ -126,6 +126,53 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Stored and fetched versions ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseConfigCodable",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " and types that conform",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseConfig",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : "are interoperable and access the same Config.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "relationshipsSections" : [

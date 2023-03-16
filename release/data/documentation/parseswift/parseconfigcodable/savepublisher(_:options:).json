@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Logs in a ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseUser",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " ",
+      "text" : "Update the Config ",
       "type" : "text"
     },
     {
@@ -22,52 +14,7 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with a session token.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "Returns an instance of the successfully logged in ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseUser",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "If successful, this saves the session to the keychain, so you can retrieve the currently logged in user",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "using ",
-      "type" : "text"
-    },
-    {
-      "inlineContent" : [
-        {
-          "text" : "current",
-          "type" : "text"
-        }
-      ],
-      "type" : "emphasis"
-    },
-    {
-      "text" : ".",
+      "text" : ". Publishes when complete.",
       "type" : "text"
     }
   ],
@@ -75,19 +22,67 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfigCodable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/become(sessionToken:options:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfigCodable\/savePublisher(_:options:)"
   },
   "kind" : "symbol",
   "metadata" : {
+    "conformance" : {
+      "availabilityPrefix" : [
+        {
+          "text" : "Available when",
+          "type" : "text"
+        }
+      ],
+      "conformancePrefix" : [
+        {
+          "text" : "Conforms when",
+          "type" : "text"
+        }
+      ],
+      "constraints" : [
+        {
+          "code" : "V",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " conforms to ",
+          "type" : "text"
+        },
+        {
+          "code" : "Decodable",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " and ",
+          "type" : "text"
+        },
+        {
+          "code" : "Encodable",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ]
+    },
     "extendedModule" : "ParseSwift",
-    "externalID" : "s:10ParseSwift0A4UserPAAE6become12sessionToken7optionsxSS_ShyAA3APIV6OptionOGtYaKF",
+    "externalID" : "s:10ParseSwift0A13ConfigCodableV13savePublisher_7options7Combine6FutureCySbAA0A5ErrorVGSDySSxG_ShyAA3APIV6OptionOGtFZ",
     "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
       {
         "kind" : "keyword",
         "text" : "func"
@@ -98,19 +93,11 @@
       },
       {
         "kind" : "identifier",
-        "text" : "become"
+        "text" : "savePublisher"
       },
       {
         "kind" : "text",
-        "text" : "("
-      },
-      {
-        "kind" : "externalParam",
-        "text" : "sessionToken"
-      },
-      {
-        "kind" : "text",
-        "text" : ": "
+        "text" : "(["
       },
       {
         "kind" : "typeIdentifier",
@@ -119,7 +106,16 @@
       },
       {
         "kind" : "text",
-        "text" : ", "
+        "text" : " : "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10ParseSwift0A13ConfigCodableV1Vxmfp",
+        "text" : "V"
+      },
+      {
+        "kind" : "text",
+        "text" : "], "
       },
       {
         "kind" : "externalParam",
@@ -145,27 +141,34 @@
       },
       {
         "kind" : "text",
-        "text" : ") "
-      },
-      {
-        "kind" : "keyword",
-        "text" : "async"
-      },
-      {
-        "kind" : "text",
-        "text" : " "
-      },
-      {
-        "kind" : "keyword",
-        "text" : "throws"
-      },
-      {
-        "kind" : "text",
-        "text" : " -> "
+        "text" : ") -> "
       },
       {
         "kind" : "typeIdentifier",
-        "text" : "Self"
+        "preciseIdentifier" : "s:7Combine6FutureC",
+        "text" : "Future"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10ParseSwift0A5ErrorV",
+        "text" : "ParseError"
+      },
+      {
+        "kind" : "text",
+        "text" : ">"
       }
     ],
     "modules" : [
@@ -174,9 +177,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Instance Method",
+    "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "become(sessionToken:options:)"
+    "title" : "savePublisher(_:options:)"
   },
   "primaryContentSections" : [
     {
@@ -190,8 +193,8 @@
           ],
           "tokens" : [
             {
-              "kind" : "attribute",
-              "text" : "@discardableResult"
+              "kind" : "keyword",
+              "text" : "static"
             },
             {
               "kind" : "text",
@@ -207,7 +210,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "become"
+              "text" : "savePublisher"
             },
             {
               "kind" : "text",
@@ -215,11 +218,19 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "sessionToken"
+              "text" : "_"
             },
             {
               "kind" : "text",
-              "text" : ": "
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "config"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
             },
             {
               "kind" : "typeIdentifier",
@@ -228,7 +239,16 @@
             },
             {
               "kind" : "text",
-              "text" : ", "
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10ParseSwift0A13ConfigCodableV1Vxmfp",
+              "text" : "V"
+            },
+            {
+              "kind" : "text",
+              "text" : "], "
             },
             {
               "kind" : "externalParam",
@@ -256,27 +276,35 @@
             },
             {
               "kind" : "text",
-              "text" : " = []) "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "async"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "throws"
-            },
-            {
-              "kind" : "text",
-              "text" : " -> "
+              "text" : " = []) -> "
             },
             {
               "kind" : "typeIdentifier",
-              "text" : "Self"
+              "preciseIdentifier" : "s:7Combine6FutureC",
+              "text" : "Future"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10ParseSwift0A5ErrorV",
+              "text" : "ParseError"
+            },
+            {
+              "kind" : "text",
+              "text" : ">"
             }
           ]
         }
@@ -294,15 +322,7 @@
         {
           "inlineContent" : [
             {
-              "text" : "Returns the logged in ",
-              "type" : "text"
-            },
-            {
-              "code" : "ParseUser",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ".",
+              "text" : "A publisher that eventually produces a single value and then finishes or fails.",
               "type" : "text"
             }
           ],
@@ -319,14 +339,14 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The sessionToken of the user to login.",
+                  "text" : "The Config to update on the server.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "sessionToken"
+          "name" : "config"
         },
         {
           "content" : [
@@ -343,81 +363,6 @@
           "name" : "options"
         }
       ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "An error of type ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseError",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Throws",
-          "style" : "note",
-          "type" : "aside"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The default cache policy for this method is ",
-                  "type" : "text"
-                },
-                {
-                  "code" : ".reloadIgnoringLocalCacheData",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ". If a developer",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "desires a different policy, it should be inserted in ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "options",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Note",
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -431,7 +376,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)"
+        "\/documentation\/parseswift\/parseconfigcodable\/savepublisher(_:options:)"
       ],
       "traits" : [
         {
@@ -521,18 +466,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/api\/options"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfigCodable": {
   "abstract" : [
     {
-      "text" : "Objects that conform to the ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseUser",
+      "code" : "ParseConfigCodable",
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of a user persisted to the",
+      "text" : " allows access to the Config on the Parse Server as a",
       "type" : "text"
     },
     {
@@ -540,15 +481,33 @@
       "type" : "text"
     },
     {
-      "text" : "Keychain and Parse Server. This protocol inherits from the ",
+      "text" : "dictionary where the keys are ",
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
+      "inlineContent" : [
+        {
+          "text" : "strings",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
     },
     {
-      "text" : " protocol, and retains the same",
+      "text" : " and the values are ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "Codable",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     },
     {
@@ -556,30 +515,22 @@
       "type" : "text"
     },
     {
-      "text" : "functionality of a ",
+      "text" : "The current ",
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
+      "code" : "ParseConfigCodable",
       "type" : "codeVoice"
     },
     {
-      "text" : ", but also extends it with various user specific methods, like",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "authentication, signing up, and validation uniqueness.",
+      "text" : " is persisted to the Keychain and Parse Server.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "protocol"
+      "text" : "struct"
     },
     {
       "kind" : "text",
@@ -587,34 +538,26 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseUser"
+      "text" : "ParseConfigCodable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfigCodable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParseUser"
+      "text" : "ParseConfigCodable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParseUser",
+  "title" : "ParseConfigCodable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseuser"
+  "url" : "\/documentation\/parseswift\/parseconfigcodable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/become(sessionToken:options:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfigCodable/savePublisher(_:options:)": {
   "abstract" : [
     {
-      "text" : "Logs in a ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseUser",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " ",
+      "text" : "Update the Config ",
       "type" : "text"
     },
     {
@@ -627,56 +570,59 @@
       "type" : "emphasis"
     },
     {
-      "text" : " with a session token.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "Returns an instance of the successfully logged in ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseUser",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "If successful, this saves the session to the keychain, so you can retrieve the currently logged in user",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "using ",
-      "type" : "text"
-    },
-    {
-      "inlineContent" : [
-        {
-          "text" : "current",
-          "type" : "text"
-        }
-      ],
-      "type" : "emphasis"
-    },
-    {
-      "text" : ".",
+      "text" : ". Publishes when complete.",
       "type" : "text"
     }
   ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "V",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Decodable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " and ",
+        "type" : "text"
+      },
+      {
+        "code" : "Encodable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "func"
@@ -687,19 +633,11 @@
     },
     {
       "kind" : "identifier",
-      "text" : "become"
+      "text" : "savePublisher"
     },
     {
       "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "sessionToken"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
+      "text" : "(["
     },
     {
       "kind" : "typeIdentifier",
@@ -708,7 +646,16 @@
     },
     {
       "kind" : "text",
-      "text" : ", "
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A13ConfigCodableV1Vxmfp",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
     },
     {
       "kind" : "externalParam",
@@ -734,35 +681,76 @@
     },
     {
       "kind" : "text",
-      "text" : ") "
+      "text" : ") -> "
     },
     {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:7Combine6FutureC",
+      "text" : "Future"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A5ErrorV",
+      "text" : "ParseError"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfigCodable\/savePublisher(_:options:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "savePublisher(_:options:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseconfigcodable\/savepublisher(_:options:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError": {
+  "abstract" : [
+    {
+      "text" : "An object with a Parse code and message.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
       "kind" : "keyword",
-      "text" : "async"
+      "text" : "struct"
     },
     {
       "kind" : "text",
       "text" : " "
     },
     {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
+      "kind" : "identifier",
+      "text" : "ParseError"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/become(sessionToken:options:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError",
   "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseError"
+    }
+  ],
   "role" : "symbol",
-  "title" : "become(sessionToken:options:)",
+  "title" : "ParseError",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)"
+  "url" : "\/documentation\/parseswift\/parseerror"
 }
 }
 }

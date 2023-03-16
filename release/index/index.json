@@ -15725,12 +15725,12 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/cloudviewmodel\/runfunction(options:)",
-                "title" : "func runFunction(options: API.Options)",
+                "title" : "func runFunction(options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/cloudviewmodel\/startjob(options:)",
-                "title" : "func startJob(options: API.Options)",
+                "title" : "func startJob(options: API.Options) async",
                 "type" : "method"
               },
               {
@@ -16056,27 +16056,27 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/queryviewmodel\/aggregate(_:options:)",
-                "title" : "func aggregate([[String : Encodable]], options: API.Options)",
+                "title" : "func aggregate([[String : Encodable]], options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryviewmodel\/count(options:)",
-                "title" : "func count(options: API.Options)",
+                "title" : "func count(options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryviewmodel\/find(options:)",
-                "title" : "func find(options: API.Options)",
+                "title" : "func find(options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryviewmodel\/findall(batchlimit:options:)",
-                "title" : "func findAll(batchLimit: Int?, options: API.Options)",
+                "title" : "func findAll(batchLimit: Int?, options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryviewmodel\/first(options:)",
-                "title" : "func first(options: API.Options)",
+                "title" : "func first(options: API.Options) async",
                 "type" : "method"
               },
               {
@@ -16131,6 +16131,16 @@
               {
                 "path" : "\/documentation\/parseswift\/subscription\/event",
                 "title" : "var event: (query: Query<T>, event: Event<T>)?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/subscription\/issubscribed",
+                "title" : "var isSubscribed: Bool",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/subscription\/isunsubscribed",
+                "title" : "var isUnsubscribed: Bool",
                 "type" : "property"
               },
               {
@@ -16270,12 +16280,12 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/cloudobservable\/runfunction(options:)",
-                "title" : "func runFunction(options: API.Options)",
+                "title" : "func runFunction(options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/cloudobservable\/startjob(options:)",
-                "title" : "func startJob(options: API.Options)",
+                "title" : "func startJob(options: API.Options) async",
                 "type" : "method"
               }
             ],
@@ -16453,13 +16463,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       }
                     ],
@@ -17488,6 +17498,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseinstallation\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
+                    "type" : "property"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -18506,6 +18525,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parserole\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
+                    "type" : "property"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -18575,6 +18603,15 @@
               },
               {
                 "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsesession\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
+                    "type" : "property"
+                  },
                   {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
@@ -18723,7 +18760,7 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)",
+                "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)-swift.method",
                 "title" : "func become(sessionToken: String, options: API.Options) async throws -> Self",
                 "type" : "method"
               },
@@ -18733,7 +18770,7 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/becomepublisher(sessiontoken:options:)",
+                "path" : "\/documentation\/parseswift\/parseuser\/becomepublisher(sessiontoken:options:)-swift.method",
                 "title" : "func becomePublisher(sessionToken: String, options: API.Options) -> Future<Self, ParseError>",
                 "type" : "method"
               },
@@ -18911,8 +18948,18 @@
                 "type" : "groupMarker"
               },
               {
+                "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:)-swift.type.method",
+                "title" : "static func become(sessionToken: String, options: API.Options) async throws -> Self",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/parseswift\/parseuser\/become(sessiontoken:options:callbackqueue:completion:)-swift.type.method",
                 "title" : "static func become(sessionToken: String, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseuser\/becomepublisher(sessiontoken:options:)-swift.type.method",
+                "title" : "static func becomePublisher(sessionToken: String, options: API.Options) -> Future<Self, ParseError>",
                 "type" : "method"
               },
               {
@@ -18946,13 +18993,28 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/login(username:password:options:)",
-                "title" : "static func login(username: String, password: String, options: API.Options) async throws -> Self",
+                "path" : "\/documentation\/parseswift\/parseuser\/login(username:email:password:authdata:options:)",
+                "title" : "static func login(username: String?, email: String?, password: String, authData: [String : [String : String]?]?, options: API.Options) async throws -> Self",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/login(username:password:options:callbackqueue:completion:)",
-                "title" : "static func login(username: String, password: String, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                "path" : "\/documentation\/parseswift\/parseuser\/login(username:email:password:authdata:options:callbackqueue:completion:)",
+                "title" : "static func login(username: String?, email: String?, password: String, authData: [String : [String : String]?]?, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseuser\/loginas(objectid:options:)",
+                "title" : "static func loginAs(objectId: String, options: API.Options) async throws -> Self",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseuser\/loginas(objectid:options:callbackqueue:completion:)",
+                "title" : "static func loginAs(objectId: String, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseuser\/loginaspublisher(objectid:options:)",
+                "title" : "static func loginAsPublisher(objectId: String, options: API.Options) -> Future<Self, ParseError>",
                 "type" : "method"
               },
               {
@@ -18961,8 +19023,8 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parseswift\/parseuser\/loginpublisher(username:password:options:)",
-                "title" : "static func loginPublisher(username: String, password: String, options: API.Options) -> Future<Self, ParseError>",
+                "path" : "\/documentation\/parseswift\/parseuser\/loginpublisher(username:email:password:authdata:options:)",
+                "title" : "static func loginPublisher(username: String?, email: String?, password: String, authData: [String : [String : String]?]?, options: API.Options) -> Future<Self, ParseError>",
                 "type" : "method"
               },
               {
@@ -19067,6 +19129,15 @@
               {
                 "children" : [
                   {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parseuser\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
+                    "type" : "property"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -19120,27 +19191,27 @@
               },
               {
                 "path" : "\/documentation\/parseswift\/queryobservable\/aggregate(_:options:)",
-                "title" : "func aggregate([[String : Encodable]], options: API.Options)",
+                "title" : "func aggregate([[String : Encodable]], options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryobservable\/count(options:)",
-                "title" : "func count(options: API.Options)",
+                "title" : "func count(options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryobservable\/find(options:)",
-                "title" : "func find(options: API.Options)",
+                "title" : "func find(options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryobservable\/findall(batchlimit:options:)",
-                "title" : "func findAll(batchLimit: Int?, options: API.Options)",
+                "title" : "func findAll(batchLimit: Int?, options: API.Options) async",
                 "type" : "method"
               },
               {
                 "path" : "\/documentation\/parseswift\/queryobservable\/first(options:)",
-                "title" : "func first(options: API.Options)",
+                "title" : "func first(options: API.Options) async",
                 "type" : "method"
               }
             ],
@@ -19413,6 +19484,11 @@
                     "type" : "case"
                   },
                   {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/loginas",
+                    "title" : "case loginAs",
+                    "type" : "case"
+                  },
+                  {
                     "path" : "\/documentation\/parseswift\/api\/endpoint\/logout",
                     "title" : "case logout",
                     "type" : "case"
@@ -19491,6 +19567,15 @@
                     "path" : "\/documentation\/parseswift\/api\/endpoint\/verifypassword",
                     "title" : "case verifyPassword",
                     "type" : "case"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/api\/endpoint\/urlcomponent",
+                    "title" : "var urlComponent: String",
+                    "type" : "property"
                   },
                   {
                     "title" : "Instance Methods",
@@ -21068,6 +21153,52 @@
             ],
             "path" : "\/documentation\/parseswift\/parseclp",
             "title" : "ParseCLP",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/current()",
+                "title" : "static func current() async throws -> [String : V]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/fetch(options:)",
+                "title" : "static func fetch(options: API.Options) async throws -> [String : V]",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/fetch(options:callbackqueue:completion:)",
+                "title" : "static func fetch(options: API.Options, callbackQueue: DispatchQueue, completion: (Result<[String : V], ParseError>) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/fetchpublisher(options:)",
+                "title" : "static func fetchPublisher(options: API.Options) -> Future<[String : V], ParseError>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/save(_:options:)",
+                "title" : "static func save([String : V], options: API.Options) async throws -> Bool",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/save(_:options:callbackqueue:completion:)",
+                "title" : "static func save([String : V], options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Bool, ParseError>) -> Void)",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/parseconfigcodable\/savepublisher(_:options:)",
+                "title" : "static func savePublisher([String : V], options: API.Options) -> Future<Bool, ParseError>",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/parseswift\/parseconfigcodable",
+            "title" : "ParseConfigCodable",
             "type" : "struct"
           },
           {
