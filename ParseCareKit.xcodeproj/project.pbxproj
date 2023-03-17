@@ -1159,7 +1159,7 @@
 			repositoryURL = "https://github.com/netreconlab/Parse-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.3.0;
+				minimumVersion = 5.3.3;
 			};
 		};
 		70DF63DA29719D6E002FA5C5 /* XCRemoteSwiftPackageReference "CareKit" */ = {
