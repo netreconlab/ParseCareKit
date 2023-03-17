@@ -5,7 +5,7 @@
       "type" : "text"
     },
     {
-      "code" : "Identifiable.id",
+      "code" : "Hashable.hash(into:)",
       "type" : "codeVoice"
     },
     {
@@ -23,15 +23,15 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/id-5kvj3"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/hash(into:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:10ParseSwift0A4FileV2id10Foundation4UUIDVvp",
+    "externalID" : "s:10ParseSwift0A4FileV4hash4intoys6HasherVz_tF",
     "fragments" : [
       {
         "kind" : "keyword",
-        "text" : "var"
+        "text" : "func"
       },
       {
         "kind" : "text",
@@ -39,16 +39,36 @@
       },
       {
         "kind" : "identifier",
-        "text" : "id"
+        "text" : "hash"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "into"
       },
       {
         "kind" : "text",
         "text" : ": "
       },
       {
+        "kind" : "keyword",
+        "text" : "inout"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10Foundation4UUIDV",
-        "text" : "UUID"
+        "preciseIdentifier" : "s:s6HasherV",
+        "text" : "Hasher"
+      },
+      {
+        "kind" : "text",
+        "text" : ")"
       }
     ],
     "modules" : [
@@ -57,9 +77,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Instance Property",
-    "symbolKind" : "property",
-    "title" : "id"
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "hash(into:)"
   },
   "primaryContentSections" : [
     {
@@ -74,7 +94,7 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "var"
+              "text" : "func"
             },
             {
               "kind" : "text",
@@ -82,16 +102,44 @@
             },
             {
               "kind" : "identifier",
-              "text" : "id"
+              "text" : "hash"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "into"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "hasher"
             },
             {
               "kind" : "text",
               "text" : ": "
             },
             {
+              "kind" : "keyword",
+              "text" : "inout"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10Foundation4UUIDV",
-              "text" : "UUID"
+              "preciseIdentifier" : "s:s6HasherV",
+              "text" : "Hasher"
+            },
+            {
+              "kind" : "text",
+              "text" : ")"
             }
           ]
         }
@@ -110,7 +158,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsefile\/id-5kvj3"
+        "\/documentation\/parseswift\/parsefile\/hash(into:)"
       ],
       "traits" : [
         {
@@ -182,14 +230,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsefile"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/id-5kvj3": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/hash(into:)": {
   "abstract" : [
 
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "var"
+      "text" : "func"
     },
     {
       "kind" : "text",
@@ -197,24 +245,44 @@
     },
     {
       "kind" : "identifier",
-      "text" : "id"
+      "text" : "hash"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
     },
     {
       "kind" : "text",
       "text" : ": "
     },
     {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10Foundation4UUIDV",
-      "text" : "UUID"
+      "preciseIdentifier" : "s:s6HasherV",
+      "text" : "Hasher"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/id-5kvj3",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/hash(into:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "id",
+  "title" : "hash(into:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsefile\/id-5kvj3"
+  "url" : "\/documentation\/parseswift\/parsefile\/hash(into:)"
 }
 }
 }

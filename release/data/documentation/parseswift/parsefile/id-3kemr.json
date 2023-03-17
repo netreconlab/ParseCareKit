@@ -5,7 +5,7 @@
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
+      "code" : "ParseFile",
       "type" : "codeVoice"
     },
     {
@@ -25,19 +25,17 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/ParseObject-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/id-27z0a"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/id-3kemr"
   },
   "kind" : "symbol",
   "metadata" : {
-    "extendedModule" : "ParseSwift",
-    "externalID" : "s:10ParseSwift0A6ObjectPAAE2idSSvp::SYNTHESIZED::s:10ParseSwift0A10PushStatusV",
+    "externalID" : "s:10ParseSwift0A4FileV2idSSvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -145,19 +143,11 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "ParseObject",
+                  "code" : "ParseFile",
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : "’s to be used even when they are not saved and do not have an ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "objectId",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
+                  "text" : "’s to be used even when they are  not saved.",
                   "type" : "text"
                 }
               ],
@@ -185,7 +175,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "objectId",
+                  "code" : "name",
                   "type" : "codeVoice"
                 },
                 {
@@ -193,7 +183,7 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "ParseObject",
+                  "code" : "ParseFile",
                   "type" : "codeVoice"
                 },
                 {
@@ -223,7 +213,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsepushstatus\/id-27z0a"
+        "\/documentation\/parseswift\/parsefile\/id-3kemr"
       ],
       "traits" : [
         {
@@ -245,10 +235,26 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile": {
   "abstract" : [
     {
-      "text" : "The PushStatus on the Parse Server.",
+      "text" : "A ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseFile",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " object representes a file of binary data stored on the Parse server.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "This can be a image, video, or anything else that an application needs to reference in a non-relational way.",
       "type" : "text"
     }
   ],
@@ -263,41 +269,30 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParsePushStatus"
+      "text" : "ParseFile"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParsePushStatus"
+      "text" : "ParseFile"
     }
   ],
   "role" : "symbol",
-  "title" : "ParsePushStatus",
+  "title" : "ParseFile",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus"
+  "url" : "\/documentation\/parseswift\/parsefile"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/ParseObject-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/ParseObject-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "ParseObject Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/parseobject-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/id-27z0a": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/id-3kemr": {
   "abstract" : [
     {
       "text" : "A computed property that is a unique identifier and makes it easy to use ",
       "type" : "text"
     },
     {
-      "code" : "ParseObject",
+      "code" : "ParseFile",
       "type" : "codeVoice"
     },
     {
@@ -336,12 +331,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/id-27z0a",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/id-3kemr",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "id",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/id-27z0a"
+  "url" : "\/documentation\/parseswift\/parsefile\/id-3kemr"
 }
 }
 }
