@@ -12,9 +12,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/cbaker6/CareKit.git",
-                 .upToNextMajor(from: "2.1.8")),
+                 .upToNextMajor(from: "3.0.0-alpha.1")),
         .package(url: "https://github.com/netreconlab/Parse-Swift.git",
-            .upToNextMajor(from: "5.3.3"))
+            .upToNextMajor(from: "5.4.1"))
     ],
     targets: [
         .target(

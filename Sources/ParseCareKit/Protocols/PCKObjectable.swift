@@ -212,16 +212,12 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
 
         if encodingForParse {
-            if !(self is PCKOutcome) {
-                try container.encodeIfPresent(entityId, forKey: .entityId)
-            }
+            try container.encodeIfPresent(entityId, forKey: .entityId)
             try container.encodeIfPresent(objectId, forKey: .objectId)
             try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
         } else {
-            if !(self is PCKOutcome) {
-                try container.encodeIfPresent(entityId, forKey: .id)
-            }
+            try container.encodeIfPresent(entityId, forKey: .id)
             try container.encodeIfPresent(uuid, forKey: .uuid)
         }
         try container.encodeIfPresent(schemaVersion, forKey: .schemaVersion)

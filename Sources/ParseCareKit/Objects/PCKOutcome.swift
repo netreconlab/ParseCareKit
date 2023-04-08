@@ -464,9 +464,6 @@ extension PCKOutcome {
             try container.encodeIfPresent(task?.toPointer(), forKey: .task)
             try container.encodeIfPresent(startDate, forKey: .startDate)
             try container.encodeIfPresent(endDate, forKey: .endDate)
-            if id.count > 0 {
-                try container.encodeIfPresent(id, forKey: .entityId)
-            }
         }
         try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
