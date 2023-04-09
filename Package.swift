@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.7
 
 import PackageDescription
 
@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/cbaker6/CareKit.git",
-                 .upToNextMajor(from: "3.0.0-alpha.1")),
+                 .upToNextMajor(from: "3.0.0-alpha.5")),
         .package(url: "https://github.com/netreconlab/Parse-Swift.git",
             .upToNextMajor(from: "5.4.1"))
     ],
