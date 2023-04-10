@@ -309,12 +309,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     await self.subscribeToClock()
                 }
                 ParseRemote.queue.sync {
-                    self.pullRevisionsForConcreteClasses(previousError: returnError, localClock: localClock,
+                    self.pullRevisionsForConcreteClasses(previousError: returnError,
+                                                         localClock: localClock,
                                                          cloudVector: cloudVector,
                                                          mergeRevision: mergeRevision) { previosError in
 
-                        self.pullRevisionsForCustomClasses(previousError: previosError, localClock: localClock,
-                                                           cloudVector: cloudVector, mergeRevision: mergeRevision,
+                        self.pullRevisionsForCustomClasses(previousError: previosError,
+                                                           localClock: localClock,
+                                                           cloudVector: cloudVector,
+                                                           mergeRevision: mergeRevision,
                                                            completion: completion)
                     }
                 }
@@ -322,8 +325,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: Int=0, previousError: Error?,
-                                         localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector,
+    func pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: Int=0,
+                                         previousError: Error?,
+                                         localClock: Int,
+                                         cloudVector: OCKRevisionRecord.KnowledgeVector,
                                          mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                                          completion: @escaping (Error?) -> Void) {
 
@@ -370,8 +375,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func pullRevisionsForCustomClasses(customClassesAlreadyPulled: Int=0, previousError: Error?,
-                                       localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector,
+    func pullRevisionsForCustomClasses(customClassesAlreadyPulled: Int=0,
+                                       previousError: Error?,
+                                       localClock: Int,
+                                       cloudVector: OCKRevisionRecord.KnowledgeVector,
                                        mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                                        completion: @escaping (Error?) -> Void) {
 
@@ -433,7 +440,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(ParseCareKitError.userNotLoggedIn)
                 return
             }
-            
+
             do {
                 let status = try await ParseHealth.check()
                 guard status == .ok else {
@@ -452,14 +459,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     os_log("Server health: %{private}@", log: .pushRevisions, type: .error, error.localizedDescription)
                 }
                 completion(ParseCareKitError.parseHealthError)
-                return
-            }
-
-            guard deviceRevisions.count > 0 else {
-                // No revisions need to be pushed
-                self.isSynchronizing = false
-                self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-                completion(nil)
                 return
             }
 
@@ -489,13 +488,22 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     return
                 }
 
+                guard deviceRevisions.count > 0 else {
+                    self.finishedRevisions(cloudParseVector,
+                                           shouldIncrementCloudClock: false,
+                                           cloudClock: cloudCareKitVector,
+                                           localClock: deviceKnowledge,
+                                           completion: completion)
+                    return
+                }
+
                 for (recordIndex, deviceRevision) in deviceRevisions.enumerated() {
                     guard deviceRevision.entities.count > 0 else {
                         if recordIndex == deviceRevisions.count {
-                            // No revisions need to be pushed
-                            self.isSynchronizing = false
-                            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-                            completion(nil)
+                            self.finishedRevisions(cloudParseVector,
+                                                   cloudClock: cloudCareKitVector,
+                                                   localClock: deviceRevision.knowledgeVector,
+                                                   completion: completion)
                         }
                         return
                     }
@@ -820,12 +828,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
     }
 
     func finishedRevisions(_ parseClock: PCKClock,
+                           shouldIncrementCloudClock: Bool = true,
                            cloudClock: OCKRevisionRecord.KnowledgeVector,
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
         var cloudVector = cloudClock
-        // Increment and merge Knowledge Vector
-        cloudVector.increment(clockFor: uuid)
+        if shouldIncrementCloudClock {
+            // Increment and merge Knowledge Vector
+            cloudVector.increment(clockFor: uuid)
+        }
         cloudVector.merge(with: localClock)
 
         guard let updatedClock = parseClock.encodeClock(cloudVector) else {
