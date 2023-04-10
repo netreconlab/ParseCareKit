@@ -265,6 +265,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(ParseCareKitError.userNotLoggedIn)
                 return
             }
+
             do {
                 let status = try await ParseHealth.check()
                 guard status == .ok else {
@@ -432,6 +433,27 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(ParseCareKitError.userNotLoggedIn)
                 return
             }
+            
+            do {
+                let status = try await ParseHealth.check()
+                guard status == .ok else {
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.pushRevisions.error("Server health is: \(status.rawValue)")
+                    } else {
+                        os_log("Server health is not \"ok\"", log: .pushRevisions, type: .error)
+                    }
+                    completion(ParseCareKitError.parseHealthError)
+                    return
+                }
+            } catch {
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pushRevisions.error("Server health: \(error.localizedDescription)")
+                } else {
+                    os_log("Server health: %{private}@", log: .pushRevisions, type: .error, error.localizedDescription)
+                }
+                completion(ParseCareKitError.parseHealthError)
+                return
+            }
 
             guard deviceRevisions.count > 0 else {
                 // No revisions need to be pushed
@@ -441,74 +463,45 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
-            for (recordIndex, deviceRevision) in deviceRevisions.enumerated() {
-                guard deviceRevision.entities.count > 0 else {
-                    if recordIndex == deviceRevisions.count {
-                        // No revisions need to be pushed
-                        self.isSynchronizing = false
-                        self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-                        completion(nil)
-                    }
-                    return
-                }
-                do {
-                    let status = try await ParseHealth.check()
-                    guard status == .ok else {
+            // Fetch Clock from Cloud
+            PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
+
+                guard let cloudParseVector = potentialPCKClock,
+                      let cloudCareKitVector = potentialCKClock else {
+                    guard let parseError = error else {
+                        // There was a different issue that we don't know how to handle
                         if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.pushRevisions.error("Server health is: \(status.rawValue)")
+                            Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
                         } else {
-                            os_log("Server health is not \"ok\"", log: .pushRevisions, type: .error)
+                            os_log("Error in pushRevisions. Couldn't unwrap clock",
+                                   log: .pushRevisions, type: .error)
                         }
-                        completion(ParseCareKitError.parseHealthError)
+                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                         return
                     }
-                } catch {
                     if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pushRevisions.error("Server health: \(error.localizedDescription)")
+                        Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
                     } else {
-                        os_log("Server health: %{private}@", log: .pushRevisions, type: .error, error.localizedDescription)
+                        os_log("Error in pushRevisions. Couldn't unwrap clock: %{private}@",
+                               log: .pushRevisions, type: .error, parseError.localizedDescription)
                     }
-                    completion(ParseCareKitError.parseHealthError)
+                    completion(parseError)
                     return
                 }
 
-                actor RevisionsComplete {
-                    var count: Int = 0
-
-                    func incrementCompleted() {
-                        count += 1
-                    }
-                }
-
-                ParseRemote.queue.async {
-                    // Fetch Clock from Cloud
-                    PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
-
-                        guard let cloudParseVector = potentialPCKClock,
-                              let cloudCareKitVector = potentialCKClock else {
-                            guard let parseError = error else {
-                                // There was a different issue that we don't know how to handle
-                                if #available(iOS 14.0, watchOS 7.0, *) {
-                                    Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
-                                } else {
-                                    os_log("Error in pushRevisions. Couldn't unwrap clock",
-                                           log: .pushRevisions, type: .error)
-                                }
-                                completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                return
-                            }
-                            if #available(iOS 14.0, watchOS 7.0, *) {
-                                Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
-                            } else {
-                                os_log("Error in pushRevisions. Couldn't unwrap clock: %{private}@",
-                                       log: .pushRevisions, type: .error, parseError.localizedDescription)
-                            }
-                            completion(parseError)
-                            return
+                for (recordIndex, deviceRevision) in deviceRevisions.enumerated() {
+                    guard deviceRevision.entities.count > 0 else {
+                        if recordIndex == deviceRevisions.count {
+                            // No revisions need to be pushed
+                            self.isSynchronizing = false
+                            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                            completion(nil)
                         }
+                        return
+                    }
 
+                    ParseRemote.queue.async {
                         let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
-
                         let revisionsCompleted = RevisionsComplete()
                         Task {
                             let count = await revisionsCompleted.count
@@ -534,7 +527,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: deviceKnowledge,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -559,7 +553,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -581,7 +576,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -606,7 +602,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -627,7 +624,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -650,7 +648,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -671,7 +670,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -695,7 +695,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -716,7 +717,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -738,7 +740,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -759,7 +762,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -783,7 +787,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                             self.notifyRevisionProgress(revisionsCompletedCount,
                                                                         totalEntities: deviceRevision.entities.count)
                                             if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector, cloudClock: cloudCareKitVector,
+                                                self.finishedRevisions(cloudParseVector,
+                                                                       cloudClock: cloudCareKitVector,
                                                                        localClock: deviceRevision.knowledgeVector,
                                                                        completion: completion)
                                             }
@@ -814,7 +819,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func finishedRevisions(_ parseClock: PCKClock, cloudClock: OCKRevisionRecord.KnowledgeVector,
+    func finishedRevisions(_ parseClock: PCKClock,
+                           cloudClock: OCKRevisionRecord.KnowledgeVector,
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
         var cloudVector = cloudClock

@@ -142,8 +142,8 @@ struct PCKClock: ParseObject {
 
     static func fetchFromCloud(uuid: UUID, createNewIfNeeded: Bool,
                                completion: @escaping(PCKClock?,
-                                                    OCKRevisionRecord.KnowledgeVector?,
-                                                    ParseError?) -> Void) {
+                                                     OCKRevisionRecord.KnowledgeVector?,
+                                                     ParseError?) -> Void) {
 
         // Fetch Clock from Cloud
         let query = Self.query(ClockKey.uuid == uuid)
