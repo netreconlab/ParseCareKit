@@ -777,7 +777,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                            completion: @escaping (Error?) -> Void) {
         // Fetch Clock from Cloud
         PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
-            
+
             guard let parseClock = potentialPCKClock,
                 let cloudClock = potentialCKClock else {
                 guard let parseError = error else {
@@ -800,20 +800,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(parseError)
                 return
             }
-            
+
             var cloudVector = cloudClock
             if shouldIncrementCloudClock {
                 // Increment and merge Knowledge Vector
                 cloudVector.increment(clockFor: self.uuid)
             }
             cloudVector.merge(with: localClock)
-            
+
             guard let updatedClock = parseClock.encodeClock(cloudVector) else {
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
             }
-            
-            guard updatedClock != parseClock else {
+
+            // If clocks incremented or new clock introduced, no need to save to Cloud.
+            guard shouldIncrementCloudClock || (!shouldIncrementCloudClock && cloudClock.uuids.count != localClock.uuids.count) else {
                 // Clocks not updated, no need to update cloud.
                 self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 completion(nil)
@@ -823,7 +824,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             updatedClock.save(callbackQueue: ParseRemote.queue) { result in
                 self.isSynchronizing = false
                 switch result {
-                    
+
                 case .success:
                     self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                     completion(nil)
