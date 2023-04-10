@@ -74,7 +74,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
-            .watch("vector")
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = try? await PCKUser.current() {
