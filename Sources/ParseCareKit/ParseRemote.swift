@@ -780,6 +780,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
             guard let parseClock = potentialPCKClock,
                 let cloudClock = potentialCKClock else {
+                self.isSynchronizing = false
                 guard let parseError = error else {
                     // There was a different issue that we don't know how to handle
                     if #available(iOS 14.0, watchOS 7.0, *) {
@@ -809,12 +810,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
             cloudVector.merge(with: localClock)
 
             guard let updatedClock = parseClock.encodeClock(cloudVector) else {
+                self.isSynchronizing = false
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
             }
 
             // If clocks incremented or new clock introduced, no need to save to Cloud.
             guard shouldIncrementCloudClock || (!shouldIncrementCloudClock && cloudClock.uuids.count != localClock.uuids.count) else {
+                self.isSynchronizing = false
                 // Clocks not updated, no need to update cloud.
                 self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 completion(nil)
