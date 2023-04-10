@@ -74,6 +74,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
+            .watch("vector")
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = try? await PCKUser.current() {
@@ -462,344 +463,289 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
-            // Fetch Clock from Cloud
-            PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
+            guard deviceRevisions.count > 0 else {
+                self.finishedRevisions(false,
+                                       localClock: deviceKnowledge,
+                                       completion: completion)
+                return
+            }
 
-                guard let cloudParseVector = potentialPCKClock,
-                      let cloudCareKitVector = potentialCKClock else {
-                    guard let parseError = error else {
-                        // There was a different issue that we don't know how to handle
-                        if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
-                        } else {
-                            os_log("Error in pushRevisions. Couldn't unwrap clock",
-                                   log: .pushRevisions, type: .error)
-                        }
-                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                        return
+            for (recordIndex, deviceRevision) in deviceRevisions.enumerated() {
+                guard deviceRevision.entities.count > 0 else {
+                    if recordIndex == deviceRevisions.count {
+                        self.finishedRevisions(localClock: deviceKnowledge,
+                                               completion: completion)
                     }
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
-                    } else {
-                        os_log("Error in pushRevisions. Couldn't unwrap clock: %{private}@",
-                               log: .pushRevisions, type: .error, parseError.localizedDescription)
-                    }
-                    completion(parseError)
                     return
                 }
 
-                guard deviceRevisions.count > 0 else {
-                    self.finishedRevisions(cloudParseVector,
-                                           shouldIncrementCloudClock: false,
-                                           cloudClock: cloudCareKitVector,
-                                           localClock: deviceKnowledge,
-                                           completion: completion)
-                    return
-                }
-
-                for (recordIndex, deviceRevision) in deviceRevisions.enumerated() {
-                    guard deviceRevision.entities.count > 0 else {
-                        if recordIndex == deviceRevisions.count {
-                            self.finishedRevisions(cloudParseVector,
-                                                   cloudClock: cloudCareKitVector,
-                                                   localClock: deviceRevision.knowledgeVector,
-                                                   completion: completion)
-                        }
-                        return
+                ParseRemote.queue.async {
+                    let cloudVectorClock = deviceKnowledge.clock(for: self.uuid)
+                    let revisionsCompleted = RevisionsComplete()
+                    Task {
+                        let count = await revisionsCompleted.count
+                        self.notifyRevisionProgress(count,
+                                                    totalEntities: deviceRevision.entities.count)
                     }
 
-                    ParseRemote.queue.async {
-                        let cloudVectorClock = cloudCareKitVector.clock(for: self.uuid)
-                        let revisionsCompleted = RevisionsComplete()
-                        Task {
-                            let count = await revisionsCompleted.count
-                            self.notifyRevisionProgress(count,
-                                                        totalEntities: deviceRevision.entities.count)
-                        }
+                    deviceRevision.entities.forEach {
+                        let entity = $0
+                        switch entity {
+                        case .patient(let patient):
 
-                        deviceRevision.entities.forEach {
-                            let entity = $0
-                            switch entity {
-                            case .patient(let patient):
+                            if let customClassName = patient.userInfo?[CustomKey.customClass] {
+                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                                cloudClock: cloudVectorClock) { error in
 
-                                if let customClassName = patient.userInfo?[CustomKey.customClass] {
-                                    self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                    cloudClock: cloudVectorClock) { error in
-
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: deviceKnowledge,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
-                                        }
+                                    if error != nil {
+                                        completion(error)
                                     }
-                                } else {
-
-                                    guard let parse = try? self.pckStoreClassesToSynchronize[.patient]?.new(with: entity) else {
-                                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                        return
-                                    }
-
-                                    parse.pushRevision(cloudClock: cloudVectorClock,
-                                                       remoteID: self.uuid.uuidString) { error in
-
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
                                 }
+                            } else {
 
-                            case .carePlan(let carePlan):
-                                if let customClassName = carePlan.userInfo?[CustomKey.customClass] {
-                                    self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                    cloudClock: cloudVectorClock) { error in
+                                guard let parse = try? self.pckStoreClassesToSynchronize[.patient]?.new(with: entity) else {
+                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                    return
+                                }
 
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
-                                        }
+                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                                   remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
                                     }
-                                } else {
-
-                                    guard let parse = try? self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
-                                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                        return
-                                    }
-
-                                    parse.pushRevision(cloudClock: cloudVectorClock,
-                                                       remoteID: self.uuid.uuidString) { error in
-
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
                                 }
-                            case .contact(let contact):
-                                if let customClassName = contact.userInfo?[CustomKey.customClass] {
-                                    self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                    cloudClock: cloudVectorClock) { error in
+                            }
 
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    guard let parse = try? self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
-                                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                        return
-                                    }
-                                    parse.pushRevision(cloudClock: cloudVectorClock,
-                                                       remoteID: self.uuid.uuidString) { error in
+                        case .carePlan(let carePlan):
+                            if let customClassName = carePlan.userInfo?[CustomKey.customClass] {
+                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                                cloudClock: cloudVectorClock) { error in
 
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
                                 }
-                            case .task(let task):
-                                if let customClassName = task.userInfo?[CustomKey.customClass] {
-                                    self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                    cloudClock: cloudVectorClock) { error in
+                            } else {
 
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
-                                        }
+                                guard let parse = try? self.pckStoreClassesToSynchronize[.carePlan]?.new(with: entity) else {
+                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                    return
+                                }
+
+                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                                   remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
                                     }
-                                } else {
-                                    guard let parse = try? self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
-                                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                        return
-                                    }
-
-                                    parse.pushRevision(cloudClock: cloudVectorClock,
-                                                       remoteID: self.uuid.uuidString) { error in
-
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
                                 }
-                            case .outcome(let outcome):
+                            }
+                        case .contact(let contact):
+                            if let customClassName = contact.userInfo?[CustomKey.customClass] {
+                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                                cloudClock: cloudVectorClock) { error in
 
-                                if let customClassName = outcome.userInfo?[CustomKey.customClass] {
-                                    self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                    cloudClock: cloudVectorClock) { error in
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
-                                        }
+                                    if error != nil {
+                                        completion(error)
                                     }
-                                } else {
-                                    guard let parse = try? self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else {
-                                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                        return
-                                    }
-                                    parse.pushRevision(cloudClock: cloudVectorClock,
-                                                       remoteID: self.uuid.uuidString) { error in
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
                                 }
-                            case .healthKitTask(let healthKit):
-                                if let customClassName = healthKit.userInfo?[CustomKey.customClass] {
-                                    self.pushRevisionForCustomClass(entity, className: customClassName,
-                                                                    cloudClock: cloudVectorClock) { error in
+                            } else {
+                                guard let parse = try? self.pckStoreClassesToSynchronize[.contact]?.new(with: entity) else {
+                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                    return
+                                }
+                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                                   remoteID: self.uuid.uuidString) { error in
 
-                                        if error != nil {
-                                            completion(error)
-                                        }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
-                                } else {
-                                    guard let parse = try? self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
-                                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                                        return
+                                }
+                            }
+                        case .task(let task):
+                            if let customClassName = task.userInfo?[CustomKey.customClass] {
+                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                                cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
                                     }
-
-                                    parse.pushRevision(cloudClock: cloudVectorClock,
-                                                       remoteID: self.uuid.uuidString) { error in
-
-                                        if error != nil {
-                                            completion(error)
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
-                                        Task {
-                                            await revisionsCompleted.incrementCompleted()
-                                            let revisionsCompletedCount = await revisionsCompleted.count
-                                            self.notifyRevisionProgress(revisionsCompletedCount,
-                                                                        totalEntities: deviceRevision.entities.count)
-                                            if revisionsCompletedCount == deviceRevision.entities.count {
-                                                self.finishedRevisions(cloudParseVector,
-                                                                       cloudClock: cloudCareKitVector,
-                                                                       localClock: deviceRevision.knowledgeVector,
-                                                                       completion: completion)
-                                            }
+                                    }
+                                }
+                            } else {
+                                guard let parse = try? self.pckStoreClassesToSynchronize[.task]?.new(with: entity) else {
+                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                    return
+                                }
+
+                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                                   remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
+                                        }
+                                    }
+                                }
+                            }
+                        case .outcome(let outcome):
+
+                            if let customClassName = outcome.userInfo?[CustomKey.customClass] {
+                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                                cloudClock: cloudVectorClock) { error in
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
+                                        }
+                                    }
+                                }
+                            } else {
+                                guard let parse = try? self.pckStoreClassesToSynchronize[.outcome]?.new(with: entity) else {
+                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                    return
+                                }
+                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                                   remoteID: self.uuid.uuidString) { error in
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
+                                        }
+                                    }
+                                }
+                            }
+                        case .healthKitTask(let healthKit):
+                            if let customClassName = healthKit.userInfo?[CustomKey.customClass] {
+                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                                                cloudClock: cloudVectorClock) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
+                                        }
+                                    }
+                                }
+                            } else {
+                                guard let parse = try? self.pckStoreClassesToSynchronize[.healthKitTask]?.new(with: entity) else {
+                                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                                    return
+                                }
+
+                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                                   remoteID: self.uuid.uuidString) { error in
+
+                                    if error != nil {
+                                        completion(error)
+                                    }
+                                    Task {
+                                        await revisionsCompleted.incrementCompleted()
+                                        let revisionsCompletedCount = await revisionsCompleted.count
+                                        self.notifyRevisionProgress(revisionsCompletedCount,
+                                                                    totalEntities: deviceRevision.entities.count)
+                                        if revisionsCompletedCount == deviceRevision.entities.count {
+                                            self.finishedRevisions(localClock: deviceKnowledge,
+                                                                   completion: completion)
                                         }
                                     }
                                 }
@@ -827,37 +773,70 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func finishedRevisions(_ parseClock: PCKClock,
-                           shouldIncrementCloudClock: Bool = true,
-                           cloudClock: OCKRevisionRecord.KnowledgeVector,
+    func finishedRevisions(_ shouldIncrementCloudClock: Bool = true,
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
-        var cloudVector = cloudClock
-        if shouldIncrementCloudClock {
-            // Increment and merge Knowledge Vector
-            cloudVector.increment(clockFor: uuid)
-        }
-        cloudVector.merge(with: localClock)
-
-        guard let updatedClock = parseClock.encodeClock(cloudVector) else {
-            completion(ParseCareKitError.couldntUnwrapClock)
-            return
-        }
-        updatedClock.save(callbackQueue: ParseRemote.queue) { result in
-            self.isSynchronizing = false
-            switch result {
-
-            case .success:
+        // Fetch Clock from Cloud
+        PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialCKClock, error) in
+            
+            guard let parseClock = potentialPCKClock,
+                let cloudClock = potentialCKClock else {
+                guard let parseError = error else {
+                    // There was a different issue that we don't know how to handle
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
+                    } else {
+                        os_log("Error in pushRevisions. Couldn't unwrap clock",
+                               log: .pushRevisions, type: .error)
+                    }
+                    completion(ParseCareKitError.requiredValueCantBeUnwrapped)
+                    return
+                }
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
+                } else {
+                    os_log("Error in pushRevisions. Couldn't unwrap clock: %{private}@",
+                           log: .pushRevisions, type: .error, parseError.localizedDescription)
+                }
+                completion(parseError)
+                return
+            }
+            
+            var cloudVector = cloudClock
+            if shouldIncrementCloudClock {
+                // Increment and merge Knowledge Vector
+                cloudVector.increment(clockFor: self.uuid)
+            }
+            cloudVector.merge(with: localClock)
+            
+            guard let updatedClock = parseClock.encodeClock(cloudVector) else {
+                completion(ParseCareKitError.couldntUnwrapClock)
+                return
+            }
+            
+            guard updatedClock != parseClock else {
+                // Clocks not updated, no need to update cloud.
                 self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 completion(nil)
-            case .failure(let error):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pushRevisions.error("finishedRevisions: \(error.localizedDescription, privacy: .private)")
-                } else {
-                    os_log("finishedRevisions: %{private}@",
-                           log: .pushRevisions, type: .error, error.localizedDescription)
+                return
+            }
+
+            updatedClock.save(callbackQueue: ParseRemote.queue) { result in
+                self.isSynchronizing = false
+                switch result {
+                    
+                case .success:
+                    self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                    completion(nil)
+                case .failure(let error):
+                    if #available(iOS 14.0, watchOS 7.0, *) {
+                        Logger.pushRevisions.error("finishedRevisions: \(error.localizedDescription, privacy: .private)")
+                    } else {
+                        os_log("finishedRevisions: %{private}@",
+                               log: .pushRevisions, type: .error, error.localizedDescription)
+                    }
+                    completion(error)
                 }
-                completion(error)
             }
         }
     }
