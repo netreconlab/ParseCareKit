@@ -21,6 +21,7 @@ public protocol PCKSynchronizable {
      Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps
      it synchronized with the CareKitStore.
 
+     - parameter delegate: The `ParseRemoteDelegate`.
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
@@ -31,6 +32,7 @@ public protocol PCKSynchronizable {
      Updates an object that conforms to PCKSynchronizable that is already on the Parse
      Server and keeps it synchronized with the CareKitStore.
 
+     - parameter delegate: The `ParseRemoteDelegate`.
      - parameter overwriteRemote: Whether data should be overwritten if it's already present on the Parse Server.
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
@@ -42,8 +44,8 @@ public protocol PCKSynchronizable {
      Creates a new ParseCareKit object from a specified CareKit entity.
 
      - parameter with: The CareKit entity used to create the new ParseCareKit object.
-     
      - returns: Returns a new version of `Self`
+     - throws: `Error`.
     */
     func new(with careKitEntity: OCKEntity) throws -> Self
 
@@ -68,6 +70,7 @@ public protocol PCKSynchronizable {
      Push a revision from a device up to the server.
     
      - Parameters:
+       - delegate: The `ParseRemoteDelegate`.
        - cloudClock: The current clock value of the revision.
        - completion: A closure that should be called once the push completes.
     */
