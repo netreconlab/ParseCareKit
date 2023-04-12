@@ -112,8 +112,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     public init() {
-        previousVersionUUIDs = []
-        nextVersionUUIDs = []
         ACL = PCKUtility.getDefaultACL()
     }
 
