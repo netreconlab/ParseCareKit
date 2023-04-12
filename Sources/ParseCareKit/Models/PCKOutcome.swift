@@ -392,15 +392,17 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
                 mutableOutcome.task = foundTask
 
-                guard let currentTask = mutableOutcome.task else {
+                guard let currentTask = mutableOutcome.task,
+                      let schedule = currentTask.schedule,
+                      let event = schedule.event(forOccurrenceIndex: taskOccurrenceIndex) else {
                     mutableOutcome.startDate = nil
                     mutableOutcome.endDate = nil
                     completion(.success(mutableOutcome))
                     return
                 }
 
-                mutableOutcome.startDate = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.start
-                mutableOutcome.endDate = currentTask.schedule?.event(forOccurrenceIndex: taskOccurrenceIndex)?.end
+                mutableOutcome.startDate = event.start
+                mutableOutcome.endDate = event.end
                 completion(.success(mutableOutcome))
 
             case .failure:
