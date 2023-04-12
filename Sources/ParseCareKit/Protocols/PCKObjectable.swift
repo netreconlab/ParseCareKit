@@ -73,12 +73,23 @@ public protocol PCKObjectable: ParseObject {
     /// A boolean that is `true` when encoding the object for Parse. If `false` the object is encoding for CareKit.
     var encodingForParse: Bool { get set }
 
-    /// Copy the values of a ParseCareKit object
+    /// Copy the values of a ParseCareKit object.
     static func copyValues(from other: Self, to here: Self) throws -> Self
+
+    /// Initialize with UUID.
+    init?(uuid: UUID?)
 }
 
 // MARK: Defaults
 extension PCKObjectable {
+
+    public init?(uuid: UUID?) {
+        guard let uuid = uuid else {
+            return nil
+        }
+        self.init(objectId: uuid.uuidString)
+    }
+
     public var uuid: UUID? {
         guard let objectId = objectId,
             let uuid = UUID(uuidString: objectId) else {

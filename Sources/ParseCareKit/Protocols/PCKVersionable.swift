@@ -32,7 +32,7 @@ public protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
 
     /// The date on which this object was marked deleted. Note that objects are never actually deleted,
     /// but rather they are marked deleted and will no longer be returned from queries.
-    var deletedDate: Date? {get set}
+    var deletedDate: Date? { get set }
 }
 
 extension PCKVersionable {

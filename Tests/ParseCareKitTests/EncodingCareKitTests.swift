@@ -354,6 +354,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
+        XCTAssertEqual(parse.task?.objectId, careKit.taskUUID.uuidString)
         XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
         XCTAssertEqual(parse.values?.count, 1)
         XCTAssertEqual(careKit.values.count, 1)
@@ -548,6 +549,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
         // XCTAssertEqual(parse.allergies, careKit.allergies)
 
         // Objectable
@@ -735,6 +737,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
         // XCTAssertEqual(parse.allergies, careKit.allergies)
 
         // Objectable
@@ -913,6 +916,7 @@ class ParseCareKitTests: XCTestCase {
         // Special
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.patientUUID, careKit.patientUUID)
+        XCTAssertEqual(parse.patient?.objectId, careKit.patientUUID?.uuidString)
 
         // Objectable
         XCTAssertEqual(parse.className, "CarePlan")
@@ -1095,6 +1099,7 @@ class ParseCareKitTests: XCTestCase {
         // Special
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
         XCTAssertEqual(parse.address, careKit.address)
         XCTAssertEqual(parse.category, careKit.category)
         XCTAssertEqual(parse.role, careKit.role)

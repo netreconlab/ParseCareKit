@@ -371,12 +371,10 @@
 				7085DDAC26CDA2980033B977 /* Documentation.docc */,
 				9119D5EE245618D7001B7AA3 /* ParseCareKit.h */,
 				9119D60A24561B02001B7AA3 /* ParseCareKitConstants.swift */,
-				709D176A258579090002E772 /* ParseCareKitError.swift */,
 				709D175C258551D20002E772 /* ParseCareKitLog.swift */,
 				9119D60C24561B22001B7AA3 /* PCKUtility.swift */,
 				916570D62462DABC008F2997 /* ParseRemote.swift */,
 				918F080B248040AA00C3A205 /* Models */,
-				703CDA0725243D230027AB82 /* Parse */,
 				91D52878248128700022292B /* Protocols */,
 			);
 			path = ParseCareKit;
@@ -398,14 +396,16 @@
 		918F080B248040AA00C3A205 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				703CDA0725243D230027AB82 /* Parse */,
+				709D176A258579090002E772 /* ParseCareKitError.swift */,
 				9119D5FE24561A28001B7AA3 /* PCKCarePlan.swift */,
-				910734B929E447ED002169C2 /* RevisionsComplete.swift */,
 				91AA07222466F0CD00B39452 /* PCKClock.swift */,
 				9119D5F824561A28001B7AA3 /* PCKContact.swift */,
 				70D5A29325E0D2D30036A8AD /* PCKHealthKitTask.swift */,
 				9119D5FF24561A28001B7AA3 /* PCKOutcome.swift */,
 				9119D5FB24561A28001B7AA3 /* PCKPatient.swift */,
 				9119D5FA24561A28001B7AA3 /* PCKTask.swift */,
+				910734B929E447ED002169C2 /* RevisionsComplete.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

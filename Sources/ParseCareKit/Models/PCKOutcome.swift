@@ -20,6 +20,7 @@ import os.log
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
 public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
+
     public var previousVersionUUIDs: [UUID]?
 
     public var nextVersionUUIDs: [UUID]?
@@ -125,7 +126,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     public func new(with careKitEntity: OCKEntity) throws -> Self {
-
         switch careKitEntity {
         case .outcome(let entity):
             return try Self.copyCareKit(entity)
@@ -142,7 +142,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public func addToCloud(_ delegate: ParseRemoteDelegate?,
                            completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.prepareToSave(delegate, completion: completion)
+        self.fetchLocalDataAndSave(delegate, completion: completion)
     }
 
     public func updateCloud(_ delegate: ParseRemoteDelegate?,
@@ -308,6 +308,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.objectId = outcome.uuid.uuidString
         decoded.entityId = outcome.id
+        decoded.task = PCKTask(uuid: outcome.taskUUID)
         if let acl = outcome.acl {
             decoded.ACL = acl
         } else {
@@ -342,8 +343,8 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         return try PCKUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
 
-    public func prepareToSave(_ delegate: ParseRemoteDelegate?,
-                              completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+    public func fetchLocalDataAndSave(_ delegate: ParseRemoteDelegate?,
+                                      completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         guard let taskUUID = taskUUID,
               let taskOccurrenceIndex = taskOccurrenceIndex else {
             completion(.failure(ParseCareKitError.errorString("""
@@ -383,57 +384,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
-    }
-
-    public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(callbackQueue: ParseRemote.queue) { results in
-            switch results {
-
-            case .success(let saved):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.debug("save(), Object: \(saved, privacy: .private)")
-                } else {
-                    os_log("save(), Object: %{private}", log: .outcome, type: .debug, saved.description)
-                }
-
-                saved.linkRelated { result in
-
-                    switch result {
-
-                    case .success(let linkedObject):
-                        linkedObject.save(callbackQueue: ParseRemote.queue) { _ in }
-                        completion(.success(linkedObject))
-
-                    case .failure:
-                        completion(.success(saved))
-                    }
-                }
-            case .failure(let error):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.error("save(), \(error.localizedDescription, privacy: .private)")
-                } else {
-                    os_log("save(), %{private}", log: .outcome, type: .error, error.localizedDescription)
-                }
-                completion(.failure(error))
-            }
-        }
-    }
-
-    /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<PCKOutcome, Error>) -> Void) {
-        var updatedOutcome = self
-        guard let taskUUID = self.taskUUID else {
-            // Finished if there's no Task, otherwise see if it's in the cloud
-            completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
-            return
-        }
-
-        PCKTask.first(taskUUID) { result in
-            if case let .success(task) = result {
-                updatedOutcome.task = task
-            }
-            completion(.success(updatedOutcome))
         }
     }
 

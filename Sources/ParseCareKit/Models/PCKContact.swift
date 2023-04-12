@@ -326,6 +326,7 @@ public struct PCKContact: PCKVersionable {
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.objectId = contact.uuid.uuidString
         decoded.entityId = contact.id
+        decoded.carePlan = PCKCarePlan(uuid: contact.carePlanUUID)
         if let acl = contact.acl {
             decoded.ACL = acl
         } else {
@@ -345,24 +346,6 @@ public struct PCKContact: PCKVersionable {
         mutableContact.encodingForParse = false
         let encoded = try PCKUtility.jsonEncoder().encode(mutableContact)
         return try PCKUtility.decoder().decode(OCKContact.self, from: encoded)
-    }
-
-    /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<PCKContact, Error>) -> Void) {
-        var updatedContact = self
-
-        guard let carePlanUUID = self.carePlanUUID else {
-            // Finished if there's no CarePlan, otherwise see if it's in the cloud
-            completion(.success(self))
-            return
-        }
-
-        PCKCarePlan.first(carePlanUUID) { result in
-            if case let .success(carePlan) = result {
-                updatedContact.carePlan = carePlan
-            }
-            completion(.success(updatedContact))
-        }
     }
 }
 

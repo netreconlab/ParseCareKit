@@ -306,6 +306,7 @@ public struct PCKHealthKitTask: PCKVersionable {
         var decoded = try PCKUtility.decoder().decode(Self.self, from: encoded)
         decoded.objectId = task.uuid.uuidString
         decoded.entityId = task.id
+        decoded.carePlan = PCKCarePlan(uuid: task.carePlanUUID)
         if let acl = task.acl {
             decoded.ACL = acl
         } else {
@@ -326,23 +327,6 @@ public struct PCKHealthKitTask: PCKVersionable {
         mutableTask.encodingForParse = false
         let encoded = try PCKUtility.jsonEncoder().encode(mutableTask)
         return try PCKUtility.decoder().decode(OCKHealthKitTask.self, from: encoded)
-    }
-
-    /// Link versions and related classes
-    public func linkRelated(completion: @escaping(Result<PCKHealthKitTask, Error>) -> Void) {
-        var updatedTask = self
-        guard let carePlanUUID = self.carePlanUUID else {
-            // Finished if there's no CarePlan, otherwise see if it's in the cloud
-            completion(.success(updatedTask))
-            return
-        }
-
-        PCKCarePlan.first(carePlanUUID) { result in
-            if case let .success(carePlan) = result {
-                updatedTask.carePlan = carePlan
-            }
-            completion(.success(updatedTask))
-        }
     }
 }
 
