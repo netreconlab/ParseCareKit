@@ -1300,6 +1300,10 @@ extension ParseCareKitTests: ParseRemoteDelegate {
         print("Implement")
     }
 
+    func needStore() -> OCKAnyStoreProtocol {
+        store
+    }
+
     func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>) {
         if let first = conflicts.first {
             completion(.success(first))

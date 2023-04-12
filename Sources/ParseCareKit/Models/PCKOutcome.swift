@@ -140,11 +140,13 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(completion: completion)
+    public func addToCloud(_ delegate: ParseRemoteDelegate?,
+                           completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+        self.prepareToSave(delegate, completion: completion)
     }
 
-    public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+    public func updateCloud(_ delegate: ParseRemoteDelegate?,
+                            completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         guard var previousVersionUUIDs = self.previousVersionUUIDs,
                 let uuid = self.uuid else {
                     completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
@@ -167,7 +169,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
                     } else {
                         os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .outcome, type: .debug)
                     }
-                    self.addToCloud(completion: completion)
+                    self.addToCloud(delegate, completion: completion)
                 case 1:
                     // This is the typical case
                     guard let previousVersion = foundObjects.first(where: {
@@ -187,7 +189,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
                     }
                     var updated = self
                     updated = updated.copyRelationalEntities(previousVersion)
-                    updated.addToCloud(completion: completion)
+                    updated.addToCloud(delegate, completion: completion)
 
                 default:
                     if #available(iOS 14.0, watchOS 7.0, *) {
@@ -253,7 +255,8 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    public func pushRevision(cloudClock: Int,
+    public func pushRevision(_ delegate: ParseRemoteDelegate?,
+                             cloudClock: Int,
                              remoteID: String,
                              completion: @escaping (Error?) -> Void) {
         var mutableOutcome = self
@@ -262,7 +265,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
         guard mutableOutcome.deletedDate != nil else {
 
-            mutableOutcome.addToCloud { result in
+            mutableOutcome.addToCloud(delegate) { result in
 
                 switch result {
 
@@ -275,7 +278,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
             return
         }
 
-        mutableOutcome.updateCloud { result in
+        mutableOutcome.updateCloud(delegate) { result in
 
             switch result {
 
@@ -339,6 +342,50 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         return try PCKUtility.decoder().decode(OCKOutcome.self, from: encoded)
     }
 
+    public func prepareToSave(_ delegate: ParseRemoteDelegate?,
+                              completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+        guard let taskUUID = taskUUID,
+              let taskOccurrenceIndex = taskOccurrenceIndex else {
+            completion(.failure(ParseCareKitError.errorString("""
+                Missing taskUUID or taskOccurrenceIndex for PCKOutcome: \(self)
+            """)))
+            return
+        }
+        guard let store = delegate?.needStore() else {
+            completion(.failure(ParseCareKitError.errorString("""
+                Missing ParseRemoteDelegate.needStore() method which is required to sync OCKOutcome's
+            """)))
+            return
+        }
+        var task = OCKTaskQuery()
+        task.uuids = [taskUUID]
+        store.fetchAnyTasks(query: task, callbackQueue: ParseRemote.queue) { taskResults in
+
+            switch taskResults {
+            case .success(let tasks):
+                guard let task = tasks.first else {
+                    let error = ParseCareKitError.errorString("Could not find taskUUID \(taskUUID) in delegate store")
+                    completion(.failure(error))
+                    return
+                }
+                var mutableOutcome = self
+
+                guard let event = task.schedule.event(forOccurrenceIndex: taskOccurrenceIndex) else {
+                    mutableOutcome.startDate = nil
+                    mutableOutcome.endDate = nil
+                    mutableOutcome.save(completion: completion)
+                    return
+                }
+
+                mutableOutcome.startDate = event.start
+                mutableOutcome.endDate = event.end
+                mutableOutcome.save(completion: completion)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     public func save(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         self.save(callbackQueue: ParseRemote.queue) { results in
             switch results {
@@ -375,40 +422,18 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     /// Link versions and related classes
     public func linkRelated(completion: @escaping(Result<PCKOutcome, Error>) -> Void) {
-        guard let taskUUID = self.taskUUID,
-              let taskOccurrenceIndex = self.taskOccurrenceIndex else {
+        var updatedOutcome = self
+        guard let taskUUID = self.taskUUID else {
             // Finished if there's no Task, otherwise see if it's in the cloud
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
             return
         }
 
-        var mutableOutcome = self
-
         PCKTask.first(taskUUID) { result in
-
-            switch result {
-
-            case .success(let foundTask):
-
-                mutableOutcome.task = foundTask
-
-                guard let currentTask = mutableOutcome.task,
-                      let schedule = currentTask.schedule,
-                      let event = schedule.event(forOccurrenceIndex: taskOccurrenceIndex) else {
-                    mutableOutcome.startDate = nil
-                    mutableOutcome.endDate = nil
-                    completion(.success(mutableOutcome))
-                    return
-                }
-
-                mutableOutcome.startDate = event.start
-                mutableOutcome.endDate = event.end
-                completion(.success(mutableOutcome))
-
-            case .failure:
-                // We still keep going if the link was unsuccessfull
-                completion(.success(mutableOutcome))
+            if case let .success(task) = result {
+                updatedOutcome.task = task
             }
+            completion(.success(updatedOutcome))
         }
     }
 

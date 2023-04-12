@@ -517,7 +517,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     return
                                 }
 
-                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                parse.pushRevision(self.parseDelegate,
+                                                   cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
 
                                     if error != nil {
@@ -538,7 +539,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                         case .carePlan(let carePlan):
                             if let customClassName = carePlan.userInfo?[CustomKey.customClass] {
-                                self.pushRevisionForCustomClass(entity, className: customClassName,
+                                self.pushRevisionForCustomClass(entity,
+                                                                className: customClassName,
                                                                 cloudClock: cloudVectorClock) { error in
 
                                     if error != nil {
@@ -562,7 +564,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     return
                                 }
 
-                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                parse.pushRevision(self.parseDelegate,
+                                                   cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
 
                                     if error != nil {
@@ -604,7 +607,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                     return
                                 }
-                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                parse.pushRevision(self.parseDelegate,
+                                                   cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
 
                                     if error != nil {
@@ -647,7 +651,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     return
                                 }
 
-                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                parse.pushRevision(self.parseDelegate,
+                                                   cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
 
                                     if error != nil {
@@ -689,7 +694,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                                     return
                                 }
-                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                parse.pushRevision(self.parseDelegate,
+                                                   cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
                                     if error != nil {
                                         completion(error)
@@ -731,7 +737,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     return
                                 }
 
-                                parse.pushRevision(cloudClock: cloudVectorClock,
+                                parse.pushRevision(self.parseDelegate,
+                                                   cloudClock: cloudVectorClock,
                                                    remoteID: self.uuid.uuidString) { error in
 
                                     if error != nil {
@@ -766,7 +773,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
             return
         }
-        parse.pushRevision(cloudClock: cloudClock,
+        parse.pushRevision(self.parseDelegate,
+                           cloudClock: cloudClock,
                            remoteID: self.uuid.uuidString) { error in
             completion(error)
         }

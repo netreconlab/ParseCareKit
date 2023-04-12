@@ -24,7 +24,8 @@ public protocol PCKSynchronizable {
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
-    func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
+    func addToCloud(_ delegate: ParseRemoteDelegate?,
+                    completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
 
     /**
      Updates an object that conforms to PCKSynchronizable that is already on the Parse
@@ -34,7 +35,8 @@ public protocol PCKSynchronizable {
      - parameter completion: The block to execute.
      It should have the following argument signature: `(Result<PCKSynchronizable,Error>)`.
     */
-    func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
+    func updateCloud(_ delegate: ParseRemoteDelegate?,
+                     completion: @escaping(Result<PCKSynchronizable, Error>) -> Void)
 
     /**
      Creates a new ParseCareKit object from a specified CareKit entity.
@@ -69,7 +71,8 @@ public protocol PCKSynchronizable {
        - cloudClock: The current clock value of the revision.
        - completion: A closure that should be called once the push completes.
     */
-    func pushRevision(cloudClock: Int,
+    func pushRevision(_ delegate: ParseRemoteDelegate?,
+                      cloudClock: Int,
                       remoteID: String,
                       completion: @escaping (Error?) -> Void)
 }

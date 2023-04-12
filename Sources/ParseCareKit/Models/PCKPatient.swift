@@ -117,11 +117,13 @@ public struct PCKPatient: PCKVersionable {
         }
     }
 
-    public func addToCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+    public func addToCloud(_ delegate: ParseRemoteDelegate? = nil,
+                           completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         self.save(completion: completion)
     }
 
-    public func updateCloud(completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+    public func updateCloud(_ delegate: ParseRemoteDelegate? = nil,
+                            completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
         guard var previousVersionUUIDs = self.previousVersionUUIDs,
                 let uuid = self.uuid else {
                     completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
@@ -230,7 +232,8 @@ public struct PCKPatient: PCKVersionable {
         }
     }
 
-    public func pushRevision(cloudClock: Int,
+    public func pushRevision(_ delegate: ParseRemoteDelegate? = nil,
+                             cloudClock: Int,
                              remoteID: String,
                              completion: @escaping (Error?) -> Void) {
         var mutatablePatient = self

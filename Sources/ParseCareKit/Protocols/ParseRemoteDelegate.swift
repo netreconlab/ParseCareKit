@@ -19,8 +19,13 @@ public protocol ParseRemoteDelegate: OCKRemoteSynchronizationDelegate {
 
     /// Receive a notification when data has been successfully pushed to the Cloud.
     func successfullyPushedDataToCloud()
+
+    /// Sometimes the remote will need the local data store to fetch additional information
+    /// required for proper synchronization.
+    /// - note: The remote will never use this method to modify the store.
+    func needStore() -> OCKAnyStoreProtocol
 }
 
 extension ParseRemoteDelegate {
-    func successfullyPushedDataToCloud() { }
+    func successfullyPushedDataToCloud() {}
 }
