@@ -21,6 +21,34 @@ import os.log
 /// time about why the changes were made.
 public struct PCKCarePlan: PCKVersionable {
 
+    public var previousVersionUUIDs: [UUID]? {
+        willSet {
+            guard let newValue = newValue else {
+                previousVersions = nil
+                return
+            }
+            var newPreviousVersions = [Pointer<Self>]()
+            newValue.forEach { newPreviousVersions.append(Pointer<Self>(objectId: $0.uuidString)) }
+            previousVersions = newPreviousVersions
+        }
+    }
+
+    public var nextVersionUUIDs: [UUID]? {
+        willSet {
+            guard let newValue = newValue else {
+                nextVersions = nil
+                return
+            }
+            var newNextVersions = [Pointer<Self>]()
+            newValue.forEach { newNextVersions.append(Pointer<Self>(objectId: $0.uuidString)) }
+            nextVersions = newNextVersions
+        }
+    }
+
+    public var previousVersions: [Pointer<Self>]?
+
+    public var nextVersions: [Pointer<Self>]?
+
     public var effectiveDate: Date?
 
     public var entityId: String?
@@ -70,10 +98,6 @@ public struct PCKCarePlan: PCKVersionable {
     public var ACL: ParseACL?
 
     public var originalData: Data?
-
-    public var nextVersionUUIDs: [UUID]?
-
-    public var previousVersionUUIDs: [UUID]?
 
     /// The patient to whom this care plan belongs.
     public var patient: PCKPatient? {

@@ -23,9 +23,33 @@ import os.log
 /// their daily completion rings.
 public struct PCKHealthKitTask: PCKVersionable {
 
-    public var nextVersionUUIDs: [UUID]?
+    public var previousVersionUUIDs: [UUID]? {
+        willSet {
+            guard let newValue = newValue else {
+                previousVersions = nil
+                return
+            }
+            var newPreviousVersions = [Pointer<Self>]()
+            newValue.forEach { newPreviousVersions.append(Pointer<Self>(objectId: $0.uuidString)) }
+            previousVersions = newPreviousVersions
+        }
+    }
 
-    public var previousVersionUUIDs: [UUID]?
+    public var nextVersionUUIDs: [UUID]? {
+        willSet {
+            guard let newValue = newValue else {
+                nextVersions = nil
+                return
+            }
+            var newNextVersions = [Pointer<Self>]()
+            newValue.forEach { newNextVersions.append(Pointer<Self>(objectId: $0.uuidString)) }
+            nextVersions = newNextVersions
+        }
+    }
+
+    public var previousVersions: [Pointer<Self>]?
+
+    public var nextVersions: [Pointer<Self>]?
 
     public var effectiveDate: Date?
 

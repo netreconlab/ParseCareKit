@@ -21,9 +21,33 @@ import os.log
 /// will contain a single value representing the patient's temperature.
 public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
-    public var previousVersionUUIDs: [UUID]?
+    public var previousVersionUUIDs: [UUID]? {
+        willSet {
+            guard let newValue = newValue else {
+                previousVersions = nil
+                return
+            }
+            var newPreviousVersions = [Pointer<Self>]()
+            newValue.forEach { newPreviousVersions.append(Pointer<Self>(objectId: $0.uuidString)) }
+            previousVersions = newPreviousVersions
+        }
+    }
 
-    public var nextVersionUUIDs: [UUID]?
+    public var nextVersionUUIDs: [UUID]? {
+        willSet {
+            guard let newValue = newValue else {
+                nextVersions = nil
+                return
+            }
+            var newNextVersions = [Pointer<Self>]()
+            newValue.forEach { newNextVersions.append(Pointer<Self>(objectId: $0.uuidString)) }
+            nextVersions = newNextVersions
+        }
+    }
+
+    public var previousVersions: [Pointer<Self>]?
+
+    public var nextVersions: [Pointer<Self>]?
 
     public var effectiveDate: Date?
 
@@ -186,7 +210,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
                         return
                     }
                     var updated = self
-                    updated = updated.copyRelationalEntities(previousVersion)
+                    updated = updated.copyRelational(previousVersion)
                     updated.addToCloud(delegate, completion: completion)
 
                 default:
@@ -206,7 +230,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
                 }
                 completion(.failure(error))
             }
-
         }
     }
 
@@ -260,7 +283,17 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         var mutableOutcome = self
         mutableOutcome.logicalClock = cloudClock // Stamp Entity
         mutableOutcome.remoteID = remoteID
+        mutableOutcome.addToCloud(delegate) { result in
 
+            switch result {
+
+            case .success:
+                completion(nil)
+            case .failure(let error):
+                completion(error)
+            }
+        }
+        /*
         guard mutableOutcome.deletedDate != nil else {
 
             mutableOutcome.addToCloud(delegate) { result in
@@ -285,7 +318,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
             case .failure(let error):
                 completion(error)
             }
-        }
+        } */
     }
 
     public static func copyValues(from other: PCKOutcome, to here: PCKOutcome) throws -> Self {
@@ -317,7 +350,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public func copyRelational(_ parse: PCKOutcome) -> PCKOutcome {
         var copy = self
-        copy = copy.copyRelationalEntities(parse)
         if copy.values == nil {
             copy.values = .init()
         }

@@ -18,13 +18,21 @@ import os.log
  Objects that conform to the `PCKVersionable` protocol are Parse interpretations of `OCKVersionedObjectCompatible` objects.
 */
 public protocol PCKVersionable: PCKObjectable, PCKSynchronizable {
-    /// The UUID of the previous version of this object, or nil if there is no previous version.
+    /// The UUIDs of the previous version of this object, or nil if there is no previous version.
     /// The UUIDs are in no particular order.
     var previousVersionUUIDs: [UUID]? { get set }
 
-    /// The UUID of the next version of this object, or nil if there is no next version.
+    /// The UUIDs of the next version of this object, or nil if there is no next version.
     /// The UUIDs are in no particular order.
     var nextVersionUUIDs: [UUID]? { get set }
+
+    /// The previous versions of this object, or nil if there is no previous version.
+    /// The versions are in no particular order.
+    var previousVersions: [Pointer<Self>]? { get set }
+
+    /// The next versions of this object, or nil if there is no next version.
+    /// The versions are in no particular order.
+    var nextVersions: [Pointer<Self>]? { get set }
 
     /// The date that this version of the object begins to take precedence over the previous version.
     /// Often this will be the same as the `createdDate`, but is not required to be.

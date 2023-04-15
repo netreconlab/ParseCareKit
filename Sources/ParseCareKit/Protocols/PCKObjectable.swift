@@ -116,7 +116,7 @@ extension PCKObjectable {
 
 extension PCKObjectable {
 
-    mutating func copyRelationalEntities(_ parse: Self) -> Self {
+    func copyRelationalEntities(_ parse: Self) -> Self {
         var current = self
         current.notes = parse.notes
         return current
