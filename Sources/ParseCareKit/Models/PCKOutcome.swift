@@ -167,72 +167,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         self.fetchLocalDataAndSave(delegate, completion: completion)
     }
 
-    public func updateCloud(_ delegate: ParseRemoteDelegate?,
-                            completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard var previousVersionUUIDs = self.previousVersionUUIDs,
-                let uuid = self.uuid else {
-                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
-            return
-        }
-        previousVersionUUIDs.append(uuid)
-
-        // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Self.query(containedIn(key: ParseKey.objectId, array: previousVersionUUIDs))
-            .includeAll()
-        query.find(callbackQueue: ParseRemote.queue) { results in
-
-            switch results {
-
-            case .success(let foundObjects):
-                switch foundObjects.count {
-                case 0:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
-                    } else {
-                        os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .outcome, type: .debug)
-                    }
-                    self.addToCloud(delegate, completion: completion)
-                case 1:
-                    // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: {
-                        guard let foundUUID = $0.uuid else {
-                            return false
-                        }
-                        return previousVersionUUIDs.contains(foundUUID)
-                    }) else {
-                        if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.outcome.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
-                        } else {
-                            os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud",
-                                   log: .outcome, type: .error, previousVersionUUIDs)
-                        }
-                        completion(.failure(ParseCareKitError.uuidAlreadyExists))
-                        return
-                    }
-                    var updated = self
-                    updated = updated.copyRelational(previousVersion)
-                    updated.addToCloud(delegate, completion: completion)
-
-                default:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.outcome.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
-                    } else {
-                        os_log("updateCloud(), UUID (%{private}) already exists in Cloud",
-                               log: .outcome, type: .error, uuid.uuidString)
-                    }
-                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
-                }
-            case .failure(let error):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.outcome.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
-                } else {
-                    os_log("updateCloud(), %{private}", log: .outcome, type: .error, error.localizedDescription)
-                }
-                completion(.failure(error))
-            }
-        }
-    }
-
     public func pullRevisions(since localClock: Int,
                               cloudClock: OCKRevisionRecord.KnowledgeVector,
                               remoteID: String,
@@ -284,41 +218,13 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         mutableOutcome.logicalClock = cloudClock // Stamp Entity
         mutableOutcome.remoteID = remoteID
         mutableOutcome.addToCloud(delegate) { result in
-
             switch result {
-
             case .success:
                 completion(nil)
             case .failure(let error):
                 completion(error)
             }
         }
-        /*
-        guard mutableOutcome.deletedDate != nil else {
-
-            mutableOutcome.addToCloud(delegate) { result in
-
-                switch result {
-
-                case .success:
-                    completion(nil)
-                case .failure(let error):
-                    completion(error)
-                }
-            }
-            return
-        }
-
-        mutableOutcome.updateCloud(delegate) { result in
-
-            switch result {
-
-            case .success:
-                completion(nil)
-            case .failure(let error):
-                completion(error)
-            }
-        } */
     }
 
     public static func copyValues(from other: PCKOutcome, to here: PCKOutcome) throws -> Self {

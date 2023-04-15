@@ -162,71 +162,6 @@ public struct PCKTask: PCKVersionable {
         self.save(completion: completion)
     }
 
-    public func updateCloud(_ delegate: ParseRemoteDelegate? = nil,
-                            completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        guard var previousVersionUUIDs = self.previousVersionUUIDs,
-                let uuid = self.uuid else {
-                    completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
-            return
-        }
-        previousVersionUUIDs.append(uuid)
-
-        // Check to see if this entity is already in the Cloud, but not matched locally
-        let query = Self.query(containedIn(key: ParseKey.objectId, array: previousVersionUUIDs))
-            .includeAll()
-        query.find(callbackQueue: ParseRemote.queue) { results in
-
-            switch results {
-
-            case .success(let foundObjects):
-                switch foundObjects.count {
-                case 0:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.debug("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new")
-                    } else {
-                        os_log("updateCloud(), A previous version is suppose to exist in the Cloud, but isn't present, saving as new", log: .task, type: .debug)
-                    }
-                    self.addToCloud(completion: completion)
-                case 1:
-                    // This is the typical case
-                    guard let previousVersion = foundObjects.first(where: {
-                        guard let foundUUID = $0.uuid else {
-                            return false
-                        }
-                        return previousVersionUUIDs.contains(foundUUID)
-                    }) else {
-                        if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.task.error("updateCloud(), Didn't find previousVersion of this UUID (\(previousVersionUUIDs, privacy: .private)) already exists in Cloud")
-                        } else {
-                            os_log("updateCloud(), Didn't find previousVersion of this UUID (%{private}) already exists in Cloud", log: .task, type: .error, previousVersionUUIDs)
-                        }
-                        completion(.failure(ParseCareKitError.uuidAlreadyExists))
-                        return
-                    }
-                    var updated = self
-                    updated = updated.copyRelationalEntities(previousVersion)
-                    updated.addToCloud(completion: completion)
-
-                default:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.task.error("updateCloud(), UUID (\(uuid, privacy: .private)) already exists in Cloud")
-                    } else {
-                        os_log("updateCloud(), UUID (%{private}) already exists in Cloud",
-                               log: .task, type: .error, uuid.uuidString)
-                    }
-                    completion(.failure(ParseCareKitError.uuidAlreadyExists))
-                }
-            case .failure(let error):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.task.error("updateCloud(), \(error.localizedDescription, privacy: .private)")
-                } else {
-                    os_log("updateCloud(), %{private}", log: .task, type: .error, error.localizedDescription)
-                }
-                completion(.failure(error))
-            }
-        }
-    }
-
     public func pullRevisions(since localClock: Int,
                               cloudClock: OCKRevisionRecord.KnowledgeVector,
                               remoteID: String,
@@ -277,25 +212,8 @@ public struct PCKTask: PCKVersionable {
         var mutableTask = self
         mutableTask.logicalClock = cloudClock // Stamp Entity
         mutableTask.remoteID = remoteID
-
-        guard mutableTask.deletedDate != nil else {
-            mutableTask.addToCloud { result in
-
-                switch result {
-
-                case .success:
-                    completion(nil)
-                case .failure(let error):
-                    completion(error)
-                }
-            }
-            return
-        }
-
-        mutableTask.updateCloud { result in
-
+        mutableTask.addToCloud { result in
             switch result {
-
             case .success:
                 completion(nil)
             case .failure(let error):
