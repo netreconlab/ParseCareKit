@@ -1,0 +1,1367 @@
+{
+  "abstract" : [
+    {
+      "text" : "A collection implementing a double-ended queue. ",
+      "type" : "text"
+    },
+    {
+      "code" : "Deque",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (pronounced “deck”)",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "implements an ordered random-access collection that supports efficient",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "insertions and removals from both ends.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:11DequeModule0A0V",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Deque"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "DequeModule"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Deque"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "Deque"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "attribute",
+              "text" : "@frozen"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Deque"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : ">"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "var colors: Deque = [\"red\", \"yellow\", \"blue\"]"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Deques implement the same indexing semantics as arrays: they use integer",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "indices, and the first element of a nonempty deque is always at index zero.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Like arrays, deques conform to ",
+              "type" : "text"
+            },
+            {
+              "code" : "RangeReplaceableCollection",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ",",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "code" : "MutableCollection",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "RandomAccessCollection",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", providing a familiar",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "interface for manipulating their contents:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "print(colors[1]) \/\/ \"yellow\"",
+            "print(colors[3]) \/\/ Runtime error: Index out of range",
+            "",
+            "colors.insert(\"green\", at: 1)",
+            "\/\/ [\"red\", \"green\", \"yellow\", \"blue\"]",
+            "",
+            "colors.remove(at: 2) \/\/ \"yellow\"",
+            "\/\/ [\"red\", \"green\", \"blue\"]"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Like all variable-size collections on the standard library, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Deque",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "implements value semantics: each deque has an independent value that",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "includes the values of its elements. Modifying one deque does not affect any",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "others:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "var copy = deque",
+            "copy[1] = \"violet\"",
+            "print(copy)  \/\/ [\"red\", \"violet\", \"blue\"]",
+            "print(deque) \/\/ [\"red\", \"green\", \"blue\"]"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This is implemented with the copy-on-write optimization. Multiple copies of",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "a deque share the same underlying storage until you modify one of the",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "copies. When that happens, the deque being modified replaces its storage",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "with a uniquely owned copy of itself, which is then modified in place.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "code" : "Deque",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " stores its elements in a circular buffer, which allows efficient",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "insertions and removals at both ends of the collection; however, this comes",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "at the cost of potentially discontiguous storage. In contrast, ",
+              "type" : "text"
+            },
+            {
+              "code" : "Array",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " is",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "(usually) backed by a contiguous buffer, where new data can be efficiently",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "appended to the end, but inserting at the front is relatively slow, as",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "existing elements need to be shifted to make room.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This difference in implementation means that while the interface of a deque",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "is very similar to an array, the operations have different performance",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "characteristics. Mutations near the front are expected to be significantly",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "faster in deques, but arrays may measure slightly faster for general",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "random-access lookups.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Deques provide a handful of additional operations that make it easier to",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "insert and remove elements at the front. This includes queue operations such",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "as ",
+              "type" : "text"
+            },
+            {
+              "code" : "popFirst",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "prepend",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", including the ability to directly prepend a",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "sequence of elements:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "colors.append(\"green\")",
+            "colors.prepend(\"orange\")",
+            "\/\/ colors: [\"orange\", \"red\", \"blue\", \"yellow\", \"green\"]",
+            "",
+            "colors.popLast() \/\/ \"green\"",
+            "colors.popFirst() \/\/ \"orange\"",
+            "\/\/ colors: [\"red\", \"blue\", \"yellow\"]",
+            "",
+            "colors.prepend(contentsOf: [\"purple\", \"teal\"])",
+            "\/\/ colors: [\"purple\", \"teal\", \"red\", \"blue\", \"yellow\"]"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Unlike arrays, deques do not currently provide direct unsafe access to their",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "underlying storage. They also lack a ",
+              "type" : "text"
+            },
+            {
+              "code" : "capacity",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " property – the size of the",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "storage buffer at any given point is an unstable implementation detail that",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "should not affect application logic. (However, deques do provide a",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "code" : "reserveCapacity",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " method.)",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SK",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sl",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s17CustomReflectableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s25ExpressibleByArrayLiteralP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SM",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sk",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sm",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/ST"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/init(_:)-1tqf4",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/init(minimumCapacity:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/init(unsafeUninitializedCapacity:initializingWith:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/append(contentsOf:)-29aoh",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/popFirst()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/prepend(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/prepend(contentsOf:)-51zn6",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/prepend(contentsOf:)-96y15"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/BidirectionalCollection-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Collection-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/CustomDebugStringConvertible-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/CustomReflectable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/CustomStringConvertible-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Decodable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Encodable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Equatable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/ExpressibleByArrayLiteral-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Hashable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/MutableCollection-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/RandomAccessCollection-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/RangeReplaceableCollection-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Sequence-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/collections\/deque"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SE": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
+  "title" : "Swift.Encodable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SK": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SK",
+  "title" : "Swift.BidirectionalCollection",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SM": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SM",
+  "title" : "Swift.MutableCollection",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/ST": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/ST",
+  "title" : "Swift.Sequence",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/Se": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
+  "title" : "Swift.Decodable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/Sk": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sk",
+  "title" : "Swift.RandomAccessCollection",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/Sl": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sl",
+  "title" : "Swift.Collection",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/Sm": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sm",
+  "title" : "Swift.RangeReplaceableCollection",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "Collections",
+  "type" : "topic",
+  "url" : "\/documentation\/collections"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque": {
+  "abstract" : [
+    {
+      "text" : "A collection implementing a double-ended queue. ",
+      "type" : "text"
+    },
+    {
+      "code" : "Deque",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (pronounced “deck”)",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "implements an ordered random-access collection that supports efficient",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "insertions and removals from both ends.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Deque",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/BidirectionalCollection-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/BidirectionalCollection-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "BidirectionalCollection Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/bidirectionalcollection-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/Collection-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Collection-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Collection Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/collection-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/CustomDebugStringConvertible-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/CustomDebugStringConvertible-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomDebugStringConvertible Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/customdebugstringconvertible-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/CustomReflectable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/CustomReflectable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomReflectable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/customreflectable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/CustomStringConvertible-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/CustomStringConvertible-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CustomStringConvertible Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/customstringconvertible-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/Decodable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Decodable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Decodable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/decodable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/Encodable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Encodable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Encodable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/encodable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/equatable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/ExpressibleByArrayLiteral-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/ExpressibleByArrayLiteral-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "ExpressibleByArrayLiteral Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/expressiblebyarrayliteral-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/hashable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/MutableCollection-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/MutableCollection-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "MutableCollection Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/mutablecollection-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/RandomAccessCollection-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/RandomAccessCollection-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "RandomAccessCollection Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/randomaccesscollection-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/RangeReplaceableCollection-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/RangeReplaceableCollection-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "RangeReplaceableCollection Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/rangereplaceablecollection-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/Sequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/Sequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Sequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/sequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/append(contentsOf:)-29aoh": {
+  "abstract" : [
+    {
+      "text" : "Adds the elements of a collection to the end of the deque.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "append"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "contentsOf"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V6append10contentsOfyqd___t7ElementQyd__RszSlRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/append(contentsOf:)-29aoh",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "append(contentsOf:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/append(contentsof:)-29aoh"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/init(_:)-1tqf4": {
+  "abstract" : [
+    {
+      "text" : "Creates a deque containing the elements of a collection.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0VyACyxGqd__c7ElementQyd__RszSlRd__lufc1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/init(_:)-1tqf4",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/init(_:)-1tqf4"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/init(minimumCapacity:)": {
+  "abstract" : [
+    {
+      "text" : "Creates and empty deque with preallocated space for at least the specified",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "number of elements.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "minimumCapacity"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/init(minimumCapacity:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(minimumCapacity:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/init(minimumcapacity:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/init(unsafeUninitializedCapacity:initializingWith:)": {
+  "abstract" : [
+    {
+      "text" : "Creates a deque with the specified capacity, then calls the given",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "closure with a buffer covering the array’s uninitialized memory.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "unsafeUninitializedCapacity"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "initializingWith"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sr",
+      "text" : "UnsafeMutableBufferPointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">, "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/init(unsafeUninitializedCapacity:initializingWith:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(unsafeUninitializedCapacity:initializingWith:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/init(unsafeuninitializedcapacity:initializingwith:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/popFirst()": {
+  "abstract" : [
+    {
+      "text" : "Removes and returns the first element of this deque, if it exists.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "popFirst"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/popFirst()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "popFirst()",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/popfirst()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/prepend(_:)": {
+  "abstract" : [
+    {
+      "text" : "Adds a new element at the front of the deque.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "prepend"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/prepend(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "prepend(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/prepend(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/prepend(contentsOf:)-51zn6": {
+  "abstract" : [
+    {
+      "text" : "Adds the elements of a collection to the front of the deque.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "prepend"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "contentsOf"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7prepend10contentsOfyqd___t7ElementQyd__RszSlRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/prepend(contentsOf:)-51zn6",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "prepend(contentsOf:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/prepend(contentsof:)-51zn6"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/Deque/prepend(contentsOf:)-96y15": {
+  "abstract" : [
+    {
+      "text" : "Adds the elements of a sequence to the front of the deque.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "prepend"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "S"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "contentsOf"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7prepend10contentsOfyqd___t7ElementQyd__RszSTRd__lF1SL_qd__mfp",
+      "text" : "S"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/Deque\/prepend(contentsOf:)-96y15",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "prepend(contentsOf:)",
+  "type" : "topic",
+  "url" : "\/documentation\/collections\/deque\/prepend(contentsof:)-96y15"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s17CustomReflectableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s17CustomReflectableP",
+  "title" : "Swift.CustomReflectable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s23CustomStringConvertibleP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
+  "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s25ExpressibleByArrayLiteralP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s25ExpressibleByArrayLiteralP",
+  "title" : "Swift.ExpressibleByArrayLiteral",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s28CustomDebugStringConvertibleP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
+  "title" : "Swift.CustomDebugStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

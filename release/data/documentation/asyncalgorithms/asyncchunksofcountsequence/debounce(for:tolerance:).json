@@ -1,0 +1,519 @@
+{
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that emits the latest element after a given quiescence period",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "has elapsed.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunksOfCountSequence",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunksOfCountSequence\/AsyncSequence-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunksOfCountSequence\/debounce(for:tolerance:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "_Concurrency",
+    "externalID" : "s:Sci15AsyncAlgorithmsE8debounce3for9toleranceAA0A16DebounceSequenceVyx12_Concurrency15ContinuousClockVGs8DurationV_ALSgts8SendableRzrlF::SYNTHESIZED::s:15AsyncAlgorithms0A21ChunksOfCountSequenceV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "debounce"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "for"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s8DurationV",
+        "text" : "Duration"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "tolerance"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s8DurationV",
+        "text" : "Duration"
+      },
+      {
+        "kind" : "text",
+        "text" : "?) -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV",
+        "text" : "AsyncDebounceSequence"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "Self"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
+        "text" : "ContinuousClock"
+      },
+      {
+        "kind" : "text",
+        "text" : ">"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AsyncAlgorithms"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.0",
+        "name" : "iOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "13.0",
+        "name" : "macOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.0",
+        "name" : "tvOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.0",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "debounce(for:tolerance:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "debounce"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "for"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "interval"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s8DurationV",
+              "text" : "Duration"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "tolerance"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s8DurationV",
+              "text" : "Duration"
+            },
+            {
+              "kind" : "text",
+              "text" : "? = nil) -> "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV",
+              "text" : "AsyncDebounceSequence"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
+              "text" : "ContinuousClock"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s8SendableP",
+              "text" : "Sendable"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/asyncalgorithms\/asyncchunksofcountsequence\/debounce(for:tolerance:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AsyncAlgorithms",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChunksOfCountSequence": {
+  "abstract" : [
+    {
+      "text" : "An ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that chunks elements into ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " instances of at least a given count.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncChunksOfCountSequence"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunksOfCountSequence",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncChunksOfCountSequence"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncChunksOfCountSequence",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchunksofcountsequence"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChunksOfCountSequence/AsyncSequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunksOfCountSequence\/AsyncSequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "AsyncSequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchunksofcountsequence\/asyncsequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChunksOfCountSequence/debounce(for:tolerance:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that emits the latest element after a given quiescence period",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "has elapsed.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "debounce"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s8DurationV",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "tolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s8DurationV",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV",
+      "text" : "AsyncDebounceSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
+      "text" : "ContinuousClock"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunksOfCountSequence\/debounce(for:tolerance:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "debounce(for:tolerance:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchunksofcountsequence\/debounce(for:tolerance:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncDebounceSequence": {
+  "abstract" : [
+    {
+      "text" : "An ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that emits the latest element after a given quiescence period",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "has elapsed.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncDebounceSequence"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncDebounceSequence"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncDebounceSequence",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence"
+}
+}
+}

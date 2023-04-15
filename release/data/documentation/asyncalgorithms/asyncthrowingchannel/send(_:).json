@@ -1,0 +1,335 @@
+{
+  "abstract" : [
+    {
+      "text" : "Send an element to an awaiting iteration. This function will resume when the next call to ",
+      "type" : "text"
+    },
+    {
+      "code" : "next()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is made",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "or when a call to ",
+      "type" : "text"
+    },
+    {
+      "code" : "finish()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "\/",
+      "type" : "text"
+    },
+    {
+      "code" : "fail(_:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is made from another Task.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "If the channel is already finished then this returns immediately",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "If the task is cancelled, this function will resume. Other sending operations from other tasks will remain active.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncThrowingChannel"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncThrowingChannel\/send(_:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AsyncAlgorithms0A15ThrowingChannelC4sendyyxYaF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "send"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A15ThrowingChannelC7Elementxmfp",
+        "text" : "Element"
+      },
+      {
+        "kind" : "text",
+        "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AsyncAlgorithms"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "send(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "send"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "element"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A15ThrowingChannelC7Elementxmfp",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : ") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "async"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/send(_:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AsyncAlgorithms",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncThrowingChannel": {
+  "abstract" : [
+    {
+      "text" : "An error-throwing channel for sending elements from on task to another with back pressure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncThrowingChannel"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncThrowingChannel",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncThrowingChannel"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncThrowingChannel",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncThrowingChannel/send(_:)": {
+  "abstract" : [
+    {
+      "text" : "Send an element to an awaiting iteration. This function will resume when the next call to ",
+      "type" : "text"
+    },
+    {
+      "code" : "next()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is made",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "or when a call to ",
+      "type" : "text"
+    },
+    {
+      "code" : "finish()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "\/",
+      "type" : "text"
+    },
+    {
+      "code" : "fail(_:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is made from another Task.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "If the channel is already finished then this returns immediately",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "If the task is cancelled, this function will resume. Other sending operations from other tasks will remain active.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "send"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A15ThrowingChannelC7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncThrowingChannel\/send(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "send(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/send(_:)"
+}
+}
+}

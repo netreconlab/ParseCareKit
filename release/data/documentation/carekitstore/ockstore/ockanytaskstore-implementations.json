@@ -99,11 +99,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/addAnyTask(_:)": {
   "abstract" : [
     {
-      "code" : "addAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds a task to the store.",
+      "text" : "Asynchronously add a task to the store.",
       "type" : "text"
     }
   ],
@@ -165,11 +161,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/addAnyTask(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "addAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds a task to the store.",
+      "text" : "Asynchronously add a task to the store.",
       "type" : "text"
     }
   ],
@@ -253,11 +245,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/addAnyTasks(_:)": {
   "abstract" : [
     {
-      "code" : "addAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds an array of tasks to the store.",
+      "text" : "Asynchronously add an array of tasks to the store.",
       "type" : "text"
     }
   ],
@@ -323,11 +311,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/addAnyTasks(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "addAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds an array of tasks to the store.",
+      "text" : "Asynchronously add an array of tasks to the store.",
       "type" : "text"
     }
   ],
@@ -411,11 +395,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/deleteAnyTask(_:)": {
   "abstract" : [
     {
-      "code" : "deleteTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes a task from the store.",
+      "text" : "Asynchronously delete a task from the store.",
       "type" : "text"
     }
   ],
@@ -477,11 +457,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/deleteAnyTask(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "deleteTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes a task from the store.",
+      "text" : "Asynchronously delete a task from the store.",
       "type" : "text"
     }
   ],
@@ -565,11 +541,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/deleteAnyTasks(_:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of tasks from the store.",
+      "text" : "Asynchronously delete an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -635,11 +607,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/deleteAnyTasks(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of tasks from the store.",
+      "text" : "Asynchronously delete an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -723,11 +691,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/updateAnyTask(_:)": {
   "abstract" : [
     {
-      "code" : "updateAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a task in the store.",
+      "text" : "Asynchronously update a task in the store.",
       "type" : "text"
     }
   ],
@@ -789,11 +753,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/updateAnyTask(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "updateAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a task in the store.",
+      "text" : "Asynchronously update a task in the store.",
       "type" : "text"
     }
   ],
@@ -877,11 +837,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/updateAnyTasks(_:)": {
   "abstract" : [
     {
-      "code" : "updateAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an array of tasks in the store.",
+      "text" : "Asynchronously update an array of tasks in the store.",
       "type" : "text"
     }
   ],
@@ -947,11 +903,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/updateAnyTasks(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "updateAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an array of tasks in the store.",
+      "text" : "Asynchronously update an array of tasks in the store.",
       "type" : "text"
     }
   ],

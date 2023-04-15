@@ -271,7 +271,7 @@
             },
             {
               "kind" : "text",
-              "text" : " = .hours(0))"
+              "text" : " = .hours(1))"
             }
           ]
         }
@@ -366,6 +366,69 @@
           "name" : "duration"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "start",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " < ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "end",
+                  "type" : "codeVoice"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Precondition",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "interval",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " should move forwards in time",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Precondition",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {

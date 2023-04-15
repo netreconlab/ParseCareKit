@@ -1,0 +1,590 @@
+{
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type on the uniqueness of a given subject.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence\/AsyncSequence-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence\/chunked(into:on:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "_Concurrency",
+    "externalID" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF::SYNTHESIZED::s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "chunked"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "genericParameter",
+        "text" : "Subject"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "genericParameter",
+        "text" : "Collected"
+      },
+      {
+        "kind" : "text",
+        "text" : ">("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "into"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+        "text" : "Collected"
+      },
+      {
+        "kind" : "text",
+        "text" : ".Type, "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "on"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sci7ElementQa",
+        "text" : "Element"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+        "text" : "Subject"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+        "text" : "AsyncChunkedOnProjectionSequence"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "Self"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+        "text" : "Subject"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+        "text" : "Collected"
+      },
+      {
+        "kind" : "text",
+        "text" : ">"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AsyncAlgorithms"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "chunked(into:on:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "chunked"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "Subject"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "Collected"
+            },
+            {
+              "kind" : "text",
+              "text" : ">("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "into"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+              "text" : "Collected"
+            },
+            {
+              "kind" : "text",
+              "text" : ".Type, "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "on"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "projection"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "attribute",
+              "text" : "@escaping"
+            },
+            {
+              "kind" : "text",
+              "text" : " ("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+              "text" : "Subject"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+              "text" : "AsyncChunkedOnProjectionSequence"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+              "text" : "Subject"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+              "text" : "Collected"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Subject"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SQ",
+              "text" : "Equatable"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Collected"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sm",
+              "text" : "RangeReplaceableCollection"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : " == "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Collected"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Element"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/asyncalgorithms\/asyncchunkedonprojectionsequence\/chunked(into:on:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AsyncAlgorithms",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChunkedOnProjectionSequence": {
+  "abstract" : [
+    {
+      "text" : "An ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that chunks on a subject when it differs from the last element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncChunkedOnProjectionSequence"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncChunkedOnProjectionSequence"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncChunkedOnProjectionSequence",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchunkedonprojectionsequence"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChunkedOnProjectionSequence/AsyncSequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence\/AsyncSequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "AsyncSequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchunkedonprojectionsequence\/asyncsequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChunkedOnProjectionSequence/chunked(into:on:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type on the uniqueness of a given subject.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "on"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+      "text" : "AsyncChunkedOnProjectionSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChunkedOnProjectionSequence\/chunked(into:on:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(into:on:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchunkedonprojectionsequence\/chunked(into:on:)"
+}
+}
+}

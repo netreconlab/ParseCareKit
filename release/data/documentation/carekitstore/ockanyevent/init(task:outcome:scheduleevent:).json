@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Initialize by specifying a task, schedule event, and optional outcome.",
+      "text" : "Creates an event with a task, schedule event, and optional outcome.",
       "type" : "text"
     }
   ],
@@ -170,51 +170,85 @@
       "kind" : "declarations"
     },
     {
-      "kind" : "parameters",
-      "parameters" : [
+      "content" : [
         {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The task associated with this event.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "task"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "content" : [
+          "items" : [
             {
-              "inlineContent" : [
+              "content" : [
                 {
-                  "text" : "The outcome associated with this event, or nil if no outcome exists yet.",
-                  "type" : "text"
+                  "inlineContent" : [
+                    {
+                      "text" : "Parameters",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                },
+                {
+                  "items" : [
+                    {
+                      "content" : [
+                        {
+                          "inlineContent" : [
+                            {
+                              "text" : "task: The task associated with this event.",
+                              "type" : "text"
+                            }
+                          ],
+                          "type" : "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content" : [
+                        {
+                          "inlineContent" : [
+                            {
+                              "text" : "outcome: The outcome associated with this event, or ",
+                              "type" : "text"
+                            },
+                            {
+                              "code" : "nil",
+                              "type" : "codeVoice"
+                            },
+                            {
+                              "text" : " if the outcome doesn’t exists yet.",
+                              "type" : "text"
+                            }
+                          ],
+                          "type" : "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content" : [
+                        {
+                          "inlineContent" : [
+                            {
+                              "text" : "scheduleEvent: The schedule event that resulted in this event.",
+                              "type" : "text"
+                            }
+                          ],
+                          "type" : "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type" : "unorderedList"
                 }
-              ],
-              "type" : "paragraph"
+              ]
             }
           ],
-          "name" : "outcome"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The schedule event that resulted in this event.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "scheduleEvent"
+          "type" : "unorderedList"
         }
-      ]
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -253,15 +287,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
       "type" : "text"
     }
   ],
@@ -295,7 +321,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/init(task:outcome:scheduleEvent:)": {
   "abstract" : [
     {
-      "text" : "Initialize by specifying a task, schedule event, and optional outcome.",
+      "text" : "Creates an event with a task, schedule event, and optional outcome.",
       "type" : "text"
     }
   ],
@@ -370,15 +396,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],

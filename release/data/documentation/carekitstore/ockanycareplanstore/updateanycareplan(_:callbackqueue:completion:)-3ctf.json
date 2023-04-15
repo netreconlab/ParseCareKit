@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -217,7 +213,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A single care plan to be updated. The care plans must already exist in the store.",
+                  "text" : "A single care plan to update. The care plans must already exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -231,7 +227,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
+                  "text" : "The queue that the method calls the completion closure on. In most cases this is the main queue.",
                   "type" : "text"
                 }
               ],
@@ -245,7 +241,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that will fire on the provided callback queue.",
+                  "text" : "A callback that executes on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -293,15 +289,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -335,23 +323,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store able to write to one ore more types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " is considered an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A protocol that enforces conformance to a care plan store.",
       "type" : "text"
     }
   ],
@@ -385,11 +357,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlan(_:callbackQueue:completion:)-16z29": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -475,11 +443,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlan(_:callbackQueue:completion:)-3ctf": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],

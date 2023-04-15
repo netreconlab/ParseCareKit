@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves a single care plans from the store.",
+      "text" : "Asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],
@@ -178,7 +174,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The identifier of the item to be fetched.",
+                  "text" : "The identifier of the item the method fetches.",
                   "type" : "text"
                 }
               ],
@@ -226,15 +222,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -268,23 +256,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading care plans.",
       "type" : "text"
     }
   ],
@@ -318,11 +290,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlan(withID:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves a single care plans from the store.",
+      "text" : "Asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],

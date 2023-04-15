@@ -1,0 +1,5709 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/AsyncSequence-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "AsyncAlgorithms"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "AsyncSequence Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/adjacentPairs()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/allSatisfy(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(by:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(by:into:)-7r5zb",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(by:into:)-z1ha",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(into:by:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(into:on:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(on:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:into:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:)-5k4a7",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:)-8pw4g",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:into:)-40vp2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:into:)-4t38b",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/compactMap(_:)-66yb7",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/compactMap(_:)-8qjjv",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/compacted()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/contains(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/contains(where:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/debounce(for:tolerance:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/debounce(for:tolerance:clock:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/drop(while:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/dropFirst(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/filter(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/first(where:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/flatMap(_:)-3rgbw",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/flatMap(_:)-7okcm",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/interspersed(with:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/joined()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/joined(separator:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/map(_:)-186qn",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/map(_:)-66rdg",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/max()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/max(by:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/min()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/min(by:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/prefix(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/prefix(while:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reduce(_:_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reduce(into:_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(_:_:)-2g4zl",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(_:_:)-4i9lu",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(into:_:)-6dmys",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(into:_:)-shrf",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/removeDuplicates()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/removeDuplicates(by:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:clock:latest:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:clock:reducing:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:latest:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:reducing:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AsyncAlgorithms",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence": {
+  "abstract" : [
+    {
+      "text" : "An asynchronous sequence composed from a synchronous sequence.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncLazySequence"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncLazySequence"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncLazySequence",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/adjacentPairs()": {
+  "abstract" : [
+    {
+      "text" : "An ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that iterates over the adjacent pairs of the original",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "original ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "adjacentPairs"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A21AdjacentPairsSequenceV",
+      "text" : "AsyncAdjacentPairsSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/adjacentPairs()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "adjacentPairs()",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/adjacentpairs()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/allSatisfy(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "allSatisfy"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/allSatisfy(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "allSatisfy(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/allsatisfy(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunked(by:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks by testing if elements belong in the same group.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A22ChunkedByGroupSequenceV",
+      "text" : "AsyncChunkedByGroupSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(by:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunked(by:into:)-7r5zb": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type when an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncTimerSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " fires.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A13TimerSequenceV",
+      "text" : "AsyncTimerSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_AA0a5TimerK0Vyqd__GGAI_qd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAK7ElementRpzANQyd_0_AORSr0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_AA0a5TimerK0Vyqd__GGAI_qd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAK7ElementRpzANQyd_0_AORSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A29ChunksOfCountOrSignalSequenceV",
+      "text" : "AsyncChunksOfCountOrSignalSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_AA0a5TimerK0Vyqd__GGAI_qd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAK7ElementRpzANQyd_0_AORSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A13TimerSequenceV",
+      "text" : "AsyncTimerSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_AA0a5TimerK0Vyqd__GGAI_qd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAK7ElementRpzANQyd_0_AORSr0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(by:into:)-7r5zb",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(by:into:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(by:into:)-7r5zb"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunked(by:into:)-z1ha": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type when a signal ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " produces an element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_qd__Gqd___qd_0_mts8SendableRzsAHRd__SciRd__SmRd_0_sAH7ElementRpzAIQyd_0_AJRSsAhIRpd__r0_lF0J0L_qd__mfp",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_qd__Gqd___qd_0_mts8SendableRzsAHRd__SciRd__SmRd_0_sAH7ElementRpzAIQyd_0_AJRSsAhIRpd__r0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A29ChunksOfCountOrSignalSequenceV",
+      "text" : "AsyncChunksOfCountOrSignalSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_qd__Gqd___qd_0_mts8SendableRzsAHRd__SciRd__SmRd_0_sAH7ElementRpzAIQyd_0_AJRSsAhIRpd__r0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2by4intoAA0A29ChunksOfCountOrSignalSequenceVyxqd_0_qd__Gqd___qd_0_mts8SendableRzsAHRd__SciRd__SmRd_0_sAH7ElementRpzAIQyd_0_AJRSsAhIRpd__r0_lF0J0L_qd__mfp",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(by:into:)-z1ha",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(by:into:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(by:into:)-z1ha"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunked(into:by:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "type by testing if elements belong in the same group.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2byAA0A22ChunkedByGroupSequenceVyxqd__Gqd__m_Sb7ElementQz_AItYbctSmRd__AHQyd__AIRSlF9CollectedL_qd__mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A22ChunkedByGroupSequenceV",
+      "text" : "AsyncChunkedByGroupSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2byAA0A22ChunkedByGroupSequenceVyxqd__Gqd__m_Sb7ElementQz_AItYbctSmRd__AHQyd__AIRSlF9CollectedL_qd__mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(into:by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(into:by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(into:by:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunked(into:on:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type on the uniqueness of a given subject.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "on"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+      "text" : "AsyncChunkedOnProjectionSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF7SubjectL_qd__mfp",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked4into2onAA0A27ChunkedOnProjectionSequenceVyxqd__qd_0_Gqd_0_m_qd__7ElementQzYbctSQRd__SmRd_0_AHQyd_0_AIRSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(into:on:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(into:on:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(into:on:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunked(on:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks on the uniqueness of a given subject.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunked"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "on"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2onAA0A27ChunkedOnProjectionSequenceVyxqd__Say7ElementQzGGqd__AGYbc_tSQRd__lF7SubjectL_qd__mfp",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+      "text" : "AsyncChunkedOnProjectionSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE7chunked2onAA0A27ChunkedOnProjectionSequenceVyxqd__Say7ElementQzGGqd__AGYbc_tSQRd__lF7SubjectL_qd__mfp",
+      "text" : "Subject"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunked(on:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunked(on:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(on:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunks(ofCount:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given count.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunks"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ofCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A21ChunksOfCountSequenceV",
+      "text" : "AsyncChunksOfCountSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunks(ofCount:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunks(ofCount:into:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of a given count.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunks"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ofCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount4intoAA0a8ChunksOfE8SequenceVyxqd__GSi_qd__mtSmRd__7ElementQyd__AHRtzlF9CollectedL_qd__mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A21ChunksOfCountSequenceV",
+      "text" : "AsyncChunksOfCountSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount4intoAA0a8ChunksOfE8SequenceVyxqd__GSi_qd__mtSmRd__7ElementQyd__AHRtzlF9CollectedL_qd__mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:into:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunks(ofCount:into:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:into:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunks(ofCount:or:)-5k4a7": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given count or when a signal ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " produces an element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunks"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ofCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "or"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2orAA0a8ChunksOfE16OrSignalSequenceVyxSay7ElementQzGqd__GSi_qd__ts8SendableRzsAKRd__SciRd__sAkHRQsAkGRpd__lF0J0L_qd__mfp",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A29ChunksOfCountOrSignalSequenceV",
+      "text" : "AsyncChunksOfCountOrSignalSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2orAA0a8ChunksOfE16OrSignalSequenceVyxSay7ElementQzGqd__GSi_qd__ts8SendableRzsAKRd__SciRd__sAkHRQsAkGRpd__lF0J0L_qd__mfp",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:)-5k4a7",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunks(ofCount:or:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:)-5k4a7"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunks(ofCount:or:)-8pw4g": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given count or when an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncTimerSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " fires.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunks"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ofCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "or"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A13TimerSequenceV",
+      "text" : "AsyncTimerSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2orAA0a8ChunksOfE16OrSignalSequenceVyxSay7ElementQzGAA0a5TimerK0Vyqd__GGSi_ALts8SendableRz12_Concurrency5ClockRd__sAnHRQlF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A29ChunksOfCountOrSignalSequenceV",
+      "text" : "AsyncChunksOfCountOrSignalSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A13TimerSequenceV",
+      "text" : "AsyncTimerSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2orAA0a8ChunksOfE16OrSignalSequenceVyxSay7ElementQzGAA0a5TimerK0Vyqd__GGSi_ALts8SendableRz12_Concurrency5ClockRd__sAnHRQlF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:)-8pw4g",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunks(ofCount:or:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:)-8pw4g"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunks(ofCount:or:into:)-40vp2": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type of a given count or when a signal ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " produces an element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunks"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ofCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "or"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_qd__GSi_qd__qd_0_mts8SendableRzsAIRd__SciRd__SmRd_0_sAI7ElementRpzAJQyd_0_AKRSsAiJRpd__r0_lF0K0L_qd__mfp",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_qd__GSi_qd__qd_0_mts8SendableRzsAIRd__SciRd__SmRd_0_sAI7ElementRpzAJQyd_0_AKRSsAiJRpd__r0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A29ChunksOfCountOrSignalSequenceV",
+      "text" : "AsyncChunksOfCountOrSignalSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_qd__GSi_qd__qd_0_mts8SendableRzsAIRd__SciRd__SmRd_0_sAI7ElementRpzAJQyd_0_AKRSsAiJRpd__r0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_qd__GSi_qd__qd_0_mts8SendableRzsAIRd__SciRd__SmRd_0_sAI7ElementRpzAJQyd_0_AKRSsAiJRpd__r0_lF0K0L_qd__mfp",
+      "text" : "Signal"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:into:)-40vp2",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunks(ofCount:or:into:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:into:)-40vp2"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/chunks(ofCount:or:into:)-4t38b": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that creates chunks of a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "RangeReplaceableCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type of a given count or when an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncTimerSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " fires.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "chunks"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ofCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "or"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A13TimerSequenceV",
+      "text" : "AsyncTimerSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_AA0a5TimerL0Vyqd__GGSi_AJqd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAL7ElementRpzAOQyd_0_APRSr0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_AA0a5TimerL0Vyqd__GGSi_AJqd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAL7ElementRpzAOQyd_0_APRSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A29ChunksOfCountOrSignalSequenceV",
+      "text" : "AsyncChunksOfCountOrSignalSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_AA0a5TimerL0Vyqd__GGSi_AJqd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAL7ElementRpzAOQyd_0_APRSr0_lF9CollectedL_qd_0_mfp",
+      "text" : "Collected"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A13TimerSequenceV",
+      "text" : "AsyncTimerSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE6chunks7ofCount2or4intoAA0a8ChunksOfE16OrSignalSequenceVyxqd_0_AA0a5TimerL0Vyqd__GGSi_AJqd_0_mts8SendableRz12_Concurrency5ClockRd__SmRd_0_sAL7ElementRpzAOQyd_0_APRSr0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/chunks(ofCount:or:into:)-4t38b",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "chunks(ofCount:or:into:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:into:)-4t38b"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/compactMap(_:)-66yb7": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "compactMap"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "ElementOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "ElementOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency23AsyncCompactMapSequenceV",
+      "text" : "AsyncCompactMapSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "ElementOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/compactMap(_:)-66yb7",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "compactMap(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/compactmap(_:)-66yb7"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/compactMap(_:)-8qjjv": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "compactMap"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "ElementOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "ElementOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency31AsyncThrowingCompactMapSequenceV",
+      "text" : "AsyncThrowingCompactMapSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "ElementOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/compactMap(_:)-8qjjv",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "compactMap(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/compactmap(_:)-8qjjv"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/compacted()": {
+  "abstract" : [
+    {
+      "text" : "Returns a new ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that iterates over every non-nil element from the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "original ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "compacted"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Unwrapped"
+    },
+    {
+      "kind" : "text",
+      "text" : ">() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A17CompactedSequenceV",
+      "text" : "AsyncCompactedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE9compactedAA0A17CompactedSequenceVyxqd__Gyqd__Sg7ElementRtzlF9UnwrappedL_qd__mfp",
+      "text" : "Unwrapped"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/compacted()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "compacted()",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/compacted()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/contains(_:)": {
+  "abstract" : [
+
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Equatable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "contains"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/contains(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "contains(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/contains(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/contains(where:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "contains"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "where"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/contains(where:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "contains(where:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/contains(where:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/debounce(for:tolerance:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that emits the latest element after a given quiescence period",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "has elapsed.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "debounce"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s8DurationV",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "tolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s8DurationV",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV",
+      "text" : "AsyncDebounceSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
+      "text" : "ContinuousClock"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/debounce(for:tolerance:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "debounce(for:tolerance:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/debounce(for:tolerance:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/debounce(for:tolerance:clock:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that emits the latest element after a given quiescence period",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "has elapsed by using a specified Clock.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "debounce"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
+      "text" : "Instant"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "tolerance"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
+      "text" : "Instant"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "clock"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV",
+      "text" : "AsyncDebounceSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/debounce(for:tolerance:clock:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "debounce(for:tolerance:clock:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/debounce(for:tolerance:clock:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/drop(while:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "drop"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "while"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency22AsyncDropWhileSequenceV",
+      "text" : "AsyncDropWhileSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/drop(while:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "drop(while:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/drop(while:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/dropFirst(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dropFirst"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency22AsyncDropFirstSequenceV",
+      "text" : "AsyncDropFirstSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/dropFirst(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "dropFirst(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/dropfirst(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/filter(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "filter"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency19AsyncFilterSequenceV",
+      "text" : "AsyncFilterSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/filter(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "filter(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/filter(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/first(where:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "first"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "where"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/first(where:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "first(where:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/first(where:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/flatMap(_:)-3rgbw": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "flatMap"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "SegmentOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "SegmentOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency20AsyncFlatMapSequenceV",
+      "text" : "AsyncFlatMapSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "SegmentOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/flatMap(_:)-3rgbw",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "flatMap(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/flatmap(_:)-3rgbw"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/flatMap(_:)-7okcm": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "flatMap"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "SegmentOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "SegmentOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency28AsyncThrowingFlatMapSequenceV",
+      "text" : "AsyncThrowingFlatMapSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "SegmentOfResult"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/flatMap(_:)-7okcm",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "flatMap(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/flatmap(_:)-7okcm"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/interspersed(with:)": {
+  "abstract" : [
+    {
+      "text" : "Returns an asynchronous sequence containing elements of this asynchronous sequence with",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the given separator inserted in between each element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "interspersed"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV",
+      "text" : "AsyncInterspersedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/interspersed(with:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "interspersed(with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/interspersed(with:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/joined()": {
+  "abstract" : [
+    {
+      "text" : "Concatenate an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " elements",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "joined"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A14JoinedSequenceV",
+      "text" : "AsyncJoinedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/joined()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "joined()",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/joined()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/joined(separator:)": {
+  "abstract" : [
+    {
+      "text" : "Concatenate an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " of ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " elements with a separator.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "joined"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Separator"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "separator"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsSci7ElementRpzrlE6joined9separatorAA0A25JoinedBySeparatorSequenceVyxqd__Gqd___tSciRd__AB_ABQZABRtd__lF0H0L_qd__mfp",
+      "text" : "Separator"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A25JoinedBySeparatorSequenceV",
+      "text" : "AsyncJoinedBySeparatorSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsSci7ElementRpzrlE6joined9separatorAA0A25JoinedBySeparatorSequenceVyxqd__Gqd___tSciRd__AB_ABQZABRtd__lF0H0L_qd__mfp",
+      "text" : "Separator"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/joined(separator:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "joined(separator:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/joined(separator:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/map(_:)-186qn": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "map"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Transformed"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Transformed"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency24AsyncThrowingMapSequenceV",
+      "text" : "AsyncThrowingMapSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Transformed"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/map(_:)-186qn",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "map(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/map(_:)-186qn"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/map(_:)-66rdg": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "map"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Transformed"
+    },
+    {
+      "kind" : "text",
+      "text" : ">(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Transformed"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency16AsyncMapSequenceV",
+      "text" : "AsyncMapSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Transformed"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/map(_:)-66rdg",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "map(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/map(_:)-66rdg"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/max()": {
+  "abstract" : [
+
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Comparable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "max"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/max()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "max()",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/max()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/max(by:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "max"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/max(by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "max(by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/max(by:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/min()": {
+  "abstract" : [
+
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Comparable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "min"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/min()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "min()",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/min()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/min(by:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "min"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/min(by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "min(by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/min(by:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/prefix(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "prefix"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency19AsyncPrefixSequenceV",
+      "text" : "AsyncPrefixSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/prefix(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "prefix(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/prefix(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/prefix(while:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "prefix"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "while"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency24AsyncPrefixWhileSequenceV",
+      "text" : "AsyncPrefixWhileSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/prefix(while:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "prefix(while:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/prefix(while:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reduce(_:_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reduce"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reduce(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reduce(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reduce(_:_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reduce(into:_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reduce"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ("
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "rethrows"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Result"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reduce(into:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reduce(into:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reduce(into:_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reductions(_:)": {
+  "abstract" : [
+    {
+      "text" : "Returns an asynchronous sequence containing the accumulated results of combining the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "elements of the asynchronous sequence using the given closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reductions"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A27InclusiveReductionsSequenceV",
+      "text" : "AsyncInclusiveReductionsSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reductions(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reductions(_:_:)-2g4zl": {
+  "abstract" : [
+    {
+      "text" : "Returns an asynchronous sequence containing the accumulated results of combining the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "elements of the asynchronous sequence using the given closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reductions"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A27ExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A27ExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A27ExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A27ExclusiveReductionsSequenceV",
+      "text" : "AsyncExclusiveReductionsSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A27ExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(_:_:)-2g4zl",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reductions(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(_:_:)-2g4zl"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reductions(_:_:)-4i9lu": {
+  "abstract" : [
+    {
+      "text" : "Returns an asynchronous sequence containing the accumulated results of combining the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "elements of the asynchronous sequence using the given error-throwing closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reductions"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A35ThrowingExclusiveReductionsSequenceV",
+      "text" : "AsyncThrowingExclusiveReductionsSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductionsyAA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___qd__qd___7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(_:_:)-4i9lu",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reductions(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(_:_:)-4i9lu"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reductions(into:_:)-6dmys": {
+  "abstract" : [
+    {
+      "text" : "Returns an asynchronous sequence containing the accumulated results of combining the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "elements of the asynchronous sequence using the given closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reductions"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductions4into_AA0A27ExclusiveReductionsSequenceVyxqd__Gqd___yqd__z_7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ("
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductions4into_AA0A27ExclusiveReductionsSequenceVyxqd__Gqd___yqd__z_7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A27ExclusiveReductionsSequenceV",
+      "text" : "AsyncExclusiveReductionsSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductions4into_AA0A27ExclusiveReductionsSequenceVyxqd__Gqd___yqd__z_7ElementQztYaYbctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(into:_:)-6dmys",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reductions(into:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(into:_:)-6dmys"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/reductions(into:_:)-shrf": {
+  "abstract" : [
+    {
+      "text" : "Returns an asynchronous sequence containing the accumulated results of combining the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "elements of the asynchronous sequence using the given error-throwing closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reductions"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "into"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductions4into_AA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___yqd__z_7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", ("
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductions4into_AA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___yqd__z_7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s4Voida",
+      "text" : "Void"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A35ThrowingExclusiveReductionsSequenceV",
+      "text" : "AsyncThrowingExclusiveReductionsSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE10reductions4into_AA0A35ThrowingExclusiveReductionsSequenceVyxqd__Gqd___yqd__z_7ElementQztYaYbKctlF6ResultL_qd__mfp",
+      "text" : "Result"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/reductions(into:_:)-shrf",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reductions(into:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(into:_:)-shrf"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/removeDuplicates()": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that omits repeated elements.",
+      "type" : "text"
+    }
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Equatable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeDuplicates"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A24RemoveDuplicatesSequenceV",
+      "text" : "AsyncRemoveDuplicatesSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/removeDuplicates()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "removeDuplicates()",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/removeduplicates()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/removeDuplicates(by:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an asynchronous sequence that omits repeated elements by testing them with a predicate.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeDuplicates"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A24RemoveDuplicatesSequenceV",
+      "text" : "AsyncRemoveDuplicatesSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/removeDuplicates(by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "removeDuplicates(by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/removeduplicates(by:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/throttle(for:clock:latest:)": {
+  "abstract" : [
+    {
+      "text" : "Create a rate-limited ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " by emitting values at most every specified interval.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "throttle"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock6latestAA0A16ThrottleSequenceVyxqd__7ElementQzG8DurationQyd___qd__Sbt12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
+      "text" : "Instant"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "clock"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock6latestAA0A16ThrottleSequenceVyxqd__7ElementQzG8DurationQyd___qd__Sbt12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "latest"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
+      "text" : "AsyncThrottleSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock6latestAA0A16ThrottleSequenceVyxqd__7ElementQzG8DurationQyd___qd__Sbt12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:clock:latest:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "throttle(for:clock:latest:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:clock:latest:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/throttle(for:clock:reducing:)": {
+  "abstract" : [
+    {
+      "text" : "Create a rate-limited ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " by emitting values at most every specified interval.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "throttle"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
+      "text" : "Instant"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "clock"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "reducing"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF7ReducedL_qd_0_mfp",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF7ReducedL_qd_0_mfp",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
+      "text" : "AsyncThrottleSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF1CL_qd__mfp",
+      "text" : "C"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF7ReducedL_qd_0_mfp",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:clock:reducing:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "throttle(for:clock:reducing:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:clock:reducing:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/throttle(for:latest:)": {
+  "abstract" : [
+    {
+      "text" : "Create a rate-limited ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " by emitting values at most every specified interval.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "throttle"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s8DurationV",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "latest"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
+      "text" : "AsyncThrottleSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
+      "text" : "ContinuousClock"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:latest:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "throttle(for:latest:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:latest:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLazySequence/throttle(for:reducing:)": {
+  "abstract" : [
+    {
+      "text" : "Create a rate-limited ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncSequence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " by emitting values at most every specified interval.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "throttle"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s8DurationV",
+      "text" : "Duration"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "reducing"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for8reducingAA0A16ThrottleSequenceVyx12_Concurrency15ContinuousClockVqd__Gs8DurationV_qd__qd__Sg_7ElementQztYaYbctlF7ReducedL_qd__mfp",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for8reducingAA0A16ThrottleSequenceVyx12_Concurrency15ContinuousClockVqd__Gs8DurationV_qd__qd__Sg_7ElementQztYaYbctlF7ReducedL_qd__mfp",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
+      "text" : "AsyncThrottleSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
+      "text" : "ContinuousClock"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for8reducingAA0A16ThrottleSequenceVyx12_Concurrency15ContinuousClockVqd__Gs8DurationV_qd__qd__Sg_7ElementQztYaYbctlF7ReducedL_qd__mfp",
+      "text" : "Reduced"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLazySequence\/throttle(for:reducing:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "throttle(for:reducing:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:reducing:)"
+}
+}
+}

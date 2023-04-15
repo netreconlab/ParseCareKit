@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The date interval in which outcomes should match.",
+      "text" : "The date interval in which events should be returned.",
       "type" : "text"
     }
   ],
@@ -161,7 +161,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery/dateInterval": {
   "abstract" : [
     {
-      "text" : "The date interval in which outcomes should match.",
+      "text" : "The date interval in which events should be returned.",
       "type" : "text"
     }
   ],

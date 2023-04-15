@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Initialize an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " with a task, optional outcome, and schedule event.",
+      "text" : "Initialize an event with a task, optional outcome, and schedule event.",
       "type" : "text"
     }
   ],
@@ -259,23 +251,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent": {
   "abstract" : [
     {
-      "text" : "An ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " represents a single occasion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "An event that represents a single occasion that a task was scheduled to occur.",
       "type" : "text"
     }
   ],
@@ -309,15 +285,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/init(task:outcome:scheduleEvent:)": {
   "abstract" : [
     {
-      "text" : "Initialize an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " with a task, optional outcome, and schedule event.",
+      "text" : "Initialize an event with a task, optional outcome, and schedule event.",
       "type" : "text"
     }
   ],

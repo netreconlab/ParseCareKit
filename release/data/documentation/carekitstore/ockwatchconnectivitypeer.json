@@ -182,7 +182,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/chooseConflictResolution(conflicts:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/pullRevisions(since:mergeRevision:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/pushRevisions(deviceRevision:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/reply(to:store:sendReply:)"
       ],
       "title" : "Instance Methods"
@@ -629,7 +629,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockwatchconnectivitypeer\/pullrevisions(since:mergerevision:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKWatchConnectivityPeer/pushRevisions(deviceRevision:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKWatchConnectivityPeer/pushRevisions(deviceRevisions:deviceKnowledge:completion:)": {
   "abstract" : [
     {
       "text" : "Push a revision from a device up to the server.",
@@ -655,7 +655,24 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "deviceRevision"
+      "text" : "deviceRevisions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV",
+      "text" : "OCKRevisionRecord"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "deviceKnowledge"
     },
     {
       "kind" : "text",
@@ -665,6 +682,15 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV",
       "text" : "OCKRevisionRecord"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV15KnowledgeVectorV",
+      "text" : "KnowledgeVector"
     },
     {
       "kind" : "text",
@@ -697,12 +723,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/pushRevisions(deviceRevision:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKWatchConnectivityPeer\/pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "pushRevisions(deviceRevision:completion:)",
+  "title" : "pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockwatchconnectivitypeer\/pushrevisions(devicerevision:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockwatchconnectivitypeer\/pushrevisions(devicerevisions:deviceknowledge:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKWatchConnectivityPeer/reply(to:store:sendReply:)": {
   "abstract" : [

@@ -207,7 +207,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-
+    {
+      "text" : "A store that allows for reading outcomes.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -1322,23 +1325,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableOutcomeStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading outcomes.",
       "type" : "text"
     }
   ],

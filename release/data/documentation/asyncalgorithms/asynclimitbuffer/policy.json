@@ -1,0 +1,327 @@
+{
+  "abstract" : [
+    {
+      "text" : "A policy for buffering elements to an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncLimitBuffer",
+      "type" : "codeVoice"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:15AsyncAlgorithms0A11LimitBufferC6PolicyO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Policy"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "AsyncAlgorithms"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Policy"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "AsyncLimitBuffer.Policy"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Policy"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy\/bufferingNewest(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy\/bufferingOldest(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy\/unbounded"
+      ],
+      "title" : "Enumeration Cases"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "AsyncAlgorithms",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer": {
+  "abstract" : [
+    {
+      "text" : "A buffer that limits pushed items by a certain count.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncLimitBuffer"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncLimitBuffer"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncLimitBuffer",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer/Policy": {
+  "abstract" : [
+    {
+      "text" : "A policy for buffering elements to an ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncLimitBuffer",
+      "type" : "codeVoice"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Policy"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Policy"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncLimitBuffer.Policy",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer/Policy/bufferingNewest(_:)": {
+  "abstract" : [
+    {
+      "text" : "A policy for limiting to a specific number of newest values.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bufferingNewest"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy\/bufferingNewest(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AsyncLimitBuffer.Policy.bufferingNewest(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy\/bufferingnewest(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer/Policy/bufferingOldest(_:)": {
+  "abstract" : [
+    {
+      "text" : "A policy for limiting to a specific number of oldest values.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bufferingOldest"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy\/bufferingOldest(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AsyncLimitBuffer.Policy.bufferingOldest(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy\/bufferingoldest(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer/Policy/unbounded": {
+  "abstract" : [
+    {
+      "text" : "A policy for no bounding limit of pushed elements.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unbounded"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy\/unbounded",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "AsyncLimitBuffer.Policy.unbounded",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy\/unbounded"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}

@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The schedule event for this task occurrence. It contains information about the start, duration, occurrence number, and schedule element that",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "resulted in this event.",
+      "text" : "The schedule event for this task occurrence.",
       "type" : "text"
     }
   ],
@@ -98,6 +90,34 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The event contains information about the start, duration, occurrence number, and schedule element that",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "resulted in this event.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -136,15 +156,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
       "type" : "text"
     }
   ],
@@ -178,15 +190,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/scheduleEvent": {
   "abstract" : [
     {
-      "text" : "The schedule event for this task occurrence. It contains information about the start, duration, occurrence number, and schedule element that",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "resulted in this event.",
+      "text" : "The schedule event for this task occurrence.",
       "type" : "text"
     }
   ],

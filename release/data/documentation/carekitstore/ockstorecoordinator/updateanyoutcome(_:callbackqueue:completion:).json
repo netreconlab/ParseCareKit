@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "updateAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an outcome in the store.",
+      "text" : "Asynchronously update an outcome in the store.",
       "type" : "text"
     }
   ],
@@ -217,7 +213,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An outcome to be updated. The outcome must already exist in the store.",
+                  "text" : "An outcome that the function updates. The outcome must already exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -231,7 +227,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
+                  "text" : "The queue that the function calls the closure on. In most cases this is the main queue.",
                   "type" : "text"
                 }
               ],
@@ -245,7 +241,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that will fire on the provided callback queue.",
+                  "text" : "A callback that the function calls on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -293,15 +289,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -449,11 +437,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyOutcome(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "updateAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an outcome in the store.",
+      "text" : "Asynchronously update an outcome in the store.",
       "type" : "text"
     }
   ],

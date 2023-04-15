@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyContactStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading contacts.",
       "type" : "text"
     }
   ],
@@ -144,12 +128,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/contactDelegate"
-      ],
-      "title" : "Instance Properties"
-    },
-    {
-      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/anyContacts(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContact(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContact(withID:callbackQueue:completion:)-iivk",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContacts(query:)",
@@ -236,23 +215,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyContactStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading contacts.",
       "type" : "text"
     }
   ],
@@ -283,33 +246,18 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/contactDelegate": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/anyContacts(matching:)": {
   "abstract" : [
     {
-      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "text" : "A continuous stream of contacts that exist in the store.",
       "type" : "text"
     }
   ],
+  "defaultImplementations" : 1,
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "var"
+      "text" : "func"
     },
     {
       "kind" : "text",
@@ -317,7 +265,15 @@
     },
     {
       "kind" : "identifier",
-      "text" : "contactDelegate"
+      "text" : "anyContacts"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "matching"
     },
     {
       "kind" : "text",
@@ -325,21 +281,39 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore010OCKContactC8DelegateP",
-      "text" : "OCKContactStoreDelegate"
+      "preciseIdentifier" : "s:12CareKitStore15OCKContactQueryV",
+      "text" : "OCKContactQuery"
     },
     {
       "kind" : "text",
-      "text" : "?"
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+      "text" : "CareStoreQueryResults"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyContactP",
+      "text" : "OCKAnyContact"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/contactDelegate",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/anyContacts(matching:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "contactDelegate",
+  "title" : "anyContacts(matching:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/contactdelegate"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/anycontacts(matching:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/fetchAnyContact(withID:)": {
   "abstract" : [
@@ -773,23 +747,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableContactStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAReadableCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading contacts.",
       "type" : "text"
     }
   ],

@@ -1,0 +1,391 @@
+{
+  "abstract" : [
+    {
+      "text" : "User progress for a task that is either completed or incomplete.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:12CareKitStore06BinaryA12TaskProgressV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "BinaryCareTaskProgress"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitStore"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "BinaryCareTaskProgress"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "BinaryCareTaskProgress"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "BinaryCareTaskProgress"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This type of progress can be useful for tasks such as “Take a medication” or “Stretch your back.”",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Once progress is constructed, it can easily be applied to a",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/progressview",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "in SwiftUI:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "var body: some View {",
+            "    ProgressView(value: progress.fractionCompleted)",
+            "}"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/CareTaskProgress",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/fractionCompleted",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/isCompleted-2ce3j"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/CareTaskProgress-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitstore\/binarycaretaskprogress"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress": {
+  "abstract" : [
+    {
+      "text" : "User progress for a task that is either completed or incomplete.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "BinaryCareTaskProgress"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "BinaryCareTaskProgress"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "BinaryCareTaskProgress",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/CareTaskProgress-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/CareTaskProgress-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "CareTaskProgress Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/caretaskprogress-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/equatable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/fractionCompleted": {
+  "abstract" : [
+    {
+      "text" : "The fraction of the task that completed between 0 and 1 inclusive.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fractionCompleted"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sd",
+      "text" : "Double"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/fractionCompleted",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fractionCompleted",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/fractioncompleted"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/isCompleted-2ce3j": {
+  "abstract" : [
+    {
+      "text" : "True if the task is considered completed.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "isCompleted"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/isCompleted-2ce3j",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "isCompleted",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/iscompleted-2ce3j"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/CareTaskProgress": {
+  "abstract" : [
+    {
+      "text" : "A protocol that describes user progress for a task.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CareTaskProgress"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/CareTaskProgress",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CareTaskProgress"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CareTaskProgress",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/caretaskprogress"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+},
+"https://developer.apple.com/documentation/swiftui/progressview": {
+  "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/progressview",
+  "title" : "ProgressView",
+  "titleInlineContent" : [
+    {
+      "text" : "ProgressView",
+      "type" : "text"
+    }
+  ],
+  "type" : "link",
+  "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/progressview"
+}
+}
+}

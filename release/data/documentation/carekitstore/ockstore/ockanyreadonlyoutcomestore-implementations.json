@@ -33,6 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/anyOutcomes(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyOutcome(query:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyOutcome(query:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyOutcomes(query:)",
@@ -88,22 +89,77 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/anyOutcomes(matching:)": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of outcomes that exist in the store.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "anyOutcomes"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "matching"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore15OCKOutcomeQueryV",
+      "text" : "OCKOutcomeQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+      "text" : "CareStoreQueryResults"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/anyOutcomes(matching:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "anyOutcomes(matching:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstore\/anyoutcomes(matching:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyOutcome(query:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves a single outcome from the store. If more than one outcome matches the query, only the first",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "will be returned. If no matching outcomes exist, the completion handler will be called with an error.",
+      "text" : "Asynchronously retrieve a single outcome from the store.",
       "type" : "text"
     }
   ],
@@ -173,19 +229,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyOutcome(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves a single outcome from the store. If more than one outcome matches the query, only the first",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "will be returned. If no matching outcomes exist, the completion handler will be called with an error.",
+      "text" : "Fetch an outcome from the store.",
       "type" : "text"
     }
   ],
@@ -277,11 +321,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyOutcomes(query:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyOutcomes",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of outcomes from the store.",
+      "text" : "Asynchronously retrieve an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -355,11 +395,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyOutcomes(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyOutcomes",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of outcomes from the store.",
+      "text" : "Fetch a list of outcomes that exist in the store.",
       "type" : "text"
     }
   ],

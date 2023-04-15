@@ -109,6 +109,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/allergies",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/birthday",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/effectiveDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/groupIdentifier",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/name",
@@ -269,6 +270,44 @@
   "title" : "birthday",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanypatient\/birthday"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatient/effectiveDate": {
+  "abstract" : [
+    {
+      "text" : "A date specifying when this version of the patient begins taking effect.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "effectiveDate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient\/effectiveDate",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "effectiveDate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanypatient\/effectivedate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatient/groupIdentifier": {
   "abstract" : [

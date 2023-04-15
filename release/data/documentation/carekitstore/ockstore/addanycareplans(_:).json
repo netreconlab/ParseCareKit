@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "addAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds an array of care plans to the store.",
+      "text" : "Asynchronously adds an array of care plans to the store.",
       "type" : "text"
     }
   ],
@@ -180,7 +176,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of plans to be added to the store.",
+                  "text" : "An array of plans to add to the store.",
                   "type" : "text"
                 }
               ],
@@ -228,15 +224,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -315,11 +303,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/addAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "code" : "addAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds an array of care plans to the store.",
+      "text" : "Asynchronously adds an array of care plans to the store.",
       "type" : "text"
     }
   ],

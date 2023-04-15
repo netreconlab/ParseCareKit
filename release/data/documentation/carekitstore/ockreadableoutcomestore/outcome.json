@@ -159,15 +159,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -201,23 +193,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableOutcomeStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading outcomes.",
       "type" : "text"
     }
   ],

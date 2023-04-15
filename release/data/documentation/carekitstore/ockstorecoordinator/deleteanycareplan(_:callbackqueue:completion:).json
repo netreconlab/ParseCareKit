@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes a single care plan from the store.",
+      "text" : "Asynchronously deletes a single care plan from the store.",
       "type" : "text"
     }
   ],
@@ -217,21 +213,21 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A single care plan to be deleted. The care plans must exist in the store.",
+                  "text" : "A single care plan to delete. The care plans must exist in the store.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "plans"
+          "name" : "plan"
         },
         {
           "content" : [
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
+                  "text" : "The queue that the method calls the completion closure on. In most cases this is the main queue.",
                   "type" : "text"
                 }
               ],
@@ -245,7 +241,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that will fire on the provided callback queue.",
+                  "text" : "A callback that executes on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -293,15 +289,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -449,11 +437,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/deleteAnyCarePlan(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes a single care plan from the store.",
+      "text" : "Asynchronously deletes a single care plan from the store.",
       "type" : "text"
     }
   ],

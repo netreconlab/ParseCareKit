@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Indicates that tasks were scheduled, but there were no events suring the interval in which adherence was computed.",
+      "text" : "Indicates that tasks were scheduled, but there were no events during the interval in which adherence was computed.",
       "type" : "text"
     }
   ],
@@ -147,7 +147,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherence/noEvents": {
   "abstract" : [
     {
-      "text" : "Indicates that tasks were scheduled, but there were no events suring the interval in which adherence was computed.",
+      "text" : "Indicates that tasks were scheduled, but there were no events during the interval in which adherence was computed.",
       "type" : "text"
     }
   ],

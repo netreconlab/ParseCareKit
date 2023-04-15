@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "addAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds a task to the store.",
+      "text" : "Asynchronously add a task to the store.",
       "type" : "text"
     }
   ],
@@ -217,7 +213,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A task to be added to the store.",
+                  "text" : "A task the function adds to the store.",
                   "type" : "text"
                 }
               ],
@@ -231,7 +227,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
+                  "text" : "The queue that the function calls the closure on. In most cases this is the main queue.",
                   "type" : "text"
                 }
               ],
@@ -245,7 +241,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that will fire on the provided callback queue.",
+                  "text" : "A callback that the function calls on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -380,11 +376,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/addAnyTask(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "addAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds a task to the store.",
+      "text" : "Asynchronously add a task to the store.",
       "type" : "text"
     }
   ],

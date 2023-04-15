@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Any store able to write to one ore more types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " is considered an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A protocol that enforces conformance to a care plan store.",
       "type" : "text"
     }
   ],
@@ -102,6 +86,42 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Any store that can write to one more types conforming to ",
+              "type" : "text"
+            },
+            {
+              "code" : "OCKAnyCarePlan",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " is considered an ",
+              "type" : "text"
+            },
+            {
+              "code" : "OCKAnyCarePlanStore",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "relationshipsSections" : [
@@ -187,23 +207,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store able to write to one ore more types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " is considered an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A protocol that enforces conformance to a care plan store.",
       "type" : "text"
     }
   ],
@@ -237,11 +241,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/addAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "code" : "addAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds a single care plan to the store.",
+      "text" : "Asynchronously adds a single care plan to the store.",
       "type" : "text"
     }
   ],
@@ -303,11 +303,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/addAnyCarePlan(_:callbackQueue:completion:)-22ln2": {
   "abstract" : [
     {
-      "code" : "addAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds a single care plan to the store.",
+      "text" : "Asynchronously adds a single care plan to the store.",
       "type" : "text"
     }
   ],
@@ -393,11 +389,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/addAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "code" : "addAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds an array of care plans to the store.",
+      "text" : "Asynchronously adds an array of care plans to the store.",
       "type" : "text"
     }
   ],
@@ -463,11 +455,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/addAnyCarePlans(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "addAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously adds an array of care plans to the store.",
+      "text" : "Asynchronously adds an array of care plans to the store.",
       "type" : "text"
     }
   ],
@@ -553,11 +541,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes a single care plan from the store.",
+      "text" : "Asynchronously deletes a single care plan from the store.",
       "type" : "text"
     }
   ],
@@ -619,11 +603,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlan(_:callbackQueue:completion:)-2eqy7": {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes a single care plan from the store.",
+      "text" : "Asynchronously deletes a single care plan from the store.",
       "type" : "text"
     }
   ],
@@ -709,11 +689,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of care plans from the store.",
+      "text" : "Asynchronously deletes an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -779,11 +755,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlans(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of care plans from the store.",
+      "text" : "Asynchronously deletes an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -869,11 +841,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -935,11 +903,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlan(_:callbackQueue:completion:)-16z29": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -1025,11 +989,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an array of care plans in the store.",
+      "text" : "Aynchronously updates an array of care plans in the store.",
       "type" : "text"
     }
   ],
@@ -1095,11 +1055,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlans(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an array of care plans in the store.",
+      "text" : "Asynchronously updates an array of care plans in the store.",
       "type" : "text"
     }
   ],
@@ -1185,23 +1141,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading care plans.",
       "type" : "text"
     }
   ],

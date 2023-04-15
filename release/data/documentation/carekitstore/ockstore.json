@@ -137,14 +137,8 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/carePlanDelegate",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/contactDelegate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/name",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/outcomeDelegate",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/patientDelegate",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/resetDelegate",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/securityApplicationGroupIdentifier",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/taskDelegate"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/securityApplicationGroupIdentifier"
       ],
       "title" : "Instance Properties"
     },
@@ -220,23 +214,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store able to write to one ore more types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " is considered an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A protocol that enforces conformance to a care plan store.",
       "type" : "text"
     }
   ],
@@ -451,23 +429,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading care plans.",
       "type" : "text"
     }
   ],
@@ -501,23 +463,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyContactStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading contacts.",
       "type" : "text"
     }
   ],
@@ -551,23 +497,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "s  can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],
@@ -600,7 +530,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-
+    {
+      "text" : "A store that allows for reading outcomes.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -632,23 +565,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyPatientStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading patients.",
       "type" : "text"
     }
   ],
@@ -682,23 +599,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],
@@ -1036,15 +937,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single event type can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],
@@ -1078,23 +971,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading care plans.",
       "type" : "text"
     }
   ],
@@ -1128,23 +1005,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableContactStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAReadableCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading contacts.",
       "type" : "text"
     }
   ],
@@ -1178,23 +1039,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableOutcomeStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading outcomes.",
       "type" : "text"
     }
   ],
@@ -1228,23 +1073,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyPatientStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading patients.",
       "type" : "text"
     }
   ],
@@ -1278,23 +1107,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],
@@ -1740,120 +1553,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore\/ocktaskstore-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/carePlanDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "carePlanDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore011OCKCarePlanC8DelegateP",
-      "text" : "OCKCarePlanStoreDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/carePlanDelegate",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "carePlanDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/careplandelegate"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/contactDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the contacts store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "contactDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore010OCKContactC8DelegateP",
-      "text" : "OCKContactStoreDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/contactDelegate",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "contactDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/contactdelegate"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/delete()": {
   "abstract" : [
     {
@@ -2027,120 +1726,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore\/name"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/outcomeDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the outcome store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "outcomeDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore010OCKOutcomeC8DelegateP",
-      "text" : "OCKOutcomeStoreDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/outcomeDelegate",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "outcomeDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/outcomedelegate"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/patientDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the patient store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "patientDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore010OCKPatientC8DelegateP",
-      "text" : "OCKPatientStoreDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/patientDelegate",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "patientDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/patientdelegate"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/reset()": {
   "abstract" : [
     {
@@ -2176,63 +1761,6 @@
   "title" : "reset()",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore\/reset()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/resetDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the store are reset.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "resetDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore16OCKResetDelegateP",
-      "text" : "OCKResetDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/resetDelegate",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "resetDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/resetdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/securityApplicationGroupIdentifier": {
   "abstract" : [
@@ -2332,63 +1860,6 @@
   "title" : "synchronize(completion:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore\/synchronize(completion:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/taskDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the tasks store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "taskDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore07OCKTaskC8DelegateP",
-      "text" : "OCKTaskStoreDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/taskDelegate",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "taskDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/taskdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKTaskStore": {
   "abstract" : [

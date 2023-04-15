@@ -160,10 +160,12 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/logicalClock",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/name",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/nextVersionUUIDs",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/nextVersions",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/notes",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/objectId",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/originalData",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/previousVersionUUIDs",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/previousVersions",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/remoteID",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/schemaVersion",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/sex",
@@ -178,13 +180,13 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/addToCloud(completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/addToCloud(_:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/convertToCareKit()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/encode(to:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/new(with:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/pullRevisions(since:cloudClock:remoteID:mergeRevision:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/pushRevision(cloudClock:remoteID:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/updateCloud(completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/pushRevision(_:cloudClock:remoteID:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/updateCloud(_:completion:)"
       ],
       "title" : "Instance Methods"
     },
@@ -258,7 +260,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -558,7 +560,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckpatient\/savable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/addToCloud(completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/addToCloud(_:completion:)": {
   "abstract" : [
     {
       "text" : "Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps",
@@ -589,6 +591,15 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit0A14RemoteDelegateP",
+      "text" : "ParseRemoteDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
     },
     {
       "kind" : "externalParam",
@@ -635,12 +646,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/addToCloud(completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/addToCloud(_:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "addToCloud(completion:)",
+  "title" : "addToCloud(_:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckpatient\/addtocloud(completion:)"
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/addtocloud(_:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/allergies": {
   "abstract" : [
@@ -927,7 +938,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/copyValues(from:to:)": {
   "abstract" : [
     {
-      "text" : "Copy the values of a ParseCareKit object",
+      "text" : "Copy the values of a ParseCareKit object.",
       "type" : "text"
     }
   ],
@@ -1628,7 +1639,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/nextVersionUUIDs": {
   "abstract" : [
     {
-      "text" : "The UUID of the next version of this object, or nil if there is no next version.",
+      "text" : "The UUIDs of the next version of this object, or nil if there is no next version.",
       "type" : "text"
     },
     {
@@ -1673,6 +1684,59 @@
   "title" : "nextVersionUUIDs",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckpatient\/nextversionuuids"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/nextVersions": {
+  "abstract" : [
+    {
+      "text" : "The next versions of this object, or nil if there is no next version.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "The versions are in no particular order.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "nextVersions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift7PointerV",
+      "text" : "Pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "<`Self`"
+    },
+    {
+      "kind" : "text",
+      "text" : ">]?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/nextVersions",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "nextVersions",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/nextversions"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/notes": {
   "abstract" : [
@@ -1794,7 +1858,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/previousVersionUUIDs": {
   "abstract" : [
     {
-      "text" : "The UUID of the previous version of this object, or nil if there is no previous version.",
+      "text" : "The UUIDs of the previous version of this object, or nil if there is no previous version.",
       "type" : "text"
     },
     {
@@ -1839,6 +1903,59 @@
   "title" : "previousVersionUUIDs",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckpatient\/previousversionuuids"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/previousVersions": {
+  "abstract" : [
+    {
+      "text" : "The previous versions of this object, or nil if there is no previous version.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "The versions are in no particular order.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "previousVersions"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift7PointerV",
+      "text" : "Pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "<`Self`"
+    },
+    {
+      "kind" : "text",
+      "text" : ">]?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/previousVersions",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "previousVersions",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/previousversions"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/pullRevisions(since:cloudClock:remoteID:mergeRevision:)": {
   "abstract" : [
@@ -1976,7 +2093,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckpatient\/pullrevisions(since:cloudclock:remoteid:mergerevision:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/pushRevision(cloudClock:remoteID:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/pushRevision(_:cloudClock:remoteID:completion:)": {
   "abstract" : [
     {
       "text" : "Push a revision from a device up to the server.",
@@ -1999,6 +2116,15 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit0A14RemoteDelegateP",
+      "text" : "ParseRemoteDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
     },
     {
       "kind" : "externalParam",
@@ -2061,12 +2187,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/pushRevision(cloudClock:remoteID:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/pushRevision(_:cloudClock:remoteID:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "pushRevision(cloudClock:remoteID:completion:)",
+  "title" : "pushRevision(_:cloudClock:remoteID:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckpatient\/pushrevision(cloudclock:remoteid:completion:)"
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/pushrevision(_:cloudclock:remoteid:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/remoteID": {
   "abstract" : [
@@ -2338,7 +2464,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckpatient\/timezone"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/updateCloud(completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/updateCloud(_:completion:)": {
   "abstract" : [
     {
       "text" : "Updates an object that conforms to PCKSynchronizable that is already on the Parse",
@@ -2369,6 +2495,15 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit0A14RemoteDelegateP",
+      "text" : "ParseRemoteDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
     },
     {
       "kind" : "externalParam",
@@ -2415,12 +2550,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/updateCloud(completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/updateCloud(_:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "updateCloud(completion:)",
+  "title" : "updateCloud(_:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckpatient\/updatecloud(completion:)"
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/updatecloud(_:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/updatedAt": {
   "abstract" : [

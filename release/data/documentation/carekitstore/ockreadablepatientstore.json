@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyPatientStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading patients.",
       "type" : "text"
     }
   ],
@@ -142,7 +126,8 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patient"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patient",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patients"
       ],
       "title" : "Associated Types"
     },
@@ -151,7 +136,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/fetchPatient(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/fetchPatient(withID:callbackQueue:completion:)-2k7xi",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/fetchPatients(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/fetchPatients(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/fetchPatients(query:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/patients(matching:)"
       ],
       "title" : "Instance Methods"
     }
@@ -184,23 +170,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyPatientStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading patients.",
       "type" : "text"
     }
   ],
@@ -315,23 +285,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyPatientStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading patients.",
       "type" : "text"
     }
   ],
@@ -414,6 +368,44 @@
   "title" : "Patient",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadablepatientstore\/patient"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore/Patients": {
+  "abstract" : [
+    {
+      "text" : "An asynchronous sequence that produces patients.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Patients"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci",
+      "text" : "AsyncSequence"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patients",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "Patients",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockreadablepatientstore\/patients"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore/fetchPatient(withID:)": {
   "abstract" : [
@@ -777,6 +769,61 @@
   "title" : "fetchPatients(query:callbackQueue:completion:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadablepatientstore\/fetchpatients(query:callbackqueue:completion:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore/patients(matching:)": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of patients that exist in the store.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "patients"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "matching"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore15OCKPatientQueryV",
+      "text" : "OCKPatientQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore018OCKReadablePatientC0P8PatientsQa",
+      "text" : "Patients"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/patients(matching:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "patients(matching:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockreadablepatientstore\/patients(matching:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore": {
   "abstract" : [

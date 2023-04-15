@@ -159,6 +159,12 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/init(uuid:)-62qc2"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/asset",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/createdDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/encodingForParse",
@@ -242,7 +248,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -745,7 +751,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/copyValues(from:to:)": {
   "abstract" : [
     {
-      "text" : "Copy the values of a ParseCareKit object",
+      "text" : "Copy the values of a ParseCareKit object.",
       "type" : "text"
     }
   ],
@@ -1546,6 +1552,49 @@
   "title" : "id",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckobjectable\/id-7q3rm"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/init(uuid:)-62qc2": {
+  "abstract" : [
+    {
+      "text" : "Initialize with UUID.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "?("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "uuid"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4UUIDV",
+      "text" : "UUID"
+    },
+    {
+      "kind" : "text",
+      "text" : "?)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/init(uuid:)-62qc2",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "init(uuid:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckobjectable\/init(uuid:)-62qc2"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/logicalClock": {
   "abstract" : [

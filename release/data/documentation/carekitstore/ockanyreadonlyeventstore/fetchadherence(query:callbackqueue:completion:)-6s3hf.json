@@ -421,23 +421,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "s  can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],

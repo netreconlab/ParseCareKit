@@ -1,11 +1,15 @@
 {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlans",
-      "type" : "codeVoice"
+      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
+      "type" : "text"
     },
     {
-      "text" : " asynchronously retrieves an array of care plans from the store.",
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
       "type" : "text"
     }
   ],
@@ -232,7 +236,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A query used to constrain the values that will be fetched.",
+                  "text" : "A query that matches care plans in the store.",
                   "type" : "text"
                 }
               ],
@@ -246,7 +250,21 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
+                  "text" : "A query that constrains the values the method fetches.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "query"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The queue that the method calls the completion closure on. In most cases this is the main queue.",
                   "type" : "text"
                 }
               ],
@@ -260,7 +278,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that will fire on the provided callback queue.",
+                  "text" : "A callback that executes on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -270,6 +288,59 @@
           "name" : "completion"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Supply a query that’ll be used to match care plans in the store. If the query doesn’t contain a date",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "interval, the result contains every version of a care plan. Multiple versions of the same care plan",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "have the same ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/id",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " but a different UUID. If the query does contain a date",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "interval, the result contains the newest version of a care plan that exists in the interval.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -308,15 +379,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -347,26 +410,48 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycareplan"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/id": {
+  "abstract" : [
+    {
+      "text" : "A user-defined unique identifier.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "id"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/id",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "id",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanycareplan\/id"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyCarePlanStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading care plans.",
       "type" : "text"
     }
   ],
@@ -400,11 +485,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlans",
-      "type" : "codeVoice"
+      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
+      "type" : "text"
     },
     {
-      "text" : " asynchronously retrieves an array of care plans from the store.",
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
       "type" : "text"
     }
   ],
@@ -532,11 +621,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlans",
-      "type" : "codeVoice"
+      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
+      "type" : "text"
     },
     {
-      "text" : " asynchronously retrieves an array of care plans from the store.",
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
       "type" : "text"
     }
   ],

@@ -200,11 +200,11 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/addToCloud(completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/addToCloud(_:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/new(with:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/pullRevisions(since:cloudClock:remoteID:mergeRevision:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/pushRevision(cloudClock:remoteID:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/updateCloud(completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/pushRevision(_:cloudClock:remoteID:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/updateCloud(_:completion:)"
       ],
       "title" : "Instance Methods"
     }
@@ -226,7 +226,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -773,7 +773,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pcksynchronizable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/addToCloud(completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/addToCloud(_:completion:)": {
   "abstract" : [
     {
       "text" : "Adds an object that conforms to PCKSynchronizable to the Parse Server and keeps",
@@ -804,6 +804,15 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit0A14RemoteDelegateP",
+      "text" : "ParseRemoteDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
     },
     {
       "kind" : "externalParam",
@@ -850,13 +859,13 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/addToCloud(completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/addToCloud(_:completion:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "addToCloud(completion:)",
+  "title" : "addToCloud(_:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/addtocloud(completion:)"
+  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/addtocloud(_:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/new(with:)": {
   "abstract" : [
@@ -1057,7 +1066,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/pullrevisions(since:cloudclock:remoteid:mergerevision:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/pushRevision(cloudClock:remoteID:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/pushRevision(_:cloudClock:remoteID:completion:)": {
   "abstract" : [
     {
       "text" : "Push a revision from a device up to the server.",
@@ -1080,6 +1089,15 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit0A14RemoteDelegateP",
+      "text" : "ParseRemoteDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
     },
     {
       "kind" : "externalParam",
@@ -1142,15 +1160,15 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/pushRevision(cloudClock:remoteID:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/pushRevision(_:cloudClock:remoteID:completion:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "pushRevision(cloudClock:remoteID:completion:)",
+  "title" : "pushRevision(_:cloudClock:remoteID:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/pushrevision(cloudclock:remoteid:completion:)"
+  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/pushrevision(_:cloudclock:remoteid:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/updateCloud(completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/updateCloud(_:completion:)": {
   "abstract" : [
     {
       "text" : "Updates an object that conforms to PCKSynchronizable that is already on the Parse",
@@ -1181,6 +1199,15 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit0A14RemoteDelegateP",
+      "text" : "ParseRemoteDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
     },
     {
       "kind" : "externalParam",
@@ -1227,13 +1254,13 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/updateCloud(completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/updateCloud(_:completion:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "updateCloud(completion:)",
+  "title" : "updateCloud(_:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/updatecloud(completion:)"
+  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/updatecloud(_:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask": {
   "abstract" : [

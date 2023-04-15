@@ -61,6 +61,9 @@
         "name" : "CareKitStore"
       }
     ],
+    "platforms" : [
+
+    ],
     "role" : "symbol",
     "roleHeading" : "Case",
     "symbolKind" : "case",
@@ -205,6 +208,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -239,6 +243,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -285,15 +290,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
       "type" : "text"
     }
   ],

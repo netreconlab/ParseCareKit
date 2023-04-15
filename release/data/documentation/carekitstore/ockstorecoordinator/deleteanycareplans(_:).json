@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of care plans from the store.",
+      "text" : "Asynchronously deletes an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -180,7 +176,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of care plans to be deleted. The care plans must exist in the store.",
+                  "text" : "An array of care plans to delete. The care plans must exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -228,15 +224,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -353,11 +341,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/deleteAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of care plans from the store.",
+      "text" : "Asynchronously deletes an array of care plans from the store.",
       "type" : "text"
     }
   ],
