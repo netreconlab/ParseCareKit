@@ -14,6 +14,10 @@ import ParseSwift
 /// Each revision record contains an array of entities as well as a knowledge vector.
 struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
+    public static var className: String {
+        "RevisionRecord"
+    }
+
     var originalData: Data?
 
     var objectId: String?
@@ -38,7 +42,7 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     /// A knowledge vector indicating the last known state of each other device
     /// by the device that authored this revision record.
-    let knowledgeVector: KnowledgeVector?
+    let knowledgeVector: PCKKnowledgeVector?
 
     var objects: [any PCKVersionable] {
         guard let entities = entities else {
@@ -90,7 +94,7 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case objectId, createdAt, updatedAt,
+        case objectId, createdAt, updatedAt, className,
              ACL, knowledgeVector, entities,
              logicalClock, clock, clockUUID
     }
@@ -203,7 +207,7 @@ extension PCKRevisionRecord {
         self.createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         self.ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
-        self.knowledgeVector = try container.decodeIfPresent(KnowledgeVector.self, forKey: .knowledgeVector)
+        self.knowledgeVector = try container.decodeIfPresent(PCKKnowledgeVector.self, forKey: .knowledgeVector)
         self.entities = try container.decodeIfPresent([PCKEntity].self, forKey: .objectId)
         self.clock = try container.decodeIfPresent(PCKClock.self, forKey: .clock)
         self.logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
@@ -212,6 +216,7 @@ extension PCKRevisionRecord {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(className, forKey: .className)
         try container.encodeIfPresent(objectId, forKey: .objectId)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
@@ -222,35 +227,27 @@ extension PCKRevisionRecord {
         try container.encodeIfPresent(clockUUID, forKey: .clockUUID)
     }
 
-    /// Create a new instance of `OCKRevisionRecord`.
-    ///
-    /// - Parameters:
-    ///   - entities: The entities that were modified.
-    ///   - knowledgeVector: A knowledge vector indicating the last known state
-    ///   of each other device by the device that authored this revision record.
-    init(entities: [PCKEntity], knowledgeVector: KnowledgeVector) {
-        self.ACL = PCKUtility.getDefaultACL()
-        self.objectId = UUID().uuidString
-        self.entities = entities
-        self.knowledgeVector = knowledgeVector
-    }
-
     /// Create a new instance of `PCKRevisionRecord`.
     ///
     /// - Parameters:
     ///   - record: The CareKit revision record.
+    ///   - remoteClockUUID: The remote clock uuid this record is designed for.
+    ///   - remoteClock: The remote clock uuid this record is designed for.
+    ///   - remoteClockValue: The remote clock uuid this record is designed for.
     init(record: OCKRevisionRecord,
-         clockUUID: UUID,
-         clock: PCKClock,
-         clockValue: Int) throws {
-        self.ACL = PCKUtility.getDefaultACL()
+         remoteClockUUID: UUID,
+         remoteClock: PCKClock,
+         remoteClockValue: Int) throws {
         self.objectId = UUID().uuidString
-        self.clockUUID = clockUUID
+        self.ACL = PCKUtility.getDefaultACL()
+        self.clockUUID = remoteClockUUID
+        self.logicalClock = remoteClockValue
+        self.clock = remoteClock
         self.entities = try record.entities.compactMap { entity in
             var parseEntity = try entity.parseEntity().value
-            parseEntity.logicalClock = clockValue // Stamp Entity
-            parseEntity.clock = clock
-            parseEntity.remoteID = clockUUID.uuidString
+            parseEntity.logicalClock = remoteClockValue // Stamp Entity
+            parseEntity.clock = remoteClock
+            parseEntity.remoteID = remoteClockUUID.uuidString
             switch entity {
             case .patient:
                 guard let parseEntity = parseEntity as? PCKPatient else {
@@ -284,6 +281,6 @@ extension PCKRevisionRecord {
                 return PCKEntity.outcome(parseEntity)
             }
         }
-        self.knowledgeVector = KnowledgeVector(record.knowledgeVector)
+        self.knowledgeVector = PCKKnowledgeVector(record.knowledgeVector)
     }
 }

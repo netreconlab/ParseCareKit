@@ -45,7 +45,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     private weak var parseDelegate: ParseRemoteDelegate?
     private var clockSubscription: SubscriptionCallback<PCKClock>?
     private var subscribeToServerUpdates: Bool
-    private var isSynchronizing = false
+    private let remoteStatus = RemoteSynchronizing()
     private let clockQuery: Query<PCKClock>
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
                                                      qos: .default,
@@ -287,11 +287,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
 
-            if isSynchronizing {
+            if await remoteStatus.isSynchronizing {
                 completion(ParseCareKitError.syncAlreadyInProgress)
                 return
             }
-            isSynchronizing = true
+            await remoteStatus.setSynchronizing()
 
             // Fetch Clock from Cloud
             PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
@@ -338,11 +338,13 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 .includeAll()
             do {
                 let revisions = try await query.find()
+                self.notifyRevisionProgress(0,
+                                            totalRecords: revisions.count)
                 for (index, revision) in revisions.enumerated() {
-                    let revision = try await revision.fetchEntities().convertToCareKit()
-                    mergeRevision(revision)
-                    self.notifyRevisionProgress(index,
-                                                totalEntities: revisions.count)
+                    let record = try await revision.fetchEntities().convertToCareKit()
+                    mergeRevision(record)
+                    self.notifyRevisionProgress(index + 1,
+                                                totalRecords: revisions.count)
                 }
 
                 // Catch up
@@ -356,6 +358,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
                 completion(nil)
             } catch {
+                await self.remoteStatus.setNotSynchronzing()
                 completion(error)
             }
         }
@@ -371,7 +374,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         if let customClassesToSynchronize = self.customClassesToSynchronize {
             let classNames = customClassesToSynchronize.keys.sorted()
             self.notifyRevisionProgress(customClassesAlreadyPulled,
-                                        totalEntities: classNames.count)
+                                        totalRecords: classNames.count)
 
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else {
@@ -419,41 +422,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
                               deviceKnowledge: CareKitStore.OCKRevisionRecord.KnowledgeVector,
                               completion: @escaping (Error?) -> Void) {
 
-        Task {
-            do {
-                _ = try await PCKUser.current()
-            } catch {
-                completion(ParseCareKitError.userNotLoggedIn)
-                return
-            }
-
-            do {
-                let status = try await ParseHealth.check()
-                guard status == .ok else {
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pushRevisions.error("Server health is: \(status.rawValue)")
-                    } else {
-                        os_log("Server health is not \"ok\"", log: .pushRevisions, type: .error)
-                    }
-                    completion(ParseCareKitError.parseHealthError)
-                    return
-                }
-            } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pushRevisions.error("Server health: \(error.localizedDescription)")
-                } else {
-                    os_log("Server health: %{private}@", log: .pushRevisions, type: .error, error.localizedDescription)
-                }
-                completion(ParseCareKitError.parseHealthError)
-                return
-            }
-
-            // Fetch Clock from Cloud
-            PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialPCKVector, error) in
-
+        // Fetch Clock from Cloud
+        PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: true) { (potentialPCKClock, potentialPCKVector, error) in
+            Task {
                 guard let parseClock = potentialPCKClock,
                     let cloudVector = potentialPCKVector else {
-                    self.isSynchronizing = false
+                    await self.remoteStatus.setNotSynchronzing()
                     guard let parseError = error else {
                         // There was a different issue that we don't know how to handle
                         if #available(iOS 14.0, watchOS 7.0, *) {
@@ -484,48 +458,32 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     return
                 }
 
+                // Push all revision records
                 ParseRemote.queue.async {
-                    let logicalClock = deviceKnowledge.clock(for: self.uuid)
-                    let revisionsCompleted = RevisionsComplete()
+                    Task {
+                        let logicalClock = deviceKnowledge.clock(for: self.uuid)
+                        self.notifyRevisionProgress(0,
+                                                    totalRecords: deviceRevisions.count)
 
-                    for deviceRevision in deviceRevisions {
-                        Task {
-                            guard deviceRevision.entities.count > 0 else {
-                                await revisionsCompleted.incrementCompleted()
-                                let count = await revisionsCompleted.count
-                                self.notifyRevisionProgress(count,
-                                                            totalEntities: deviceRevisions.count)
-                                if count == deviceRevisions.count {
-                                    self.finishedRevisions(parseClock: parseClock,
-                                                           cloudVector: cloudVector,
-                                                           localClock: deviceKnowledge,
-                                                           completion: completion)
-                                }
-                                return
-                            }
-
-                            let count = await revisionsCompleted.count
-                            self.notifyRevisionProgress(count,
-                                                        totalEntities: deviceRevisions.count)
+                        for (index, deviceRevision) in deviceRevisions.enumerated() {
                             do {
                                 let revision = try PCKRevisionRecord(record: deviceRevision,
-                                                                     clockUUID: self.uuid,
-                                                                     clock: parseClock,
-                                                                     clockValue: logicalClock)
+                                                                     remoteClockUUID: self.uuid,
+                                                                     remoteClock: parseClock,
+                                                                     remoteClockValue: logicalClock)
                                 _ = try await revision.save()
-                                completion(error)
-                                await revisionsCompleted.incrementCompleted()
-                                let revisionsCompletedCount = await revisionsCompleted.count
-                                self.notifyRevisionProgress(revisionsCompletedCount,
-                                                            totalEntities: deviceRevision.entities.count)
-                                if revisionsCompletedCount == deviceRevisions.count {
+                                self.notifyRevisionProgress(index + 1,
+                                                            totalRecords: deviceRevisions.count)
+                                if index == (deviceRevisions.count - 1) {
                                     self.finishedRevisions(parseClock: parseClock,
                                                            cloudVector: cloudVector,
                                                            localClock: deviceKnowledge,
                                                            completion: completion)
                                 }
                             } catch {
+                                await self.remoteStatus.setNotSynchronzing()
                                 completion(error)
+                                break
                             }
                         }
                     }
@@ -556,36 +514,38 @@ public class ParseRemote: OCKRemoteSynchronizable {
                            cloudVector: OCKRevisionRecord.KnowledgeVector,
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
-        var cloudVector = cloudVector
-        if shouldIncrementCloudClock {
-            // Increment and merge Knowledge Vector
-            cloudVector.increment(clockFor: self.uuid)
-        }
-        cloudVector.merge(with: localClock)
+        Task {
+            var cloudVector = cloudVector
+            if shouldIncrementCloudClock {
+                // Increment and merge Knowledge Vector
+                cloudVector.increment(clockFor: self.uuid)
+            }
+            cloudVector.merge(with: localClock)
 
-        guard let updatedClock = parseClock.encodeClock(cloudVector) else {
-            self.isSynchronizing = false
-            completion(ParseCareKitError.couldntUnwrapClock)
-            return
-        }
+            guard let updatedClock = parseClock.encodeClock(cloudVector) else {
+                await self.remoteStatus.setNotSynchronzing()
+                completion(ParseCareKitError.couldntUnwrapClock)
+                return
+            }
 
-        // If clocks incremented or new clock introduced, no need to save to Cloud.
-        guard shouldIncrementCloudClock || (!shouldIncrementCloudClock && cloudVector.uuids.count != localClock.uuids.count) else {
-            self.isSynchronizing = false
-            // Clocks not updated, no need to update cloud.
-            self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-            completion(nil)
-            return
-        }
-
-        updatedClock.save(callbackQueue: ParseRemote.queue) { result in
-            self.isSynchronizing = false
-            switch result {
-
-            case .success:
-                self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+            // If clocks incremented or new clock introduced, no need to save to Cloud.
+            guard shouldIncrementCloudClock || (!shouldIncrementCloudClock && cloudVector.uuids.count != localClock.uuids.count) else {
+                await self.remoteStatus.setNotSynchronzing()
+                // Clocks not updated, no need to update cloud.
+                DispatchQueue.main.async {
+                    self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                }
                 completion(nil)
-            case .failure(let error):
+                return
+            }
+
+            do {
+                _ = try await updatedClock.save()
+                DispatchQueue.main.async {
+                    self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                }
+                completion(nil)
+            } catch {
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pushRevisions.error("finishedRevisions: \(error.localizedDescription, privacy: .private)")
                 } else {
@@ -594,13 +554,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
                 completion(error)
             }
+            await self.remoteStatus.setNotSynchronzing()
         }
     }
 
-    func notifyRevisionProgress(_ numberCompleted: Int, totalEntities: Int) {
-        if totalEntities > 0 {
-            let ratioComplete = Double(numberCompleted)/Double(totalEntities)
-            self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+    func notifyRevisionProgress(_ numberCompleted: Int, totalRecords: Int) {
+        if totalRecords > 0 {
+            let ratioComplete = Double(numberCompleted)/Double(totalRecords)
+            DispatchQueue.main.async {
+                self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+            }
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.syncProgress.info("\(ratioComplete, privacy: .private)")
             } else {
@@ -620,8 +583,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
             completion(.success(first))
             return
         }
-        parseDelegate
-            .chooseConflictResolution(conflicts: conflicts,
-                                      completion: completion)
+        DispatchQueue.main.async {
+            parseDelegate
+                .chooseConflictResolution(conflicts: conflicts,
+                                          completion: completion)
+        }
     }
 }

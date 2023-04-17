@@ -15,7 +15,11 @@ import ParseSwift
 /// vector is less than another, it means that the first event happened before the second. If
 /// one cannot be shown to be less than the other, it means the events are concurrent and
 /// require resolution.
-public struct KnowledgeVector: ParseObject {
+public struct PCKKnowledgeVector: ParseObject {
+
+    public static var className: String {
+        "KnowledgeVector"
+    }
 
     public var originalData: Data?
 
@@ -38,7 +42,7 @@ public struct KnowledgeVector: ParseObject {
     }
 }
 
-extension KnowledgeVector {
+extension PCKKnowledgeVector {
     public init() {
         vector = nil
     }
