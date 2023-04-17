@@ -42,7 +42,7 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     /// A knowledge vector indicating the last known state of each other device
     /// by the device that authored this revision record.
-    let knowledgeVector: PCKKnowledgeVector?
+    var knowledgeVector: PCKKnowledgeVector?
 
     var objects: [any PCKVersionable] {
         guard let entities = entities else {
@@ -197,9 +197,6 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 }
 
 extension PCKRevisionRecord {
-    init() {
-        self.knowledgeVector = nil
-    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -208,7 +205,7 @@ extension PCKRevisionRecord {
         self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         self.ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
         self.knowledgeVector = try container.decodeIfPresent(PCKKnowledgeVector.self, forKey: .knowledgeVector)
-        self.entities = try container.decodeIfPresent([PCKEntity].self, forKey: .objectId)
+        self.entities = try container.decodeIfPresent([PCKEntity].self, forKey: .entities)
         self.clock = try container.decodeIfPresent(PCKClock.self, forKey: .clock)
         self.logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
         self.clockUUID = try container.decodeIfPresent(UUID.self, forKey: .clockUUID)
@@ -222,6 +219,7 @@ extension PCKRevisionRecord {
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
         try container.encodeIfPresent(ACL, forKey: .ACL)
         try container.encodeIfPresent(knowledgeVector, forKey: .knowledgeVector)
+        try container.encodeIfPresent(entities, forKey: .entities)
         try container.encodeIfPresent(clock, forKey: .clock)
         try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
         try container.encodeIfPresent(clockUUID, forKey: .clockUUID)

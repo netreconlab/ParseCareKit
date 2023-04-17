@@ -91,12 +91,12 @@ public enum PCKEntity: Equatable, Codable {
         var container = encoder.container(keyedBy: Keys.self)
         try container.encode(entityType, forKey: .type)
         switch self {
-        case let .patient(patient): try container.encode(patient, forKey: .object)
-        case let .carePlan(plan): try container.encode(plan, forKey: .object)
-        case let .contact(contact): try container.encode(contact, forKey: .object)
-        case let .task(task): try container.encode(task, forKey: .object)
-        case let .healthKitTask(task): try container.encode(task, forKey: .object)
-        case let .outcome(outcome): try container.encode(outcome, forKey: .object)
+        case let .patient(patient): try container.encode(try patient.toPointer(), forKey: .object)
+        case let .carePlan(plan): try container.encode(try plan.toPointer(), forKey: .object)
+        case let .contact(contact): try container.encode(try contact.toPointer(), forKey: .object)
+        case let .task(task): try container.encode(try task.toPointer(), forKey: .object)
+        case let .healthKitTask(task): try container.encode(try task.toPointer(), forKey: .object)
+        case let .outcome(outcome): try container.encode(try outcome.toPointer(), forKey: .object)
         }
     }
 

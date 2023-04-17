@@ -27,9 +27,9 @@ public struct PCKClock: ParseObject {
 
     public var originalData: Data?
 
-    var uuid: UUID?
+    public var uuid: UUID?
 
-    var vector: String?
+    public var vector: String?
 
     public init() { }
 
@@ -46,19 +46,22 @@ public struct PCKClock: ParseObject {
         return updated
     }
 
-    func decodeClock(completion: @escaping(OCKRevisionRecord.KnowledgeVector?) -> Void) {
+    func decodeClock() throws -> OCKRevisionRecord.KnowledgeVector {
         guard let data = self.vector?.data(using: .utf8) else {
+            let errorString = "Could not get data as utf8"
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.clock.error("Error in Clock. Couldn't get data as utf8")
+                Logger.clock.error("\(errorString)")
             } else {
-                os_log("Error in Clock. Couldn't get data as utf8", log: .clock, type: .error)
+                os_log("Could not get data as utf8", log: .clock, type: .error)
             }
-            return
+            throw ParseCareKitError.errorString(errorString)
         }
 
-        let cloudVector: OCKRevisionRecord.KnowledgeVector?
         do {
-            cloudVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self, from: data)
+            // swiftlint:disable:next line_length
+            let cloudVector: OCKRevisionRecord.KnowledgeVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self,
+                                                                                          from: data)
+            return cloudVector
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 // swiftlint:disable:next line_length
@@ -67,9 +70,8 @@ public struct PCKClock: ParseObject {
                 os_log("Clock.decodeClock(): %{private}@. Vector %{private}@.",
                        log: .clock, type: .error, error.localizedDescription, data.debugDescription)
             }
-            cloudVector = nil
+            throw ParseCareKitError.errorString("Clock.decodeClock(): \(error.localizedDescription)")
         }
-        completion(cloudVector)
     }
 
     func encodeClock(_ clock: OCKRevisionRecord.KnowledgeVector) -> Self? {
@@ -154,9 +156,7 @@ public struct PCKClock: ParseObject {
             switch result {
 
             case .success(let foundVector):
-                foundVector.decodeClock { possiblyDecoded in
-                    completion(foundVector, possiblyDecoded, nil)
-                }
+                completion(foundVector, try? foundVector.decodeClock(), nil)
             case .failure(let error):
                 if !createNewIfNeeded {
                     completion(nil, nil, error)
@@ -166,14 +166,12 @@ public struct PCKClock: ParseObject {
                     Task {
                         do {
                             let updatedVector = try await newVector.setupACLWithRoles()
-                            updatedVector.decodeClock { possiblyDecoded in
-                                updatedVector.create(callbackQueue: ParseRemote.queue) { result in
-                                    switch result {
-                                    case .success(let savedVector):
-                                        completion(savedVector, possiblyDecoded, nil)
-                                    case .failure(let error):
-                                        completion(nil, nil, error)
-                                    }
+                            updatedVector.create(callbackQueue: ParseRemote.queue) { result in
+                                switch result {
+                                case .success(let savedVector):
+                                    completion(savedVector, try? updatedVector.decodeClock(), nil)
+                                case .failure(let error):
+                                    completion(nil, nil, error)
                                 }
                             }
                         } catch {

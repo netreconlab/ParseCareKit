@@ -1259,6 +1259,70 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
+    func testRevisionRecord() async throws {
+        var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
+        careKit.sex = .female
+        careKit = try await store.addPatient(careKit)
+        let entity = OCKEntity.patient(careKit)
+        let remoteUUID = UUID()
+        let clock = PCKClock(uuid: remoteUUID)
+        let clockVector = try clock.decodeClock()
+        let logicalClockValue = clockVector.clock(for: remoteUUID)
+        let careKitRecord = OCKRevisionRecord(entities: [entity], knowledgeVector: clockVector)
+
+        // Test PCKRevisionRecord <-> OCKRevisionRecord
+        let parseRecord = try PCKRevisionRecord(record: careKitRecord,
+                                                remoteClockUUID: remoteUUID,
+                                                remoteClock: clock,
+                                                remoteClockValue: logicalClockValue)
+        XCTAssertEqual(parseRecord.clockUUID, remoteUUID)
+        XCTAssertEqual(parseRecord.clock, clock)
+        XCTAssertEqual(parseRecord.logicalClock, logicalClockValue)
+        let decodedParseRecoded = try parseRecord.convertToCareKit()
+        XCTAssertEqual(decodedParseRecoded.knowledgeVector, careKitRecord.knowledgeVector)
+        XCTAssertEqual(decodedParseRecoded.entities.count, careKitRecord.entities.count)
+        guard let decodedPatient = decodedParseRecoded.entities.first else {
+            XCTFail("Should have unwrapped")
+            return
+        }
+        switch decodedPatient {
+        case .patient(let patient):
+            XCTAssertEqual(patient.id, careKit.id)
+            XCTAssertEqual(patient.name, careKit.name)
+            XCTAssertEqual(patient.sex, careKit.sex)
+        default:
+            XCTFail("Should have been patient")
+        }
+
+        // Test PCKRevisionRecord encoding/decoding to Parse Server
+        let encoded = try ParseCoding.jsonEncoder().encode(parseRecord)
+        let decoded = try ParseCoding.jsonDecoder().decode(PCKRevisionRecord.self, from: encoded)
+        guard let decodedKnowledgeVector = decoded.knowledgeVector,
+              let decodedEntities = decoded.entities else {
+            XCTFail("Should have unwrapped")
+            return
+        }
+        XCTAssertEqual(try decodedKnowledgeVector.currentVector(), careKitRecord.knowledgeVector)
+        XCTAssertEqual(decodedEntities.count, careKitRecord.entities.count)
+        guard let decodedPatient2 = decodedEntities.first else {
+            XCTFail("Should have unwrapped")
+            return
+        }
+        switch decodedPatient2 {
+        case .patient(let patient):
+            // Decoded PCKPatient comes back as a ParsePointer that needs to be fetched to hydrate
+            XCTAssertEqual(patient.uuid, careKit.uuid)
+            guard let uuidString = patient.objectId,
+                  let uuid = UUID(uuidString: uuidString) else {
+                XCTFail("Should have unwrapped")
+                return
+            }
+            XCTAssertEqual(uuid, careKit.uuid)
+
+        default:
+            XCTFail("Should have been patient")
+        }
+    }
 /*
     func testAddContact() async throws {
         let contact = OCKContact(id: "test", givenName: "hello", familyName: "world", carePlanUUID: nil)
