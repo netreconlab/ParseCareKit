@@ -24,7 +24,7 @@ enum PCKCodingKeys: String, CodingKey {
     case entityId, id
     case uuid, schemaVersion, createdDate, updatedDate, deletedDate, timezone,
          userInfo, groupIdentifier, tags, source, asset, remoteID, notes,
-         logicalClock, className, ACL, objectId, updatedAt, createdAt
+         logicalClock, clock, className, ACL, objectId, updatedAt, createdAt
     case effectiveDate, previousVersionUUIDs, nextVersionUUIDs
 }
 
@@ -203,6 +203,10 @@ public enum ObjectableKey {
     public static let timezone                                   = "timezone"
     /// logicalClock key.
     public static let logicalClock                               = "logicalClock"
+    /// clock key.
+    public static let clock                                      = "clock"
+    /// clockUUID key.
+    public static let clockUUID                                  = "clockUUID"
     /// createdDate key.
     public static let createdDate                                = "createdDate"
     /// updatedDate key.

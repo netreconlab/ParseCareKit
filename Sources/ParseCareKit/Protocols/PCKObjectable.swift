@@ -25,8 +25,11 @@ public protocol PCKObjectable: ParseObject {
     /// already taken in Parse). It is used strictly by the developer and will never be shown to a user
     var entityId: String? { get set }
 
-    // The clock value of when this object was added to the Parse server.
+    /// The clock value of when this object was added to the Parse server.
     var logicalClock: Int? { get set }
+
+    /// The clock of when this object was added to the Parse server.
+    var clock: PCKClock? { get set }
 
     /// The semantic version of the database schema when this object was created.
     /// The value will be nil for objects that have not yet been persisted.
@@ -133,6 +136,7 @@ extension PCKObjectable {
         createdDate = other.createdDate
         notes = other.notes
         logicalClock = other.logicalClock
+        clock = other.clock
         source = other.source
         asset = other.asset
         schemaVersion = other.schemaVersion
@@ -227,6 +231,7 @@ extension PCKObjectable {
             try container.encodeIfPresent(objectId, forKey: .objectId)
             try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
+            try container.encodeIfPresent(clock, forKey: .clock)
         } else {
             try container.encodeIfPresent(entityId, forKey: .id)
             try container.encodeIfPresent(uuid, forKey: .uuid)

@@ -11,27 +11,29 @@ import ParseSwift
 import CareKitStore
 import os.log
 
-struct PCKClock: ParseObject {
+public struct PCKClock: ParseObject {
 
-    static var className: String {
+    public static var className: String {
         "Clock"
     }
 
-    var objectId: String?
+    public var objectId: String?
 
-    var createdAt: Date?
+    public var createdAt: Date?
 
-    var updatedAt: Date?
+    public var updatedAt: Date?
 
-    var ACL: ParseACL?
+    public var ACL: ParseACL?
 
-    var originalData: Data?
+    public var originalData: Data?
 
     var uuid: UUID?
 
     var vector: String?
 
-    func merge(with object: PCKClock) throws -> PCKClock {
+    public init() { }
+
+    public func merge(with object: PCKClock) throws -> PCKClock {
         var updated = try mergeParse(with: object)
         if updated.shouldRestoreKey(\.uuid,
                                      original: object) {

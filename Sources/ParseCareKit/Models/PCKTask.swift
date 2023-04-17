@@ -57,6 +57,8 @@ public struct PCKTask: PCKVersionable {
 
     public var logicalClock: Int?
 
+    public var clock: PCKClock?
+
     public var schemaVersion: OCKSemanticVersion?
 
     public var createdDate: Date?
