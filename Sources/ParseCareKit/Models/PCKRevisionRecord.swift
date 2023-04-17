@@ -42,7 +42,7 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     /// A knowledge vector indicating the last known state of each other device
     /// by the device that authored this revision record.
-    var knowledgeVector: PCKKnowledgeVector?
+    var knowledgeVector: OCKRevisionRecord.KnowledgeVector?
 
     var objects: [any PCKVersionable] {
         guard let entities = entities else {
@@ -106,7 +106,7 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
         }
         let careKitEntities = try entities.compactMap { try $0.careKit() }
         return OCKRevisionRecord(entities: careKitEntities,
-                                 knowledgeVector: try knowledgeVector.currentVector())
+                                 knowledgeVector: knowledgeVector)
     }
 
     func save(options: API.Options = []) async throws -> Self {
@@ -203,7 +203,8 @@ extension PCKRevisionRecord {
         self.createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         self.ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
-        self.knowledgeVector = try container.decodeIfPresent(PCKKnowledgeVector.self, forKey: .knowledgeVector)
+        self.knowledgeVector = try container.decodeIfPresent(OCKRevisionRecord.KnowledgeVector.self,
+                                                             forKey: .knowledgeVector)
         self.entities = try container.decodeIfPresent([PCKEntity].self, forKey: .entities)
         self.clock = try container.decodeIfPresent(PCKClock.self, forKey: .clock)
         self.logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
@@ -240,6 +241,7 @@ extension PCKRevisionRecord {
         self.clockUUID = remoteClockUUID
         self.logicalClock = remoteClockValue
         self.clock = remoteClock
+        self.knowledgeVector = record.knowledgeVector
         self.entities = try record.entities.compactMap { entity in
             var parseEntity = try entity.parseEntity().value
             parseEntity.logicalClock = remoteClockValue // Stamp Entity
@@ -278,6 +280,5 @@ extension PCKRevisionRecord {
                 return PCKEntity.outcome(parseEntity)
             }
         }
-        self.knowledgeVector = PCKKnowledgeVector(record.knowledgeVector)
     }
 }

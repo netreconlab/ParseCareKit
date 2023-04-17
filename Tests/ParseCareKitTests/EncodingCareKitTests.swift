@@ -1297,12 +1297,11 @@ class ParseCareKitTests: XCTestCase {
         // Test PCKRevisionRecord encoding/decoding to Parse Server
         let encoded = try ParseCoding.jsonEncoder().encode(parseRecord)
         let decoded = try ParseCoding.jsonDecoder().decode(PCKRevisionRecord.self, from: encoded)
-        guard let decodedKnowledgeVector = decoded.knowledgeVector,
-              let decodedEntities = decoded.entities else {
+        guard let decodedEntities = decoded.entities else {
             XCTFail("Should have unwrapped")
             return
         }
-        XCTAssertEqual(try decodedKnowledgeVector.currentVector(), careKitRecord.knowledgeVector)
+        XCTAssertEqual(decoded.knowledgeVector, careKitRecord.knowledgeVector)
         XCTAssertEqual(decodedEntities.count, careKitRecord.entities.count)
         guard let decodedPatient2 = decodedEntities.first else {
             XCTFail("Should have unwrapped")
