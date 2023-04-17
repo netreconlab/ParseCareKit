@@ -541,6 +541,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
             do {
                 _ = try await updatedClock.save()
+                if #available(iOS 14.0, watchOS 7.0, *) {
+                    Logger.pushRevisions.debug("Finished pushing revisions")
+                } else {
+                    os_log("Finished pushing revisions", log: .pushRevisions, type: .debug)
+                }
                 DispatchQueue.main.async {
                     self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 }
