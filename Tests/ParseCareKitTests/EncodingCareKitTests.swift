@@ -1266,7 +1266,7 @@ class ParseCareKitTests: XCTestCase {
         let entity = OCKEntity.patient(careKit)
         let remoteUUID = UUID()
         let clock = PCKClock(uuid: remoteUUID)
-        let clockVector = try clock.decodeClock()
+        let clockVector = try PCKClock.decodeVector(clock)
         let logicalClockValue = clockVector.clock(for: remoteUUID)
         let careKitRecord = OCKRevisionRecord(entities: [entity], knowledgeVector: clockVector)
 
@@ -1295,7 +1295,7 @@ class ParseCareKitTests: XCTestCase {
         }
 
         // Test PCKRevisionRecord encoding/decoding to Parse Server
-        let encoded = try ParseCoding.jsonEncoder().encode(parseRecord)
+        let encoded = try ParseCoding.parseEncoder().encode(parseRecord)
         let decoded = try ParseCoding.jsonDecoder().decode(PCKRevisionRecord.self, from: encoded)
         guard let decodedEntities = decoded.entities else {
             XCTFail("Should have unwrapped")

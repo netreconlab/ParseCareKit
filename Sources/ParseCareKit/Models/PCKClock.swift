@@ -46,8 +46,12 @@ public struct PCKClock: ParseObject {
         return updated
     }
 
-    func decodeClock() throws -> OCKRevisionRecord.KnowledgeVector {
-        guard let data = self.vector?.data(using: .utf8) else {
+    static func decodeVector(_ clock: Self) throws -> OCKRevisionRecord.KnowledgeVector {
+        try decodeVector(clock.vector)
+    }
+
+    static func decodeVector(_ vector: String?) throws -> OCKRevisionRecord.KnowledgeVector {
+        guard let data = vector?.data(using: .utf8) else {
             let errorString = "Could not get data as utf8"
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("\(errorString)")
@@ -74,15 +78,22 @@ public struct PCKClock: ParseObject {
         }
     }
 
-    func encodeClock(_ clock: OCKRevisionRecord.KnowledgeVector) -> Self? {
+    static func encodeVector(_ vector: OCKRevisionRecord.KnowledgeVector, for clock: Self) -> Self? {
+        guard let cloudVectorString = encodeVector(vector) else {
+            return nil
+        }
+        var mutableClock = clock
+        mutableClock.vector = cloudVectorString
+        return mutableClock
+    }
+
+    static func encodeVector(_ vector: OCKRevisionRecord.KnowledgeVector) -> String? {
         do {
-            let json = try JSONEncoder().encode(clock)
+            let json = try JSONEncoder().encode(vector)
             guard let cloudVectorString = String(data: json, encoding: .utf8) else {
                 return nil
             }
-            var mutableClock = self
-            mutableClock.vector = cloudVectorString
-            return mutableClock
+            return cloudVectorString
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription, privacy: .private).")
@@ -156,7 +167,7 @@ public struct PCKClock: ParseObject {
             switch result {
 
             case .success(let foundVector):
-                completion(foundVector, try? foundVector.decodeClock(), nil)
+                completion(foundVector, try? decodeVector(foundVector), nil)
             case .failure(let error):
                 if !createNewIfNeeded {
                     completion(nil, nil, error)
@@ -169,7 +180,7 @@ public struct PCKClock: ParseObject {
                             updatedVector.create(callbackQueue: ParseRemote.queue) { result in
                                 switch result {
                                 case .success(let savedVector):
-                                    completion(savedVector, try? updatedVector.decodeClock(), nil)
+                                    completion(savedVector, try? decodeVector(updatedVector), nil)
                                 case .failure(let error):
                                     completion(nil, nil, error)
                                 }

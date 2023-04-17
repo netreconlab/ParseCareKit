@@ -42,7 +42,20 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     /// A knowledge vector indicating the last known state of each other device
     /// by the device that authored this revision record.
-    var knowledgeVector: OCKRevisionRecord.KnowledgeVector?
+    var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
+        get {
+            try? PCKClock.decodeVector(vector)
+        }
+        set {
+            guard let newValue = newValue else {
+                vector = nil
+                return
+            }
+            vector = PCKClock.encodeVector(newValue)
+        }
+    }
+
+    public var vector: String?
 
     var objects: [any PCKVersionable] {
         guard let entities = entities else {
@@ -95,7 +108,7 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt, className,
-             ACL, knowledgeVector, entities,
+             ACL, vector, entities,
              logicalClock, clock, clockUUID
     }
 
@@ -203,8 +216,7 @@ extension PCKRevisionRecord {
         self.createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         self.ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
-        self.knowledgeVector = try container.decodeIfPresent(OCKRevisionRecord.KnowledgeVector.self,
-                                                             forKey: .knowledgeVector)
+        self.vector = try container.decodeIfPresent(String.self, forKey: .vector)
         self.entities = try container.decodeIfPresent([PCKEntity].self, forKey: .entities)
         self.clock = try container.decodeIfPresent(PCKClock.self, forKey: .clock)
         self.logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
@@ -218,7 +230,7 @@ extension PCKRevisionRecord {
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
         try container.encodeIfPresent(ACL, forKey: .ACL)
-        try container.encodeIfPresent(knowledgeVector, forKey: .knowledgeVector)
+        try container.encodeIfPresent(vector, forKey: .vector)
         try container.encodeIfPresent(entities, forKey: .entities)
         try container.encodeIfPresent(clock, forKey: .clock)
         try container.encodeIfPresent(logicalClock, forKey: .logicalClock)

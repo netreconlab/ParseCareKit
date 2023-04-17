@@ -522,7 +522,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             cloudVector.merge(with: localClock)
 
-            guard let updatedClock = parseClock.encodeClock(cloudVector) else {
+            guard let updatedClock = PCKClock.encodeVector(cloudVector, for: parseClock) else {
                 await self.remoteStatus.setNotSynchronzing()
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
