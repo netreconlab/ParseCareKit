@@ -6,16 +6,31 @@
 //  Copyright © 2023 Network Reconnaissance Lab. All rights reserved.
 //
 
+import CareKitStore
 import Foundation
 
 actor RemoteSynchronizing {
     var isSynchronizing = false
+    var knowledgeVector: OCKRevisionRecord.KnowledgeVector?
 
-    func setSynchronizing() {
+    func synchronizing() {
         isSynchronizing = true
     }
 
-    func setNotSynchronzing() {
+    func notSynchronzing() {
         isSynchronizing = false
+    }
+
+    func updateKnowledgeVector(_ vector: OCKRevisionRecord.KnowledgeVector) {
+        knowledgeVector = vector
+    }
+
+    func hasNewerRevision(_ vector: OCKRevisionRecord.KnowledgeVector, for uuid: UUID) -> Bool {
+        guard let knowledgeVector = knowledgeVector else {
+            return true
+        }
+        let currentClock = knowledgeVector.clock(for: uuid)
+        let vectorClock = vector.clock(for: uuid)
+        return vectorClock > currentClock
     }
 }

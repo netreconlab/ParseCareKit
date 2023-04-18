@@ -227,16 +227,32 @@ public class ParseRemote: OCKRemoteSynchronizable {
             do {
                 let subscription = try await self.clockQuery.subscribeCallback()
                 self.clockSubscription = subscription
-                self.clockSubscription?.handleEvent { (_, _) in
-                    self.parseDelegate?.didRequestSynchronization(self)
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger
-                            .clockSubscription
-                            .log("Parse subscription is notifying that there are updates on the server")
-                    } else {
-                        os_log("Parse subscription is notifying that there are updates on the server",
-                               log: .clockSubscription,
-                               type: .info)
+                self.clockSubscription?.handleEvent { (_, event) in
+                    switch event {
+                    case .updated(let updatedClock):
+                        do {
+                            let updatedVector = try PCKClock.decodeVector(updatedClock)
+                            Task {
+                                guard await self.remoteStatus.hasNewerRevision(updatedVector,
+                                                                               for: self.uuid) else {
+                                    return
+                                }
+                                self.parseDelegate?.didRequestSynchronization(self)
+                                if #available(iOS 14.0, watchOS 7.0, *) {
+                                    Logger
+                                        .clockSubscription
+                                        .log("Parse subscription is notifying that there are updates on the server")
+                                } else {
+                                    os_log("Parse subscription is notifying that there are updates on the server",
+                                           log: .clockSubscription,
+                                           type: .info)
+                                }
+                            }
+                        } catch {
+
+                        }
+                    default:
+                        return
                     }
                 }
             } catch {
@@ -291,7 +307,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(ParseCareKitError.syncAlreadyInProgress)
                 return
             }
-            await remoteStatus.setSynchronizing()
+            await remoteStatus.synchronizing()
 
             // Fetch Clock from Cloud
             PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (_, potentialCKClock, _) in
@@ -332,7 +348,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             }
                             completion(nil)
                         } catch {
-                            await self.remoteStatus.setNotSynchronzing()
+                            await self.remoteStatus.notSynchronzing()
                             completion(error)
                         }
                     }
@@ -352,7 +368,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 Task {
                     guard let parseClock = potentialPCKClock,
                         let cloudVector = potentialPCKVector else {
-                        await self.remoteStatus.setNotSynchronzing()
+                        await self.remoteStatus.notSynchronzing()
                         guard let parseError = error else {
                             // There was a different issue that we don't know how to handle
                             if #available(iOS 14.0, watchOS 7.0, *) {
@@ -375,11 +391,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     guard deviceRevisions.count > 0 else {
-                        self.finishedRevisions(false,
-                                               parseClock: parseClock,
-                                               cloudVector: cloudVector,
-                                               localClock: deviceKnowledge,
-                                               completion: completion)
+                        self.completePushRevisions(parseClock: parseClock,
+                                                   cloudVector: cloudVector,
+                                                   localClock: deviceKnowledge,
+                                                   completion: completion)
                         return
                     }
 
@@ -401,13 +416,13 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             self.notifyRevisionProgress(index + 1,
                                                         totalRecords: deviceRevisions.count)
                             if index == (deviceRevisions.count - 1) {
-                                self.finishedRevisions(parseClock: parseClock,
-                                                       cloudVector: cloudVector,
-                                                       localClock: updatedDeviceKnowledge,
-                                                       completion: completion)
+                                self.completePushRevisions(parseClock: parseClock,
+                                                           cloudVector: cloudVector,
+                                                           localClock: updatedDeviceKnowledge,
+                                                           completion: completion)
                             }
                         } catch {
-                            await self.remoteStatus.setNotSynchronzing()
+                            await self.remoteStatus.notSynchronzing()
                             completion(error)
                             break
                         }
@@ -417,37 +432,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func finishedRevisions(_ incrementedCloudClock: Bool = true,
-                           parseClock: PCKClock,
-                           cloudVector: OCKRevisionRecord.KnowledgeVector,
-                           localClock: OCKRevisionRecord.KnowledgeVector,
-                           completion: @escaping (Error?) -> Void) {
+    func completePushRevisions(parseClock: PCKClock,
+                               cloudVector: OCKRevisionRecord.KnowledgeVector,
+                               localClock: OCKRevisionRecord.KnowledgeVector,
+                               completion: @escaping (Error?) -> Void) {
         Task {
             var updatedCloudVector = cloudVector
             updatedCloudVector.merge(with: localClock)
 
             guard let updatedClock = PCKClock.encodeVector(updatedCloudVector, for: parseClock) else {
-                await self.remoteStatus.setNotSynchronzing()
+                await self.remoteStatus.notSynchronzing()
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
             }
-
-            // If clocks incremented or new clock introduced, no need to save to Cloud.
-            guard incrementedCloudClock ||
-                    (!incrementedCloudClock && cloudVector.uuids.count != updatedCloudVector.uuids.count) else {
-                await self.remoteStatus.setNotSynchronzing()
-                // Clocks not updated, no need to update cloud.
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pushRevisions.debug("Finished pushing revisions")
-                } else {
-                    os_log("Finished pushing revisions", log: .pushRevisions, type: .debug)
-                }
-                DispatchQueue.main.async {
-                    self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-                }
-                completion(nil)
-                return
-            }
+            await self.remoteStatus.updateKnowledgeVector(updatedCloudVector)
 
             do {
                 _ = try await updatedClock.save()
@@ -469,7 +467,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
                 completion(error)
             }
-            await self.remoteStatus.setNotSynchronzing()
+            await self.remoteStatus.notSynchronzing()
         }
     }
 
