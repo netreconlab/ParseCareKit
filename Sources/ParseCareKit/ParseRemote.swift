@@ -332,7 +332,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                          mergeRevision: @escaping (OCKRevisionRecord) -> Void,
                                          completion: @escaping (Error?) -> Void) {
         Task {
-            let query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
+            let query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
                                                 ObjectableKey.clockUUID == self.uuid)
                 .order([.ascending(ObjectableKey.logicalClock)])
                 .includeAll()
