@@ -26,6 +26,9 @@ actor RemoteSynchronizing {
     }
 
     func hasNewerRevision(_ vector: OCKRevisionRecord.KnowledgeVector, for uuid: UUID) -> Bool {
+        guard !isSynchronizing else {
+            return false
+        }
         guard let knowledgeVector = knowledgeVector else {
             return true
         }
