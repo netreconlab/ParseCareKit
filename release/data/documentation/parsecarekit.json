@@ -426,6 +426,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
@@ -441,6 +442,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ContactKey",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ObjectableKey",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/OutcomeKey",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKStoreClass",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseCareKitConstants",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseKey",
@@ -787,6 +789,37 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PCKClock"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PCKClock"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PCKClock",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckclock"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact": {
   "abstract" : [
     {
@@ -860,6 +893,40 @@
   "title" : "PCKContact",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcontact"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKEntity": {
+  "abstract" : [
+    {
+      "text" : "Holds one of several possible modified entities.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PCKEntity"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PCKEntity"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PCKEntity",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckentity"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask": {
   "abstract" : [

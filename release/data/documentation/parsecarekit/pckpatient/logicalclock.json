@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKObjectable.logicalClock",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "The clock value of when this object was added to the Parse server.",
       "type" : "text"
     }
   ],
@@ -203,7 +195,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/logicalClock": {
   "abstract" : [
-
+    {
+      "text" : "The clock value of when this object was added to the Parse server.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

@@ -1,0 +1,314 @@
+{
+  "abstract" : [
+    {
+      "text" : "The clock of when this object was added to the Parse server.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/clock"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:12ParseCareKit7PCKTaskV5clockAA8PCKClockVSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "clock"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12ParseCareKit8PCKClockV",
+        "text" : "PCKClock"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "ParseCareKit"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "clock"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "clock"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12ParseCareKit8PCKClockV",
+              "text" : "PCKClock"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/parsecarekit\/pcktask\/clock"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
+  "abstract" : [
+    {
+      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "type" : "text"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "ParseCareKit",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PCKClock"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PCKClock"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PCKClock",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckclock"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask": {
+  "abstract" : [
+    {
+      "text" : "An ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is the ParseCareKit equivalent of ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".  An ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " represents some task or action that a",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "patient is supposed to perform. Tasks are optionally associable with an ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and must have a unique",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "id and schedule. The schedule determines when and how often the task should be performed, and the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "impactsAdherence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " flag may be used to specify whether or not the patients adherence to this task will affect",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "their daily completion rings.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PCKTask"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PCKTask"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PCKTask",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pcktask"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/clock": {
+  "abstract" : [
+    {
+      "text" : "The clock of when this object was added to the Parse server.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "clock"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit8PCKClockV",
+      "text" : "PCKClock"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/clock",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "clock",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pcktask\/clock"
+}
+}
+}

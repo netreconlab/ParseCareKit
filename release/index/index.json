@@ -19168,6 +19168,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/carekitstore\/ockentity\/parseentity()",
+                "title" : "func parseEntity() throws -> PCKEntity",
+                "type" : "method"
+              },
+              {
                 "title" : "Enumerations",
                 "type" : "groupMarker"
               },
@@ -25438,6 +25443,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckobjectable\/clock",
+                "title" : "var clock: PCKClock?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckobjectable\/createddate",
                 "title" : "var createdDate: Date?",
                 "type" : "property"
@@ -25724,11 +25734,6 @@
                 "path" : "\/documentation\/parsecarekit\/pcksynchronizable\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcksynchronizable\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
               }
             ],
             "path" : "\/documentation\/parsecarekit\/pcksynchronizable",
@@ -25890,6 +25895,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckcareplan\/clock",
+                "title" : "var clock: PCKClock?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckcareplan\/createdat",
                 "title" : "var createdAt: Date?",
                 "type" : "property"
@@ -26046,11 +26056,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckcareplan\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -26692,6 +26697,534 @@
                 "type" : "groupMarker"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/init()",
+                "title" : "init()",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/init(from:)",
+                "title" : "init(from: Decoder) throws",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/acl",
+                "title" : "var ACL: ParseACL?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/createdat",
+                "title" : "var createdAt: Date?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/objectid",
+                "title" : "var objectId: String?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/originaldata",
+                "title" : "var originalData: Data?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/updatedat",
+                "title" : "var updatedAt: Date?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/uuid",
+                "title" : "var uuid: UUID?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/vector",
+                "title" : "var vector: String?",
+                "type" : "property"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/merge(with:)",
+                "title" : "func merge(with: PCKClock) throws -> PCKClock",
+                "type" : "method"
+              },
+              {
+                "title" : "Type Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckclock\/classname-swift.type.property-7tzyb",
+                "title" : "static var className: String",
+                "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/debugdescription-3rkzl",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/debugdescription-5ljob",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/customdebugstringconvertible-implementations",
+                "title" : "CustomDebugStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/description-4pkj4",
+                    "title" : "var description: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/description-96w3u",
+                    "title" : "var description: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/customstringconvertible-implementations",
+                "title" : "CustomStringConvertible Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/delete()",
+                    "title" : "func delete() async throws -> Self.DeletingType",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/deletable-implementations",
+                "title" : "Deletable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/fetch()",
+                    "title" : "func fetch() async throws -> Self.FetchingType",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/fetchable-implementations",
+                "title" : "Fetchable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/hash(into:)",
+                    "title" : "func hash(into: inout Hasher)",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/hashable-implementations",
+                "title" : "Hashable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/id-22610",
+                    "title" : "var id: ObjectIdentifier",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/identifiable-implementations",
+                "title" : "Identifiable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/classname-swift.property",
+                    "title" : "var className: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/endpoint",
+                    "title" : "var endpoint: API.Endpoint",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/issaved",
+                    "title" : "var isSaved: Bool",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Type Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/classname-swift.type.property-1ee2o",
+                    "title" : "static var className: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/objectable-implementations",
+                "title" : "Objectable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/debugdescription-3evm5",
+                    "title" : "var debugDescription: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/description-448wq",
+                    "title" : "var description: String",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/parseencodable-implementations",
+                "title" : "ParseEncodable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/init(objectid:)",
+                    "title" : "init(objectId: String)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/id-7e2gb",
+                    "title" : "var id: String",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/mergeable",
+                    "title" : "var mergeable: Self",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/operation",
+                    "title" : "var operation: ParseOperation<Self>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation",
+                    "title" : "var relation: ParseRelation<Self>?",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/create(options:)",
+                    "title" : "func create(options: API.Options) async throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/create(options:callbackqueue:completion:)",
+                    "title" : "func create(options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/createpublisher(options:)",
+                    "title" : "func createPublisher(options: API.Options) -> Future<Self, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/delete(options:)",
+                    "title" : "func delete(options: API.Options) async throws",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/delete(options:callbackqueue:completion:)",
+                    "title" : "func delete(options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Void, ParseError>) -> Void)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/deletepublisher(options:)",
+                    "title" : "func deletePublisher(options: API.Options) -> Future<Void, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/fetch(includekeys:options:)",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options) async throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/fetch(includekeys:options:callbackqueue:completion:)",
+                    "title" : "func fetch(includeKeys: [String]?, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/fetchpublisher(includekeys:options:)",
+                    "title" : "func fetchPublisher(includeKeys: [String]?, options: API.Options) -> Future<Self, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/get(_:)",
+                    "title" : "func get<W>(KeyPath<Self, W?>) throws -> W",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/getdecoder()",
+                    "title" : "func getDecoder() -> JSONDecoder",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/getencoder()",
+                    "title" : "func getEncoder() -> ParseEncoder",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/getjsonencoder()",
+                    "title" : "func getJSONEncoder() -> JSONEncoder",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/hassameobjectid(as:)",
+                    "title" : "func hasSameObjectId<T>(as: T) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/isdirtyforkey(_:)",
+                    "title" : "func isDirtyForKey<W>(KeyPath<Self, W?>) throws -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/mergeparse(with:)",
+                    "title" : "func mergeParse(with: Self) throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:child:)",
+                    "title" : "func relation<U>(String, child: U) throws -> ParseRelation<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:classname:)",
+                    "title" : "func relation(String, className: String) throws -> ParseRelation<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:key:)",
+                    "title" : "func relation(ParseRelation<Self>?, key: String) throws -> ParseRelation<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:key:with:)-swift.method-1vlke",
+                    "title" : "func relation<T>(ParseRelation<T>?, key: String, with: Pointer<T>) throws -> ParseRelation<T>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:key:with:)-swift.method-8eq09",
+                    "title" : "func relation<T>(ParseRelation<T>?, key: String, with: T) throws -> ParseRelation<T>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/replace(options:)",
+                    "title" : "func replace(options: API.Options) async throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/replace(options:callbackqueue:completion:)",
+                    "title" : "func replace(options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/replacepublisher(options:)",
+                    "title" : "func replacePublisher(options: API.Options) -> Future<Self, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/revert()",
+                    "title" : "func revert() throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/revert(_:)",
+                    "title" : "func revert<W>(WritableKeyPath<Self, W?>) throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/save(ignoringcustomobjectidconfig:options:)",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options) async throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/save(ignoringcustomobjectidconfig:options:callbackqueue:completion:)",
+                    "title" : "func save(ignoringCustomObjectIdConfig: Bool, options: API.Options, callbackQueue: DispatchQueue, completion: (Result<Self, ParseError>) -> Void)",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/save(options:)",
+                    "title" : "func save(options: API.Options) async throws -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/savepublisher(ignoringcustomobjectidconfig:options:)",
+                    "title" : "func savePublisher(ignoringCustomObjectIdConfig: Bool, options: API.Options) -> Future<Self, ParseError>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/set(_:to:)",
+                    "title" : "func set<W>(WritableKeyPath<Self, W?>, to: W) -> Self",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/shouldrestorekey(_:original:)",
+                    "title" : "func shouldRestoreKey<W>(KeyPath<Self, W?>, original: Self) -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/topointer()",
+                    "title" : "func toPointer() throws -> Pointer<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "title" : "Type Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/query",
+                    "title" : "static var query: Query<Self>",
+                    "type" : "property"
+                  },
+                  {
+                    "title" : "Type Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/query(_:)-40qe9",
+                    "title" : "static func query([QueryConstraint]) -> Query<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/query(_:)-9zily",
+                    "title" : "static func query(QueryConstraint...) -> Query<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/queryrelations(_:parent:)-88a18",
+                    "title" : "static func queryRelations<U>(String, parent: Pointer<U>) -> Query<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/queryrelations(_:parent:)-9sbb0",
+                    "title" : "static func queryRelations<U>(String, parent: U) throws -> Query<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:key:with:)-swift.type.method-4m47d",
+                    "title" : "static func relation<T>(ParseRelation<T>?, key: String, with: T) throws -> ParseRelation<T>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/relation(_:key:with:)-swift.type.method-8pey7",
+                    "title" : "static func relation<T>(ParseRelation<T>?, key: String, with: Pointer<T>) throws -> ParseRelation<T>",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/parseobject-implementations",
+                "title" : "ParseObject Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/save()",
+                    "title" : "func save() async throws -> Self.SavingType",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckclock\/savable-implementations",
+                "title" : "Savable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/parsecarekit\/pckclock",
+            "title" : "PCKClock",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckcontact\/init()",
                 "title" : "init()",
                 "type" : "init"
@@ -26733,6 +27266,11 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckcontact\/category",
                 "title" : "var category: OCKContactCategory?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckcontact\/clock",
+                "title" : "var clock: PCKClock?",
                 "type" : "property"
               },
               {
@@ -26917,11 +27455,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckcontact\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -27597,6 +28130,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/clock",
+                "title" : "var clock: PCKClock?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/createdat",
                 "title" : "var createdAt: Date?",
                 "type" : "property"
@@ -27763,11 +28301,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -28433,6 +28966,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckoutcome\/clock",
+                "title" : "var clock: PCKClock?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckoutcome\/createdat",
                 "title" : "var createdAt: Date?",
                 "type" : "property"
@@ -28614,11 +29152,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckoutcome\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -29304,6 +29837,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckpatient\/clock",
+                "title" : "var clock: PCKClock?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckpatient\/createdat",
                 "title" : "var createdAt: Date?",
                 "type" : "property"
@@ -29460,11 +29998,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckpatient\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -30124,6 +30657,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pcktask\/clock",
+                "title" : "var clock: PCKClock?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pcktask\/createdat",
                 "title" : "var createdAt: Date?",
                 "type" : "property"
@@ -30285,11 +30823,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pcktask\/pushrevision(_:cloudclock:remoteid:completion:)",
                 "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/updatecloud(_:completion:)",
-                "title" : "func updateCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -31063,6 +31596,16 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/objectablekey\/clock",
+                "title" : "static let clock: String",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/objectablekey\/clockuuid",
+                "title" : "static let clockUUID: String",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/objectablekey\/createddate",
                 "title" : "static let createdDate: String",
                 "type" : "property"
@@ -31156,6 +31699,248 @@
             ],
             "path" : "\/documentation\/parsecarekit\/outcomekey",
             "title" : "OutcomeKey",
+            "type" : "enum"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Enumeration Cases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/careplan(_:)",
+                "title" : "case carePlan(PCKCarePlan)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/contact(_:)",
+                "title" : "case contact(PCKContact)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/healthkittask(_:)",
+                "title" : "case healthKitTask(PCKHealthKitTask)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/outcome(_:)",
+                "title" : "case outcome(PCKOutcome)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/patient(_:)",
+                "title" : "case patient(PCKPatient)",
+                "type" : "case"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/task(_:)",
+                "title" : "case task(PCKTask)",
+                "type" : "case"
+              },
+              {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/init(from:)",
+                "title" : "init(from: Decoder) throws",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.property",
+                "title" : "var entityType: EntityType",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/value",
+                "title" : "var value: any PCKVersionable",
+                "type" : "property"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/carekit()",
+                "title" : "func careKit() throws -> OCKEntity",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckentity\/encode(to:)",
+                "title" : "func encode(to: Encoder) throws",
+                "type" : "method"
+              },
+              {
+                "title" : "Enumerations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Enumeration Cases",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/careplan",
+                    "title" : "case carePlan",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/contact",
+                    "title" : "case contact",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/healthkittask",
+                    "title" : "case healthKitTask",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/outcome",
+                    "title" : "case outcome",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/patient",
+                    "title" : "case patient",
+                    "type" : "case"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/task",
+                    "title" : "case task",
+                    "type" : "case"
+                  },
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/init(intvalue:)",
+                    "title" : "init?(intValue: Int)",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/init(rawvalue:)",
+                    "title" : "init?(rawValue: String)",
+                    "type" : "init"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/init(stringvalue:)",
+                    "title" : "init?(stringValue: String)",
+                    "type" : "init"
+                  },
+                  {
+                    "title" : "Default Implementations",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/debugdescription",
+                        "title" : "var debugDescription: String",
+                        "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/description",
+                        "title" : "var description: String",
+                        "type" : "property"
+                      }
+                    ],
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/codingkey-implementations",
+                    "title" : "CodingKey Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Operators",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/!=(_:_:)",
+                        "title" : "static func != (Self, Self) -> Bool",
+                        "type" : "op"
+                      }
+                    ],
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/equatable-implementations",
+                    "title" : "Equatable Implementations",
+                    "type" : "symbol"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Initializers",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/init(from:)",
+                        "title" : "init(from: Decoder) throws",
+                        "type" : "init"
+                      },
+                      {
+                        "title" : "Instance Properties",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/hashvalue",
+                        "title" : "var hashValue: Int",
+                        "type" : "property"
+                      },
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/encode(to:)",
+                        "title" : "func encode(to: Encoder) throws",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/hash(into:)",
+                        "title" : "func hash(into: inout Hasher)",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum\/rawrepresentable-implementations",
+                    "title" : "RawRepresentable Implementations",
+                    "type" : "symbol"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckentity\/entitytype-swift.enum",
+                "title" : "PCKEntity.EntityType",
+                "type" : "enum"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckentity\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/parsecarekit\/pckentity",
+            "title" : "PCKEntity",
             "type" : "enum"
           },
           {
@@ -33283,13 +34068,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
@@ -33306,13 +34091,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],

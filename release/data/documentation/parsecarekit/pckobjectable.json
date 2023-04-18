@@ -166,6 +166,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/asset",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/clock",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/createdDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/encodingForParse",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/entityId",
@@ -699,6 +700,48 @@
   "title" : "canConvertToCareKit()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckobjectable\/canconverttocarekit()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/clock": {
+  "abstract" : [
+    {
+      "text" : "The clock of when this object was added to the Parse server.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "clock"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit8PCKClockV",
+      "text" : "PCKClock"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/clock",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "clock",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckobjectable\/clock"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/copyCommonValues(from:)": {
   "abstract" : [
@@ -1598,7 +1641,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/logicalClock": {
   "abstract" : [
-
+    {
+      "text" : "The clock value of when this object was added to the Parse server.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
