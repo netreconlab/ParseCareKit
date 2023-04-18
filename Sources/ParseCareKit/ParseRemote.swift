@@ -321,7 +321,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let localClock = knowledgeVector.clock(for: self.uuid)
                 ParseRemote.queue.async {
                     Task {
-                        await self.subscribeToClock()
                         let query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
                                                             ObjectableKey.clockUUID == self.uuid)
                             .order([.ascending(ObjectableKey.logicalClock)])
@@ -446,7 +445,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 return
             }
             await self.remoteStatus.updateKnowledgeVector(updatedCloudVector)
-
+            await self.subscribeToClock()
             do {
                 _ = try await updatedClock.save()
                 if #available(iOS 14.0, watchOS 7.0, *) {
