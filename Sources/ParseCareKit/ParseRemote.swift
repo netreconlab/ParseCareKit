@@ -515,21 +515,22 @@ public class ParseRemote: OCKRemoteSynchronizable {
                            localClock: OCKRevisionRecord.KnowledgeVector,
                            completion: @escaping (Error?) -> Void) {
         Task {
-            var cloudVector = cloudVector
+            var updatedCloudVector = cloudVector
             if shouldIncrementCloudClock {
                 // Increment and merge Knowledge Vector
-                cloudVector.increment(clockFor: self.uuid)
+                updatedCloudVector.increment(clockFor: self.uuid)
             }
-            cloudVector.merge(with: localClock)
+            updatedCloudVector.merge(with: localClock)
 
-            guard let updatedClock = PCKClock.encodeVector(cloudVector, for: parseClock) else {
+            guard let updatedClock = PCKClock.encodeVector(updatedCloudVector, for: parseClock) else {
                 await self.remoteStatus.setNotSynchronzing()
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
             }
 
             // If clocks incremented or new clock introduced, no need to save to Cloud.
-            guard shouldIncrementCloudClock || (!shouldIncrementCloudClock && cloudVector.uuids.count != localClock.uuids.count) else {
+            guard shouldIncrementCloudClock ||
+                    (!shouldIncrementCloudClock && cloudVector.uuids.count != updatedCloudVector.uuids.count) else {
                 await self.remoteStatus.setNotSynchronzing()
                 // Clocks not updated, no need to update cloud.
                 if #available(iOS 14.0, watchOS 7.0, *) {
