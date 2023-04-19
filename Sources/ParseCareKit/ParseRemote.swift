@@ -48,10 +48,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
     private let remoteStatus = RemoteSynchronizing()
     private let clockQuery: Query<PCKClock>
     static let queue = DispatchQueue(label: "edu.netreconlab.parsecarekit",
-                                                     qos: .default,
-                                                     attributes: .concurrent,
-                                                     autoreleaseFrequency: .inherit,
-                                                     target: nil)
+                                     qos: .default,
+                                     attributes: .concurrent,
+                                     autoreleaseFrequency: .inherit,
+                                     target: nil)
     /**
      Creates an instance of ParseRemote.
      - Parameters:
@@ -219,7 +219,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     func subscribeToClock() async {
         do {
             _ = try await PCKUser.current()
-            guard self.subscribeToServerUpdates == true,
+            guard self.subscribeToServerUpdates,
                 self.clockSubscription == nil else {
                 return
             }
@@ -248,7 +248,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 }
                             }
                         } catch {
-
+                            if #available(iOS 14.0, watchOS 7.0, *) {
+                                Logger
+                                    .clockSubscription
+                                    .error("Could not decode server clock: \(error)")
+                            } else {
+                                os_log("Could not decode server clock: %{private}@",
+                                       log: .clockSubscription,
+                                       type: .error,
+                                       error.localizedDescription)
+                            }
                         }
                     default:
                         return
