@@ -397,8 +397,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     guard deviceRevisions.count > 0 else {
-                        await self.remoteStatus.notSynchronzing()
-                        completion(nil)
+                        self.completePushRevisions(shouldSaveCloudClock: false,
+                                                   parseClock: parseClock,
+                                                   cloudVector: cloudVector,
+                                                   localClock: deviceKnowledge,
+                                                   completion: completion)
                         return
                     }
 
@@ -436,7 +439,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func completePushRevisions(parseClock: PCKClock,
+    func completePushRevisions(shouldSaveCloudClock: Bool = true,
+                               parseClock: PCKClock,
                                cloudVector: OCKRevisionRecord.KnowledgeVector,
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
@@ -451,6 +455,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             await self.remoteStatus.updateKnowledgeVector(updatedCloudVector)
             do {
+                guard shouldSaveCloudClock || (!shouldSaveCloudClock && (updatedCloudVector.uuids.count > cloudVector.uuids.count)) else {
+                    DispatchQueue.main.async {
+                        self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                    }
+                    await self.remoteStatus.notSynchronzing()
+                    completion(nil)
+                    return
+                }
                 _ = try await updatedClock.save()
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pushRevisions.debug("Finished pushing revisions")
