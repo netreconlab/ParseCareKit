@@ -397,6 +397,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     guard deviceRevisions.count > 0 else {
+                        await self.remoteStatus.notSynchronzing()
                         completion(nil)
                         return
                     }
