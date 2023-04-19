@@ -397,10 +397,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     guard deviceRevisions.count > 0 else {
-                        self.completePushRevisions(parseClock: parseClock,
-                                                   cloudVector: cloudVector,
-                                                   localClock: deviceKnowledge,
-                                                   completion: completion)
+                        completion(nil)
                         return
                     }
 
