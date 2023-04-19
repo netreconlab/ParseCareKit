@@ -329,7 +329,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let localClock = knowledgeVector.clock(for: self.uuid)
                 ParseRemote.queue.async {
                     Task {
-                        let query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
+                        let query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
                                                             ObjectableKey.clockUUID == self.uuid)
                             .order([.ascending(ObjectableKey.logicalClock)])
                         do {
