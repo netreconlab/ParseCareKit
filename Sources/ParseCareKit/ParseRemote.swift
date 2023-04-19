@@ -329,7 +329,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let localClock = knowledgeVector.clock(for: self.uuid)
                 ParseRemote.queue.async {
                     Task {
-                        let query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
+                        let query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
                                                             ObjectableKey.clockUUID == self.uuid)
                             .order([.ascending(ObjectableKey.logicalClock)])
                         do {
@@ -415,7 +415,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                     for (index, deviceRevision) in deviceRevisions.enumerated() {
                         do {
-                            let revision = try PCKRevisionRecord(record: deviceRevision,
+                            var revisionVector = deviceRevision.knowledgeVector
+                            revisionVector.merge(with: deviceKnowledge)
+                            let remoteRevision = OCKRevisionRecord(entities: deviceRevision.entities,
+                                                                   knowledgeVector: revisionVector)
+                            let revision = try PCKRevisionRecord(record: remoteRevision,
                                                                  remoteClockUUID: self.uuid,
                                                                  remoteClock: parseClock,
                                                                  remoteClockValue: logicalClock)
