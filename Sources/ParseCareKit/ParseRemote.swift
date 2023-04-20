@@ -538,14 +538,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             await self.remoteStatus.updateKnowledgeVector(updatedCloudVector)
             do {
-                guard shouldIncrementClock || (!shouldIncrementClock && (updatedCloudVector.uuids.count > cloudVector.uuids.count)) else {
-                    DispatchQueue.main.async {
-                        self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-                    }
-                    await self.remoteStatus.notSynchronzing()
-                    completion(nil)
-                    return
-                }
                 _ = try await updatedClock.save()
                 if #available(iOS 14.0, watchOS 7.0, *) {
                     Logger.pushRevisions.debug("Finished pushing revisions")
