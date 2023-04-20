@@ -64,12 +64,7 @@ extension PCKVersionable {
     func fixVersionLinkedList(_ versionFixed: Self, backwards: Bool) {
 
         guard let versionFixedUUID = versionFixed.uuid else {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.versionable.debug("Couldn't unwrap versionFixed.uuid")
-            } else {
-                os_log("Couldn't unwrap versionFixed.uuid",
-                       log: .versionable, type: .debug)
-            }
+            Logger.versionable.debug("Couldn't unwrap versionFixed.uuid")
             return
         }
 
@@ -90,13 +85,7 @@ extension PCKVersionable {
                                 case .success:
                                     self.fixVersionLinkedList(previousFound, backwards: backwards)
                                 case .failure(let error):
-                                    if #available(iOS 14.0, watchOS 7.0, *) {
-                                        Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription, privacy: .private). Object: \(versionFixed, privacy: .private)")
-                                    } else {
-                                        os_log("Couldn't save in fixVersionLinkedList(). Error: %{private}@. Object: %{private}@",
-                                               log: .versionable, type: .error,
-                                               error.localizedDescription, versionFixed.description)
-                                    }
+                                    Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error, privacy: .private). Object: \(versionFixed, privacy: .private)")
                                 }
                             }
                         }
@@ -123,13 +112,7 @@ extension PCKVersionable {
                                 case .success:
                                     self.fixVersionLinkedList(nextFound, backwards: backwards)
                                 case .failure(let error):
-                                    if #available(iOS 14.0, watchOS 7.0, *) {
-                                        Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error.localizedDescription, privacy: .private). Object: \(versionFixed, privacy: .private)")
-                                    } else {
-                                        os_log("Couldn't save in fixVersionLinkedList(), %{private}@. Object: %{private}@",
-                                               log: .versionable, type: .error,
-                                               error.localizedDescription, versionFixed.description)
-                                    }
+                                    Logger.versionable.error("Couldn't save in fixVersionLinkedList(),  \(error, privacy: .private). Object: \(versionFixed, privacy: .private)")
                                 }
                             }
                         }
@@ -157,12 +140,7 @@ extension PCKVersionable {
             switch results {
 
             case .success(let savedObject):
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.versionable.debug("Successfully added to cloud: \(savedObject, privacy: .private)")
-                } else {
-                    os_log("Successfully added to cloud: %{private}@",
-                           log: .versionable, type: .debug, savedObject.description)
-                }
+                Logger.versionable.debug("Successfully added to cloud: \(savedObject, privacy: .private)")
 
                 guard let uuid = self.uuid else {
                     completion(.failure(ParseCareKitError.couldntUnwrapRequiredField))
@@ -182,13 +160,7 @@ extension PCKVersionable {
                                     case .success:
                                         self.fixVersionLinkedList(previousObject, backwards: true)
                                     case .failure(let error):
-                                        if #available(iOS 14.0, watchOS 7.0, *) {
-                                            Logger.versionable.error("Couldn't save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
-                                        } else {
-                                            os_log("Couldn't save(), %{private}@. Object: %{private}@",
-                                                   log: .versionable, type: .error,
-                                                   error.localizedDescription, self.description)
-                                        }
+                                        Logger.versionable.error("Couldn't save(), \(error, privacy: .private). Object: \(self, privacy: .private)")
                                     }
                                 }
                             }
@@ -208,13 +180,7 @@ extension PCKVersionable {
                                     case .success:
                                         self.fixVersionLinkedList(nextObject, backwards: false)
                                     case .failure(let error):
-                                        if #available(iOS 14.0, watchOS 7.0, *) {
-                                            Logger.versionable.error("Couldn't save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
-                                        } else {
-                                            os_log("Couldn't save(), %{private}@. Object: %{private}@",
-                                                   log: .versionable, type: .error,
-                                                   error.localizedDescription, self.description)
-                                        }
+                                        Logger.versionable.error("Couldn't save(), \(error, privacy: .private). Object: \(self, privacy: .private)")
                                     }
                                 }
                             }
@@ -225,13 +191,7 @@ extension PCKVersionable {
 
             case .failure(let error):
                 guard error.code == .duplicateValue else {
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.versionable.error("\(self.className, privacy: .private).save(), \(error.localizedDescription, privacy: .private). Object: \(self, privacy: .private)")
-                    } else {
-                        os_log("%{private}@.save(), %{private}@. Object: %{private}@",
-                               log: .versionable, type: .error, self.className,
-                               error.localizedDescription, self.description)
-                    }
+                    Logger.versionable.error("\(self.className, privacy: .private).save(), \(error, privacy: .private). Object: \(self, privacy: .private)")
                     completion(.failure(error))
                     return
                 }

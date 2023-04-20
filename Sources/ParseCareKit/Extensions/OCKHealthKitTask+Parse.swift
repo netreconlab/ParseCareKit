@@ -36,14 +36,7 @@ public extension OCKHealthKitTask {
                     userInfo = [ParseCareKitConstants.acl: aclString]
                 }
             } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.ockHealthKitTask.error("Can't set ACL: \(error.localizedDescription)")
-                } else {
-                    os_log("Can't set ACL: `%{private}@`",
-                           log: .ockHealthKitTask,
-                           type: .error,
-                           error.localizedDescription)
-                }
+                Logger.ockHealthKitTask.error("Can't set ACL: \(error)")
             }
         }
     }

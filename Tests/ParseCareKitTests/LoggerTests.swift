@@ -18,101 +18,46 @@ class LoggerTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func testCarePlan() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.carePlan.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .carePlan, type: .error)
-        }
+        Logger.carePlan.error("Testing")
     }
 
     func testContact() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.contact.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .contact, type: .error)
-        }
+        Logger.contact.error("Testing")
     }
 
     func testPatient() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.patient.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .patient, type: .error)
-        }
+        Logger.patient.error("Testing")
     }
 
     func testTask() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.task.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .task, type: .error)
-        }
+        Logger.task.error("Testing")
     }
 
     func testOutcome() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.outcome.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .outcome, type: .error)
-        }
+        Logger.outcome.error("Testing")
     }
 
     func testVersionable() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.versionable.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .versionable, type: .error)
-        }
+        Logger.versionable.error("Testing")
     }
 
     func testObjectable() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.objectable.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .objectable, type: .error)
-        }
+        Logger.objectable.error("Testing")
     }
 
     func testPullRevisions() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.pullRevisions.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .pullRevisions, type: .error)
-        }
+        Logger.pullRevisions.error("Testing")
     }
 
     func testPushRevisions() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.pushRevisions.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .pushRevisions, type: .error)
-        }
+        Logger.pushRevisions.error("Testing")
     }
 
     func testClock() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.clock.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .clock, type: .error)
-        }
+        Logger.clock.error("Testing")
     }
 
     func testInitializer() throws {
-        if #available(iOS 14.0, watchOS 7.0, *) {
-            Logger.initializer.error("Testing")
-        } else {
-            os_log("Testing",
-                   log: .initializer, type: .error)
-        }
+        Logger.initializer.error("Testing")
     }
 }

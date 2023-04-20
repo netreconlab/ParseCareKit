@@ -169,12 +169,7 @@ public struct PCKContact: PCKVersionable {
         case .contact(let entity):
             return try Self.copyCareKit(entity)
         default:
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.contact.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
-            } else {
-                os_log("new(with:) The wrong type (%{private}@) of entity was passed.",
-                       log: .contact, type: .error, careKitEntity.entityType.debugDescription)
-            }
+            Logger.contact.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
@@ -211,18 +206,9 @@ public struct PCKContact: PCKVersionable {
                 // it will return nil if the table doesn't contain the custom column
                 // Saving the new item with the custom column should resolve the issue
                 case .internalServer, .objectNotFound:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.contact.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .contact, type: .debug, ObjectableKey.logicalClock, error.localizedDescription)
-                    }
+                    Logger.contact.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
                 default:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.contact.debug("An unexpected error occured \(error.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("An unexpected error occured \"%{private}",
-                               log: .contact, type: .debug, error.localizedDescription)
-                    }
+                    Logger.contact.debug("An unexpected error occured \(error, privacy: .private)")
                 }
                 mergeRevision(.failure(error))
             }

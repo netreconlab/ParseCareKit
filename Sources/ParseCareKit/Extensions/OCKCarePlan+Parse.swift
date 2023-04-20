@@ -36,14 +36,7 @@ public extension OCKCarePlan {
                     userInfo = [ParseCareKitConstants.acl: aclString]
                 }
             } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.ockCarePlan.error("Can't set ACL: \(error.localizedDescription)")
-                } else {
-                    os_log("Can't set ACL: `%{private}@`",
-                           log: .ockCarePlan,
-                           type: .error,
-                           error.localizedDescription)
-                }
+                Logger.ockCarePlan.error("Can't set ACL: \(error)")
             }
         }
     }

@@ -151,21 +151,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
         Task {
             do {
                 try await clockQuery.unsubscribe()
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.deinitializer.error("Unsubscribed from clock query")
-                } else {
-                    os_log("Unsubscribed from clock query",
-                           log: .deinitializer,
-                           type: .error)
-                }
+                Logger.deinitializer.error("Unsubscribed from clock query")
             } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.deinitializer.error("Couldn't unsubscribe from clock query")
-                } else {
-                    os_log("Couldn't unsubscribe from clock query",
-                           log: .deinitializer,
-                           type: .error)
-                }
+                Logger.deinitializer.error("Couldn't unsubscribe from clock query")
             }
         }
     }
@@ -194,23 +182,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                                forKey: ParseCareKitConstants.defaultACL)
                 UserDefaults.standard.synchronize()
             } else {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.defaultACL.error("Couldn't encode defaultACL from user as string")
-                } else {
-                    os_log("Couldn't encode defaultACL from user as string",
-                           log: .defaultACL,
-                           type: .error)
-                }
+                Logger.defaultACL.error("Couldn't encode defaultACL from user as string")
             }
         } catch {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.defaultACL.error("Couldn't encode defaultACL from user. \(error.localizedDescription)")
-            } else {
-                os_log("Couldn't encode defaultACL from user. %{private}@",
-                       log: .defaultACL,
-                       type: .error,
-                       error.localizedDescription)
-            }
+            Logger.defaultACL.error("Couldn't encode defaultACL from user. \(error)")
             throw error
         }
     }
@@ -236,40 +211,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                     return
                                 }
                                 self.parseDelegate?.didRequestSynchronization(self)
-                                if #available(iOS 14.0, watchOS 7.0, *) {
-                                    Logger
-                                        .clockSubscription
-                                        .log("Parse subscription is notifying that there are updates on the server")
-                                } else {
-                                    os_log("Parse subscription is notifying that there are updates on the server",
-                                           log: .clockSubscription,
-                                           type: .info)
-                                }
-                            }
-                        } catch {
-                            if #available(iOS 14.0, watchOS 7.0, *) {
                                 Logger
                                     .clockSubscription
-                                    .error("Could not decode server clock: \(error)")
-                            } else {
-                                os_log("Could not decode server clock: %{private}@",
-                                       log: .clockSubscription,
-                                       type: .error,
-                                       error.localizedDescription)
+                                    .log("Parse subscription is notifying that there are updates on the server")
                             }
+                        } catch {
+                            Logger
+                                .clockSubscription
+                                .error("Could not decode server clock: \(error)")
                         }
                     default:
                         return
                     }
                 }
             } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.clockSubscription.error("Couldn't subscribe to clock query")
-                } else {
-                    os_log("Couldn't subscribe to clock query",
-                           log: .clockSubscription,
-                           type: .error)
-                }
+                Logger.clockSubscription.error("Couldn't subscribe to clock query")
                 return
             }
         } catch {
@@ -293,20 +249,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
             do {
                 let status = try await ParseHealth.check()
                 guard status == .ok else {
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pullRevisions.error("Server health is: \(status.rawValue)")
-                    } else {
-                        os_log("Server health is not ok", log: .pullRevisions, type: .error)
-                    }
+                    Logger.pullRevisions.error("Server health is: \(status.rawValue)")
                     completion(ParseCareKitError.parseHealthError)
                     return
                 }
             } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.error("Server health: \(error.localizedDescription)")
-                } else {
-                    os_log("Server health: %{private}@", log: .pullRevisions, type: .error, error.localizedDescription)
-                }
+                Logger.pullRevisions.error("Server health: \(error.localizedDescription)")
                 completion(ParseCareKitError.parseHealthError)
                 return
             }
@@ -383,11 +331,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             let revision = OCKRevisionRecord(entities: [],
                                                              knowledgeVector: updatedParseVector)
                             mergeRevision(revision)
-                            if #available(iOS 14.0, watchOS 7.0, *) {
-                                Logger.pullRevisions.debug("Finished pulling revisions for default classes")
-                            } else {
-                                os_log("Finished pulling revisions for default classes", log: .pullRevisions, type: .debug)
-                            }
+                            Logger.pullRevisions.debug("Finished pulling revisions for default classes")
                             completion(nil)
                         } catch {
                             await self.remoteStatus.notSynchronzing()
@@ -411,11 +355,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
         guard concreteClassesAlreadyPulled < classNames.count,
             let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.pullRevisions.debug("Finished pulling revisions for default classes")
-            } else {
-                os_log("Finished pulling revisions for default classes", log: .pullRevisions, type: .debug)
-            }
+            Logger.pullRevisions.debug("Finished pulling revisions for default classes")
             completion(previousError)
             return
         }
@@ -433,17 +373,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
             case .failure(let error):
                 currentError = error
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(currentError!.localizedDescription, privacy: .private)")
-                } else {
-                    os_log("pullRevisionsForConcreteClasses: %{private}@",
-                           log: .pullRevisions, type: .error, currentError!.localizedDescription)
-                }
+                Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(error, privacy: .private)")
             }
 
             self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1,
-                                                 previousError: currentError, localClock: localClock,
-                                                 cloudVector: cloudVector, mergeRevision: mergeRevision,
+                                                 previousError: currentError,
+                                                 localClock: localClock,
+                                                 cloudVector: cloudVector,
+                                                 mergeRevision: mergeRevision,
                                                  completion: completion)
         }
     }
@@ -460,12 +397,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
             guard customClassesAlreadyPulled < classNames.count,
                 let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pullRevisions.debug("Finished pulling custom revision classes")
-                } else {
-                    // Fallback on earlier versions
-                    os_log("Finished pulling custom revision classes", log: .pullRevisions, type: .debug)
-                }
+                Logger.pullRevisions.debug("Finished pulling custom revision classes")
                 completion(previousError)
                 return
             }
@@ -482,17 +414,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                 case .failure(let error):
                     currentError = error
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(currentError!.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("pullRevisionsForConcreteClasses: %{private}@",
-                               log: .pullRevisions, type: .error, currentError!.localizedDescription)
-                    }
+                    Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(error, privacy: .private)")
                 }
 
                 self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1,
-                                                   previousError: previousError, localClock: localClock,
-                                                   cloudVector: cloudVector, mergeRevision: mergeRevision,
+                                                   previousError: currentError,
+                                                   localClock: localClock,
+                                                   cloudVector: cloudVector,
+                                                   mergeRevision: mergeRevision,
                                                    completion: completion)
             }
         } else {
@@ -514,21 +443,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
                         await self.remoteStatus.notSynchronzing()
                         guard let parseError = error else {
                             // There was a different issue that we don't know how to handle
-                            if #available(iOS 14.0, watchOS 7.0, *) {
-                                Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
-                            } else {
-                                os_log("Error in pushRevisions. Couldn't unwrap clock",
-                                       log: .pushRevisions, type: .error)
-                            }
+                            Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
                             completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                             return
                         }
-                        if #available(iOS 14.0, watchOS 7.0, *) {
-                            Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
-                        } else {
-                            os_log("Error in pushRevisions. Couldn't unwrap clock: %{private}@",
-                                   log: .pushRevisions, type: .error, parseError.localizedDescription)
-                        }
+                        Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
                         completion(parseError)
                         return
                     }
@@ -602,23 +521,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             do {
                 _ = try await updatedClock.save()
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pushRevisions.debug("Finished pushing revisions")
-                } else {
-                    os_log("Finished pushing revisions", log: .pushRevisions, type: .debug)
-                }
+                Logger.pushRevisions.debug("Finished pushing revisions")
                 DispatchQueue.main.async {
                     self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                 }
                 completion(nil)
             } catch {
                 await self.remoteStatus.updateKnowledgeVector(parseVector) // revert
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.pushRevisions.error("finishedRevisions: \(error.localizedDescription, privacy: .private)")
-                } else {
-                    os_log("finishedRevisions: %{private}@",
-                           log: .pushRevisions, type: .error, error.localizedDescription)
-                }
+                Logger.pushRevisions.error("finishedRevisions: \(error, privacy: .private)")
                 completion(error)
             }
             await self.remoteStatus.notSynchronzing()
@@ -632,12 +542,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             DispatchQueue.main.async {
                 self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
             }
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.syncProgress.info("\(ratioComplete, privacy: .private)")
-            } else {
-                os_log("%{private}@",
-                       log: .syncProgress, type: .default, ratioComplete)
-            }
+            Logger.syncProgress.info("\(ratioComplete, privacy: .private)")
         }
     }
 

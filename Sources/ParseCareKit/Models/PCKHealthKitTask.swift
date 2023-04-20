@@ -153,11 +153,7 @@ public struct PCKHealthKitTask: PCKVersionable {
         case .healthKitTask(let entity):
             return try Self.copyCareKit(entity)
         default:
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.healthKitTask.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
-            } else {
-                os_log("new(with:) The wrong type (%{private}@) of entity was passed.", log: .healthKitTask, type: .error, careKitEntity.entityType.debugDescription)
-            }
+            Logger.healthKitTask.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
@@ -192,18 +188,9 @@ public struct PCKHealthKitTask: PCKVersionable {
                     // If the query was looking in a column that wasn't a default column,
                     // it will return nil if the table doesn't contain the custom column
                     // Saving the new item with the custom column should resolve the issue
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.healthKitTask.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("Warning, the table either doesn't exist or is missing the column \"%{private}\" It should be fixed during the first sync... ParseError: \"%{private}", log: .healthKitTask, type: .debug, ObjectableKey.logicalClock, error.localizedDescription)
-                    }
+                    Logger.healthKitTask.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error, privacy: .private)")
                 default:
-                    if #available(iOS 14.0, watchOS 7.0, *) {
-                        Logger.healthKitTask.debug("An unexpected error occured \(error.localizedDescription, privacy: .private)")
-                    } else {
-                        os_log("An unexpected error occured \"%{private}",
-                               log: .healthKitTask, type: .debug, error.localizedDescription)
-                    }
+                    Logger.healthKitTask.debug("An unexpected error occured \(error, privacy: .private)")
                 }
                 mergeRevision(.failure(error))
             }

@@ -68,11 +68,7 @@ public struct PCKClock: ParseObject {
     static func decodeVector(_ vector: String?) throws -> OCKRevisionRecord.KnowledgeVector {
         guard let data = vector?.data(using: .utf8) else {
             let errorString = "Could not get data as utf8"
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.clock.error("\(errorString)")
-            } else {
-                os_log("Could not get data as utf8", log: .clock, type: .error)
-            }
+            Logger.clock.error("\(errorString)")
             throw ParseCareKitError.errorString(errorString)
         }
 
@@ -82,14 +78,8 @@ public struct PCKClock: ParseObject {
                                                                                           from: data)
             return cloudVector
         } catch {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                // swiftlint:disable:next line_length
-                Logger.clock.error("Clock.decodeVector(): \(error.localizedDescription, privacy: .private). Vector \(data, privacy: .private).")
-            } else {
-                os_log("Clock.decodeVector(): %{private}@. Vector %{private}@.",
-                       log: .clock, type: .error, error.localizedDescription, data.debugDescription)
-            }
-            throw ParseCareKitError.errorString("Clock.decodeVector(): \(error.localizedDescription)")
+            Logger.clock.error("Clock.decodeVector(): \(error, privacy: .private). Vector \(data, privacy: .private).")
+            throw ParseCareKitError.errorString("Clock.decodeVector(): \(error)")
         }
     }
 
@@ -110,11 +100,7 @@ public struct PCKClock: ParseObject {
             }
             return cloudVectorString
         } catch {
-            if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.clock.error("Clock.encodeVector(): \(error.localizedDescription, privacy: .private).")
-            } else {
-                os_log("Clock.encodeVector(): %{private}@.", log: .clock, type: .error, error.localizedDescription)
-            }
+            Logger.clock.error("Clock.encodeVector(): \(error, privacy: .private).")
             return nil
         }
     }
@@ -202,17 +188,7 @@ public struct PCKClock: ParseObject {
                             }
                         } catch {
                             guard let parseError = error as? ParseError else {
-                                if #available(iOS 14.0, watchOS 7.0, *) {
-                                    Logger.clock.error("""
-                                        Couldn't cast error to
-                                        ParseError: \(error.localizedDescription)
-                                    """)
-                                } else {
-                                    os_log("Couldn't cast error to ParseError: %{private}@",
-                                           log: .clock,
-                                           type: .error,
-                                           error.localizedDescription)
-                                }
+                                Logger.clock.error("Could not cast error to ParseError: \(error)")
                                 completion(nil, nil, nil)
                                 return
                             }
