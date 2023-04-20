@@ -524,12 +524,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
         Task {
-            var updatedDeviceKnowledge = cloudVector
+            var updatedCloudVector = cloudVector
             if shouldIncrementClock {
                 // Increment and merge Knowledge Vector
-                updatedDeviceKnowledge.increment(clockFor: self.uuid)
+                updatedCloudVector.increment(clockFor: self.uuid)
             }
-            var updatedCloudVector = cloudVector
             updatedCloudVector.merge(with: localClock)
 
             guard let updatedClock = PCKClock.encodeVector(updatedCloudVector, for: parseClock) else {
