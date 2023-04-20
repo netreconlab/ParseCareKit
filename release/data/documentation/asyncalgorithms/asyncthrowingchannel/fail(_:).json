@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Send an error to all awaiting iterations.",
+      "text" : "Sends an error to all awaiting iterations.",
       "type" : "text"
     },
     {
@@ -222,7 +222,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncThrowingChannel/fail(_:)": {
   "abstract" : [
     {
-      "text" : "Send an error to all awaiting iterations.",
+      "text" : "Sends an error to all awaiting iterations.",
       "type" : "text"
     },
     {

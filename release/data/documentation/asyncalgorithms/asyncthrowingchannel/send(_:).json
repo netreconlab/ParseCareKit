@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Send an element to an awaiting iteration. This function will resume when the next call to ",
+      "text" : "Sends an element to an awaiting iteration. This function will resume when the next call to ",
       "type" : "text"
     },
     {
@@ -25,15 +25,15 @@
       "type" : "codeVoice"
     },
     {
-      "text" : "\/",
+      "text" : " or ",
       "type" : "text"
     },
     {
-      "code" : "fail(_:)",
+      "code" : "fail",
       "type" : "codeVoice"
     },
     {
-      "text" : " is made from another Task.",
+      "text" : " is made from another task.",
       "type" : "text"
     },
     {
@@ -41,7 +41,7 @@
       "type" : "text"
     },
     {
-      "text" : "If the channel is already finished then this returns immediately",
+      "text" : "If the channel is already finished then this returns immediately.",
       "type" : "text"
     },
     {
@@ -49,7 +49,15 @@
       "type" : "text"
     },
     {
-      "text" : "If the task is cancelled, this function will resume. Other sending operations from other tasks will remain active.",
+      "text" : "If the task is cancelled, this function will resume without sending the element.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Other sending operations from other tasks will remain active.",
       "type" : "text"
     }
   ],
@@ -241,7 +249,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncThrowingChannel/send(_:)": {
   "abstract" : [
     {
-      "text" : "Send an element to an awaiting iteration. This function will resume when the next call to ",
+      "text" : "Sends an element to an awaiting iteration. This function will resume when the next call to ",
       "type" : "text"
     },
     {
@@ -265,15 +273,15 @@
       "type" : "codeVoice"
     },
     {
-      "text" : "\/",
+      "text" : " or ",
       "type" : "text"
     },
     {
-      "code" : "fail(_:)",
+      "code" : "fail",
       "type" : "codeVoice"
     },
     {
-      "text" : " is made from another Task.",
+      "text" : " is made from another task.",
       "type" : "text"
     },
     {
@@ -281,7 +289,7 @@
       "type" : "text"
     },
     {
-      "text" : "If the channel is already finished then this returns immediately",
+      "text" : "If the channel is already finished then this returns immediately.",
       "type" : "text"
     },
     {
@@ -289,7 +297,15 @@
       "type" : "text"
     },
     {
-      "text" : "If the task is cancelled, this function will resume. Other sending operations from other tasks will remain active.",
+      "text" : "If the task is cancelled, this function will resume without sending the element.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Other sending operations from other tasks will remain active.",
       "type" : "text"
     }
   ],

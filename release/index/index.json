@@ -34,8 +34,8 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/asyncalgorithms\/asyncchannel\/init(element:)",
-                "title" : "init(element: Element.Type)",
+                "path" : "\/documentation\/asyncalgorithms\/asyncchannel\/init()",
+                "title" : "init()",
                 "type" : "init"
               },
               {
@@ -58,6 +58,20 @@
                 "type" : "method"
               },
               {
+                "title" : "Type Aliases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncchannel\/asynciterator",
+                "title" : "AsyncChannel.AsyncIterator",
+                "type" : "typealias"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncchannel\/element",
+                "title" : "AsyncChannel.Element",
+                "type" : "typealias"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -78,13 +92,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncchannel\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncchannel\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -345,57 +354,6 @@
           {
             "children" : [
               {
-                "title" : "Instance Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/pop()",
-                "title" : "func pop() async -> Element?",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/push(_:)",
-                "title" : "func push(Element) async",
-                "type" : "method"
-              },
-              {
-                "title" : "Enumerations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Enumeration Cases",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy\/bufferingnewest(_:)",
-                    "title" : "case bufferingNewest(Int)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy\/bufferingoldest(_:)",
-                    "title" : "case bufferingOldest(Int)",
-                    "type" : "case"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy\/unbounded",
-                    "title" : "case unbounded",
-                    "type" : "case"
-                  }
-                ],
-                "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy",
-                "title" : "AsyncLimitBuffer.Policy",
-                "type" : "enum"
-              }
-            ],
-            "path" : "\/documentation\/asyncalgorithms\/asynclimitbuffer",
-            "title" : "AsyncLimitBuffer",
-            "type" : "class"
-          },
-          {
-            "children" : [
-              {
                 "title" : "Structures",
                 "type" : "groupMarker"
               },
@@ -420,8 +378,8 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/init(_:)",
-                "title" : "init(Element.Type)",
+                "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/init()",
+                "title" : "init()",
                 "type" : "init"
               },
               {
@@ -449,6 +407,20 @@
                 "type" : "method"
               },
               {
+                "title" : "Type Aliases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/asynciterator",
+                "title" : "AsyncThrowingChannel.AsyncIterator",
+                "type" : "typealias"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/element",
+                "title" : "AsyncThrowingChannel.Element",
+                "type" : "typealias"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -469,13 +441,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -732,45 +699,6 @@
             "path" : "\/documentation\/asyncalgorithms\/asyncthrowingchannel",
             "title" : "AsyncThrowingChannel",
             "type" : "class"
-          },
-          {
-            "title" : "Protocols",
-            "type" : "groupMarker"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Associated Types",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asyncbuffer\/input",
-                "title" : "Input",
-                "type" : "associatedtype"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asyncbuffer\/output",
-                "title" : "Output",
-                "type" : "associatedtype"
-              },
-              {
-                "title" : "Instance Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asyncbuffer\/pop()",
-                "title" : "func pop() async throws -> Output?",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asyncbuffer\/push(_:)",
-                "title" : "func push(Input) async",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/asyncalgorithms\/asyncbuffer",
-            "title" : "AsyncBuffer",
-            "type" : "protocol"
           },
           {
             "title" : "Structures",
@@ -1093,6 +1021,38 @@
                 "type" : "struct"
               },
               {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/init(base:policy:)",
+                "title" : "init(base: Base, policy: AsyncBufferSequencePolicy)",
+                "type" : "init"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/makeasynciterator()",
+                "title" : "func makeAsyncIterator() -> Iterator",
+                "type" : "method"
+              },
+              {
+                "title" : "Type Aliases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/asynciterator",
+                "title" : "AsyncBufferSequence.AsyncIterator",
+                "type" : "typealias"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/element",
+                "title" : "AsyncBufferSequence.Element",
+                "type" : "typealias"
+              },
+              {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
               },
@@ -1113,13 +1073,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -1263,11 +1218,6 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/makeasynciterator()",
-                    "title" : "func makeAsyncIterator() -> Iterator",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/map(_:)-5k84n",
                     "title" : "func map<Transformed>((Self.Element) async throws -> Transformed) -> AsyncThrowingMapSequence<Self, Transformed>",
                     "type" : "method"
@@ -1371,15 +1321,6 @@
                     "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/throttle(for:reducing:)",
                     "title" : "func throttle<Reduced>(for: Duration, reducing: (Reduced?, Element) async -> Reduced) -> AsyncThrottleSequence<Self, ContinuousClock, Reduced>",
                     "type" : "method"
-                  },
-                  {
-                    "title" : "Type Aliases",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/element",
-                    "title" : "AsyncBufferSequence.Element",
-                    "type" : "typealias"
                   }
                 ],
                 "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/asyncsequence-implementations",
@@ -1389,6 +1330,41 @@
             ],
             "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequence",
             "title" : "AsyncBufferSequence",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Type Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequencepolicy\/unbounded",
+                "title" : "static var unbounded: `Self`",
+                "type" : "property"
+              },
+              {
+                "title" : "Type Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequencepolicy\/bounded(_:)",
+                "title" : "static func bounded(Int) -> AsyncBufferSequencePolicy",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequencepolicy\/bufferinglatest(_:)",
+                "title" : "static func bufferingLatest(Int) -> AsyncBufferSequencePolicy",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequencepolicy\/bufferingoldest(_:)",
+                "title" : "static func bufferingOldest(Int) -> AsyncBufferSequencePolicy",
+                "type" : "method"
+              }
+            ],
+            "path" : "\/documentation\/asyncalgorithms\/asyncbuffersequencepolicy",
+            "title" : "AsyncBufferSequencePolicy",
             "type" : "struct"
           },
           {
@@ -2708,13 +2684,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncchunksofcountorsignalsequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncchunksofcountorsignalsequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -3362,13 +3333,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asynccombinelatest2sequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asynccombinelatest2sequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -3662,13 +3628,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asynccombinelatest3sequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asynccombinelatest3sequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -4254,13 +4215,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -6099,321 +6055,6 @@
           {
             "children" : [
               {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/iterator\/next()",
-                    "title" : "func next() async -> Base.Element?",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/iterator",
-                "title" : "AsyncLazySequence.Iterator",
-                "type" : "struct"
-              },
-              {
-                "title" : "Instance Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/makeasynciterator()",
-                "title" : "func makeAsyncIterator() -> Iterator",
-                "type" : "method"
-              },
-              {
-                "title" : "Type Aliases",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/element",
-                "title" : "AsyncLazySequence.Element",
-                "type" : "typealias"
-              },
-              {
-                "title" : "Default Implementations",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/adjacentpairs()",
-                    "title" : "func adjacentPairs() -> AsyncAdjacentPairsSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/allsatisfy(_:)",
-                    "title" : "func allSatisfy((Self.Element) async throws -> Bool) async rethrows -> Bool",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(by:)",
-                    "title" : "func chunked(by: (Element, Element) -> Bool) -> AsyncChunkedByGroupSequence<Self, [Element]>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(by:into:)-7r5zb",
-                    "title" : "func chunked<C, Collected>(by: AsyncTimerSequence<C>, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, AsyncTimerSequence<C>>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(by:into:)-z1ha",
-                    "title" : "func chunked<Signal, Collected>(by: Signal, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, Signal>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(into:by:)",
-                    "title" : "func chunked<Collected>(into: Collected.Type, by: (Element, Element) -> Bool) -> AsyncChunkedByGroupSequence<Self, Collected>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(into:on:)",
-                    "title" : "func chunked<Subject, Collected>(into: Collected.Type, on: (Element) -> Subject) -> AsyncChunkedOnProjectionSequence<Self, Subject, Collected>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunked(on:)",
-                    "title" : "func chunked<Subject>(on: (Element) -> Subject) -> AsyncChunkedOnProjectionSequence<Self, Subject, [Element]>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:)",
-                    "title" : "func chunks(ofCount: Int) -> AsyncChunksOfCountSequence<Self, [Element]>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:into:)",
-                    "title" : "func chunks<Collected>(ofCount: Int, into: Collected.Type) -> AsyncChunksOfCountSequence<Self, Collected>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:)-5k4a7",
-                    "title" : "func chunks<Signal>(ofCount: Int, or: Signal) -> AsyncChunksOfCountOrSignalSequence<Self, [Element], Signal>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:)-8pw4g",
-                    "title" : "func chunks<C>(ofCount: Int, or: AsyncTimerSequence<C>) -> AsyncChunksOfCountOrSignalSequence<Self, [Element], AsyncTimerSequence<C>>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:into:)-40vp2",
-                    "title" : "func chunks<Signal, Collected>(ofCount: Int, or: Signal, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, Signal>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/chunks(ofcount:or:into:)-4t38b",
-                    "title" : "func chunks<C, Collected>(ofCount: Int, or: AsyncTimerSequence<C>, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, AsyncTimerSequence<C>>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/compactmap(_:)-66yb7",
-                    "title" : "func compactMap<ElementOfResult>((Self.Element) async -> ElementOfResult?) -> AsyncCompactMapSequence<Self, ElementOfResult>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/compactmap(_:)-8qjjv",
-                    "title" : "func compactMap<ElementOfResult>((Self.Element) async throws -> ElementOfResult?) -> AsyncThrowingCompactMapSequence<Self, ElementOfResult>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/compacted()",
-                    "title" : "func compacted<Unwrapped>() -> AsyncCompactedSequence<Self, Unwrapped>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/contains(_:)",
-                    "title" : "func contains(Self.Element) async rethrows -> Bool",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/contains(where:)",
-                    "title" : "func contains(where: (Self.Element) async throws -> Bool) async rethrows -> Bool",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/debounce(for:tolerance:)",
-                    "title" : "func debounce(for: Duration, tolerance: Duration?) -> AsyncDebounceSequence<Self, ContinuousClock>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/debounce(for:tolerance:clock:)",
-                    "title" : "func debounce<C>(for: C.Instant.Duration, tolerance: C.Instant.Duration?, clock: C) -> AsyncDebounceSequence<Self, C>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/drop(while:)",
-                    "title" : "func drop(while: (Self.Element) async -> Bool) -> AsyncDropWhileSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/dropfirst(_:)",
-                    "title" : "func dropFirst(Int) -> AsyncDropFirstSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/filter(_:)",
-                    "title" : "func filter((Self.Element) async -> Bool) -> AsyncFilterSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/first(where:)",
-                    "title" : "func first(where: (Self.Element) async throws -> Bool) async rethrows -> Self.Element?",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/flatmap(_:)-3rgbw",
-                    "title" : "func flatMap<SegmentOfResult>((Self.Element) async -> SegmentOfResult) -> AsyncFlatMapSequence<Self, SegmentOfResult>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/flatmap(_:)-7okcm",
-                    "title" : "func flatMap<SegmentOfResult>((Self.Element) async throws -> SegmentOfResult) -> AsyncThrowingFlatMapSequence<Self, SegmentOfResult>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/interspersed(with:)",
-                    "title" : "func interspersed(with: Element) -> AsyncInterspersedSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/joined()",
-                    "title" : "func joined() -> AsyncJoinedSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/joined(separator:)",
-                    "title" : "func joined<Separator>(separator: Separator) -> AsyncJoinedBySeparatorSequence<Self, Separator>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/map(_:)-186qn",
-                    "title" : "func map<Transformed>((Self.Element) async throws -> Transformed) -> AsyncThrowingMapSequence<Self, Transformed>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/map(_:)-66rdg",
-                    "title" : "func map<Transformed>((Self.Element) async -> Transformed) -> AsyncMapSequence<Self, Transformed>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/max()",
-                    "title" : "func max() async rethrows -> Self.Element?",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/max(by:)",
-                    "title" : "func max(by: (Self.Element, Self.Element) async throws -> Bool) async rethrows -> Self.Element?",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/min()",
-                    "title" : "func min() async rethrows -> Self.Element?",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/min(by:)",
-                    "title" : "func min(by: (Self.Element, Self.Element) async throws -> Bool) async rethrows -> Self.Element?",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/prefix(_:)",
-                    "title" : "func prefix(Int) -> AsyncPrefixSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/prefix(while:)",
-                    "title" : "func prefix(while: (Self.Element) async -> Bool) rethrows -> AsyncPrefixWhileSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reduce(_:_:)",
-                    "title" : "func reduce<Result>(Result, (Result, Self.Element) async throws -> Result) async rethrows -> Result",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reduce(into:_:)",
-                    "title" : "func reduce<Result>(into: Result, (inout Result, Self.Element) async throws -> Void) async rethrows -> Result",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(_:)",
-                    "title" : "func reductions((Element, Element) async -> Element) -> AsyncInclusiveReductionsSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(_:_:)-2g4zl",
-                    "title" : "func reductions<Result>(Result, (Result, Element) async -> Result) -> AsyncExclusiveReductionsSequence<Self, Result>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(_:_:)-4i9lu",
-                    "title" : "func reductions<Result>(Result, (Result, Element) async throws -> Result) -> AsyncThrowingExclusiveReductionsSequence<Self, Result>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(into:_:)-6dmys",
-                    "title" : "func reductions<Result>(into: Result, (inout Result, Element) async -> Void) -> AsyncExclusiveReductionsSequence<Self, Result>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/reductions(into:_:)-shrf",
-                    "title" : "func reductions<Result>(into: Result, (inout Result, Element) async throws -> Void) -> AsyncThrowingExclusiveReductionsSequence<Self, Result>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/removeduplicates()",
-                    "title" : "func removeDuplicates() -> AsyncRemoveDuplicatesSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/removeduplicates(by:)",
-                    "title" : "func removeDuplicates(by: (Element, Element) async -> Bool) -> AsyncRemoveDuplicatesSequence<Self>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:clock:latest:)",
-                    "title" : "func throttle<C>(for: C.Instant.Duration, clock: C, latest: Bool) -> AsyncThrottleSequence<Self, C, Element>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:clock:reducing:)",
-                    "title" : "func throttle<C, Reduced>(for: C.Instant.Duration, clock: C, reducing: (Reduced?, Element) async -> Reduced) -> AsyncThrottleSequence<Self, C, Reduced>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:latest:)",
-                    "title" : "func throttle(for: Duration, latest: Bool) -> AsyncThrottleSequence<Self, ContinuousClock, Element>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/throttle(for:reducing:)",
-                    "title" : "func throttle<Reduced>(for: Duration, reducing: (Reduced?, Element) async -> Reduced) -> AsyncThrottleSequence<Self, ContinuousClock, Reduced>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/asyncalgorithms\/asynclazysequence\/asyncsequence-implementations",
-                "title" : "AsyncSequence Implementations",
-                "type" : "symbol"
-              }
-            ],
-            "path" : "\/documentation\/asyncalgorithms\/asynclazysequence",
-            "title" : "AsyncLazySequence",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },
@@ -6472,13 +6113,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -6802,13 +6438,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -7384,6 +7015,321 @@
             ],
             "path" : "\/documentation\/asyncalgorithms\/asyncremoveduplicatessequence",
             "title" : "AsyncRemoveDuplicatesSequence",
+            "type" : "struct"
+          },
+          {
+            "children" : [
+              {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/iterator\/next()",
+                    "title" : "func next() async -> Base.Element?",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/iterator",
+                "title" : "AsyncSyncSequence.Iterator",
+                "type" : "struct"
+              },
+              {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/makeasynciterator()",
+                "title" : "func makeAsyncIterator() -> Iterator",
+                "type" : "method"
+              },
+              {
+                "title" : "Type Aliases",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/element",
+                "title" : "AsyncSyncSequence.Element",
+                "type" : "typealias"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/adjacentpairs()",
+                    "title" : "func adjacentPairs() -> AsyncAdjacentPairsSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/allsatisfy(_:)",
+                    "title" : "func allSatisfy((Self.Element) async throws -> Bool) async rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunked(by:)",
+                    "title" : "func chunked(by: (Element, Element) -> Bool) -> AsyncChunkedByGroupSequence<Self, [Element]>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunked(by:into:)-3qqa0",
+                    "title" : "func chunked<Signal, Collected>(by: Signal, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, Signal>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunked(by:into:)-r28r",
+                    "title" : "func chunked<C, Collected>(by: AsyncTimerSequence<C>, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, AsyncTimerSequence<C>>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunked(into:by:)",
+                    "title" : "func chunked<Collected>(into: Collected.Type, by: (Element, Element) -> Bool) -> AsyncChunkedByGroupSequence<Self, Collected>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunked(into:on:)",
+                    "title" : "func chunked<Subject, Collected>(into: Collected.Type, on: (Element) -> Subject) -> AsyncChunkedOnProjectionSequence<Self, Subject, Collected>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunked(on:)",
+                    "title" : "func chunked<Subject>(on: (Element) -> Subject) -> AsyncChunkedOnProjectionSequence<Self, Subject, [Element]>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunks(ofcount:)",
+                    "title" : "func chunks(ofCount: Int) -> AsyncChunksOfCountSequence<Self, [Element]>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunks(ofcount:into:)",
+                    "title" : "func chunks<Collected>(ofCount: Int, into: Collected.Type) -> AsyncChunksOfCountSequence<Self, Collected>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunks(ofcount:or:)-8qvne",
+                    "title" : "func chunks<C>(ofCount: Int, or: AsyncTimerSequence<C>) -> AsyncChunksOfCountOrSignalSequence<Self, [Element], AsyncTimerSequence<C>>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunks(ofcount:or:)-96o8s",
+                    "title" : "func chunks<Signal>(ofCount: Int, or: Signal) -> AsyncChunksOfCountOrSignalSequence<Self, [Element], Signal>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunks(ofcount:or:into:)-76u58",
+                    "title" : "func chunks<Signal, Collected>(ofCount: Int, or: Signal, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, Signal>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/chunks(ofcount:or:into:)-95ix5",
+                    "title" : "func chunks<C, Collected>(ofCount: Int, or: AsyncTimerSequence<C>, into: Collected.Type) -> AsyncChunksOfCountOrSignalSequence<Self, Collected, AsyncTimerSequence<C>>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/compactmap(_:)-955kt",
+                    "title" : "func compactMap<ElementOfResult>((Self.Element) async throws -> ElementOfResult?) -> AsyncThrowingCompactMapSequence<Self, ElementOfResult>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/compactmap(_:)-9leml",
+                    "title" : "func compactMap<ElementOfResult>((Self.Element) async -> ElementOfResult?) -> AsyncCompactMapSequence<Self, ElementOfResult>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/compacted()",
+                    "title" : "func compacted<Unwrapped>() -> AsyncCompactedSequence<Self, Unwrapped>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/contains(_:)",
+                    "title" : "func contains(Self.Element) async rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/contains(where:)",
+                    "title" : "func contains(where: (Self.Element) async throws -> Bool) async rethrows -> Bool",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/debounce(for:tolerance:)",
+                    "title" : "func debounce(for: Duration, tolerance: Duration?) -> AsyncDebounceSequence<Self, ContinuousClock>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/debounce(for:tolerance:clock:)",
+                    "title" : "func debounce<C>(for: C.Instant.Duration, tolerance: C.Instant.Duration?, clock: C) -> AsyncDebounceSequence<Self, C>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/drop(while:)",
+                    "title" : "func drop(while: (Self.Element) async -> Bool) -> AsyncDropWhileSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/dropfirst(_:)",
+                    "title" : "func dropFirst(Int) -> AsyncDropFirstSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/filter(_:)",
+                    "title" : "func filter((Self.Element) async -> Bool) -> AsyncFilterSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/first(where:)",
+                    "title" : "func first(where: (Self.Element) async throws -> Bool) async rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/flatmap(_:)-6vkyg",
+                    "title" : "func flatMap<SegmentOfResult>((Self.Element) async throws -> SegmentOfResult) -> AsyncThrowingFlatMapSequence<Self, SegmentOfResult>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/flatmap(_:)-zoxt",
+                    "title" : "func flatMap<SegmentOfResult>((Self.Element) async -> SegmentOfResult) -> AsyncFlatMapSequence<Self, SegmentOfResult>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/interspersed(with:)",
+                    "title" : "func interspersed(with: Element) -> AsyncInterspersedSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/joined()",
+                    "title" : "func joined() -> AsyncJoinedSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/joined(separator:)",
+                    "title" : "func joined<Separator>(separator: Separator) -> AsyncJoinedBySeparatorSequence<Self, Separator>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/map(_:)-4ij7w",
+                    "title" : "func map<Transformed>((Self.Element) async -> Transformed) -> AsyncMapSequence<Self, Transformed>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/map(_:)-4p6uo",
+                    "title" : "func map<Transformed>((Self.Element) async throws -> Transformed) -> AsyncThrowingMapSequence<Self, Transformed>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/max()",
+                    "title" : "func max() async rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/max(by:)",
+                    "title" : "func max(by: (Self.Element, Self.Element) async throws -> Bool) async rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/min()",
+                    "title" : "func min() async rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/min(by:)",
+                    "title" : "func min(by: (Self.Element, Self.Element) async throws -> Bool) async rethrows -> Self.Element?",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/prefix(_:)",
+                    "title" : "func prefix(Int) -> AsyncPrefixSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/prefix(while:)",
+                    "title" : "func prefix(while: (Self.Element) async -> Bool) rethrows -> AsyncPrefixWhileSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reduce(_:_:)",
+                    "title" : "func reduce<Result>(Result, (Result, Self.Element) async throws -> Result) async rethrows -> Result",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reduce(into:_:)",
+                    "title" : "func reduce<Result>(into: Result, (inout Result, Self.Element) async throws -> Void) async rethrows -> Result",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reductions(_:)",
+                    "title" : "func reductions((Element, Element) async -> Element) -> AsyncInclusiveReductionsSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reductions(_:_:)-71bpj",
+                    "title" : "func reductions<Result>(Result, (Result, Element) async -> Result) -> AsyncExclusiveReductionsSequence<Self, Result>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reductions(_:_:)-7wq4i",
+                    "title" : "func reductions<Result>(Result, (Result, Element) async throws -> Result) -> AsyncThrowingExclusiveReductionsSequence<Self, Result>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reductions(into:_:)-1qzka",
+                    "title" : "func reductions<Result>(into: Result, (inout Result, Element) async -> Void) -> AsyncExclusiveReductionsSequence<Self, Result>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/reductions(into:_:)-8vml",
+                    "title" : "func reductions<Result>(into: Result, (inout Result, Element) async throws -> Void) -> AsyncThrowingExclusiveReductionsSequence<Self, Result>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/removeduplicates()",
+                    "title" : "func removeDuplicates() -> AsyncRemoveDuplicatesSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/removeduplicates(by:)",
+                    "title" : "func removeDuplicates(by: (Element, Element) async -> Bool) -> AsyncRemoveDuplicatesSequence<Self>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/throttle(for:clock:latest:)",
+                    "title" : "func throttle<C>(for: C.Instant.Duration, clock: C, latest: Bool) -> AsyncThrottleSequence<Self, C, Element>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/throttle(for:clock:reducing:)",
+                    "title" : "func throttle<C, Reduced>(for: C.Instant.Duration, clock: C, reducing: (Reduced?, Element) async -> Reduced) -> AsyncThrottleSequence<Self, C, Reduced>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/throttle(for:latest:)",
+                    "title" : "func throttle(for: Duration, latest: Bool) -> AsyncThrottleSequence<Self, ContinuousClock, Element>",
+                    "type" : "method"
+                  },
+                  {
+                    "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/throttle(for:reducing:)",
+                    "title" : "func throttle<Reduced>(for: Duration, reducing: (Reduced?, Element) async -> Reduced) -> AsyncThrottleSequence<Self, ContinuousClock, Reduced>",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence\/asyncsequence-implementations",
+                "title" : "AsyncSequence Implementations",
+                "type" : "symbol"
+              }
+            ],
+            "path" : "\/documentation\/asyncalgorithms\/asyncsyncsequence",
+            "title" : "AsyncSyncSequence",
             "type" : "struct"
           },
           {
@@ -8709,13 +8655,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asynctimersequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asynctimersequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -9039,13 +8980,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asynczip2sequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asynczip2sequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {
@@ -9339,13 +9275,8 @@
                     "type" : "method"
                   },
                   {
-                    "path" : "\/documentation\/asyncalgorithms\/asynczip3sequence\/buffer(_:)",
-                    "title" : "func buffer<Buffer>(() -> Buffer) -> AsyncBufferSequence<Self, Buffer>",
-                    "type" : "method"
-                  },
-                  {
                     "path" : "\/documentation\/asyncalgorithms\/asynczip3sequence\/buffer(policy:)",
-                    "title" : "func buffer(policy: AsyncLimitBuffer<Element>.Policy) -> AsyncBufferSequence<Self, AsyncLimitBuffer<Element>>",
+                    "title" : "func buffer(policy: AsyncBufferSequencePolicy) -> AsyncBufferSequence<Self>",
                     "type" : "method"
                   },
                   {

@@ -35,7 +35,6 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/adjacentPairs()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/allSatisfy(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/buffer(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/buffer(policy:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/chunked(by:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/chunked(by:into:)-3ls94",
@@ -301,141 +300,10 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/allsatisfy(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/buffer(_:)": {
-  "abstract" : [
-    {
-      "text" : "Creates an asynchronous sequence that buffers elements using a buffer created from a supplied closure.",
-      "type" : "text"
-    }
-  ],
-  "conformance" : {
-    "availabilityPrefix" : [
-      {
-        "text" : "Available when",
-        "type" : "text"
-      }
-    ],
-    "conformancePrefix" : [
-      {
-        "text" : "Conforms when",
-        "type" : "text"
-      }
-    ],
-    "constraints" : [
-      {
-        "code" : "Self",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Sendable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " and ",
-        "type" : "text"
-      },
-      {
-        "code" : "Element",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Sendable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ".",
-        "type" : "text"
-      }
-    ]
-  },
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "buffer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "Buffer"
-    },
-    {
-      "kind" : "text",
-      "text" : ">(() -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmss8SendableRzsAB7ElementRpzrlE6bufferyAA0A14BufferSequenceVyxqd__Gqd__yYbcAA0aF0Rd__5InputQyd__ADRSlF0F0L_qd__mfp",
-      "text" : "Buffer"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A14BufferSequenceV",
-      "text" : "AsyncBufferSequence"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmss8SendableRzsAB7ElementRpzrlE6bufferyAA0A14BufferSequenceVyxqd__Gqd__yYbcAA0aF0Rd__5InputQyd__ADRSlF0F0L_qd__mfp",
-      "text" : "Buffer"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/buffer(_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "buffer(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/buffer(_:)"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/buffer(policy:)": {
   "abstract" : [
     {
-      "text" : "Creates an asynchronous sequence that buffers elements using a specific policy to limit the number of",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "elements that are buffered.",
+      "text" : "Creates an asynchronous sequence that buffers elements.",
       "type" : "text"
     }
   ],
@@ -455,22 +323,6 @@
     "constraints" : [
       {
         "code" : "Self",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Sendable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " and ",
-        "type" : "text"
-      },
-      {
-        "code" : "Element",
         "type" : "codeVoice"
       },
       {
@@ -514,26 +366,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-      "text" : "AsyncLimitBuffer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC6PolicyO",
-      "text" : "Policy"
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A20BufferSequencePolicyV",
+      "text" : "AsyncBufferSequencePolicy"
     },
     {
       "kind" : "text",
@@ -554,25 +388,7 @@
     },
     {
       "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-      "text" : "AsyncLimitBuffer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">>"
+      "text" : ">"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/buffer(policy:)",

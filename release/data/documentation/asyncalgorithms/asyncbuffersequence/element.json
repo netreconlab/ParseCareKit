@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/AsyncSequence-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence"
       ]
     ]
   },
@@ -28,87 +27,6 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "conformance" : {
-      "availabilityPrefix" : [
-        {
-          "text" : "Available when",
-          "type" : "text"
-        }
-      ],
-      "conformancePrefix" : [
-        {
-          "text" : "Conforms when",
-          "type" : "text"
-        }
-      ],
-      "constraints" : [
-        {
-          "code" : "Base",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "Sendable",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ", ",
-          "type" : "text"
-        },
-        {
-          "code" : "Base",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "AsyncSequence",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ", ",
-          "type" : "text"
-        },
-        {
-          "code" : "Buffer",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "AsyncBuffer",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ", and ",
-          "type" : "text"
-        },
-        {
-          "code" : "Base.Element",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " is ",
-          "type" : "text"
-        },
-        {
-          "code" : "Buffer.Input",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ".",
-          "type" : "text"
-        }
-      ]
-    },
-    "extendedModule" : "AsyncAlgorithms",
     "externalID" : "s:15AsyncAlgorithms0A14BufferSequenceV7Elementa",
     "fragments" : [
       {
@@ -169,18 +87,17 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A14BufferSequenceV0C0q_mfp",
-              "text" : "Buffer"
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A14BufferSequenceV4Basexmfp",
+              "text" : "Base"
             },
             {
               "kind" : "text",
               "text" : "."
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBuffer\/Output",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A6BufferP6OutputQa",
-              "text" : "Output"
+              "preciseIdentifier" : "s:Sci7ElementQa",
+              "text" : "Element"
             }
           ]
         }
@@ -221,41 +138,6 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBuffer/Output": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "associatedtype"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "Output"
-    },
-    {
-      "kind" : "text",
-      "text" : " : "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s8SendableP",
-      "text" : "Sendable"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBuffer\/Output",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "Output",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffer\/output"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence": {
   "abstract" : [
     {
@@ -267,15 +149,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " that buffers elements utilizing an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncBuffer",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : " that buffers elements in regard to a policy.",
       "type" : "text"
     }
   ],
@@ -306,101 +180,10 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/AsyncSequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/AsyncSequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "AsyncSequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/asyncsequence-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/Element": {
   "abstract" : [
 
   ],
-  "conformance" : {
-    "availabilityPrefix" : [
-      {
-        "text" : "Available when",
-        "type" : "text"
-      }
-    ],
-    "conformancePrefix" : [
-      {
-        "text" : "Conforms when",
-        "type" : "text"
-      }
-    ],
-    "constraints" : [
-      {
-        "code" : "Base",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Sendable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ", ",
-        "type" : "text"
-      },
-      {
-        "code" : "Base",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "AsyncSequence",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ", ",
-        "type" : "text"
-      },
-      {
-        "code" : "Buffer",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "AsyncBuffer",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ", and ",
-        "type" : "text"
-      },
-      {
-        "code" : "Base.Element",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " is ",
-        "type" : "text"
-      },
-      {
-        "code" : "Buffer.Input",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ".",
-        "type" : "text"
-      }
-    ]
-  },
   "fragments" : [
     {
       "kind" : "keyword",

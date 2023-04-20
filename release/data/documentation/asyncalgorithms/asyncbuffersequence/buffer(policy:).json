@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Creates an asynchronous sequence that buffers elements using a specific policy to limit the number of",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "elements that are buffered.",
+      "text" : "Creates an asynchronous sequence that buffers elements.",
       "type" : "text"
     }
   ],
@@ -55,29 +47,13 @@
           "type" : "codeVoice"
         },
         {
-          "text" : " and ",
-          "type" : "text"
-        },
-        {
-          "code" : "Element",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "Sendable",
-          "type" : "codeVoice"
-        },
-        {
           "text" : ".",
           "type" : "text"
         }
       ]
     },
     "extendedModule" : "_Concurrency",
-    "externalID" : "s:Sci15AsyncAlgorithmss8SendableRzsAB7ElementRpzrlE6buffer6policyAA0A14BufferSequenceVyxAA0a5LimitG0CyADGGAJ6PolicyOyAD_G_tF::SYNTHESIZED::s:15AsyncAlgorithms0A14BufferSequenceV",
+    "externalID" : "s:Sci15AsyncAlgorithmss8SendableRzrlE6buffer6policyAA0A14BufferSequenceVyxGAA0afG6PolicyV_tF::SYNTHESIZED::s:15AsyncAlgorithms0A14BufferSequenceV",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -105,26 +81,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-        "text" : "AsyncLimitBuffer"
-      },
-      {
-        "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:Sci7ElementQa",
-        "text" : "Element"
-      },
-      {
-        "kind" : "text",
-        "text" : ">."
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC6PolicyO",
-        "text" : "Policy"
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A20BufferSequencePolicyV",
+        "text" : "AsyncBufferSequencePolicy"
       },
       {
         "kind" : "text",
@@ -145,25 +103,7 @@
       },
       {
         "kind" : "text",
-        "text" : ", "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-        "text" : "AsyncLimitBuffer"
-      },
-      {
-        "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:Sci7ElementQa",
-        "text" : "Element"
-      },
-      {
-        "kind" : "text",
-        "text" : ">>"
+        "text" : ">"
       }
     ],
     "modules" : [
@@ -209,40 +149,13 @@
             },
             {
               "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "internalParam",
-              "text" : "limit"
-            },
-            {
-              "kind" : "text",
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequencePolicy",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-              "text" : "AsyncLimitBuffer"
-            },
-            {
-              "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:Sci7ElementQa",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ">."
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC6PolicyO",
-              "text" : "Policy"
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A20BufferSequencePolicyV",
+              "text" : "AsyncBufferSequencePolicy"
             },
             {
               "kind" : "text",
@@ -264,26 +177,7 @@
             },
             {
               "kind" : "text",
-              "text" : ", "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-              "text" : "AsyncLimitBuffer"
-            },
-            {
-              "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:Sci7ElementQa",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ">>"
+              "text" : ">"
             }
           ]
         }
@@ -318,12 +212,13 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A limiting policy behavior on the buffering behavior of the ",
+                  "text" : "A policy that drives the behaviour of the ",
                   "type" : "text"
                 },
                 {
-                  "code" : "AsyncBufferSequence",
-                  "type" : "codeVoice"
+                  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence",
+                  "isActive" : true,
+                  "type" : "reference"
                 }
               ],
               "type" : "paragraph"
@@ -332,6 +227,83 @@
           "name" : "policy"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The buffering behaviour is dictated by the policy:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "bounded: will buffer elements until the limit is reached. Then it will suspend the upstream async sequence.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "unbounded: will buffer elements without limit.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "bufferingNewest: will buffer elements until the limit is reached. Then it will discard the oldest elements.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "bufferingOldest: will buffer elements until the limit is reached. Then it will discard the newest elements.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -378,15 +350,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " that buffers elements utilizing an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncBuffer",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : " that buffers elements in regard to a policy.",
       "type" : "text"
     }
   ],
@@ -431,15 +395,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/buffer(policy:)": {
   "abstract" : [
     {
-      "text" : "Creates an asynchronous sequence that buffers elements using a specific policy to limit the number of",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "elements that are buffered.",
+      "text" : "Creates an asynchronous sequence that buffers elements.",
       "type" : "text"
     }
   ],
@@ -459,22 +415,6 @@
     "constraints" : [
       {
         "code" : "Self",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Sendable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " and ",
-        "type" : "text"
-      },
-      {
-        "code" : "Element",
         "type" : "codeVoice"
       },
       {
@@ -518,26 +458,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-      "text" : "AsyncLimitBuffer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC6PolicyO",
-      "text" : "Policy"
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A20BufferSequencePolicyV",
+      "text" : "AsyncBufferSequencePolicy"
     },
     {
       "kind" : "text",
@@ -558,25 +480,7 @@
     },
     {
       "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A11LimitBufferC",
-      "text" : "AsyncLimitBuffer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">>"
+      "text" : ">"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/buffer(policy:)",
@@ -586,17 +490,22 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/buffer(policy:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequencePolicy": {
   "abstract" : [
     {
-      "text" : "A buffer that limits pushed items by a certain count.",
+      "text" : "A policy dictating the buffering behaviour of an ",
       "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence",
+      "isActive" : true,
+      "type" : "reference"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "class"
+      "text" : "struct"
     },
     {
       "kind" : "text",
@@ -604,59 +513,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "AsyncLimitBuffer"
+      "text" : "AsyncBufferSequencePolicy"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequencePolicy",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "AsyncLimitBuffer"
+      "text" : "AsyncBufferSequencePolicy"
     }
   ],
   "role" : "symbol",
-  "title" : "AsyncLimitBuffer",
+  "title" : "AsyncBufferSequencePolicy",
   "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncLimitBuffer/Policy": {
-  "abstract" : [
-    {
-      "text" : "A policy for buffering elements to an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncLimitBuffer",
-      "type" : "codeVoice"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "enum"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "Policy"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncLimitBuffer\/Policy",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "Policy"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "AsyncLimitBuffer.Policy",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asynclimitbuffer\/policy"
+  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequencepolicy"
 }
 }
 }

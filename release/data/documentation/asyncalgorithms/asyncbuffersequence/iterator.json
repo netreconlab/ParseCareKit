@@ -1,18 +1,4 @@
 {
-  "abstract" : [
-    {
-      "text" : "The iterator for a ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncBufferSequence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance.",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -27,87 +13,6 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "conformance" : {
-      "availabilityPrefix" : [
-        {
-          "text" : "Available when",
-          "type" : "text"
-        }
-      ],
-      "conformancePrefix" : [
-        {
-          "text" : "Conforms when",
-          "type" : "text"
-        }
-      ],
-      "constraints" : [
-        {
-          "code" : "Base",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "Sendable",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ", ",
-          "type" : "text"
-        },
-        {
-          "code" : "Base",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "AsyncSequence",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ", ",
-          "type" : "text"
-        },
-        {
-          "code" : "Buffer",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " conforms to ",
-          "type" : "text"
-        },
-        {
-          "code" : "AsyncBuffer",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ", and ",
-          "type" : "text"
-        },
-        {
-          "code" : "Base.Element",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " is ",
-          "type" : "text"
-        },
-        {
-          "code" : "Buffer.Input",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : ".",
-          "type" : "text"
-        }
-      ]
-    },
-    "extendedModule" : "AsyncAlgorithms",
     "externalID" : "s:15AsyncAlgorithms0A14BufferSequenceV8IteratorV",
     "fragments" : [
       {
@@ -171,6 +76,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/ScI"
       ],
       "kind" : "relationships",
@@ -235,15 +141,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " that buffers elements utilizing an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncBuffer",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : " that buffers elements in regard to a policy.",
       "type" : "text"
     }
   ],
@@ -276,99 +174,8 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/Iterator": {
   "abstract" : [
-    {
-      "text" : "The iterator for a ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncBufferSequence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance.",
-      "type" : "text"
-    }
+
   ],
-  "conformance" : {
-    "availabilityPrefix" : [
-      {
-        "text" : "Available when",
-        "type" : "text"
-      }
-    ],
-    "conformancePrefix" : [
-      {
-        "text" : "Conforms when",
-        "type" : "text"
-      }
-    ],
-    "constraints" : [
-      {
-        "code" : "Base",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Sendable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ", ",
-        "type" : "text"
-      },
-      {
-        "code" : "Base",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "AsyncSequence",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ", ",
-        "type" : "text"
-      },
-      {
-        "code" : "Buffer",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "AsyncBuffer",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ", and ",
-        "type" : "text"
-      },
-      {
-        "code" : "Base.Element",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " is ",
-        "type" : "text"
-      },
-      {
-        "code" : "Buffer.Input",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ".",
-        "type" : "text"
-      }
-    ]
-  },
   "fragments" : [
     {
       "kind" : "keyword",
@@ -449,6 +256,11 @@
   "title" : "next()",
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/iterator\/next()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
 }
 }
 }

@@ -217,18 +217,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncThrowingChannel/Iterator": {
   "abstract" : [
-    {
-      "text" : "The iterator for an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncThrowingChannel",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Await the next sent element or finish.",
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "AsyncIteratorProtocol.next()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -193,18 +201,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/Iterator": {
   "abstract" : [
-    {
-      "text" : "The iterator for a ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -235,10 +232,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/Iterator/next()": {
   "abstract" : [
-    {
-      "text" : "Await the next sent element or finish.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

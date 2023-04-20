@@ -90,28 +90,7 @@
             },
             {
               "kind" : "text",
-              "text" : "> "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "where"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : " : "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:s8SendableP",
-              "text" : "Sendable"
+              "text" : ">"
             }
           ]
         }
@@ -221,7 +200,7 @@
               "type" : "codeVoice"
             },
             {
-              "text" : " induces a terminal state, there is no need for a back pressure management.",
+              "text" : " induces a terminal state, there is no more need for a back pressure management.",
               "type" : "text"
             },
             {
@@ -267,7 +246,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/init(element:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/init()"
       ],
       "title" : "Initializers"
     },
@@ -278,6 +257,13 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/send(_:)"
       ],
       "title" : "Instance Methods"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/AsyncIterator",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/Element"
+      ],
+      "title" : "Type Aliases"
     },
     {
       "generated" : true,
@@ -351,6 +337,37 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncchannel"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/AsyncIterator": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "AsyncIterator"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/AsyncIterator",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "AsyncIterator"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncChannel.AsyncIterator",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/asynciterator"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/AsyncSequence-Implementations": {
   "abstract" : [
 
@@ -362,20 +379,40 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/asyncsequence-implementations"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/Element": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Element"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/Element",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Element"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "AsyncChannel.Element",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/element"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/Iterator": {
   "abstract" : [
-    {
-      "text" : "The iterator for a ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -407,7 +444,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/finish()": {
   "abstract" : [
     {
-      "text" : "Send a finish to all awaiting iterations.",
+      "text" : "Immediately resumes all the suspended operations.",
       "type" : "text"
     },
     {
@@ -452,20 +489,9 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/finish()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/init(element:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/init()": {
   "abstract" : [
-    {
-      "text" : "Create a new ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " given an element type.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -474,51 +500,19 @@
     },
     {
       "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "element"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A7ChannelC7Elementxmfp",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ".Type)"
+      "text" : "()"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/init(element:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncChannel\/init()",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(element:)",
+  "title" : "init()",
   "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/init(element:)"
+  "url" : "\/documentation\/asyncalgorithms\/asyncchannel\/init()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/makeAsyncIterator()": {
   "abstract" : [
-    {
-      "text" : "Create an ",
-      "type" : "text"
-    },
-    {
-      "code" : "Iterator",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " for iteration of an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
-    }
+
   ],
   "fragments" : [
     {
@@ -553,7 +547,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/send(_:)": {
   "abstract" : [
     {
-      "text" : "Send an element to an awaiting iteration. This function will resume when the next call to ",
+      "text" : "Sends an element to an awaiting iteration. This function will resume when the next call to ",
       "type" : "text"
     },
     {
@@ -577,7 +571,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " is made from another Task.",
+      "text" : " is made from another task.",
       "type" : "text"
     },
     {
@@ -585,7 +579,7 @@
       "type" : "text"
     },
     {
-      "text" : "If the channel is already finished then this returns immediately",
+      "text" : "If the channel is already finished then this returns immediately.",
       "type" : "text"
     },
     {
@@ -593,7 +587,15 @@
       "type" : "text"
     },
     {
-      "text" : "If the task is cancelled, this function will resume. Other sending operations from other tasks will remain active.",
+      "text" : "If the task is cancelled, this function will resume without sending the element.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Other sending operations from other tasks will remain active.",
       "type" : "text"
     }
   ],

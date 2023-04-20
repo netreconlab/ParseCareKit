@@ -1,20 +1,16 @@
 {
   "abstract" : [
     {
-      "text" : "Create an ",
+      "text" : "Inherited from ",
       "type" : "text"
     },
     {
-      "code" : "Iterator",
+      "code" : "AsyncSequence.makeAsyncIterator()",
       "type" : "codeVoice"
     },
     {
-      "text" : " for iteration of an ",
+      "text" : ".",
       "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
     }
   ],
   "hierarchy" : {
@@ -173,18 +169,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/Iterator": {
   "abstract" : [
-    {
-      "text" : "The iterator for a ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " instance.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -215,22 +200,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncChannel/makeAsyncIterator()": {
   "abstract" : [
-    {
-      "text" : "Create an ",
-      "type" : "text"
-    },
-    {
-      "code" : "Iterator",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " for iteration of an ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncChannel",
-      "type" : "codeVoice"
-    }
+
   ],
   "fragments" : [
     {

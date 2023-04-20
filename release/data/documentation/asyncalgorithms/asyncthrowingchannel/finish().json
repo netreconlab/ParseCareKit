@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Send a finish to all awaiting iterations.",
+      "text" : "Immediately resumes all the suspended operations.",
       "type" : "text"
     },
     {
@@ -167,7 +167,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncThrowingChannel/finish()": {
   "abstract" : [
     {
-      "text" : "Send a finish to all awaiting iterations.",
+      "text" : "Immediately resumes all the suspended operations.",
       "type" : "text"
     },
     {
