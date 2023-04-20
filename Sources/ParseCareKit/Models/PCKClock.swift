@@ -31,6 +31,21 @@ public struct PCKClock: ParseObject {
 
     public var vector: String?
 
+    /// A knowledge vector indicating the last known state of each other device
+    /// by the device that authored this revision record.
+    var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
+        get {
+            try? PCKClock.decodeVector(vector)
+        }
+        set {
+            guard let newValue = newValue else {
+                vector = nil
+                return
+            }
+            vector = PCKClock.encodeVector(newValue)
+        }
+    }
+
     public init() { }
 
     public func merge(with object: PCKClock) throws -> PCKClock {
@@ -69,12 +84,12 @@ public struct PCKClock: ParseObject {
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
                 // swiftlint:disable:next line_length
-                Logger.clock.error("Clock.decodeClock(): \(error.localizedDescription, privacy: .private). Vector \(data, privacy: .private).")
+                Logger.clock.error("Clock.decodeVector(): \(error.localizedDescription, privacy: .private). Vector \(data, privacy: .private).")
             } else {
-                os_log("Clock.decodeClock(): %{private}@. Vector %{private}@.",
+                os_log("Clock.decodeVector(): %{private}@. Vector %{private}@.",
                        log: .clock, type: .error, error.localizedDescription, data.debugDescription)
             }
-            throw ParseCareKitError.errorString("Clock.decodeClock(): \(error.localizedDescription)")
+            throw ParseCareKitError.errorString("Clock.decodeVector(): \(error.localizedDescription)")
         }
     }
 
@@ -96,9 +111,9 @@ public struct PCKClock: ParseObject {
             return cloudVectorString
         } catch {
             if #available(iOS 14.0, watchOS 7.0, *) {
-                Logger.clock.error("Clock.encodeClock(): \(error.localizedDescription, privacy: .private).")
+                Logger.clock.error("Clock.encodeVector(): \(error.localizedDescription, privacy: .private).")
             } else {
-                os_log("Clock.decodeClock(): %{private}@.", log: .clock, type: .error, error.localizedDescription)
+                os_log("Clock.encodeVector(): %{private}@.", log: .clock, type: .error, error.localizedDescription)
             }
             return nil
         }
