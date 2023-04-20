@@ -29,11 +29,11 @@ public struct PCKClock: ParseObject {
 
     public var uuid: UUID?
 
-    public var vector: String?
+    var vector: String?
 
     /// A knowledge vector indicating the last known state of each other device
     /// by the device that authored this revision record.
-    var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
+    public var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
         get {
             try? PCKClock.decodeVector(vector)
         }
@@ -156,10 +156,9 @@ public struct PCKClock: ParseObject {
         return mutatingClock
     }
 
-    static func fetchFromCloud(uuid: UUID, createNewIfNeeded: Bool,
-                               completion: @escaping(PCKClock?,
-                                                     OCKRevisionRecord.KnowledgeVector?,
-                                                     ParseError?) -> Void) {
+    static func fetchFromCloud(_ uuid: UUID,
+                               createNewIfNeeded: Bool,
+                               completion: @escaping(Result<Self, ParseError>) -> Void) {
 
         // Fetch Clock from Cloud
         let query = Self.query(ClockKey.uuid == uuid)
@@ -168,10 +167,10 @@ public struct PCKClock: ParseObject {
             switch result {
 
             case .success(let foundVector):
-                completion(foundVector, try? decodeVector(foundVector), nil)
+                completion(.success(foundVector))
             case .failure(let error):
                 if !createNewIfNeeded {
-                    completion(nil, nil, error)
+                    completion(.failure(error))
                 } else {
                     // This is the first time the Clock is user setup for this user
                     let newVector = PCKClock(uuid: uuid)
@@ -181,22 +180,32 @@ public struct PCKClock: ParseObject {
                             updatedVector.create(callbackQueue: ParseRemote.queue) { result in
                                 switch result {
                                 case .success(let savedVector):
-                                    completion(savedVector, try? decodeVector(updatedVector), nil)
+                                    completion(.success(savedVector))
                                 case .failure(let error):
-                                    completion(nil, nil, error)
+                                    completion(.failure(error))
                                 }
                             }
                         } catch {
                             guard let parseError = error as? ParseError else {
-                                Logger.clock.error("Could not cast error to ParseError: \(error)")
-                                completion(nil, nil, nil)
+                                let errorString = "Could not cast error to ParseError"
+                                Logger.clock.error(": \(error)")
+                                completion(.failure(.init(message: errorString, swift: error)))
                                 return
                             }
-                            completion(nil, nil, parseError)
+                            completion(.failure(parseError))
                         }
                     }
                 }
             }
+        }
+    }
+
+    static func fetchFromCloud(_ uuid: UUID,
+                               createNewIfNeeded: Bool) async throws -> Self {
+        try await withCheckedThrowingContinuation { continuation in
+            Self.fetchFromCloud(uuid,
+                                createNewIfNeeded: createNewIfNeeded,
+                                completion: continuation.resume)
         }
     }
 }

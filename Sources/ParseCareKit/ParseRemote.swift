@@ -11,8 +11,6 @@ import CareKitStore
 import ParseSwift
 import os.log
 
-// swiftlint:disable line_length
-
 /// Allows the CareKitStore to synchronize against a Parse Server.
 public class ParseRemote: OCKRemoteSynchronizable {
 
@@ -265,29 +263,32 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             await remoteStatus.synchronizing()
 
-            PCKClock.fetchFromCloud(uuid: self.uuid, createNewIfNeeded: false) { (potentialPCKClock, potentialCKClock, _) in
-                guard let parseClock = potentialPCKClock,
-                    let parseVector = potentialCKClock else {
-                    // No Clock available, need to let CareKit know this is the first sync.
-                    let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
-                    mergeRevision(revision)
-                    completion(nil)
-                    return
-                }
-                let localClock = knowledgeVector.clock(for: self.uuid)
-                ParseRemote.queue.async {
-                    /* self.pullRevisionsForConcreteClasses(previousError: nil,
-                                                         localClock: localClock,
-                                                         cloudVector: cloudVector,
-                                                         mergeRevision: mergeRevision) { previosError in
+            ParseRemote.queue.async {
+                Task {
+                    do {
+                        let parseClock = try await PCKClock.fetchFromCloud(self.uuid, createNewIfNeeded: false)
 
-                        self.pullRevisionsForCustomClasses(previousError: previosError,
-                                                           localClock: localClock,
-                                                           cloudVector: cloudVector,
-                                                           mergeRevision: mergeRevision,
-                                                           completion: completion)
-                    }*/
-                    Task {
+                        guard let parseVector = parseClock.knowledgeVector else {
+                            // No Clock available, need to let CareKit know this is the first sync.
+                            let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                            mergeRevision(revision)
+                            completion(nil)
+                            return
+                        }
+                        let localClock = knowledgeVector.clock(for: self.uuid)
+
+                        /* self.pullRevisionsForConcreteClasses(previousError: nil,
+                         localClock: localClock,
+                         cloudVector: cloudVector,
+                         mergeRevision: mergeRevision) { previosError in
+                         
+                         self.pullRevisionsForCustomClasses(previousError: previosError,
+                         localClock: localClock,
+                         cloudVector: cloudVector,
+                         mergeRevision: mergeRevision,
+                         completion: completion)
+                         }*/
+
                         // 2. Pull revisions
                         let query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
                                                             ObjectableKey.clockUUID == self.uuid)
@@ -337,6 +338,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             await self.remoteStatus.notSynchronzing()
                             completion(error)
                         }
+                    } catch {
+                        // No Clock available, need to let CareKit know this is the first sync.
+                        let revision = OCKRevisionRecord(entities: [], knowledgeVector: .init())
+                        mergeRevision(revision)
+                        completion(nil)
+                        return
                     }
                 }
             }
@@ -433,22 +440,17 @@ public class ParseRemote: OCKRemoteSynchronizable {
                               deviceKnowledge: CareKitStore.OCKRevisionRecord.KnowledgeVector,
                               completion: @escaping (Error?) -> Void) {
 
-        // Fetch Clock from Cloud
-        PCKClock.fetchFromCloud(uuid: self.uuid,
-                                createNewIfNeeded: true) { (potentialPCKClock, potentialPCKVector, error) in
-            ParseRemote.queue.async {
-                Task {
-                    guard let parseClock = potentialPCKClock,
-                          let parseVector = potentialPCKVector else {
+        ParseRemote.queue.async {
+            Task {
+                do {
+                    // Fetch Clock from Cloud
+                    let parseClock = try await PCKClock.fetchFromCloud(self.uuid,
+                                                                       createNewIfNeeded: true)
+                    guard let parseVector = parseClock.knowledgeVector else {
                         await self.remoteStatus.notSynchronzing()
-                        guard let parseError = error else {
-                            // There was a different issue that we don't know how to handle
-                            Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
-                            completion(ParseCareKitError.requiredValueCantBeUnwrapped)
-                            return
-                        }
-                        Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(parseError)")
-                        completion(parseError)
+                        // There was a different issue that we don't know how to handle
+                        Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
+                        completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                         return
                     }
 
@@ -495,6 +497,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             break
                         }
                     }
+                } catch {
+                    Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(error)")
+                    completion(error)
+                    return
                 }
             }
         }
