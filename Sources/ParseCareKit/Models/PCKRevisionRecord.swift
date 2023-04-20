@@ -122,15 +122,14 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
                                  knowledgeVector: knowledgeVector)
     }
 
-    func save(options: API.Options = []) async throws -> Self {
-        let saved = try await self.create(options: options)
+    func save(options: API.Options = []) async throws {
+        // let saved = try await self.create(options: options)
         try await patients.createAll(options: options)
         try await carePlans.createAll(options: options)
         try await contacts.createAll(options: options)
         try await tasks.createAll(options: options)
         try await healthKitTasks.createAll(options: options)
         try await outcomes.createAll(options: options)
-        return saved
     }
 
     func fetchEntities(options: API.Options = []) async throws -> Self {
