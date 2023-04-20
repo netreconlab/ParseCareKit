@@ -479,7 +479,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     guard deviceRevisions.count > 0 else {
-                        self.completePushRevisions(shouldSaveCloudClock: false,
+                        self.completePushRevisions(shouldIncrementClock: false,
                                                    parseClock: parseClock,
                                                    cloudVector: cloudVector,
                                                    localClock: deviceKnowledge,
@@ -488,10 +488,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     // Push all revision records
-                    var updatedDeviceKnowledge = deviceKnowledge
-                    // Increment and merge Knowledge Vector
-                    updatedDeviceKnowledge.increment(clockFor: self.uuid)
-                    let logicalClock = updatedDeviceKnowledge.clock(for: self.uuid)
+                    let logicalClock = deviceKnowledge.clock(for: self.uuid)
                     self.notifyRevisionProgress(0,
                                                 total: deviceRevisions.count)
 
@@ -507,7 +504,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             if index == (deviceRevisions.count - 1) {
                                 self.completePushRevisions(parseClock: parseClock,
                                                            cloudVector: cloudVector,
-                                                           localClock: updatedDeviceKnowledge,
+                                                           localClock: deviceKnowledge,
                                                            completion: completion)
                             }
                         } catch {
@@ -521,12 +518,17 @@ public class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    func completePushRevisions(shouldSaveCloudClock: Bool = true,
+    func completePushRevisions(shouldIncrementClock: Bool = true,
                                parseClock: PCKClock,
                                cloudVector: OCKRevisionRecord.KnowledgeVector,
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
         Task {
+            var updatedDeviceKnowledge = cloudVector
+            if shouldIncrementClock {
+                // Increment and merge Knowledge Vector
+                updatedDeviceKnowledge.increment(clockFor: self.uuid)
+            }
             var updatedCloudVector = cloudVector
             updatedCloudVector.merge(with: localClock)
 
@@ -537,7 +539,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
             await self.remoteStatus.updateKnowledgeVector(updatedCloudVector)
             do {
-                guard shouldSaveCloudClock || (!shouldSaveCloudClock && (updatedCloudVector.uuids.count > cloudVector.uuids.count)) else {
+                guard shouldIncrementClock || (!shouldIncrementClock && (updatedCloudVector.uuids.count > cloudVector.uuids.count)) else {
                     DispatchQueue.main.async {
                         self.parseRemoteDelegate?.successfullyPushedDataToCloud()
                     }

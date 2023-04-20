@@ -169,7 +169,7 @@ public struct PCKTask: PCKVersionable {
                               remoteID: String,
                               mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
 
-        let query = Self.query(ObjectableKey.logicalClock >= localClock,
+        let query = Self.query(ObjectableKey.logicalClock > localClock,
                                ObjectableKey.remoteID == remoteID)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
             .includeAll()
