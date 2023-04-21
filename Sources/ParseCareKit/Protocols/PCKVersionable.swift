@@ -79,7 +79,7 @@ extension PCKVersionable {
                         if let previousNextVersionUUIDs = previousFound.nextVersionUUIDs,
                             !previousNextVersionUUIDs.contains(versionFixedUUID) {
                             previousFound.nextVersionUUIDs?.append(versionFixedUUID)
-                            previousFound.save(callbackQueue: ParseRemote.queue) { results in
+                            previousFound.save { results in
                                 switch results {
 
                                 case .success:
@@ -105,7 +105,7 @@ extension PCKVersionable {
                     case .success(var nextFound):
                         if let nextPreviousUUIDs = nextFound.previousVersionUUIDs, !nextPreviousUUIDs.contains(versionFixedUUID) {
                             nextFound.previousVersionUUIDs?.append(versionFixedUUID)
-                            nextFound.save(callbackQueue: ParseRemote.queue) { results in
+                            nextFound.save { results in
 
                                 switch results {
 
@@ -135,8 +135,7 @@ extension PCKVersionable {
     */
     public func save(options: API.Options = [],
                      completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.create(options: options,
-                    callbackQueue: ParseRemote.queue) { results in
+        self.create(options: options) { results in
             switch results {
 
             case .success(let savedObject):
@@ -154,7 +153,7 @@ extension PCKVersionable {
                             if let previousNextVersionUUIDs = previousObject.nextVersionUUIDs,
                                 !previousNextVersionUUIDs.contains(uuid) {
                                 previousObject.nextVersionUUIDs?.append(uuid)
-                                previousObject.save(callbackQueue: ParseRemote.queue) { results in
+                                previousObject.save { results in
                                     switch results {
 
                                     case .success:
@@ -174,7 +173,7 @@ extension PCKVersionable {
                             if let nextPreviousVersionUUIDs = nextObject.previousVersionUUIDs,
                                 !nextPreviousVersionUUIDs.contains(uuid) {
                                 nextObject.previousVersionUUIDs?.append(uuid)
-                                nextObject.save(callbackQueue: ParseRemote.queue) { results in
+                                nextObject.save { results in
                                     switch results {
 
                                     case .success:

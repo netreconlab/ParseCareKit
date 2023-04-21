@@ -173,7 +173,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
                                ObjectableKey.remoteID == remoteID)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
             .includeAll()
-        query.find(callbackQueue: ParseRemote.queue) { results in
+        query.find { results in
             switch results {
 
             case .success(let outcomes):
@@ -284,7 +284,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
         var task = OCKTaskQuery()
         task.uuids = [taskUUID]
-        store.fetchAnyTasks(query: task, callbackQueue: ParseRemote.queue) { taskResults in
+        store.fetchAnyTasks(query: task, callbackQueue: .main) { taskResults in
 
             switch taskResults {
             case .success(let tasks):
@@ -345,7 +345,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
 
     public func findOutcomesInBackground(completion: @escaping([PCKOutcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
-        query.find(callbackQueue: ParseRemote.queue) { results in
+        query.find { results in
 
             switch results {
 

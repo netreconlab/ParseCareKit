@@ -187,8 +187,7 @@ extension PCKObjectable {
 
         let query = Self.query(ParseKey.objectId == uuidString)
             .includeAll()
-        query.first(options: options,
-                    callbackQueue: ParseRemote.queue) { result in
+        query.first(options: options) { result in
 
             switch result {
 

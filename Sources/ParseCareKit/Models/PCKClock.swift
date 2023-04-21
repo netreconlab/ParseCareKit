@@ -162,7 +162,7 @@ public struct PCKClock: ParseObject {
 
         // Fetch Clock from Cloud
         let query = Self.query(ClockKey.uuid == uuid)
-        query.first(callbackQueue: ParseRemote.queue) { result in
+        query.first { result in
 
             switch result {
 
@@ -177,7 +177,7 @@ public struct PCKClock: ParseObject {
                     Task {
                         do {
                             let updatedVector = try await newVector.setupACLWithRoles()
-                            updatedVector.create(callbackQueue: ParseRemote.queue) { result in
+                            updatedVector.create { result in
                                 switch result {
                                 case .success(let savedVector):
                                     completion(.success(savedVector))

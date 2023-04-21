@@ -153,7 +153,7 @@ public struct PCKPatient: PCKVersionable {
                                ObjectableKey.remoteID == remoteID)
             .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
             .includeAll()
-        query.find(callbackQueue: ParseRemote.queue) { results in
+        query.find { results in
             switch results {
 
             case .success(let patients):
