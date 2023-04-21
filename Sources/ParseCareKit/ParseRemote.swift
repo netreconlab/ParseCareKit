@@ -271,18 +271,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
                 let localClock = knowledgeVector.clock(for: self.uuid)
 
-                /* self.pullRevisionsForConcreteClasses(previousError: nil,
-                 localClock: localClock,
-                 cloudVector: cloudVector,
-                 mergeRevision: mergeRevision) { previosError in
-                 
-                 self.pullRevisionsForCustomClasses(previousError: previosError,
-                 localClock: localClock,
-                 cloudVector: cloudVector,
-                 mergeRevision: mergeRevision,
-                 completion: completion)
-                 }*/
-
                 // 2. Pull revisions
                 let query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
                                                     ObjectableKey.clockUUID == self.uuid)
@@ -305,7 +293,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                         // 3. Increment the knowledge vector so that all conflict
                         //    revisions applied in the next step count as new for
                         //    the peer.
-                        updatedParseVector.increment(clockFor: self.uuid)
+                        updatedParseVector = incrementVectorClock(updatedParseVector)
                         updatedParseClock.knowledgeVector = updatedParseVector
                         guard updatedParseClock.knowledgeVector != nil else {
                             await self.remoteStatus.notSynchronzing()
@@ -339,92 +327,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(nil)
                 return
             }
-        }
-    }
-
-    func pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: Int=0,
-                                         previousError: Error?,
-                                         localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector,
-                                         mergeRevision: @escaping (OCKRevisionRecord) -> Void,
-                                         completion: @escaping (Error?) -> Void) {
-
-        let classNames = PCKStoreClass.patient.orderedArray()
-        self.notifyRevisionProgress(concreteClassesAlreadyPulled,
-                                    total: classNames.count)
-
-        guard concreteClassesAlreadyPulled < classNames.count,
-            let concreteClass = self.pckStoreClassesToSynchronize[classNames[concreteClassesAlreadyPulled]] else {
-            Logger.pullRevisions.debug("Finished pulling revisions for default classes")
-            completion(previousError)
-            return
-        }
-
-        concreteClass.pullRevisions(since: localClock,
-                                    cloudClock: cloudVector,
-                                    remoteID: self.uuid.uuidString) { result in
-
-            var currentError = previousError
-
-            switch result {
-
-            case .success(let customRevision):
-                mergeRevision(customRevision)
-
-            case .failure(let error):
-                currentError = error
-                Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(error, privacy: .private)")
-            }
-
-            self.pullRevisionsForConcreteClasses(concreteClassesAlreadyPulled: concreteClassesAlreadyPulled+1,
-                                                 previousError: currentError,
-                                                 localClock: localClock,
-                                                 cloudVector: cloudVector,
-                                                 mergeRevision: mergeRevision,
-                                                 completion: completion)
-        }
-    }
-
-    func pullRevisionsForCustomClasses(customClassesAlreadyPulled: Int=0, previousError: Error?,
-                                       localClock: Int, cloudVector: OCKRevisionRecord.KnowledgeVector,
-                                       mergeRevision: @escaping (OCKRevisionRecord) -> Void,
-                                       completion: @escaping (Error?) -> Void) {
-
-        if let customClassesToSynchronize = self.customClassesToSynchronize {
-            let classNames = customClassesToSynchronize.keys.sorted()
-            self.notifyRevisionProgress(customClassesAlreadyPulled,
-                                        total: classNames.count)
-
-            guard customClassesAlreadyPulled < classNames.count,
-                let customClass = customClassesToSynchronize[classNames[customClassesAlreadyPulled]] else {
-                Logger.pullRevisions.debug("Finished pulling custom revision classes")
-                completion(previousError)
-                return
-            }
-
-            customClass.pullRevisions(since: localClock,
-                                      cloudClock: cloudVector,
-                                      remoteID: self.uuid.uuidString) { result in
-                var currentError = previousError
-
-                switch result {
-
-                case .success(let customRevision):
-                    mergeRevision(customRevision)
-
-                case .failure(let error):
-                    currentError = error
-                    Logger.pullRevisions.error("pullRevisionsForConcreteClasses: \(error, privacy: .private)")
-                }
-
-                self.pullRevisionsForCustomClasses(customClassesAlreadyPulled: customClassesAlreadyPulled+1,
-                                                   previousError: currentError,
-                                                   localClock: localClock,
-                                                   cloudVector: cloudVector,
-                                                   mergeRevision: mergeRevision,
-                                                   completion: completion)
-            }
-        } else {
-            completion(previousError)
         }
     }
 
@@ -505,7 +407,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             var updatedParseVector = parseVector
             if shouldIncrementClock {
                 // Increment and merge Knowledge Vector
-                updatedParseVector.increment(clockFor: self.uuid)
+                updatedParseVector = incrementVectorClock(updatedParseVector)
             }
             updatedParseVector.merge(with: localClock)
             await self.remoteStatus.updateKnowledgeVector(updatedParseVector)
@@ -530,6 +432,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
             await self.remoteStatus.notSynchronzing()
             await self.subscribeToClock()
         }
+    }
+
+    func incrementVectorClock(_ vector: OCKRevisionRecord.KnowledgeVector) -> OCKRevisionRecord.KnowledgeVector {
+        var mutableVector = vector
+        mutableVector.increment(clockFor: self.uuid)
+        return mutableVector
     }
 
     func notifyRevisionProgress(_ numberCompleted: Int, total: Int) {
