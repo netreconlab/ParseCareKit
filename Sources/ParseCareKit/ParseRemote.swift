@@ -412,14 +412,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 updatedParseVector = incrementVectorClock(updatedParseVector)
             }
             updatedParseVector.merge(with: localClock)
-            await self.remoteStatus.updateKnowledgeVector(updatedParseVector)
-            guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
+            guard (shouldIncrementClock || (!shouldIncrementClock && updatedParseVector.uuids.count > parseVector.uuids.count)),
+                let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
                 await self.remoteStatus.updateKnowledgeVector(parseVector) // revert
                 await self.remoteStatus.notSynchronzing()
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
             }
             do {
+                await self.remoteStatus.updateKnowledgeVector(updatedParseVector)
                 _ = try await updatedClock.save()
                 Logger.pushRevisions.debug("Finished pushing revisions")
                 DispatchQueue.main.async {
