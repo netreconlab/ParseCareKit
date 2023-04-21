@@ -9,17 +9,17 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/new(with:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/new(with:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit17PCKSynchronizableP3new4withx0bC5Store9OCKEntityO_tKF",
+    "externalID" : "s:12ParseCareKit13PCKObjectableP3new4withx0bC5Store9OCKEntityO_tKF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -238,7 +238,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pcksynchronizable\/new(with:)"
+        "\/documentation\/parsecarekit\/pckobjectable\/new(with:)"
       ],
       "traits" : [
         {
@@ -297,34 +297,10 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable": {
   "abstract" : [
     {
       "text" : "Objects that conform to the ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKSynchronizable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " protocol are synchronized between the ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and the Parse Cloud.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In order to synchronize objects, they must also conform to either ",
       "type" : "text"
     },
     {
@@ -332,63 +308,15 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " or ",
+      "text" : " protocol are Parse interpretations of ",
       "type" : "text"
     },
     {
-      "code" : "PCKVersionable",
+      "code" : "OCKObjectCompatible",
       "type" : "codeVoice"
     },
     {
-      "text" : ". For examples,",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "see ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", and ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : " objects.",
       "type" : "text"
     }
   ],
@@ -403,23 +331,23 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKSynchronizable"
+      "text" : "PCKObjectable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKSynchronizable"
+      "text" : "PCKObjectable"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKSynchronizable",
+  "title" : "PCKObjectable",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcksynchronizable"
+  "url" : "\/documentation\/parsecarekit\/pckobjectable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable/new(with:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/new(with:)": {
   "abstract" : [
     {
       "text" : "Creates a new ParseCareKit object from a specified CareKit entity.",
@@ -473,13 +401,13 @@
       "text" : "Self"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable\/new(with:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/new(with:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "new(with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcksynchronizable\/new(with:)"
+  "url" : "\/documentation\/parsecarekit\/pckobjectable\/new(with:)"
 }
 }
 }

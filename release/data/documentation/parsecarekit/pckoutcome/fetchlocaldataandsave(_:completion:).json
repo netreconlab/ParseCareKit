@@ -13,7 +13,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKOutcomeV21fetchLocalDataAndSave_10completionyAA0A14RemoteDelegate_pSg_ys6ResultOyAA17PCKSynchronizable_ps5Error_pGctF",
+    "externalID" : "s:12ParseCareKit10PCKOutcomeV21fetchLocalDataAndSave_10completionyAA0A14RemoteDelegate_pSg_ys6ResultOyACs5Error_pGctF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -55,12 +55,7 @@
       },
       {
         "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
-        "text" : "PCKSynchronizable"
+        "text" : "<`Self`"
       },
       {
         "kind" : "text",
@@ -171,13 +166,7 @@
             },
             {
               "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
-              "text" : "PCKSynchronizable"
+              "text" : "<`Self`"
             },
             {
               "kind" : "text",
@@ -370,12 +359,7 @@
     },
     {
       "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
-      "text" : "PCKSynchronizable"
+      "text" : "<`Self`"
     },
     {
       "kind" : "text",
@@ -406,128 +390,6 @@
   "title" : "fetchLocalDataAndSave(_:completion:)",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckoutcome\/fetchlocaldataandsave(_:completion:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable": {
-  "abstract" : [
-    {
-      "text" : "Objects that conform to the ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKSynchronizable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " protocol are synchronized between the ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and the Parse Cloud.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In order to synchronize objects, they must also conform to either ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKObjectable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " or ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKVersionable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ". For examples,",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "see ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKPatient",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKContact",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", and ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "protocol"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "PCKSynchronizable"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "PCKSynchronizable"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "PCKSynchronizable",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcksynchronizable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate": {
   "abstract" : [

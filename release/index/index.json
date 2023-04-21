@@ -25228,12 +25228,12 @@
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : PCKSynchronizable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : PCKSynchronizable]?, customClasses: [String : PCKSynchronizable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable]?, customClasses: [String : any PCKVersionable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
@@ -25289,7 +25289,7 @@
               },
               {
                 "path" : "\/documentation\/parsecarekit\/parseremote\/customclassestosynchronize",
-                "title" : "var customClassesToSynchronize: [String : PCKSynchronizable]?",
+                "title" : "var customClassesToSynchronize: [String : any PCKVersionable]?",
                 "type" : "property"
               },
               {
@@ -25304,7 +25304,7 @@
               },
               {
                 "path" : "\/documentation\/parsecarekit\/parseremote\/pckstoreclassestosynchronize",
-                "title" : "var pckStoreClassesToSynchronize: [PCKStoreClass : PCKSynchronizable]!",
+                "title" : "var pckStoreClassesToSynchronize: [PCKStoreClass : any PCKVersionable]!",
                 "type" : "property"
               },
               {
@@ -25499,6 +25499,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckobjectable\/new(with:)",
+                "title" : "func new(with: OCKEntity) throws -> Self",
+                "type" : "method"
+              },
+              {
                 "title" : "Type Methods",
                 "type" : "groupMarker"
               },
@@ -25643,37 +25648,6 @@
           {
             "children" : [
               {
-                "title" : "Instance Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcksynchronizable\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcksynchronizable\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcksynchronizable\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcksynchronizable\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/parsecarekit\/pcksynchronizable",
-            "title" : "PCKSynchronizable",
-            "type" : "protocol"
-          },
-          {
-            "children" : [
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -25739,11 +25713,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckversionable\/save(options:)",
                 "title" : "func save(options: API.Options) async throws -> Self",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckversionable\/save(options:completion:)",
-                "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -25965,11 +25934,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pckcareplan\/converttocarekit()",
                 "title" : "func convertToCareKit() throws -> OCKCarePlan",
                 "type" : "method"
@@ -25977,16 +25941,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckcareplan\/new(with:)",
                 "title" : "func new(with: OCKEntity) throws -> PCKCarePlan",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
               },
               {
@@ -26301,11 +26255,6 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcareplan\/save(options:)",
                     "title" : "func save(options: API.Options) async throws -> Self",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/save(options:completion:)",
-                    "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                     "type" : "method"
                   },
                   {
@@ -27364,11 +27313,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pckcontact\/converttocarekit()",
                 "title" : "func convertToCareKit() throws -> OCKContact",
                 "type" : "method"
@@ -27376,16 +27320,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckcontact\/new(with:)",
                 "title" : "func new(with: OCKEntity) throws -> PCKContact",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
               },
               {
@@ -27700,11 +27634,6 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckcontact\/save(options:)",
                     "title" : "func save(options: API.Options) async throws -> Self",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckcontact\/save(options:completion:)",
-                    "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                     "type" : "method"
                   },
                   {
@@ -28210,11 +28139,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/converttocarekit()",
                 "title" : "func convertToCareKit() throws -> OCKHealthKitTask",
                 "type" : "method"
@@ -28222,16 +28146,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(with:)",
                 "title" : "func new(with: OCKEntity) throws -> PCKHealthKitTask",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
               },
               {
@@ -28546,11 +28460,6 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save(options:)",
                     "title" : "func save(options: API.Options) async throws -> Self",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/save(options:completion:)",
-                    "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                     "type" : "method"
                   },
                   {
@@ -29041,11 +28950,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pckoutcome\/converttocarekit()",
                 "title" : "func convertToCareKit() throws -> OCKOutcome",
                 "type" : "method"
@@ -29057,7 +28961,7 @@
               },
               {
                 "path" : "\/documentation\/parsecarekit\/pckoutcome\/fetchlocaldataandsave(_:completion:)",
-                "title" : "func fetchLocalDataAndSave(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
+                "title" : "func fetchLocalDataAndSave(ParseRemoteDelegate?, completion: (Result<`Self`, Error>) -> Void)",
                 "type" : "method"
               },
               {
@@ -29073,16 +28977,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckoutcome\/prepareencodingrelational(_:)",
                 "title" : "func prepareEncodingRelational(Bool)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
               },
               {
@@ -29407,11 +29301,6 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckoutcome\/save(options:)",
                     "title" : "func save(options: API.Options) async throws -> Self",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/save(options:completion:)",
-                    "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                     "type" : "method"
                   },
                   {
@@ -29902,11 +29791,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pckpatient\/converttocarekit()",
                 "title" : "func convertToCareKit() throws -> OCKPatient",
                 "type" : "method"
@@ -29919,16 +29803,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckpatient\/new(with:)",
                 "title" : "func new(with: OCKEntity) throws -> PCKPatient",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
               },
               {
@@ -30227,11 +30101,6 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/save(options:)",
                     "title" : "func save(options: API.Options) async throws -> Self",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pckpatient\/save(options:completion:)",
-                    "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                     "type" : "method"
                   },
                   {
@@ -30732,11 +30601,6 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/addtocloud(_:completion:)",
-                "title" : "func addToCloud(ParseRemoteDelegate?, completion: (Result<PCKSynchronizable, Error>) -> Void)",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pcktask\/converttocarekit()",
                 "title" : "func convertToCareKit() throws -> OCKTask",
                 "type" : "method"
@@ -30744,16 +30608,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pcktask\/new(with:)",
                 "title" : "func new(with: OCKEntity) throws -> PCKTask",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/pullrevisions(since:cloudclock:remoteid:mergerevision:)",
-                "title" : "func pullRevisions(since: Int, cloudClock: OCKRevisionRecord.KnowledgeVector, remoteID: String, mergeRevision: (Result<OCKRevisionRecord, ParseError>) -> Void)",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/pushrevision(_:cloudclock:remoteid:completion:)",
-                "title" : "func pushRevision(ParseRemoteDelegate?, cloudClock: Int, remoteID: String, completion: (Error?) -> Void)",
                 "type" : "method"
               },
               {
@@ -31068,11 +30922,6 @@
                   {
                     "path" : "\/documentation\/parsecarekit\/pcktask\/save(options:)",
                     "title" : "func save(options: API.Options) async throws -> Self",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/parsecarekit\/pcktask\/save(options:completion:)",
-                    "title" : "func save(options: API.Options, completion: (Result<PCKSynchronizable, Error>) -> Void)",
                     "type" : "method"
                   },
                   {

@@ -353,9 +353,17 @@
       "text" : " : "
     },
     {
+      "kind" : "keyword",
+      "text" : "any"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
-      "text" : "PCKSynchronizable"
+      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
+      "text" : "PCKVersionable"
     },
     {
       "kind" : "text",
@@ -546,9 +554,17 @@
       "text" : " : "
     },
     {
+      "kind" : "keyword",
+      "text" : "any"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
-      "text" : "PCKSynchronizable"
+      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
+      "text" : "PCKVersionable"
     },
     {
       "kind" : "text",
