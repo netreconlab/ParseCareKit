@@ -201,7 +201,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                         do {
                             let updatedVector = try PCKClock.decodeVector(updatedClock)
                             Task {
-                                guard await self.remoteStatus.hasNewerRevision(updatedVector) else {
+                                guard await self.remoteStatus.hasNewerRevision(updatedVector, for: self.uuid) else {
                                     return
                                 }
                                 self.parseDelegate?.didRequestSynchronization(self)
@@ -349,7 +349,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     return
                 }
 
-                guard await !self.remoteStatus.hasNewerRevision(parseVector) else {
+                guard await !self.remoteStatus.hasNewerRevision(parseVector, for: self.uuid) else {
                     let errorString = "New knowledge on server. Pull first then try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
@@ -412,8 +412,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 updatedParseVector = incrementVectorClock(updatedParseVector)
             }
             updatedParseVector.merge(with: localClock)
-            guard (shouldIncrementClock || (!shouldIncrementClock && updatedParseVector.uuids.count > parseVector.uuids.count)),
-                let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
+            guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
                 await self.remoteStatus.updateKnowledgeVector(parseVector) // revert
                 await self.remoteStatus.notSynchronzing()
                 completion(ParseCareKitError.couldntUnwrapClock)
