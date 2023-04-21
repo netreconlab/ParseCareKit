@@ -81,8 +81,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/OrderedSet\/SubSequence\/Element",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/OrderedSet\/SubSequence\/Iterator"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/OrderedSet\/SubSequence\/Element"
       ],
       "title" : "Type Aliases"
     }
@@ -273,72 +272,6 @@
   "title" : "OrderedSet.SubSequence.Element",
   "type" : "topic",
   "url" : "\/documentation\/collections\/orderedset\/subsequence\/element"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/OrderedSet/SubSequence/Iterator": {
-  "abstract" : [
-    {
-      "text" : "The type that allows iteration over the collection’s elements.",
-      "type" : "text"
-    }
-  ],
-  "conformance" : {
-    "availabilityPrefix" : [
-      {
-        "text" : "Available when",
-        "type" : "text"
-      }
-    ],
-    "conformancePrefix" : [
-      {
-        "text" : "Conforms when",
-        "type" : "text"
-      }
-    ],
-    "constraints" : [
-      {
-        "code" : "Element",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "Hashable",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ".",
-        "type" : "text"
-      }
-    ]
-  },
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "typealias"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "Iterator"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/Collections\/OrderedSet\/SubSequence\/Iterator",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "Iterator"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "OrderedSet.SubSequence.Iterator",
-  "type" : "topic",
-  "url" : "\/documentation\/collections\/orderedset\/subsequence\/iterator"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/Collections/OrderedSet/SubSequence/allSatisfy(_:)": {
   "abstract" : [
