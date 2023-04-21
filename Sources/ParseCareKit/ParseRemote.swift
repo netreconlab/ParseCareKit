@@ -308,6 +308,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             completion(ParseCareKitError.couldntUnwrapClock)
                             return
                         }
+                    } else {
+                        await self.remoteStatus.updateKnowledgeVector(updatedParseClock.knowledgeVector)
                     }
 
                     // 4. Lock in the changes and catch up local device.
