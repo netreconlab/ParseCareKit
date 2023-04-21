@@ -286,6 +286,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                         self.notifyRevisionProgress(index + 1,
                                                     total: revisions.count)
                     }
+                    self.notifyRevisionProgress(revisions.count,
+                                                total: revisions.count)
 
                     var updatedParseClock = parseClock
                     var updatedParseVector = parseVector
@@ -313,9 +315,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     // 4. Lock in the changes and catch up local device.
-                    // let revision = OCKRevisionRecord(entities: [],
-                    //                                 knowledgeVector: updatedParseVector)
-                    // mergeRevision(revision)
+                    let revision = OCKRevisionRecord(entities: [],
+                                                     knowledgeVector: updatedParseVector)
+                    mergeRevision(revision)
                     Logger.pullRevisions.debug("Finished pulling revisions for default classes")
                     completion(nil)
                 } catch {
@@ -392,6 +394,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                         break
                     }
                 }
+                self.notifyRevisionProgress(deviceRevisions.count,
+                                            total: deviceRevisions.count)
             } catch {
                 Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock: \(error)")
                 completion(error)
