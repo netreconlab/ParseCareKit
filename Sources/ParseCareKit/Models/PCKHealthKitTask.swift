@@ -158,62 +158,6 @@ public struct PCKHealthKitTask: PCKVersionable {
         }
     }
 
-    public func addToCloud(_ delegate: ParseRemoteDelegate? = nil,
-                           completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(completion: completion)
-    }
-
-    public func pullRevisions(since localClock: Int,
-                              cloudClock: OCKRevisionRecord.KnowledgeVector,
-                              remoteID: String,
-                              mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
-
-        let query = Self.query(ObjectableKey.logicalClock >= localClock,
-                               ObjectableKey.remoteID == remoteID)
-            .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
-            .includeAll()
-        query.find { results in
-            switch results {
-
-            case .success(let tasks):
-                let pulled = tasks.compactMap {try? $0.convertToCareKit()}
-                let entities = pulled.compactMap {OCKEntity.healthKitTask($0)}
-                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
-                mergeRevision(.success(revision))
-            case .failure(let error):
-
-                switch error.code {
-                case .internalServer, .objectNotFound:
-                    // 1 - this column hasn't been added. 101 - Query returned no results
-                    // If the query was looking in a column that wasn't a default column,
-                    // it will return nil if the table doesn't contain the custom column
-                    // Saving the new item with the custom column should resolve the issue
-                    Logger.healthKitTask.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error, privacy: .private)")
-                default:
-                    Logger.healthKitTask.debug("An unexpected error occured \(error, privacy: .private)")
-                }
-                mergeRevision(.failure(error))
-            }
-        }
-    }
-
-    public func pushRevision(_ delegate: ParseRemoteDelegate? = nil,
-                             cloudClock: Int,
-                             remoteID: String,
-                             completion: @escaping (Error?) -> Void) {
-        var mutableTask = self
-        mutableTask.logicalClock = cloudClock // Stamp Entity
-        mutableTask.remoteID = remoteID
-        mutableTask.addToCloud { result in
-            switch result {
-            case .success:
-                completion(nil)
-            case .failure(let error):
-                completion(error)
-            }
-        }
-    }
-
     public static func copyValues(from other: PCKHealthKitTask, to here: PCKHealthKitTask) throws -> PCKHealthKitTask {
         var here = here
         here.copyVersionedValues(from: other)

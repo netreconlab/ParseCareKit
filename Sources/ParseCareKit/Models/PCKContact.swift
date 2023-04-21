@@ -174,64 +174,6 @@ public struct PCKContact: PCKVersionable {
         }
     }
 
-    public func addToCloud(_ delegate: ParseRemoteDelegate? = nil,
-                           completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.save(completion: completion)
-    }
-
-    public func pullRevisions(since localClock: Int,
-                              cloudClock: OCKRevisionRecord.KnowledgeVector,
-                              remoteID: String,
-                              mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
-
-        let query = Self.query(ObjectableKey.logicalClock >= localClock,
-                               ObjectableKey.remoteID == remoteID)
-            .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
-            .includeAll()
-        query.find { results in
-
-            switch results {
-
-            case .success(let contacts):
-                let pulled = contacts.compactMap {try? $0.convertToCareKit()}
-                let entities = pulled.compactMap {OCKEntity.contact($0)}
-                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
-                mergeRevision(.success(revision))
-
-            case .failure(let error):
-
-                switch error.code {
-                // 1 - this column hasn't been added. 101 - Query returned no results
-                // If the query was looking in a column that wasn't a default column,
-                // it will return nil if the table doesn't contain the custom column
-                // Saving the new item with the custom column should resolve the issue
-                case .internalServer, .objectNotFound:
-                    Logger.contact.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error.localizedDescription, privacy: .private)")
-                default:
-                    Logger.contact.debug("An unexpected error occured \(error, privacy: .private)")
-                }
-                mergeRevision(.failure(error))
-            }
-        }
-    }
-
-    public func pushRevision(_ delegate: ParseRemoteDelegate? = nil,
-                             cloudClock: Int,
-                             remoteID: String,
-                             completion: @escaping (Error?) -> Void) {
-        var mutableContact = self
-        mutableContact.logicalClock = cloudClock // Stamp Entity
-        mutableContact.remoteID = remoteID
-        mutableContact.addToCloud { result in
-            switch result {
-            case .success:
-                completion(nil)
-            case .failure(let error):
-                completion(error)
-            }
-        }
-    }
-
     public static func copyValues(from other: PCKContact, to here: PCKContact) throws -> Self {
         var copy = here
         copy.copyVersionedValues(from: other)

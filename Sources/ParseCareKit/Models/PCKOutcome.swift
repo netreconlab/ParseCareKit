@@ -19,7 +19,7 @@ import os.log
 /// outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.
 /// For example, a task that asks a patient to measure their temperature will have events whose outcome
 /// will contain a single value representing the patient's temperature.
-public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
+public struct PCKOutcome: PCKVersionable {
 
     public var previousVersionUUIDs: [UUID]? {
         willSet {
@@ -159,62 +159,6 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
         }
     }
 
-    public func addToCloud(_ delegate: ParseRemoteDelegate?,
-                           completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
-        self.fetchLocalDataAndSave(delegate, completion: completion)
-    }
-
-    public func pullRevisions(since localClock: Int,
-                              cloudClock: OCKRevisionRecord.KnowledgeVector,
-                              remoteID: String,
-                              mergeRevision: @escaping (Result<OCKRevisionRecord, ParseError>) -> Void) {
-
-        let query = Self.query(ObjectableKey.logicalClock >= localClock,
-                               ObjectableKey.remoteID == remoteID)
-            .order([.ascending(ObjectableKey.logicalClock), .ascending(ObjectableKey.updatedDate)])
-            .includeAll()
-        query.find { results in
-            switch results {
-
-            case .success(let outcomes):
-                let pulled = outcomes.compactMap {try? $0.convertToCareKit()}
-                let entities = pulled.compactMap {OCKEntity.outcome($0)}
-                let revision = OCKRevisionRecord(entities: entities, knowledgeVector: cloudClock)
-                mergeRevision(.success(revision))
-            case .failure(let error):
-
-                switch error.code {
-                case .internalServer, .objectNotFound:
-                    // 1 - this column hasn't been added. 101 - Query returned no results
-                    // If the query was looking in a column that wasn't a default column,
-                    // it will return nil if the table doesn't contain the custom column
-                    // Saving the new item with the custom column should resolve the issue
-                    Logger.outcome.debug("Warning, the table either doesn't exist or is missing the column \"\(ObjectableKey.logicalClock, privacy: .private)\". It should be fixed during the first sync... ParseError: \(error, privacy: .private)")
-                default:
-                    Logger.outcome.debug("An unexpected error occured \(error, privacy: .private)")
-                }
-                mergeRevision(.failure(error))
-            }
-        }
-    }
-
-    public func pushRevision(_ delegate: ParseRemoteDelegate?,
-                             cloudClock: Int,
-                             remoteID: String,
-                             completion: @escaping (Error?) -> Void) {
-        var mutableOutcome = self
-        mutableOutcome.logicalClock = cloudClock // Stamp Entity
-        mutableOutcome.remoteID = remoteID
-        mutableOutcome.addToCloud(delegate) { result in
-            switch result {
-            case .success:
-                completion(nil)
-            case .failure(let error):
-                completion(error)
-            }
-        }
-    }
-
     public static func copyValues(from other: PCKOutcome, to here: PCKOutcome) throws -> Self {
         var here = here
         here.copyCommonValues(from: other)
@@ -268,7 +212,7 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
     }
 
     public func fetchLocalDataAndSave(_ delegate: ParseRemoteDelegate?,
-                                      completion: @escaping(Result<PCKSynchronizable, Error>) -> Void) {
+                                      completion: @escaping(Result<Self, Error>) -> Void) {
         guard let taskUUID = taskUUID,
               let taskOccurrenceIndex = taskOccurrenceIndex else {
             completion(.failure(ParseCareKitError.errorString("""
@@ -298,13 +242,29 @@ public struct PCKOutcome: PCKVersionable, PCKSynchronizable {
                 guard let event = task.schedule.event(forOccurrenceIndex: taskOccurrenceIndex) else {
                     mutableOutcome.startDate = nil
                     mutableOutcome.endDate = nil
-                    mutableOutcome.save(completion: completion)
+                    mutableOutcome.save { result in
+                        switch result {
+                        case .success(let outcome):
+                            completion(.success(outcome))
+                        case .failure(let error):
+                            let parseCareKitError = ParseCareKitError.errorString(error.localizedDescription)
+                            completion(.failure(parseCareKitError))
+                        }
+                    }
                     return
                 }
 
                 mutableOutcome.startDate = event.start
                 mutableOutcome.endDate = event.end
-                mutableOutcome.save(completion: completion)
+                mutableOutcome.save { result in
+                    switch result {
+                    case .success(let outcome):
+                        completion(.success(outcome))
+                    case .failure(let error):
+                        let parseCareKitError = ParseCareKitError.errorString(error.localizedDescription)
+                        completion(.failure(parseCareKitError))
+                    }
+                }
             case .failure(let error):
                 completion(.failure(error))
             }

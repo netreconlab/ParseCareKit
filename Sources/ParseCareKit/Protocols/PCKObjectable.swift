@@ -81,6 +81,15 @@ public protocol PCKObjectable: ParseObject {
 
     /// Initialize with UUID.
     init?(uuid: UUID?)
+
+    /**
+     Creates a new ParseCareKit object from a specified CareKit entity.
+
+     - parameter with: The CareKit entity used to create the new ParseCareKit object.
+     - returns: Returns a new version of `Self`
+     - throws: `Error`.
+    */
+    func new(with careKitEntity: OCKEntity) throws -> Self
 }
 
 // MARK: Defaults

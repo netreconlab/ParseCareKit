@@ -27,7 +27,7 @@ public enum PCKStoreClass: String {
     /// The ParseCareKit equivalent of `OCKHealthKitTask`.
     case healthKitTask
 
-    func getDefault() throws -> PCKSynchronizable {
+    func getDefault() throws -> any PCKVersionable {
         switch self {
         case .carePlan:
             let carePlan = OCKCarePlan(id: "", title: "",
@@ -72,7 +72,7 @@ public enum PCKStoreClass: String {
         return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome]
     }
 
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
+    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable]) throws -> [PCKStoreClass: any PCKVersionable] {
         var updatedClasses = try getConcrete()
 
         for (key, value) in newClasses {
@@ -85,9 +85,9 @@ public enum PCKStoreClass: String {
         return updatedClasses
     }
 
-    func getConcrete() throws -> [PCKStoreClass: PCKSynchronizable] {
+    func getConcrete() throws -> [PCKStoreClass: any PCKVersionable] {
 
-        var concreteClasses: [PCKStoreClass: PCKSynchronizable] = [
+        var concreteClasses: [PCKStoreClass: any PCKVersionable] = [
             .carePlan: try PCKStoreClass.carePlan.getDefault(),
             .contact: try PCKStoreClass.contact.getDefault(),
             .outcome: try PCKStoreClass.outcome.getDefault(),
@@ -111,7 +111,7 @@ public enum PCKStoreClass: String {
         return concreteClasses
     }
 
-    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: PCKSynchronizable]) throws -> [PCKStoreClass: PCKSynchronizable] {
+    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable]) throws -> [PCKStoreClass: any PCKVersionable] {
         var updatedClasses = try getConcrete()
 
         for (key, value) in newClasses {
@@ -124,7 +124,7 @@ public enum PCKStoreClass: String {
         return updatedClasses
     }
 
-    func isCorrectType(_ type: PCKStoreClass, check: PCKSynchronizable) -> Bool {
+    func isCorrectType(_ type: PCKStoreClass, check: any PCKVersionable) -> Bool {
         switch type {
         case .carePlan:
             guard (check as? PCKCarePlan) != nil else {
