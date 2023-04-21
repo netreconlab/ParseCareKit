@@ -313,9 +313,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
 
                     // 4. Lock in the changes and catch up local device.
-                    let revision = OCKRevisionRecord(entities: [],
-                                                     knowledgeVector: updatedParseVector)
-                    mergeRevision(revision)
+                    // let revision = OCKRevisionRecord(entities: [],
+                    //                                 knowledgeVector: updatedParseVector)
+                    // mergeRevision(revision)
                     Logger.pullRevisions.debug("Finished pulling revisions for default classes")
                     completion(nil)
                 } catch {
