@@ -1,7 +1,23 @@
 {
   "abstract" : [
     {
-      "text" : "A date specifying when this version of the care plan begins to take effect.",
+      "text" : "The date that this version of the object begins to take precedence over the previous version.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Often this will be the same as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "createdDate",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", but is not required to be.",
       "type" : "text"
     }
   ],
@@ -193,7 +209,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/effectiveDate": {
   "abstract" : [
     {
-      "text" : "A date specifying when this version of the care plan begins to take effect.",
+      "text" : "The date that this version of the object begins to take precedence over the previous version.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Often this will be the same as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "createdDate",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", but is not required to be.",
       "type" : "text"
     }
   ],

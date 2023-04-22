@@ -1,7 +1,23 @@
 {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -129,8 +145,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Task",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Tasks"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Task"
       ],
       "title" : "Associated Types"
     },
@@ -139,8 +154,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/fetchTask(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/fetchTask(withID:callbackQueue:completion:)-5wyob",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/fetchTasks(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/fetchTasks(query:callbackQueue:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/tasks(matching:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/fetchTasks(query:callbackQueue:completion:)"
       ],
       "title" : "Instance Methods"
     }
@@ -173,7 +187,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -314,7 +344,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -348,7 +386,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -422,44 +476,6 @@
   "title" : "Task",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadabletaskstore\/task"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore/Tasks": {
-  "abstract" : [
-    {
-      "text" : "An asynchronous sequence that produces tasks.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "associatedtype"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "Tasks"
-    },
-    {
-      "kind" : "text",
-      "text" : " : "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci",
-      "text" : "AsyncSequence"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Tasks",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "Tasks",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockreadabletaskstore\/tasks"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore/fetchTask(withID:)": {
   "abstract" : [
@@ -823,61 +839,6 @@
   "title" : "fetchTasks(query:callbackQueue:completion:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadabletaskstore\/fetchtasks(query:callbackqueue:completion:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore/tasks(matching:)": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of tasks that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "tasks"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore12OCKTaskQueryV",
-      "text" : "OCKTaskQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P5TasksQa",
-      "text" : "Tasks"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/tasks(matching:)",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "tasks(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockreadabletaskstore\/tasks(matching:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore": {
   "abstract" : [

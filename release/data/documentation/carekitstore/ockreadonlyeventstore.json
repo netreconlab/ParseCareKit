@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -151,17 +159,10 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/Events"
-      ],
-      "title" : "Associated Types"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/events(matching:)-spn",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvent(forTask:occurrence:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvent(forTask:occurrence:callbackQueue:completion:)-4v8pa",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(query:callbackQueue:completion:)-x40u"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(taskID:query:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(taskID:query:callbackQueue:completion:)-1bdah"
       ],
       "title" : "Instance Methods"
     },
@@ -200,7 +201,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyEvent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s  can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -233,10 +250,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -268,7 +282,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -409,7 +439,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -470,100 +508,6 @@
   "title" : "OCKReadOnlyEventStore.Event",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/event"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/Events": {
-  "abstract" : [
-    {
-      "text" : "An asynchronous sequence that produces events.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "associatedtype"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "Events"
-    },
-    {
-      "kind" : "text",
-      "text" : " : "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci",
-      "text" : "AsyncSequence"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/Events",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "Events",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/events"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/events(matching:)-spn": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "events"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
-      "text" : "OCKEventQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore016OCKReadOnlyEventC0P6EventsQa",
-      "text" : "Events"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/events(matching:)-spn",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "events(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/events(matching:)-spn"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/fetchEvent(forTask:occurrence:)": {
   "abstract" : [
@@ -771,7 +715,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/fetchevent(fortask:occurrence:callbackqueue:completion:)-4v8pa"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/fetchEvents(query:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/fetchEvents(taskID:query:)": {
   "abstract" : [
     {
       "code" : "fetchEvents",
@@ -798,6 +742,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "taskID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -842,17 +803,21 @@
       "text" : "]"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(query:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(taskID:query:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "fetchEvents(query:)",
+  "title" : "fetchEvents(taskID:query:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/fetchevents(query:)"
+  "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/fetchevents(taskid:query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/fetchEvents(query:callbackQueue:completion:)-x40u": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore/fetchEvents(taskID:query:callbackQueue:completion:)-1bdah": {
   "abstract" : [
     {
-      "text" : "The completion will be called with an error if there’s an issue accessing the store or fetching results.",
+      "code" : "fetchEvents",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " retrieves all the occurrences of the specified task in the interval specified by the provided query.",
       "type" : "text"
     }
   ],
@@ -873,6 +838,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "taskID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -935,18 +917,34 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(query:callbackQueue:completion:)-x40u",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/fetchEvents(taskID:query:callbackQueue:completion:)-1bdah",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "fetchEvents(query:callbackQueue:completion:)",
+  "title" : "fetchEvents(taskID:query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/fetchevents(query:callbackqueue:completion:)-x40u"
+  "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/fetchevents(taskid:query:callbackqueue:completion:)-1bdah"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading outcomes.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableOutcomeStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -980,7 +978,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

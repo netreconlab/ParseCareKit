@@ -1,7 +1,19 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve a single outcome from the store.",
+      "code" : "fetchAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single outcome from the store. If more than one outcome matches the query, only the first",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "will be returned. If no matching outcomes exist, the completion handler will be called with an error.",
       "type" : "text"
     }
   ],
@@ -167,7 +179,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A query that constrains the fetched values.",
+                  "text" : "A query used to constrain the values that will be fetched.",
                   "type" : "text"
                 }
               ],
@@ -177,34 +189,6 @@
           "name" : "query"
         }
       ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "If more than one outcome matches the query, only the first",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "returns. If no matching outcomes exist, the completion handler receives an error.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -243,7 +227,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -276,10 +268,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -311,7 +300,19 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore/fetchAnyOutcome(query:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve a single outcome from the store.",
+      "code" : "fetchAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single outcome from the store. If more than one outcome matches the query, only the first",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "will be returned. If no matching outcomes exist, the completion handler will be called with an error.",
       "type" : "text"
     }
   ],

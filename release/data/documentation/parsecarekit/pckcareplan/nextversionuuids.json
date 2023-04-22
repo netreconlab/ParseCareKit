@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The UUIDs of the next version of this object, or nil if there is no next version.",
+      "text" : "The UUID of the next version of this object, or nil if there is no next version.",
       "type" : "text"
     },
     {
@@ -99,23 +99,7 @@
             },
             {
               "kind" : "text",
-              "text" : "]? { "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "get"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "set"
-            },
-            {
-              "kind" : "text",
-              "text" : " }"
+              "text" : "]?"
             }
           ]
         }
@@ -148,7 +132,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -260,7 +244,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/nextVersionUUIDs": {
   "abstract" : [
     {
-      "text" : "The UUIDs of the next version of this object, or nil if there is no next version.",
+      "text" : "The UUID of the next version of this object, or nil if there is no next version.",
       "type" : "text"
     },
     {

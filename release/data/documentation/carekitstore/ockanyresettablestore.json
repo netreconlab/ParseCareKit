@@ -130,6 +130,12 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyResettableStore\/resetDelegate"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyResettableStore\/reset()"
       ],
       "title" : "Instance Methods"
@@ -163,7 +169,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A protocol that enforces conformance to a care plan store.",
+      "text" : "Any store able to write to one ore more types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is considered an ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -378,7 +400,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -412,7 +450,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading contacts.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyContact",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyContactStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -446,7 +500,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyEvent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s  can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -479,10 +549,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -514,7 +581,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading patients.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyPatient",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyPatientStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -548,7 +631,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -643,6 +742,45 @@
   "title" : "reset()",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyresettablestore\/reset()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyResettableStore/resetDelegate": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "resetDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResetDelegateP",
+      "text" : "OCKResetDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyResettableStore\/resetDelegate",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "resetDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyresettablestore\/resetdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore": {
   "abstract" : [
@@ -954,7 +1092,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -988,7 +1134,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -1022,7 +1184,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableContactStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading contacts.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyContact",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAReadableCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -1056,7 +1234,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading outcomes.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableOutcomeStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -1090,7 +1284,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading patients.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyPatient",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyPatientStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -1124,7 +1334,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

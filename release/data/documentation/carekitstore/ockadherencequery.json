@@ -93,13 +93,13 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/init(taskIDs:dateInterval:aggregator:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/init(taskIDs:dateInterval:computeProgress:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/init(taskIDs:dateInterval:aggregator:)"
       ],
       "title" : "Initializers"
     },
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/aggregator",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/dateInterval",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/taskIDs"
       ],
@@ -169,6 +169,43 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockadherencequery"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/aggregator": {
+  "abstract" : [
+    {
+      "text" : "An aggregator used to derive an adherence value from a series of events.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "aggregator"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore22OCKAdherenceAggregatorO",
+      "text" : "OCKAdherenceAggregator"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/aggregator",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "aggregator",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockadherencequery\/aggregator"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/dateInterval": {
   "abstract" : [
     {
@@ -213,7 +250,6 @@
       "type" : "text"
     }
   ],
-  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "identifier",
@@ -281,90 +317,6 @@
   "title" : "init(taskIDs:dateInterval:aggregator:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockadherencequery\/init(taskids:dateinterval:aggregator:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/init(taskIDs:dateInterval:computeProgress:)": {
-  "abstract" : [
-    {
-      "text" : "Initialize a new query by specifying the taskIDs, dates, and aggregator.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "taskIDs"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ["
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : "], "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "dateInterval"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10Foundation12DateIntervalV",
-      "text" : "DateInterval"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "computeProgress"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV",
-      "text" : "OCKAnyEvent"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0A12TaskProgressP",
-      "text" : "CareTaskProgress"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/init(taskIDs:dateInterval:computeProgress:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(taskIDs:dateInterval:computeProgress:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockadherencequery\/init(taskids:dateinterval:computeprogress:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/taskIDs": {
   "abstract" : [

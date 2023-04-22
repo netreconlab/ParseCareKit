@@ -33,7 +33,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/anyPatients(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyPatient(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyPatient(withID:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyPatients(query:)",
@@ -88,73 +87,6 @@
   "title" : "OCKStore",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/anyPatients(matching:)": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of patients that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "anyPatients"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore15OCKPatientQueryV",
-      "text" : "OCKPatientQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
-      "text" : "CareStoreQueryResults"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKAnyPatientP",
-      "text" : "OCKAnyPatient"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/anyPatients(matching:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "anyPatients(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/anypatients(matching:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyPatient(withID:)": {
   "abstract" : [

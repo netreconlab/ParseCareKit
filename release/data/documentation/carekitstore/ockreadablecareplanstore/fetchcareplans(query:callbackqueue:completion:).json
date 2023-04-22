@@ -334,7 +334,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

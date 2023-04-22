@@ -253,10 +253,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

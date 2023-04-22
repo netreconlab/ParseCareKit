@@ -199,7 +199,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -390,7 +406,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

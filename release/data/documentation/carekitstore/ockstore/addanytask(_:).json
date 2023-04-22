@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously add a task to the store.",
+      "code" : "addAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds a task to the store.",
       "type" : "text"
     }
   ],
@@ -168,7 +172,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A task the function adds.",
+                  "text" : "A task to be added to the store.",
                   "type" : "text"
                 }
               ],
@@ -303,7 +307,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/addAnyTask(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously add a task to the store.",
+      "code" : "addAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds a task to the store.",
       "type" : "text"
     }
   ],

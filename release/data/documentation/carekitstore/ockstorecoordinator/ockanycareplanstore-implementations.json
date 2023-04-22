@@ -137,7 +137,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/addAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously adds a single care plan to the store.",
+      "code" : "addAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds a single care plan to the store.",
       "type" : "text"
     }
   ],
@@ -199,7 +203,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/addAnyCarePlan(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously adds a single care plan to the store.",
+      "code" : "addAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds a single care plan to the store.",
       "type" : "text"
     }
   ],
@@ -283,7 +291,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/addAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously adds an array of care plans to the store.",
+      "code" : "addAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an array of care plans to the store.",
       "type" : "text"
     }
   ],
@@ -349,7 +361,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/addAnyCarePlans(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously adds an array of care plans to the store.",
+      "code" : "addAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an array of care plans to the store.",
       "type" : "text"
     }
   ],
@@ -451,7 +467,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/deleteAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously deletes a single care plan from the store.",
+      "code" : "deleteAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes a single care plan from the store.",
       "type" : "text"
     }
   ],
@@ -513,7 +533,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/deleteAnyCarePlan(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously deletes a single care plan from the store.",
+      "code" : "deleteAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes a single care plan from the store.",
       "type" : "text"
     }
   ],
@@ -597,7 +621,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/deleteAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously deletes an array of care plans from the store.",
+      "code" : "deleteAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -663,7 +691,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/deleteAnyCarePlans(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously deletes an array of care plans from the store.",
+      "code" : "deleteAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -765,7 +797,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously updates a single care plan in the store.",
+      "code" : "updateAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -827,7 +863,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyCarePlan(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously updates a single care plan in the store.",
+      "code" : "updateAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -911,7 +951,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyCarePlans(_:)": {
   "abstract" : [
     {
-      "text" : "Aynchronously updates an array of care plans in the store.",
+      "code" : "updateAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an array of care plans in the store.",
       "type" : "text"
     }
   ],
@@ -977,7 +1021,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyCarePlans(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously updates an array of care plans in the store.",
+      "code" : "updateAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an array of care plans in the store.",
       "type" : "text"
     }
   ],

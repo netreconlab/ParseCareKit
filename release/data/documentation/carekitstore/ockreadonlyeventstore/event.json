@@ -143,7 +143,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent": {
   "abstract" : [
     {
-      "text" : "An event that represents a single occasion that a task was scheduled to occur.",
+      "text" : "An ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKEvent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " represents a single occasion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
       "type" : "text"
     }
   ],
@@ -177,7 +193,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

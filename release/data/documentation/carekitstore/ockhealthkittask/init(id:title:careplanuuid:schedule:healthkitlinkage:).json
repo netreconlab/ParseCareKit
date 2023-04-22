@@ -248,7 +248,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A unique id for this HealthKit task chosen by the developer.",
+                  "text" : "A unique id for this health kit task chosen by the developer.",
                   "type" : "text"
                 }
               ],

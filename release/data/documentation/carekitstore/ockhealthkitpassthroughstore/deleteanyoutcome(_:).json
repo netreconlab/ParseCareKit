@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously delete an outcome from the store.",
+      "code" : "deleteAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an outcome from the store.",
       "type" : "text"
     }
   ],
@@ -168,7 +172,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An outcome the function deletes. The outcome must exist in the store.",
+                  "text" : "An outcome to be deleted. The outcome must exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -216,7 +220,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -295,7 +307,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/deleteAnyOutcome(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously delete an outcome from the store.",
+      "code" : "deleteAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an outcome from the store.",
       "type" : "text"
     }
   ],

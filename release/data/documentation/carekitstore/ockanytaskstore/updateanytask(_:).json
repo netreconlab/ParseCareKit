@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously update a task in the store.",
+      "code" : "updateAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates a task in the store.",
       "type" : "text"
     }
   ],
@@ -167,7 +171,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A task the function updates. The task must exist in the store.",
+                  "text" : "A task to be updated. The task must already exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -307,7 +311,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/updateAnyTask(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously update a task in the store.",
+      "code" : "updateAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates a task in the store.",
       "type" : "text"
     }
   ],

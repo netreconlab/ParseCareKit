@@ -142,7 +142,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A task that may own this outcome.",
+                  "text" : "A task which may or may not own this outcome.",
                   "type" : "text"
                 }
               ],
@@ -190,7 +190,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],

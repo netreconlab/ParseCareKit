@@ -86,9 +86,6 @@
         "name" : "CareKitStore"
       }
     ],
-    "platforms" : [
-
-    ],
     "role" : "symbol",
     "roleHeading" : "Initializer",
     "symbolKind" : "init",
@@ -163,7 +160,7 @@
             },
             {
               "kind" : "text",
-              "text" : ")"
+              "text" : " = .outcomeExists)"
             }
           ]
         }
@@ -206,7 +203,15 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Produce a single progress value from an event.",
+                  "text" : "An aggregator that will be used to compute adherence. Uses ",
+                  "type" : "text"
+                },
+                {
+                  "code" : ".outcomesExists",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " by default.",
                   "type" : "text"
                 }
               ],
@@ -258,7 +263,6 @@
       "type" : "text"
     }
   ],
-  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",
@@ -331,7 +335,6 @@
       "type" : "text"
     }
   ],
-  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "identifier",

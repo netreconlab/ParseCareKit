@@ -44,22 +44,6 @@
         "text" : "OCKHealthKitPassthroughStore"
       }
     ],
-    "platforms" : [
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "15.0",
-        "name" : "iOS",
-        "unavailable" : false
-      },
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "8.0",
-        "name" : "watchOS",
-        "unavailable" : false
-      }
-    ],
     "role" : "symbol",
     "roleHeading" : "Class",
     "symbolKind" : "class",
@@ -141,7 +125,14 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/checkAbilityToDelete(outcomes:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/outcomeDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/resetDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/taskDelegate"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/fetchTasks(for:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/requestHealthKitPermissionsForAllTasksInStore(completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/reset()"
@@ -281,7 +272,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyEvent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s  can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -314,10 +321,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -349,7 +353,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -709,56 +729,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/task"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/checkAbilityToDelete(outcomes:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "checkAbilityToDelete"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "outcomes"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ["
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7OutcomeV",
-      "text" : "OCKHealthKitOutcome"
-    },
-    {
-      "kind" : "text",
-      "text" : "]) "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/checkAbilityToDelete(outcomes:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "checkAbilityToDelete(outcomes:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/checkabilitytodelete(outcomes:)"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/fetchTasks(for:)": {
   "abstract" : [
 
@@ -859,6 +829,63 @@
   "title" : "init(store:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/init(store:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/outcomeDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "outcomeDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore010OCKOutcomeC8DelegateP",
+      "text" : "OCKOutcomeStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/outcomeDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "outcomeDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/outcomedelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/requestHealthKitPermissionsForAllTasksInStore(completion:)": {
   "abstract" : [
@@ -962,6 +989,101 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/reset()"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/resetDelegate": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "resetDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResetDelegateP",
+      "text" : "OCKResetDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/resetDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "resetDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/resetdelegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/taskDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "taskDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore07OCKTaskC8DelegateP",
+      "text" : "OCKTaskStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/taskDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "taskDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/taskdelegate"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcomeStore": {
   "abstract" : [
 
@@ -996,7 +1118,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -1030,7 +1160,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading outcomes.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableOutcomeStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -1064,7 +1210,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadableTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

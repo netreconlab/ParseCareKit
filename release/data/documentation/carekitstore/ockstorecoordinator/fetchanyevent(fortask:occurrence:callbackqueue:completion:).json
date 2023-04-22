@@ -5,7 +5,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " retrieves the occurrence of the specified task.",
+      "text" : " retrieves a single occurrence of the specified task.",
       "type" : "text"
     }
   ],
@@ -281,7 +281,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The occurrence number of the event to be fetched.",
+                  "text" : "The occurrence index of the desired event.",
                   "type" : "text"
                 }
               ],
@@ -302,14 +302,14 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "callbackQueue"
+          "name" : "queue"
         },
         {
           "content" : [
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that will fire on the provided callback queue.",
+                  "text" : "A callback that will fire on the specified queue.",
                   "type" : "text"
                 }
               ],
@@ -357,7 +357,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
+      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
       "type" : "text"
     }
   ],
@@ -551,7 +559,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " retrieves the occurrence of the specified task.",
+      "text" : " retrieves a single occurrence of the specified task.",
       "type" : "text"
     }
   ],

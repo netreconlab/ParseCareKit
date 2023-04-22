@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Indicates that events were found with specified progress.",
+      "text" : "Inidates that events were found, and a fraction of them betwee 0 and 1 was completd.",
       "type" : "text"
     }
   ],
@@ -83,14 +83,6 @@
             {
               "kind" : "text",
               "text" : "("
-            },
-            {
-              "kind" : "externalParam",
-              "text" : "_"
-            },
-            {
-              "kind" : "text",
-              "text" : ": "
             },
             {
               "kind" : "typeIdentifier",
@@ -181,7 +173,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherence/progress(_:)": {
   "abstract" : [
     {
-      "text" : "Indicates that events were found with specified progress.",
+      "text" : "Inidates that events were found, and a fraction of them betwee 0 and 1 was completd.",
       "type" : "text"
     }
   ],

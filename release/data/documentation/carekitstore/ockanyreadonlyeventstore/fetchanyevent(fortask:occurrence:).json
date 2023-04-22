@@ -275,7 +275,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
+      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
       "type" : "text"
     }
   ],
@@ -309,7 +317,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyEvent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s  can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

@@ -602,7 +602,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKSchedule/event(forOccurrenceIndex:)": {
   "abstract" : [
     {
-      "text" : "Compute the date of the Nth event. The result will be nil if the Nth event starts after the end of the schedule.",
+      "text" : "Computes the date of the Nth occurrence of a schedule element. If the Nth occurrence is beyond the end date, then nil will be returned.",
       "type" : "text"
     }
   ],
@@ -660,7 +660,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKSchedule/events(from:to:)": {
   "abstract" : [
     {
-      "text" : "Compute a list of events that occur between two dates. The lower bound is inclusive",
+      "text" : "Computes an array of events between two dates.",
       "type" : "text"
     },
     {
@@ -668,7 +668,7 @@
       "type" : "text"
     },
     {
-      "text" : "and the upper bound is exclusive.",
+      "text" : "The lower bound is inclusive and the upper bound is exclusive.",
       "type" : "text"
     }
   ],

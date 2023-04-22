@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "An array of values associated with this outcome.",
+      "text" : "An array of values associated with this outcome. Most outcomes will have 0 or 1 values, but some may have more.",
       "type" : "text"
     }
   ],
@@ -108,38 +108,66 @@
           "type" : "heading"
         },
         {
-          "inlineContent" : [
+          "items" : [
             {
-              "text" : "Most outcomes have 0 or 1 values, but some may have more. For example, a task to call a physician might have 0 values,",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "or 1 value containing the time stamp of when the call was placed.",
-              "type" : "text"
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Examples:",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                },
+                {
+                  "items" : [
+                    {
+                      "content" : [
+                        {
+                          "inlineContent" : [
+                            {
+                              "text" : "A task to call a physician might have 0 values, or 1 value containing the time stamp of when the call was placed.",
+                              "type" : "text"
+                            }
+                          ],
+                          "type" : "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content" : [
+                        {
+                          "inlineContent" : [
+                            {
+                              "text" : "A task to walk 2,000 steps might have 1 value, with that value being the number of steps that were actually taken.",
+                              "type" : "text"
+                            }
+                          ],
+                          "type" : "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content" : [
+                        {
+                          "inlineContent" : [
+                            {
+                              "text" : "A task to complete a survey might have multiple values corresponding to the answers to the questions in the survey.",
+                              "type" : "text"
+                            }
+                          ],
+                          "type" : "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type" : "unorderedList"
+                }
+              ]
             }
           ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "Another example is a task to walk 2,000 steps that may have 1 value, with that value being the number of steps actually taken.",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "Yet another example is a task to complete a survey that may have multiple values corresponding to the answers to the questions in the survey.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
+          "type" : "unorderedList"
         }
       ],
       "kind" : "content"
@@ -239,7 +267,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcome/values": {
   "abstract" : [
     {
-      "text" : "An array of values associated with this outcome.",
+      "text" : "An array of values associated with this outcome. Most outcomes will have 0 or 1 values, but some may have more.",
       "type" : "text"
     }
   ],

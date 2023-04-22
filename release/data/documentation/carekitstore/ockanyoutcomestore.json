@@ -249,7 +249,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcome(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously add an outcome to the store.",
+      "code" : "addAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an outcome to the store.",
       "type" : "text"
     }
   ],
@@ -311,7 +315,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcome(_:callbackQueue:completion:)-8fewj": {
   "abstract" : [
     {
-      "text" : "Asynchronously add an outcome to the store.",
+      "code" : "addAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an outcome to the store.",
       "type" : "text"
     }
   ],
@@ -397,7 +405,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcomes(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously add an array of outcomes to the store.",
+      "code" : "addAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an array of outcomes to the store.",
       "type" : "text"
     }
   ],
@@ -463,7 +475,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcomes(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously add an array of outcomes to the store.",
+      "code" : "addAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an array of outcomes to the store.",
       "type" : "text"
     }
   ],
@@ -549,7 +565,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcome(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously delete an outcome from the store.",
+      "code" : "deleteAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an outcome from the store.",
       "type" : "text"
     }
   ],
@@ -611,7 +631,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcome(_:callbackQueue:completion:)-7z9j9": {
   "abstract" : [
     {
-      "text" : "Asynchronously delete an outcome from the store.",
+      "code" : "deleteAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an outcome from the store.",
       "type" : "text"
     }
   ],
@@ -697,7 +721,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcomes(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously delete an array of outcomes from the store.",
+      "code" : "deleteAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -763,7 +791,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcomes(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously delete an array of outcomes from the store.",
+      "code" : "deleteAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -849,7 +881,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcome(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously update an outcome in the store.",
+      "code" : "updateAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an outcome in the store.",
       "type" : "text"
     }
   ],
@@ -911,7 +947,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcome(_:callbackQueue:completion:)-6m13u": {
   "abstract" : [
     {
-      "text" : "Asynchronously update an outcome in the store.",
+      "code" : "updateAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an outcome in the store.",
       "type" : "text"
     }
   ],
@@ -997,7 +1037,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcomes(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously update an array of outcomes in the store.",
+      "code" : "updateAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an array of outcomes in the store.",
       "type" : "text"
     }
   ],
@@ -1063,7 +1107,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcomes(_:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously update an array of outcomes in the store.",
+      "code" : "updateAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an array of outcomes in the store.",
       "type" : "text"
     }
   ],
@@ -1148,10 +1196,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

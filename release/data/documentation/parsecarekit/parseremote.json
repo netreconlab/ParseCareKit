@@ -112,7 +112,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/chooseConflictResolution(conflicts:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/pullRevisions(since:mergeRevision:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/pushRevisions(deviceRevisions:deviceKnowledge:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/pushRevisions(deviceRevision:completion:)"
       ],
       "title" : "Instance Methods"
     }
@@ -168,7 +168,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -353,17 +353,9 @@
       "text" : " : "
     },
     {
-      "kind" : "keyword",
-      "text" : "any"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-      "text" : "PCKVersionable"
+      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+      "text" : "PCKSynchronizable"
     },
     {
       "kind" : "text",
@@ -554,17 +546,9 @@
       "text" : " : "
     },
     {
-      "kind" : "keyword",
-      "text" : "any"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-      "text" : "PCKVersionable"
+      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+      "text" : "PCKSynchronizable"
     },
     {
       "kind" : "text",
@@ -685,7 +669,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/parseremote\/pullrevisions(since:mergerevision:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pushRevisions(deviceRevisions:deviceKnowledge:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pushRevisions(deviceRevision:completion:)": {
   "abstract" : [
 
   ],
@@ -708,50 +692,16 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "deviceRevisions"
+      "text" : "deviceRevision"
     },
     {
       "kind" : "text",
-      "text" : ": [CareKitStore"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
+      "text" : ": "
     },
     {
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV",
       "text" : "OCKRevisionRecord"
-    },
-    {
-      "kind" : "text",
-      "text" : "], "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "deviceKnowledge"
-    },
-    {
-      "kind" : "text",
-      "text" : ": CareKitStore"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV",
-      "text" : "OCKRevisionRecord"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV15KnowledgeVectorV",
-      "text" : "KnowledgeVector"
     },
     {
       "kind" : "text",
@@ -784,12 +734,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/pushRevisions(deviceRevision:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
+  "title" : "pushRevisions(deviceRevision:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/pushrevisions(devicerevisions:deviceknowledge:completion:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/pushrevisions(devicerevision:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/uuid": {
   "abstract" : [

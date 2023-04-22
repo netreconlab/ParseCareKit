@@ -288,7 +288,13 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyResettableStore",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanStoreDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactStoreDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeStoreDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatientStoreDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKResetDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskStoreDelegate"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -312,6 +318,17 @@
     },
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/carePlanDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/contactDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/outcomeDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/patientDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/resetDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/taskDelegate"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/attach(contactStore:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/attach(eventStore:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/attach(patientStore:)",
@@ -330,6 +347,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/patientStore(_:shouldHandleQuery:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/patientStore(_:shouldHandleWritingPatient:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/reset()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/storeDidReset(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/taskStore(_:shouldHandleQuery:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/taskStore(_:shouldHandleWritingTask:)"
       ],
@@ -348,7 +366,12 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKAnyReadOnlyOutcomeStore-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKAnyReadOnlyPatientStore-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKAnyReadOnlyTaskStore-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKAnyTaskStore-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKAnyTaskStore-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKCarePlanStoreDelegate-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKContactStoreDelegate-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKOutcomeStoreDelegate-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKPatientStoreDelegate-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKTaskStoreDelegate-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -381,7 +404,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A protocol that enforces conformance to a care plan store.",
+      "text" : "Any store able to write to one ore more types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is considered an ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -596,7 +635,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -630,7 +685,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading contacts.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyContact",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyContactStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -664,7 +735,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyEvent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "s  can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -697,10 +784,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -732,7 +816,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading patients.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyPatient",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyPatientStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -766,7 +866,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -877,6 +993,173 @@
   "title" : "OCKAnyTaskStore",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanytaskstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlanStoreDelegate": {
+  "abstract" : [
+    {
+      "text" : "Types conforming to this protocol can receive callbacks from care plan stores.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKCarePlanStoreDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanStoreDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKCarePlanStoreDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKCarePlanStoreDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockcareplanstoredelegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKContactStoreDelegate": {
+  "abstract" : [
+    {
+      "text" : "Types conforming to this protocol can receive callbacks from contact stores.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKContactStoreDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactStoreDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKContactStoreDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKContactStoreDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockcontactstoredelegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcomeStoreDelegate": {
+  "abstract" : [
+    {
+      "text" : "Types conforming to this protocol can receive callbacks from outcome stores.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKOutcomeStoreDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeStoreDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKOutcomeStoreDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKOutcomeStoreDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockoutcomestoredelegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKPatientStoreDelegate": {
+  "abstract" : [
+    {
+      "text" : "Types conforming to this protocol can receive callbacks from patient stores.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKPatientStoreDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatientStoreDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKPatientStoreDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKPatientStoreDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockpatientstoredelegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKResetDelegate": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKResetDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKResetDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKResetDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResetDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockresetdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator": {
   "abstract" : [
@@ -1070,6 +1353,61 @@
   "title" : "OCKAnyTaskStore Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/ockanytaskstore-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/OCKCarePlanStoreDelegate-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKCarePlanStoreDelegate-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "OCKCarePlanStoreDelegate Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/ockcareplanstoredelegate-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/OCKContactStoreDelegate-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKContactStoreDelegate-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "OCKContactStoreDelegate Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/ockcontactstoredelegate-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/OCKOutcomeStoreDelegate-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKOutcomeStoreDelegate-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "OCKOutcomeStoreDelegate Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/ockoutcomestoredelegate-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/OCKPatientStoreDelegate-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKPatientStoreDelegate-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "OCKPatientStoreDelegate Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/ockpatientstoredelegate-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/OCKTaskStoreDelegate-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/OCKTaskStoreDelegate-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "OCKTaskStoreDelegate Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/ocktaskstoredelegate-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/attach(contactStore:)": {
   "abstract" : [
@@ -1512,6 +1850,63 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/attachreadonly(patientstore:)"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/carePlanDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "carePlanDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore011OCKCarePlanC8DelegateP",
+      "text" : "OCKCarePlanStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/carePlanDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "carePlanDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/careplandelegate"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/carePlanStore(_:shouldHandleQuery:)": {
   "abstract" : [
     {
@@ -1661,6 +2056,63 @@
   "title" : "carePlanStore(_:shouldHandleWritingCarePlan:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/careplanstore(_:shouldhandlewritingcareplan:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/contactDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "contactDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore010OCKContactC8DelegateP",
+      "text" : "OCKContactStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/contactDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "contactDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/contactdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/contactStore(_:shouldHandleQuery:)": {
   "abstract" : [
@@ -1833,6 +2285,63 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/init()"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/outcomeDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "outcomeDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore010OCKOutcomeC8DelegateP",
+      "text" : "OCKOutcomeStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/outcomeDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "outcomeDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/outcomedelegate"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/outcomeStore(_:shouldHandleQuery:)": {
   "abstract" : [
     {
@@ -1982,6 +2491,63 @@
   "title" : "outcomeStore(_:shouldHandleWritingOutcome:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/outcomestore(_:shouldhandlewritingoutcome:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/patientDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the patient store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "patientDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore010OCKPatientC8DelegateP",
+      "text" : "OCKPatientStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/patientDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "patientDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/patientdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/patientStore(_:shouldHandleQuery:)": {
   "abstract" : [
@@ -2166,6 +2732,139 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/reset()"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/resetDelegate": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "resetDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResetDelegateP",
+      "text" : "OCKResetDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/resetDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "resetDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/resetdelegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/storeDidReset(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "storeDidReset"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore016OCKAnyResettableC0P",
+      "text" : "OCKAnyResettableStore"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/storeDidReset(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "storeDidReset(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/storedidreset(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/taskDelegate": {
+  "abstract" : [
+    {
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "taskDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore07OCKTaskC8DelegateP",
+      "text" : "OCKTaskStoreDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/taskDelegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "taskDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/taskdelegate"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/taskStore(_:shouldHandleQuery:)": {
   "abstract" : [
     {
@@ -2315,6 +3014,40 @@
   "title" : "taskStore(_:shouldHandleWritingTask:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/taskstore(_:shouldhandlewritingtask:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKTaskStoreDelegate": {
+  "abstract" : [
+    {
+      "text" : "Types conforming to this protocol can receive callbacks from task stores.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKTaskStoreDelegate"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskStoreDelegate",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKTaskStoreDelegate"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKTaskStoreDelegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ocktaskstoredelegate"
 }
 }
 }

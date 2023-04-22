@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Determines if this care plan belongs to the given patient.",
+      "text" : "Determines if this care plan belongs to the given patiehtn.",
       "type" : "text"
     }
   ],
@@ -297,7 +297,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/belongs(to:)": {
   "abstract" : [
     {
-      "text" : "Determines if this care plan belongs to the given patient.",
+      "text" : "Determines if this care plan belongs to the given patiehtn.",
       "type" : "text"
     }
   ],

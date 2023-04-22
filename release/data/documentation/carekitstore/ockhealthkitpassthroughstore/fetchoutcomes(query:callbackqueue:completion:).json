@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Fetch a list of events that exist in the store.",
+      "code" : "fetchOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -92,8 +96,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12CareKitStore09OCKHealthb11PassthroughC0C7Outcomea",
-        "text" : "Outcome"
+        "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7OutcomeV",
+        "text" : "OCKHealthKitOutcome"
       },
       {
         "kind" : "text",
@@ -121,22 +125,6 @@
     "modules" : [
       {
         "name" : "CareKitStore"
-      }
-    ],
-    "platforms" : [
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "15.0",
-        "name" : "iOS",
-        "unavailable" : false
-      },
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "8.0",
-        "name" : "watchOS",
-        "unavailable" : false
       }
     ],
     "role" : "symbol",
@@ -232,10 +220,10 @@
               "text" : "<["
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/Outcome",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12CareKitStore09OCKHealthb11PassthroughC0C7Outcomea",
-              "text" : "Outcome"
+              "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7OutcomeV",
+              "text" : "OCKHealthKitOutcome"
             },
             {
               "kind" : "text",
@@ -273,7 +261,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Used to match outcomes in the store.",
+                  "text" : "A query used to constrain the values that will be fetched.",
                   "type" : "text"
                 }
               ],
@@ -287,15 +275,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that runs the completion. In most cases this should be the",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "main queue.",
+                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
                   "type" : "text"
                 }
               ],
@@ -309,7 +289,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that contains the result.",
+                  "text" : "A callback that will fire on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -319,60 +299,6 @@
           "name" : "completion"
         }
       ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "The completion will be called with an error if there’s an issue accessing the store or fetching results.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "Supply a query that’ll be used to match outcomes in the store. If the query doesn’t contain a date",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "interval, the result will contain the latest version of each outcome. If the query does contain a date",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "interval, the result will contain outcomes whose events occur within the interval.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "This method does not check if an outcome’s task is effective in the query interval.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -407,6 +333,37 @@
   "title" : "CareKitStore",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKHealthKitOutcome"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKHealthKitOutcome"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKHealthKitOutcome",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockhealthkitoutcome"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore": {
   "abstract" : [
@@ -453,41 +410,14 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/ockreadableoutcomestore-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/Outcome": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "typealias"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "Outcome"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitPassthroughStore\/Outcome",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "Outcome"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "OCKHealthKitPassthroughStore.Outcome",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockhealthkitpassthroughstore\/outcome"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitPassthroughStore/fetchOutcomes(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Fetch a list of events that exist in the store.",
+      "code" : "fetchOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -561,8 +491,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore09OCKHealthb11PassthroughC0C7Outcomea",
-      "text" : "Outcome"
+      "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7OutcomeV",
+      "text" : "OCKHealthKitOutcome"
     },
     {
       "kind" : "text",

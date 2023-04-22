@@ -1,34 +1,4 @@
 {
-  "abstract" : [
-    {
-      "text" : "Compute all events that occur between ",
-      "type" : "text"
-    },
-    {
-      "code" : "startIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (inclusive) and ",
-      "type" : "text"
-    },
-    {
-      "code" : "stopIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (exclusive). The result",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "might not contain the desired events if the schedule ends before a particular event starts.",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -43,7 +13,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12CareKitStore18OCKScheduleElementV6events22betweenOccurrenceIndex3andSayAA0D5EventVGSi_SitF",
+    "externalID" : "s:12CareKitStore18OCKScheduleElementV6events22betweenOccurrenceIndex3andSayAA0D5EventVSgGSi_SitF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -102,7 +72,7 @@
       },
       {
         "kind" : "text",
-        "text" : "]"
+        "text" : "?]"
       }
     ],
     "modules" : [
@@ -200,7 +170,7 @@
             },
             {
               "kind" : "text",
-              "text" : "]"
+              "text" : "?]"
             }
           ]
         }
@@ -208,37 +178,24 @@
       "kind" : "declarations"
     },
     {
-      "kind" : "parameters",
-      "parameters" : [
+      "content" : [
         {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The inclusive lower bound for the event indices.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "startIndex"
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
         },
         {
-          "content" : [
+          "inlineContent" : [
             {
-              "inlineContent" : [
-                {
-                  "text" : "The exclusive upper bound for the event indices.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
+              "text" : "An array containing either an schedule event or nil",
+              "type" : "text"
             }
           ],
-          "name" : "stopIndex"
+          "type" : "paragraph"
         }
-      ]
+      ],
+      "kind" : "content"
     },
     {
       "content" : [
@@ -253,26 +210,14 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "",
+                  "text" : "Lower bound is inclusive, upper bound is exclusive.",
                   "type" : "text"
-                },
-                {
-                  "code" : "startIndex",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " < ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "stopIndex",
-                  "type" : "codeVoice"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "Precondition",
+          "name" : "Remark",
           "style" : "note",
           "type" : "aside"
         }
@@ -365,34 +310,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/events(betweenOccurrenceIndex:and:)": {
   "abstract" : [
-    {
-      "text" : "Compute all events that occur between ",
-      "type" : "text"
-    },
-    {
-      "code" : "startIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (inclusive) and ",
-      "type" : "text"
-    },
-    {
-      "code" : "stopIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (exclusive). The result",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "might not contain the desired events if the schedule ends before a particular event starts.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -452,7 +370,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]"
+      "text" : "?]"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/events(betweenOccurrenceIndex:and:)",

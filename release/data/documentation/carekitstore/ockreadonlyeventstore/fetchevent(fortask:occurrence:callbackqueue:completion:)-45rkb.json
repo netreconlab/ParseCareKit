@@ -85,14 +85,6 @@
       },
       {
         "kind" : "typeIdentifier",
-        "text" : "Self"
-      },
-      {
-        "kind" : "text",
-        "text" : "."
-      },
-      {
-        "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P0E0Qa",
         "text" : "Task"
       },
@@ -215,14 +207,6 @@
               "text" : ": "
             },
             {
-              "kind" : "typeIdentifier",
-              "text" : "Self"
-            },
-            {
-              "kind" : "text",
-              "text" : "."
-            },
-            {
               "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Task",
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P0E0Qa",
@@ -264,7 +248,7 @@
             },
             {
               "kind" : "text",
-              "text" : ", "
+              "text" : " = .main, "
             },
             {
               "kind" : "externalParam",
@@ -405,7 +389,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading events.",
+      "text" : "Any store from which a single event type can be queried is considered a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKReadOnlyEventStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -534,14 +526,6 @@
     {
       "kind" : "text",
       "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
     },
     {
       "kind" : "typeIdentifier",

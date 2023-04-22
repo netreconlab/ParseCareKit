@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieves a single care plans from the store.",
+      "code" : "fetchAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],
@@ -175,7 +179,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The identifier of the item the method fetches.",
+                  "text" : "The identifier of the item to be fetched.",
                   "type" : "text"
                 }
               ],
@@ -223,7 +227,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "A protocol for a CareKit plan.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -302,7 +314,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyCarePlan(withID:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieves a single care plans from the store.",
+      "code" : "fetchAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],

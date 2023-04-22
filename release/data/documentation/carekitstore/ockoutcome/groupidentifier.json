@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "An identifier you can use to group this outcome with others.",
+      "text" : "An identifier that can be used to group this outcome with others.",
       "type" : "text"
     }
   ],
@@ -193,7 +193,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcome/groupIdentifier": {
   "abstract" : [
     {
-      "text" : "An identifier you can use to group this outcome with others.",
+      "text" : "An identifier that can be used to group this outcome with others.",
       "type" : "text"
     }
   ],

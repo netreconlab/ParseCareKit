@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously update an array of tasks in the store.",
+      "code" : "updateAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an array of tasks in the store.",
       "type" : "text"
     }
   ],
@@ -176,14 +180,14 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of tasks the function updates. The tasks must exist in the store.",
+                  "text" : "An array of tasks to be updated. The tasks must already exist in the store.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "task"
+          "name" : "tasks"
         }
       ]
     }
@@ -349,7 +353,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyTasks(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously update an array of tasks in the store.",
+      "code" : "updateAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously updates an array of tasks in the store.",
       "type" : "text"
     }
   ],

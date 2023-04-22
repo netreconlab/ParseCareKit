@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Aynchronously retrieves an array of care plans from the store.",
+      "code" : "fetchAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -175,7 +179,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A query that constrains the values that the method fetches.",
+                  "text" : "A query used to constrain the values that will be fetched.",
                   "type" : "text"
                 }
               ],
@@ -223,7 +227,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "A protocol for a CareKit plan.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -257,7 +269,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -291,7 +319,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:)": {
   "abstract" : [
     {
-      "text" : "Aynchronously retrieves an array of care plans from the store.",
+      "code" : "fetchAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],

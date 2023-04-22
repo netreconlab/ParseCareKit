@@ -199,7 +199,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherence/noEvents": {
   "abstract" : [
     {
-      "text" : "Indicates that tasks were scheduled, but there were no events during the interval in which adherence was computed.",
+      "text" : "Indicates that tasks were scheduled, but there were no events suring the interval in which adherence was computed.",
       "type" : "text"
     }
   ],
@@ -255,7 +255,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherence/progress(_:)": {
   "abstract" : [
     {
-      "text" : "Indicates that events were found with specified progress.",
+      "text" : "Inidates that events were found, and a fraction of them betwee 0 and 1 was completd.",
       "type" : "text"
     }
   ],

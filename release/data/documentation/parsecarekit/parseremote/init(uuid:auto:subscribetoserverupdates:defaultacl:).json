@@ -457,7 +457,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -536,17 +536,9 @@
       "text" : " : "
     },
     {
-      "kind" : "keyword",
-      "text" : "any"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-      "text" : "PCKVersionable"
+      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+      "text" : "PCKSynchronizable"
     },
     {
       "kind" : "text",
@@ -570,17 +562,9 @@
       "text" : " : "
     },
     {
-      "kind" : "keyword",
-      "text" : "any"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-      "text" : "PCKVersionable"
+      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+      "text" : "PCKSynchronizable"
     },
     {
       "kind" : "text",
@@ -708,17 +692,9 @@
       "text" : " : "
     },
     {
-      "kind" : "keyword",
-      "text" : "any"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-      "text" : "PCKVersionable"
+      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+      "text" : "PCKSynchronizable"
     },
     {
       "kind" : "text",

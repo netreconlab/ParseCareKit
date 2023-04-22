@@ -223,7 +223,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "A protocol for a CareKit plan.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -443,7 +451,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/belongs(to:)": {
   "abstract" : [
     {
-      "text" : "Determines if this care plan belongs to the given patient.",
+      "text" : "Determines if this care plan belongs to the given patiehtn.",
       "type" : "text"
     }
   ],
@@ -595,7 +603,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/effectiveDate": {
   "abstract" : [
     {
-      "text" : "A date specifying when this version of the care plan begins to take effect.",
+      "text" : "The date that this version of the object begins to take precedence over the previous version.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Often this will be the same as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "createdDate",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", but is not required to be.",
       "type" : "text"
     }
   ],
@@ -632,7 +656,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/groupIdentifier": {
   "abstract" : [
     {
-      "text" : "An identifier you use to group this care plan with others.",
+      "text" : "An identifier that can be used to group this care plan with others.",
       "type" : "text"
     }
   ],
@@ -677,7 +701,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "var"
+      "text" : "let"
     },
     {
       "kind" : "text",

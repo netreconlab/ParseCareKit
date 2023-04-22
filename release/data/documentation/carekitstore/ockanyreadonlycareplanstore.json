@@ -1,7 +1,23 @@
 {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -128,7 +144,12 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/anyCarePlans(matching:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/carePlanDelegate"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlan(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlan(withID:callbackQueue:completion:)-v9kd",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:)",
@@ -165,7 +186,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A protocol that enforces conformance to a care plan store.",
+      "text" : "Any store able to write to one ore more types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is considered an ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -199,7 +236,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -230,18 +283,33 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/anyCarePlans(matching:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/carePlanDelegate": {
   "abstract" : [
     {
-      "text" : "A continuous stream of care plans that exist in the store.",
+      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
       "type" : "text"
     }
   ],
-  "defaultImplementations" : 1,
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "func"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -249,15 +317,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "anyCarePlans"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
+      "text" : "carePlanDelegate"
     },
     {
       "kind" : "text",
@@ -265,44 +325,30 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore16OCKCarePlanQueryV",
-      "text" : "OCKCarePlanQuery"
+      "preciseIdentifier" : "s:12CareKitStore011OCKCarePlanC8DelegateP",
+      "text" : "OCKCarePlanStoreDelegate"
     },
     {
       "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
-      "text" : "CareStoreQueryResults"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore06OCKAnyA4PlanP",
-      "text" : "OCKAnyCarePlan"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
+      "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/anyCarePlans(matching:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/carePlanDelegate",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "anyCarePlans(matching:)",
+  "title" : "carePlanDelegate",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/anycareplans(matching:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/careplandelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlan(withID:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieves a single care plans from the store.",
+      "code" : "fetchAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],
@@ -372,7 +418,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlan(withID:callbackQueue:completion:)-v9kd": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieves a single care plan from the store.",
+      "code" : "fetchAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],
@@ -466,7 +516,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:)": {
   "abstract" : [
     {
-      "text" : "Aynchronously retrieves an array of care plans from the store.",
+      "code" : "fetchAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -540,15 +594,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
-      "type" : "text"
+      "code" : "fetchAnyCarePlans",
+      "type" : "codeVoice"
     },
     {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
+      "text" : " asynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -723,7 +773,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableCarePlanStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading care plans.",
+      "text" : "Any store from which a single type conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyCarePlanStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],

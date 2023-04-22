@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously adds a single care plan to the store.",
+      "code" : "addAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds a single care plan to the store.",
       "type" : "text"
     }
   ],
@@ -168,7 +172,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A single plan to add to the store.",
+                  "text" : "A single plan to be added to the store.",
                   "type" : "text"
                 }
               ],
@@ -216,7 +220,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "A protocol for a CareKit plan.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -333,7 +345,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/addAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously adds a single care plan to the store.",
+      "code" : "addAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds a single care plan to the store.",
       "type" : "text"
     }
   ],

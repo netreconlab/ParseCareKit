@@ -33,7 +33,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/anyTasks(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyTask(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyTask(withID:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyTasks(query:)",
@@ -127,77 +126,22 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/anyTasks(matching:)": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of tasks that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "anyTasks"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore12OCKTaskQueryV",
-      "text" : "OCKTaskQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
-      "text" : "CareStoreQueryResults"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
-      "text" : "OCKAnyTask"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/anyTasks(matching:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "anyTasks(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/anytasks(matching:)"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyTask(withID:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store using its user-defined unique identifier.",
+      "code" : "fetchAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store using its user-defined unique identifier. If a task with the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "specified identifier is not found, the completion handler will be called with an error.",
       "type" : "text"
     }
   ],
@@ -267,7 +211,19 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyTask(withID:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store using its user-defined unique identifier.",
+      "code" : "fetchAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store using its user-defined unique identifier. If a task with the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "specified identifier is not found, the completion handler will be called with an error.",
       "type" : "text"
     }
   ],
@@ -359,7 +315,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyTasks(query:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store.",
+      "code" : "fetchAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -433,7 +393,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyTasks(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store.",
+      "code" : "fetchAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store.",
       "type" : "text"
     }
   ],

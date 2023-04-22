@@ -213,7 +213,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A unique id for this task chosen by the developer.",
+                  "text" : "A unique id for this care task chosen by the developer.",
                   "type" : "text"
                 }
               ],
@@ -227,7 +227,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A title that will be used to represent this task to the user.",
+                  "text" : "A title that will be used to represent this care task to the patient.",
                   "type" : "text"
                 }
               ],

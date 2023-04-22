@@ -124,8 +124,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEntity\/encode(to:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEntity\/parseEntity()"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEntity\/encode(to:)"
       ],
       "title" : "Instance Methods"
     },
@@ -554,48 +553,6 @@
   "title" : "OCKEntity.outcome(_:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockentity\/outcome(_:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEntity/parseEntity()": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "parseEntity"
-    },
-    {
-      "kind" : "text",
-      "text" : "() "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit9PCKEntityO",
-      "text" : "PCKEntity"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEntity\/parseEntity()",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "parseEntity()",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockentity\/parseentity()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEntity/patient(_:)": {
   "abstract" : [

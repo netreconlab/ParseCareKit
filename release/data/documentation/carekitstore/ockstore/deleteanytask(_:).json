@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously delete a task from the store.",
+      "code" : "deleteTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes a task from the store.",
       "type" : "text"
     }
   ],
@@ -168,7 +172,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A task the function deletes. The task must exist in the store.",
+                  "text" : "A task to be deleted. The task must exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -303,7 +307,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/deleteAnyTask(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously delete a task from the store.",
+      "code" : "deleteTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously deletes a task from the store.",
       "type" : "text"
     }
   ],

@@ -33,11 +33,10 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/events(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvent(forTask:occurrence:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvent(forTask:occurrence:callbackQueue:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(taskID:query:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(taskID:query:callbackQueue:completion:)"
       ],
       "title" : "Instance Methods"
     }
@@ -88,105 +87,6 @@
   "title" : "OCKStore",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/events(matching:)": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "conformance" : {
-    "availabilityPrefix" : [
-      {
-        "text" : "Available when",
-        "type" : "text"
-      }
-    ],
-    "conformancePrefix" : [
-      {
-        "text" : "Conforms when",
-        "type" : "text"
-      }
-    ],
-    "constraints" : [
-      {
-        "code" : "Task",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : " conforms to ",
-        "type" : "text"
-      },
-      {
-        "code" : "OCKAnyVersionableTask",
-        "type" : "codeVoice"
-      },
-      {
-        "text" : ".",
-        "type" : "text"
-      }
-    ]
-  },
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "events"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
-      "text" : "OCKEventQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
-      "text" : "CareStoreQueryResults"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore016OCKReadOnlyEventC0P0F0a",
-      "text" : "Event"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/events(matching:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "events(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/events(matching:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchEvent(forTask:occurrence:)": {
   "abstract" : [
@@ -349,14 +249,6 @@
     },
     {
       "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P0E0Qa",
       "text" : "Task"
     },
@@ -432,7 +324,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore\/fetchevent(fortask:occurrence:callbackqueue:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchEvents(query:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchEvents(taskID:query:)": {
   "abstract" : [
     {
       "code" : "fetchEvents",
@@ -459,6 +351,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "taskID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -503,17 +412,21 @@
       "text" : "]"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(query:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(taskID:query:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "fetchEvents(query:)",
+  "title" : "fetchEvents(taskID:query:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/fetchevents(query:)"
+  "url" : "\/documentation\/carekitstore\/ockstore\/fetchevents(taskid:query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchEvents(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchEvents(taskID:query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "The completion will be called with an error if there’s an issue accessing the store or fetching results.",
+      "code" : "fetchEvents",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " retrieves all the occurrences of the specified task in the interval specified by the provided query.",
       "type" : "text"
     }
   ],
@@ -565,6 +478,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "taskID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -645,12 +575,12 @@
       "text" : ">]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchEvents(taskID:query:callbackQueue:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "fetchEvents(query:callbackQueue:completion:)",
+  "title" : "fetchEvents(taskID:query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/fetchevents(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockstore\/fetchevents(taskid:query:callbackqueue:completion:)"
 }
 }
 }

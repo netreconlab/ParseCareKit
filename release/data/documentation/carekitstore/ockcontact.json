@@ -161,8 +161,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContact\/belongs(to:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContact\/isEqual(to:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContact\/belongs(to:)"
       ],
       "title" : "Instance Methods"
     },
@@ -689,7 +688,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKContact/effectiveDate": {
   "abstract" : [
     {
-      "text" : "A date specifying when this version of the contact begins taking effect.",
+      "text" : "The date that this version of the object begins to take precedence over the previous version.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Often this will be the same as the ",
+      "type" : "text"
+    },
+    {
+      "code" : "createdDate",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", but is not required to be.",
       "type" : "text"
     }
   ],
@@ -812,7 +827,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "var"
+      "text" : "let"
     },
     {
       "kind" : "text",
@@ -1063,60 +1078,6 @@
   "title" : "init(id:name:carePlanUUID:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockcontact\/init(id:name:careplanuuid:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKContact/isEqual(to:)": {
-  "abstract" : [
-    {
-      "text" : "Determines if this contact equals another contact.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "isEqual"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "to"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKAnyContactP",
-      "text" : "OCKAnyContact"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContact\/isEqual(to:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "isEqual(to:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockcontact\/isequal(to:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKContact/messagingNumbers": {
   "abstract" : [

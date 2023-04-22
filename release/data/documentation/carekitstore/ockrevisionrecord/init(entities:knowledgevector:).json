@@ -150,36 +150,28 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The entities that were modified.",
+                  "text" : "The operation that was performed (add, update, or delete)",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "entities"
+          "name" : "operation"
         },
         {
           "content" : [
             {
               "inlineContent" : [
                 {
-                  "text" : "A knowledge vector indicating the last known state",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "of each other device by the device that authored this revision record.",
+                  "text" : "The entity that was modified",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "knowledgeVector"
+          "name" : "entity"
         }
       ]
     }

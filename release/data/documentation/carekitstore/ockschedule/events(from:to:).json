@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Compute a list of events that occur between two dates. The lower bound is inclusive",
+      "text" : "Computes an array of events between two dates.",
       "type" : "text"
     },
     {
@@ -9,7 +9,7 @@
       "type" : "text"
     },
     {
-      "text" : "and the upper bound is exclusive.",
+      "text" : "The lower bound is inclusive and the upper bound is exclusive.",
       "type" : "text"
     }
   ],
@@ -199,7 +199,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The earliest date (inclusive) when an event can occur.",
+                  "text" : "The earliest date at which an event could be returned. Inclusive.",
                   "type" : "text"
                 }
               ],
@@ -213,7 +213,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The latest date (exclusive) when an event can occur.",
+                  "text" : "The latest date at which an event could be returned. Exclusive.",
                   "type" : "text"
                 }
               ],
@@ -223,45 +223,6 @@
           "name" : "end"
         }
       ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "",
-                  "type" : "text"
-                },
-                {
-                  "code" : "start",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " < ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "end",
-                  "type" : "codeVoice"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Precondition",
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -370,7 +331,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKSchedule/events(from:to:)": {
   "abstract" : [
     {
-      "text" : "Compute a list of events that occur between two dates. The lower bound is inclusive",
+      "text" : "Computes an array of events between two dates.",
       "type" : "text"
     },
     {
@@ -378,7 +339,7 @@
       "type" : "text"
     },
     {
-      "text" : "and the upper bound is exclusive.",
+      "text" : "The lower bound is inclusive and the upper bound is exclusive.",
       "type" : "text"
     }
   ],

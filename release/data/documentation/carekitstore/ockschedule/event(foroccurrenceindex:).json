@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Compute the date of the Nth event. The result will be nil if the Nth event starts after the end of the schedule.",
+      "text" : "Computes the date of the Nth occurrence of a schedule element. If the Nth occurrence is beyond the end date, then nil will be returned.",
       "type" : "text"
     }
   ],
@@ -140,56 +140,6 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The occurrence of the desired event.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "occurrence"
-        }
-      ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "",
-                  "type" : "text"
-                },
-                {
-                  "code" : "occurrence >= 0",
-                  "type" : "codeVoice"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Precondition",
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -298,7 +248,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKSchedule/event(forOccurrenceIndex:)": {
   "abstract" : [
     {
-      "text" : "Compute the date of the Nth event. The result will be nil if the Nth event starts after the end of the schedule.",
+      "text" : "Computes the date of the Nth occurrence of a schedule element. If the Nth occurrence is beyond the end date, then nil will be returned.",
       "type" : "text"
     }
   ],

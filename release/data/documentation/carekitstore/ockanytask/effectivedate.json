@@ -1,10 +1,4 @@
 {
-  "abstract" : [
-    {
-      "text" : "A date specifying when this version of the task begins taking effect.",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -181,10 +175,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTask/effectiveDate": {
   "abstract" : [
-    {
-      "text" : "A date specifying when this version of the task begins taking effect.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

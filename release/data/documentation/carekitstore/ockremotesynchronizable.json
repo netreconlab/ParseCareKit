@@ -113,7 +113,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizable\/chooseConflictResolution(conflicts:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizable\/pullRevisions(since:mergeRevision:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizable\/pushRevisions(deviceRevisions:deviceKnowledge:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizable\/pushRevisions(deviceRevision:completion:)"
       ],
       "title" : "Instance Methods"
     }
@@ -484,7 +484,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockremotesynchronizable\/pullrevisions(since:mergerevision:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKRemoteSynchronizable/pushRevisions(deviceRevisions:deviceKnowledge:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKRemoteSynchronizable/pushRevisions(deviceRevision:completion:)": {
   "abstract" : [
     {
       "text" : "Push a revision from a device up to the server.",
@@ -510,24 +510,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "deviceRevisions"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ["
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV",
-      "text" : "OCKRevisionRecord"
-    },
-    {
-      "kind" : "text",
-      "text" : "], "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "deviceKnowledge"
+      "text" : "deviceRevision"
     },
     {
       "kind" : "text",
@@ -537,15 +520,6 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV",
       "text" : "OCKRevisionRecord"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore17OCKRevisionRecordV15KnowledgeVectorV",
-      "text" : "KnowledgeVector"
     },
     {
       "kind" : "text",
@@ -578,13 +552,13 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizable\/pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizable\/pushRevisions(deviceRevision:completion:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "pushRevisions(deviceRevisions:deviceKnowledge:completion:)",
+  "title" : "pushRevisions(deviceRevision:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockremotesynchronizable\/pushrevisions(devicerevisions:deviceknowledge:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockremotesynchronizable\/pushrevisions(devicerevision:completion:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKWatchConnectivityPeer": {
   "abstract" : [

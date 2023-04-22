@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously add an array of tasks to the store.",
+      "code" : "addAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an array of tasks to the store.",
       "type" : "text"
     }
   ],
@@ -175,14 +179,14 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of tasks the function adds.",
+                  "text" : "An array of tasks to be added to the store.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "task"
+          "name" : "tasks"
         }
       ]
     }
@@ -315,7 +319,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/addAnyTasks(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously add an array of tasks to the store.",
+      "code" : "addAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an array of tasks to the store.",
       "type" : "text"
     }
   ],

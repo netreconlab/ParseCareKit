@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "A human readable, user-defined unique identifier.",
+      "text" : "A user-defined unique identifier, typically human readable.",
       "type" : "text"
     }
   ],
@@ -140,7 +140,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -174,7 +182,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome/id": {
   "abstract" : [
     {
-      "text" : "A human readable, user-defined unique identifier.",
+      "text" : "A user-defined unique identifier, typically human readable.",
       "type" : "text"
     }
   ],

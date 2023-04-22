@@ -67,7 +67,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC28pckStoreClassesToSynchronizeSDyAA13PCKStoreClassOAA14PCKVersionable_pGSgvp",
+    "externalID" : "s:12ParseCareKit0A6RemoteC28pckStoreClassesToSynchronizeSDyAA13PCKStoreClassOAA17PCKSynchronizable_pGSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -95,17 +95,9 @@
         "text" : " : "
       },
       {
-        "kind" : "keyword",
-        "text" : "any"
-      },
-      {
-        "kind" : "text",
-        "text" : " "
-      },
-      {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-        "text" : "PCKVersionable"
+        "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+        "text" : "PCKSynchronizable"
       },
       {
         "kind" : "text",
@@ -160,18 +152,10 @@
               "text" : " : "
             },
             {
-              "kind" : "keyword",
-              "text" : "any"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKVersionable",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-              "text" : "PCKVersionable"
+              "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+              "text" : "PCKSynchronizable"
             },
             {
               "kind" : "text",
@@ -208,7 +192,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -253,10 +237,42 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckstoreclass"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKVersionable": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKSynchronizable": {
   "abstract" : [
     {
       "text" : "Objects that conform to the ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKSynchronizable",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " protocol are synchronized between the ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and the Parse Cloud.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "In order to synchronize objects, they must also conform to either ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKObjectable",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " or ",
       "type" : "text"
     },
     {
@@ -264,15 +280,55 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol are Parse interpretations of ",
+      "text" : ". For examples,",
       "type" : "text"
     },
     {
-      "code" : "OCKVersionedObjectCompatible",
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "see ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKPatient",
       "type" : "codeVoice"
     },
     {
-      "text" : " objects.",
+      "text" : ", ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKContact",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", and ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -287,21 +343,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKVersionable"
+      "text" : "PCKSynchronizable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKVersionable",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKSynchronizable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKVersionable"
+      "text" : "PCKSynchronizable"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKVersionable",
+  "title" : "PCKSynchronizable",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckversionable"
+  "url" : "\/documentation\/parsecarekit\/pcksynchronizable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote": {
   "abstract" : [
@@ -419,17 +475,9 @@
       "text" : " : "
     },
     {
-      "kind" : "keyword",
-      "text" : "any"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
-      "text" : "PCKVersionable"
+      "preciseIdentifier" : "s:12ParseCareKit17PCKSynchronizableP",
+      "text" : "PCKSynchronizable"
     },
     {
       "kind" : "text",

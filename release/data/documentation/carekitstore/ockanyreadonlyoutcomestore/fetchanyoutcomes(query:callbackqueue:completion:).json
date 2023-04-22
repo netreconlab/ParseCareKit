@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Fetch a list of outcomes that exist in the store.",
+      "code" : "fetchAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -228,7 +232,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Used to match outcomes in the store.",
+                  "text" : "A query used to constrain the values that will be fetched.",
                   "type" : "text"
                 }
               ],
@@ -242,15 +246,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The queue that runs the closure. In most cases this should be the",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "main queue.",
+                  "text" : "The queue that the completion closure should be called on. In most cases this should be the main queue.",
                   "type" : "text"
                 }
               ],
@@ -264,7 +260,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A callback that contains the result.",
+                  "text" : "A callback that will fire on the provided callback queue.",
                   "type" : "text"
                 }
               ],
@@ -274,60 +270,6 @@
           "name" : "completion"
         }
       ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "The closure receives an error if there’s an issue accessing the store or fetching results.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "Supply a query that’ll be used to match outcomes in the store. If the query doesn’t contain a date",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "interval, the result contains the latest version of each outcome. If the query does contain a date",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "interval, the result contains outcomes whose events occur within the interval.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "This method doesn’t check if an outcome’s task is effective in the query interval.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -366,7 +308,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -399,10 +349,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-    {
-      "text" : "A store that allows for reading outcomes.",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -434,7 +381,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore/fetchAnyOutcomes(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Fetch a list of outcomes that exist in the store.",
+      "code" : "fetchAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -562,7 +513,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore/fetchAnyOutcomes(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Fetch a list of outcomes that exist in the store.",
+      "code" : "fetchAnyOutcomes",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of outcomes from the store.",
       "type" : "text"
     }
   ],

@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "A protocol for a CareKit plan.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -99,7 +107,6 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/effectiveDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/groupIdentifier",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/notes",
@@ -143,7 +150,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "A protocol for a CareKit plan.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -177,7 +192,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/belongs(to:)": {
   "abstract" : [
     {
-      "text" : "Determines if this care plan belongs to the given patient.",
+      "text" : "Determines if this care plan belongs to the given patiehtn.",
       "type" : "text"
     }
   ],
@@ -229,48 +244,10 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycareplan\/belongs(to:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/effectiveDate": {
-  "abstract" : [
-    {
-      "text" : "A date specifying when this version of the care plan begins to take effect.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "effectiveDate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10Foundation4DateV",
-      "text" : "Date"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/effectiveDate",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "effectiveDate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycareplan\/effectivedate"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/groupIdentifier": {
   "abstract" : [
     {
-      "text" : "An identifier you use to group this care plan with others.",
+      "text" : "An identifier that can be used to group this care plan with others.",
       "type" : "text"
     }
   ],
@@ -312,7 +289,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/id": {
   "abstract" : [
     {
-      "text" : "A user-defined unique identifier.",
+      "text" : "A user-defined unique identifier, typically human readable.",
       "type" : "text"
     }
   ],

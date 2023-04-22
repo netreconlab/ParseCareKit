@@ -33,13 +33,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/init(uuid:)"
-      ],
-      "title" : "Initializers"
-    },
-    {
-      "generated" : true,
-      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/id-1bxed",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/uuid"
       ],
@@ -70,7 +63,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -734,47 +727,6 @@
   "title" : "id",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcontact\/id-1bxed"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/init(uuid:)": {
-  "abstract" : [
-    {
-      "text" : "Initialize with UUID.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "?("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "uuid"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10Foundation4UUIDV",
-      "text" : "UUID"
-    },
-    {
-      "kind" : "text",
-      "text" : "?)"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/init(uuid:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(uuid:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcontact\/init(uuid:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/uuid": {
   "abstract" : [

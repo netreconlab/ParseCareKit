@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously add an outcome to the store.",
+      "code" : "addAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an outcome to the store.",
       "type" : "text"
     }
   ],
@@ -167,7 +171,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An outcome that the function adds to the store.",
+                  "text" : "An outcome to be added to the store.",
                   "type" : "text"
                 }
               ],
@@ -215,7 +219,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Conforming a type to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " allows it to be queried and displayed by CareKit.",
       "type" : "text"
     }
   ],
@@ -280,7 +292,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcome(_:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously add an outcome to the store.",
+      "code" : "addAnyOutcome",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously adds an outcome to the store.",
       "type" : "text"
     }
   ],

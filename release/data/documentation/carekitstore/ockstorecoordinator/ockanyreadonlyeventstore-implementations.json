@@ -33,13 +33,14 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/anyEvents(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAdherence(query:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAdherence(query:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvent(forTask:occurrence:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(taskID:query:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(taskID:query:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchInsights(query:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchInsights(query:callbackQueue:completion:)"
       ],
       "title" : "Instance Methods"
     }
@@ -128,73 +129,6 @@
   "title" : "OCKStoreCoordinator",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/anyEvents(matching:)": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "anyEvents"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
-      "text" : "OCKEventQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
-      "text" : "CareStoreQueryResults"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV",
-      "text" : "OCKAnyEvent"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/anyEvents(matching:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "anyEvents(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/anyevents(matching:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAdherence(query:)": {
   "abstract" : [
@@ -468,7 +402,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " retrieves the occurrence of the specified task.",
+      "text" : " retrieves a single occurrence of the specified task.",
       "type" : "text"
     }
   ],
@@ -574,7 +508,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchanyevent(fortask:occurrence:callbackqueue:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyEvents(query:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyEvents(taskID:query:)": {
   "abstract" : [
     {
       "code" : "fetchAnyEvents",
@@ -601,6 +535,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "taskID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -645,17 +596,21 @@
       "text" : "]"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(query:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(taskID:query:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "fetchAnyEvents(query:)",
+  "title" : "fetchAnyEvents(taskID:query:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchanyevents(query:)"
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchanyevents(taskid:query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyEvents(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyEvents(taskID:query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Fetch a list of events that exist in the store.",
+      "code" : "fetchAnyEvents",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " retrieves all the occurrences of the specified task in the interval specified by the provided query.",
       "type" : "text"
     }
   ],
@@ -675,6 +630,23 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "taskID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -737,12 +709,186 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchAnyEvents(taskID:query:callbackQueue:completion:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "fetchAnyEvents(query:callbackQueue:completion:)",
+  "title" : "fetchAnyEvents(taskID:query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchanyevents(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchanyevents(taskid:query:callbackqueue:completion:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchInsights(query:)": {
+  "abstract" : [
+    {
+      "code" : "fetchInsights",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " computes a metric for a given task between two dates using the provided closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fetchInsights"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "query"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore15OCKInsightQueryV",
+      "text" : "OCKInsightQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sd",
+      "text" : "Double"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchInsights(query:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fetchInsights(query:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchinsights(query:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchInsights(query:callbackQueue:completion:)": {
+  "abstract" : [
+    {
+      "code" : "fetchInsights",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " computes a metric for a given task between two dates using the provided closure.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fetchInsights"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "query"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore15OCKInsightQueryV",
+      "text" : "OCKInsightQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "callbackQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+      "text" : "DispatchQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+      "text" : "OCKResultClosure"
+    },
+    {
+      "kind" : "text",
+      "text" : "<["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sd",
+      "text" : "Double"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreCoordinator\/fetchInsights(query:callbackQueue:completion:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fetchInsights(query:callbackQueue:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstorecoordinator\/fetchinsights(query:callbackqueue:completion:)"
 }
 }
 }

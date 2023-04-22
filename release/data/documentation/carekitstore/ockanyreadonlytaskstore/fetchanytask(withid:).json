@@ -1,7 +1,19 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store using its user-defined unique identifier.",
+      "code" : "fetchAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store using its user-defined unique identifier. If a task with the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "specified identifier is not found, the completion handler will be called with an error.",
       "type" : "text"
     }
   ],
@@ -174,7 +186,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The identifier of the item to fetch.",
+                  "text" : "The identifier of the item to be fetched.",
                   "type" : "text"
                 }
               ],
@@ -184,26 +196,6 @@
           "name" : "id"
         }
       ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "If a task with the specified identifier isn’t found, the completion handler receives an error.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -242,7 +234,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -276,7 +284,19 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTask(withID:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store using its user-defined unique identifier.",
+      "code" : "fetchAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store using its user-defined unique identifier. If a task with the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "specified identifier is not found, the completion handler will be called with an error.",
       "type" : "text"
     }
   ],

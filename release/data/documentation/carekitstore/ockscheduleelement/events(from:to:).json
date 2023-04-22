@@ -1,26 +1,4 @@
 {
-  "abstract" : [
-    {
-      "text" : "Compute all events that occur between ",
-      "type" : "text"
-    },
-    {
-      "code" : "start",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (inclusive) and ",
-      "type" : "text"
-    },
-    {
-      "code" : "end",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (exclusive).",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -198,78 +176,6 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The inclusive earliest start time for an event.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "start"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The exclusive latest start time for an event.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "end"
-        }
-      ]
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "",
-                  "type" : "text"
-                },
-                {
-                  "code" : "start",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " < ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "end",
-                  "type" : "codeVoice"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Precondition",
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -357,26 +263,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/events(from:to:)": {
   "abstract" : [
-    {
-      "text" : "Compute all events that occur between ",
-      "type" : "text"
-    },
-    {
-      "code" : "start",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (inclusive) and ",
-      "type" : "text"
-    },
-    {
-      "code" : "end",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " (exclusive).",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {

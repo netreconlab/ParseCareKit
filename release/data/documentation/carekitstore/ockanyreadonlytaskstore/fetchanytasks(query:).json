@@ -1,7 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store.",
+      "code" : "fetchAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -175,7 +179,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A query that constrains the fetched values.",
+                  "text" : "A query used to constrain the values that will be fetched.",
                   "type" : "text"
                 }
               ],
@@ -223,7 +227,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "A store that allows for reading tasks.",
+      "text" : "Any store from which types conforming to ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " can be queried is considered ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKAnyReadOnlyTaskStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
@@ -257,7 +277,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTasks(query:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieve an array of tasks from the store.",
+      "code" : "fetchAnyTasks",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of tasks from the store.",
       "type" : "text"
     }
   ],

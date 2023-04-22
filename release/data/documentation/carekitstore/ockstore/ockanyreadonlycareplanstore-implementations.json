@@ -33,7 +33,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/anyCarePlans(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyCarePlan(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyCarePlan(withID:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/fetchAnyCarePlans(query:)",
@@ -89,77 +88,14 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/anyCarePlans(matching:)": {
-  "abstract" : [
-    {
-      "text" : "A continuous stream of care plans that exist in the store.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "anyCarePlans"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "matching"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore16OCKCarePlanQueryV",
-      "text" : "OCKCarePlanQuery"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
-      "text" : "CareStoreQueryResults"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore06OCKAnyA4PlanP",
-      "text" : "OCKAnyCarePlan"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/anyCarePlans(matching:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "anyCarePlans(matching:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstore\/anycareplans(matching:)"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyCarePlan(withID:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieves a single care plans from the store.",
+      "code" : "fetchAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],
@@ -229,7 +165,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyCarePlan(withID:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "Asynchronously retrieves a single care plan from the store.",
+      "code" : "fetchAnyCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves a single care plans from the store.",
       "type" : "text"
     }
   ],
@@ -321,7 +261,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyCarePlans(query:)": {
   "abstract" : [
     {
-      "text" : "Aynchronously retrieves an array of care plans from the store.",
+      "code" : "fetchAnyCarePlans",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " asynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -395,15 +339,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyCarePlans(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
-      "type" : "text"
+      "code" : "fetchAnyCarePlans",
+      "type" : "codeVoice"
     },
     {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
+      "text" : " asynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],
