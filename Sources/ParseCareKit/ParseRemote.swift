@@ -288,36 +288,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     }
                     self.notifyRevisionProgress(revisions.count,
                                                 total: revisions.count)
-                    /*
-                    var updatedParseClock = parseClock
-                    var updatedParseVector = parseVector
-                    if revisions.count > 0 {
-                        // 3. Increment the knowledge vector so that all conflict
-                        //    revisions applied in the next step count as new for
-                        //    the peer.
-                        updatedParseVector = incrementVectorClock(updatedParseVector)
-                        updatedParseClock.knowledgeVector = updatedParseVector
-                        guard updatedParseClock.knowledgeVector != nil else {
-                            await self.remoteStatus.notSynchronzing()
-                            completion(ParseCareKitError.couldntUnwrapClock)
-                            return
-                        }
-                        do {
-                            await self.remoteStatus.updateKnowledgeVector(updatedParseClock.knowledgeVector)
-                            updatedParseClock = try await updatedParseClock.save()
-                        } catch {
-                            await self.remoteStatus.notSynchronzing()
-                            completion(ParseCareKitError.couldntUnwrapClock)
-                            return
-                        }
-                    } else {
-                        await self.remoteStatus.updateKnowledgeVector(updatedParseClock.knowledgeVector)
-                    }
-
-                    // 4. Lock in the changes and catch up local device.
-                    let revision = OCKRevisionRecord(entities: [],
-                                                     knowledgeVector: updatedParseVector)
-                     */
 
                     await self.remoteStatus.updateClock(parseClock)
                     // 4. Lock in the changes and catch up local device.
@@ -425,8 +395,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
             if shouldIncrementClock {
                 // Increment and merge Knowledge Vector
                 updatedParseVector = incrementVectorClock(updatedParseVector)
+                updatedParseVector.merge(with: localClock)
+            } else {
+                updatedParseVector.merge(with: localClock)
+                if updatedParseVector.uuids.count > parseVector.uuids.count {
+                    // Increment and merge Knowledge Vector
+                    updatedParseVector = incrementVectorClock(updatedParseVector)
+                }
             }
-            updatedParseVector.merge(with: localClock)
             guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
                 await self.remoteStatus.updateClock(parseClock) // revert
                 await self.remoteStatus.notSynchronzing()
