@@ -112,15 +112,12 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
              logicalClock, clock, clockUUID
     }
 
-    func convertToCareKit(_ vector: OCKRevisionRecord.KnowledgeVector? = nil) throws -> OCKRevisionRecord {
+    func convertToCareKit() throws -> OCKRevisionRecord {
         guard let entities = entities,
-            var knowledgeVector = knowledgeVector else {
+            let knowledgeVector = knowledgeVector else {
             throw ParseCareKitError.couldntUnwrapSelf
         }
         let careKitEntities = try entities.compactMap { try $0.careKit() }
-        if let vector = vector {
-            knowledgeVector.merge(with: vector)
-        }
         return OCKRevisionRecord(entities: careKitEntities,
                                  knowledgeVector: knowledgeVector)
     }

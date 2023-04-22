@@ -280,7 +280,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                                 total: revisions.count)
                     // 2.1 Merge revisions
                     for (index, revision) in revisions.enumerated() {
-                        let record = try await revision.fetchEntities().convertToCareKit(knowledgeVector)
+                        let record = try await revision.fetchEntities().convertToCareKit()
                         mergeRevision(record)
                         self.notifyRevisionProgress(index + 1,
                                                     total: revisions.count)
@@ -393,8 +393,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
             if shouldIncrementClock {
                 // Increment Knowledge Vector
                 updatedParseVector = incrementVectorClock(updatedParseVector)
+                updatedParseVector.merge(with: localClock)
+            } else {
+                updatedParseVector.merge(with: localClock)
+                guard updatedParseVector.uuids.count > parseVector.uuids.count else {
+                    Logger.pushRevisions.debug("Finished pushing revisions")
+                    await self.remoteStatus.notSynchronzing()
+                    await self.subscribeToRevisionRecord()
+                    DispatchQueue.main.async {
+                        self.parseRemoteDelegate?.successfullyPushedDataToCloud()
+                    }
+                    completion(nil)
+                    return
+                }
             }
-            updatedParseVector.merge(with: localClock)
 
             guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
                 await self.remoteStatus.notSynchronzing()
