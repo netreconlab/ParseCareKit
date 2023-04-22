@@ -106,7 +106,10 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/dateInterval"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/dateInterval",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/taskGroupIdentifiers",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/taskIDs",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/taskTags"
       ],
       "title" : "Instance Properties"
     },
@@ -196,7 +199,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery/dateInterval": {
   "abstract" : [
     {
-      "text" : "The date interval in which outcomes should match.",
+      "text" : "The date interval in which events should be returned.",
       "type" : "text"
     }
   ],
@@ -327,6 +330,129 @@
   "title" : "init(for:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockeventquery\/init(for:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery/taskGroupIdentifiers": {
+  "abstract" : [
+    {
+      "text" : "The group identifiers of tasks to match events against.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "taskGroupIdentifiers"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/taskGroupIdentifiers",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "taskGroupIdentifiers",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockeventquery\/taskgroupidentifiers"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery/taskIDs": {
+  "abstract" : [
+    {
+      "text" : "The identifiers of tasks to match events against.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "taskIDs"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/taskIDs",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "taskIDs",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockeventquery\/taskids"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery/taskTags": {
+  "abstract" : [
+    {
+      "text" : "The tags of tasks to match events against.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "taskTags"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/taskTags",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "taskTags",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockeventquery\/tasktags"
 }
 }
 }

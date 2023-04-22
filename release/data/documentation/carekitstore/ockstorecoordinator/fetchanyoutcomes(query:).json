@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "fetchAnyOutcomes",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of outcomes from the store.",
+      "text" : "Asynchronously retrieve an array of outcomes from the store.",
       "type" : "text"
     }
   ],
@@ -180,7 +176,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A query used to constrain the values that will be fetched.",
+                  "text" : "A query that constrains the fetched values.",
                   "type" : "text"
                 }
               ],
@@ -228,15 +224,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -387,11 +375,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/fetchAnyOutcomes(query:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyOutcomes",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of outcomes from the store.",
+      "text" : "Asynchronously retrieve an array of outcomes from the store.",
       "type" : "text"
     }
   ],

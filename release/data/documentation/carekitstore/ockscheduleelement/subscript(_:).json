@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Returns the Nth event of this schedule.",
+      "text" : "Compute the Nth event of this schedule.",
       "type" : "text"
     }
   ],
@@ -219,7 +219,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/subscript(_:)": {
   "abstract" : [
     {
-      "text" : "Returns the Nth event of this schedule.",
+      "text" : "Compute the Nth event of this schedule.",
       "type" : "text"
     }
   ],

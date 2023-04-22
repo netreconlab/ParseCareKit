@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of care plans from the store.",
+      "text" : "Aynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],
@@ -180,7 +176,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A query used to constrain the values that will be fetched.",
+                  "text" : "A query that constrains the values that the method fetches.",
                   "type" : "text"
                 }
               ],
@@ -228,15 +224,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -349,11 +337,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/fetchAnyCarePlans(query:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyCarePlans",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of care plans from the store.",
+      "text" : "Aynchronously retrieves an array of care plans from the store.",
       "type" : "text"
     }
   ],

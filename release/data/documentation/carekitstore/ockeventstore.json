@@ -273,23 +273,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "s  can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],
@@ -322,7 +306,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [
-
+    {
+      "text" : "A store that allows for reading outcomes.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -354,23 +341,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],
@@ -592,15 +563,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single event type can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],
@@ -634,23 +597,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableOutcomeStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading outcomes.",
       "type" : "text"
     }
   ],
@@ -684,23 +631,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],

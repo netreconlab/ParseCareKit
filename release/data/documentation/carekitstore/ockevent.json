@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "An ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " represents a single occasion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "An event that represents a single occasion that a task was scheduled to occur.",
       "type" : "text"
     }
   ],
@@ -136,6 +120,23 @@
             },
             {
               "kind" : "typeIdentifier",
+              "text" : "Task"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SQ",
+              "text" : "Equatable"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
               "text" : "Outcome"
             },
             {
@@ -147,16 +148,70 @@
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
               "text" : "OCKAnyOutcome"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Outcome"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SQ",
+              "text" : "Equatable"
             }
           ]
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The event contains a copy of the task itself, the",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "schedule event, and an outcome that’s non-",
+              "type" : "text"
+            },
+            {
+              "code" : "nil",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " if progress is made on the task.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s12IdentifiableP"
       ],
       "kind" : "relationships",
@@ -189,8 +244,15 @@
       "title" : "Instance Properties"
     },
     {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/computeProgress(by:)"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Equatable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Identifiable-Implementations"
       ],
       "title" : "Default Implementations"
@@ -210,6 +272,11 @@
   ]
 , 
 "references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore": {
   "abstract" : [
 
@@ -224,15 +291,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -308,23 +367,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent": {
   "abstract" : [
     {
-      "text" : "An ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " represents a single occasion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "An event that represents a single occasion that a task was scheduled to occur.",
       "type" : "text"
     }
   ],
@@ -355,6 +398,17 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockevent"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockevent\/equatable-implementations"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/Identifiable-Implementations": {
   "abstract" : [
 
@@ -366,18 +420,81 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockevent\/identifiable-implementations"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/computeProgress(by:)": {
+  "abstract" : [
+    {
+      "text" : "Compute the progress for an event.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "computeProgress"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Progress"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0A20TaskProgressStrategyV",
+      "text" : "CareTaskProgressStrategy"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore8OCKEventV15computeProgress2byqd__AA0a4TaskF8StrategyVyqd__G_tAA0ahF0Rd__lF0F0L_qd__mfp",
+      "text" : "Progress"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore8OCKEventV15computeProgress2byqd__AA0a4TaskF8StrategyVyqd__G_tAA0ahF0Rd__lF0F0L_qd__mfp",
+      "text" : "Progress"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/computeProgress(by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "computeProgress(by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockevent\/computeprogress(by:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/id-9f0k": {
   "abstract" : [
     {
-      "text" : "The stable identifier that can be used for the ",
-      "type" : "text"
-    },
-    {
-      "code" : "Identifiable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " protocol.",
+      "text" : "The stable identifier to use.",
       "type" : "text"
     }
   ],
@@ -414,15 +531,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/init(task:outcome:scheduleEvent:)": {
   "abstract" : [
     {
-      "text" : "Initialize an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " with a task, optional outcome, and schedule event.",
+      "text" : "Initialize an event with a task, optional outcome, and schedule event.",
       "type" : "text"
     }
   ],

@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],
@@ -149,12 +133,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/taskDelegate"
-      ],
-      "title" : "Instance Properties"
-    },
-    {
-      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/anyTasks(matching:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTask(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTask(withID:callbackQueue:completion:)-60dim",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTasks(query:)",
@@ -241,23 +220,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyEvent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "s  can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],
@@ -291,23 +254,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore": {
   "abstract" : [
     {
-      "text" : "Any store from which types conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyReadOnlyTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],
@@ -338,22 +285,79 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/anyTasks(matching:)": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of tasks that exist in the store.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "anyTasks"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "matching"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore12OCKTaskQueryV",
+      "text" : "OCKTaskQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+      "text" : "CareStoreQueryResults"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
+      "text" : "OCKAnyTask"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/anyTasks(matching:)",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "anyTasks(matching:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/anytasks(matching:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTask(withID:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of tasks from the store using its user-defined unique identifier. If a task with the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "specified identifier is not found, the completion handler will be called with an error.",
+      "text" : "Asynchronously retrieve an array of tasks from the store using its user-defined unique identifier.",
       "type" : "text"
     }
   ],
@@ -423,19 +427,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTask(withID:callbackQueue:completion:)-60dim": {
   "abstract" : [
     {
-      "code" : "fetchAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of tasks from the store using its user-defined unique identifier. If a task with the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "specified identifier is not found, the completion handler will be called with an error.",
+      "text" : "Asynchronously retrieve an array of tasks from the store using its user-defined unique identifier.",
       "type" : "text"
     }
   ],
@@ -547,11 +539,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTasks(query:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of tasks from the store.",
+      "text" : "Asynchronously retrieve an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -625,11 +613,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTasks(query:callbackQueue:completion:)": {
   "abstract" : [
     {
-      "code" : "fetchAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously retrieves an array of tasks from the store.",
+      "text" : "Asynchronously retrieve an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -719,64 +703,6 @@
   "title" : "fetchAnyTasks(query:callbackQueue:completion:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/fetchanytasks(query:callbackqueue:completion:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/taskDelegate": {
-  "abstract" : [
-    {
-      "text" : "The delegate receives callbacks when the contents of the care plan store are modified.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "In ",
-      "type" : "text"
-    },
-    {
-      "code" : "CareKit",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " apps, the delegate will be set automatically, and it should not be modified.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "taskDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore07OCKTaskC8DelegateP",
-      "text" : "OCKTaskStoreDelegate"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/taskDelegate",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "taskDelegate",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/taskdelegate"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyResettableStore": {
   "abstract" : [
@@ -938,15 +864,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadOnlyEventStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single event type can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadOnlyEventStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading events.",
       "type" : "text"
     }
   ],
@@ -980,23 +898,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore": {
   "abstract" : [
     {
-      "text" : "Any store from which a single type conforming to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " can be queried is considered a ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKReadableTaskStore",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A store that allows for reading tasks.",
       "type" : "text"
     }
   ],

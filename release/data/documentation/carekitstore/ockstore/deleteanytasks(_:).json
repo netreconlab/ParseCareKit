@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "deleteAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of tasks from the store.",
+      "text" : "Asynchronously delete an array of tasks from the store.",
       "type" : "text"
     }
   ],
@@ -180,14 +176,14 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of tasks to be deleted. The tasks must exist in the store.",
+                  "text" : "An array of tasks the function deletes. The tasks must exist in the store.",
                   "type" : "text"
                 }
               ],
               "type" : "paragraph"
             }
           ],
-          "name" : "tasks"
+          "name" : "task"
         }
       ]
     }
@@ -315,11 +311,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/deleteAnyTasks(_:)": {
   "abstract" : [
     {
-      "code" : "deleteAnyTasks",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously deletes an array of tasks from the store.",
+      "text" : "Asynchronously delete an array of tasks from the store.",
       "type" : "text"
     }
   ],

@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "An identifier that can be used to group this care plan with others.",
+      "text" : "An identifier you use to group this care plan with others.",
       "type" : "text"
     }
   ],
@@ -144,15 +144,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -186,7 +178,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/groupIdentifier": {
   "abstract" : [
     {
-      "text" : "An identifier that can be used to group this care plan with others.",
+      "text" : "An identifier you use to group this care plan with others.",
       "type" : "text"
     }
   ],

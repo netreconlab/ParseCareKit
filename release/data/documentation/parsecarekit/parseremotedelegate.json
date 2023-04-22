@@ -126,6 +126,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/chooseConflictResolution(conflicts:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/needStore()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedDataToCloud()"
       ],
       "title" : "Instance Methods"
@@ -190,7 +191,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -326,6 +327,52 @@
   "title" : "chooseConflictResolution(conflicts:completion:)",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/chooseconflictresolution(conflicts:completion:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/needStore()": {
+  "abstract" : [
+    {
+      "text" : "Sometimes the remote will need the local data store to fetch additional information",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "required for proper synchronization.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "needStore"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
+      "text" : "OCKAnyStoreProtocol"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/needStore()",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "needStore()",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/needstore()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/successfullyPushedDataToCloud()": {
   "abstract" : [

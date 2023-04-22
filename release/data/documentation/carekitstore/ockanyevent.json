@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
       "type" : "text"
     }
   ],
@@ -84,6 +76,42 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The event contains a copy of the task itself, as well as the",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "schedule event and an outcome that is non-",
+              "type" : "text"
+            },
+            {
+              "code" : "nil",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " if progress occurred on the task.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -109,6 +137,12 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyEvent\/task"
       ],
       "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyEvent\/computeProgress(by:)"
+      ],
+      "title" : "Instance Methods"
     }
   ],
   "variants" : [
@@ -139,15 +173,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
       "type" : "text"
     }
   ],
@@ -177,6 +203,77 @@
   "title" : "OCKAnyEvent",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyevent"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/computeProgress(by:)": {
+  "abstract" : [
+    {
+      "text" : "Compute the progress for an event.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "computeProgress"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "Progress"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "by"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0A20TaskProgressStrategyV",
+      "text" : "CareTaskProgressStrategy"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV15computeProgress2byxAA0a4TaskG8StrategyVyxG_tAA0aiG0RzlF0G0L_xmfp",
+      "text" : "Progress"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV15computeProgress2byxAA0a4TaskG8StrategyVyxG_tAA0aiG0RzlF0G0L_xmfp",
+      "text" : "Progress"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyEvent\/computeProgress(by:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "computeProgress(by:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyevent\/computeprogress(by:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/id": {
   "abstract" : [
@@ -226,7 +323,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/init(task:outcome:scheduleEvent:)": {
   "abstract" : [
     {
-      "text" : "Initialize by specifying a task, schedule event, and optional outcome.",
+      "text" : "Creates an event with a task, schedule event, and optional outcome.",
       "type" : "text"
     }
   ],
@@ -301,7 +398,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/outcome": {
   "abstract" : [
     {
-      "text" : "The outcome for this event. If the outcome is empty, that means that no actions were recorded.",
+      "text" : "The outcome for this event.",
       "type" : "text"
     }
   ],
@@ -342,15 +439,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/scheduleEvent": {
   "abstract" : [
     {
-      "text" : "The schedule event for this task occurrence. It contains information about the start, duration, occurrence number, and schedule element that",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "resulted in this event.",
+      "text" : "The schedule event for this task occurrence.",
       "type" : "text"
     }
   ],
@@ -387,7 +476,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/task": {
   "abstract" : [
     {
-      "text" : "The task that this event is associated with",
+      "text" : "The task that this event is associated with.",
       "type" : "text"
     }
   ],

@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],
@@ -172,7 +168,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A single care plan to be updated. The care plans must already exist in the store.",
+                  "text" : "A single care plan to update. The care plans must already exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -220,15 +216,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol for a CareKit plan.",
       "type" : "text"
     }
   ],
@@ -307,11 +295,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/updateAnyCarePlan(_:)": {
   "abstract" : [
     {
-      "code" : "updateAnyCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates a single care plan in the store.",
+      "text" : "Asynchronously updates a single care plan in the store.",
       "type" : "text"
     }
   ],

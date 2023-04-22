@@ -1,4 +1,26 @@
 {
+  "abstract" : [
+    {
+      "text" : "Each store involved in synchronization is termed a process and given a unique UUID. The corresponding",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "integer for a process is an indication of time. If two processes have the same integer value, they both",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "have the same knowledge of the current data representation.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -255,7 +277,26 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKRevisionRecord/KnowledgeVector-swift.struct/processes": {
   "abstract" : [
-
+    {
+      "text" : "Each store involved in synchronization is termed a process and given a unique UUID. The corresponding",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "integer for a process is an indication of time. If two processes have the same integer value, they both",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "have the same knowledge of the current data representation.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The date that this version of the object begins to take precedence over the previous version.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "Often this will be the same as the ",
-      "type" : "text"
-    },
-    {
-      "code" : "createdDate",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", but is not required to be.",
+      "text" : "A date specifying when this version of the contact begins taking effect.",
       "type" : "text"
     }
   ],
@@ -193,23 +177,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKContact/effectiveDate": {
   "abstract" : [
     {
-      "text" : "The date that this version of the object begins to take precedence over the previous version.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "Often this will be the same as the ",
-      "type" : "text"
-    },
-    {
-      "code" : "createdDate",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", but is not required to be.",
+      "text" : "A date specifying when this version of the contact begins taking effect.",
       "type" : "text"
     }
   ],

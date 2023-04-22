@@ -1,11 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "updateAnyOutcomes",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an array of outcomes in the store.",
+      "text" : "Asynchronously update an array of outcomes in the store.",
       "type" : "text"
     }
   ],
@@ -180,7 +176,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "An array of outcomes to be updated. The outcomes must already exist in the store.",
+                  "text" : "An array of updated outcomes. The outcomes must already exist in the store.",
                   "type" : "text"
                 }
               ],
@@ -228,15 +224,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -353,11 +341,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreCoordinator/updateAnyOutcomes(_:)": {
   "abstract" : [
     {
-      "code" : "updateAnyOutcomes",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " asynchronously updates an array of outcomes in the store.",
+      "text" : "Asynchronously update an array of outcomes in the store.",
       "type" : "text"
     }
   ],

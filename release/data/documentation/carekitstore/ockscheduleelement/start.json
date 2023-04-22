@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "The date and time the first event occurs.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -170,7 +176,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/start": {
   "abstract" : [
-
+    {
+      "text" : "The date and time the first event occurs.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

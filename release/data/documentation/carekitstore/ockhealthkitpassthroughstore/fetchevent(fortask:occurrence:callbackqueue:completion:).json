@@ -85,6 +85,14 @@
       },
       {
         "kind" : "typeIdentifier",
+        "text" : "Self"
+      },
+      {
+        "kind" : "text",
+        "text" : "."
+      },
+      {
+        "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P0E0Qa",
         "text" : "Task"
       },
@@ -207,6 +215,14 @@
               "text" : ": "
             },
             {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
               "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Task",
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P0E0Qa",
@@ -248,7 +264,7 @@
             },
             {
               "kind" : "text",
-              "text" : " = .main, "
+              "text" : ", "
             },
             {
               "kind" : "externalParam",
@@ -498,6 +514,14 @@
     {
       "kind" : "text",
       "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
     },
     {
       "kind" : "typeIdentifier",

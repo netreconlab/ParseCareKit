@@ -141,7 +141,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A task which may or may not own this outcome.",
+                  "text" : "A task that may own this outcome.",
                   "type" : "text"
                 }
               ],

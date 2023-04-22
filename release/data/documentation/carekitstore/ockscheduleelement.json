@@ -301,7 +301,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/date(ofOccurrence:)": {
   "abstract" : [
     {
-      "text" : "Computes the date of the Nth occurrence of a schedule element. If the Nth occurrence is beyond the end date, then nil will be returned.",
+      "text" : "Computes the date of the Nth event. The result will be nil if the Nth event starts after the end of the schedule.",
       "type" : "text"
     }
   ],
@@ -475,7 +475,34 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/events(betweenOccurrenceIndex:and:)": {
   "abstract" : [
-
+    {
+      "text" : "Compute all events that occur between ",
+      "type" : "text"
+    },
+    {
+      "code" : "startIndex",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (inclusive) and ",
+      "type" : "text"
+    },
+    {
+      "code" : "stopIndex",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (exclusive). The result",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "might not contain the desired events if the schedule ends before a particular event starts.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -535,7 +562,7 @@
     },
     {
       "kind" : "text",
-      "text" : "?]"
+      "text" : "]"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/events(betweenOccurrenceIndex:and:)",
@@ -547,7 +574,26 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/events(from:to:)": {
   "abstract" : [
-
+    {
+      "text" : "Compute all events that occur between ",
+      "type" : "text"
+    },
+    {
+      "code" : "start",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (inclusive) and ",
+      "type" : "text"
+    },
+    {
+      "code" : "end",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (exclusive).",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -891,7 +937,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/start": {
   "abstract" : [
-
+    {
+      "text" : "The date and time the first event occurs.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -926,7 +975,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/subscript(_:)": {
   "abstract" : [
     {
-      "text" : "Returns the Nth event of this schedule.",
+      "text" : "Compute the Nth event of this schedule.",
       "type" : "text"
     }
   ],

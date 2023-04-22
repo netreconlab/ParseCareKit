@@ -173,15 +173,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -322,7 +314,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/groupIdentifier": {
   "abstract" : [
     {
-      "text" : "An identifier that can be used to group this outcome with others.",
+      "text" : "An identifier you can use to group this outcome with others.",
       "type" : "text"
     }
   ],
@@ -633,23 +625,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/taskOccurrenceIndex": {
   "abstract" : [
     {
-      "text" : "Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the 2nd outcome on the 2nd day will have a ",
-      "type" : "text"
-    },
-    {
-      "code" : "taskOccurrenceIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " of 3.",
+      "text" : "A property that specifies how many events occured before this outcome became instantiated.",
       "type" : "text"
     }
   ],
@@ -723,7 +699,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/values": {
   "abstract" : [
     {
-      "text" : "An array of values associated with this outcome. Most outcomes will have 0 or 1 values, but some may have more.",
+      "text" : "An array of values associated with this outcome.",
       "type" : "text"
     }
   ],

@@ -113,7 +113,6 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/limit",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/offset",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/remoteIDs",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/sortDescriptors",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/tags",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/taskIDs",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/taskRemoteIDs",
@@ -121,12 +120,6 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/uuids"
       ],
       "title" : "Instance Properties"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/SortDescriptor"
-      ],
-      "title" : "Enumerations"
     },
     {
       "generated" : true,
@@ -210,40 +203,6 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockoutcomequery\/equatable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcomeQuery/SortDescriptor": {
-  "abstract" : [
-    {
-      "text" : "Specifies the order in which query results will be sorted.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "enum"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "SortDescriptor"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/SortDescriptor",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "SortDescriptor"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "OCKOutcomeQuery.SortDescriptor",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockoutcomequery\/sortdescriptor"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcomeQuery/dateInterval": {
   "abstract" : [
@@ -618,47 +577,6 @@
   "title" : "remoteIDs",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockoutcomequery\/remoteids"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcomeQuery/sortDescriptors": {
-  "abstract" : [
-    {
-      "text" : "The order in which the results will be sorted when returned from the query.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "sortDescriptors"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ["
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore15OCKOutcomeQueryV14SortDescriptorO",
-      "text" : "SortDescriptor"
-    },
-    {
-      "kind" : "text",
-      "text" : "]"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKOutcomeQuery\/sortDescriptors",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "sortDescriptors",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockoutcomequery\/sortdescriptors"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKOutcomeQuery/tags": {
   "abstract" : [

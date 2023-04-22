@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The outcome for this event. If the outcome is empty, that means that no actions were recorded.",
+      "text" : "The outcome for this event.",
       "type" : "text"
     }
   ],
@@ -108,11 +108,28 @@
           "type" : "heading"
         },
         {
+          "inlineContent" : [
+            {
+              "text" : "If the outcome is empty, no actions were recorded.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
           "content" : [
             {
               "inlineContent" : [
                 {
-                  "text" : "The outcome may be non-nil even if if the task was not completed, so simply checking the presence of an outcome is not sufficient",
+                  "text" : "The outcome may be non-",
+                  "type" : "text"
+                },
+                {
+                  "code" : "nil",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " even if the task didn’t complete. Checking the presence of an outcome isn’t sufficient",
                   "type" : "text"
                 },
                 {
@@ -120,15 +137,15 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "to determing whether or not the task was completed. Examples of times when the outcome is non-nil but the task was not completed could",
+                  "text" : "to determine whether or not the task completed. Here are some examples of times when the outcome is non-",
                   "type" : "text"
                 },
                 {
-                  "text" : " ",
-                  "type" : "text"
+                  "code" : "nil",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text" : "include, among others",
+                  "text" : " but the task didn’t complete:",
                   "type" : "text"
                 }
               ],
@@ -179,15 +196,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
   "abstract" : [
     {
-      "text" : "An event represents a single occassion on which a task was scheduled to occur. It contains a copy of the task itself as well as the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "schedule event and an outcome that will be non-nil if progress was made on the task.",
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
       "type" : "text"
     }
   ],
@@ -221,7 +230,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent/outcome": {
   "abstract" : [
     {
-      "text" : "The outcome for this event. If the outcome is empty, that means that no actions were recorded.",
+      "text" : "The outcome for this event.",
       "type" : "text"
     }
   ],
@@ -262,15 +271,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],

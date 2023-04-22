@@ -75,7 +75,6 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SL",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ"
       ],
       "kind" : "relationships",
@@ -94,12 +93,6 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/_(_:_:)-12wxa"
-      ],
-      "title" : "Operators"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/element",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/end",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/occurrence",
@@ -110,7 +103,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/Comparable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/Equatable-Implementations"
       ],
       "title" : "Default Implementations"
@@ -130,11 +122,6 @@
   ]
 , 
 "references": {
-"doc://edu.uky.cs.netreconlab.ParseCareKit/SL": {
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SL",
-  "title" : "Swift.Comparable",
-  "type" : "unresolvable"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
   "title" : "Swift.Equatable",
@@ -182,17 +169,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockscheduleevent"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleEvent/Comparable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/Comparable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Comparable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockscheduleevent\/comparable-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleEvent/Equatable-Implementations": {
   "abstract" : [
 
@@ -204,70 +180,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockscheduleevent\/equatable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleEvent/_(_:_:)-12wxa": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "<"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore16OCKScheduleEventV",
-      "text" : "OCKScheduleEvent"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore16OCKScheduleEventV",
-      "text" : "OCKScheduleEvent"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleEvent\/_(_:_:)-12wxa",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "<(_:_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockscheduleevent\/_(_:_:)-12wxa"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleEvent/element": {
   "abstract" : [
 
@@ -275,7 +187,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "let"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -309,7 +221,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "let"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -343,7 +255,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "let"
+      "text" : "var"
     },
     {
       "kind" : "text",
@@ -377,7 +289,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "let"
+      "text" : "var"
     },
     {
       "kind" : "text",

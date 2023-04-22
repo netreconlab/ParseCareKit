@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -113,6 +105,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome\/notes",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome\/remoteID",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome\/taskOccurrenceIndex",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome\/taskUUID",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome\/values"
       ],
       "title" : "Instance Properties"
@@ -152,15 +145,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -249,7 +234,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome/groupIdentifier": {
   "abstract" : [
     {
-      "text" : "An identifier that can be used to group this outcome with others.",
+      "text" : "An identifier you can use to group this outcome with others.",
       "type" : "text"
     }
   ],
@@ -291,7 +276,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome/id": {
   "abstract" : [
     {
-      "text" : "A user-defined unique identifier, typically human readable.",
+      "text" : "A human readable, user-defined unique identifier.",
       "type" : "text"
     }
   ],
@@ -413,23 +398,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome/taskOccurrenceIndex": {
   "abstract" : [
     {
-      "text" : "Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the 2nd outcome on the 2nd day will have a ",
-      "type" : "text"
-    },
-    {
-      "code" : "taskOccurrenceIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " of 3.",
+      "text" : "A property that specifies how many events occured before this outcome became instantiated.",
       "type" : "text"
     }
   ],
@@ -464,10 +433,48 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyoutcome\/taskoccurrenceindex"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome/taskUUID": {
+  "abstract" : [
+    {
+      "text" : "A unique identifier for the specific version of the task that this outcome belongs to.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "taskUUID"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4UUIDV",
+      "text" : "UUID"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome\/taskUUID",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "taskUUID",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyoutcome\/taskuuid"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome/values": {
   "abstract" : [
     {
-      "text" : "An array of values associated with this outcome. Most outcomes will have 0 or 1 values, but some may have more.",
+      "text" : "An array of values associated with this outcome.",
       "type" : "text"
     }
   ],

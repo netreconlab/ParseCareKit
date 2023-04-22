@@ -1,23 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the 2nd outcome on the 2nd day will have a ",
-      "type" : "text"
-    },
-    {
-      "code" : "taskOccurrenceIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " of 3.",
+      "text" : "A property that specifies how many events occured before this outcome became instantiated.",
       "type" : "text"
     }
   ],
@@ -115,11 +99,36 @@
           "type" : "heading"
         },
         {
+          "inlineContent" : [
+            {
+              "text" : "For example, if a task is schedule to happen twice per day, then",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "the 2nd outcome on the 2nd day has a ",
+              "type" : "text"
+            },
+            {
+              "code" : "taskOccurrenceIndex",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " of 3.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
           "content" : [
             {
               "inlineContent" : [
                 {
-                  "text" : "The task occurrence references a specific version of a task, so if a new version the task is created, the task occurrence index",
+                  "text" : "The task occurrence references a specific version of a task. If a new version the task becomes instantiated,",
                   "type" : "text"
                 },
                 {
@@ -127,7 +136,7 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "will start again from 0.",
+                  "text" : "the task occurrence index restarts from 0.",
                   "type" : "text"
                 }
               ],
@@ -209,23 +218,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/taskOccurrenceIndex": {
   "abstract" : [
     {
-      "text" : "Specifies how many events occured before this outcome was created. For example, if a task is schedule to happen twice per day, then",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the 2nd outcome on the 2nd day will have a ",
-      "type" : "text"
-    },
-    {
-      "code" : "taskOccurrenceIndex",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " of 3.",
+      "text" : "A property that specifies how many events occured before this outcome became instantiated.",
       "type" : "text"
     }
   ],
