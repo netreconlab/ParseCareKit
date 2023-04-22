@@ -389,22 +389,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
         Task {
-            guard shouldIncrementClock else {
-                await self.remoteStatus.updateClock(parseClock)
-                await self.remoteStatus.notSynchronzing()
-                Logger.pushRevisions.debug("Finished pushing revisions")
-                DispatchQueue.main.async {
-                    self.parseRemoteDelegate?.successfullyPushedDataToCloud()
-                }
-                completion(nil)
-                return
-            }
             var updatedParseVector = parseVector
-            // Increment and merge Knowledge Vector
-            updatedParseVector = incrementVectorClock(updatedParseVector)
+            if shouldIncrementClock {
+                // Increment Knowledge Vector
+                updatedParseVector = incrementVectorClock(updatedParseVector)
+            }
             updatedParseVector.merge(with: localClock)
+
             guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
-                await self.remoteStatus.updateClock(parseClock) // revert
                 await self.remoteStatus.notSynchronzing()
                 Logger.pushRevisions.error("Could not encode clock")
                 completion(ParseCareKitError.couldntUnwrapClock)
