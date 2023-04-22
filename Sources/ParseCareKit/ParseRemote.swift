@@ -72,7 +72,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = try? await PCKUser.current() {
             try Self.setDefaultACL(defaultACL, for: currentUser)
-            await subscribeToClock()
+            await subscribeToRevisionRecord()
         }
     }
 
@@ -185,7 +185,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     }
 
     @MainActor
-    func subscribeToClock() async {
+    func subscribeToRevisionRecord() async {
         do {
             _ = try await PCKUser.current()
             guard self.subscribeToServerUpdates,
@@ -197,7 +197,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 self.revisionRecordSubscription = try await self.revisionRecordQuery.subscribeCallback()
                 self.revisionRecordSubscription?.handleEvent { (_, event) in
                     switch event {
-                    case .entered(let updatedRevision), .updated(let updatedRevision):
+                    case .created(let updatedRevision), .entered(let updatedRevision), .updated(let updatedRevision):
                         guard let logicalClock = updatedRevision.logicalClock else {
                             Logger
                                 .revisionRecordSubscription
@@ -421,7 +421,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(error)
             }
             await self.remoteStatus.notSynchronzing()
-            await self.subscribeToClock()
+            await self.subscribeToRevisionRecord()
         }
     }
 
