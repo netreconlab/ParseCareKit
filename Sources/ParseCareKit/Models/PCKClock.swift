@@ -156,6 +156,12 @@ public struct PCKClock: ParseObject {
         return mutatingClock
     }
 
+    static func new(uuid: UUID) async throws -> Self {
+        var newClock = PCKClock(uuid: uuid)
+        newClock = try await newClock.setupACLWithRoles()
+        return try await newClock.create()
+    }
+
     static func fetchFromCloud(_ uuid: UUID,
                                createNewIfNeeded: Bool,
                                completion: @escaping(Result<Self, ParseError>) -> Void) {
@@ -173,25 +179,18 @@ public struct PCKClock: ParseObject {
                     completion(.failure(error))
                 } else {
                     // This is the first time the Clock is user setup for this user
-                    let newVector = PCKClock(uuid: uuid)
                     Task {
                         do {
-                            let updatedVector = try await newVector.setupACLWithRoles()
-                            updatedVector.create { result in
-                                switch result {
-                                case .success(let savedVector):
-                                    completion(.success(savedVector))
-                                case .failure(let error):
-                                    completion(.failure(error))
-                                }
-                            }
+                            let newClock = try await new(uuid: uuid)
+                            completion(.success(newClock))
                         } catch {
                             guard let parseError = error as? ParseError else {
                                 let errorString = "Could not cast error to ParseError"
-                                Logger.clock.error(": \(error)")
+                                Logger.clock.error("\(errorString): \(error)")
                                 completion(.failure(.init(message: errorString, swift: error)))
                                 return
                             }
+                            Logger.clock.error("\(parseError)")
                             completion(.failure(parseError))
                         }
                     }

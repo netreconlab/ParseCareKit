@@ -11,7 +11,10 @@ import Foundation
 
 actor RemoteSynchronizing {
     var isSynchronizing = false
-    var knowledgeVector: OCKRevisionRecord.KnowledgeVector?
+    var clock: PCKClock?
+    var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
+        clock?.knowledgeVector
+    }
 
     func synchronizing() {
         isSynchronizing = true
@@ -21,8 +24,8 @@ actor RemoteSynchronizing {
         isSynchronizing = false
     }
 
-    func updateKnowledgeVector(_ vector: OCKRevisionRecord.KnowledgeVector?) {
-        knowledgeVector = vector
+    func updateClock(_ clock: PCKClock?) {
+        self.clock = clock
     }
 
     func hasNewerRevision(_ vector: OCKRevisionRecord.KnowledgeVector, for uuid: UUID) -> Bool {
