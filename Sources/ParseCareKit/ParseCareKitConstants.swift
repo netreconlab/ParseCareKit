@@ -179,3 +179,14 @@ public enum ClockKey {
     /// vector key.
     public static let vector                                   = "vector"
 }
+
+// MARK: RevisionRecord Class
+/// Keys for `RevisionRecord` objects. These keys can be used for querying Parse objects.
+enum RevisionRecordKey {
+    /// className key.
+    static let className                                       = "RevisionRecord"
+    /// clockUUID key.
+    static let clockUUID                                       = "clockUUID"
+    /// logicalClock key.
+    static let logicalClock                                          = "logicalClock"
+}

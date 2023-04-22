@@ -41,10 +41,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable]!
 
     private weak var parseDelegate: ParseRemoteDelegate?
-    private var clockSubscription: SubscriptionCallback<PCKClock>?
+    private var revisionRecordSubscription: SubscriptionCallback<PCKRevisionRecord>?
     private var subscribeToServerUpdates: Bool
     private let remoteStatus = RemoteSynchronizing()
-    private let clockQuery: Query<PCKClock>
+    private let revisionRecordQuery: Query<PCKRevisionRecord>
 
     /**
      Creates an instance of ParseRemote.
@@ -67,7 +67,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
-        self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
+        self.revisionRecordQuery = PCKRevisionRecord.query(RevisionRecordKey.clockUUID == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = try? await PCKUser.current() {
@@ -144,7 +144,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     deinit {
         Task {
             do {
-                try await clockQuery.unsubscribe()
+                try await revisionRecordQuery.unsubscribe()
                 Logger.deinitializer.error("Unsubscribed from clock query")
             } catch {
                 Logger.deinitializer.error("Couldn't unsubscribe from clock query")
@@ -189,37 +189,36 @@ public class ParseRemote: OCKRemoteSynchronizable {
         do {
             _ = try await PCKUser.current()
             guard self.subscribeToServerUpdates,
-                self.clockSubscription == nil else {
+                self.revisionRecordSubscription == nil else {
                 return
             }
 
             do {
-                self.clockSubscription = try await self.clockQuery.subscribeCallback()
-                self.clockSubscription?.handleEvent { (_, event) in
+                self.revisionRecordSubscription = try await self.revisionRecordQuery.subscribeCallback()
+                self.revisionRecordSubscription?.handleEvent { (_, event) in
                     switch event {
-                    case .entered(let updatedClock), .updated(let updatedClock):
-                        do {
-                            let updatedVector = try PCKClock.decodeVector(updatedClock)
-                            Task {
-                                guard await self.remoteStatus.hasNewerRevision(updatedVector, for: self.uuid) else {
-                                    return
-                                }
-                                self.parseDelegate?.didRequestSynchronization(self)
-                                Logger
-                                    .clockSubscription
-                                    .log("Parse subscription is notifying that there are updates on the server")
-                            }
-                        } catch {
+                    case .entered(let updatedRevision), .updated(let updatedRevision):
+                        guard let logicalClock = updatedRevision.logicalClock else {
                             Logger
-                                .clockSubscription
-                                .error("Could not decode server clock: \(error)")
+                                .revisionRecordSubscription
+                                .error("RevisionRecord missing required \"logicalClock\" key: \(updatedRevision)")
+                            return
+                        }
+                        Task {
+                            guard await self.remoteStatus.hasNewerRevision(logicalClock, for: self.uuid) else {
+                                return
+                            }
+                            self.parseDelegate?.didRequestSynchronization(self)
+                            Logger
+                                .revisionRecordSubscription
+                                .log("Parse remote has updates available")
                         }
                     default:
                         return
                     }
                 }
             } catch {
-                Logger.clockSubscription.error("Couldn't subscribe to clock query")
+                Logger.revisionRecordSubscription.error("Couldn't subscribe to RevisionRecord query")
                 return
             }
         } catch {
@@ -331,8 +330,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
-
-                guard await !self.remoteStatus.hasNewerRevision(parseVector, for: self.uuid) else {
+                let logicalClock = parseVector.clock(for: self.uuid)
+                guard await !self.remoteStatus.hasNewerRevision(logicalClock, for: self.uuid) else {
                     let errorString = "New knowledge on server. Pull first then try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
@@ -350,7 +349,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
 
                 // 8. Push conflict resolutions + local changes to remote
-                let logicalClock = deviceKnowledge.clock(for: self.uuid)
                 self.notifyRevisionProgress(0,
                                             total: deviceRevisions.count)
 
