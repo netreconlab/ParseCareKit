@@ -280,7 +280,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                                 total: revisions.count)
                     // 2.1 Merge revisions
                     for (index, revision) in revisions.enumerated() {
-                        let record = try await revision.fetchEntities().convertToCareKit()
+                        let record = try await revision.fetchEntities().convertToCareKit(knowledgeVector)
                         mergeRevision(record)
                         self.notifyRevisionProgress(index + 1,
                                                     total: revisions.count)
