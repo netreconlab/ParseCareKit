@@ -197,7 +197,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 self.revisionRecordSubscription = try await self.revisionRecordQuery.subscribeCallback()
                 self.revisionRecordSubscription?.handleEvent { (_, event) in
                     switch event {
-                    case .created(let updatedRevision):
+                    case .created(let updatedRevision), .updated(let updatedRevision), .entered(let updatedRevision):
                         guard let logicalClock = updatedRevision.logicalClock else {
                             Logger
                                 .revisionRecordSubscription
