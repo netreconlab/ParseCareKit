@@ -36,7 +36,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public var uuid: UUID!
 
     /// A dictionary of any custom classes to synchronize between the `CareKitStore` and the Parse Server.
-    public var customClassesToSynchronize: [String: any PCKVersionable]?
+    public var customClassesToSynchronize: [String: any PCKVersionable.Type]?
 
     /// A dictionary of any default classes to synchronize between the `CareKitStore` and the Parse Server. These
     /// are `PCKPatient`, `PCKCarePlan`, `PCKContact`, `PCKTask`,  `PCKHealthKitTask`,
@@ -128,7 +128,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
-                            customClasses: [String: any PCKVersionable],
+                            customClasses: [String: any PCKVersionable.Type],
                             subscribeToServerUpdates: Bool,
                             defaultACL: ParseACL? = nil) async throws {
         try await self.init(uuid: uuid,

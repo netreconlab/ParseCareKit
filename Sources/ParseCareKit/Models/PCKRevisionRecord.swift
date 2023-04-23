@@ -55,7 +55,11 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
         }
     }
 
-    public var vector: String?
+    var vector: String?
+
+    var storeClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]? = try? PCKStoreClass.getConcrete()
+
+    var customClassesToSynchronize: [String: any PCKVersionable.Type]?
 
     var objects: [any PCKVersionable] {
         guard let entities = entities else {
@@ -110,6 +114,13 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
         case objectId, createdAt, updatedAt, className,
              ACL, vector, entities,
              logicalClock, clock, clockUUID
+    }
+
+    static func == (lhs: PCKRevisionRecord, rhs: PCKRevisionRecord) -> Bool {
+        lhs.vector == rhs.vector &&
+        lhs.logicalClock == rhs.logicalClock &&
+        lhs.objectId == rhs.objectId &&
+        lhs.entities == rhs.entities
     }
 
     func convertToCareKit() throws -> OCKRevisionRecord {
@@ -246,13 +257,17 @@ extension PCKRevisionRecord {
     init(record: OCKRevisionRecord,
          remoteClockUUID: UUID,
          remoteClock: PCKClock,
-         remoteClockValue: Int) throws {
+         remoteClockValue: Int,
+         storeClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]? = nil,
+         customClassesToSynchronize: [String: any PCKVersionable.Type]? = nil) throws {
         self.objectId = UUID().uuidString
         self.ACL = PCKUtility.getDefaultACL()
         self.clockUUID = remoteClockUUID
         self.logicalClock = remoteClockValue
         self.clock = remoteClock
         self.knowledgeVector = record.knowledgeVector
+        self.storeClassesToSynchronize = storeClassesToSynchronize
+        self.customClassesToSynchronize = customClassesToSynchronize
         self.entities = try record.entities.compactMap { entity in
             var parseEntity = try entity.parseEntity().value
             parseEntity.logicalClock = remoteClockValue // Stamp Entity

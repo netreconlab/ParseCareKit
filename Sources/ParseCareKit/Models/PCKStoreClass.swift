@@ -13,7 +13,7 @@ import os.log
 // swiftlint:disable line_length
 
 /// Types of ParseCareKit classes.
-public enum PCKStoreClass: String, CaseIterable {
+public enum PCKStoreClass: String, Equatable, CaseIterable {
     /// The ParseCareKit equivalent of `OCKPatient`.
     case patient
     /// The ParseCareKit equivalent of `OCKCarePlan`.
