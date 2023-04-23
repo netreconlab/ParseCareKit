@@ -149,10 +149,10 @@ public struct PCKOutcome: PCKVersionable {
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> Self {
+    public static func new(with careKitEntity: OCKEntity) throws -> Self {
         switch careKitEntity {
         case .outcome(let entity):
-            return try Self.copyCareKit(entity)
+            return try copyCareKit(entity)
         default:
             Logger.outcome.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType

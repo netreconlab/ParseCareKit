@@ -19,7 +19,7 @@ public enum ParseCareKitConstants {
 
 // MARK: Custom Enums
 enum CustomKey {
-    static let customClass                                  = "customClass"
+    static let className                                  = "className"
 }
 
 // MARK: Parse Database Keys

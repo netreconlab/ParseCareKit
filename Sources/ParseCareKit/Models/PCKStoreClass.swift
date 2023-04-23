@@ -13,66 +13,38 @@ import os.log
 // swiftlint:disable line_length
 
 /// Types of ParseCareKit classes.
-public enum PCKStoreClass: String {
+public enum PCKStoreClass: String, CaseIterable {
+    /// The ParseCareKit equivalent of `OCKPatient`.
+    case patient
     /// The ParseCareKit equivalent of `OCKCarePlan`.
     case carePlan
     /// The ParseCareKit equivalent of `OCKContact`.
     case contact
-    /// The ParseCareKit equivalent of `OCKOutcome`.
-    case outcome
-    /// The ParseCareKit equivalent of `OCKPatient`.
-    case patient
     /// The ParseCareKit equivalent of `OCKTask`.
     case task
     /// The ParseCareKit equivalent of `OCKHealthKitTask`.
     case healthKitTask
+    /// The ParseCareKit equivalent of `OCKOutcome`.
+    case outcome
 
-    func getDefault() throws -> any PCKVersionable {
+    func getDefault() -> any PCKVersionable.Type {
         switch self {
-        case .carePlan:
-            let carePlan = OCKCarePlan(id: "", title: "",
-                                       patientUUID: nil)
-            return try PCKCarePlan.copyCareKit(carePlan)
-        case .contact:
-            let contact = OCKContact(id: "", givenName: "",
-                                     familyName: "",
-                                     carePlanUUID: nil)
-            return try PCKContact.copyCareKit(contact)
-        case .outcome:
-            let outcome = OCKOutcome(taskUUID: UUID(),
-                                     taskOccurrenceIndex: 0,
-                                     values: [])
-            return try PCKOutcome.copyCareKit(outcome)
         case .patient:
-            let patient = OCKPatient(id: "",
-                                     givenName: "",
-                                     familyName: "")
-            return try PCKPatient.copyCareKit(patient)
+            return PCKPatient.self
+        case .carePlan:
+            return PCKCarePlan.self
+        case .contact:
+            return PCKContact.self
         case .task:
-            let task = OCKTask(id: "",
-                               title: "",
-                               carePlanUUID: nil,
-                               schedule: .init(composing: [.init(start: Date(), end: nil, interval: .init(day: 1))]))
-            return try PCKTask.copyCareKit(task)
+            return PCKTask.self
         case .healthKitTask:
-            let healthKitTask = OCKHealthKitTask(id: "",
-                                                 title: "",
-                                                 carePlanUUID: nil,
-                                                 schedule: .init(composing: [.init(start: Date(),
-                                                                                   end: nil,
-                                                                                   interval: .init(day: 1))]),
-                                                 healthKitLinkage: .init(quantityIdentifier: .bodyTemperature,
-                                                                         quantityType: .discrete,
-                                                                         unit: .degreeCelsius()))
-            return try PCKHealthKitTask.copyCareKit(healthKitTask)
+            return PCKHealthKitTask.self
+        case .outcome:
+            return PCKOutcome.self
         }
     }
 
-    func orderedArray() -> [PCKStoreClass] {
-        return [.patient, .carePlan, .contact, .task, .healthKitTask, .outcome]
-    }
-
-    func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable]) throws -> [PCKStoreClass: any PCKVersionable] {
+    static func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable.Type]) throws -> [PCKStoreClass: any PCKVersionable.Type] {
         var updatedClasses = try getConcrete()
 
         for (key, value) in newClasses {
@@ -85,15 +57,15 @@ public enum PCKStoreClass: String {
         return updatedClasses
     }
 
-    func getConcrete() throws -> [PCKStoreClass: any PCKVersionable] {
+    static func getConcrete() throws -> [PCKStoreClass: any PCKVersionable.Type] {
 
-        var concreteClasses: [PCKStoreClass: any PCKVersionable] = [
-            .carePlan: try PCKStoreClass.carePlan.getDefault(),
-            .contact: try PCKStoreClass.contact.getDefault(),
-            .outcome: try PCKStoreClass.outcome.getDefault(),
-            .patient: try PCKStoreClass.patient.getDefault(),
-            .task: try PCKStoreClass.task.getDefault(),
-            .healthKitTask: try PCKStoreClass.healthKitTask.getDefault()
+        var concreteClasses: [PCKStoreClass: any PCKVersionable.Type] = [
+            .carePlan: PCKStoreClass.carePlan.getDefault(),
+            .contact: PCKStoreClass.contact.getDefault(),
+            .outcome: PCKStoreClass.outcome.getDefault(),
+            .patient: PCKStoreClass.patient.getDefault(),
+            .task: PCKStoreClass.task.getDefault(),
+            .healthKitTask: PCKStoreClass.healthKitTask.getDefault()
         ]
 
         for (key, value) in concreteClasses {
@@ -104,14 +76,14 @@ public enum PCKStoreClass: String {
         }
 
         // Ensure all default classes are created
-        guard concreteClasses.count == orderedArray().count else {
+        guard concreteClasses.count == Self.allCases.count else {
             throw ParseCareKitError.couldntCreateConcreteClasses
         }
 
         return concreteClasses
     }
 
-    func replaceConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable]) throws -> [PCKStoreClass: any PCKVersionable] {
+    static func replaceConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable.Type]) throws -> [PCKStoreClass: any PCKVersionable.Type] {
         var updatedClasses = try getConcrete()
 
         for (key, value) in newClasses {
@@ -124,38 +96,20 @@ public enum PCKStoreClass: String {
         return updatedClasses
     }
 
-    func isCorrectType(_ type: PCKStoreClass, check: any PCKVersionable) -> Bool {
+    static func isCorrectType(_ type: PCKStoreClass, check: any PCKVersionable.Type) -> Bool {
         switch type {
         case .carePlan:
-            guard (check as? PCKCarePlan) != nil else {
-                return false
-            }
-            return true
+            return check is PCKCarePlan.Type
         case .contact:
-            guard (check as? PCKContact) != nil else {
-                return false
-            }
-            return true
+            return check is PCKContact.Type
         case .outcome:
-            guard (check as? PCKOutcome) != nil else {
-                return false
-            }
-            return true
+            return check is PCKOutcome.Type
         case .patient:
-            guard (check as? PCKPatient) != nil else {
-                return false
-            }
-            return true
+            return check is PCKPatient.Type
         case .task:
-            guard (check as? PCKTask) != nil else {
-                return false
-            }
-            return true
+            return check is PCKTask.Type
         case .healthKitTask:
-            guard (check as? PCKHealthKitTask) != nil else {
-                return false
-            }
-            return true
+            return check is PCKHealthKitTask.Type
         }
     }
 }

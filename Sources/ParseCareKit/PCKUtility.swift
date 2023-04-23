@@ -19,7 +19,7 @@ public class PCKUtility {
         var propertyListFormat = PropertyListSerialization.PropertyListFormat.xml
         guard let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
-                fatalError("Error in ParseCareKit.setupServer(). Can't find ParseCareKit.plist in this project")
+                fatalError("Error in ParseCareKit.setupServer(). Cannot find ParseCareKit.plist in this project")
         }
 
         return try PropertyListSerialization.propertyList(from: xml,

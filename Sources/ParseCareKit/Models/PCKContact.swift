@@ -163,7 +163,7 @@ public struct PCKContact: PCKVersionable {
         ACL = PCKUtility.getDefaultACL()
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> PCKContact {
+    public static func new(with careKitEntity: OCKEntity) throws -> PCKContact {
 
         switch careKitEntity {
         case .contact(let entity):

@@ -50,19 +50,20 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("Remote clock larger than local during pushRevisions, not pushing",
                                      comment: "Knowledge vector larger on Remote")
         case .couldntUnwrapSelf:
-            return NSLocalizedString("Can't unwrap self. This class has already been deallocated",
-                                     comment: "Can't unwrap self, class deallocated")
+            return NSLocalizedString("Cannot unwrap self. This class has already been deallocated",
+                                     comment: "Cannot unwrap self, class deallocated")
         case .remoteVersionNewerThanLocal:
-            return NSLocalizedString("Can't sync, the Remote version newer than local version",
+            return NSLocalizedString("Cannot sync, the Remote version newer than local version",
                                      comment: "Remote version newer than local version")
         case .uuidAlreadyExists:
-            return NSLocalizedString("Can't sync, the uuid already exists on the Remote", comment: "UUID is not unique")
+            return NSLocalizedString("Cannot sync, the uuid already exists on the Remote",
+                                     comment: "UUID is not unique")
         case .cantCastToNeededClassType:
-            return NSLocalizedString("Can't cast to needed class type",
-                                     comment: "Can't cast to needed class type")
+            return NSLocalizedString("Cannot cast to needed class type",
+                                     comment: "Cannot cast to needed class type")
         case .cantEncodeACL:
-            return NSLocalizedString("Can't encode ACL",
-                                     comment: "Can't encode ACL")
+            return NSLocalizedString("Cannot encode ACL",
+                                     comment: "Cannot encode ACL")
         case .classTypeNotAnEligibleType:
             return NSLocalizedString("PCKClass type is not an eligible type",
                                      comment: "PCKClass type is not an eligible type")

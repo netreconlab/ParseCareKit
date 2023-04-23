@@ -30,6 +30,11 @@ public enum PCKEntity: Equatable, Codable {
     /// An outcome entity.
     case outcome(PCKOutcome)
 
+    private enum Keys: CodingKey {
+        case type
+        case object
+    }
+
     /// The type of the contained entity.
     public var entityType: EntityType {
         switch self {
@@ -42,6 +47,7 @@ public enum PCKEntity: Equatable, Codable {
         }
     }
 
+    /// The underlying ParseCareKit type for the respective entity.
     public var value: any PCKVersionable {
         switch self {
         case let .patient(patient): return patient
@@ -53,6 +59,7 @@ public enum PCKEntity: Equatable, Codable {
         }
     }
 
+    /// The `OCKEntity` of the `PCKEntity`.
     public func careKit() throws -> OCKEntity {
         switch self {
         case let .patient(patient):
@@ -67,36 +74,6 @@ public enum PCKEntity: Equatable, Codable {
             return OCKEntity.healthKitTask(try task.convertToCareKit())
         case let .outcome(outcome):
             return OCKEntity.outcome(try outcome.convertToCareKit())
-        }
-    }
-
-    private enum Keys: CodingKey {
-        case type
-        case object
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Keys.self)
-        switch try container.decode(EntityType.self, forKey: .type) {
-        case .patient: self = .patient(try container.decode(PCKPatient.self, forKey: .object))
-        case .carePlan: self = .carePlan(try container.decode(PCKCarePlan.self, forKey: .object))
-        case .contact: self = .contact(try container.decode(PCKContact.self, forKey: .object))
-        case .task: self = .task(try container.decode(PCKTask.self, forKey: .object))
-        case .healthKitTask: self = .healthKitTask(try container.decode(PCKHealthKitTask.self, forKey: .object))
-        case .outcome: self = .outcome(try container.decode(PCKOutcome.self, forKey: .object))
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Keys.self)
-        try container.encode(entityType, forKey: .type)
-        switch self {
-        case let .patient(patient): try container.encode(try patient.toPointer(), forKey: .object)
-        case let .carePlan(plan): try container.encode(try plan.toPointer(), forKey: .object)
-        case let .contact(contact): try container.encode(try contact.toPointer(), forKey: .object)
-        case let .task(task): try container.encode(try task.toPointer(), forKey: .object)
-        case let .healthKitTask(task): try container.encode(try task.toPointer(), forKey: .object)
-        case let .outcome(outcome): try container.encode(try outcome.toPointer(), forKey: .object)
         }
     }
 
@@ -123,6 +100,39 @@ public enum PCKEntity: Equatable, Codable {
     }
 }
 
+// MARK: Encoding
+public extension PCKEntity {
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Keys.self)
+        try container.encode(entityType, forKey: .type)
+        switch self {
+        case let .patient(patient): try container.encode(try patient.toPointer(), forKey: .object)
+        case let .carePlan(plan): try container.encode(try plan.toPointer(), forKey: .object)
+        case let .contact(contact): try container.encode(try contact.toPointer(), forKey: .object)
+        case let .task(task): try container.encode(try task.toPointer(), forKey: .object)
+        case let .healthKitTask(task): try container.encode(try task.toPointer(), forKey: .object)
+        case let .outcome(outcome): try container.encode(try outcome.toPointer(), forKey: .object)
+        }
+    }
+}
+
+// MARK: Decoding
+public extension PCKEntity {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        switch try container.decode(EntityType.self, forKey: .type) {
+        case .patient: self = .patient(try container.decode(PCKPatient.self, forKey: .object))
+        case .carePlan: self = .carePlan(try container.decode(PCKCarePlan.self, forKey: .object))
+        case .contact: self = .contact(try container.decode(PCKContact.self, forKey: .object))
+        case .task: self = .task(try container.decode(PCKTask.self, forKey: .object))
+        case .healthKitTask: self = .healthKitTask(try container.decode(PCKHealthKitTask.self, forKey: .object))
+        case .outcome: self = .outcome(try container.decode(PCKOutcome.self, forKey: .object))
+        }
+    }
+}
+
+// MARK: Compatability with OCKEntity
 public extension OCKEntity {
     func parseEntity() throws -> PCKEntity {
         switch self {

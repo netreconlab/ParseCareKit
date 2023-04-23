@@ -13,7 +13,7 @@ import os.log
 
 public extension OCKPatient {
     /**
-    The Parse ACL for this object.
+     The Parse ACL for this object.
     */
     var acl: ParseACL? {
         get {
@@ -36,7 +36,23 @@ public extension OCKPatient {
                     userInfo = [ParseCareKitConstants.acl: aclString]
                 }
             } catch {
-                Logger.ockPatient.error("Can't set ACL: \(error)")
+                Logger.ockPatient.error("Cannot set ACL: \(error)")
+            }
+        }
+    }
+
+    /**
+     The Parse `className` for this object.
+    */
+    var className: String? {
+        get {
+            return userInfo?[CustomKey.className]
+        }
+        set {
+            if userInfo != nil {
+                userInfo?[CustomKey.className] = newValue
+            } else if let newValue = newValue {
+                userInfo = [CustomKey.className: newValue]
             }
         }
     }

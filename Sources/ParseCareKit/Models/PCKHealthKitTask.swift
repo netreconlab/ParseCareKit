@@ -147,11 +147,11 @@ public struct PCKHealthKitTask: PCKVersionable {
         ACL = PCKUtility.getDefaultACL()
     }
 
-    public func new(with careKitEntity: OCKEntity) throws -> PCKHealthKitTask {
+    public static func new(with careKitEntity: OCKEntity) throws -> PCKHealthKitTask {
 
         switch careKitEntity {
         case .healthKitTask(let entity):
-            return try Self.copyCareKit(entity)
+            return try copyCareKit(entity)
         default:
             Logger.healthKitTask.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType

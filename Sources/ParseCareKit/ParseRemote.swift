@@ -41,7 +41,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     /// A dictionary of any default classes to synchronize between the `CareKitStore` and the Parse Server. These
     /// are `PCKPatient`, `PCKCarePlan`, `PCKContact`, `PCKTask`,  `PCKHealthKitTask`,
     /// and `PCKOutcome`.
-    public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable]!
+    public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]!
 
     private weak var parseDelegate: ParseRemoteDelegate?
     private var clockRecordSubscription: SubscriptionCallback<PCKClock>?
@@ -67,7 +67,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 auto: Bool,
                 subscribeToServerUpdates: Bool,
                 defaultACL: ParseACL? = nil) async throws {
-        self.pckStoreClassesToSynchronize = try PCKStoreClass.patient.getConcrete()
+        self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
@@ -96,7 +96,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
-                            replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable],
+                            replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type],
                             subscribeToServerUpdates: Bool,
                             defaultACL: ParseACL? = nil) async throws {
         try await self.init(uuid: uuid,
@@ -104,7 +104,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             subscribeToServerUpdates: subscribeToServerUpdates,
                             defaultACL: defaultACL)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
-            .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses)
+            .replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
     }
 
@@ -115,7 +115,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
             by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.
-        - customClasses: Add custom classes to synchroniz by passing in the respective key/value pair.
+        - customClasses: Add custom classes to synchronize by passing in the respective key/value pair.
         - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
@@ -127,7 +127,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     */
     convenience public init(uuid: UUID,
                             auto: Bool,
-                            replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable]? = nil,
+                            replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
                             customClasses: [String: any PCKVersionable],
                             subscribeToServerUpdates: Bool,
                             defaultACL: ParseACL? = nil) async throws {
@@ -135,9 +135,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             auto: auto,
                             subscribeToServerUpdates: subscribeToServerUpdates,
                             defaultACL: defaultACL)
-        if replacePCKStoreClasses != nil {
+        if let replacePCKStoreClasses = replacePCKStoreClasses {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
-                .patient.replaceRemoteConcreteClasses(replacePCKStoreClasses!)
+                .replaceRemoteConcreteClasses(replacePCKStoreClasses)
         } else {
             self.pckStoreClassesToSynchronize = nil
         }

@@ -89,7 +89,7 @@ public protocol PCKObjectable: ParseObject {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    func new(with careKitEntity: OCKEntity) throws -> Self
+    static func new(with careKitEntity: OCKEntity) throws -> Self
 }
 
 // MARK: Defaults
