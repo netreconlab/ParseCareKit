@@ -139,7 +139,8 @@ public class PCKUtility {
         PCKOutcome.getDecoder()
     }
 
-    class func getDefaultACL() -> ParseACL? {
+    /// Get the default ACL for `ParseCareKit` objects.
+    public class func getDefaultACL() -> ParseACL? {
         guard let aclString = UserDefaults.standard.value(forKey: ParseCareKitConstants.defaultACL) as? String,
               let aclData = aclString.data(using: .utf8),
               let acl = try? decoder().decode(ParseACL.self, from: aclData) else {
