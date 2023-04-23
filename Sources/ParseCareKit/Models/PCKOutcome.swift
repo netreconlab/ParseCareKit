@@ -333,10 +333,6 @@ extension PCKOutcome {
         try container.encodeIfPresent(taskUUID, forKey: .taskUUID)
         try container.encodeIfPresent(taskOccurrenceIndex, forKey: .taskOccurrenceIndex)
         try container.encodeIfPresent(values, forKey: .values)
-        try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
-        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
-        try container.encodeIfPresent(previousVersionUUIDs, forKey: .previousVersionUUIDs)
-        try container.encodeIfPresent(nextVersionUUIDs, forKey: .nextVersionUUIDs)
-        try encodeObjectable(to: encoder)
+        try encodeVersionable(to: encoder)
     }
 }// swiftlint:disable:this file_length

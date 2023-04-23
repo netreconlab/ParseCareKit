@@ -123,9 +123,11 @@ extension PCKVersionable {
     public func encodeVersionable(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
         try container.encodeIfPresent(deletedDate, forKey: .deletedDate)
+        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
         try container.encodeIfPresent(previousVersionUUIDs, forKey: .previousVersionUUIDs)
         try container.encodeIfPresent(nextVersionUUIDs, forKey: .nextVersionUUIDs)
-        try container.encodeIfPresent(effectiveDate, forKey: .effectiveDate)
+        try container.encodeIfPresent(previousVersions, forKey: .previousVersions)
+        try container.encodeIfPresent(nextVersions, forKey: .nextVersions)
         try encodeObjectable(to: encoder)
     }
 } // swiftlint:disable:this file_length
