@@ -161,7 +161,8 @@ public struct PCKHealthKitTask: PCKVersionable {
     public static func copyValues(from other: PCKHealthKitTask, to here: PCKHealthKitTask) throws -> PCKHealthKitTask {
         var here = here
         here.copyVersionedValues(from: other)
-
+        here.previousVersionUUIDs = other.previousVersionUUIDs
+        here.nextVersionUUIDs = other.nextVersionUUIDs
         here.impactsAdherence = other.impactsAdherence
         here.instructions = other.instructions
         here.title = other.title

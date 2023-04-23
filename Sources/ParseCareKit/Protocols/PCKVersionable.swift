@@ -50,8 +50,6 @@ extension PCKVersionable {
     mutating public func copyVersionedValues(from other: Self) {
         self.effectiveDate = other.effectiveDate
         self.deletedDate = other.deletedDate
-        self.previousVersionUUIDs = other.previousVersionUUIDs
-        self.nextVersionUUIDs = other.nextVersionUUIDs
         self.copyCommonValues(from: other)
     }
 }

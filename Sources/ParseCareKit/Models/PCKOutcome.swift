@@ -161,7 +161,9 @@ public struct PCKOutcome: PCKVersionable {
 
     public static func copyValues(from other: PCKOutcome, to here: PCKOutcome) throws -> Self {
         var here = here
-        here.copyCommonValues(from: other)
+        here.copyVersionedValues(from: other)
+        here.previousVersionUUIDs = other.previousVersionUUIDs
+        here.nextVersionUUIDs = other.nextVersionUUIDs
         here.taskOccurrenceIndex = other.taskOccurrenceIndex
         here.values = other.values
         here.task = other.task

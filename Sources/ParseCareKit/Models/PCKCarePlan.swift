@@ -146,6 +146,8 @@ public struct PCKCarePlan: PCKVersionable {
     public static func copyValues(from other: PCKCarePlan, to here: PCKCarePlan) throws -> Self {
         var here = here
         here.copyVersionedValues(from: other)
+        here.previousVersionUUIDs = other.previousVersionUUIDs
+        here.nextVersionUUIDs = other.nextVersionUUIDs
         here.patient = other.patient
         here.title = other.title
         return here

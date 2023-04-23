@@ -175,16 +175,18 @@ public struct PCKContact: PCKVersionable {
     }
 
     public static func copyValues(from other: PCKContact, to here: PCKContact) throws -> Self {
-        var copy = here
-        copy.copyVersionedValues(from: other)
-        copy.address = other.address
-        copy.category = other.category
-        copy.title = other.title
-        copy.name = other.name
-        copy.organization = other.organization
-        copy.role = other.role
-        copy.carePlan = other.carePlan
-        return copy
+        var here = here
+        here.copyVersionedValues(from: other)
+        here.previousVersionUUIDs = other.previousVersionUUIDs
+        here.nextVersionUUIDs = other.nextVersionUUIDs
+        here.address = other.address
+        here.category = other.category
+        here.title = other.title
+        here.name = other.name
+        here.organization = other.organization
+        here.role = other.role
+        here.carePlan = other.carePlan
+        return here
     }
 
     public static func copyCareKit(_ contactAny: OCKAnyContact) throws -> PCKContact {
