@@ -1364,7 +1364,7 @@ extension ParseCareKitTests: ParseRemoteDelegate {
         print("Implement")
     }
 
-    func successfullyPushedDataToCloud() {
+    func successfullyPushedToRemote() {
         print("Implement")
     }
 

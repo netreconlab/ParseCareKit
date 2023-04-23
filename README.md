@@ -63,7 +63,7 @@ ParseCareKit can be installed via SPM. Open an existing project or create a new 
 Note: ParseCareKit includes [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (it's a dependency) from CareKit's main branch, so there's no need to add CareKitStore to your app. If you want the rest of CareKit, you only need to add [CareKit](https://github.com/carekit-apple/CareKit#carekit-) and [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-) via SPM. Anytime you need ParseCareKit, simply add `import ParseCareKit` at the top of the file.
 
 ### Installing via cocoapods
-To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#installing-via-cocoapods) branch for the readme. The main branch isn't compatable with cocoapods as the CareKit framework isn't compatible with Cocoapods.
+To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#installing-via-cocoapods) branch for the readme. The main branch is not compatable with cocoapods as the CareKit framework is not compatible with Cocoapods.
 
 
 ### Installing as a framework
@@ -76,7 +76,7 @@ To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netrecon
 **If you have CareKit already in your project via SPM or copied, you will need to remove it as ParseCareKit comes with the a compatibile version of CareKit and a conflict of CareKit appearing twice will cause your app to crash**
 
 ## Setup Parse Server
-For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default. 
+For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, is not HIPAA complaint by default. 
 
 ### Protecting Patients data in the Cloud using ACL's
 `ParseCareKit` will set a default ACL on every object saved to your Parse Server with read/write access only for the user who created the data. If you want different level of access by default, you should pass the default ACL you prefer while initializing `ParseCareKit`. For example, to make all data created to only be read and written by the user who created it, do the following:

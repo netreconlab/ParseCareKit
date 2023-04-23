@@ -74,9 +74,9 @@ public struct PCKClock: ParseObject {
 
         do {
             // swiftlint:disable:next line_length
-            let cloudVector: OCKRevisionRecord.KnowledgeVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self,
+            let remoteVector: OCKRevisionRecord.KnowledgeVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self,
                                                                                           from: data)
-            return cloudVector
+            return remoteVector
         } catch {
             Logger.clock.error("Clock.decodeVector(): \(error, privacy: .private). Vector \(data, privacy: .private).")
             throw ParseCareKitError.errorString("Clock.decodeVector(): \(error)")
@@ -84,21 +84,21 @@ public struct PCKClock: ParseObject {
     }
 
     static func encodeVector(_ vector: OCKRevisionRecord.KnowledgeVector, for clock: Self) -> Self? {
-        guard let cloudVectorString = encodeVector(vector) else {
+        guard let remoteVectorString = encodeVector(vector) else {
             return nil
         }
         var mutableClock = clock
-        mutableClock.vector = cloudVectorString
+        mutableClock.vector = remoteVectorString
         return mutableClock
     }
 
     static func encodeVector(_ vector: OCKRevisionRecord.KnowledgeVector) -> String? {
         do {
             let json = try JSONEncoder().encode(vector)
-            guard let cloudVectorString = String(data: json, encoding: .utf8) else {
+            guard let remoteVectorString = String(data: json, encoding: .utf8) else {
                 return nil
             }
-            return cloudVectorString
+            return remoteVectorString
         } catch {
             Logger.clock.error("Clock.encodeVector(): \(error, privacy: .private).")
             return nil
@@ -162,11 +162,11 @@ public struct PCKClock: ParseObject {
         return try await newClock.create()
     }
 
-    static func fetchFromCloud(_ uuid: UUID,
-                               createNewIfNeeded: Bool,
-                               completion: @escaping(Result<Self, ParseError>) -> Void) {
+    static func fetchFromRemote(_ uuid: UUID,
+                                createNewIfNeeded: Bool,
+                                completion: @escaping(Result<Self, ParseError>) -> Void) {
 
-        // Fetch Clock from Cloud
+        // Fetch Clock from Remote
         let query = Self.query(ClockKey.uuid == uuid)
         query.first { result in
 
@@ -199,10 +199,10 @@ public struct PCKClock: ParseObject {
         }
     }
 
-    static func fetchFromCloud(_ uuid: UUID,
-                               createNewIfNeeded: Bool) async throws -> Self {
+    static func fetchFromRemote(_ uuid: UUID,
+                                createNewIfNeeded: Bool) async throws -> Self {
         try await withCheckedThrowingContinuation { continuation in
-            Self.fetchFromCloud(uuid,
+            Self.fetchFromRemote(uuid,
                                 createNewIfNeeded: createNewIfNeeded,
                                 completion: continuation.resume)
         }

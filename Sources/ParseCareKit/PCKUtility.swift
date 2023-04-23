@@ -57,7 +57,7 @@ public class PCKUtility {
         do {
             plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
         } catch {
-            fatalError("Error in ParseCareKit.setupServer(). Couldn't serialize plist. \(error)")
+            fatalError("Error in ParseCareKit.setupServer(). Could not serialize plist. \(error)")
         }
 
         guard let appID = plistConfiguration["ApplicationID"] as? String,
@@ -109,7 +109,7 @@ public class PCKUtility {
         do {
             plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
         } catch {
-            fatalError("Error in ParseCareKit.setupServer(). Couldn't serialize plist. \(error)")
+            fatalError("Error in ParseCareKit.setupServer(). Could not serialize plist. \(error)")
         }
 
         if let keychainAccessGroup = plistConfiguration["AccessGroup"] as? String {

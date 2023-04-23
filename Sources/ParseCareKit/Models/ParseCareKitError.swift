@@ -10,15 +10,15 @@ import Foundation
 
 enum ParseCareKitError: Error {
     case userNotLoggedIn
-    case relatedEntityNotInCloud
+    case relatedEntityNotOnRemote
     case requiredValueCantBeUnwrapped
     case objectIdDoesntMatchRemoteId
     case objectNotFoundOnParseServer
-    case cloudClockLargerThanLocal
+    case remoteClockLargerThanLocal
     case couldntUnwrapClock
     case couldntUnwrapRequiredField
     case couldntUnwrapSelf
-    case cloudVersionNewerThanLocal
+    case remoteVersionNewerThanLocal
     case uuidAlreadyExists
     case cantCastToNeededClassType
     case cantEncodeACL
@@ -33,30 +33,30 @@ extension ParseCareKitError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .userNotLoggedIn:
-            return NSLocalizedString("ParseCareKit: Parse User isn't logged in.", comment: "Login error")
-        case .relatedEntityNotInCloud:
-            return NSLocalizedString("ParseCareKit: Related entity isn't in cloud.", comment: "Related entity error")
+            return NSLocalizedString("ParseCareKit: Parse User is not logged in.", comment: "Login error")
+        case .relatedEntityNotOnRemote:
+            return NSLocalizedString("ParseCareKit: Related entity is not on remote.", comment: "Related entity error")
         case .requiredValueCantBeUnwrapped:
             return NSLocalizedString("ParseCareKit: Required value can't be unwrapped.", comment: "Unwrapping error")
         case .couldntUnwrapClock:
             return NSLocalizedString("ParseCareKit: Clock can't be unwrapped.", comment: "Clock Unwrapping error")
         case .couldntUnwrapRequiredField:
-            return NSLocalizedString("ParseCareKit: Couldn't unwrap required field.",
-                                     comment: "Couldn't unwrap required field")
+            return NSLocalizedString("ParseCareKit: Could not unwrap required field.",
+                                     comment: "Could not unwrap required field")
         case .objectIdDoesntMatchRemoteId:
             return NSLocalizedString("ParseCareKit: remoteId and objectId don't match.",
                                      comment: "Remote/Local mismatch error")
-        case .cloudClockLargerThanLocal:
-            return NSLocalizedString("Cloud clock larger than local during pushRevisions, not pushing",
-                                     comment: "Knowledge vector larger in Cloud")
+        case .remoteClockLargerThanLocal:
+            return NSLocalizedString("Remote clock larger than local during pushRevisions, not pushing",
+                                     comment: "Knowledge vector larger on Remote")
         case .couldntUnwrapSelf:
             return NSLocalizedString("Can't unwrap self. This class has already been deallocated",
                                      comment: "Can't unwrap self, class deallocated")
-        case .cloudVersionNewerThanLocal:
-            return NSLocalizedString("Can't sync, the Cloud version newere than local version",
-                                     comment: "Cloud version newer than local version")
+        case .remoteVersionNewerThanLocal:
+            return NSLocalizedString("Can't sync, the Remote version newer than local version",
+                                     comment: "Remote version newer than local version")
         case .uuidAlreadyExists:
-            return NSLocalizedString("Can't sync, the uuid already exists in the Cloud", comment: "UUID isn't unique")
+            return NSLocalizedString("Can't sync, the uuid already exists on the Remote", comment: "UUID is not unique")
         case .cantCastToNeededClassType:
             return NSLocalizedString("Can't cast to needed class type",
                                      comment: "Can't cast to needed class type")
@@ -64,11 +64,11 @@ extension ParseCareKitError: LocalizedError {
             return NSLocalizedString("Can't encode ACL",
                                      comment: "Can't encode ACL")
         case .classTypeNotAnEligibleType:
-            return NSLocalizedString("PCKClass type isn't an eligible type",
-                                     comment: "PCKClass type isn't an eligible type")
+            return NSLocalizedString("PCKClass type is not an eligible type",
+                                     comment: "PCKClass type is not an eligible type")
         case .couldntCreateConcreteClasses:
-            return NSLocalizedString("Couldn't create concrete classes",
-                                     comment: "Couldn't create concrete classes")
+            return NSLocalizedString("Could not create concrete classes",
+                                     comment: "Could not create concrete classes")
         case .objectNotFoundOnParseServer:
             return NSLocalizedString("Object couldn't be found on the Parse Server",
                                      comment: "Object couldn't be found on the Parse Server")
