@@ -161,6 +161,8 @@ public struct PCKPatient: PCKVersionable {
         var decoded = try PCKUtility.decoder().decode(PCKPatient.self, from: encoded)
         decoded.objectId = patient.uuid.uuidString
         decoded.entityId = patient.id
+        decoded.previousVersions = patient.previousVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
+        decoded.nextVersions = patient.nextVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
         if let acl = patient.acl {
             decoded.ACL = acl
         } else {
