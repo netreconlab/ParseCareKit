@@ -358,6 +358,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 updatedParseVector.merge(with: localClock)
                 guard updatedParseVector.uuids.count > parseVector.uuids.count else {
                     Logger.pushRevisions.debug("Finished pushing revisions")
+                    await self.remoteStatus.updateClock(parseClock)
                     await self.remoteStatus.notSynchronzing()
                     await self.subscribeToRevisionRecord()
                     DispatchQueue.main.async {
