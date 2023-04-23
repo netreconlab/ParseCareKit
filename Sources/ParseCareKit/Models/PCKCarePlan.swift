@@ -163,8 +163,6 @@ public struct PCKCarePlan: PCKVersionable {
         decoded.objectId = carePlan.uuid.uuidString
         decoded.entityId = carePlan.id
         decoded.patient = PCKPatient(uuid: carePlan.patientUUID)
-        decoded.previousVersions = carePlan.previousVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
-        decoded.nextVersions = carePlan.nextVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
         if let acl = carePlan.acl {
             decoded.ACL = acl
         } else {

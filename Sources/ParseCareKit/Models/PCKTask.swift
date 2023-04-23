@@ -180,8 +180,6 @@ public struct PCKTask: PCKVersionable {
         decoded.objectId = task.uuid.uuidString
         decoded.entityId = task.id
         decoded.carePlan = PCKCarePlan(uuid: task.carePlanUUID)
-        decoded.previousVersions = task.previousVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
-        decoded.nextVersions = task.nextVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
         if let acl = task.acl {
             decoded.ACL = acl
         } else {

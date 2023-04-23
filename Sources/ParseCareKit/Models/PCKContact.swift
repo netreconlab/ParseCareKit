@@ -199,8 +199,6 @@ public struct PCKContact: PCKVersionable {
         decoded.objectId = contact.uuid.uuidString
         decoded.entityId = contact.id
         decoded.carePlan = PCKCarePlan(uuid: contact.carePlanUUID)
-        decoded.previousVersions = contact.previousVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
-        decoded.nextVersions = contact.nextVersionUUIDs.map { Pointer<Self>(objectId: $0.uuidString) }
         if let acl = contact.acl {
             decoded.ACL = acl
         } else {
