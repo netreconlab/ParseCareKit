@@ -162,6 +162,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
             defaultACL.publicWrite = false
             defaultACL.setReadAccess(user: user, value: true)
             defaultACL.setWriteAccess(user: user, value: true)
+            defaultACL.setReadAccess(roleName: try PCKReadRole.roleName(owner: user),
+                                     value: true)
+            defaultACL.setWriteAccess(roleName: try PCKWriteRole.roleName(owner: user),
+                                      value: true)
             acl = defaultACL
         }
         if let currentDefaultACL = PCKUtility.getDefaultACL() {
