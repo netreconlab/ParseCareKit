@@ -322,13 +322,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
         Task {
             do {
                 // Fetch Clock from Cloud
-                var parseClock = await self.remoteStatus.clock
-                if parseClock == nil {
-                    parseClock = try await PCKClock.new(uuid: self.uuid)
-                    await self.remoteStatus.updateClock(parseClock)
-                }
-                guard let currentClock = parseClock,
-                    let parseVector = currentClock.knowledgeVector else {
+                let parseClock = try await PCKClock.new(uuid: self.uuid)
+                guard let parseVector = parseClock.knowledgeVector else {
                     await self.remoteStatus.notSynchronzing()
                     // There was a different issue that we don't know how to handle
                     Logger.pushRevisions.error("Error in pushRevisions. Couldn't unwrap clock")
@@ -346,7 +341,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                 guard deviceRevisions.count > 0 else {
                     self.completePushRevisions(shouldIncrementClock: false,
-                                               parseClock: currentClock,
+                                               parseClock: parseClock,
                                                parseVector: parseVector,
                                                localClock: deviceKnowledge,
                                                completion: completion)
@@ -361,13 +356,13 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     do {
                         let remoteRevision = try PCKRevisionRecord(record: deviceRevision,
                                                                    remoteClockUUID: self.uuid,
-                                                                   remoteClock: currentClock,
+                                                                   remoteClock: parseClock,
                                                                    remoteClockValue: logicalClock)
                         try await remoteRevision.save()
                         self.notifyRevisionProgress(index + 1,
                                                     total: deviceRevisions.count)
                         if index == (deviceRevisions.count - 1) {
-                            self.completePushRevisions(parseClock: currentClock,
+                            self.completePushRevisions(parseClock: parseClock,
                                                        parseVector: parseVector,
                                                        localClock: deviceKnowledge,
                                                        completion: completion)
