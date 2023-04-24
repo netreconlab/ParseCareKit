@@ -353,20 +353,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
         Task {
-            // 9. Increment and merge clocks if revisions were pushed to
-            //    the remote or else finish revisions.
-            guard shouldIncrementClock else {
-                Logger.pushRevisions.debug("Finished pushing revisions")
-                await self.remoteStatus.notSynchronzing()
-                await self.subscribeToRevisionRecord()
-                DispatchQueue.main.async {
-                    self.parseRemoteDelegate?.successfullyPushedToRemote()
-                }
-                completion(nil)
-                return
-            }
             var updatedParseVector = parseVector
-            updatedParseVector = incrementVectorClock(updatedParseVector)
+            // 9. Increment and merge clocks if new local revisions were pushed,
+            //    or else simply update thes remote.
+            if shouldIncrementClock {
+                updatedParseVector = incrementVectorClock(updatedParseVector)
+            }
             updatedParseVector.merge(with: localClock)
 
             // 10. Save updated clock to the remote and notify peer that sync is complete.
