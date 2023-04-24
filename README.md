@@ -1,5 +1,5 @@
 # ParseCareKit
-![CareKitImage](https://user-images.githubusercontent.com/8621344/234047174-bc60e980-2edf-4469-895e-a10665b83ab9.png)
+![CareKitImage](https://user-images.githubusercontent.com/8621344/234047811-de85e2d6-3c5a-405d-bd0e-a94ce603c8e3.png)
 
 ---
 
