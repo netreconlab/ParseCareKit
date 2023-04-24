@@ -144,7 +144,7 @@ public class PCKUtility {
         UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
         UserDefaults.standard.synchronize()
     }
-    
+
     /// Get the default ACL for `ParseCareKit` objects.
     public class func getDefaultACL() -> ParseACL? {
         guard let aclString = UserDefaults.standard.value(forKey: ParseCareKitConstants.defaultACL) as? String,

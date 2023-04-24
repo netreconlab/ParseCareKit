@@ -107,8 +107,7 @@ class ParseCareKitTests: XCTestCase {
         try await KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
         try store.delete()
-        UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
-        UserDefaults.standard.synchronize()
+        PCKUtility.removeCache()
     }
 
     func testSetDefaultACLLoggedIn() async throws {

@@ -18,8 +18,7 @@ class UtilityTests: XCTestCase {
         MockURLProtocol.removeAll()
         try await KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
-        UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
-        UserDefaults.standard.synchronize()
+        PCKUtility.removeCache()
     }
 
     func testSetupServer() async throws {
