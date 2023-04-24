@@ -26,11 +26,11 @@ public protocol PCKVersionable: PCKObjectable {
     /// The UUIDs are in no particular order.
     var nextVersionUUIDs: [UUID]? { get set }
 
-    /// The previous versions of this object, or nil if there is no previous version.
+    /// Parse Pointers to previous versions of this object, or nil if there is no previous version.
     /// The versions are in no particular order.
     var previousVersions: [Pointer<Self>]? { get set }
 
-    /// The next versions of this object, or nil if there is no next version.
+    /// Parse Pointers to next versions of this object, or nil if there is no next version.
     /// The versions are in no particular order.
     var nextVersions: [Pointer<Self>]? { get set }
 

@@ -149,12 +149,12 @@ public struct PCKOutcome: PCKVersionable {
         case task, taskUUID, taskOccurrenceIndex, values, deletedDate, startDate, endDate
     }
 
-    public static func new(with careKitEntity: OCKEntity) throws -> Self {
+    public static func new(from careKitEntity: OCKEntity) throws -> Self {
         switch careKitEntity {
         case .outcome(let entity):
-            return try copyCareKit(entity)
+            return try new(from: entity)
         default:
-            Logger.outcome.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
+            Logger.outcome.error("new(from:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType
         }
     }
@@ -170,7 +170,14 @@ public struct PCKOutcome: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ outcomeAny: OCKAnyOutcome) throws -> Self {
+    /**
+     Creates a new ParseCareKit object from a specified CareKit Outcome.
+
+     - parameter from: The CareKit Outcome used to create the new ParseCareKit object.
+     - returns: Returns a new version of `Self`
+     - throws: `Error`.
+    */
+    public static func new(from outcomeAny: OCKAnyOutcome) throws -> Self {
 
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType
@@ -224,9 +231,9 @@ public struct PCKOutcome: PCKVersionable {
             """)))
             return
         }
-        guard let store = delegate?.needStore() else {
+        guard let store = delegate?.provideStore() else {
             completion(.failure(ParseCareKitError.errorString("""
-                Missing ParseRemoteDelegate.needStore() method which is required to sync OCKOutcome's
+                Missing ParseRemoteDelegate.provideStore() method which is required to sync OCKOutcome's
             """)))
             return
         }

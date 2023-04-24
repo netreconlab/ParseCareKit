@@ -128,11 +128,11 @@ public struct PCKPatient: PCKVersionable {
         try encodeVersionable(to: encoder)
     }
 
-    public static func new(with careKitEntity: OCKEntity) throws -> PCKPatient {
+    public static func new(from careKitEntity: OCKEntity) throws -> PCKPatient {
 
         switch careKitEntity {
         case .patient(let entity):
-            return try copyCareKit(entity)
+            return try new(from: entity)
         default:
             Logger.patient.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -151,7 +151,14 @@ public struct PCKPatient: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ patientAny: OCKAnyPatient) throws -> PCKPatient {
+    /**
+     Creates a new ParseCareKit object from a specified CareKit Patient.
+
+     - parameter from: The CareKit Patient used to create the new ParseCareKit object.
+     - returns: Returns a new version of `Self`
+     - throws: `Error`.
+    */
+    public static func new(from patientAny: OCKAnyPatient) throws -> PCKPatient {
 
         guard let patient = patientAny as? OCKPatient else {
             throw ParseCareKitError.cantCastToNeededClassType

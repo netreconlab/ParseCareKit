@@ -1,4 +1,9 @@
 # ParseCareKit
+
+---
+
+[![Documentation](http://img.shields.io/badge/read_-docs-2196f3.svg)](https://swiftpackageindex.com/netreconlab/ParseCareKit/documentation)
+[![Tuturiol](http://img.shields.io/badge/read_-tuturials-2196f3.svg)](https://netreconlab.github.io/Parse-Swift/release/tutorials/parsecarekit/)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 ![Xcode 13.3+](https://img.shields.io/badge/xcode-13.3%2B-blue.svg)
@@ -7,6 +12,8 @@
 [![Slider Status](https://github.com/netreconlab/ParseCareKit/workflows/slider/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aslider)
 ![Codecov](https://codecov.io/gh/netreconlab/ParseCareKit/branches/main/graph/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license)
+
+---
 
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
@@ -223,7 +230,7 @@ You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This i
 struct Doctor: Patient {
     public var type:String?
     
-    func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
+    func new(from careKitEntity: OCKEntity)->PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):
@@ -237,7 +244,7 @@ struct Doctor: Patient {
     //Add a convienience initializer to to ensure that that the doctor class is always created correctly
     init(careKitEntity: OCKAnyPatient {
         self.init()
-        self.copyCareKit(careKitEntity)
+        self.new(from: careKitEntity)
         self.userInfo = [kPCKCustomClassKey: self.className]
     }
     
@@ -247,7 +254,7 @@ struct Doctor: Patient {
             return nil
         }
         
-        super.copyCareKit(doctor, clone: clone)
+        super.new(from: doctor, clone: clone)
         self.type = cancerPatient.userInfo?["CustomDoctorUserInfoTypeKey"]
         return seld
     }

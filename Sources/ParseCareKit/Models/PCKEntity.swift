@@ -137,17 +137,17 @@ public extension OCKEntity {
     func parseEntity() throws -> PCKEntity {
         switch self {
         case let .patient(patient):
-            return PCKEntity.patient(try PCKPatient.copyCareKit(patient))
+            return PCKEntity.patient(try PCKPatient.new(from: patient))
         case let .carePlan(plan):
-            return PCKEntity.carePlan(try PCKCarePlan.copyCareKit(plan))
+            return PCKEntity.carePlan(try PCKCarePlan.new(from: plan))
         case let .contact(contact):
-            return PCKEntity.contact(try PCKContact.copyCareKit(contact))
+            return PCKEntity.contact(try PCKContact.new(from: contact))
         case let .task(task):
-            return PCKEntity.task(try PCKTask.copyCareKit(task))
+            return PCKEntity.task(try PCKTask.new(from: task))
         case let .healthKitTask(task):
-            return PCKEntity.healthKitTask(try PCKHealthKitTask.copyCareKit(task))
+            return PCKEntity.healthKitTask(try PCKHealthKitTask.new(from: task))
         case let .outcome(outcome):
-            return PCKEntity.outcome(try PCKOutcome.copyCareKit(outcome))
+            return PCKEntity.outcome(try PCKOutcome.new(from: outcome))
         }
     }
 }

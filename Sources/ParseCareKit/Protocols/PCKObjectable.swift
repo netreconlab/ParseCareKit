@@ -85,11 +85,11 @@ public protocol PCKObjectable: ParseObject {
     /**
      Creates a new ParseCareKit object from a specified CareKit entity.
 
-     - parameter with: The CareKit entity used to create the new ParseCareKit object.
+     - parameter from: The CareKit entity used to create the new ParseCareKit object.
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    static func new(with careKitEntity: OCKEntity) throws -> Self
+    static func new(from careKitEntity: OCKEntity) throws -> Self
 }
 
 // MARK: Defaults

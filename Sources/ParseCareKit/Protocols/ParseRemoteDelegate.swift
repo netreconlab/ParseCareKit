@@ -23,7 +23,7 @@ public protocol ParseRemoteDelegate: OCKRemoteSynchronizationDelegate {
     /// Sometimes the remote will need the local data store to fetch additional information
     /// required for proper synchronization.
     /// - note: The remote will never use this method to modify the store.
-    func needStore() -> OCKAnyStoreProtocol
+    func provideStore() -> OCKAnyStoreProtocol
 }
 
 extension ParseRemoteDelegate {

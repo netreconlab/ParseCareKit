@@ -133,10 +133,10 @@ public struct PCKCarePlan: PCKVersionable {
         ACL = PCKUtility.getDefaultACL()
     }
 
-    public static func new(with careKitEntity: OCKEntity) throws -> PCKCarePlan {
+    public static func new(from careKitEntity: OCKEntity) throws -> PCKCarePlan {
         switch careKitEntity {
         case .carePlan(let entity):
-            return try copyCareKit(entity)
+            return try new(from: entity)
         default:
             Logger.carePlan.error("new(with:) The wrong type (\(careKitEntity.entityType, privacy: .private)) of entity was passed as an argument.")
             throw ParseCareKitError.classTypeNotAnEligibleType
@@ -153,7 +153,14 @@ public struct PCKCarePlan: PCKVersionable {
         return here
     }
 
-    public static func copyCareKit(_ carePlanAny: OCKAnyCarePlan) throws -> PCKCarePlan {
+    /**
+     Creates a new ParseCareKit object from a specified CareKit CarePlan.
+
+     - parameter from: The CareKit Plan used to create the new ParseCareKit object.
+     - returns: Returns a new version of `Self`
+     - throws: `Error`.
+    */
+    public static func new(from carePlanAny: OCKAnyCarePlan) throws -> PCKCarePlan {
 
         guard let carePlan = carePlanAny as? OCKCarePlan else {
             throw ParseCareKitError.cantCastToNeededClassType
