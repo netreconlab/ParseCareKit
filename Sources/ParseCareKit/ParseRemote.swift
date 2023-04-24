@@ -216,8 +216,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     for (index, revision) in revisions.enumerated() {
                         let record = try await revision.fetchEntities().convertToCareKit()
                         mergeRevision(record)
-                        self.notifyRevisionProgress(index + 1,
-                                                    total: revisions.count)
+                        if index < revisions.count {
+                            self.notifyRevisionProgress(index + 1,
+                                                        total: revisions.count)
+                        }
                     }
                     self.notifyRevisionProgress(revisions.count,
                                                 total: revisions.count)
@@ -296,9 +298,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                                                    remoteClock: parseClock,
                                                                    remoteClockValue: logicalClock)
                         try await remoteRevision.save()
-                        self.notifyRevisionProgress(index + 1,
-                                                    total: deviceRevisions.count)
-                        if index == (deviceRevisions.count - 1) {
+                        if index < deviceRevisions.count {
+                            self.notifyRevisionProgress(index + 1,
+                                                        total: deviceRevisions.count)
+                        } else {
                             self.completePushRevisions(parseClock: parseClock,
                                                        parseVector: parseVector,
                                                        localClock: deviceKnowledge,
