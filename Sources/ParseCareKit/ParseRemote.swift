@@ -204,16 +204,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                 // 3. Pull the latest revisions from the remote.
                 let localClock = knowledgeVector.clock(for: self.uuid)
-                let query: Query<PCKRevisionRecord>!
-                if localClock > 0 {
-                    query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
+                let query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
                                                     ObjectableKey.clockUUID == self.uuid)
-                        .order([.ascending(ObjectableKey.logicalClock)])
-                } else {
-                    query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
-                                                    ObjectableKey.clockUUID == self.uuid)
-                        .order([.ascending(ObjectableKey.logicalClock)])
-                }
+                    .order([.ascending(ObjectableKey.logicalClock)])
                 do {
                     let revisions = try await query.find()
                     self.notifyRevisionProgress(0,
