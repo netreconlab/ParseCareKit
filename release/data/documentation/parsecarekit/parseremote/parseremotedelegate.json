@@ -9,15 +9,7 @@
       "type" : "text"
     },
     {
-      "text" : "store (set this, don’t set ",
-      "type" : "text"
-    },
-    {
-      "code" : "delegate",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ").",
+      "text" : "store.",
       "type" : "text"
     }
   ],
@@ -138,6 +130,49 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Setting ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "parseRemoteDelegate",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " automatically sets ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "delegate",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -179,7 +214,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote": {
   "abstract" : [
     {
-      "text" : "Allows the CareKitStore to synchronize against a Parse Server.",
+      "text" : "Allows the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to synchronize with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -221,15 +264,7 @@
       "type" : "text"
     },
     {
-      "text" : "store (set this, don’t set ",
-      "type" : "text"
-    },
-    {
-      "code" : "delegate",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ").",
+      "text" : "store.",
       "type" : "text"
     }
   ],

@@ -17,7 +17,8 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity\/Encodable-Implementations"
       ]
     ]
   },
@@ -27,6 +28,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
+    "extendedModule" : "ParseCareKit",
     "externalID" : "s:12ParseCareKit9PCKEntityO6encode2toys7Encoder_p_tKF",
     "fragments" : [
       {
@@ -208,6 +210,17 @@
   "title" : "PCKEntity",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckentity"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKEntity/Encodable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity\/Encodable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Encodable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckentity\/encodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKEntity/encode(to:)": {
   "abstract" : [

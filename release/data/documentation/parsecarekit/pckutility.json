@@ -91,7 +91,9 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/decoder()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/encoder()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/getDefaultACL()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/jsonEncoder()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/removeCache()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setAccessGroup(fileName:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setupServer(fileName:authentication:)"
       ],
@@ -250,6 +252,63 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckutility\/encoder()"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/getDefaultACL()": {
+  "abstract" : [
+    {
+      "text" : "Get the default ACL for ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseCareKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " objects.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "getDefaultACL"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A3ACLV",
+      "text" : "ParseACL"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/getDefaultACL()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "getDefaultACL()",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckutility\/getdefaultacl()"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/jsonEncoder()": {
   "abstract" : [
     {
@@ -294,6 +353,46 @@
   "title" : "jsonEncoder()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckutility\/jsonencoder()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/removeCache()": {
+  "abstract" : [
+    {
+      "text" : "Remove ParseCareKit cache from device.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeCache"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/removeCache()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "removeCache()",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckutility\/removecache()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/setAccessGroup(fileName:)": {
   "abstract" : [

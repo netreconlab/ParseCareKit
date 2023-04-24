@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "A dictionary of any default classes to synchronize between the CareKitStore and the Parse Server. These",
+      "text" : "A dictionary of any default classes to synchronize between the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and the Parse Server. These",
       "type" : "text"
     },
     {
@@ -21,14 +29,6 @@
       "type" : "text"
     },
     {
-      "code" : "PCKTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
       "code" : "PCKCarePlan",
       "type" : "codeVoice"
     },
@@ -41,7 +41,31 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", and ",
+      "text" : ", ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",  ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKHealthKitTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "and ",
       "type" : "text"
     },
     {
@@ -67,7 +91,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC28pckStoreClassesToSynchronizeSDyAA13PCKStoreClassOAA14PCKVersionable_pGSgvp",
+    "externalID" : "s:12ParseCareKit0A6RemoteC28pckStoreClassesToSynchronizeSDyAA13PCKStoreClassOAA14PCKVersionable_pXpGSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -109,7 +133,7 @@
       },
       {
         "kind" : "text",
-        "text" : "]!"
+        "text" : ".Type]!"
       }
     ],
     "modules" : [
@@ -175,7 +199,7 @@
             },
             {
               "kind" : "text",
-              "text" : "]!"
+              "text" : ".Type]!"
             }
           ]
         }
@@ -306,7 +330,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote": {
   "abstract" : [
     {
-      "text" : "Allows the CareKitStore to synchronize against a Parse Server.",
+      "text" : "Allows the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to synchronize with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -340,7 +372,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/pckStoreClassesToSynchronize": {
   "abstract" : [
     {
-      "text" : "A dictionary of any default classes to synchronize between the CareKitStore and the Parse Server. These",
+      "text" : "A dictionary of any default classes to synchronize between the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and the Parse Server. These",
       "type" : "text"
     },
     {
@@ -360,14 +400,6 @@
       "type" : "text"
     },
     {
-      "code" : "PCKTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ", ",
-      "type" : "text"
-    },
-    {
       "code" : "PCKCarePlan",
       "type" : "codeVoice"
     },
@@ -380,7 +412,31 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", and ",
+      "text" : ", ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",  ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKHealthKitTask",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ",",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "and ",
       "type" : "text"
     },
     {
@@ -433,7 +489,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]!"
+      "text" : ".Type]!"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/pckStoreClassesToSynchronize",

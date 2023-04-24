@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The next versions of this object, or nil if there is no next version.",
+      "text" : "Parse Pointers to next versions of this object, or nil if there is no next version.",
       "type" : "text"
     },
     {
@@ -257,7 +257,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/nextVersions": {
   "abstract" : [
     {
-      "text" : "The next versions of this object, or nil if there is no next version.",
+      "text" : "Parse Pointers to next versions of this object, or nil if there is no next version.",
       "type" : "text"
     },
     {

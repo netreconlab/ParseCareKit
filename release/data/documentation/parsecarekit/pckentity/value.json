@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "The underlying ParseCareKit type for the respective entity.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -186,7 +192,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKEntity/value": {
   "abstract" : [
-
+    {
+      "text" : "The underlying ParseCareKit type for the respective entity.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

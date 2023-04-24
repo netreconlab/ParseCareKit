@@ -1,19 +1,25 @@
 {
+  "abstract" : [
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit Contact.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/copyCareKit(_:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/new(from:)-7szt4"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKPatientV04copybC0yAC0bC5Store13OCKAnyPatient_pKFZ",
+    "externalID" : "s:12ParseCareKit10PCKContactV3new4fromAC0bC5Store13OCKAnyContact_p_tKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -33,16 +39,24 @@
       },
       {
         "kind" : "identifier",
-        "text" : "copyCareKit"
+        "text" : "new"
       },
       {
         "kind" : "text",
         "text" : "("
       },
       {
+        "kind" : "externalParam",
+        "text" : "from"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12CareKitStore13OCKAnyPatientP",
-        "text" : "OCKAnyPatient"
+        "preciseIdentifier" : "s:12CareKitStore13OCKAnyContactP",
+        "text" : "OCKAnyContact"
       },
       {
         "kind" : "text",
@@ -58,8 +72,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12ParseCareKit10PCKPatientV",
-        "text" : "PCKPatient"
+        "preciseIdentifier" : "s:12ParseCareKit10PCKContactV",
+        "text" : "PCKContact"
       }
     ],
     "modules" : [
@@ -70,7 +84,7 @@
     "role" : "symbol",
     "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "copyCareKit(_:)"
+    "title" : "new(from:)"
   },
   "primaryContentSections" : [
     {
@@ -101,7 +115,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "copyCareKit"
+              "text" : "new"
             },
             {
               "kind" : "text",
@@ -109,7 +123,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "_"
+              "text" : "from"
             },
             {
               "kind" : "text",
@@ -117,17 +131,17 @@
             },
             {
               "kind" : "internalParam",
-              "text" : "patientAny"
+              "text" : "contactAny"
             },
             {
               "kind" : "text",
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContact",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12CareKitStore13OCKAnyPatientP",
-              "text" : "OCKAnyPatient"
+              "preciseIdentifier" : "s:12CareKitStore13OCKAnyContactP",
+              "text" : "OCKAnyContact"
             },
             {
               "kind" : "text",
@@ -142,15 +156,93 @@
               "text" : " -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12ParseCareKit10PCKPatientV",
-              "text" : "PCKPatient"
+              "preciseIdentifier" : "s:12ParseCareKit10PCKContactV",
+              "text" : "PCKContact"
             }
           ]
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Returns a new version of ",
+              "type" : "text"
+            },
+            {
+              "code" : "Self",
+              "type" : "codeVoice"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The CareKit Contact used to create the new ParseCareKit object.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "from"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Error",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -164,7 +256,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckpatient\/copycarekit(_:)"
+        "\/documentation\/parsecarekit\/pckcontact\/new(from:)-7szt4"
       ],
       "traits" : [
         {
@@ -175,14 +267,14 @@
   ]
 , 
 "references": {
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatient": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContact": {
   "abstract" : [
     {
       "text" : "Conforming a type to ",
       "type" : "text"
     },
     {
-      "code" : "OCKAnyPatient",
+      "code" : "OCKAnyContact",
       "type" : "codeVoice"
     },
     {
@@ -201,21 +293,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "OCKAnyPatient"
+      "text" : "OCKAnyContact"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatient",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContact",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "OCKAnyPatient"
+      "text" : "OCKAnyContact"
     }
   ],
   "role" : "symbol",
-  "title" : "OCKAnyPatient",
+  "title" : "OCKAnyContact",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanypatient"
+  "url" : "\/documentation\/carekitstore\/ockanycontact"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
@@ -231,14 +323,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact": {
   "abstract" : [
     {
       "text" : "An ",
       "type" : "text"
     },
     {
-      "code" : "PCKPatient",
+      "code" : "PCKContact",
       "type" : "codeVoice"
     },
     {
@@ -246,7 +338,7 @@
       "type" : "text"
     },
     {
-      "code" : "OCKPatient",
+      "code" : "OCKContact",
       "type" : "codeVoice"
     },
     {
@@ -254,11 +346,27 @@
       "type" : "text"
     },
     {
-      "code" : "OCKPatient",
+      "code" : "OCKContact",
       "type" : "codeVoice"
     },
     {
-      "text" : " represents a patient.",
+      "text" : "represents a contact that a user",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "may want to get in touch with. A contact may be a care provider, a friend, or a family member. Contacts must have at",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "least a name, and may optionally have numerous other addresses at which to be contacted.",
       "type" : "text"
     }
   ],
@@ -273,25 +381,28 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKPatient"
+      "text" : "PCKContact"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKPatient"
+      "text" : "PCKContact"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKPatient",
+  "title" : "PCKContact",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckpatient"
+  "url" : "\/documentation\/parsecarekit\/pckcontact"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/copyCareKit(_:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/new(from:)-7szt4": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit Contact.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -312,16 +423,24 @@
     },
     {
       "kind" : "identifier",
-      "text" : "copyCareKit"
+      "text" : "new"
     },
     {
       "kind" : "text",
       "text" : "("
     },
     {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKAnyPatientP",
-      "text" : "OCKAnyPatient"
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyContactP",
+      "text" : "OCKAnyContact"
     },
     {
       "kind" : "text",
@@ -337,16 +456,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit10PCKPatientV",
-      "text" : "PCKPatient"
+      "preciseIdentifier" : "s:12ParseCareKit10PCKContactV",
+      "text" : "PCKContact"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/copyCareKit(_:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/new(from:)-7szt4",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "copyCareKit(_:)",
+  "title" : "new(from:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckpatient\/copycarekit(_:)"
+  "url" : "\/documentation\/parsecarekit\/pckcontact\/new(from:)-7szt4"
 }
 }
 }

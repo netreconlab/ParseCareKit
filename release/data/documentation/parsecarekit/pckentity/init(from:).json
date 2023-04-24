@@ -17,7 +17,8 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity\/Decodable-Implementations"
       ]
     ]
   },
@@ -27,6 +28,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
+    "extendedModule" : "ParseCareKit",
     "externalID" : "s:12ParseCareKit9PCKEntityO4fromACs7Decoder_p_tKcfc",
     "fragments" : [
       {
@@ -192,6 +194,17 @@
   "title" : "PCKEntity",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckentity"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKEntity/Decodable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKEntity\/Decodable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Decodable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckentity\/decodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKEntity/init(from:)": {
   "abstract" : [

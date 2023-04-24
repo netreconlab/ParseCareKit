@@ -227,8 +227,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/convertToCareKit()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/new(with:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/convertToCareKit()"
       ],
       "title" : "Instance Methods"
     },
@@ -240,8 +239,9 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/copyCareKit(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/copyValues(from:to:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/copyValues(from:to:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/new(from:)-7za4s",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/new(from:)-mcw2"
       ],
       "title" : "Type Methods"
     },
@@ -871,65 +871,6 @@
   "title" : "convertToCareKit()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/converttocarekit()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/copyCareKit(_:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "copyCareKit"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
-      "text" : "OCKAnyTask"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit09PCKHealthC4TaskV",
-      "text" : "PCKHealthKitTask"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/copyCareKit(_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "copyCareKit(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/copycarekit(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/copyValues(from:to:)": {
   "abstract" : [
@@ -1605,7 +1546,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/logicalclock"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/new(with:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/new(from:)-7za4s": {
   "abstract" : [
     {
       "text" : "Creates a new ParseCareKit object from a specified CareKit entity.",
@@ -1613,6 +1554,14 @@
     }
   ],
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "func"
@@ -1631,7 +1580,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "with"
+      "text" : "from"
     },
     {
       "kind" : "text",
@@ -1660,12 +1609,82 @@
       "text" : "PCKHealthKitTask"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/new(with:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/new(from:)-7za4s",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "new(with:)",
+  "title" : "new(from:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(with:)"
+  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(from:)-7za4s"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/new(from:)-mcw2": {
+  "abstract" : [
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit Task.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "new"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
+      "text" : "OCKAnyTask"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12ParseCareKit09PCKHealthC4TaskV",
+      "text" : "PCKHealthKitTask"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/new(from:)-mcw2",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "new(from:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(from:)-mcw2"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/nextVersionUUIDs": {
   "abstract" : [
@@ -1719,7 +1738,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/nextVersions": {
   "abstract" : [
     {
-      "text" : "The next versions of this object, or nil if there is no next version.",
+      "text" : "Parse Pointers to next versions of this object, or nil if there is no next version.",
       "type" : "text"
     },
     {
@@ -1938,7 +1957,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/previousVersions": {
   "abstract" : [
     {
-      "text" : "The previous versions of this object, or nil if there is no previous version.",
+      "text" : "Parse Pointers to previous versions of this object, or nil if there is no previous version.",
       "type" : "text"
     },
     {

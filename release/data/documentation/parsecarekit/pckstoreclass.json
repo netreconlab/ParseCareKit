@@ -81,6 +81,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s12CaseIterableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY"
@@ -477,6 +478,11 @@
   "title" : "PCKStoreClass.task",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckstoreclass\/task"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s12CaseIterableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s12CaseIterableP",
+  "title" : "Swift.CaseIterable",
+  "type" : "unresolvable"
 }
 }
 }

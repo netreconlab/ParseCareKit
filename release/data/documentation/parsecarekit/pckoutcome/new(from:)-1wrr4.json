@@ -1,19 +1,25 @@
 {
+  "abstract" : [
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit Outcome.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/copyCareKit(_:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome\/new(from:)-1wrr4"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit7PCKTaskV04copybC0yAC0bC5Store10OCKAnyTask_pKFZ",
+    "externalID" : "s:12ParseCareKit10PCKOutcomeV3new4fromAC0bC5Store13OCKAnyOutcome_p_tKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -33,16 +39,24 @@
       },
       {
         "kind" : "identifier",
-        "text" : "copyCareKit"
+        "text" : "new"
       },
       {
         "kind" : "text",
         "text" : "("
       },
       {
+        "kind" : "externalParam",
+        "text" : "from"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
-        "text" : "OCKAnyTask"
+        "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+        "text" : "OCKAnyOutcome"
       },
       {
         "kind" : "text",
@@ -58,8 +72,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12ParseCareKit7PCKTaskV",
-        "text" : "PCKTask"
+        "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
+        "text" : "PCKOutcome"
       }
     ],
     "modules" : [
@@ -70,7 +84,7 @@
     "role" : "symbol",
     "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "copyCareKit(_:)"
+    "title" : "new(from:)"
   },
   "primaryContentSections" : [
     {
@@ -101,7 +115,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "copyCareKit"
+              "text" : "new"
             },
             {
               "kind" : "text",
@@ -109,7 +123,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "_"
+              "text" : "from"
             },
             {
               "kind" : "text",
@@ -117,17 +131,17 @@
             },
             {
               "kind" : "internalParam",
-              "text" : "taskAny"
+              "text" : "outcomeAny"
             },
             {
               "kind" : "text",
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTask",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
-              "text" : "OCKAnyTask"
+              "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+              "text" : "OCKAnyOutcome"
             },
             {
               "kind" : "text",
@@ -142,15 +156,93 @@
               "text" : " -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12ParseCareKit7PCKTaskV",
-              "text" : "PCKTask"
+              "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
+              "text" : "PCKOutcome"
             }
           ]
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Returns a new version of ",
+              "type" : "text"
+            },
+            {
+              "code" : "Self",
+              "type" : "codeVoice"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The CareKit Outcome used to create the new ParseCareKit object.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "from"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Error",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -164,7 +256,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pcktask\/copycarekit(_:)"
+        "\/documentation\/parsecarekit\/pckoutcome\/new(from:)-1wrr4"
       ],
       "traits" : [
         {
@@ -175,18 +267,10 @@
   ]
 , 
 "references": {
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTask": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
   "abstract" : [
     {
-      "text" : "Conforming a type to ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKAnyTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " allows it to be queried and displayed by CareKit.",
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
       "type" : "text"
     }
   ],
@@ -201,21 +285,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "OCKAnyTask"
+      "text" : "OCKAnyOutcome"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTask",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "OCKAnyTask"
+      "text" : "OCKAnyOutcome"
     }
   ],
   "role" : "symbol",
-  "title" : "OCKAnyTask",
+  "title" : "OCKAnyOutcome",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanytask"
+  "url" : "\/documentation\/carekitstore\/ockanyoutcome"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
@@ -231,14 +315,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome": {
   "abstract" : [
     {
       "text" : "An ",
       "type" : "text"
     },
     {
-      "code" : "PCKTask",
+      "code" : "PCKOutcome",
       "type" : "codeVoice"
     },
     {
@@ -246,7 +330,7 @@
       "type" : "text"
     },
     {
-      "code" : "OCKTask",
+      "code" : "OCKOutcome",
       "type" : "codeVoice"
     },
     {
@@ -254,11 +338,11 @@
       "type" : "text"
     },
     {
-      "code" : "OCKTask",
+      "code" : "OCKOutcome",
       "type" : "codeVoice"
     },
     {
-      "text" : " represents some task or action that a",
+      "text" : " represents the",
       "type" : "text"
     },
     {
@@ -266,15 +350,7 @@
       "type" : "text"
     },
     {
-      "text" : "patient is supposed to perform. Tasks are optionally associable with an ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKCarePlan",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and must have a unique",
+      "text" : "outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.",
       "type" : "text"
     },
     {
@@ -282,7 +358,7 @@
       "type" : "text"
     },
     {
-      "text" : "id and schedule. The schedule determines when and how often the task should be performed, and the",
+      "text" : "For example, a task that asks a patient to measure their temperature will have events whose outcome",
       "type" : "text"
     },
     {
@@ -290,19 +366,7 @@
       "type" : "text"
     },
     {
-      "code" : "impactsAdherence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " flag may be used to specify whether or not the patients adherence to this task will affect",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "their daily completion rings.",
+      "text" : "will contain a single value representing the patient’s temperature.",
       "type" : "text"
     }
   ],
@@ -317,25 +381,28 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKTask"
+      "text" : "PCKOutcome"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKTask"
+      "text" : "PCKOutcome"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKTask",
+  "title" : "PCKOutcome",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask"
+  "url" : "\/documentation\/parsecarekit\/pckoutcome"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/copyCareKit(_:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome/new(from:)-1wrr4": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit Outcome.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -356,16 +423,24 @@
     },
     {
       "kind" : "identifier",
-      "text" : "copyCareKit"
+      "text" : "new"
     },
     {
       "kind" : "text",
       "text" : "("
     },
     {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
-      "text" : "OCKAnyTask"
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
     },
     {
       "kind" : "text",
@@ -381,16 +456,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit7PCKTaskV",
-      "text" : "PCKTask"
+      "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
+      "text" : "PCKOutcome"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/copyCareKit(_:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome\/new(from:)-1wrr4",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "copyCareKit(_:)",
+  "title" : "new(from:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask\/copycarekit(_:)"
+  "url" : "\/documentation\/parsecarekit\/pckoutcome\/new(from:)-1wrr4"
 }
 }
 }

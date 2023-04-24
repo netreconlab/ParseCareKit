@@ -18,7 +18,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA14PCKVersionable_pGSb0A5Swift0aO0VSgtYaKcfc",
+    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA14PCKVersionable_pXpGSb0A5Swift0aO0VSgtYaKcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -94,7 +94,7 @@
       },
       {
         "kind" : "text",
-        "text" : "], "
+        "text" : ".Type], "
       },
       {
         "kind" : "externalParam",
@@ -248,7 +248,7 @@
             },
             {
               "kind" : "text",
-              "text" : "], "
+              "text" : ".Type], "
             },
             {
               "kind" : "externalParam",
@@ -741,7 +741,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : ".Type]?, "
     },
     {
       "kind" : "externalParam",
@@ -775,7 +775,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",
@@ -913,7 +913,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",

@@ -15451,6 +15451,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/carekitstore\/ockcareplan\/classname",
+                "title" : "var className: String?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/carekitstore\/ockcareplan\/createddate",
                 "title" : "var createdDate: Date?",
                 "type" : "property"
@@ -15798,6 +15803,11 @@
               {
                 "path" : "\/documentation\/carekitstore\/ockcontact\/category",
                 "title" : "var category: OCKContactCategory?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/carekitstore\/ockcontact\/classname",
+                "title" : "var className: String?",
                 "type" : "property"
               },
               {
@@ -16589,6 +16599,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/carekitstore\/ockhealthkittask\/classname",
+                "title" : "var className: String?",
+                "type" : "property"
+              },
+              {
                 "path" : "\/documentation\/carekitstore\/ockhealthkittask\/createddate",
                 "title" : "var createdDate: Date?",
                 "type" : "property"
@@ -16886,6 +16901,11 @@
               {
                 "path" : "\/documentation\/carekitstore\/ockoutcome\/asset",
                 "title" : "var asset: String?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/carekitstore\/ockoutcome\/classname",
+                "title" : "var className: String?",
                 "type" : "property"
               },
               {
@@ -17314,6 +17334,11 @@
               {
                 "path" : "\/documentation\/carekitstore\/ockpatient\/birthday",
                 "title" : "var birthday: Date?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/carekitstore\/ockpatient\/classname",
+                "title" : "var className: String?",
                 "type" : "property"
               },
               {
@@ -18391,6 +18416,11 @@
               {
                 "path" : "\/documentation\/carekitstore\/ocktask\/careplanuuid",
                 "title" : "var carePlanUUID: UUID?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/carekitstore\/ocktask\/classname",
+                "title" : "var className: String?",
                 "type" : "property"
               },
               {
@@ -24566,15 +24596,6 @@
                             "path" : "\/documentation\/collections\/orderedset\/subsequence\/subscript(_:)-8r0e1",
                             "title" : "subscript<R>(R) -> Self.SubSequence",
                             "type" : "subscript"
-                          },
-                          {
-                            "title" : "Type Aliases",
-                            "type" : "groupMarker"
-                          },
-                          {
-                            "path" : "\/documentation\/collections\/orderedset\/subsequence\/iterator",
-                            "title" : "OrderedSet.SubSequence.Iterator",
-                            "type" : "typealias"
                           }
                         ],
                         "path" : "\/documentation\/collections\/orderedset\/subsequence\/collection-implementations",
@@ -24904,6 +24925,11 @@
                             "path" : "\/documentation\/collections\/orderedset\/subsequence\/element",
                             "title" : "OrderedSet.SubSequence.Element",
                             "type" : "typealias"
+                          },
+                          {
+                            "path" : "\/documentation\/collections\/orderedset\/subsequence\/iterator",
+                            "title" : "OrderedSet.SubSequence.Iterator",
+                            "type" : "typealias"
                           }
                         ],
                         "path" : "\/documentation\/collections\/orderedset\/subsequence\/sequence-implementations",
@@ -25228,12 +25254,12 @@
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
             "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable]?, customClasses: [String : any PCKVersionable], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type]?, customClasses: [String : any PCKVersionable.Type], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
@@ -25257,8 +25283,18 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckutility\/getdefaultacl()",
+                "title" : "class func getDefaultACL() -> ParseACL?",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckutility\/jsonencoder()",
                 "title" : "class func jsonEncoder() -> JSONEncoder",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckutility\/removecache()",
+                "title" : "class func removeCache()",
                 "type" : "method"
               },
               {
@@ -25289,7 +25325,7 @@
               },
               {
                 "path" : "\/documentation\/parsecarekit\/parseremote\/customclassestosynchronize",
-                "title" : "var customClassesToSynchronize: [String : any PCKVersionable]?",
+                "title" : "var customClassesToSynchronize: [String : any PCKVersionable.Type]?",
                 "type" : "property"
               },
               {
@@ -25304,7 +25340,7 @@
               },
               {
                 "path" : "\/documentation\/parsecarekit\/parseremote\/pckstoreclassestosynchronize",
-                "title" : "var pckStoreClassesToSynchronize: [PCKStoreClass : any PCKVersionable]!",
+                "title" : "var pckStoreClassesToSynchronize: [PCKStoreClass : any PCKVersionable.Type]!",
                 "type" : "property"
               },
               {
@@ -25499,11 +25535,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckobjectable\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> Self",
-                "type" : "method"
-              },
-              {
                 "title" : "Type Methods",
                 "type" : "groupMarker"
               },
@@ -25530,6 +25561,11 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckobjectable\/firstpublisher(_:options:)",
                 "title" : "static func firstPublisher(UUID?, options: API.Options) -> Future<Self, Error>",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckobjectable\/new(from:)",
+                "title" : "static func new(from: OCKEntity) throws -> Self",
                 "type" : "method"
               },
               {
@@ -25746,13 +25782,13 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/parseremotedelegate\/needstore()",
-                "title" : "func needStore() -> OCKAnyStoreProtocol",
+                "path" : "\/documentation\/parsecarekit\/parseremotedelegate\/providestore()",
+                "title" : "func provideStore() -> OCKAnyStoreProtocol",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypusheddatatocloud()",
-                "title" : "func successfullyPushedDataToCloud()",
+                "path" : "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypushedtoremote()",
+                "title" : "func successfullyPushedToRemote()",
                 "type" : "method"
               }
             ],
@@ -25939,11 +25975,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> PCKCarePlan",
-                "type" : "method"
-              },
-              {
                 "title" : "Type Properties",
                 "type" : "groupMarker"
               },
@@ -25957,13 +25988,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/copycarekit(_:)",
-                "title" : "static func copyCareKit(OCKAnyCarePlan) throws -> PCKCarePlan",
+                "path" : "\/documentation\/parsecarekit\/pckcareplan\/copyvalues(from:to:)",
+                "title" : "static func copyValues(from: PCKCarePlan, to: PCKCarePlan) throws -> PCKCarePlan",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcareplan\/copyvalues(from:to:)",
-                "title" : "static func copyValues(from: PCKCarePlan, to: PCKCarePlan) throws -> PCKCarePlan",
+                "path" : "\/documentation\/parsecarekit\/pckcareplan\/new(from:)-77oqn",
+                "title" : "static func new(from: OCKEntity) throws -> PCKCarePlan",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckcareplan\/new(from:)-8mk4t",
+                "title" : "static func new(from: OCKAnyCarePlan) throws -> PCKCarePlan",
                 "type" : "method"
               },
               {
@@ -27318,11 +27354,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> PCKContact",
-                "type" : "method"
-              },
-              {
                 "title" : "Type Properties",
                 "type" : "groupMarker"
               },
@@ -27336,13 +27367,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/copycarekit(_:)",
-                "title" : "static func copyCareKit(OCKAnyContact) throws -> PCKContact",
+                "path" : "\/documentation\/parsecarekit\/pckcontact\/copyvalues(from:to:)",
+                "title" : "static func copyValues(from: PCKContact, to: PCKContact) throws -> PCKContact",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckcontact\/copyvalues(from:to:)",
-                "title" : "static func copyValues(from: PCKContact, to: PCKContact) throws -> PCKContact",
+                "path" : "\/documentation\/parsecarekit\/pckcontact\/new(from:)-31o0b",
+                "title" : "static func new(from: OCKEntity) throws -> PCKContact",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckcontact\/new(from:)-7szt4",
+                "title" : "static func new(from: OCKAnyContact) throws -> PCKContact",
                 "type" : "method"
               },
               {
@@ -28144,11 +28180,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> PCKHealthKitTask",
-                "type" : "method"
-              },
-              {
                 "title" : "Type Properties",
                 "type" : "groupMarker"
               },
@@ -28162,13 +28193,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/copycarekit(_:)",
-                "title" : "static func copyCareKit(OCKAnyTask) throws -> PCKHealthKitTask",
+                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/copyvalues(from:to:)",
+                "title" : "static func copyValues(from: PCKHealthKitTask, to: PCKHealthKitTask) throws -> PCKHealthKitTask",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/copyvalues(from:to:)",
-                "title" : "static func copyValues(from: PCKHealthKitTask, to: PCKHealthKitTask) throws -> PCKHealthKitTask",
+                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(from:)-7za4s",
+                "title" : "static func new(from: OCKEntity) throws -> PCKHealthKitTask",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/new(from:)-mcw2",
+                "title" : "static func new(from: OCKAnyTask) throws -> PCKHealthKitTask",
                 "type" : "method"
               },
               {
@@ -28970,11 +29006,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> PCKOutcome",
-                "type" : "method"
-              },
-              {
                 "path" : "\/documentation\/parsecarekit\/pckoutcome\/prepareencodingrelational(_:)",
                 "title" : "func prepareEncodingRelational(Bool)",
                 "type" : "method"
@@ -28993,13 +29024,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/copycarekit(_:)",
-                "title" : "static func copyCareKit(OCKAnyOutcome) throws -> PCKOutcome",
+                "path" : "\/documentation\/parsecarekit\/pckoutcome\/copyvalues(from:to:)",
+                "title" : "static func copyValues(from: PCKOutcome, to: PCKOutcome) throws -> PCKOutcome",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckoutcome\/copyvalues(from:to:)",
-                "title" : "static func copyValues(from: PCKOutcome, to: PCKOutcome) throws -> PCKOutcome",
+                "path" : "\/documentation\/parsecarekit\/pckoutcome\/new(from:)-1lokd",
+                "title" : "static func new(from: OCKEntity) throws -> PCKOutcome",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckoutcome\/new(from:)-1wrr4",
+                "title" : "static func new(from: OCKAnyOutcome) throws -> PCKOutcome",
                 "type" : "method"
               },
               {
@@ -29801,11 +29837,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> PCKPatient",
-                "type" : "method"
-              },
-              {
                 "title" : "Type Properties",
                 "type" : "groupMarker"
               },
@@ -29819,13 +29850,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/copycarekit(_:)",
-                "title" : "static func copyCareKit(OCKAnyPatient) throws -> PCKPatient",
+                "path" : "\/documentation\/parsecarekit\/pckpatient\/copyvalues(from:to:)",
+                "title" : "static func copyValues(from: PCKPatient, to: PCKPatient) throws -> PCKPatient",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckpatient\/copyvalues(from:to:)",
-                "title" : "static func copyValues(from: PCKPatient, to: PCKPatient) throws -> PCKPatient",
+                "path" : "\/documentation\/parsecarekit\/pckpatient\/new(from:)-1zwnd",
+                "title" : "static func new(from: OCKAnyPatient) throws -> PCKPatient",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckpatient\/new(from:)-biac",
+                "title" : "static func new(from: OCKEntity) throws -> PCKPatient",
                 "type" : "method"
               },
               {
@@ -30606,11 +30642,6 @@
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/new(with:)",
-                "title" : "func new(with: OCKEntity) throws -> PCKTask",
-                "type" : "method"
-              },
-              {
                 "title" : "Type Properties",
                 "type" : "groupMarker"
               },
@@ -30624,13 +30655,18 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/copycarekit(_:)",
-                "title" : "static func copyCareKit(OCKAnyTask) throws -> PCKTask",
+                "path" : "\/documentation\/parsecarekit\/pcktask\/copyvalues(from:to:)",
+                "title" : "static func copyValues(from: PCKTask, to: PCKTask) throws -> PCKTask",
                 "type" : "method"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pcktask\/copyvalues(from:to:)",
-                "title" : "static func copyValues(from: PCKTask, to: PCKTask) throws -> PCKTask",
+                "path" : "\/documentation\/parsecarekit\/pcktask\/new(from:)-6t6nw",
+                "title" : "static func new(from: OCKEntity) throws -> PCKTask",
+                "type" : "method"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pcktask\/new(from:)-8ucl3",
+                "title" : "static func new(from: OCKAnyTask) throws -> PCKTask",
                 "type" : "method"
               },
               {
@@ -31518,15 +31554,6 @@
                 "type" : "case"
               },
               {
-                "title" : "Initializers",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckentity\/init(from:)",
-                "title" : "init(from: Decoder) throws",
-                "type" : "init"
-              },
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -31547,11 +31574,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckentity\/carekit()",
                 "title" : "func careKit() throws -> OCKEntity",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckentity\/encode(to:)",
-                "title" : "func encode(to: Encoder) throws",
                 "type" : "method"
               },
               {
@@ -31701,6 +31723,38 @@
               {
                 "title" : "Default Implementations",
                 "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/init(from:)",
+                    "title" : "init(from: Decoder) throws",
+                    "type" : "init"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckentity\/decodable-implementations",
+                "title" : "Decodable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckentity\/encode(to:)",
+                    "title" : "func encode(to: Encoder) throws",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckentity\/encodable-implementations",
+                "title" : "Encodable Implementations",
+                "type" : "symbol"
               },
               {
                 "children" : [
@@ -32757,13 +32811,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       }
                     ],
@@ -46337,6 +46391,22 @@
         "path" : "\/documentation\/parseswift",
         "title" : "ParseSwift",
         "type" : "module"
+      },
+      {
+        "children" : [
+          {
+            "title" : "Start Syncing CareKit Data To Your Server",
+            "type" : "groupMarker"
+          },
+          {
+            "path" : "\/tutorials\/parsecarekit\/connect-parsecarekit-to-your-app",
+            "title" : "Connect ParseCareKit to Your App",
+            "type" : "project"
+          }
+        ],
+        "path" : "\/tutorials\/parsecarekit",
+        "title" : "Welcome to ParseCareKit",
+        "type" : "overview"
       }
     ]
   },

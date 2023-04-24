@@ -41,6 +41,14 @@
         {
           "inlineContent" : [
             {
+              "identifier" : "parsecarekit.png",
+              "type" : "image"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
               "text" : "This framework provides an API to synchronize ",
               "type" : "text"
             },
@@ -1557,7 +1565,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote": {
   "abstract" : [
     {
-      "text" : "Allows the CareKitStore to synchronize against a Parse Server.",
+      "text" : "Allows the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to synchronize with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -1670,7 +1686,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : ".Type]?, "
     },
     {
       "kind" : "externalParam",
@@ -1704,7 +1720,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",
@@ -1842,7 +1858,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",
@@ -2393,6 +2409,20 @@
   ],
   "type" : "link",
   "url" : "https:\/\/www.postgresql.org"
+},
+"parsecarekit.png": {
+  "alt" : "ParseCareKit Logo",
+  "identifier" : "parsecarekit.png",
+  "type" : "image",
+  "variants" : [
+    {
+      "traits" : [
+        "1x",
+        "light"
+      ],
+      "url" : "\/images\/parsecarekit.png"
+    }
+  ]
 }
 }
 }

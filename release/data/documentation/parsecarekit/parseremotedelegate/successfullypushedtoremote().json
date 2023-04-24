@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Sometimes the remote will need the local data store to fetch additional information",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "required for proper synchronization.",
+      "text" : "Receive a notification when data has been successfully pushed to the remote.",
       "type" : "text"
     }
   ],
@@ -23,11 +15,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/needStore()"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedToRemote()"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A14RemoteDelegateP9needStore0bcG006OCKAnyb4PlanG0_AE0h7ContactG0AE0h5EventG0AE0h7PatientG0pyF",
+    "externalID" : "s:12ParseCareKit0A14RemoteDelegateP020successfullyPushedToD0yyF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,16 +31,11 @@
       },
       {
         "kind" : "identifier",
-        "text" : "needStore"
+        "text" : "successfullyPushedToRemote"
       },
       {
         "kind" : "text",
-        "text" : "() -> "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
-        "text" : "OCKAnyStoreProtocol"
+        "text" : "()"
       }
     ],
     "modules" : [
@@ -60,7 +47,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Method",
     "symbolKind" : "method",
-    "title" : "needStore()"
+    "title" : "successfullyPushedToRemote()"
   },
   "primaryContentSections" : [
     {
@@ -83,49 +70,16 @@
             },
             {
               "kind" : "identifier",
-              "text" : "needStore"
+              "text" : "successfullyPushedToRemote"
             },
             {
               "kind" : "text",
-              "text" : "() -> "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyStoreProtocol",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
-              "text" : "OCKAnyStoreProtocol"
+              "text" : "()"
             }
           ]
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The remote will never use this method to modify the store.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Note",
-          "style" : "note",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -139,7 +93,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/parseremotedelegate\/needstore()"
+        "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypushedtoremote()"
       ],
       "traits" : [
         {
@@ -150,37 +104,6 @@
   ]
 , 
 "references": {
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyStoreProtocol": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "typealias"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "OCKAnyStoreProtocol"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyStoreProtocol",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "OCKAnyStoreProtocol"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "OCKAnyStoreProtocol",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanystoreprotocol"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
@@ -245,18 +168,10 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/parseremotedelegate"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/needStore()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/successfullyPushedToRemote()": {
   "abstract" : [
     {
-      "text" : "Sometimes the remote will need the local data store to fetch additional information",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "required for proper synchronization.",
+      "text" : "Receive a notification when data has been successfully pushed to the remote.",
       "type" : "text"
     }
   ],
@@ -271,25 +186,20 @@
     },
     {
       "kind" : "identifier",
-      "text" : "needStore"
+      "text" : "successfullyPushedToRemote"
     },
     {
       "kind" : "text",
-      "text" : "() -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
-      "text" : "OCKAnyStoreProtocol"
+      "text" : "()"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/needStore()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedToRemote()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "needStore()",
+  "title" : "successfullyPushedToRemote()",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/needstore()"
+  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypushedtoremote()"
 }
 }
 }

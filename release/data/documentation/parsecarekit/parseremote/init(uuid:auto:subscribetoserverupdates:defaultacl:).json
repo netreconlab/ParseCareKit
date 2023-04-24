@@ -550,7 +550,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : ".Type]?, "
     },
     {
       "kind" : "externalParam",
@@ -584,7 +584,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",
@@ -722,7 +722,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",

@@ -9,18 +9,26 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/new(with:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/new(from:)-biac"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit13PCKObjectableP3new4withx0bC5Store9OCKEntityO_tKF",
+    "externalID" : "s:12ParseCareKit10PCKPatientV3new4fromAC0bC5Store9OCKEntityO_tKFZ",
     "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
       {
         "kind" : "keyword",
         "text" : "func"
@@ -39,7 +47,7 @@
       },
       {
         "kind" : "externalParam",
-        "text" : "with"
+        "text" : "from"
       },
       {
         "kind" : "text",
@@ -64,7 +72,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "text" : "Self"
+        "preciseIdentifier" : "s:12ParseCareKit10PCKPatientV",
+        "text" : "PCKPatient"
       }
     ],
     "modules" : [
@@ -72,11 +81,10 @@
         "name" : "ParseCareKit"
       }
     ],
-    "required" : true,
     "role" : "symbol",
-    "roleHeading" : "Instance Method",
+    "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "new(with:)"
+    "title" : "new(from:)"
   },
   "primaryContentSections" : [
     {
@@ -89,6 +97,14 @@
             "iOS"
           ],
           "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
             {
               "kind" : "keyword",
               "text" : "func"
@@ -107,7 +123,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "with"
+              "text" : "from"
             },
             {
               "kind" : "text",
@@ -140,8 +156,10 @@
               "text" : " -> "
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient",
               "kind" : "typeIdentifier",
-              "text" : "Self"
+              "preciseIdentifier" : "s:12ParseCareKit10PCKPatientV",
+              "text" : "PCKPatient"
             }
           ]
         }
@@ -187,7 +205,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "with"
+          "name" : "from"
         }
       ]
     },
@@ -238,7 +256,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckobjectable\/new(with:)"
+        "\/documentation\/parsecarekit\/pckpatient\/new(from:)-biac"
       ],
       "traits" : [
         {
@@ -297,33 +315,41 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient": {
   "abstract" : [
     {
-      "text" : "Objects that conform to the ",
+      "text" : "An ",
       "type" : "text"
     },
     {
-      "code" : "PCKObjectable",
+      "code" : "PCKPatient",
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol are Parse interpretations of ",
+      "text" : " is the ParseCareKit equivalent of ",
       "type" : "text"
     },
     {
-      "code" : "OCKObjectCompatible",
+      "code" : "OCKPatient",
       "type" : "codeVoice"
     },
     {
-      "text" : " objects.",
+      "text" : ".  An ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKPatient",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " represents a patient.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "protocol"
+      "text" : "struct"
     },
     {
       "kind" : "text",
@@ -331,23 +357,23 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKObjectable"
+      "text" : "PCKPatient"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKObjectable"
+      "text" : "PCKPatient"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKObjectable",
+  "title" : "PCKPatient",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckobjectable"
+  "url" : "\/documentation\/parsecarekit\/pckpatient"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/new(with:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/new(from:)-biac": {
   "abstract" : [
     {
       "text" : "Creates a new ParseCareKit object from a specified CareKit entity.",
@@ -355,6 +381,14 @@
     }
   ],
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "func"
@@ -373,7 +407,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "with"
+      "text" : "from"
     },
     {
       "kind" : "text",
@@ -398,16 +432,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "text" : "Self"
+      "preciseIdentifier" : "s:12ParseCareKit10PCKPatientV",
+      "text" : "PCKPatient"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/new(with:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKPatient\/new(from:)-biac",
   "kind" : "symbol",
-  "required" : true,
   "role" : "symbol",
-  "title" : "new(with:)",
+  "title" : "new(from:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckobjectable\/new(with:)"
+  "url" : "\/documentation\/parsecarekit\/pckpatient\/new(from:)-biac"
 }
 }
 }

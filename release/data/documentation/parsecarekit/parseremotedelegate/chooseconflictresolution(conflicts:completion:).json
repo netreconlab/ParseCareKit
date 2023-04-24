@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "When a conflict occurs, decide if the device or cloud record should be kept.",
+      "text" : "When a conflict occurs, decide if the local or remote record should be kept.",
       "type" : "text"
     }
   ],
@@ -333,7 +333,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/chooseConflictResolution(conflicts:completion:)": {
   "abstract" : [
     {
-      "text" : "When a conflict occurs, decide if the device or cloud record should be kept.",
+      "text" : "When a conflict occurs, decide if the local or remote record should be kept.",
       "type" : "text"
     }
   ],

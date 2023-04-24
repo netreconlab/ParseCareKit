@@ -1,19 +1,25 @@
 {
+  "abstract" : [
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit entity.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome\/copyCareKit(_:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/new(from:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKOutcomeV04copybC0yAC0bC5Store13OCKAnyOutcome_pKFZ",
+    "externalID" : "s:12ParseCareKit13PCKObjectableP3new4fromx0bC5Store9OCKEntityO_tKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -33,16 +39,24 @@
       },
       {
         "kind" : "identifier",
-        "text" : "copyCareKit"
+        "text" : "new"
       },
       {
         "kind" : "text",
         "text" : "("
       },
       {
+        "kind" : "externalParam",
+        "text" : "from"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
-        "text" : "OCKAnyOutcome"
+        "preciseIdentifier" : "s:12CareKitStore9OCKEntityO",
+        "text" : "OCKEntity"
       },
       {
         "kind" : "text",
@@ -58,8 +72,7 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
-        "text" : "PCKOutcome"
+        "text" : "Self"
       }
     ],
     "modules" : [
@@ -67,10 +80,11 @@
         "name" : "ParseCareKit"
       }
     ],
+    "required" : true,
     "role" : "symbol",
     "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "copyCareKit(_:)"
+    "title" : "new(from:)"
   },
   "primaryContentSections" : [
     {
@@ -101,7 +115,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "copyCareKit"
+              "text" : "new"
             },
             {
               "kind" : "text",
@@ -109,7 +123,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "_"
+              "text" : "from"
             },
             {
               "kind" : "text",
@@ -117,17 +131,17 @@
             },
             {
               "kind" : "internalParam",
-              "text" : "outcomeAny"
+              "text" : "careKitEntity"
             },
             {
               "kind" : "text",
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEntity",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
-              "text" : "OCKAnyOutcome"
+              "preciseIdentifier" : "s:12CareKitStore9OCKEntityO",
+              "text" : "OCKEntity"
             },
             {
               "kind" : "text",
@@ -142,15 +156,91 @@
               "text" : " -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
-              "text" : "PCKOutcome"
+              "text" : "Self"
             }
           ]
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Returns a new version of ",
+              "type" : "text"
+            },
+            {
+              "code" : "Self",
+              "type" : "codeVoice"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The CareKit entity used to create the new ParseCareKit object.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "from"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Error",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -164,7 +254,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckoutcome\/copycarekit(_:)"
+        "\/documentation\/parsecarekit\/pckobjectable\/new(from:)"
       ],
       "traits" : [
         {
@@ -175,17 +265,17 @@
   ]
 , 
 "references": {
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEntity": {
   "abstract" : [
     {
-      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "text" : "Holds one of several possible modified entities.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "protocol"
+      "text" : "enum"
     },
     {
       "kind" : "text",
@@ -193,21 +283,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "OCKAnyOutcome"
+      "text" : "OCKEntity"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEntity",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "OCKAnyOutcome"
+      "text" : "OCKEntity"
     }
   ],
   "role" : "symbol",
-  "title" : "OCKAnyOutcome",
+  "title" : "OCKEntity",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyoutcome"
+  "url" : "\/documentation\/carekitstore\/ockentity"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
@@ -223,65 +313,33 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable": {
   "abstract" : [
     {
-      "text" : "An ",
+      "text" : "Objects that conform to the ",
       "type" : "text"
     },
     {
-      "code" : "PCKOutcome",
+      "code" : "PCKObjectable",
       "type" : "codeVoice"
     },
     {
-      "text" : " is the ParseCareKit equivalent of ",
+      "text" : " protocol are Parse interpretations of ",
       "type" : "text"
     },
     {
-      "code" : "OCKOutcome",
+      "code" : "OCKObjectCompatible",
       "type" : "codeVoice"
     },
     {
-      "text" : ".  An ",
-      "type" : "text"
-    },
-    {
-      "code" : "OCKOutcome",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " represents the",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "For example, a task that asks a patient to measure their temperature will have events whose outcome",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "will contain a single value representing the patient’s temperature.",
+      "text" : " objects.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "struct"
+      "text" : "protocol"
     },
     {
       "kind" : "text",
@@ -289,25 +347,28 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKOutcome"
+      "text" : "PCKObjectable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKOutcome"
+      "text" : "PCKObjectable"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKOutcome",
+  "title" : "PCKObjectable",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckoutcome"
+  "url" : "\/documentation\/parsecarekit\/pckobjectable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome/copyCareKit(_:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKObjectable/new(from:)": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new ParseCareKit object from a specified CareKit entity.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -328,16 +389,24 @@
     },
     {
       "kind" : "identifier",
-      "text" : "copyCareKit"
+      "text" : "new"
     },
     {
       "kind" : "text",
       "text" : "("
     },
     {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
-      "text" : "OCKAnyOutcome"
+      "preciseIdentifier" : "s:12CareKitStore9OCKEntityO",
+      "text" : "OCKEntity"
     },
     {
       "kind" : "text",
@@ -353,16 +422,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
-      "text" : "PCKOutcome"
+      "text" : "Self"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome\/copyCareKit(_:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKObjectable\/new(from:)",
   "kind" : "symbol",
+  "required" : true,
   "role" : "symbol",
-  "title" : "copyCareKit(_:)",
+  "title" : "new(from:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckoutcome\/copycarekit(_:)"
+  "url" : "\/documentation\/parsecarekit\/pckobjectable\/new(from:)"
 }
 }
 }

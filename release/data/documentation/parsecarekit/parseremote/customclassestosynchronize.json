@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "A dictionary of any custom classes to synchronize between the CareKitStore and the Parse Server.",
+      "text" : "A dictionary of any custom classes to synchronize between the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and the Parse Server.",
       "type" : "text"
     }
   ],
@@ -19,7 +27,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC26customClassesToSynchronizeSDySSAA14PCKVersionable_pGSgvp",
+    "externalID" : "s:12ParseCareKit0A6RemoteC26customClassesToSynchronizeSDySSAA14PCKVersionable_pXpGSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -61,7 +69,7 @@
       },
       {
         "kind" : "text",
-        "text" : "]?"
+        "text" : ".Type]?"
       }
     ],
     "modules" : [
@@ -126,7 +134,7 @@
             },
             {
               "kind" : "text",
-              "text" : "]?"
+              "text" : ".Type]?"
             }
           ]
         }
@@ -223,7 +231,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote": {
   "abstract" : [
     {
-      "text" : "Allows the CareKitStore to synchronize against a Parse Server.",
+      "text" : "Allows the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to synchronize with a Parse Server.",
       "type" : "text"
     }
   ],
@@ -257,7 +273,15 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/customClassesToSynchronize": {
   "abstract" : [
     {
-      "text" : "A dictionary of any custom classes to synchronize between the CareKitStore and the Parse Server.",
+      "text" : "A dictionary of any custom classes to synchronize between the ",
+      "type" : "text"
+    },
+    {
+      "code" : "CareKitStore",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and the Parse Server.",
       "type" : "text"
     }
   ],
@@ -302,7 +326,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?"
+      "text" : ".Type]?"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/customClassesToSynchronize",

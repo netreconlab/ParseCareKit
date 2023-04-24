@@ -1,0 +1,149 @@
+{
+  "hierarchy" : {
+    "modules" : [
+      {
+        "projects" : [
+          {
+            "reference" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Connect-ParseCareKit-to-Your-App",
+            "sections" : [
+              {
+                "kind" : "task",
+                "reference" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Connect-ParseCareKit-to-Your-App#Connect-ParseCareKit-to-your-app"
+              }
+            ]
+          }
+        ],
+        "reference" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Start-Syncing-CareKit-Data-To-Your-Server"
+      }
+    ],
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/$volume",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Start-Syncing-CareKit-Data-To-Your-Server"
+      ]
+    ],
+    "reference" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit"
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Connect-ParseCareKit-to-Your-App"
+  },
+  "kind" : "project",
+  "metadata" : {
+    "category" : "ParseCareKit",
+    "categoryPathComponent" : "ParseCareKit",
+    "role" : "project",
+    "title" : "Connect ParseCareKit to Your App"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+    {
+      "chapter" : "Start Syncing CareKit Data To Your Server",
+      "content" : [
+
+      ],
+      "estimatedTimeInMinutes" : 1,
+      "kind" : "hero",
+      "title" : "Connect ParseCareKit to Your App"
+    },
+    {
+      "kind" : "tasks",
+      "tasks" : [
+        {
+          "anchor" : "Connect-ParseCareKit-to-your-app",
+          "contentSection" : [
+
+          ],
+          "stepsSection" : [
+            {
+              "caption" : [
+
+              ],
+              "code" : null,
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Initialize the framework.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            }
+          ],
+          "title" : "Connect ParseCareKit to your app"
+        }
+      ]
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/tutorials\/parsecarekit\/connect-parsecarekit-to-your-app"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/tutorials/ParseCareKit": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit",
+  "kind" : "overview",
+  "role" : "overview",
+  "title" : "Welcome to ParseCareKit",
+  "type" : "topic",
+  "url" : "\/tutorials\/parsecarekit"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/tutorials/ParseCareKit/Connect-ParseCareKit-to-Your-App": {
+  "abstract" : [
+
+  ],
+  "estimatedTime" : "1min",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Connect-ParseCareKit-to-Your-App",
+  "kind" : "project",
+  "role" : "project",
+  "title" : "Connect ParseCareKit to Your App",
+  "type" : "topic",
+  "url" : "\/tutorials\/parsecarekit\/connect-parsecarekit-to-your-app"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/tutorials/ParseCareKit/Connect-ParseCareKit-to-Your-App#Connect-ParseCareKit-to-your-app": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Connect-ParseCareKit-to-Your-App#Connect-ParseCareKit-to-your-app",
+  "kind" : "section",
+  "role" : "pseudoSymbol",
+  "title" : "Connect ParseCareKit to your app",
+  "type" : "section",
+  "url" : "\/tutorials\/parsecarekit\/connect-parsecarekit-to-your-app#Connect-ParseCareKit-to-your-app"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/tutorials/ParseCareKit/Start-Syncing-CareKit-Data-To-Your-Server": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/tutorials\/ParseCareKit\/Start-Syncing-CareKit-Data-To-Your-Server",
+  "kind" : "article",
+  "role" : "article",
+  "title" : "Start Syncing CareKit Data To Your Server",
+  "type" : "topic",
+  "url" : "\/tutorials\/parsecarekit\/start-syncing-carekit-data-to-your-server"
+}
+}
+}

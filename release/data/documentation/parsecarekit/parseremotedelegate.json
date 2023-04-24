@@ -126,8 +126,8 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/chooseConflictResolution(conflicts:completion:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/needStore()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedDataToCloud()"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/provideStore()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedToRemote()"
       ],
       "title" : "Instance Methods"
     }
@@ -255,7 +255,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/chooseConflictResolution(conflicts:completion:)": {
   "abstract" : [
     {
-      "text" : "When a conflict occurs, decide if the device or cloud record should be kept.",
+      "text" : "When a conflict occurs, decide if the local or remote record should be kept.",
       "type" : "text"
     }
   ],
@@ -328,7 +328,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/chooseconflictresolution(conflicts:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/needStore()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/provideStore()": {
   "abstract" : [
     {
       "text" : "Sometimes the remote will need the local data store to fetch additional information",
@@ -354,7 +354,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "needStore"
+      "text" : "provideStore"
     },
     {
       "kind" : "text",
@@ -366,18 +366,18 @@
       "text" : "OCKAnyStoreProtocol"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/needStore()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/provideStore()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "needStore()",
+  "title" : "provideStore()",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/needstore()"
+  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/providestore()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/successfullyPushedDataToCloud()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/successfullyPushedToRemote()": {
   "abstract" : [
     {
-      "text" : "Receive a notification when data has been successfully pushed to the Cloud.",
+      "text" : "Receive a notification when data has been successfully pushed to the remote.",
       "type" : "text"
     }
   ],
@@ -392,20 +392,20 @@
     },
     {
       "kind" : "identifier",
-      "text" : "successfullyPushedDataToCloud"
+      "text" : "successfullyPushedToRemote"
     },
     {
       "kind" : "text",
       "text" : "()"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedDataToCloud()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedToRemote()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "successfullyPushedDataToCloud()",
+  "title" : "successfullyPushedToRemote()",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypusheddatatocloud()"
+  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypushedtoremote()"
 }
 }
 }

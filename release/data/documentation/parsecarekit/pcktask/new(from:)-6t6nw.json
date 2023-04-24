@@ -9,18 +9,26 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome\/new(with:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/new(from:)-6t6nw"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKOutcomeV3new4withAC0bC5Store9OCKEntityO_tKF",
+    "externalID" : "s:12ParseCareKit7PCKTaskV3new4fromAC0bC5Store9OCKEntityO_tKFZ",
     "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
       {
         "kind" : "keyword",
         "text" : "func"
@@ -39,7 +47,7 @@
       },
       {
         "kind" : "externalParam",
-        "text" : "with"
+        "text" : "from"
       },
       {
         "kind" : "text",
@@ -64,8 +72,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
-        "text" : "PCKOutcome"
+        "preciseIdentifier" : "s:12ParseCareKit7PCKTaskV",
+        "text" : "PCKTask"
       }
     ],
     "modules" : [
@@ -74,9 +82,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Instance Method",
+    "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "new(with:)"
+    "title" : "new(from:)"
   },
   "primaryContentSections" : [
     {
@@ -89,6 +97,14 @@
             "iOS"
           ],
           "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
             {
               "kind" : "keyword",
               "text" : "func"
@@ -107,7 +123,7 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "with"
+              "text" : "from"
             },
             {
               "kind" : "text",
@@ -140,10 +156,10 @@
               "text" : " -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
-              "text" : "PCKOutcome"
+              "preciseIdentifier" : "s:12ParseCareKit7PCKTaskV",
+              "text" : "PCKTask"
             }
           ]
         }
@@ -189,7 +205,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "with"
+          "name" : "from"
         }
       ]
     },
@@ -240,7 +256,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckoutcome\/new(with:)"
+        "\/documentation\/parsecarekit\/pcktask\/new(from:)-6t6nw"
       ],
       "traits" : [
         {
@@ -299,14 +315,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask": {
   "abstract" : [
     {
       "text" : "An ",
       "type" : "text"
     },
     {
-      "code" : "PCKOutcome",
+      "code" : "PCKTask",
       "type" : "codeVoice"
     },
     {
@@ -314,7 +330,7 @@
       "type" : "text"
     },
     {
-      "code" : "OCKOutcome",
+      "code" : "OCKTask",
       "type" : "codeVoice"
     },
     {
@@ -322,11 +338,11 @@
       "type" : "text"
     },
     {
-      "code" : "OCKOutcome",
+      "code" : "OCKTask",
       "type" : "codeVoice"
     },
     {
-      "text" : " represents the",
+      "text" : " represents some task or action that a",
       "type" : "text"
     },
     {
@@ -334,7 +350,15 @@
       "type" : "text"
     },
     {
-      "text" : "outcome of an event corresponding to a task. An outcome may have 0 or more values associated with it.",
+      "text" : "patient is supposed to perform. Tasks are optionally associable with an ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKCarePlan",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and must have a unique",
       "type" : "text"
     },
     {
@@ -342,7 +366,7 @@
       "type" : "text"
     },
     {
-      "text" : "For example, a task that asks a patient to measure their temperature will have events whose outcome",
+      "text" : "id and schedule. The schedule determines when and how often the task should be performed, and the",
       "type" : "text"
     },
     {
@@ -350,7 +374,19 @@
       "type" : "text"
     },
     {
-      "text" : "will contain a single value representing the patient’s temperature.",
+      "code" : "impactsAdherence",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " flag may be used to specify whether or not the patients adherence to this task will affect",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "their daily completion rings.",
       "type" : "text"
     }
   ],
@@ -365,23 +401,23 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKOutcome"
+      "text" : "PCKTask"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKOutcome"
+      "text" : "PCKTask"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKOutcome",
+  "title" : "PCKTask",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckoutcome"
+  "url" : "\/documentation\/parsecarekit\/pcktask"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKOutcome/new(with:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/new(from:)-6t6nw": {
   "abstract" : [
     {
       "text" : "Creates a new ParseCareKit object from a specified CareKit entity.",
@@ -389,6 +425,14 @@
     }
   ],
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "func"
@@ -407,7 +451,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "with"
+      "text" : "from"
     },
     {
       "kind" : "text",
@@ -432,16 +476,16 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12ParseCareKit10PCKOutcomeV",
-      "text" : "PCKOutcome"
+      "preciseIdentifier" : "s:12ParseCareKit7PCKTaskV",
+      "text" : "PCKTask"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKOutcome\/new(with:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/new(from:)-6t6nw",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "new(with:)",
+  "title" : "new(from:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckoutcome\/new(with:)"
+  "url" : "\/documentation\/parsecarekit\/pcktask\/new(from:)-6t6nw"
 }
 }
 }

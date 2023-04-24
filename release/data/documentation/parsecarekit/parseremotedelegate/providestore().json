@@ -1,7 +1,15 @@
 {
   "abstract" : [
     {
-      "text" : "Receive a notification when data has been successfully pushed to the Cloud.",
+      "text" : "Sometimes the remote will need the local data store to fetch additional information",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "required for proper synchronization.",
       "type" : "text"
     }
   ],
@@ -15,11 +23,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedDataToCloud()"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/provideStore()"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A14RemoteDelegateP29successfullyPushedDataToCloudyyF",
+    "externalID" : "s:12ParseCareKit0A14RemoteDelegateP12provideStore0bcG006OCKAnyb4PlanG0_AE0h7ContactG0AE0h5EventG0AE0h7PatientG0pyF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -31,11 +39,16 @@
       },
       {
         "kind" : "identifier",
-        "text" : "successfullyPushedDataToCloud"
+        "text" : "provideStore"
       },
       {
         "kind" : "text",
-        "text" : "()"
+        "text" : "() -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
+        "text" : "OCKAnyStoreProtocol"
       }
     ],
     "modules" : [
@@ -47,7 +60,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Method",
     "symbolKind" : "method",
-    "title" : "successfullyPushedDataToCloud()"
+    "title" : "provideStore()"
   },
   "primaryContentSections" : [
     {
@@ -70,16 +83,49 @@
             },
             {
               "kind" : "identifier",
-              "text" : "successfullyPushedDataToCloud"
+              "text" : "provideStore"
             },
             {
               "kind" : "text",
-              "text" : "()"
+              "text" : "() -> "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyStoreProtocol",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
+              "text" : "OCKAnyStoreProtocol"
             }
           ]
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The remote will never use this method to modify the store.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -93,7 +139,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypusheddatatocloud()"
+        "\/documentation\/parsecarekit\/parseremotedelegate\/providestore()"
       ],
       "traits" : [
         {
@@ -104,6 +150,37 @@
   ]
 , 
 "references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyStoreProtocol": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyStoreProtocol"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyStoreProtocol",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyStoreProtocol"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyStoreProtocol",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanystoreprotocol"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
@@ -168,10 +245,18 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/parseremotedelegate"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/successfullyPushedDataToCloud()": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate/provideStore()": {
   "abstract" : [
     {
-      "text" : "Receive a notification when data has been successfully pushed to the Cloud.",
+      "text" : "Sometimes the remote will need the local data store to fetch additional information",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "required for proper synchronization.",
       "type" : "text"
     }
   ],
@@ -186,20 +271,25 @@
     },
     {
       "kind" : "identifier",
-      "text" : "successfullyPushedDataToCloud"
+      "text" : "provideStore"
     },
     {
       "kind" : "text",
-      "text" : "()"
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore06OCKAnyC8Protocola",
+      "text" : "OCKAnyStoreProtocol"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/successfullyPushedDataToCloud()",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemoteDelegate\/provideStore()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "successfullyPushedDataToCloud()",
+  "title" : "provideStore()",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/successfullypusheddatatocloud()"
+  "url" : "\/documentation\/parsecarekit\/parseremotedelegate\/providestore()"
 }
 }
 }

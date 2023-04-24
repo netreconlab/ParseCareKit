@@ -18,7 +18,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA14PCKVersionable_pGSgSDySSAaO_pGSb0A5Swift0aP0VSgtYaKcfc",
+    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses06customI024subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA14PCKVersionable_pXpGSgSDySSAaO_pXpGSb0A5Swift0aP0VSgtYaKcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -94,7 +94,7 @@
       },
       {
         "kind" : "text",
-        "text" : "]?, "
+        "text" : ".Type]?, "
       },
       {
         "kind" : "externalParam",
@@ -128,7 +128,7 @@
       },
       {
         "kind" : "text",
-        "text" : "], "
+        "text" : ".Type], "
       },
       {
         "kind" : "externalParam",
@@ -282,7 +282,7 @@
             },
             {
               "kind" : "text",
-              "text" : "]? = nil, "
+              "text" : ".Type]? = nil, "
             },
             {
               "kind" : "externalParam",
@@ -317,7 +317,7 @@
             },
             {
               "kind" : "text",
-              "text" : "], "
+              "text" : ".Type], "
             },
             {
               "kind" : "externalParam",
@@ -437,7 +437,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Add custom classes to synchroniz by passing in the respective Key\/Value pair.",
+                  "text" : "Add custom classes to synchronize by passing in the respective key\/value pair.",
                   "type" : "text"
                 }
               ],
@@ -509,7 +509,7 @@
                   "type" : "text"
                 },
                 {
-                  "text" : "no public read\/write access.",
+                  "text" : "no public read\/write access along with respective read\/write roles.",
                   "type" : "text"
                 }
               ],
@@ -565,7 +565,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "If you want the the ",
+                  "text" : "If you want the ",
                   "type" : "text"
                 },
                 {
@@ -832,7 +832,7 @@
     },
     {
       "kind" : "text",
-      "text" : "]?, "
+      "text" : ".Type]?, "
     },
     {
       "kind" : "externalParam",
@@ -866,7 +866,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",
@@ -1004,7 +1004,7 @@
     },
     {
       "kind" : "text",
-      "text" : "], "
+      "text" : ".Type], "
     },
     {
       "kind" : "externalParam",
