@@ -254,8 +254,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let parseClock = try await PCKClock.fetchFromRemote(self.uuid, createNewIfNeeded: true)
 
                 guard let parseVector = parseClock.knowledgeVector else {
+                    await self.remoteStatus.updateClock(nil)
                     await self.remoteStatus.notSynchronzing()
-                    // There was a different issue that we don't know how to handle
                     Logger.pushRevisions.error("Could not get KnowledgeVector from Clock")
                     completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
@@ -265,9 +265,12 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let hasNewerRevision = await self.remoteStatus.hasNewerRevision(parseVector, for: self.uuid)
                 let currentClock = await self.remoteStatus.clock
                 guard !hasNewerRevision || currentClock == nil else {
-                    let errorString = "New knowledge on server. Pull first then try again"
+                    let errorString = "New knowledge on server. Attempting to pull and try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.parseDelegate?.didRequestSynchronization(self)
+                    }
                     completion(ParseCareKitError.errorString(errorString))
                     return
                 }
