@@ -204,9 +204,16 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
                 // 3. Pull the latest revisions from the remote.
                 let localClock = knowledgeVector.clock(for: self.uuid)
-                let query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
+                let query: Query<PCKRevisionRecord>!
+                if localClock > 0 {
+                    query = PCKRevisionRecord.query(ObjectableKey.logicalClock > localClock,
                                                     ObjectableKey.clockUUID == self.uuid)
-                    .order([.ascending(ObjectableKey.logicalClock)])
+                        .order([.ascending(ObjectableKey.logicalClock)])
+                } else {
+                    query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
+                                                    ObjectableKey.clockUUID == self.uuid)
+                        .order([.ascending(ObjectableKey.logicalClock)])
+                }
                 do {
                     let revisions = try await query.find()
                     self.notifyRevisionProgress(0,
@@ -353,26 +360,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
         Task {
-            var updatedParseVector = parseVector
-            // 9. Increment and merge clocks if new local revisions were pushed,
-            //    or else check if the local device is new with a new clock that
-            //    is now in sync with the remote.
-            if shouldIncrementClock {
-                updatedParseVector = incrementVectorClock(updatedParseVector)
-                updatedParseVector.merge(with: localClock)
-            } else {
-                updatedParseVector.merge(with: localClock)
-                guard updatedParseVector.uuids.count > parseVector.uuids.count else {
-                    Logger.pushRevisions.debug("Finished pushing revisions")
-                    await self.remoteStatus.notSynchronzing()
-                    await self.subscribeToRevisionRecord()
-                    DispatchQueue.main.async {
-                        self.parseRemoteDelegate?.successfullyPushedToRemote()
-                    }
-                    completion(nil)
-                    return
+            // 9. Increment and merge clocks if revisions were pushed to
+            //    the remote or else finish revisions.
+            guard shouldIncrementClock else {
+                Logger.pushRevisions.debug("Finished pushing revisions")
+                await self.remoteStatus.notSynchronzing()
+                await self.subscribeToRevisionRecord()
+                DispatchQueue.main.async {
+                    self.parseRemoteDelegate?.successfullyPushedToRemote()
                 }
+                completion(nil)
+                return
             }
+            var updatedParseVector = parseVector
+            updatedParseVector = incrementVectorClock(updatedParseVector)
+            updatedParseVector.merge(with: localClock)
 
             // 10. Save updated clock to the remote and notify peer that sync is complete.
             guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
