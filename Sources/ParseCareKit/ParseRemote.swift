@@ -445,7 +445,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 self.clockRecordSubscription = try await self.clockQuery.subscribeCallback()
                 self.clockRecordSubscription?.handleEvent { (_, event) in
                     switch event {
-                    case .created(let updatedClock), .updated(let updatedClock), .entered(let updatedClock):
+                    case .created(let updatedClock), .updated(let updatedClock):
                         do {
                             let updatedVector = try PCKClock.decodeVector(updatedClock)
                             Task {
