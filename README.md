@@ -2,8 +2,8 @@
 
 ---
 
-[![Documentation](http://img.shields.io/badge/read_-docs-2196f3.svg)](https://swiftpackageindex.com/netreconlab/ParseCareKit/documentation)
-[![Tuturiol](http://img.shields.io/badge/read_-tuturials-2196f3.svg)](https://netreconlab.github.io/Parse-Swift/release/tutorials/parsecarekit/)
+[![Documentation](https://img.shields.io/badge/read_-docs-2196f3.svg)](https://swiftpackageindex.com/netreconlab/ParseCareKit/documentation)
+[![Tuturiol](https://img.shields.io/badge/read_-tuturials-2196f3.svg)](https://netreconlab.github.io/Parse-Swift/release/tutorials/parsecarekit/)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 ![Xcode 13.3+](https://img.shields.io/badge/xcode-13.3%2B-blue.svg)
