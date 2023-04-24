@@ -139,6 +139,12 @@ public class PCKUtility {
         PCKOutcome.getDecoder()
     }
 
+    /// Remove ParseCareKit cache from device.
+    public class func removeCache() {
+        UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
+        UserDefaults.standard.synchronize()
+    }
+    
     /// Get the default ACL for `ParseCareKit` objects.
     public class func getDefaultACL() -> ParseACL? {
         guard let aclString = UserDefaults.standard.value(forKey: ParseCareKitConstants.defaultACL) as? String,
