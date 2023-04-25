@@ -200,7 +200,7 @@ public struct PCKClock: ParseObject {
     }
 
     static func fetchFromRemote(_ uuid: UUID,
-                                createNewIfNeeded: Bool) async throws -> Self {
+                                createNewIfNeeded: Bool = false) async throws -> Self {
         try await withCheckedThrowingContinuation { continuation in
             Self.fetchFromRemote(uuid,
                                 createNewIfNeeded: createNewIfNeeded,

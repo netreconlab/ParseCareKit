@@ -191,7 +191,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             await remoteStatus.synchronizing()
 
             do {
-                let parseClock = try await PCKClock.fetchFromRemote(self.uuid, createNewIfNeeded: false)
+                let parseClock = try await PCKClock.fetchFromRemote(uuid)
 
                 guard let parseVector = parseClock.knowledgeVector else {
                     // No KnowledgeVector available, act as if this is the first sync.
@@ -253,7 +253,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
         Task {
             do {
-                let parseClock = try await PCKClock.fetchFromRemote(self.uuid, createNewIfNeeded: true)
+                let parseClock: PCKClock!
+                let createdNewClock: Bool!
+                do {
+                    parseClock = try await PCKClock.fetchFromRemote(uuid)
+                    createdNewClock = false
+                } catch {
+                    parseClock = try await PCKClock.new(uuid: uuid)
+                    createdNewClock = true
+                }
                 guard let parseVector = parseClock.knowledgeVector else {
                     await self.remoteStatus.updateClock(nil)
                     await self.remoteStatus.notSynchronzing()
@@ -264,7 +272,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 await self.remoteStatus.updateClockIfNeeded(parseClock)
 
                 // 6. Ensure there has not been any updates to remote clock before proceeding.
-                guard await !self.remoteStatus.hasNewerVector(parseVector) else {
+                guard await !self.remoteStatus.hasNewerVector(parseVector) || createdNewClock else {
                     let errorString = "New knowledge on server. Attempting to pull and try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
