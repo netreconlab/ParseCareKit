@@ -386,6 +386,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
             do {
                 _ = try await updatedClock.save()
                 Logger.pushRevisions.debug("Finished pushing revisions")
+                await self.remoteStatus.notSynchronzing()
+                await self.subscribeToClock()
                 DispatchQueue.main.async {
                     self.parseRemoteDelegate?.successfullyPushedToRemote()
                 }
@@ -393,10 +395,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
             } catch {
                 await self.remoteStatus.updateClock(parseClock) // revert
                 Logger.pushRevisions.error("finishedRevisions: \(error, privacy: .private)")
+                await self.remoteStatus.notSynchronzing()
                 completion(error)
             }
-            await self.remoteStatus.notSynchronzing()
-            await self.subscribeToClock()
         }
     }
 
@@ -456,7 +457,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 do {
                                     let delay = try await self.remoteStatus.retryLiveQueryAfter()
                                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                                        self.parseRemoteDelegate?.didRequestSynchronization(self)
+                                        Task {
+                                            await self.requestSyncIfNewerClock(updatedClock)
+                                        }
                                     }
                                 } catch {
                                     Logger.clockSubscription.error("\(error)")
@@ -481,7 +484,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
     func requestSyncIfNewerClock(_ clock: PCKClock?) async {
         guard let vector = clock?.knowledgeVector,
-            await self.remoteStatus.hasNewerClock(vector, for: self.uuid) else {
+            await self.remoteStatus.hasNewerClock(vector, for: uuid) else {
             return
         }
         let random = Int.random(in: 0..<2)
