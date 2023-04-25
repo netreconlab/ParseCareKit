@@ -44,10 +44,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]!
 
     private weak var parseDelegate: ParseRemoteDelegate?
-    private var clockRecordSubscription: SubscriptionCallback<PCKClock>?
+    private var revisionRecordSubscription: SubscriptionCallback<PCKRevisionRecord>?
     private var subscribeToServerUpdates: Bool
     private let remoteStatus = RemoteSynchronizing()
-    private let clockQuery: Query<PCKClock>
+    private let revisionQuery: Query<PCKRevisionRecord>
 
     /**
      Creates an instance of ParseRemote.
@@ -70,7 +70,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
-        self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
+        self.revisionQuery = PCKRevisionRecord.query(RevisionRecordKey.clockUUID == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = try? await PCKUser.current() {
@@ -147,7 +147,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     deinit {
         Task {
             do {
-                try await clockQuery.unsubscribe()
+                try await revisionQuery.unsubscribe()
                 Logger.deinitializer.error("Unsubscribed from Parse remote")
             } catch {
                 Logger.deinitializer.error("Could not unsubscribe from Parse remote: \(error)")
@@ -264,13 +264,15 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
 
                 // 6. Ensure there has not been any updates to remote clock before proceeding.
-                let hasNewerRevision = await self.remoteStatus.hasNewerRevision(parseVector, for: self.uuid)
+                let parseLogicalClock = parseVector.clock(for: self.uuid)
+                let hasNewerClock = await self.remoteStatus.hasNewerClock(parseLogicalClock, for: self.uuid)
                 let currentClock = await self.remoteStatus.clock
-                guard !hasNewerRevision || currentClock == nil else {
+                guard !hasNewerClock || currentClock == nil else {
                     let errorString = "New knowledge on server. Attempting to pull and try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let random = Int.random(in: 0..<3)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
                         self.parseDelegate?.didRequestSynchronization(self)
                     }
                     completion(ParseCareKitError.errorString(errorString))
@@ -354,11 +356,8 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                completion: @escaping (Error?) -> Void) {
         Task {
             var updatedParseVector = parseVector
-            // 9. Increment and merge clocks if new local revisions were pushed,
-            //    or else simply update thes remote.
-            if shouldIncrementClock {
-                updatedParseVector = incrementVectorClock(updatedParseVector)
-            }
+            // 9. Increment and merge clocks.
+            updatedParseVector = incrementVectorClock(updatedParseVector)
             updatedParseVector.merge(with: localClock)
 
             // 10. Save updated clock to the remote and notify peer that sync is complete.
@@ -427,30 +426,27 @@ public class ParseRemote: OCKRemoteSynchronizable {
         do {
             _ = try await PCKUser.current()
             guard self.subscribeToServerUpdates,
-                self.clockRecordSubscription == nil else {
+                self.revisionRecordSubscription == nil else {
                 return
             }
 
             do {
-                self.clockRecordSubscription = try await self.clockQuery.subscribeCallback()
-                self.clockRecordSubscription?.handleEvent { (_, event) in
+                self.revisionRecordSubscription = try await self.revisionQuery.subscribeCallback()
+                self.revisionRecordSubscription?.handleEvent { (_, event) in
                     switch event {
-                    case .created(let updatedClock), .updated(let updatedClock):
-                        do {
-                            let updatedVector = try PCKClock.decodeVector(updatedClock)
-                            Task {
-                                guard await self.remoteStatus.hasNewerRevision(updatedVector, for: self.uuid) else {
-                                    return
-                                }
-                                self.parseDelegate?.didRequestSynchronization(self)
-                                Logger
-                                    .clockSubscription
-                                    .log("Parse subscription is notifying that there are updates on the server")
+                    case .created(let updatedRecord):
+                        Task {
+                            guard let revisionClock = updatedRecord.logicalClock,
+                                  await self.remoteStatus.hasNewerClock(revisionClock, for: self.uuid) else {
+                                return
                             }
-                        } catch {
+                            let random = Int.random(in: 0..<3)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
+                                self.parseDelegate?.didRequestSynchronization(self)
+                            }
                             Logger
                                 .clockSubscription
-                                .error("Could not decode server clock: \(error)")
+                                .log("Parse subscription is notifying that there are updates on the server")
                         }
                     default:
                         return
