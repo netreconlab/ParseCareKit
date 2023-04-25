@@ -11,7 +11,7 @@ import CareKitStore
 import ParseSwift
 import os.log
 
-/// Allows the `CareKitStore` to synchronize with a Parse Server.
+/// Allows the `CareKitStore` to synchronize with a remote Parse Server.
 public class ParseRemote: OCKRemoteSynchronizable {
 
     /// - warning: Should set `parseRemoteDelegate` instead.
@@ -45,7 +45,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
     private weak var parseDelegate: ParseRemoteDelegate?
     private var clockSubscription: SubscriptionCallback<PCKClock>?
-    private var subscribeToServerUpdates: Bool
+    private var subscribeToRemoteUpdates: Bool
     private let remoteStatus = RemoteSynchronizing()
     private let clockQuery: Query<PCKClock>
 
@@ -54,7 +54,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
      - Parameters:
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
-        - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
+        - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
@@ -65,14 +65,14 @@ public class ParseRemote: OCKRemoteSynchronizable {
     */
     public init(uuid: UUID,
                 auto: Bool,
-                subscribeToServerUpdates: Bool,
+                subscribeToRemoteUpdates: Bool,
                 defaultACL: ParseACL? = nil) async throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
         self.automaticallySynchronizes = auto
-        self.subscribeToServerUpdates = subscribeToServerUpdates
+        self.subscribeToRemoteUpdates = subscribeToRemoteUpdates
         if let currentUser = try? await PCKUser.current() {
             try Self.setDefaultACL(defaultACL, for: currentUser)
             await subscribeToRevisionRecord()
@@ -85,7 +85,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - uuid: The unique identifier of the remote clock.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
-        - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
+        - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
@@ -97,11 +97,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
     convenience public init(uuid: UUID,
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type],
-                            subscribeToServerUpdates: Bool,
+                            subscribeToRemoteUpdates: Bool,
                             defaultACL: ParseACL? = nil) async throws {
         try await self.init(uuid: uuid,
                             auto: auto,
-                            subscribeToServerUpdates: subscribeToServerUpdates,
+                            subscribeToRemoteUpdates: subscribeToRemoteUpdates,
                             defaultACL: defaultACL)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .replaceRemoteConcreteClasses(replacePCKStoreClasses)
@@ -116,7 +116,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
             by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.
         - customClasses: Add custom classes to synchronize by passing in the respective key/value pair.
-        - subscribeToServerUpdates: Automatically receive updates from other devices linked to this Clock.
+        - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
@@ -129,11 +129,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             auto: Bool,
                             replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
                             customClasses: [String: any PCKVersionable.Type],
-                            subscribeToServerUpdates: Bool,
+                            subscribeToRemoteUpdates: Bool,
                             defaultACL: ParseACL? = nil) async throws {
         try await self.init(uuid: uuid,
                             auto: auto,
-                            subscribeToServerUpdates: subscribeToServerUpdates,
+                            subscribeToRemoteUpdates: subscribeToRemoteUpdates,
                             defaultACL: defaultACL)
         if let replacePCKStoreClasses = replacePCKStoreClasses {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
@@ -427,7 +427,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     func subscribeToRevisionRecord() async {
         do {
             _ = try await PCKUser.current()
-            guard self.subscribeToServerUpdates,
+            guard self.subscribeToRemoteUpdates,
                 self.clockSubscription == nil else {
                 return
             }
@@ -448,7 +448,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                             }
                             Logger
                                 .clockSubscription
-                                .log("Parse subscription is notifying that there are updates on the server")
+                                .log("Parse subscription is notifying that there are updates on the remote")
                         }
                     default:
                         return

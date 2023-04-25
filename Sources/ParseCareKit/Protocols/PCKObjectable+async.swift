@@ -12,10 +12,10 @@ import ParseSwift
 public extension PCKObjectable {
 
     /**
-     Finds the first object on the server that has the same `uuid`.
+     Finds the first object on the remote that has the same `uuid`.
      - Parameters:
         - uuid: The UUID to search for.
-        - options: A set of header options sent to the server. Defaults to an empty set.
+        - options: A set of header options sent to the remote. Defaults to an empty set.
         - relatedObject: An object that has the same `uuid` as the one being searched for.
         - returns: The first object found with the matching `uuid`.
         - throws: `ParseError`.

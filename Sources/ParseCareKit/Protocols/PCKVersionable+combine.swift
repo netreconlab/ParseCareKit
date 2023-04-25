@@ -19,7 +19,7 @@ public extension PCKVersionable {
      that has not been deleted. Publishes when complete.
      - Parameters:
         - for: The date the objects are active.
-        - options: A set of header options sent to the server. Defaults to an empty set.
+        - options: A set of header options sent to the remote. Defaults to an empty set.
         - returns: `Future<[Self],ParseError>`.
     */
     func findPublisher(for date: Date,
@@ -34,7 +34,7 @@ public extension PCKVersionable {
     /**
      Saves a `PCKVersionable` object. *asynchronously*. Publishes when complete.
      - Parameters:
-        - options: A set of header options sent to the server. Defaults to an empty set.
+        - options: A set of header options sent to the remote. Defaults to an empty set.
         - returns: `Future<[Self],ParseError>`.
     */
     func savePublisher(for date: Date,

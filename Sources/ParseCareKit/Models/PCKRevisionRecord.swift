@@ -10,7 +10,7 @@ import CareKitStore
 import Foundation
 import ParseSwift
 
-/// Revision records are exchanged by the CareKit and a ParseCareKit server during synchronization.
+/// Revision records are exchanged by the CareKit and a ParseCareKit remote during synchronization.
 /// Each revision record contains an array of entities as well as a knowledge vector.
 struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
@@ -30,10 +30,10 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     var clockUUID: UUID?
 
-    /// The clock value when this record was added to the Parse server.
+    /// The clock value when this record was added to the Parse remote.
     var logicalClock: Int?
 
-    /// The clock associated with this record when it was added to the Parse server.
+    /// The clock associated with this record when it was added to the Parse remote.
     var clock: PCKClock?
 
     /// The entities that were modified, in the order the were inserted into the database.
@@ -173,42 +173,42 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
             case .patient(let patient):
                 guard let fetched = patients.first(where: { $0.objectId == patient.objectId }) else {
                     throw ParseCareKitError.errorString("""
-                        Patient with objectId, \"\(String(describing: patient.objectId))\" is not on server
+                        Patient with objectId, \"\(String(describing: patient.objectId))\" is not on remote
                     """)
                 }
                 mutableRecord.entities?.append(PCKEntity.patient(fetched))
             case .carePlan(let plan):
                 guard let fetched = carePlans.first(where: { $0.objectId == plan.objectId }) else {
                     throw ParseCareKitError.errorString("""
-                        CarePlan with objectId, \"\(String(describing: plan.objectId))\" is not on server
+                        CarePlan with objectId, \"\(String(describing: plan.objectId))\" is not on remote
                     """)
                 }
                 mutableRecord.entities?.append(PCKEntity.carePlan(fetched))
             case .contact(let contact):
                 guard let fetched = contacts.first(where: { $0.objectId == contact.objectId }) else {
                     throw ParseCareKitError.errorString("""
-                        Contact with objectId, \"\(String(describing: contact.objectId))\" is not on server
+                        Contact with objectId, \"\(String(describing: contact.objectId))\" is not on remote
                     """)
                 }
                 mutableRecord.entities?.append(PCKEntity.contact(fetched))
             case .task(let task):
                 guard let fetched = tasks.first(where: { $0.objectId == task.objectId }) else {
                     throw ParseCareKitError.errorString("""
-                        Task with objectId, \"\(String(describing: task.objectId))\" is not on server
+                        Task with objectId, \"\(String(describing: task.objectId))\" is not on remote
                     """)
                 }
                 mutableRecord.entities?.append(PCKEntity.task(fetched))
             case .healthKitTask(let healthKitTask):
                 guard let fetched = healthKitTasks.first(where: { $0.objectId == healthKitTask.objectId }) else {
                     throw ParseCareKitError.errorString("""
-                        HealthKitTask with objectId, \"\(String(describing: healthKitTask.objectId))\" is not on server
+                        HealthKitTask with objectId, \"\(String(describing: healthKitTask.objectId))\" is not on remote
                     """)
                 }
                 mutableRecord.entities?.append(PCKEntity.healthKitTask(fetched))
             case .outcome(let outcome):
                 guard let fetched = outcomes.first(where: { $0.objectId == outcome.objectId }) else {
                     throw ParseCareKitError.errorString("""
-                        Outcome with objectId, \"\(String(describing: outcome.objectId))\" is not on server
+                        Outcome with objectId, \"\(String(describing: outcome.objectId))\" is not on remote
                     """)
                 }
                 mutableRecord.entities?.append(PCKEntity.outcome(fetched))

@@ -95,7 +95,7 @@ extension PCKVersionable {
      that has not been deleted.
      - Parameters:
         - for: The date the objects are active.
-        - options: A set of header options sent to the server. Defaults to an empty set.
+        - options: A set of header options sent to the remote. Defaults to an empty set.
         - callbackQueue: The queue to return to after completion. Default value of `.main`.
         - completion: The block to execute.
      It should have the following argument signature: `(Result<[Self],ParseError>)`.

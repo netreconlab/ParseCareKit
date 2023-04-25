@@ -76,8 +76,8 @@ extension ParseCareKitError: LocalizedError {
         case .syncAlreadyInProgress:
             return NSLocalizedString("Sync already in progress!", comment: "Sync already in progress!")
         case .parseHealthError:
-            return NSLocalizedString("There was a problem with the health of the server!",
-                                     comment: "There was a problem with the health of the server!")
+            return NSLocalizedString("There was a problem with the health of the remote!",
+                                     comment: "There was a problem with the health of the remote!")
         case .errorString(let string): return string
         }
     }

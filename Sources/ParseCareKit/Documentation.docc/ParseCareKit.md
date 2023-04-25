@@ -1,6 +1,6 @@
 # ``ParseCareKit``
 
-Seamlessly Synchronize CareKit data with a Parse Server.
+Seamlessly Synchronize CareKit data with a remote Parse Server.
 
 ## Overview
 ![ParseCareKit Logo](parsecarekit.png)
@@ -27,6 +27,6 @@ ParseCareKit enables iOS and watchOS devices belonging to the same user to be re
 
 ### Initialize the SDK
 
-- ``ParseCareKit/ParseRemote/init(uuid:auto:subscribeToServerUpdates:defaultACL:)``
-- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)``
-- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)``
+- ``ParseCareKit/ParseRemote/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)``
+- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)``
+- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)``

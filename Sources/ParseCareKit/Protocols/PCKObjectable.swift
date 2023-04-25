@@ -21,14 +21,14 @@ public protocol PCKObjectable: ParseObject {
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
     var id: String { get }
 
-    /// A human readable unique identifier (same as `id`, but this is what's on the Parse server, `id` is
+    /// A human readable unique identifier (same as `id`, but this is what's on the Parse remote, `id` is
     /// already taken in Parse). It is used strictly by the developer and will never be shown to a user
     var entityId: String? { get set }
 
-    /// The clock value of when this object was added to the Parse server.
+    /// The clock value of when this object was added to the Parse remote.
     var logicalClock: Int? { get set }
 
-    /// The clock of when this object was added to the Parse server.
+    /// The clock of when this object was added to the Parse remote.
     var clock: PCKClock? { get set }
 
     /// The semantic version of the database schema when this object was created.
@@ -177,10 +177,10 @@ extension PCKObjectable {
     }
 
     /**
-     Finds the first object on the server that has the same `uuid`.
+     Finds the first object on the remote that has the same `uuid`.
      - Parameters:
         - uuid: The UUID to search for.
-        - options: A set of header options sent to the server. Defaults to an empty set.
+        - options: A set of header options sent to the remote. Defaults to an empty set.
         - relatedObject: An object that has the same `uuid` as the one being searched for.
         - completion: The block to execute.
      It should have the following argument signature: `(Result<Self,Error>)`.

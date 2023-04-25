@@ -97,7 +97,7 @@ class ParseCareKitTests: XCTestCase {
         _ = try await userLogin()
         parse = try await ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                       auto: false,
-                                      subscribeToServerUpdates: false)
+                                      subscribeToRemoteUpdates: false)
         store = OCKStore(name: "SampleAppStore", type: .inMemory, remote: parse)
         parse?.parseRemoteDelegate = self
     }

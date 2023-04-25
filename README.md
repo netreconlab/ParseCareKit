@@ -83,7 +83,7 @@ To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netrecon
 
 **If you have CareKit already in your project via SPM or copied, you will need to remove it as ParseCareKit comes with the a compatibile version of CareKit and a conflict of CareKit appearing twice will cause your app to crash**
 
-## Setup Parse Server
+## Setup Parse Server Remote
 For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, is not HIPAA complaint by default. 
 
 ### Protecting Patients data in the Cloud using ACL's
@@ -99,7 +99,7 @@ newACL.setWriteAccess(user: user, value: true)
 do {
     let parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
-                                subscribeToServerUpdates: false,
+                                subscribeToRemoteUpdates: false,
                                 defaultACL: newACL)
 } catch {
     print(error.localizedDescription)
