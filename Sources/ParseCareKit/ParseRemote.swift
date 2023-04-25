@@ -254,7 +254,6 @@ public class ParseRemote: OCKRemoteSynchronizable {
         Task {
             do {
                 let parseClock = try await PCKClock.fetchFromRemote(self.uuid, createNewIfNeeded: true)
-
                 guard let parseVector = parseClock.knowledgeVector else {
                     await self.remoteStatus.updateClock(nil)
                     await self.remoteStatus.notSynchronzing()
@@ -262,11 +261,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     completion(ParseCareKitError.requiredValueCantBeUnwrapped)
                     return
                 }
+                await self.remoteStatus.updateClockIfNeeded(parseClock)
 
                 // 6. Ensure there has not been any updates to remote clock before proceeding.
-                let hasNewerClock = await self.remoteStatus.hasNewerClock(parseVector, for: self.uuid)
-                let currentClock = await self.remoteStatus.clock
-                guard !hasNewerClock || currentClock == nil else {
+                guard await !self.remoteStatus.hasNewerVector(parseVector) else {
                     let errorString = "New knowledge on server. Attempting to pull and try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
@@ -438,17 +436,22 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     switch event {
                     case .created(let updatedClock), .updated(let updatedClock):
                         Task {
-                            guard let updatedVector = updatedClock.knowledgeVector,
-                                await self.remoteStatus.hasNewerClock(updatedVector, for: self.uuid) else {
+                            guard await !self.remoteStatus.isSynchronizing else {
+                                // If currently syncing need to check in the future
+                                do {
+                                    let delay = try await self.remoteStatus.retryLiveQueryAfter()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                                        Task {
+                                            await self.requestSyncIfNewerClock(updatedClock)
+                                        }
+                                    }
+                                } catch {
+                                    Logger.clockSubscription.error("\(error)")
+                                    await self.remoteStatus.notSynchronzing()
+                                }
                                 return
                             }
-                            let random = Int.random(in: 0..<2)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
-                                self.parseDelegate?.didRequestSynchronization(self)
-                            }
-                            Logger
-                                .clockSubscription
-                                .log("Parse subscription is notifying that there are updates on the remote")
+                            await self.requestSyncIfNewerClock(updatedClock)
                         }
                     default:
                         return
@@ -461,6 +464,20 @@ public class ParseRemote: OCKRemoteSynchronizable {
         } catch {
             return
         }
+    }
+
+    func requestSyncIfNewerClock(_ clock: PCKClock?) async {
+        guard let vector = clock?.knowledgeVector,
+            await self.remoteStatus.hasNewerClock(vector, for: self.uuid) else {
+            return
+        }
+        let random = Int.random(in: 0..<2)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
+            self.parseDelegate?.didRequestSynchronization(self)
+        }
+        Logger
+            .clockSubscription
+            .log("Parse subscription is notifying that there are updates on the remote")
     }
 
     func incrementVectorClock(_ vector: OCKRevisionRecord.KnowledgeVector) -> OCKRevisionRecord.KnowledgeVector {
