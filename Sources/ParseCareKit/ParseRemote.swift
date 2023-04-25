@@ -456,9 +456,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 do {
                                     let delay = try await self.remoteStatus.retryLiveQueryAfter()
                                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                                        Task {
-                                            await self.requestSyncIfNewerClock(updatedClock)
-                                        }
+                                        self.parseRemoteDelegate?.didRequestSynchronization(self)
                                     }
                                 } catch {
                                     Logger.clockSubscription.error("\(error)")
