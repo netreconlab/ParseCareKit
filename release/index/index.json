@@ -32815,13 +32815,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       }
                     ],
@@ -33929,13 +33929,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       }
                     ],
