@@ -44,10 +44,10 @@ public class ParseRemote: OCKRemoteSynchronizable {
     public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]!
 
     private weak var parseDelegate: ParseRemoteDelegate?
-    private var revisionRecordSubscription: SubscriptionCallback<PCKRevisionRecord>?
+    private var clockSubscription: SubscriptionCallback<PCKClock>?
     private var subscribeToServerUpdates: Bool
     private let remoteStatus = RemoteSynchronizing()
-    private let revisionQuery: Query<PCKRevisionRecord>
+    private let clockQuery: Query<PCKClock>
 
     /**
      Creates an instance of ParseRemote.
@@ -70,7 +70,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
-        self.revisionQuery = PCKRevisionRecord.query(RevisionRecordKey.clockUUID == uuid)
+        self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToServerUpdates = subscribeToServerUpdates
         if let currentUser = try? await PCKUser.current() {
@@ -147,7 +147,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     deinit {
         Task {
             do {
-                try await revisionQuery.unsubscribe()
+                try await clockQuery.unsubscribe()
                 Logger.deinitializer.error("Unsubscribed from Parse remote")
             } catch {
                 Logger.deinitializer.error("Could not unsubscribe from Parse remote: \(error)")
@@ -206,7 +206,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 let localClock = knowledgeVector.clock(for: self.uuid)
                 let query = PCKRevisionRecord.query(ObjectableKey.logicalClock >= localClock,
                                                     ObjectableKey.clockUUID == self.uuid)
-                    .order([.ascending(ObjectableKey.logicalClock)])
+                    .order([.ascending(ObjectableKey.logicalClock), .ascending(ParseKey.createdAt)])
                 do {
                     let revisions = try await query.find()
                     self.notifyRevisionProgress(0,
@@ -264,14 +264,13 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 }
 
                 // 6. Ensure there has not been any updates to remote clock before proceeding.
-                let parseLogicalClock = parseVector.clock(for: self.uuid)
-                let hasNewerClock = await self.remoteStatus.hasNewerClock(parseLogicalClock, for: self.uuid)
+                let hasNewerClock = await self.remoteStatus.hasNewerClock(parseVector, for: self.uuid)
                 let currentClock = await self.remoteStatus.clock
                 guard !hasNewerClock || currentClock == nil else {
                     let errorString = "New knowledge on server. Attempting to pull and try again"
                     Logger.pushRevisions.error("\(errorString)")
                     await self.remoteStatus.notSynchronzing()
-                    let random = Int.random(in: 0..<3)
+                    let random = Int.random(in: 0..<2)
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
                         self.parseDelegate?.didRequestSynchronization(self)
                     }
@@ -356,8 +355,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                completion: @escaping (Error?) -> Void) {
         Task {
             var updatedParseVector = parseVector
-            // 9. Increment and merge clocks.
-            updatedParseVector = incrementVectorClock(updatedParseVector)
+            // 9. Increment and merge clocks if new local revisions were pushed,
+            //    or else simply update thes remote.
+            if shouldIncrementClock {
+                updatedParseVector = incrementVectorClock(updatedParseVector)
+            }
             updatedParseVector.merge(with: localClock)
 
             // 10. Save updated clock to the remote and notify peer that sync is complete.
@@ -426,21 +428,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
         do {
             _ = try await PCKUser.current()
             guard self.subscribeToServerUpdates,
-                self.revisionRecordSubscription == nil else {
+                self.clockSubscription == nil else {
                 return
             }
 
             do {
-                self.revisionRecordSubscription = try await self.revisionQuery.subscribeCallback()
-                self.revisionRecordSubscription?.handleEvent { (_, event) in
+                self.clockSubscription = try await self.clockQuery.subscribeCallback()
+                self.clockSubscription?.handleEvent { (_, event) in
                     switch event {
-                    case .created(let updatedRecord):
+                    case .created(let updatedClock), .updated(let updatedClock):
                         Task {
-                            guard let revisionClock = updatedRecord.logicalClock,
-                                  await self.remoteStatus.hasNewerClock(revisionClock, for: self.uuid) else {
+                            guard let updatedVector = updatedClock.knowledgeVector,
+                                await self.remoteStatus.hasNewerClock(updatedVector, for: self.uuid) else {
                                 return
                             }
-                            let random = Int.random(in: 0..<3)
+                            let random = Int.random(in: 0..<2)
                             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
                                 self.parseDelegate?.didRequestSynchronization(self)
                             }
