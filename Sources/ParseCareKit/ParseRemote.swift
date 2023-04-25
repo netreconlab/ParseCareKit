@@ -75,7 +75,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         self.subscribeToRemoteUpdates = subscribeToRemoteUpdates
         if let currentUser = try? await PCKUser.current() {
             try Self.setDefaultACL(defaultACL, for: currentUser)
-            await subscribeToRevisionRecord()
+            await subscribeToClock()
         }
     }
 
@@ -352,23 +352,30 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                localClock: OCKRevisionRecord.KnowledgeVector,
                                completion: @escaping (Error?) -> Void) {
         Task {
+            // 9. Increment and merge clocks if new local revisions were pushed.
             var updatedParseVector = parseVector
-            // 9. Increment and merge clocks if new local revisions were pushed,
-            //    or else simply update thes remote.
             if shouldIncrementClock {
                 updatedParseVector = incrementVectorClock(updatedParseVector)
             }
             updatedParseVector.merge(with: localClock)
 
-            // 10. Save updated clock to the remote and notify peer that sync is complete.
             guard let updatedClock = PCKClock.encodeVector(updatedParseVector, for: parseClock) else {
                 await self.remoteStatus.notSynchronzing()
                 Logger.pushRevisions.error("Could not encode clock")
                 completion(ParseCareKitError.couldntUnwrapClock)
                 return
             }
+
+            // 10. Save updated clock to the remote and notify peer that sync is complete.
+            let hasNewerClock = await self.remoteStatus.hasNewerVector(updatedParseVector)
+            await self.remoteStatus.updateClock(updatedClock)
+            guard shouldIncrementClock || hasNewerClock else {
+                await self.remoteStatus.notSynchronzing()
+                await self.subscribeToClock()
+                completion(nil)
+                return
+            }
             do {
-                await self.remoteStatus.updateClock(updatedClock)
                 _ = try await updatedClock.save()
                 Logger.pushRevisions.debug("Finished pushing revisions")
                 DispatchQueue.main.async {
@@ -381,7 +388,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                 completion(error)
             }
             await self.remoteStatus.notSynchronzing()
-            await self.subscribeToRevisionRecord()
+            await self.subscribeToClock()
         }
     }
 
@@ -422,7 +429,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
     }
 
     @MainActor
-    func subscribeToRevisionRecord() async {
+    func subscribeToClock() async {
         do {
             _ = try await PCKUser.current()
             guard self.subscribeToRemoteUpdates,
