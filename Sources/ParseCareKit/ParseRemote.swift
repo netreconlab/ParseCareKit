@@ -375,14 +375,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
 
             // 10. Save updated clock to the remote and notify peer that sync is complete.
-            let hasNewerClock = await self.remoteStatus.hasNewerVector(updatedParseVector)
             await self.remoteStatus.updateClock(updatedClock)
-            guard shouldIncrementClock || hasNewerClock else {
-                await self.remoteStatus.notSynchronzing()
-                await self.subscribeToClock()
-                completion(nil)
-                return
-            }
             do {
                 _ = try await updatedClock.save()
                 Logger.pushRevisions.debug("Finished pushing revisions")

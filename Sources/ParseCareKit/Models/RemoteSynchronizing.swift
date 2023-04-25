@@ -68,8 +68,6 @@ actor RemoteSynchronizing {
         guard let currentVector = knowledgeVector else {
             return true
         }
-        var testVector = currentVector
-        testVector.merge(with: vector)
-        return vector > currentVector || testVector.uuids.count > currentVector.uuids.count
+        return vector > currentVector
     }
 }
