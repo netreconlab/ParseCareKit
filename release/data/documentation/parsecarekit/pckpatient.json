@@ -256,7 +256,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -740,7 +740,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/clock": {
   "abstract" : [
     {
-      "text" : "The clock of when this object was added to the Parse server.",
+      "text" : "The clock of when this object was added to the Parse remote.",
       "type" : "text"
     }
   ],
@@ -1214,7 +1214,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", but this is what’s on the Parse server, ",
+      "text" : ", but this is what’s on the Parse remote, ",
       "type" : "text"
     },
     {
@@ -1383,7 +1383,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/logicalClock": {
   "abstract" : [
     {
-      "text" : "The clock value of when this object was added to the Parse server.",
+      "text" : "The clock value of when this object was added to the Parse remote.",
       "type" : "text"
     }
   ],

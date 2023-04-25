@@ -387,7 +387,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -409,7 +409,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " to synchronize with a Parse Server.",
+      "text" : " to synchronize with a remote Parse Server.",
       "type" : "text"
     }
   ],

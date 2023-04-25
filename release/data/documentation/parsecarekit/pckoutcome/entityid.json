@@ -9,7 +9,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", but this is what’s on the Parse server, ",
+      "text" : ", but this is what’s on the Parse remote, ",
       "type" : "text"
     },
     {
@@ -148,7 +148,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -252,7 +252,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : ", but this is what’s on the Parse server, ",
+      "text" : ", but this is what’s on the Parse remote, ",
       "type" : "text"
     },
     {

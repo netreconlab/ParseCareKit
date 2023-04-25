@@ -14,11 +14,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToServerUpdates:defaultACL:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto24subscribeToServerUpdates10defaultACLAC10Foundation4UUIDV_S2b0A5Swift0aL0VSgtYaKcfc",
+    "externalID" : "s:12ParseCareKit0A6RemoteC4uuid4auto22replacePCKStoreClasses011subscribeToD7Updates10defaultACLAC10Foundation4UUIDV_SbSDyAA0H5ClassOAA14PCKVersionable_pXpGSb0A5Swift0aN0VSgtYaKcfc",
     "fragments" : [
       {
         "kind" : "identifier",
@@ -64,7 +64,41 @@
       },
       {
         "kind" : "externalParam",
-        "text" : "subscribeToServerUpdates"
+        "text" : "replacePCKStoreClasses"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12ParseCareKit13PCKStoreClassO",
+        "text" : "PCKStoreClass"
+      },
+      {
+        "kind" : "text",
+        "text" : " : "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "any"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
+        "text" : "PCKVersionable"
+      },
+      {
+        "kind" : "text",
+        "text" : ".Type], "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "subscribeToRemoteUpdates"
       },
       {
         "kind" : "text",
@@ -117,7 +151,7 @@
     "role" : "symbol",
     "roleHeading" : "Initializer",
     "symbolKind" : "init",
-    "title" : "init(uuid:auto:subscribeToServerUpdates:defaultACL:)"
+    "title" : "init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)"
   },
   "primaryContentSections" : [
     {
@@ -130,6 +164,14 @@
             "iOS"
           ],
           "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "convenience"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
             {
               "kind" : "keyword",
               "text" : "init"
@@ -174,7 +216,43 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "subscribeToServerUpdates"
+              "text" : "replacePCKStoreClasses"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKStoreClass",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12ParseCareKit13PCKStoreClassO",
+              "text" : "PCKStoreClass"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "any"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKVersionable",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12ParseCareKit14PCKVersionableP",
+              "text" : "PCKVersionable"
+            },
+            {
+              "kind" : "text",
+              "text" : ".Type], "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "subscribeToRemoteUpdates"
             },
             {
               "kind" : "text",
@@ -268,6 +346,20 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "Replace some or all of the default classes that are synchronized",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "replacePCKStoreClasses"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "Automatically receive updates from other devices linked to this Clock.",
                   "type" : "text"
                 },
@@ -291,7 +383,7 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "subscribeToServerUpdates"
+          "name" : "subscribeToRemoteUpdates"
         },
         {
           "content" : [
@@ -334,6 +426,16 @@
             }
           ],
           "name" : "defaultACL"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
           "content" : [
@@ -363,7 +465,9 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "important"
+          "name" : "Important",
+          "style" : "important",
+          "type" : "aside"
         },
         {
           "content" : [
@@ -417,9 +521,12 @@
               "type" : "paragraph"
             }
           ],
-          "name" : "note"
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
         }
-      ]
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -434,8 +541,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)"
       ],
       "title" : "Initialize the SDK"
     }
@@ -443,7 +550,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoserverupdates:defaultacl:)"
+        "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoremoteupdates:defaultacl:)"
       ],
       "traits" : [
         {
@@ -457,7 +564,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -468,7 +575,91 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKStoreClass": {
+  "abstract" : [
+    {
+      "text" : "Types of ParseCareKit classes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PCKStoreClass"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKStoreClass",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PCKStoreClass"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PCKStoreClass",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckstoreclass"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKVersionable": {
+  "abstract" : [
+    {
+      "text" : "Objects that conform to the ",
+      "type" : "text"
+    },
+    {
+      "code" : "PCKVersionable",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " protocol are Parse interpretations of ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKVersionedObjectCompatible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " objects.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PCKVersionable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKVersionable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PCKVersionable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PCKVersionable",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckversionable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)": {
   "abstract" : [
     {
       "text" : "Creates an instance of ParseRemote.",
@@ -588,7 +779,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "subscribeToServerUpdates"
+      "text" : "subscribeToRemoteUpdates"
     },
     {
       "kind" : "text",
@@ -633,14 +824,14 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)",
+  "title" : "init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoserverupdates:defaultacl:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoremoteupdates:defaultacl:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)": {
   "abstract" : [
     {
       "text" : "Creates an instance of ParseRemote.",
@@ -726,7 +917,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "subscribeToServerUpdates"
+      "text" : "subscribeToRemoteUpdates"
     },
     {
       "kind" : "text",
@@ -771,14 +962,14 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)",
+  "title" : "init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoserverupdates:defaultacl:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoremoteupdates:defaultacl:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:subscribeToServerUpdates:defaultACL:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)": {
   "abstract" : [
     {
       "text" : "Creates an instance of ParseRemote.",
@@ -830,7 +1021,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "subscribeToServerUpdates"
+      "text" : "subscribeToRemoteUpdates"
     },
     {
       "kind" : "text",
@@ -875,12 +1066,12 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToServerUpdates:defaultACL:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(uuid:auto:subscribeToServerUpdates:defaultACL:)",
+  "title" : "init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoserverupdates:defaultacl:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoremoteupdates:defaultacl:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseACL": {
   "abstract" : [

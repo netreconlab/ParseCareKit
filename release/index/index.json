@@ -25252,18 +25252,18 @@
             "type" : "groupMarker"
           },
           {
-            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoremoteupdates:defaultacl:)",
+            "title" : "init(uuid: UUID, auto: Bool, subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
-            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoremoteupdates:defaultacl:)",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type], subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
-            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoserverupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type]?, customClasses: [String : any PCKVersionable.Type], subscribeToServerUpdates: Bool, defaultACL: ParseACL?) async throws",
+            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoremoteupdates:defaultacl:)",
+            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type]?, customClasses: [String : any PCKVersionable.Type], subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
             "type" : "init"
           },
           {
@@ -32815,13 +32815,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       }
                     ],
@@ -33929,13 +33929,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],

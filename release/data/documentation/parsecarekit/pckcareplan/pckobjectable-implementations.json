@@ -70,7 +70,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -390,7 +390,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/first(_:options:)": {
   "abstract" : [
     {
-      "text" : "Finds the first object on the server that has the same ",
+      "text" : "Finds the first object on the remote that has the same ",
       "type" : "text"
     },
     {
@@ -493,7 +493,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/first(_:options:completion:)": {
   "abstract" : [
     {
-      "text" : "Finds the first object on the server that has the same ",
+      "text" : "Finds the first object on the remote that has the same ",
       "type" : "text"
     },
     {
@@ -619,7 +619,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/firstPublisher(_:options:)": {
   "abstract" : [
     {
-      "text" : "Finds the first object on the server that has the same ",
+      "text" : "Finds the first object on the remote that has the same ",
       "type" : "text"
     },
     {

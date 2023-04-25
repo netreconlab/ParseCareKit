@@ -655,7 +655,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " to synchronize with a Parse Server.",
+      "text" : " to synchronize with a remote Parse Server.",
       "type" : "text"
     }
   ],

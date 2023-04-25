@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -408,9 +408,9 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToServerUpdates:defaultACL:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)"
       ],
       "title" : "Initialize the SDK"
     },
@@ -477,7 +477,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -1573,7 +1573,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " to synchronize with a Parse Server.",
+      "text" : " to synchronize with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -1604,7 +1604,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/parseremote"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)": {
   "abstract" : [
     {
       "text" : "Creates an instance of ParseRemote.",
@@ -1724,7 +1724,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "subscribeToServerUpdates"
+      "text" : "subscribeToRemoteUpdates"
     },
     {
       "kind" : "text",
@@ -1769,14 +1769,14 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)",
+  "title" : "init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoserverupdates:defaultacl:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoremoteupdates:defaultacl:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)": {
   "abstract" : [
     {
       "text" : "Creates an instance of ParseRemote.",
@@ -1862,7 +1862,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "subscribeToServerUpdates"
+      "text" : "subscribeToRemoteUpdates"
     },
     {
       "kind" : "text",
@@ -1907,14 +1907,14 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)",
+  "title" : "init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoserverupdates:defaultacl:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoremoteupdates:defaultacl:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:subscribeToServerUpdates:defaultACL:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)": {
   "abstract" : [
     {
       "text" : "Creates an instance of ParseRemote.",
@@ -1966,7 +1966,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "subscribeToServerUpdates"
+      "text" : "subscribeToRemoteUpdates"
     },
     {
       "kind" : "text",
@@ -2011,12 +2011,12 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToServerUpdates:defaultACL:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/ParseRemote\/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(uuid:auto:subscribeToServerUpdates:defaultACL:)",
+  "title" : "init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoserverupdates:defaultacl:)"
+  "url" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoremoteupdates:defaultacl:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemoteDelegate": {
   "abstract" : [

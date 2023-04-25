@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Finds the first object on the server that has the same ",
+      "text" : "Finds the first object on the remote that has the same ",
       "type" : "text"
     },
     {
@@ -310,7 +310,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A set of header options sent to the server. Defaults to an empty set.",
+                  "text" : "A set of header options sent to the remote. Defaults to an empty set.",
                   "type" : "text"
                 }
               ],
@@ -399,7 +399,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit": {
   "abstract" : [
     {
-      "text" : "Seamlessly Synchronize CareKit data with a Parse Server.",
+      "text" : "Seamlessly Synchronize CareKit data with a remote Parse Server.",
       "type" : "text"
     }
   ],
@@ -482,7 +482,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKPatient/first(_:options:completion:)": {
   "abstract" : [
     {
-      "text" : "Finds the first object on the server that has the same ",
+      "text" : "Finds the first object on the remote that has the same ",
       "type" : "text"
     },
     {
