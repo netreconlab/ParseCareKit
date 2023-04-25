@@ -188,5 +188,5 @@ enum RevisionRecordKey {
     /// clockUUID key.
     static let clockUUID                                       = "clockUUID"
     /// logicalClock key.
-    static let logicalClock                                          = "logicalClock"
+    static let logicalClock                                    = "logicalClock"
 }

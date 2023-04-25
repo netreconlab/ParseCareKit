@@ -35,6 +35,6 @@ actor RemoteSynchronizing {
         guard let currentClock = knowledgeVector?.clock(for: uuid) else {
             return true
         }
-        return clock > currentClock
+        return clock >= currentClock
     }
 }
