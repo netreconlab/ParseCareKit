@@ -103,8 +103,28 @@ public struct PCKHealthKitTask: PCKVersionable {
 
     public var originalData: Data?
 
+    #if canImport(HealthKit)
     /// A structure specifying how this task is linked with HealthKit.
-    public var healthKitLinkage: OCKHealthKitLinkage?
+    public var healthKitLinkage: OCKHealthKitLinkage? {
+        get {
+            guard let data = healthKitLinkageString?.data(using: .utf8) else {
+                return nil
+            }
+            return try? JSONDecoder().decode(OCKHealthKitLinkage.self,
+                                             from: data)
+        } set {
+            guard let json = try? JSONEncoder().encode(newValue),
+                    let encodedString = String(data: json, encoding: .utf8) else {
+                healthKitLinkageString = nil
+                return
+            }
+            healthKitLinkageString = encodedString
+        }
+    }
+    #endif
+
+    /// A string specifying how this task is linked with HealthKit.
+    public var healthKitLinkageString: String?
 
     /// If true, completion of this task will be factored into the patient's overall adherence. True by default.
     public var impactsAdherence: Bool?
@@ -135,12 +155,18 @@ public struct PCKHealthKitTask: PCKVersionable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case objectId, createdAt, updatedAt
+        case objectId, createdAt, updatedAt,
+             className, ACL, uuid
         case entityId, schemaVersion, createdDate, updatedDate,
              deletedDate, timezone, userInfo, groupIdentifier,
              tags, source, asset, remoteID, notes, logicalClock
         case previousVersionUUIDs, nextVersionUUIDs, effectiveDate
-        case title, carePlan, carePlanUUID, impactsAdherence, instructions, schedule, healthKitLinkage
+        case title, carePlan, carePlanUUID, impactsAdherence,
+             instructions, schedule, healthKitLinkageString
+        case previousVersions, nextVersions
+        #if canImport(HealthKit)
+        case healthKitLinkage
+        #endif
     }
 
     public init() {
@@ -215,18 +241,61 @@ public struct PCKHealthKitTask: PCKVersionable {
     }
 }
 
-extension PCKHealthKitTask {
-    public func encode(to encoder: Encoder) throws {
+public extension PCKHealthKitTask {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
+        self.createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
+        self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
+        self.ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
+        self.healthKitLinkageString = try container.decodeIfPresent(String.self, forKey: .healthKitLinkageString)
+        #if canImport(HealthKit)
+        if healthKitLinkageString == nil {
+            self.healthKitLinkage = try container.decodeIfPresent(OCKHealthKitLinkage.self, forKey: .healthKitLinkage)
+        }
+        #endif
+        self.carePlan = try container.decodeIfPresent(PCKCarePlan.self, forKey: .carePlan)
+        self.carePlanUUID = try container.decodeIfPresent(UUID.self, forKey: .carePlanUUID)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)
+        self.logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
+        self.impactsAdherence = try container.decodeIfPresent(Bool.self, forKey: .impactsAdherence)
+        self.instructions = try container.decodeIfPresent(String.self, forKey: .instructions)
+        self.schedule = try container.decodeIfPresent(OCKSchedule.self, forKey: .schedule)
+        self.entityId = try container.decodeIfPresent(String.self, forKey: .entityId)
+        self.createdDate = try container.decodeIfPresent(Date.self, forKey: .createdDate)
+        self.updatedDate = try container.decodeIfPresent(Date.self, forKey: .updatedDate)
+        self.deletedDate = try container.decodeIfPresent(Date.self, forKey: .deletedDate)
+        self.effectiveDate = try container.decodeIfPresent(Date.self, forKey: .effectiveDate)
+        self.timezone = try container.decodeIfPresent(TimeZone.self, forKey: .timezone)
+        self.previousVersions = try container.decodeIfPresent([Pointer<Self>].self, forKey: .previousVersions)
+        self.nextVersions = try container.decodeIfPresent([Pointer<Self>].self, forKey: .nextVersions)
+        self.previousVersionUUIDs = try container.decodeIfPresent([UUID].self, forKey: .previousVersionUUIDs)
+        self.nextVersionUUIDs = try container.decodeIfPresent([UUID].self, forKey: .nextVersionUUIDs)
+        self.userInfo = try container.decodeIfPresent([String: String].self, forKey: .userInfo)
+        self.remoteID = try container.decodeIfPresent(String.self, forKey: .remoteID)
+        self.source = try container.decodeIfPresent(String.self, forKey: .source)
+        self.asset = try container.decodeIfPresent(String.self, forKey: .asset)
+        self.schemaVersion = try container.decodeIfPresent(OCKSemanticVersion.self, forKey: .schemaVersion)
+        self.groupIdentifier = try container.decodeIfPresent(String.self, forKey: .groupIdentifier)
+        self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        self.notes = try container.decodeIfPresent([OCKNote].self, forKey: .notes)
+    }
+
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if encodingForParse {
             try container.encodeIfPresent(carePlan?.toPointer(), forKey: .carePlan)
+            try container.encodeIfPresent(healthKitLinkageString, forKey: .healthKitLinkageString)
+        } else {
+            #if canImport(HealthKit)
+            try container.encodeIfPresent(healthKitLinkage, forKey: .healthKitLinkage)
+            #endif
         }
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(carePlanUUID, forKey: .carePlanUUID)
         try container.encodeIfPresent(impactsAdherence, forKey: .impactsAdherence)
         try container.encodeIfPresent(instructions, forKey: .instructions)
         try container.encodeIfPresent(schedule, forKey: .schedule)
-        try container.encodeIfPresent(healthKitLinkage, forKey: .healthKitLinkage)
         try encodeVersionable(to: encoder)
     }
 }

@@ -29,20 +29,20 @@ public struct PCKClock: ParseObject {
 
     public var uuid: UUID?
 
-    var vector: String?
+    var knowledgeVectorString: String?
 
     /// A knowledge vector indicating the last known state of each other device
     /// by the device that authored this revision record.
     public var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
         get {
-            try? PCKClock.decodeVector(vector)
+            try? PCKClock.decodeVector(knowledgeVectorString)
         }
         set {
             guard let newValue = newValue else {
-                vector = nil
+                knowledgeVectorString = nil
                 return
             }
-            vector = PCKClock.encodeVector(newValue)
+            knowledgeVectorString = PCKClock.encodeVector(newValue)
         }
     }
 
@@ -54,15 +54,15 @@ public struct PCKClock: ParseObject {
                                      original: object) {
             updated.uuid = object.uuid
         }
-        if updated.shouldRestoreKey(\.vector,
+        if updated.shouldRestoreKey(\.knowledgeVectorString,
                                      original: object) {
-            updated.vector = object.vector
+            updated.knowledgeVectorString = object.knowledgeVectorString
         }
         return updated
     }
 
     static func decodeVector(_ clock: Self) throws -> OCKRevisionRecord.KnowledgeVector {
-        try decodeVector(clock.vector)
+        try decodeVector(clock.knowledgeVectorString)
     }
 
     static func decodeVector(_ vector: String?) throws -> OCKRevisionRecord.KnowledgeVector {
@@ -73,10 +73,8 @@ public struct PCKClock: ParseObject {
         }
 
         do {
-            // swiftlint:disable:next line_length
-            let remoteVector: OCKRevisionRecord.KnowledgeVector = try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self,
-                                                                                          from: data)
-            return remoteVector
+            return try JSONDecoder().decode(OCKRevisionRecord.KnowledgeVector.self,
+                                            from: data)
         } catch {
             Logger.clock.error("Clock.decodeVector(): \(error, privacy: .private). Vector \(data, privacy: .private).")
             throw ParseCareKitError.errorString("Clock.decodeVector(): \(error)")
@@ -88,7 +86,7 @@ public struct PCKClock: ParseObject {
             return nil
         }
         var mutableClock = clock
-        mutableClock.vector = remoteVectorString
+        mutableClock.knowledgeVectorString = remoteVectorString
         return mutableClock
     }
 
@@ -212,7 +210,7 @@ public struct PCKClock: ParseObject {
 extension PCKClock {
     init(uuid: UUID) {
         self.uuid = uuid
-        vector = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
+        knowledgeVectorString = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
         ACL = PCKUtility.getDefaultACL()
     }
 }

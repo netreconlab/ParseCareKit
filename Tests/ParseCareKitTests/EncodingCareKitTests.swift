@@ -693,15 +693,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
+    #if canImport(HealthKit)
     // swiftlint:disable:next function_body_length
     func testHealthKitTask() async throws {
         let careKitSchedule = OCKScheduleElement(start: Date(),
                                                  end: Date().addingTimeInterval(3000), interval: .init(day: 1))
+        let linkage = OCKHealthKitLinkage(quantityIdentifier: .bodyTemperature,
+                                          quantityType: .discrete,
+                                          unit: .degreeCelsius())
         var careKit = OCKHealthKitTask(id: "myId", title: "hello", carePlanUUID: UUID(),
                                        schedule: .init(composing: [careKitSchedule]),
-                                       healthKitLinkage: .init(quantityIdentifier: .bodyTemperature,
-                                                               quantityType: .discrete,
-                                                               unit: .degreeCelsius()))
+                                       healthKitLinkage: linkage)
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
         // Special
@@ -737,7 +739,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
         XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
-        // XCTAssertEqual(parse.allergies, careKit.allergies)
+        XCTAssertEqual(parse.healthKitLinkage, careKit.healthKitLinkage)
 
         // Objectable
         XCTAssertEqual(parse.className, "HealthKitTask")
@@ -769,6 +771,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Special
         XCTAssertEqual(parse2.impactsAdherence, careKit.impactsAdherence)
+        XCTAssertEqual(parse2.healthKitLinkage, careKit.healthKitLinkage)
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
 
@@ -826,6 +829,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.impactsAdherence, cloudDecoded.impactsAdherence)
         XCTAssertEqual(parse.title, cloudDecoded.title)
         XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
+        XCTAssertEqual(parse.healthKitLinkage, cloudDecoded.healthKitLinkage)
 
         // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
@@ -883,6 +887,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
+    #endif
 
     // swiftlint:disable:next function_body_length
     func testCarePlan() async throws {

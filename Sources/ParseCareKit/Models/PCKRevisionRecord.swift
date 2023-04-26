@@ -44,18 +44,18 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
     /// by the device that authored this revision record.
     var knowledgeVector: OCKRevisionRecord.KnowledgeVector? {
         get {
-            try? PCKClock.decodeVector(vector)
+            try? PCKClock.decodeVector(knowledgeVectorString)
         }
         set {
             guard let newValue = newValue else {
-                vector = nil
+                knowledgeVectorString = nil
                 return
             }
-            vector = PCKClock.encodeVector(newValue)
+            knowledgeVectorString = PCKClock.encodeVector(newValue)
         }
     }
 
-    var vector: String?
+    var knowledgeVectorString: String?
 
     var storeClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]? = try? PCKStoreClass.getConcrete()
 
@@ -112,12 +112,12 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
 
     enum CodingKeys: String, CodingKey {
         case objectId, createdAt, updatedAt, className,
-             ACL, vector, entities,
+             ACL, knowledgeVectorString, entities,
              logicalClock, clock, clockUUID
     }
 
     static func == (lhs: PCKRevisionRecord, rhs: PCKRevisionRecord) -> Bool {
-        lhs.vector == rhs.vector &&
+        lhs.knowledgeVectorString == rhs.knowledgeVectorString &&
         lhs.logicalClock == rhs.logicalClock &&
         lhs.objectId == rhs.objectId &&
         lhs.entities == rhs.entities
@@ -226,7 +226,7 @@ extension PCKRevisionRecord {
         self.createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         self.ACL = try container.decodeIfPresent(ParseACL.self, forKey: .ACL)
-        self.vector = try container.decodeIfPresent(String.self, forKey: .vector)
+        self.knowledgeVectorString = try container.decodeIfPresent(String.self, forKey: .knowledgeVectorString)
         self.entities = try container.decodeIfPresent([PCKEntity].self, forKey: .entities)
         self.clock = try container.decodeIfPresent(PCKClock.self, forKey: .clock)
         self.logicalClock = try container.decodeIfPresent(Int.self, forKey: .logicalClock)
@@ -240,7 +240,7 @@ extension PCKRevisionRecord {
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
         try container.encodeIfPresent(ACL, forKey: .ACL)
-        try container.encodeIfPresent(vector, forKey: .vector)
+        try container.encodeIfPresent(knowledgeVectorString, forKey: .knowledgeVectorString)
         try container.encodeIfPresent(entities, forKey: .entities)
         try container.encodeIfPresent(clock, forKey: .clock)
         try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
