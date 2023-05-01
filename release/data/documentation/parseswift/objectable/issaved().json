@@ -17,23 +17,22 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Objectable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/isSaved"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable\/isSaved()"
   },
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "ParseSwift",
-    "externalID" : "s:10ParseSwift10ObjectablePAAE7isSavedSbvp::SYNTHESIZED::s:10ParseSwift0A10PushStatusV",
+    "externalID" : "s:10ParseSwift10ObjectablePAAE7isSavedSbyYaKF",
     "fragments" : [
       {
         "kind" : "keyword",
-        "text" : "var"
+        "text" : "func"
       },
       {
         "kind" : "text",
@@ -45,7 +44,23 @@
       },
       {
         "kind" : "text",
-        "text" : ": "
+        "text" : "() "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "async"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> "
       },
       {
         "kind" : "typeIdentifier",
@@ -59,9 +74,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Instance Property",
-    "symbolKind" : "property",
-    "title" : "isSaved"
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "isSaved()"
   },
   "primaryContentSections" : [
     {
@@ -76,7 +91,7 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "var"
+              "text" : "func"
             },
             {
               "kind" : "text",
@@ -88,72 +103,33 @@
             },
             {
               "kind" : "text",
-              "text" : ": "
+              "text" : "() "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "async"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> "
             },
             {
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:Sb",
               "text" : "Bool"
-            },
-            {
-              "kind" : "text",
-              "text" : " { "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "get"
-            },
-            {
-              "kind" : "text",
-              "text" : " }"
             }
           ]
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "This will not be available in ParseSwift 6.0.0. Use ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "isSaved()",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " instead.",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "BAKER mark this internal.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "Warning",
-          "style" : "warning",
-          "type" : "aside"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -167,7 +143,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parseswift\/parsepushstatus\/issaved"
+        "\/documentation\/parseswift\/objectable\/issaved()"
       ],
       "traits" : [
         {
@@ -189,17 +165,25 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Objectable": {
   "abstract" : [
     {
-      "text" : "The PushStatus on the Parse Server.",
+      "text" : "The base protocol for a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "struct"
+      "text" : "protocol"
     },
     {
       "kind" : "text",
@@ -207,34 +191,23 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParsePushStatus"
+      "text" : "Objectable"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "ParsePushStatus"
+      "text" : "Objectable"
     }
   ],
   "role" : "symbol",
-  "title" : "ParsePushStatus",
+  "title" : "Objectable",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus"
+  "url" : "\/documentation\/parseswift\/objectable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/Objectable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Objectable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Objectable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/objectable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/isSaved": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Objectable/isSaved()": {
   "abstract" : [
     {
       "text" : "Specifies if a ",
@@ -252,7 +225,7 @@
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "var"
+      "text" : "func"
     },
     {
       "kind" : "text",
@@ -264,7 +237,23 @@
     },
     {
       "kind" : "text",
-      "text" : ": "
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
     },
     {
       "kind" : "typeIdentifier",
@@ -272,12 +261,12 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/isSaved",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable\/isSaved()",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "isSaved",
+  "title" : "isSaved()",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/issaved"
+  "url" : "\/documentation\/parseswift\/objectable\/issaved()"
 }
 }
 }

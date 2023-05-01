@@ -42,6 +42,13 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/isSaved()"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property-3wrb8"
       ],
       "title" : "Type Properties"
@@ -313,6 +320,56 @@
   "title" : "isSaved",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/issaved"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/isSaved()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "isSaved"
+    },
+    {
+      "kind" : "text",
+      "text" : "() "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/isSaved()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "isSaved()",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckcareplan\/issaved()"
 }
 }
 }

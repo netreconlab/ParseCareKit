@@ -5,7 +5,7 @@
       "type" : "text"
     },
     {
-      "code" : "Decodable.init(from:)",
+      "code" : "Objectable.isSaved()",
       "type" : "codeVoice"
     },
     {
@@ -17,48 +17,56 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Objectable-Implementations"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/isSaved()"
   },
   "kind" : "symbol",
   "metadata" : {
-    "extendedModule" : "ParseCareKit",
-    "externalID" : "s:12ParseCareKit09PCKHealthC4TaskV4fromACs7Decoder_p_tKcfc",
+    "extendedModule" : "ParseSwift",
+    "externalID" : "s:10ParseSwift10ObjectablePAAE7isSavedSbyYaKF::SYNTHESIZED::s:12ParseCareKit11PCKCarePlanV",
     "fragments" : [
       {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
         "kind" : "identifier",
-        "text" : "init"
+        "text" : "isSaved"
       },
       {
         "kind" : "text",
-        "text" : "("
+        "text" : "() "
       },
       {
-        "kind" : "externalParam",
-        "text" : "from"
-      },
-      {
-        "kind" : "text",
-        "text" : ": "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:s7DecoderP",
-        "text" : "Decoder"
+        "kind" : "keyword",
+        "text" : "async"
       },
       {
         "kind" : "text",
-        "text" : ") "
+        "text" : " "
       },
       {
         "kind" : "keyword",
         "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
       }
     ],
     "modules" : [
@@ -67,9 +75,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Initializer",
-    "symbolKind" : "init",
-    "title" : "init(from:)"
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "isSaved()"
   },
   "primaryContentSections" : [
     {
@@ -84,40 +92,40 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "init"
-            },
-            {
-              "kind" : "text",
-              "text" : "("
-            },
-            {
-              "kind" : "externalParam",
-              "text" : "from"
+              "text" : "func"
             },
             {
               "kind" : "text",
               "text" : " "
             },
             {
-              "kind" : "internalParam",
-              "text" : "decoder"
+              "kind" : "identifier",
+              "text" : "isSaved"
             },
             {
               "kind" : "text",
-              "text" : ": "
+              "text" : "() "
             },
             {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:s7DecoderP",
-              "text" : "Decoder"
+              "kind" : "keyword",
+              "text" : "async"
             },
             {
               "kind" : "text",
-              "text" : ") "
+              "text" : " "
             },
             {
               "kind" : "keyword",
               "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
             }
           ]
         }
@@ -136,7 +144,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+        "\/documentation\/parsecarekit\/pckcareplan\/issaved()"
       ],
       "traits" : [
         {
@@ -161,14 +169,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan": {
   "abstract" : [
     {
       "text" : "An ",
       "type" : "text"
     },
     {
-      "code" : "PCKHealthKitTask",
+      "code" : "PCKCarePlan",
       "type" : "codeVoice"
     },
     {
@@ -176,7 +184,7 @@
       "type" : "text"
     },
     {
-      "code" : "OCKHealthKitTask",
+      "code" : "OCKCarePlan",
       "type" : "codeVoice"
     },
     {
@@ -184,27 +192,11 @@
       "type" : "text"
     },
     {
-      "code" : "OCKHealthKitTask",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " represents some task or action that a",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "patient is supposed to perform. Tasks are optionally associable with an ",
-      "type" : "text"
-    },
-    {
       "code" : "OCKCarePlan",
       "type" : "codeVoice"
     },
     {
-      "text" : " and must have a unique",
+      "text" : " represents",
       "type" : "text"
     },
     {
@@ -212,7 +204,7 @@
       "type" : "text"
     },
     {
-      "text" : "id and schedule. The schedule determines when and how often the task should be performed, and the",
+      "text" : "a set of tasks, including both interventions and assesments, that a patient is supposed to",
       "type" : "text"
     },
     {
@@ -220,11 +212,7 @@
       "type" : "text"
     },
     {
-      "code" : "impactsAdherence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " flag may be used to specify whether or not the patients adherence to this task will affect",
+      "text" : "complete as part of his or her treatment for a specific condition. For example, a care plan for obesity",
       "type" : "text"
     },
     {
@@ -232,7 +220,23 @@
       "type" : "text"
     },
     {
-      "text" : "their daily completion rings.",
+      "text" : "may include tasks requiring the patient to exercise, record their weight, and log meals. As the care",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "plan evolves with the patient’s progress, the care provider may modify the exercises and include notes each",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "time about why the changes were made.",
       "type" : "text"
     }
   ],
@@ -247,74 +251,82 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKHealthKitTask"
+      "text" : "PCKCarePlan"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKHealthKitTask"
+      "text" : "PCKCarePlan"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKHealthKitTask",
+  "title" : "PCKCarePlan",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask"
+  "url" : "\/documentation\/parsecarekit\/pckcareplan"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/Decodable-Implementations": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/Objectable-Implementations": {
   "abstract" : [
 
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Objectable-Implementations",
   "kind" : "article",
   "role" : "collectionGroup",
-  "title" : "Decodable Implementations",
+  "title" : "Objectable Implementations",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/decodable-implementations"
+  "url" : "\/documentation\/parsecarekit\/pckcareplan\/objectable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/init(from:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/isSaved()": {
   "abstract" : [
 
   ],
   "fragments" : [
     {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
       "kind" : "identifier",
-      "text" : "init"
+      "text" : "isSaved"
     },
     {
       "kind" : "text",
-      "text" : "("
+      "text" : "() "
     },
     {
-      "kind" : "externalParam",
-      "text" : "from"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s7DecoderP",
-      "text" : "Decoder"
+      "kind" : "keyword",
+      "text" : "async"
     },
     {
       "kind" : "text",
-      "text" : ") "
+      "text" : " "
     },
     {
       "kind" : "keyword",
       "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/isSaved()",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(from:)",
+  "title" : "isSaved()",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+  "url" : "\/documentation\/parsecarekit\/pckcareplan\/issaved()"
 }
 }
 }

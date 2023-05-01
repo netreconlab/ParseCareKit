@@ -182,8 +182,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init()"
       ],
       "title" : "Initializers"
     },
@@ -202,6 +201,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/entityId",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/groupIdentifier",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/healthKitLinkage",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/healthKitLinkageString",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/impactsAdherence",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/instructions",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/logicalClock",
@@ -250,6 +250,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/CustomDebugStringConvertible-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/CustomStringConvertible-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Deletable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Encodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Equatable-Implementations",
@@ -475,6 +476,17 @@
   "title" : "CustomStringConvertible Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/customstringconvertible-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/Decodable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Decodable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/decodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/Deletable-Implementations": {
   "abstract" : [
@@ -1360,6 +1372,47 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/healthkitlinkage"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/healthKitLinkageString": {
+  "abstract" : [
+    {
+      "text" : "A string specifying how this task is linked with HealthKit.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "healthKitLinkageString"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/healthKitLinkageString",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "healthKitLinkageString",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/healthkitlinkagestring"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/impactsAdherence": {
   "abstract" : [
     {
@@ -1421,48 +1474,6 @@
   "title" : "init()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/init()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/init(from:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "from"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s7DecoderP",
-      "text" : "Decoder"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(from:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/instructions": {
   "abstract" : [

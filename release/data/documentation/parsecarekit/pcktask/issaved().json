@@ -5,7 +5,7 @@
       "type" : "text"
     },
     {
-      "code" : "Decodable.init(from:)",
+      "code" : "Objectable.isSaved()",
       "type" : "codeVoice"
     },
     {
@@ -17,48 +17,56 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/Objectable-Implementations"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/isSaved()"
   },
   "kind" : "symbol",
   "metadata" : {
-    "extendedModule" : "ParseCareKit",
-    "externalID" : "s:12ParseCareKit09PCKHealthC4TaskV4fromACs7Decoder_p_tKcfc",
+    "extendedModule" : "ParseSwift",
+    "externalID" : "s:10ParseSwift10ObjectablePAAE7isSavedSbyYaKF::SYNTHESIZED::s:12ParseCareKit7PCKTaskV",
     "fragments" : [
       {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
         "kind" : "identifier",
-        "text" : "init"
+        "text" : "isSaved"
       },
       {
         "kind" : "text",
-        "text" : "("
+        "text" : "() "
       },
       {
-        "kind" : "externalParam",
-        "text" : "from"
-      },
-      {
-        "kind" : "text",
-        "text" : ": "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:s7DecoderP",
-        "text" : "Decoder"
+        "kind" : "keyword",
+        "text" : "async"
       },
       {
         "kind" : "text",
-        "text" : ") "
+        "text" : " "
       },
       {
         "kind" : "keyword",
         "text" : "throws"
+      },
+      {
+        "kind" : "text",
+        "text" : " -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
       }
     ],
     "modules" : [
@@ -67,9 +75,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Initializer",
-    "symbolKind" : "init",
-    "title" : "init(from:)"
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "isSaved()"
   },
   "primaryContentSections" : [
     {
@@ -84,40 +92,40 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "init"
-            },
-            {
-              "kind" : "text",
-              "text" : "("
-            },
-            {
-              "kind" : "externalParam",
-              "text" : "from"
+              "text" : "func"
             },
             {
               "kind" : "text",
               "text" : " "
             },
             {
-              "kind" : "internalParam",
-              "text" : "decoder"
+              "kind" : "identifier",
+              "text" : "isSaved"
             },
             {
               "kind" : "text",
-              "text" : ": "
+              "text" : "() "
             },
             {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:s7DecoderP",
-              "text" : "Decoder"
+              "kind" : "keyword",
+              "text" : "async"
             },
             {
               "kind" : "text",
-              "text" : ") "
+              "text" : " "
             },
             {
               "kind" : "keyword",
               "text" : "throws"
+            },
+            {
+              "kind" : "text",
+              "text" : " -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
             }
           ]
         }
@@ -136,7 +144,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+        "\/documentation\/parsecarekit\/pcktask\/issaved()"
       ],
       "traits" : [
         {
@@ -161,14 +169,14 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask": {
   "abstract" : [
     {
       "text" : "An ",
       "type" : "text"
     },
     {
-      "code" : "PCKHealthKitTask",
+      "code" : "PCKTask",
       "type" : "codeVoice"
     },
     {
@@ -176,7 +184,7 @@
       "type" : "text"
     },
     {
-      "code" : "OCKHealthKitTask",
+      "code" : "OCKTask",
       "type" : "codeVoice"
     },
     {
@@ -184,7 +192,7 @@
       "type" : "text"
     },
     {
-      "code" : "OCKHealthKitTask",
+      "code" : "OCKTask",
       "type" : "codeVoice"
     },
     {
@@ -247,74 +255,82 @@
     },
     {
       "kind" : "identifier",
-      "text" : "PCKHealthKitTask"
+      "text" : "PCKTask"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "PCKHealthKitTask"
+      "text" : "PCKTask"
     }
   ],
   "role" : "symbol",
-  "title" : "PCKHealthKitTask",
+  "title" : "PCKTask",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask"
+  "url" : "\/documentation\/parsecarekit\/pcktask"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/Decodable-Implementations": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/Objectable-Implementations": {
   "abstract" : [
 
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/Objectable-Implementations",
   "kind" : "article",
   "role" : "collectionGroup",
-  "title" : "Decodable Implementations",
+  "title" : "Objectable Implementations",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/decodable-implementations"
+  "url" : "\/documentation\/parsecarekit\/pcktask\/objectable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/init(from:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/isSaved()": {
   "abstract" : [
 
   ],
   "fragments" : [
     {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
       "kind" : "identifier",
-      "text" : "init"
+      "text" : "isSaved"
     },
     {
       "kind" : "text",
-      "text" : "("
+      "text" : "() "
     },
     {
-      "kind" : "externalParam",
-      "text" : "from"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s7DecoderP",
-      "text" : "Decoder"
+      "kind" : "keyword",
+      "text" : "async"
     },
     {
       "kind" : "text",
-      "text" : ") "
+      "text" : " "
     },
     {
       "kind" : "keyword",
       "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/isSaved()",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(from:)",
+  "title" : "isSaved()",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+  "url" : "\/documentation\/parsecarekit\/pcktask\/issaved()"
 }
 }
 }

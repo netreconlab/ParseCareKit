@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "Decodable.init(from:)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "A string specifying how this task is linked with HealthKit.",
       "type" : "text"
     }
   ],
@@ -17,31 +9,29 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/healthKitLinkageString"
   },
   "kind" : "symbol",
   "metadata" : {
-    "extendedModule" : "ParseCareKit",
-    "externalID" : "s:12ParseCareKit09PCKHealthC4TaskV4fromACs7Decoder_p_tKcfc",
+    "externalID" : "s:12ParseCareKit09PCKHealthC4TaskV06healthC13LinkageStringSSSgvp",
     "fragments" : [
       {
-        "kind" : "identifier",
-        "text" : "init"
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
         "kind" : "text",
-        "text" : "("
+        "text" : " "
       },
       {
-        "kind" : "externalParam",
-        "text" : "from"
+        "kind" : "identifier",
+        "text" : "healthKitLinkageString"
       },
       {
         "kind" : "text",
@@ -49,16 +39,12 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:s7DecoderP",
-        "text" : "Decoder"
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       },
       {
         "kind" : "text",
-        "text" : ") "
-      },
-      {
-        "kind" : "keyword",
-        "text" : "throws"
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -67,9 +53,9 @@
       }
     ],
     "role" : "symbol",
-    "roleHeading" : "Initializer",
-    "symbolKind" : "init",
-    "title" : "init(from:)"
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "healthKitLinkageString"
   },
   "primaryContentSections" : [
     {
@@ -84,23 +70,15 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "init"
-            },
-            {
-              "kind" : "text",
-              "text" : "("
-            },
-            {
-              "kind" : "externalParam",
-              "text" : "from"
+              "text" : "var"
             },
             {
               "kind" : "text",
               "text" : " "
             },
             {
-              "kind" : "internalParam",
-              "text" : "decoder"
+              "kind" : "identifier",
+              "text" : "healthKitLinkageString"
             },
             {
               "kind" : "text",
@@ -108,16 +86,12 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:s7DecoderP",
-              "text" : "Decoder"
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
               "kind" : "text",
-              "text" : ") "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "throws"
+              "text" : "?"
             }
           ]
         }
@@ -136,7 +110,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+        "\/documentation\/parsecarekit\/pckhealthkittask\/healthkitlinkagestring"
       ],
       "traits" : [
         {
@@ -263,33 +237,25 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/Decodable-Implementations": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/healthKitLinkageString": {
   "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Decodable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/decodable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/init(from:)": {
-  "abstract" : [
-
+    {
+      "text" : "A string specifying how this task is linked with HealthKit.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
-      "kind" : "identifier",
-      "text" : "init"
+      "kind" : "keyword",
+      "text" : "var"
     },
     {
       "kind" : "text",
-      "text" : "("
+      "text" : " "
     },
     {
-      "kind" : "externalParam",
-      "text" : "from"
+      "kind" : "identifier",
+      "text" : "healthKitLinkageString"
     },
     {
       "kind" : "text",
@@ -297,24 +263,20 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s7DecoderP",
-      "text" : "Decoder"
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
     },
     {
       "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
+      "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/healthKitLinkageString",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(from:)",
+  "title" : "healthKitLinkageString",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/healthkitlinkagestring"
 }
 }
 }

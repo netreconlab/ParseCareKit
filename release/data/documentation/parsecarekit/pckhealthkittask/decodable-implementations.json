@@ -1,130 +1,26 @@
 {
-  "abstract" : [
-    {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "Decodable.init(from:)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
-      "type" : "text"
-    }
-  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations"
   },
-  "kind" : "symbol",
+  "kind" : "article",
   "metadata" : {
-    "extendedModule" : "ParseCareKit",
-    "externalID" : "s:12ParseCareKit09PCKHealthC4TaskV4fromACs7Decoder_p_tKcfc",
-    "fragments" : [
-      {
-        "kind" : "identifier",
-        "text" : "init"
-      },
-      {
-        "kind" : "text",
-        "text" : "("
-      },
-      {
-        "kind" : "externalParam",
-        "text" : "from"
-      },
-      {
-        "kind" : "text",
-        "text" : ": "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:s7DecoderP",
-        "text" : "Decoder"
-      },
-      {
-        "kind" : "text",
-        "text" : ") "
-      },
-      {
-        "kind" : "keyword",
-        "text" : "throws"
-      }
-    ],
     "modules" : [
       {
         "name" : "ParseCareKit"
       }
     ],
-    "role" : "symbol",
-    "roleHeading" : "Initializer",
-    "symbolKind" : "init",
-    "title" : "init(from:)"
+    "role" : "collectionGroup",
+    "title" : "Decodable Implementations"
   },
-  "primaryContentSections" : [
-    {
-      "declarations" : [
-        {
-          "languages" : [
-            "swift"
-          ],
-          "platforms" : [
-            "iOS"
-          ],
-          "tokens" : [
-            {
-              "kind" : "keyword",
-              "text" : "init"
-            },
-            {
-              "kind" : "text",
-              "text" : "("
-            },
-            {
-              "kind" : "externalParam",
-              "text" : "from"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
-            {
-              "kind" : "internalParam",
-              "text" : "decoder"
-            },
-            {
-              "kind" : "text",
-              "text" : ": "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:s7DecoderP",
-              "text" : "Decoder"
-            },
-            {
-              "kind" : "text",
-              "text" : ") "
-            },
-            {
-              "kind" : "keyword",
-              "text" : "throws"
-            }
-          ]
-        }
-      ],
-      "kind" : "declarations"
-    }
-  ],
   "schemaVersion" : {
     "major" : 0,
     "minor" : 3,
@@ -133,16 +29,13 @@
   "sections" : [
 
   ],
-  "variants" : [
+  "topicSections" : [
     {
-      "paths" : [
-        "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/init(from:)"
       ],
-      "traits" : [
-        {
-          "interfaceLanguage" : "swift"
-        }
-      ]
+      "title" : "Initializers"
     }
   ]
 , 
@@ -262,17 +155,6 @@
   "title" : "PCKHealthKitTask",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/Decodable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/Decodable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Decodable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/decodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/init(from:)": {
   "abstract" : [

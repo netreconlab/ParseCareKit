@@ -26175,6 +26175,15 @@
                     "type" : "property"
                   },
                   {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcareplan\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -26829,6 +26838,15 @@
                     "path" : "\/documentation\/parsecarekit\/pckclock\/issaved",
                     "title" : "var isSaved: Bool",
                     "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckclock\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
                   },
                   {
                     "title" : "Type Properties",
@@ -27554,6 +27572,15 @@
                     "type" : "property"
                   },
                   {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckcontact\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -28001,11 +28028,6 @@
                 "type" : "init"
               },
               {
-                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)",
-                "title" : "init(from: Decoder) throws",
-                "type" : "init"
-              },
-              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
@@ -28072,6 +28094,11 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/healthkitlinkage",
                 "title" : "var healthKitLinkage: OCKHealthKitLinkage?",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/healthkitlinkagestring",
+                "title" : "var healthKitLinkageString: String?",
                 "type" : "property"
               },
               {
@@ -28260,6 +28287,22 @@
               {
                 "children" : [
                   {
+                    "title" : "Initializers",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/init(from:)",
+                    "title" : "init(from: Decoder) throws",
+                    "type" : "init"
+                  }
+                ],
+                "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/decodable-implementations",
+                "title" : "Decodable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
                     "title" : "Instance Methods",
                     "type" : "groupMarker"
                   },
@@ -28378,6 +28421,15 @@
                     "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/issaved",
                     "title" : "var isSaved: Bool",
                     "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckhealthkittask\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
                   },
                   {
                     "title" : "Type Properties",
@@ -29221,6 +29273,15 @@
                     "type" : "property"
                   },
                   {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckoutcome\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
+                  },
+                  {
                     "title" : "Type Properties",
                     "type" : "groupMarker"
                   },
@@ -30019,6 +30080,15 @@
                     "path" : "\/documentation\/parsecarekit\/pckpatient\/issaved",
                     "title" : "var isSaved: Bool",
                     "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pckpatient\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
                   },
                   {
                     "title" : "Type Properties",
@@ -30840,6 +30910,15 @@
                     "path" : "\/documentation\/parsecarekit\/pcktask\/issaved",
                     "title" : "var isSaved: Bool",
                     "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parsecarekit\/pcktask\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
                   },
                   {
                     "title" : "Type Properties",
@@ -32807,6 +32886,15 @@
                 "type" : "property"
               },
               {
+                "title" : "Instance Methods",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parseswift\/objectable\/issaved()",
+                "title" : "func isSaved() async throws -> Bool",
+                "type" : "method"
+              },
+              {
                 "title" : "Type Properties",
                 "type" : "groupMarker"
               },
@@ -33929,13 +34017,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
@@ -43585,6 +43673,15 @@
                     "path" : "\/documentation\/parseswift\/parsepushstatus\/issaved",
                     "title" : "var isSaved: Bool",
                     "type" : "property"
+                  },
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/parseswift\/parsepushstatus\/issaved()",
+                    "title" : "func isSaved() async throws -> Bool",
+                    "type" : "method"
                   },
                   {
                     "title" : "Type Properties",
