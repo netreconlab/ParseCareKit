@@ -21,8 +21,8 @@ class UtilityTests: XCTestCase {
         PCKUtility.removeCache()
     }
 
-    func testSetupServer() async throws {
-        try await PCKUtility.setupServer { (_, completionHandler) in
+    func testConfigureParse() async throws {
+        try await PCKUtility.configureParse { (_, completionHandler) in
             completionHandler(.performDefaultHandling, nil)
         }
         XCTAssertEqual(ParseSwift.configuration.applicationId, "3B5FD9DA-C278-4582-90DC-101C08E7FC98")

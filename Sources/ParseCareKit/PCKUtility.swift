@@ -19,7 +19,7 @@ public class PCKUtility {
         var propertyListFormat = PropertyListSerialization.PropertyListFormat.xml
         guard let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
-                fatalError("Error in ParseCareKit.setupServer(). Cannot find ParseCareKit.plist in this project")
+                fatalError("Error in ParseCareKit.configureParse(). Cannot find ParseCareKit.plist in this project")
         }
 
         return try PropertyListSerialization.propertyList(from: xml,
@@ -29,7 +29,7 @@ public class PCKUtility {
     }
 
     /**
-     Setup a connection to Parse Server based on a ParseCareKit.plist file.
+     Configure the client to connect to a Parse Server based on a ParseCareKit.plist file.
     
      The key/values supported in the file are a dictionary named `ParseClientConfiguration`:
      - Server - (String) The server URL to connect to Parse Server.
@@ -45,10 +45,10 @@ public class PCKUtility {
      completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void`.
      See Apple's [documentation](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession) for more for details.
      */
-    public class func setupServer(fileName: String = "ParseCareKit",
-                                  authentication: ((URLAuthenticationChallenge,
-                                                    (URLSession.AuthChallengeDisposition,
-                                                      URLCredential?) -> Void) -> Void)? = nil) async throws {
+    public class func configureParse(fileName: String = "ParseCareKit",
+                                     authentication: ((URLAuthenticationChallenge,
+                                                       (URLSession.AuthChallengeDisposition,
+                                                        URLCredential?) -> Void) -> Void)? = nil) async throws {
         var plistConfiguration: [String: AnyObject]
         var clientKey: String?
         var liveQueryURL: URL?
@@ -57,13 +57,13 @@ public class PCKUtility {
         do {
             plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
         } catch {
-            fatalError("Error in ParseCareKit.setupServer(). Could not serialize plist. \(error)")
+            fatalError("Error in ParseCareKit.configureParse(). Could not serialize plist. \(error)")
         }
 
         guard let appID = plistConfiguration["ApplicationID"] as? String,
             let server = plistConfiguration["Server"] as? String,
             let serverURL = URL(string: server) else {
-                fatalError("Error in ParseCareKit.setupServer(). Missing keys in \(plistConfiguration)")
+                fatalError("Error in ParseCareKit.configureParse(). Missing keys in \(plistConfiguration)")
         }
 
         if let client = plistConfiguration["ClientKey"] as? String {
@@ -109,7 +109,7 @@ public class PCKUtility {
         do {
             plistConfiguration = try Self.getPlistConfiguration(fileName: fileName)
         } catch {
-            fatalError("Error in ParseCareKit.setupServer(). Could not serialize plist. \(error)")
+            fatalError("Error in ParseCareKit.configureParse(). Could not serialize plist. \(error)")
         }
 
         if let keychainAccessGroup = plistConfiguration["AccessGroup"] as? String {
