@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Setup a connection to Parse Server based on a ParseCareKit.plist file.",
+      "text" : "Configure the client to connect to a Parse Server based on a ParseCareKit.plist file.",
       "type" : "text"
     }
   ],
@@ -15,11 +15,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setupServer(fileName:authentication:)"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/configureParse(fileName:authentication:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12ParseCareKit10PCKUtilityC11setupServer8fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthK11DispositionV_So15NSURLCredentialCSgtXEtcSgtYaKFZ",
+    "externalID" : "s:12ParseCareKit10PCKUtilityC09configureA08fileName14authenticationySS_ySo28NSURLAuthenticationChallengeC_ySo016NSURLSessionAuthJ11DispositionV_So15NSURLCredentialCSgtXEtcSgtYaKFZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,7 +39,7 @@
       },
       {
         "kind" : "identifier",
-        "text" : "setupServer"
+        "text" : "configureParse"
       },
       {
         "kind" : "text",
@@ -145,7 +145,7 @@
     "role" : "symbol",
     "roleHeading" : "Type Method",
     "symbolKind" : "method",
-    "title" : "setupServer(fileName:authentication:)"
+    "title" : "configureParse(fileName:authentication:)"
   },
   "primaryContentSections" : [
     {
@@ -176,7 +176,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "setupServer"
+              "text" : "configureParse"
             },
             {
               "kind" : "text",
@@ -496,7 +496,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/parsecarekit\/pckutility\/setupserver(filename:authentication:)"
+        "\/documentation\/parsecarekit\/pckutility\/configureparse(filename:authentication:)"
       ],
       "traits" : [
         {
@@ -555,10 +555,10 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckutility"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/setupServer(fileName:authentication:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKUtility/configureParse(fileName:authentication:)": {
   "abstract" : [
     {
-      "text" : "Setup a connection to Parse Server based on a ParseCareKit.plist file.",
+      "text" : "Configure the client to connect to a Parse Server based on a ParseCareKit.plist file.",
       "type" : "text"
     }
   ],
@@ -581,7 +581,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "setupServer"
+      "text" : "configureParse"
     },
     {
       "kind" : "text",
@@ -679,12 +679,12 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/setupServer(fileName:authentication:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKUtility\/configureParse(fileName:authentication:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "setupServer(fileName:authentication:)",
+  "title" : "configureParse(fileName:authentication:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckutility\/setupserver(filename:authentication:)"
+  "url" : "\/documentation\/parsecarekit\/pckutility\/configureparse(filename:authentication:)"
 },
 "https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession": {
   "identifier" : "https:\/\/developer.apple.com\/documentation\/foundation\/urlsessiontaskdelegate\/1411595-urlsession",

@@ -24596,15 +24596,6 @@
                             "path" : "\/documentation\/collections\/orderedset\/subsequence\/subscript(_:)-8r0e1",
                             "title" : "subscript<R>(R) -> Self.SubSequence",
                             "type" : "subscript"
-                          },
-                          {
-                            "title" : "Type Aliases",
-                            "type" : "groupMarker"
-                          },
-                          {
-                            "path" : "\/documentation\/collections\/orderedset\/subsequence\/iterator",
-                            "title" : "OrderedSet.SubSequence.Iterator",
-                            "type" : "typealias"
                           }
                         ],
                         "path" : "\/documentation\/collections\/orderedset\/subsequence\/collection-implementations",
@@ -24933,6 +24924,11 @@
                           {
                             "path" : "\/documentation\/collections\/orderedset\/subsequence\/element",
                             "title" : "OrderedSet.SubSequence.Element",
+                            "type" : "typealias"
+                          },
+                          {
+                            "path" : "\/documentation\/collections\/orderedset\/subsequence\/iterator",
+                            "title" : "OrderedSet.SubSequence.Iterator",
                             "type" : "typealias"
                           }
                         ],
@@ -25277,6 +25273,11 @@
                 "type" : "groupMarker"
               },
               {
+                "path" : "\/documentation\/parsecarekit\/pckutility\/configureparse(filename:authentication:)",
+                "title" : "class func configureParse(fileName: String, authentication: ((URLAuthenticationChallenge, (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)?) async throws",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/parsecarekit\/pckutility\/decoder()",
                 "title" : "class func decoder() -> JSONDecoder",
                 "type" : "method"
@@ -25304,11 +25305,6 @@
               {
                 "path" : "\/documentation\/parsecarekit\/pckutility\/setaccessgroup(filename:)",
                 "title" : "class func setAccessGroup(fileName: String) async throws",
-                "type" : "method"
-              },
-              {
-                "path" : "\/documentation\/parsecarekit\/pckutility\/setupserver(filename:authentication:)",
-                "title" : "class func setupServer(fileName: String, authentication: ((URLAuthenticationChallenge, (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)?) async throws",
                 "type" : "method"
               }
             ],
@@ -32903,13 +32899,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.type.property-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       }
                     ],
@@ -33994,13 +33990,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
