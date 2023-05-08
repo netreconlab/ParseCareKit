@@ -1,0 +1,11 @@
+@Tutorials(name: "ParseCareKit") {
+    @Intro(title: "Welcome to ParseCareKit") {
+
+    }
+    
+    @Chapter(name: "Start Syncing CareKit Data To Your Server") {
+        
+        @Image(source: parsecarekit.png, alt: "ParseCareKit Logo")
+        @TutorialReference(tutorial: "doc:Connect-ParseCareKit-to-Your-App") 
+    }
+}

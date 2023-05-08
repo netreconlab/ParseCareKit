@@ -13,7 +13,7 @@ import os.log
 
 public extension OCKTask {
     /**
-    The Parse ACL for this object.
+     The Parse ACL for this object.
     */
     var acl: ParseACL? {
         get {
@@ -36,14 +36,23 @@ public extension OCKTask {
                     userInfo = [ParseCareKitConstants.acl: aclString]
                 }
             } catch {
-                if #available(iOS 14.0, watchOS 7.0, *) {
-                    Logger.ockTask.error("Can't set ACL: \(error.localizedDescription)")
-                } else {
-                    os_log("Can't set ACL: `%{private}@`",
-                           log: .ockTask,
-                           type: .error,
-                           error.localizedDescription)
-                }
+                Logger.ockTask.error("Cannot set ACL: \(error)")
+            }
+        }
+    }
+
+    /**
+     The Parse `className` for this object.
+    */
+    var className: String? {
+        get {
+            return userInfo?[CustomKey.className]
+        }
+        set {
+            if userInfo != nil {
+                userInfo?[CustomKey.className] = newValue
+            } else if let newValue = newValue {
+                userInfo = [CustomKey.className: newValue]
             }
         }
     }

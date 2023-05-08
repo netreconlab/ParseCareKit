@@ -1,10 +1,10 @@
-// swift-tools-version:5.5.2
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
     name: "ParseCareKit",
-    platforms: [.iOS(.v13), .watchOS(.v6)],
+    platforms: [.iOS(.v14), .macOS(.v13), .watchOS(.v7)],
     products: [
         .library(
             name: "ParseCareKit",
@@ -12,9 +12,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/cbaker6/CareKit.git",
-                 .upToNextMajor(from: "2.1.8")),
+                 .upToNextMajor(from: "3.0.0-beta.1")),
         .package(url: "https://github.com/netreconlab/Parse-Swift.git",
-            .upToNextMajor(from: "5.3.3"))
+            .upToNextMajor(from: "5.4.3"))
     ],
     targets: [
         .target(

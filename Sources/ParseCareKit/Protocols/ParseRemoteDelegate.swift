@@ -14,13 +14,18 @@ import CareKitStore
  able to respond to updates and resolve conflicts when needed.
 */
 public protocol ParseRemoteDelegate: OCKRemoteSynchronizationDelegate {
-    /// When a conflict occurs, decide if the device or cloud record should be kept.
+    /// When a conflict occurs, decide if the local or remote record should be kept.
     func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>)
 
-    /// Receive a notification when data has been successfully pushed to the Cloud.
-    func successfullyPushedDataToCloud()
+    /// Receive a notification when data has been successfully pushed to the remote.
+    func successfullyPushedToRemote()
+
+    /// Sometimes the remote will need the local data store to fetch additional information
+    /// required for proper synchronization.
+    /// - note: The remote will never use this method to modify the store.
+    func provideStore() -> OCKAnyStoreProtocol
 }
 
 extension ParseRemoteDelegate {
-    func successfullyPushedDataToCloud() { }
+    func successfullyPushedToRemote() {}
 }

@@ -21,12 +21,15 @@ public protocol PCKObjectable: ParseObject {
     /// A human readable unique identifier. It is used strictly by the developer and will never be shown to a user
     var id: String { get }
 
-    /// A human readable unique identifier (same as `id`, but this is what's on the Parse server, `id` is
+    /// A human readable unique identifier (same as `id`, but this is what's on the Parse remote, `id` is
     /// already taken in Parse). It is used strictly by the developer and will never be shown to a user
     var entityId: String? { get set }
 
-    // The clock value of when this object was added to the Parse server.
+    /// The clock value of when this object was added to the Parse remote.
     var logicalClock: Int? { get set }
+
+    /// The clock of when this object was added to the Parse remote.
+    var clock: PCKClock? { get set }
 
     /// The semantic version of the database schema when this object was created.
     /// The value will be nil for objects that have not yet been persisted.
@@ -73,12 +76,32 @@ public protocol PCKObjectable: ParseObject {
     /// A boolean that is `true` when encoding the object for Parse. If `false` the object is encoding for CareKit.
     var encodingForParse: Bool { get set }
 
-    /// Copy the values of a ParseCareKit object
+    /// Copy the values of a ParseCareKit object.
     static func copyValues(from other: Self, to here: Self) throws -> Self
+
+    /// Initialize with UUID.
+    init?(uuid: UUID?)
+
+    /**
+     Creates a new ParseCareKit object from a specified CareKit entity.
+
+     - parameter from: The CareKit entity used to create the new ParseCareKit object.
+     - returns: Returns a new version of `Self`
+     - throws: `Error`.
+    */
+    static func new(from careKitEntity: OCKEntity) throws -> Self
 }
 
 // MARK: Defaults
 extension PCKObjectable {
+
+    public init?(uuid: UUID?) {
+        guard let uuid = uuid else {
+            return nil
+        }
+        self.init(objectId: uuid.uuidString)
+    }
+
     public var uuid: UUID? {
         guard let objectId = objectId,
             let uuid = UUID(uuidString: objectId) else {
@@ -105,7 +128,7 @@ extension PCKObjectable {
 
 extension PCKObjectable {
 
-    mutating func copyRelationalEntities(_ parse: Self) -> Self {
+    func copyRelationalEntities(_ parse: Self) -> Self {
         var current = self
         current.notes = parse.notes
         return current
@@ -122,6 +145,7 @@ extension PCKObjectable {
         createdDate = other.createdDate
         notes = other.notes
         logicalClock = other.logicalClock
+        clock = other.clock
         source = other.source
         asset = other.asset
         schemaVersion = other.schemaVersion
@@ -153,10 +177,10 @@ extension PCKObjectable {
     }
 
     /**
-     Finds the first object on the server that has the same `uuid`.
+     Finds the first object on the remote that has the same `uuid`.
      - Parameters:
         - uuid: The UUID to search for.
-        - options: A set of header options sent to the server. Defaults to an empty set.
+        - options: A set of header options sent to the remote. Defaults to an empty set.
         - relatedObject: An object that has the same `uuid` as the one being searched for.
         - completion: The block to execute.
      It should have the following argument signature: `(Result<Self,Error>)`.
@@ -172,8 +196,7 @@ extension PCKObjectable {
 
         let query = Self.query(ParseKey.objectId == uuidString)
             .includeAll()
-        query.first(options: options,
-                    callbackQueue: ParseRemote.queue) { result in
+        query.first(options: options) { result in
 
             switch result {
 
@@ -212,16 +235,13 @@ extension PCKObjectable {
         var container = encoder.container(keyedBy: PCKCodingKeys.self)
 
         if encodingForParse {
-            if !(self is PCKOutcome) {
-                try container.encodeIfPresent(entityId, forKey: .entityId)
-            }
+            try container.encodeIfPresent(entityId, forKey: .entityId)
             try container.encodeIfPresent(objectId, forKey: .objectId)
             try container.encodeIfPresent(ACL, forKey: .ACL)
             try container.encodeIfPresent(logicalClock, forKey: .logicalClock)
+            try container.encodeIfPresent(clock, forKey: .clock)
         } else {
-            if !(self is PCKOutcome) {
-                try container.encodeIfPresent(entityId, forKey: .id)
-            }
+            try container.encodeIfPresent(entityId, forKey: .id)
             try container.encodeIfPresent(uuid, forKey: .uuid)
         }
         try container.encodeIfPresent(schemaVersion, forKey: .schemaVersion)

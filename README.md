@@ -1,18 +1,26 @@
 # ParseCareKit
+![CareKitImage](https://user-images.githubusercontent.com/8621344/234047811-de85e2d6-3c5a-405d-bd0e-a94ce603c8e3.png)
+
+---
+
+[![Documentation](https://img.shields.io/badge/read_-docs-2196f3.svg)](https://swiftpackageindex.com/netreconlab/ParseCareKit/documentation)
+[![Tuturiol](https://img.shields.io/badge/read_-tuturials-2196f3.svg)](https://netreconlab.github.io/ParseCareKit/release/tutorials/parsecarekit/)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnetreconlab%2FParseCareKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/netreconlab/ParseCareKit)
-![Xcode 13.2+](https://img.shields.io/badge/xcode-13.2%2B-blue.svg)
+![Xcode 13.3+](https://img.shields.io/badge/xcode-13.3%2B-blue.svg)
 [![CI Status](https://github.com/netreconlab/ParseCareKit/workflows/ci/badge.svg?branch=main)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aci)
 [![Release Status](https://github.com/netreconlab/ParseCareKit/workflows/release/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Arelease)
 [![Slider Status](https://github.com/netreconlab/ParseCareKit/workflows/slider/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aslider)
 ![Codecov](https://codecov.io/gh/netreconlab/ParseCareKit/branches/main/graph/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license)
 
+---
+
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
-This framework is an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.1+ data with [parse-server](https://github.com/parse-community/parse-server) using [Parse-Swift](https://github.com/netreconlab/Parse-Swift). The learn more about how to use ParseCareKit check out the [API documentation](https://netreconlab.github.io/ParseCareKit/main/documentation/parsecarekit/) along with the rest of the README.
+This framework is an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) data with [parse-server](https://github.com/parse-community/parse-server) using [Parse-Swift](https://github.com/netreconlab/Parse-Swift). The learn more about how to use ParseCareKit check out the [API documentation](https://swiftpackageindex.com/netreconlab/ParseCareKit/documentation/) along with the rest of the README.
 
-For the backend, it is suggested to use [parse-hipaa](https://github.com/netreconlab/parse-hipaa) which is an out-of-the-box HIPAA compliant Parse/[Postgres](https://www.postgresql.org) or Parse/[Mongo](https://www.mongodb.com) server that comes with [Parse Dashboard](https://github.com/parse-community/parse-dashboard). Since [parse-hipaa](https://github.com/netreconlab/parse-hipaa) is a pare-server, it can be used for [iOS](https://docs.parseplatform.org/ios/guide/), [Android](https://docs.parseplatform.org/android/guide/), and web based apps. API's such as [GraphQL](https://docs.parseplatform.org/graphql/guide/), [REST](https://docs.parseplatform.org/rest/guide/), and [JS](https://docs.parseplatform.org/js/guide/) are also enabled in parse-hipaa and can be accessed directly or tested via the "API Console" in parse-dashboard. See the [Parse SDK documentation](https://parseplatform.org/#sdks) for details. These docker images include the necessary database auditing and logging for HIPAA compliance.
+For the backend, it is suggested to use [parse-hipaa](https://github.com/netreconlab/parse-hipaa) which is an out-of-the-box HIPAA compliant Parse/[Postgres](https://www.postgresql.org) or Parse/[Mongo](https://www.mongodb.com) server that comes with [Parse Dashboard](https://github.com/parse-community/parse-dashboard). Since [parse-hipaa](https://github.com/netreconlab/parse-hipaa) is a pare-server, it can be used for [iOS](https://docs.parseplatform.org/ios/guide/), [Android](https://docs.parseplatform.org/android/guide/), and web based apps. API's such as [GraphQL](https://docs.parseplatform.org/graphql/guide/), [REST](https://docs.parseplatform.org/rest/guide/), and [JS](https://docs.parseplatform.org/js/guide/) can also be enabled in parse-hipaa to enable building apps with other languages. See the [Parse SDK documentation](https://parseplatform.org/#sdks) for details. The parse-hipaa docker images include the necessary database auditing and logging for HIPAA compliance.
 
 You can also use ParseCareKit with any parse-server setup. If you devide to use your own parse-server, it's strongly recommended to add the following [CloudCode](https://github.com/netreconlab/parse-hipaa/tree/main/parse/cloud) to your server's "cloud" folder to ensure the necessary classes and fields are created as well as ensuring uniqueness of pushed entities. In addition, you should follow the [directions](https://github.com/netreconlab/parse-hipaa#running-in-production-for-parsecarekit) to setup additional indexes for optimized queries. ***Note that CareKit data is extremely sensitive and you are responsible for ensuring your parse-server meets HIPAA compliance.***
 
@@ -33,27 +41,27 @@ A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKi
 <img src="https://user-images.githubusercontent.com/8621344/99022137-1ec7ca80-2530-11eb-897c-ace7c70536f2.png" width="300"> <img src="https://user-images.githubusercontent.com/8621344/99022190-3bfc9900-2530-11eb-8ad1-c1e8ba2e7f55.png" width="300">
 
 ### ParseCareKit.plist with server connection information
-ParseCareKit comes with a helper method, [PCKUtility.setupServer()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/PCKUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
+ParseCareKit comes with a helper method, [PCKUtility.configureParse()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/PCKUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
 //Pulls from ParseCareKit.plist to connect to server
-PCKUtility.setupServer() 
+PCKUtility.configureParse() 
 
 //If you need certificate pinning:
-PCKUtility.setupServer { (challenge, completionHandler) in
+PCKUtility.configureParse { (challenge, completionHandler) in
     //Return how you want to handle the challenge. See docs for more information.
     completionHandler(.performDefaultHandling, nil)
 }
 ```
 
 ## What version of ParseCareKit Suits Your Needs?
-- (Most cases) Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest (the minimal required commit is from [PR #508](https://github.com/carekit-apple/CareKit/commit/248c42c4e4ea97ff5fe349361fa6e0a849eab204)) [CareKit 2.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [main](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemote()` see [below](#synchronizing-your-data) more details. This branch uses the [Parse-Swift SDK](https://github.com/netreconlab/Parse-Swift) instead of the [Parse-Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX).
-- Need to use ParseCareKit for iOS13+ and/or watchOS7 and will be using the latest [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you would like to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) within your app? You will need to use Cocoapods and the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc) branch. You can still use all of the capabilities of ParseCareKit. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#synchronizing-your-data) for more details.
+- (Most cases) Need to use ParseCareKit for iOS14+ and/or watchOS7+ and will be using the latest (the minimal required commit is from [PR #508](https://github.com/carekit-apple/CareKit/commit/248c42c4e4ea97ff5fe349361fa6e0a849eab204)) [CareKit 2.1+](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore`) within your app? You should use the [main](https://github.com/netreconlab/ParseCareKit) branch. You can take advantage of all of the capabilities of ParseCareKit. You should use `ParseRemote()` see [below](#synchronizing-your-data) more details. This branch uses the [Parse-Swift SDK](https://github.com/netreconlab/Parse-Swift) instead of the [Parse-Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX).
+- Need to use ParseCareKit for iOS13+ and/or watchOS6+ and will be using the latest [CareKit](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (but you would like to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) within your app? You will need to use Cocoapods and the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc) branch. You can still use all of the capabilities of ParseCareKit. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#synchronizing-your-data) for more details.
 - Need to use ParseCareKit for iOS13+ and will be using [CareKit <= 2.0.1](https://github.com/carekit-apple/CareKit#carekit-), [CareKitUI <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitui-), and [CareKitStore <= 2.0.1](https://github.com/carekit-apple/CareKit#carekitstore-) (using `OCKStore` or conforming to `OCKAnyStoreProtocol`) within your app? You should use the [carekit_2.0.1](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1) branch. You can still use most of the capabilities of ParseCareKit, but you will be limited to syncing via a "wall clock" instead of "knowledge vectors". You will also have to use the [Parse Objc SDK](https://github.com/parse-community/Parse-SDK-iOS-OSX)) and Cocoapods. You should use `ParseSynchronizedStoreManager()` see [here](https://github.com/netreconlab/ParseCareKit/tree/carekit_2.0.1#synchronizing-your-data) for more details.
 
-**Note that it is recommended to use Vectors Clocks (`ParseRemote`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how vector clocks work by looking at [vector clocks](https://en.wikipedia.org/wiki/Vector_clock).**
+**Note that it is recommended to use Vector Clocks (`ParseRemote`) over Wall Clocks (`ParseSynchronizedStoreManager`) as the latter can run into more synching issues. If you choose to go the wall clock route, I recommend having your application suited for 1 device per user to reduce potential synching issues. You can learn more about how vector clocks work by looking at [vector clocks](https://sookocheff.com/post/time/vector-clocks/).**
 
 ## Install ParseCareKit
 
@@ -63,7 +71,7 @@ ParseCareKit can be installed via SPM. Open an existing project or create a new 
 Note: ParseCareKit includes [CareKitStore](https://github.com/carekit-apple/CareKit#carekitstore-) (it's a dependency) from CareKit's main branch, so there's no need to add CareKitStore to your app. If you want the rest of CareKit, you only need to add [CareKit](https://github.com/carekit-apple/CareKit#carekit-) and [CareKitUI](https://github.com/carekit-apple/CareKit#carekitui-) via SPM. Anytime you need ParseCareKit, simply add `import ParseCareKit` at the top of the file.
 
 ### Installing via cocoapods
-To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#installing-via-cocoapods) branch for the readme. The main branch isn't compatable with cocoapods as the CareKit framework isn't compatible with Cocoapods.
+To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netreconlab/ParseCareKit/tree/parse-objc#installing-via-cocoapods) branch for the readme. The main branch is not compatable with cocoapods as the CareKit framework is not compatible with Cocoapods.
 
 
 ### Installing as a framework
@@ -75,8 +83,8 @@ To install via cocoapods, go to the [Parse-Objc SDK](https://github.com/netrecon
 
 **If you have CareKit already in your project via SPM or copied, you will need to remove it as ParseCareKit comes with the a compatibile version of CareKit and a conflict of CareKit appearing twice will cause your app to crash**
 
-## Setup Parse Server
-For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, isn't HIPAA complaint by default. 
+## Setup Parse Server Remote
+For details on how to setup parse-server, follow the directions [here](https://github.com/parse-community/parse-server#getting-started) or look at their detailed [guide](https://docs.parseplatform.org/parse-server/guide/). Note that standard deployment locally on compouter, docker, AWS, Google Cloud, is not HIPAA complaint by default. 
 
 ### Protecting Patients data in the Cloud using ACL's
 `ParseCareKit` will set a default ACL on every object saved to your Parse Server with read/write access only for the user who created the data. If you want different level of access by default, you should pass the default ACL you prefer while initializing `ParseCareKit`. For example, to make all data created to only be read and written by the user who created it, do the following:
@@ -91,7 +99,7 @@ newACL.setWriteAccess(user: user, value: true)
 do {
     let parse = try ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                 auto: false,
-                                subscribeToServerUpdates: false,
+                                subscribeToRemoteUpdates: false,
                                 defaultACL: newACL)
 } catch {
     print(error.localizedDescription)
@@ -223,7 +231,7 @@ You can also map "custom" `Parse` classes to concrete `OCKStore` classes. This i
 struct Doctor: Patient {
     public var type:String?
     
-    func new(with careKitEntity: OCKEntity)->PCKSynchronizable? {
+    func new(from careKitEntity: OCKEntity)->PCKSynchronizable? {
         
         switch careKitEntity {
         case .patient(let entity):
@@ -237,7 +245,7 @@ struct Doctor: Patient {
     //Add a convienience initializer to to ensure that that the doctor class is always created correctly
     init(careKitEntity: OCKAnyPatient {
         self.init()
-        self.copyCareKit(careKitEntity)
+        self.new(from: careKitEntity)
         self.userInfo = [kPCKCustomClassKey: self.className]
     }
     
@@ -247,7 +255,7 @@ struct Doctor: Patient {
             return nil
         }
         
-        super.copyCareKit(doctor, clone: clone)
+        super.new(from: doctor, clone: clone)
         self.type = cancerPatient.userInfo?["CustomDoctorUserInfoTypeKey"]
         return seld
     }

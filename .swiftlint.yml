@@ -3,6 +3,7 @@ disabled_rules:
   - cyclomatic_complexity
   - function_body_length
   - type_body_length
+  - blanket_disable_command
 excluded:
   - .build
   - .dependencies

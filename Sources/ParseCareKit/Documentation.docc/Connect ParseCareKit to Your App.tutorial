@@ -1,0 +1,14 @@
+@Tutorial(time: 1) {
+    @Intro(title: "Connect ParseCareKit to Your App") {
+        
+    }
+    
+    @Section(title: "Connect ParseCareKit to your app") {
+        @Steps {
+            
+            @Step {
+                Initialize the framework.
+            }
+        }
+    }
+}

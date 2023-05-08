@@ -1,10 +1,10 @@
 # ``ParseCareKit``
 
-Seamlessly Synchronize CareKit 2.1+ data with a Parse Server.
+Seamlessly Synchronize CareKit data with a remote Parse Server.
 
 ## Overview
-
-This framework provides an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) 2.1+ data with [parse-server](https://github.com/parse-community/parse-server) using [Parse-Swift](https://github.com/netreconlab/Parse-Swift). The learn more about how to use ParseCareKit check out the [API documentation](https://netreconlab.github.io/ParseCareKit/api/) along with the rest of the README.
+![ParseCareKit Logo](parsecarekit.png)
+This framework provides an API to synchronize [CareKit](https://github.com/carekit-apple/CareKit) data with [parse-server](https://github.com/parse-community/parse-server) using [Parse-Swift](https://github.com/netreconlab/Parse-Swift). The learn more about how to use ParseCareKit check out the [API documentation](https://netreconlab.github.io/ParseCareKit/api/) along with the rest of the README.
 
 **Use at your own risk. There is no promise that this is HIPAA compliant and we are not responsible for any mishandling of your data**
 
@@ -27,6 +27,6 @@ ParseCareKit enables iOS and watchOS devices belonging to the same user to be re
 
 ### Initialize the SDK
 
-- ``ParseCareKit/ParseRemote/init(uuid:auto:subscribeToServerUpdates:defaultACL:)``
-- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToServerUpdates:defaultACL:)``
-- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToServerUpdates:defaultACL:)``
+- ``ParseCareKit/ParseRemote/init(uuid:auto:subscribeToRemoteUpdates:defaultACL:)``
+- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:subscribeToRemoteUpdates:defaultACL:)``
+- ``ParseCareKit/ParseRemote/init(uuid:auto:replacePCKStoreClasses:customClasses:subscribeToRemoteUpdates:defaultACL:)``

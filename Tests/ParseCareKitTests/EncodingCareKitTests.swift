@@ -97,7 +97,7 @@ class ParseCareKitTests: XCTestCase {
         _ = try await userLogin()
         parse = try await ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
                                       auto: false,
-                                      subscribeToServerUpdates: false)
+                                      subscribeToRemoteUpdates: false)
         store = OCKStore(name: "SampleAppStore", type: .inMemory, remote: parse)
         parse?.parseRemoteDelegate = self
     }
@@ -107,8 +107,7 @@ class ParseCareKitTests: XCTestCase {
         try await KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
         try store.delete()
-        UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
-        UserDefaults.standard.synchronize()
+        PCKUtility.removeCache()
     }
 
     func testSetDefaultACLLoggedIn() async throws {
@@ -174,7 +173,7 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try PCKPatient.copyCareKit(careKit)
+        var parse = try PCKPatient.new(from: careKit)
 
         // Special
         XCTAssertEqual(parse.name, careKit.name)
@@ -284,7 +283,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNil(careKit.acl)
 
         // Should have default ACL
-        let parse = try PCKPatient.copyCareKit(careKit)
+        let parse = try PCKPatient.new(from: careKit)
         let user = try await PCKUser.current()
         guard let objectId = user.objectId,
             let acl = parse.ACL else {
@@ -313,7 +312,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
 
         // ParseObject should have new ACL
-        let parse2 = try PCKPatient.copyCareKit(careKit)
+        let parse2 = try PCKPatient.new(from: careKit)
         guard let acl2 = parse2.ACL else {
             XCTFail("Should have ACL")
             return
@@ -350,10 +349,11 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try PCKOutcome.copyCareKit(careKit)
+        var parse = try PCKOutcome.new(from: careKit)
 
         // Special
         XCTAssertEqual(parse.taskUUID, careKit.taskUUID)
+        XCTAssertEqual(parse.task?.objectId, careKit.taskUUID.uuidString)
         XCTAssertEqual(parse.taskOccurrenceIndex, careKit.taskOccurrenceIndex)
         XCTAssertEqual(parse.values?.count, 1)
         XCTAssertEqual(careKit.values.count, 1)
@@ -468,7 +468,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNil(careKit.acl)
 
         // Should have default ACL
-        let parse = try PCKOutcome.copyCareKit(careKit)
+        let parse = try PCKOutcome.new(from: careKit)
         let user = try await PCKUser.current()
         guard let objectId = user.objectId,
             let acl = parse.ACL else {
@@ -497,7 +497,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
 
         // ParseObject should have new ACL
-        let parse2 = try PCKOutcome.copyCareKit(careKit)
+        let parse2 = try PCKOutcome.new(from: careKit)
         guard let acl2 = parse2.ACL else {
             XCTFail("Should have ACL")
             return
@@ -542,12 +542,13 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try PCKTask.copyCareKit(careKit)
+        var parse = try PCKTask.new(from: careKit)
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
         // XCTAssertEqual(parse.allergies, careKit.allergies)
 
         // Objectable
@@ -652,7 +653,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNil(careKit.acl)
 
         // Should have default ACL
-        let parse = try PCKTask.copyCareKit(careKit)
+        let parse = try PCKTask.new(from: careKit)
         let user = try await PCKUser.current()
         guard let objectId = user.objectId,
             let acl = parse.ACL else {
@@ -681,7 +682,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
 
         // ParseObject should have new ACL
-        let parse2 = try PCKTask.copyCareKit(careKit)
+        let parse2 = try PCKTask.new(from: careKit)
         guard let acl2 = parse2.ACL else {
             XCTFail("Should have ACL")
             return
@@ -692,15 +693,17 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
+    #if canImport(HealthKit)
     // swiftlint:disable:next function_body_length
     func testHealthKitTask() async throws {
         let careKitSchedule = OCKScheduleElement(start: Date(),
                                                  end: Date().addingTimeInterval(3000), interval: .init(day: 1))
+        let linkage = OCKHealthKitLinkage(quantityIdentifier: .bodyTemperature,
+                                          quantityType: .discrete,
+                                          unit: .degreeCelsius())
         var careKit = OCKHealthKitTask(id: "myId", title: "hello", carePlanUUID: UUID(),
                                        schedule: .init(composing: [careKitSchedule]),
-                                       healthKitLinkage: .init(quantityIdentifier: .bodyTemperature,
-                                                               quantityType: .discrete,
-                                                               unit: .degreeCelsius()))
+                                       healthKitLinkage: linkage)
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
         // Special
@@ -729,13 +732,14 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try PCKHealthKitTask.copyCareKit(careKit)
+        var parse = try PCKHealthKitTask.new(from: careKit)
 
         // Special
         XCTAssertEqual(parse.impactsAdherence, careKit.impactsAdherence)
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
-        // XCTAssertEqual(parse.allergies, careKit.allergies)
+        XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
+        XCTAssertEqual(parse.healthKitLinkage, careKit.healthKitLinkage)
 
         // Objectable
         XCTAssertEqual(parse.className, "HealthKitTask")
@@ -767,6 +771,7 @@ class ParseCareKitTests: XCTestCase {
 
         // Special
         XCTAssertEqual(parse2.impactsAdherence, careKit.impactsAdherence)
+        XCTAssertEqual(parse2.healthKitLinkage, careKit.healthKitLinkage)
         XCTAssertEqual(parse2.title, careKit.title)
         XCTAssertEqual(parse2.carePlanUUID, careKit.carePlanUUID)
 
@@ -824,6 +829,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertEqual(parse.impactsAdherence, cloudDecoded.impactsAdherence)
         XCTAssertEqual(parse.title, cloudDecoded.title)
         XCTAssertEqual(parse.carePlanUUID, cloudDecoded.carePlanUUID)
+        XCTAssertEqual(parse.healthKitLinkage, cloudDecoded.healthKitLinkage)
 
         // Versionable
         XCTAssertNotNil(cloudDecoded.effectiveDate)
@@ -842,7 +848,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNil(careKit.acl)
 
         // Should have default ACL
-        let parse = try PCKHealthKitTask.copyCareKit(careKit)
+        let parse = try PCKHealthKitTask.new(from: careKit)
         let user = try await PCKUser.current()
         guard let objectId = user.objectId,
             let acl = parse.ACL else {
@@ -871,7 +877,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
 
         // ParseObject should have new ACL
-        let parse2 = try PCKHealthKitTask.copyCareKit(careKit)
+        let parse2 = try PCKHealthKitTask.new(from: careKit)
         guard let acl2 = parse2.ACL else {
             XCTFail("Should have ACL")
             return
@@ -881,6 +887,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(acl2.getReadAccess(objectId: objectId))
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
+    #endif
 
     // swiftlint:disable:next function_body_length
     func testCarePlan() async throws {
@@ -908,11 +915,12 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try PCKCarePlan.copyCareKit(careKit)
+        var parse = try PCKCarePlan.new(from: careKit)
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.patientUUID, careKit.patientUUID)
+        XCTAssertEqual(parse.patient?.objectId, careKit.patientUUID?.uuidString)
 
         // Objectable
         XCTAssertEqual(parse.className, "CarePlan")
@@ -1011,7 +1019,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNil(careKit.acl)
 
         // Should have default ACL
-        let parse = try PCKCarePlan.copyCareKit(careKit)
+        let parse = try PCKCarePlan.new(from: careKit)
         let user = try await PCKUser.current()
         guard let objectId = user.objectId,
             let acl = parse.ACL else {
@@ -1040,7 +1048,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
 
         // ParseObject should have new ACL
-        let parse2 = try PCKCarePlan.copyCareKit(careKit)
+        let parse2 = try PCKCarePlan.new(from: careKit)
         guard let acl2 = parse2.ACL else {
             XCTFail("Should have ACL")
             return
@@ -1090,11 +1098,12 @@ class ParseCareKitTests: XCTestCase {
         careKit.effectiveDate = Date().addingTimeInterval(-199)
 
         // Test CareKit -> Parse
-        var parse = try PCKContact.copyCareKit(careKit)
+        var parse = try PCKContact.new(from: careKit)
 
         // Special
         XCTAssertEqual(parse.title, careKit.title)
         XCTAssertEqual(parse.carePlanUUID, careKit.carePlanUUID)
+        XCTAssertEqual(parse.carePlan?.objectId, careKit.carePlanUUID?.uuidString)
         XCTAssertEqual(parse.address, careKit.address)
         XCTAssertEqual(parse.category, careKit.category)
         XCTAssertEqual(parse.role, careKit.role)
@@ -1214,7 +1223,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertNil(careKit.acl)
 
         // Should have default ACL
-        let parse = try PCKContact.copyCareKit(careKit)
+        let parse = try PCKContact.new(from: careKit)
         let user = try await PCKUser.current()
         guard let objectId = user.objectId,
             let acl = parse.ACL else {
@@ -1243,7 +1252,7 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(defaultACL.getWriteAccess(objectId: objectId))
 
         // ParseObject should have new ACL
-        let parse2 = try PCKContact.copyCareKit(careKit)
+        let parse2 = try PCKContact.new(from: careKit)
         guard let acl2 = parse2.ACL else {
             XCTFail("Should have ACL")
             return
@@ -1254,6 +1263,69 @@ class ParseCareKitTests: XCTestCase {
         XCTAssertTrue(acl2.getWriteAccess(objectId: objectId))
     }
 
+    func testRevisionRecord() async throws {
+        var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
+        careKit.sex = .female
+        careKit = try await store.addPatient(careKit)
+        let entity = OCKEntity.patient(careKit)
+        let remoteUUID = UUID()
+        let clock = PCKClock(uuid: remoteUUID)
+        let clockVector = try PCKClock.decodeVector(clock)
+        let logicalClockValue = clockVector.clock(for: remoteUUID)
+        let careKitRecord = OCKRevisionRecord(entities: [entity], knowledgeVector: clockVector)
+
+        // Test PCKRevisionRecord <-> OCKRevisionRecord
+        let parseRecord = try PCKRevisionRecord(record: careKitRecord,
+                                                remoteClockUUID: remoteUUID,
+                                                remoteClock: clock,
+                                                remoteClockValue: logicalClockValue)
+        XCTAssertEqual(parseRecord.clockUUID, remoteUUID)
+        XCTAssertEqual(parseRecord.clock, clock)
+        XCTAssertEqual(parseRecord.logicalClock, logicalClockValue)
+        let decodedParseRecoded = try parseRecord.convertToCareKit()
+        XCTAssertEqual(decodedParseRecoded.knowledgeVector, careKitRecord.knowledgeVector)
+        XCTAssertEqual(decodedParseRecoded.entities.count, careKitRecord.entities.count)
+        guard let decodedPatient = decodedParseRecoded.entities.first else {
+            XCTFail("Should have unwrapped")
+            return
+        }
+        switch decodedPatient {
+        case .patient(let patient):
+            XCTAssertEqual(patient.id, careKit.id)
+            XCTAssertEqual(patient.name, careKit.name)
+            XCTAssertEqual(patient.sex, careKit.sex)
+        default:
+            XCTFail("Should have been patient")
+        }
+
+        // Test PCKRevisionRecord encoding/decoding to Parse Server
+        let encoded = try ParseCoding.parseEncoder().encode(parseRecord)
+        let decoded = try ParseCoding.jsonDecoder().decode(PCKRevisionRecord.self, from: encoded)
+        guard let decodedEntities = decoded.entities else {
+            XCTFail("Should have unwrapped")
+            return
+        }
+        XCTAssertEqual(decoded.knowledgeVector, careKitRecord.knowledgeVector)
+        XCTAssertEqual(decodedEntities.count, careKitRecord.entities.count)
+        guard let decodedPatient2 = decodedEntities.first else {
+            XCTFail("Should have unwrapped")
+            return
+        }
+        switch decodedPatient2 {
+        case .patient(let patient):
+            // Decoded PCKPatient comes back as a ParsePointer that needs to be fetched to hydrate
+            XCTAssertEqual(patient.uuid, careKit.uuid)
+            guard let uuidString = patient.objectId,
+                  let uuid = UUID(uuidString: uuidString) else {
+                XCTFail("Should have unwrapped")
+                return
+            }
+            XCTAssertEqual(uuid, careKit.uuid)
+
+        default:
+            XCTFail("Should have been patient")
+        }
+    }
 /*
     func testAddContact() async throws {
         let contact = OCKContact(id: "test", givenName: "hello", familyName: "world", carePlanUUID: nil)
@@ -1296,8 +1368,12 @@ extension ParseCareKitTests: ParseRemoteDelegate {
         print("Implement")
     }
 
-    func successfullyPushedDataToCloud() {
+    func successfullyPushedToRemote() {
         print("Implement")
+    }
+
+    func provideStore() -> OCKAnyStoreProtocol {
+        store
     }
 
     func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>) {
