@@ -6,6 +6,7 @@
 //  Copyright © 2023 Network Reconnaissance Lab. All rights reserved.
 //
 
+import ParseCareKit
 import SwiftUI
 
 @main
