@@ -12,6 +12,7 @@
 		700B0ED6270DD7D900EEF103 /* PCKVersionable+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700B0ED5270DD7D900EEF103 /* PCKVersionable+async.swift */; };
 		700B0ED9270DDF5600EEF103 /* PCKObjectable+combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700B0ED8270DDF5600EEF103 /* PCKObjectable+combine.swift */; };
 		700B0EDC270DE0C400EEF103 /* PCKVersionable+combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700B0EDB270DE0C400EEF103 /* PCKVersionable+combine.swift */; };
+		70365BEB2A0D774500F577F7 /* ParseCareKit.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 70365BEA2A0D774400F577F7 /* ParseCareKit.xctestplan */; };
 		705DC9222526A4B80035BBE3 /* ParseCareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9119D5EB245618D7001B7AA3 /* ParseCareKit.framework */; };
 		705DC9292526A55E0035BBE3 /* EncodingCareKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7098A7782524E92900DDF53D /* EncodingCareKitTests.swift */; };
 		705DC92B2526A5610035BBE3 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7098A7762524E92900DDF53D /* MockURLProtocol.swift */; };
@@ -116,6 +117,7 @@
 		700B0ED5270DD7D900EEF103 /* PCKVersionable+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionable+async.swift"; sourceTree = "<group>"; };
 		700B0ED8270DDF5600EEF103 /* PCKObjectable+combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKObjectable+combine.swift"; sourceTree = "<group>"; };
 		700B0EDB270DE0C400EEF103 /* PCKVersionable+combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionable+combine.swift"; sourceTree = "<group>"; };
+		70365BEA2A0D774400F577F7 /* ParseCareKit.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ParseCareKit.xctestplan; sourceTree = "<group>"; };
 		705DC91D2526A4B80035BBE3 /* ParseCareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7085DDAC26CDA2980033B977 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		708A2CA12A092EE100AAB18A /* TestHostAll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHostAll.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -286,6 +288,7 @@
 		9119D5E1245618D7001B7AA3 = {
 			isa = PBXGroup;
 			children = (
+				70365BEA2A0D774400F577F7 /* ParseCareKit.xctestplan */,
 				9119D699245689D9001B7AA3 /* README.md */,
 				708D038D25218D3D00646C70 /* Sources */,
 				708D038E25218D7200646C70 /* Tests */,
@@ -517,6 +520,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70365BEB2A0D774500F577F7 /* ParseCareKit.xctestplan in Resources */,
 				91226D67274ADD4B00B5C2DF /* ParseCareKit.plist in Resources */,
 				9119D69A245689DA001B7AA3 /* README.md in Resources */,
 			);
