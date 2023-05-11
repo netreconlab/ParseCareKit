@@ -41,7 +41,7 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   xcode-test-macos:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
     - uses: actions/checkout@v3
     - name: Use multiple cores
