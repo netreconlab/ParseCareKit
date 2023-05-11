@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/Parse-Swift.git",
       "state" : {
-        "revision" : "0e409291a0a81b47dbea722a48aba61ef9ddafcd",
-        "version" : "5.4.3"
+        "revision" : "8e8a84725ed69fe6ec1302f3d9d18018deb0b914",
+        "version" : "5.5.1"
       }
     },
     {

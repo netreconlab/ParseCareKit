@@ -1,8 +1,4 @@
 version: 1
 builder:
   configs:
-  - platform: ios
-    scheme: ParseCareKit
-    documentation_targets: [ParseCareKit]
-  - platform: watchos
-    scheme: ParseCareKit-watchOS
+  - documentation_targets: [ParseCareKit]
