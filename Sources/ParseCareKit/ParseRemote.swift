@@ -171,7 +171,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
             }
 
             do {
-                let status = try await ParseHealth.check()
+                let status = try await ParseServer.health()
                 guard status == .ok else {
                     Logger.pullRevisions.error("Server health is: \(status.rawValue)")
                     completion(ParseCareKitError.parseHealthError)

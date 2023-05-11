@@ -40,6 +40,33 @@ jobs:
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
+  xcode-test-macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use multiple cores
+      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test | xcpretty
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE }}
+    - name: Prepare codecov
+      uses: sersoft-gmbh/swift-coverage-action@v3
+      id: coverage-files
+      with:
+        target-name-filter: '^ParseCareKit$'
+        format: lcov
+        search-paths: ./DerivedData
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE }}
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
+        env_vars: MACOS
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE }}
+
   xcode-build-watchos:
     runs-on: macos-latest
     steps:
@@ -47,7 +74,19 @@ jobs:
     - name: Use multiple cores
       run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit-watchOS -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 6\ \(44mm\) | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 6\ \(44mm\) | xcpretty
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE }}
+
+  spm-test:
+    timeout-minutes: 15
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use multiple cores
+      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+    - name: Build-Test
+      run: swift build -v
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
