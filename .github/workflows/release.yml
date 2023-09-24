@@ -3,11 +3,11 @@ on:
   release:
     types: [published]
 env:
-  CI_XCODE: '/Applications/Xcode_14.2.app/Contents/Developer'
+  CI_XCODE: '/Applications/Xcode_15.0.app/Contents/Developer'
   
 jobs:
   docs:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
       - name: Use multiple cores

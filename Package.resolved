@@ -3,10 +3,10 @@
     {
       "identity" : "carekit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/cbaker6/CareKit.git",
+      "location" : "https://github.com/carekit-apple/CareKit.git",
       "state" : {
-        "revision" : "7c941993bee316faccff2ccaa6b256fd550cc1a9",
-        "version" : "3.0.0-beta.1"
+        "revision" : "fff092e37b3e3fa7c7401005e7b358fb54af60b3",
+        "version" : "3.0.1-beta.2"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/Parse-Swift.git",
       "state" : {
-        "revision" : "8e8a84725ed69fe6ec1302f3d9d18018deb0b914",
-        "version" : "5.5.1"
+        "revision" : "fc516a6e48c1c150a0ecac94910bc8dcedfc2e71",
+        "version" : "5.8.1"
       }
     },
     {
