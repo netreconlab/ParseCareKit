@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Current version of the SDK.",
+      "text" : "Get the current version of the SDK from the Keychain.",
       "type" : "text"
     }
   ],
@@ -285,7 +285,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseVersion/current()": {
   "abstract" : [
     {
-      "text" : "Current version of the SDK.",
+      "text" : "Get the current version of the SDK from the Keychain.",
       "type" : "text"
     }
   ],

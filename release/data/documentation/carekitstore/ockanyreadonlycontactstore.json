@@ -128,11 +128,11 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/anyContacts(matching:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/anyContacts(matching:)-6s462",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContact(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContact(withID:callbackQueue:completion:)-iivk",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContacts(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContacts(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContacts(query:callbackQueue:completion:)-4v9vi"
       ],
       "title" : "Instance Methods"
     }
@@ -246,7 +246,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/anyContacts(matching:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/anyContacts(matching:)-6s462": {
   "abstract" : [
     {
       "text" : "A continuous stream of contacts that exist in the store.",
@@ -307,13 +307,13 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/anyContacts(matching:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/anyContacts(matching:)-6s462",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "anyContacts(matching:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/anycontacts(matching:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/anycontacts(matching:)-6s462"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/fetchAnyContact(withID:)": {
   "abstract" : [
@@ -565,7 +565,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/fetchanycontacts(query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/fetchAnyContacts(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore/fetchAnyContacts(query:callbackQueue:completion:)-4v9vi": {
   "abstract" : [
     {
       "code" : "fetchAnyContacts",
@@ -655,13 +655,13 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContacts(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyContactStore\/fetchAnyContacts(query:callbackQueue:completion:)-4v9vi",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetchAnyContacts(query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/fetchanycontacts(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycontactstore\/fetchanycontacts(query:callbackqueue:completion:)-4v9vi"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyResettableStore": {
   "abstract" : [

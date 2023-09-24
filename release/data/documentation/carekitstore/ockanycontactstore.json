@@ -146,15 +146,15 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContact(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContact(_:callbackQueue:completion:)-1ynz9",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContacts(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContacts(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContacts(_:callbackQueue:completion:)-7xdx2",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContact(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContact(_:callbackQueue:completion:)-5xl3x",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContacts(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContacts(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContacts(_:callbackQueue:completion:)-2mgwe",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContact(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContact(_:callbackQueue:completion:)-2aaxo",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContacts(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContacts(_:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContacts(_:callbackQueue:completion:)-26k85"
       ],
       "title" : "Instance Methods"
     }
@@ -460,7 +460,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycontactstore\/addanycontacts(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/addAnyContacts(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/addAnyContacts(_:callbackQueue:completion:)-7xdx2": {
   "abstract" : [
     {
       "code" : "addAnyContacts",
@@ -542,13 +542,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContacts(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/addAnyContacts(_:callbackQueue:completion:)-7xdx2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "addAnyContacts(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycontactstore\/addanycontacts(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanycontactstore\/addanycontacts(_:callbackqueue:completion:)-7xdx2"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/deleteAnyContact(_:)": {
   "abstract" : [
@@ -776,7 +776,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycontactstore\/deleteanycontacts(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/deleteAnyContacts(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/deleteAnyContacts(_:callbackQueue:completion:)-2mgwe": {
   "abstract" : [
     {
       "code" : "deleteAnyContacts",
@@ -858,13 +858,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContacts(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/deleteAnyContacts(_:callbackQueue:completion:)-2mgwe",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "deleteAnyContacts(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycontactstore\/deleteanycontacts(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanycontactstore\/deleteanycontacts(_:callbackqueue:completion:)-2mgwe"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/updateAnyContact(_:)": {
   "abstract" : [
@@ -1092,7 +1092,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycontactstore\/updateanycontacts(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/updateAnyContacts(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyContactStore/updateAnyContacts(_:callbackQueue:completion:)-26k85": {
   "abstract" : [
     {
       "code" : "updateAnyContacts",
@@ -1174,13 +1174,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContacts(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyContactStore\/updateAnyContacts(_:callbackQueue:completion:)-26k85",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "updateAnyContacts(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycontactstore\/updateanycontacts(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanycontactstore\/updateanycontacts(_:callbackqueue:completion:)-26k85"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyContactStore": {
   "abstract" : [

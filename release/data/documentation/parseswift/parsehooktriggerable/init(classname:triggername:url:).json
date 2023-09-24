@@ -5,6 +5,17 @@
       "type" : "text"
     }
   ],
+  "deprecationSummary" : [
+    {
+      "inlineContent" : [
+        {
+          "text" : "Change \\\"triggerName\\\" to \\\"trigger\\\"",
+          "type" : "text"
+        }
+      ],
+      "type" : "paragraph"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -86,6 +97,9 @@
       {
         "name" : "ParseSwift"
       }
+    ],
+    "platforms" : [
+
     ],
     "role" : "symbol",
     "roleHeading" : "Initializer",
@@ -356,6 +370,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "identifier",

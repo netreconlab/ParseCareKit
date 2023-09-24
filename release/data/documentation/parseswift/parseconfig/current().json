@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Gets\/Sets properties of the current config in the Keychain.",
+      "text" : "Get the current config from the Keychain.",
       "type" : "text"
     }
   ],
@@ -311,7 +311,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfig/current()": {
   "abstract" : [
     {
-      "text" : "Gets\/Sets properties of the current config in the Keychain.",
+      "text" : "Get the current config from the Keychain.",
       "type" : "text"
     }
   ],

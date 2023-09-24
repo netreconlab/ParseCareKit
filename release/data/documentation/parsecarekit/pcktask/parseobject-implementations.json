@@ -40,7 +40,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/id-9po9j",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/mergeable",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/operation",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation"
@@ -70,8 +69,9 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:child:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:className:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.method-466w3",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.method-6c4y7",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-466w3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-6c4y7",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:object:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/replace(options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/replace(options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/replacePublisher(options:)",
@@ -100,8 +100,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/query(_:)-1716z",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/queryRelations(_:parent:)-246bf",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/queryRelations(_:parent:)-4o1nd",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.type.method-3rezj",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.type.method-4gg3e"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-3rezj",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-4gg3e"
       ],
       "title" : "Type Methods"
     }
@@ -1316,40 +1316,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pcktask\/hassameobjectid(as:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/id-9po9j": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "id"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/id-9po9j",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "id",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask\/id-9po9j"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/init(objectId:)": {
   "abstract" : [
 
@@ -2328,240 +2294,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-swift.method-466w3": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "relation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
-      "text" : "ParseRelation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">?, "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "key"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "with"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
-      "text" : "ParseRelation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.method-466w3",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "relation(_:key:with:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-swift.method-466w3"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-swift.method-6c4y7": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "relation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
-      "text" : "ParseRelation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">?, "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "key"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "with"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift7PointerV",
-      "text" : "Pointer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">) "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
-      "text" : "ParseRelation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.method-6c4y7",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "relation(_:key:with:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-swift.method-6c4y7"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-swift.type.method-3rezj": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-3rezj": {
   "abstract" : [
 
   ],
@@ -2674,14 +2407,126 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.type.method-3rezj",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-3rezj",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "relation(_:key:with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-swift.type.method-3rezj"
+  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-3rezj"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-swift.type.method-4gg3e": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-466w3": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "relation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-466w3",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "relation(_:key:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-466w3"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-4gg3e": {
   "abstract" : [
 
   ],
@@ -2803,12 +2648,220 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-swift.type.method-4gg3e",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-4gg3e",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "relation(_:key:with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-swift.type.method-4gg3e"
+  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-4gg3e"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:key:with:)-6c4y7": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "relation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift7PointerV",
+      "text" : "Pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:key:with:)-6c4y7",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "relation(_:key:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:key:with:)-6c4y7"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/relation(_:object:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "relation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "object"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKTask\/relation(_:object:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "relation(_:object:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pcktask\/relation(_:object:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKTask/replace(options:)": {
   "abstract" : [

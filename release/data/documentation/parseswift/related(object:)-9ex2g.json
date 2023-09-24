@@ -183,6 +183,25 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The object that should be related.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "object"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -209,25 +228,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The object that should be related.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "object"
-        }
-      ]
     },
     {
       "content" : [

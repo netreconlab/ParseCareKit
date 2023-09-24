@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/description-4pkj4",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/description-96w3u"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/description"
       ],
       "title" : "Instance Properties"
     }
@@ -86,7 +85,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckclock"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/description-4pkj4": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/description": {
   "abstract" : [
 
   ],
@@ -113,46 +112,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/description-4pkj4",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/description",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "description",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/description-4pkj4"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/description-96w3u": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "description"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/description-96w3u",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "description",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/description-96w3u"
+  "url" : "\/documentation\/parsecarekit\/pckclock\/description"
 }
 }
 }

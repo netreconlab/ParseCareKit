@@ -141,13 +141,13 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)-5owja",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAdherence(query:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAdherence(query:callbackQueue:completion:)-71pef",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvent(forTask:occurrence:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)-6jtds",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvents(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvents(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvents(query:callbackQueue:completion:)-3y7ug"
       ],
       "title" : "Instance Methods"
     }
@@ -261,7 +261,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/anyEvents(matching:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/anyEvents(matching:)-5owja": {
   "abstract" : [
     {
       "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
@@ -322,13 +322,13 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)-5owja",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "anyEvents(matching:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/anyevents(matching:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/anyevents(matching:)-5owja"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/fetchAdherence(query:)": {
   "abstract" : [
@@ -597,7 +597,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/fetchanyevent(fortask:occurrence:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)-6jtds": {
   "abstract" : [
     {
       "code" : "fetchAnyEvent",
@@ -704,13 +704,13 @@
       "text" : ">)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)-6jtds",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetchAnyEvent(forTask:occurrence:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/fetchanyevent(fortask:occurrence:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/fetchanyevent(fortask:occurrence:callbackqueue:completion:)-6jtds"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/fetchAnyEvents(query:)": {
   "abstract" : [
@@ -790,7 +790,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/fetchanyevents(query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/fetchAnyEvents(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/fetchAnyEvents(query:callbackQueue:completion:)-3y7ug": {
   "abstract" : [
     {
       "text" : "Fetch a list of events that exist in the store.",
@@ -876,13 +876,13 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvents(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/fetchAnyEvents(query:callbackQueue:completion:)-3y7ug",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetchAnyEvents(query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/fetchanyevents(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/fetchanyevents(query:callbackqueue:completion:)-3y7ug"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [

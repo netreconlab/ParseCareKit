@@ -178,7 +178,10 @@
     ],
     "modules" : [
       {
-        "name" : "AsyncAlgorithms"
+        "name" : "AsyncAlgorithms",
+        "relatedModules" : [
+          "_Concurrency"
+        ]
       }
     ],
     "platforms" : [

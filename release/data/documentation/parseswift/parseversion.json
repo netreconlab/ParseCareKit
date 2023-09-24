@@ -118,7 +118,8 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseVersion\/init(from:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseVersion\/init(from:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseVersion\/init(string:)"
       ],
       "title" : "Initializers"
     },
@@ -316,7 +317,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseVersion/current()": {
   "abstract" : [
     {
-      "text" : "Current version of the SDK.",
+      "text" : "Get the current version of the SDK from the Keychain.",
       "type" : "text"
     }
   ],
@@ -415,6 +416,59 @@
   "title" : "init(from:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseversion\/init(from:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseVersion/init(string:)": {
+  "abstract" : [
+    {
+      "text" : "Create an instance from a ",
+      "type" : "text"
+    },
+    {
+      "code" : "String",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "string"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseVersion\/init(string:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(string:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseversion\/init(string:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",

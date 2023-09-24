@@ -212,6 +212,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/installationId",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/ipAddress",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/primaryKey",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/trigger",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/triggerName",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/user"
       ],
@@ -1024,13 +1025,55 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehooktriggerrequest\/primarykey"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTriggerRequest/triggerName": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTriggerRequest/trigger": {
   "abstract" : [
     {
-      "text" : "The types of Parse Hook Trigger.",
+      "text" : "The type of Parse Hook Trigger.",
       "type" : "text"
     }
   ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "trigger"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A15HookTriggerTypeO",
+      "text" : "ParseHookTriggerType"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTriggerRequest\/trigger",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "trigger",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehooktriggerrequest\/trigger"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTriggerRequest/triggerName": {
+  "abstract" : [
+    {
+      "text" : "The name of the Parse Hook Trigger.",
+      "type" : "text"
+    }
+  ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",

@@ -149,7 +149,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/deletedDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/effectiveDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/groupIdentifier",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/id-3jbo7",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/nextVersionUUIDs",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/notes",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/patientUUID",
@@ -175,8 +175,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/Equatable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/Identifiable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/Equatable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -331,17 +330,6 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockcareplan\/equatable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockcareplan\/identifiable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/acl": {
   "abstract" : [
@@ -720,7 +708,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockcareplan\/groupidentifier"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/id-3jbo7": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/id": {
   "abstract" : [
 
   ],
@@ -747,12 +735,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/id-3jbo7",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlan\/id",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "id",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockcareplan\/id-3jbo7"
+  "url" : "\/documentation\/carekitstore\/ockcareplan\/id"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlan/init(from:)": {
   "abstract" : [

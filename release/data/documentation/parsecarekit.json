@@ -273,6 +273,7 @@
         {
           "items" : [
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [
@@ -286,6 +287,7 @@
               ]
             },
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [
@@ -299,6 +301,7 @@
               ]
             },
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [
@@ -312,6 +315,7 @@
               ]
             },
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [
@@ -325,6 +329,7 @@
               ]
             },
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [
@@ -338,6 +343,7 @@
               ]
             },
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [
@@ -351,6 +357,7 @@
               ]
             },
             {
+              "checked" : true,
               "content" : [
                 {
                   "inlineContent" : [

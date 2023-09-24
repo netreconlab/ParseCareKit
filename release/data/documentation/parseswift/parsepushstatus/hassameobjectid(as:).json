@@ -177,6 +177,25 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Object to compare.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "as"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -229,25 +248,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "Object to compare.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "as"
-        }
-      ]
     }
   ],
   "schemaVersion" : {

@@ -126,6 +126,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseGeoPoint",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " that represents the location of other point.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "point"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -152,33 +179,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseGeoPoint",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " that represents the location of other point.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "point"
-        }
-      ]
     }
   ],
   "schemaVersion" : {

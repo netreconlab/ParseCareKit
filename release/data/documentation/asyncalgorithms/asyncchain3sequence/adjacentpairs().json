@@ -83,7 +83,10 @@
     ],
     "modules" : [
       {
-        "name" : "AsyncAlgorithms"
+        "name" : "AsyncAlgorithms",
+        "relatedModules" : [
+          "_Concurrency"
+        ]
       }
     ],
     "role" : "symbol",

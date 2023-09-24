@@ -236,7 +236,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/id-9f0k",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/outcome",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/scheduleEvent",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/task"
@@ -252,8 +252,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Equatable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Identifiable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Equatable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -409,17 +408,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockevent\/equatable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockevent\/identifiable-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/computeProgress(by:)": {
   "abstract" : [
     {
@@ -491,7 +479,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockevent\/computeprogress(by:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/id-9f0k": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/id": {
   "abstract" : [
     {
       "text" : "The stable identifier to use.",
@@ -521,12 +509,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/id-9f0k",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEvent\/id",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "id",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockevent\/id-9f0k"
+  "url" : "\/documentation\/carekitstore\/ockevent\/id"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEvent/init(task:outcome:scheduleEvent:)": {
   "abstract" : [

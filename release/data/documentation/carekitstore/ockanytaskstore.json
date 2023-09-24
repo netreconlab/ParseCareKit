@@ -149,15 +149,15 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTask(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTask(_:callbackQueue:completion:)-37cfz",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTasks(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTasks(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTasks(_:callbackQueue:completion:)-2z3ae",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTask(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTask(_:callbackQueue:completion:)-6i5s0",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTasks(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTasks(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTasks(_:callbackQueue:completion:)-9rz4z",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTask(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTask(_:callbackQueue:completion:)-2uvf7",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTasks(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTasks(_:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTasks(_:callbackQueue:completion:)-9avik"
       ],
       "title" : "Instance Methods"
     }
@@ -584,7 +584,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanytaskstore\/addanytasks(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/addAnyTasks(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/addAnyTasks(_:callbackQueue:completion:)-2z3ae": {
   "abstract" : [
     {
       "text" : "Asynchronously add an array of tasks to the store.",
@@ -662,13 +662,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTasks(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/addAnyTasks(_:callbackQueue:completion:)-2z3ae",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "addAnyTasks(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanytaskstore\/addanytasks(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanytaskstore\/addanytasks(_:callbackqueue:completion:)-2z3ae"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/deleteAnyTask(_:)": {
   "abstract" : [
@@ -902,7 +902,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanytaskstore\/deleteanytasks(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/deleteAnyTasks(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/deleteAnyTasks(_:callbackQueue:completion:)-9rz4z": {
   "abstract" : [
     {
       "text" : "Asynchronously delete an array of tasks from the store.",
@@ -980,13 +980,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTasks(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/deleteAnyTasks(_:callbackQueue:completion:)-9rz4z",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "deleteAnyTasks(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanytaskstore\/deleteanytasks(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanytaskstore\/deleteanytasks(_:callbackqueue:completion:)-9rz4z"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/updateAnyTask(_:)": {
   "abstract" : [
@@ -1220,7 +1220,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanytaskstore\/updateanytasks(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/updateAnyTasks(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTaskStore/updateAnyTasks(_:callbackQueue:completion:)-9avik": {
   "abstract" : [
     {
       "text" : "Asynchronously update an array of tasks in the store.",
@@ -1298,13 +1298,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTasks(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTaskStore\/updateAnyTasks(_:callbackQueue:completion:)-9avik",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "updateAnyTasks(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanytaskstore\/updateanytasks(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanytaskstore\/updateanytasks(_:callbackqueue:completion:)-9avik"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventStore": {
   "abstract" : [

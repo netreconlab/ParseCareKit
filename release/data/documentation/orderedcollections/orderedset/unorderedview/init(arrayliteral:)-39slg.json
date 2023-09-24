@@ -1,0 +1,396 @@
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "SetAlgebra.init(arrayLiteral:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/SetAlgebra-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/init(arrayLiteral:)-39slg"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "conformance" : {
+      "availabilityPrefix" : [
+        {
+          "text" : "Available when",
+          "type" : "text"
+        }
+      ],
+      "conformancePrefix" : [
+        {
+          "text" : "Conforms when",
+          "type" : "text"
+        }
+      ],
+      "constraints" : [
+        {
+          "code" : "ArrayLiteralElement",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " is ",
+          "type" : "text"
+        },
+        {
+          "code" : "Self.Element",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ]
+    },
+    "extendedModule" : "Swift",
+    "externalID" : "s:s10SetAlgebraPs7ElementQz012ArrayLiteralC0RtzrlE05arrayE0xAFd_tcfc::SYNTHESIZED::s:18OrderedCollections0A3SetV13UnorderedViewV",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "arrayLiteral"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "Self"
+      },
+      {
+        "kind" : "text",
+        "text" : "."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "Element"
+      },
+      {
+        "kind" : "text",
+        "text" : "...)"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Collections",
+        "relatedModules" : [
+          "Swift"
+        ]
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(arrayLiteral:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "arrayLiteral"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : "...)"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/orderedcollections\/orderedset\/unorderedview\/init(arrayliteral:)-39slg"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "OrderedCollections",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet": {
+  "abstract" : [
+    {
+      "text" : "An ordered collection of unique elements.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OrderedSet"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OrderedSet"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OrderedSet",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections\/orderedset"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView": {
+  "abstract" : [
+    {
+      "text" : "An unordered view into an ordered set, providing ",
+      "type" : "text"
+    },
+    {
+      "code" : "SetAlgebra",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "conformance.",
+      "type" : "text"
+    }
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Hashable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "UnorderedView"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "UnorderedView"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OrderedSet.UnorderedView",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/SetAlgebra-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/SetAlgebra-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "SetAlgebra Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview\/setalgebra-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/init(arrayLiteral:)-39slg": {
+  "abstract" : [
+
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "ArrayLiteralElement",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " is ",
+        "type" : "text"
+      },
+      {
+        "code" : "Self.Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "arrayLiteral"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : "...)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/init(arrayLiteral:)-39slg",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(arrayLiteral:)",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview\/init(arrayliteral:)-39slg"
+}
+}
+}

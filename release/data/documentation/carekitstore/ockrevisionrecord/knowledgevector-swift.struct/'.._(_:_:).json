@@ -96,7 +96,10 @@
     ],
     "modules" : [
       {
-        "name" : "CareKitStore"
+        "name" : "CareKitStore",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",

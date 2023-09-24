@@ -83,7 +83,10 @@
     ],
     "modules" : [
       {
-        "name" : "ParseSwift"
+        "name" : "ParseSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",
@@ -221,7 +224,15 @@
       "type" : "text"
     },
     {
-      "text" : "that may be associated with a key in a ParseObject or used as a reference point",
+      "text" : "that may be associated with a key in a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " or used as a reference point",
       "type" : "text"
     },
     {

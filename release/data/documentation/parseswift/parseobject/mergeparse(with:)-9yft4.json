@@ -24,27 +24,12 @@
   "defaultImplementationsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/mergeParse(with:)"
-      ],
-      "title" : "ParseInstallation Implementations"
-    },
-    {
-      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-8plu3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-49r7x",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-13frx",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-6csd5"
       ],
       "title" : "ParseObject Implementations"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRole\/mergeParse(with:)"
-      ],
-      "title" : "ParseRole Implementations"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/mergeParse(with:)"
-      ],
-      "title" : "ParseUser Implementations"
     }
   ],
   "hierarchy" : {
@@ -188,6 +173,25 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The original object.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "with"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -206,25 +210,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The original object.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "with"
-        }
-      ]
     },
     {
       "content" : [
@@ -351,7 +336,57 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseInstallation/mergeParse(with:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject": {
+  "abstract" : [
+    {
+      "text" : "Objects that conform to the ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " protocol have a local representation of data persisted to the Parse Server.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "This is the main protocol that is used to interact with objects in your app.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseObject"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseObject"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseObject",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/mergeParse(with:)-13frx": {
   "abstract" : [
     {
       "text" : "Merges two ",
@@ -420,17 +455,17 @@
       "text" : "Self"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/mergeParse(with:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-13frx",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "mergeParse(with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseinstallation\/mergeparse(with:)"
+  "url" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-13frx"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/mergeParse(with:)-49r7x": {
   "abstract" : [
     {
-      "text" : "Objects that conform to the ",
+      "text" : "Merges two ",
       "type" : "text"
     },
     {
@@ -438,7 +473,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : " protocol have a local representation of data persisted to the Parse Server.",
+      "text" : "’s with the resulting object consisting of all modified",
       "type" : "text"
     },
     {
@@ -446,14 +481,14 @@
       "type" : "text"
     },
     {
-      "text" : "This is the main protocol that is used to interact with objects in your app.",
+      "text" : "and unchanged Parse properties.",
       "type" : "text"
     }
   ],
   "fragments" : [
     {
       "kind" : "keyword",
-      "text" : "protocol"
+      "text" : "func"
     },
     {
       "kind" : "text",
@@ -461,21 +496,47 @@
     },
     {
       "kind" : "identifier",
-      "text" : "ParseObject"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject",
-  "kind" : "symbol",
-  "navigatorTitle" : [
+      "text" : "mergeParse"
+    },
     {
-      "kind" : "identifier",
-      "text" : "ParseObject"
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
     }
   ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-49r7x",
+  "kind" : "symbol",
   "role" : "symbol",
-  "title" : "ParseObject",
+  "title" : "mergeParse(with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseobject"
+  "url" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-49r7x"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/mergeParse(with:)-6csd5": {
   "abstract" : [
@@ -552,6 +613,82 @@
   "title" : "mergeParse(with:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-6csd5"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/mergeParse(with:)-8plu3": {
+  "abstract" : [
+    {
+      "text" : "Merges two ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseObject",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "’s with the resulting object consisting of all modified",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "and unchanged Parse properties.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "mergeParse"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseObject\/mergeParse(with:)-8plu3",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "mergeParse(with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-8plu3"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseObject/mergeParse(with:)-9yft4": {
   "abstract" : [
@@ -630,158 +767,6 @@
   "title" : "mergeParse(with:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-9yft4"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRole/mergeParse(with:)": {
-  "abstract" : [
-    {
-      "text" : "Merges two ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "’s with the resulting object consisting of all modified",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "and unchanged Parse properties.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "mergeParse"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "with"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRole\/mergeParse(with:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "mergeParse(with:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parserole\/mergeparse(with:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/mergeParse(with:)": {
-  "abstract" : [
-    {
-      "text" : "Merges two ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseObject",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "’s with the resulting object consisting of all modified",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "and unchanged Parse properties.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "mergeParse"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "with"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/mergeParse(with:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "mergeParse(with:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseuser\/mergeparse(with:)"
 }
 }
 }

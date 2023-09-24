@@ -233,6 +233,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "KeyPath",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " of the value to check.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "keyPath"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -285,33 +312,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "KeyPath",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " of the value to check.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "keyPath"
-        }
-      ]
     },
     {
       "content" : [

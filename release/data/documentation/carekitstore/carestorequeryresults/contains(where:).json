@@ -120,7 +120,10 @@
     ],
     "modules" : [
       {
-        "name" : "CareKitStore"
+        "name" : "CareKitStore",
+        "relatedModules" : [
+          "_Concurrency"
+        ]
       }
     ],
     "platforms" : [

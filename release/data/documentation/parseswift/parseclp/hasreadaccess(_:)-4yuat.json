@@ -192,6 +192,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseRole",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " to check.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "role"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -236,33 +263,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseRole",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " to check.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "role"
-        }
-      ]
     },
     {
       "content" : [

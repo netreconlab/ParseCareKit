@@ -192,6 +192,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseUser.objectId",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " of the user for which to retrieve access.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "objectId"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -257,33 +284,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseUser.objectId",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " of the user for which to retrieve access.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "objectId"
-        }
-      ]
     }
   ],
   "schemaVersion" : {

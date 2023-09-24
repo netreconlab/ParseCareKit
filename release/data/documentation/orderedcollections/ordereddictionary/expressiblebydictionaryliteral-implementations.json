@@ -1,0 +1,166 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/ExpressibleByDictionaryLiteral-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "OrderedCollections"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "ExpressibleByDictionaryLiteral Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/init(dictionaryLiteral:)"
+      ],
+      "title" : "Initializers"
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "OrderedCollections",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary": {
+  "abstract" : [
+    {
+      "text" : "An ordered collection of key-value pairs.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OrderedDictionary"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OrderedDictionary"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OrderedDictionary",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections\/ordereddictionary"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/init(dictionaryLiteral:)": {
+  "abstract" : [
+
+  ],
+  "conformance" : {
+    "availabilityPrefix" : [
+      {
+        "text" : "Available when",
+        "type" : "text"
+      }
+    ],
+    "conformancePrefix" : [
+      {
+        "text" : "Conforms when",
+        "type" : "text"
+      }
+    ],
+    "constraints" : [
+      {
+        "code" : "Key",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Hashable",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ".",
+        "type" : "text"
+      }
+    ]
+  },
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "dictionaryLiteral"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Key"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Value"
+    },
+    {
+      "kind" : "text",
+      "text" : ")...)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/init(dictionaryLiteral:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(dictionaryLiteral:)",
+  "type" : "topic",
+  "url" : "\/documentation\/orderedcollections\/ordereddictionary\/init(dictionaryliteral:)"
+}
+}
+}

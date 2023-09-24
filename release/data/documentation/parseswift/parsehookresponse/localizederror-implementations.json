@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/errorDescription-4cwpp",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/errorDescription-7cvu5",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/errorDescription",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/failureReason",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/helpAnchor",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/recoverySuggestion"
@@ -109,7 +108,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehookresponse"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookResponse/errorDescription-4cwpp": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookResponse/errorDescription": {
   "abstract" : [
 
   ],
@@ -188,50 +187,12 @@
       "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/errorDescription-4cwpp",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/errorDescription",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "errorDescription",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsehookresponse\/errordescription-4cwpp"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookResponse/errorDescription-7cvu5": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "errorDescription"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookResponse\/errorDescription-7cvu5",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "errorDescription",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsehookresponse\/errordescription-7cvu5"
+  "url" : "\/documentation\/parseswift\/parsehookresponse\/errordescription"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookResponse/failureReason": {
   "abstract" : [

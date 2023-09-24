@@ -105,7 +105,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/groupIdentifier",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/id-43fyc",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/isOwnedByApp",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/notes",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/remoteID",
@@ -124,8 +124,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/Equatable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/Identifiable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/Equatable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -246,17 +245,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockhealthkitoutcome\/equatable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockhealthkitoutcome\/identifiable-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/belongs(to:)": {
   "abstract" : [
     {
@@ -352,7 +340,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockhealthkitoutcome\/groupidentifier"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/id-43fyc": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/id": {
   "abstract" : [
 
   ],
@@ -379,12 +367,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/id-43fyc",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitOutcome\/id",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "id",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockhealthkitoutcome\/id-43fyc"
+  "url" : "\/documentation\/carekitstore\/ockhealthkitoutcome\/id"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKHealthKitOutcome/init(from:)": {
   "abstract" : [

@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Gets the ",
+      "text" : "Get the ",
       "type" : "text"
     },
     {
@@ -394,7 +394,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRole/users-6uxer": {
   "abstract" : [
     {
-      "text" : "Gets the ",
+      "text" : "Get the ",
       "type" : "text"
     },
     {
@@ -491,7 +491,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRole/users-7o4v6": {
   "abstract" : [
     {
-      "text" : "Gets the ",
+      "text" : "Get the ",
       "type" : "text"
     },
     {

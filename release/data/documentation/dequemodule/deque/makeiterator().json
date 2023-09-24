@@ -1,0 +1,328 @@
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Sequence.makeIterator()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Sequence-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/makeIterator()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "DequeModule",
+    "externalID" : "s:11DequeModule0A0V12makeIteratorAC0D0Vyx_GyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "makeIterator"
+      },
+      {
+        "kind" : "text",
+        "text" : "() -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:11DequeModule0A0V",
+        "text" : "Deque"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "Element"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:11DequeModule0A0V8IteratorV",
+        "text" : "Iterator"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Collections",
+        "relatedModules" : [
+          "DequeModule"
+        ]
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "makeIterator()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "makeIterator"
+            },
+            {
+              "kind" : "text",
+              "text" : "() -> "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:11DequeModule0A0V",
+              "text" : "Deque"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Iterator",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:11DequeModule0A0V8IteratorV",
+              "text" : "Iterator"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/dequemodule\/deque\/makeiterator()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "DequeModule",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque": {
+  "abstract" : [
+    {
+      "text" : "A collection implementing a double-ended queue. ",
+      "type" : "text"
+    },
+    {
+      "code" : "Deque",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (pronounced “deck”)",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "implements an ordered random-access collection that supports efficient",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "insertions and removals from both ends.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Deque",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Iterator": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Iterator"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Iterator",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Iterator"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Deque.Iterator",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/iterator"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Sequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Sequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Sequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/sequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/makeIterator()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "makeIterator"
+    },
+    {
+      "kind" : "text",
+      "text" : "() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V",
+      "text" : "Deque"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V8IteratorV",
+      "text" : "Iterator"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/makeIterator()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "makeIterator()",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/makeiterator()"
+}
+}
+}

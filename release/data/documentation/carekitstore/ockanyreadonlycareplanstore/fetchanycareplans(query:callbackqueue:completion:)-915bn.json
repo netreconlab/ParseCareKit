@@ -1,0 +1,746 @@
+{
+  "abstract" : [
+    {
+      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)-5jg20"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)-915bn"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "CareKitStore",
+    "externalID" : "s:12CareKitStore011OCKReadablea4PlanC0PAAE08fetchAnyA5Plans5query13callbackQueue10completionyAA07OCKCareE5QueryV_So17OS_dispatch_queueCys6ResultOySayAA06OCKAnyaE0_pGAA13OCKStoreErrorOGctF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "fetchAnyCarePlans"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "query"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore16OCKCarePlanQueryV",
+        "text" : "OCKCarePlanQuery"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "callbackQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+        "text" : "DispatchQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "completion"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+        "text" : "OCKResultClosure"
+      },
+      {
+        "kind" : "text",
+        "text" : "<["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore06OCKAnyA4PlanP",
+        "text" : "OCKAnyCarePlan"
+      },
+      {
+        "kind" : "text",
+        "text" : "]>)"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitStore"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "fetchAnyCarePlans(query:callbackQueue:completion:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "fetchAnyCarePlans"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "query"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanQuery",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore16OCKCarePlanQueryV",
+              "text" : "OCKCarePlanQuery"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "callbackQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+              "text" : "DispatchQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "completion"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "attribute",
+              "text" : "@escaping"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKResultClosure",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+              "text" : "OCKResultClosure"
+            },
+            {
+              "kind" : "text",
+              "text" : "<["
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore06OCKAnyA4PlanP",
+              "text" : "OCKAnyCarePlan"
+            },
+            {
+              "kind" : "text",
+              "text" : "]>)"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A query that matches care plans in the store.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "query"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A query that constrains the values the method fetches.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "query"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The queue that the method calls the completion closure on. In most cases this is the main queue.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "callbackQueue"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A callback that executes on the provided callback queue.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "completion"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Supply a query that’ll be used to match care plans in the store. If the query doesn’t contain a date",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "interval, the result contains every version of a care plan. Multiple versions of the same care plan",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "have the same ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/id",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " but a different UUID. If the query does contain a date",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "interval, the result contains the newest version of a care plan that exists in the interval.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/fetchanycareplans(query:callbackqueue:completion:)-915bn"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan": {
+  "abstract" : [
+    {
+      "text" : "A protocol for a CareKit plan.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyCarePlan"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyCarePlan"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyCarePlan",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanycareplan"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlan/id": {
+  "abstract" : [
+    {
+      "text" : "A user-defined unique identifier.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "id"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlan\/id",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "id",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanycareplan\/id"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
+  "abstract" : [
+    {
+      "text" : "A store that allows for reading care plans.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyReadOnlyCarePlanStore"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyReadOnlyCarePlanStore"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyReadOnlyCarePlanStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)-5jg20": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fetchAnyCarePlans"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "query"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKCarePlanQueryV",
+      "text" : "OCKCarePlanQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "callbackQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+      "text" : "DispatchQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+      "text" : "OCKResultClosure"
+    },
+    {
+      "kind" : "text",
+      "text" : "<["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore06OCKAnyA4PlanP",
+      "text" : "OCKAnyCarePlan"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)-5jg20",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "fetchAnyCarePlans(query:callbackQueue:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/fetchanycareplans(query:callbackqueue:completion:)-5jg20"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)-915bn": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the result changes and yields an error if there’s an issue accessing the store or fetching results.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "fetchAnyCarePlans"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "query"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKCarePlanQueryV",
+      "text" : "OCKCarePlanQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "callbackQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+      "text" : "DispatchQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+      "text" : "OCKResultClosure"
+    },
+    {
+      "kind" : "text",
+      "text" : "<["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore06OCKAnyA4PlanP",
+      "text" : "OCKAnyCarePlan"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)-915bn",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "fetchAnyCarePlans(query:callbackQueue:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/fetchanycareplans(query:callbackqueue:completion:)-915bn"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlanQuery": {
+  "abstract" : [
+    {
+      "text" : "A query that limits which care plans will be returned when fetching.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKCarePlanQuery"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanQuery",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKCarePlanQuery"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKCarePlanQuery",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockcareplanquery"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKResultClosure": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKResultClosure"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKResultClosure",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKResultClosure"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResultClosure",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockresultclosure"
+}
+}
+}

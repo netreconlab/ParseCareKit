@@ -234,6 +234,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseUser",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " for which to retrieve access.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "user"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -299,33 +326,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseUser",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " for which to retrieve access.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "user"
-        }
-      ]
     }
   ],
   "schemaVersion" : {

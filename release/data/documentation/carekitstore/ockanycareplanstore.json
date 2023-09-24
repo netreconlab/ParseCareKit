@@ -166,15 +166,15 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlan(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlan(_:callbackQueue:completion:)-22ln2",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlans(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlans(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlans(_:callbackQueue:completion:)-oozn",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlan(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlan(_:callbackQueue:completion:)-2eqy7",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlans(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlans(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlans(_:callbackQueue:completion:)-1mp4b",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlan(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlan(_:callbackQueue:completion:)-16z29",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlans(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlans(_:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlans(_:callbackQueue:completion:)-37t1l"
       ],
       "title" : "Instance Methods"
     }
@@ -452,7 +452,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/addanycareplans(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/addAnyCarePlans(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/addAnyCarePlans(_:callbackQueue:completion:)-oozn": {
   "abstract" : [
     {
       "text" : "Asynchronously adds an array of care plans to the store.",
@@ -530,13 +530,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlans(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/addAnyCarePlans(_:callbackQueue:completion:)-oozn",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "addAnyCarePlans(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/addanycareplans(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/addanycareplans(_:callbackqueue:completion:)-oozn"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlan(_:)": {
   "abstract" : [
@@ -752,7 +752,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/deleteanycareplans(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlans(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/deleteAnyCarePlans(_:callbackQueue:completion:)-1mp4b": {
   "abstract" : [
     {
       "text" : "Asynchronously deletes an array of care plans from the store.",
@@ -830,13 +830,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlans(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/deleteAnyCarePlans(_:callbackQueue:completion:)-1mp4b",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "deleteAnyCarePlans(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/deleteanycareplans(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/deleteanycareplans(_:callbackqueue:completion:)-1mp4b"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlan(_:)": {
   "abstract" : [
@@ -1052,7 +1052,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/updateanycareplans(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlans(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyCarePlanStore/updateAnyCarePlans(_:callbackQueue:completion:)-37t1l": {
   "abstract" : [
     {
       "text" : "Asynchronously updates an array of care plans in the store.",
@@ -1130,13 +1130,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlans(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyCarePlanStore\/updateAnyCarePlans(_:callbackQueue:completion:)-37t1l",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "updateAnyCarePlans(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/updateanycareplans(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanycareplanstore\/updateanycareplans(_:callbackqueue:completion:)-37t1l"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore": {
   "abstract" : [

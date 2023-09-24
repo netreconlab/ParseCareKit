@@ -1,0 +1,881 @@
+{
+  "abstract" : [
+    {
+      "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementationsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)-1vlhv"
+      ],
+      "title" : "OCKAnyReadOnlyEventStore Implementations"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)-5owja"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:12CareKitStore019OCKAnyReadOnlyEventC0P9anyEvents8matchingAA0aC12QueryResultsVyAA0dG0VGAA08OCKEventK0V_tF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "anyEvents"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "matching"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
+        "text" : "OCKEventQuery"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+        "text" : "CareStoreQueryResults"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV",
+        "text" : "OCKAnyEvent"
+      },
+      {
+        "kind" : "text",
+        "text" : ">"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitStore"
+      }
+    ],
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "anyEvents(matching:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "anyEvents"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "matching"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "query"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
+              "text" : "OCKEventQuery"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/CareStoreQueryResults",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+              "text" : "CareStoreQueryResults"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyEvent",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV",
+              "text" : "OCKAnyEvent"
+            },
+            {
+              "kind" : "text",
+              "text" : ">"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Used to match events in the store.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "query"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The stream yields a new value whenever the result changes and yields an error if there’s an issue",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "accessing the store or fetching results.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The result will contain an event if the event occurs within the query interval ",
+              "type" : "text"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "and",
+                  "type" : "text"
+                }
+              ],
+              "type" : "emphasis"
+            },
+            {
+              "text" : " the task is effective in the query interval.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "A task is effective if its ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyVersionableTask\/effectiveDate",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " lies in the query interval. The outcome",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "attached to the event will always be the most recent version available.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This method will also walk through all versions of a task and compute the events for each version. The events will have the same",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTask\/id",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " but a unique ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTask\/uuid",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "It’s important to handle events from multiple task version with care. Suppose ",
+              "type" : "text"
+            },
+            {
+              "code" : "newTask",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "oldTask",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " are two versions of a",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "task, where ",
+              "type" : "text"
+            },
+            {
+              "code" : "newTask.effectiveDate < oldTask.effectiveDate",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ". A few important caveats to consider include:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "If there exists an event for ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "newTask",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " that overlaps with an event for ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "oldTask",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : ", both events will be returned by this method.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "Both events are relevant because at some point during each of their durations the associated task is effective, even if not for the",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "entire duration.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "If there exists an all-day event for ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "newTask",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " and an all-day event for ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "oldTask",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " on the same day, both events will",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "be returned by this method.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "orderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Ultimately, be sure to consider the task when handling events returned by this method. If the task is akin to a medication,",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "make sure the events are properly spaced out before presenting them to the user to ensure there is no risk of under-dosing or",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "over-dosing.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Events returned by this method will be sorted by their start date and task effective date.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/anyevents(matching:)-5owja"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/CareStoreQueryResults": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of entities that exist in a CareKit store.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "CareStoreQueryResults"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/CareStoreQueryResults",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "CareStoreQueryResults"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "CareStoreQueryResults",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/carestorequeryresults"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyEvent": {
+  "abstract" : [
+    {
+      "text" : "A representation of a single occassion which a task was scheduled to occur on.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyEvent"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyEvent",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyEvent"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyEvent",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyevent"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore": {
+  "abstract" : [
+    {
+      "text" : "A store that allows for reading events.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyReadOnlyEventStore"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyReadOnlyEventStore"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyReadOnlyEventStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/anyEvents(matching:)-1vlhv": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "anyEvents"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "matching"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
+      "text" : "OCKEventQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+      "text" : "CareStoreQueryResults"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV",
+      "text" : "OCKAnyEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)-1vlhv",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "anyEvents(matching:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/anyevents(matching:)-1vlhv"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyEventStore/anyEvents(matching:)-5owja": {
+  "abstract" : [
+    {
+      "text" : "A continuous stream of events (occurrences of tasks) that exist in the store.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "anyEvents"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "matching"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKEventQueryV",
+      "text" : "OCKEventQuery"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore0aC12QueryResultsV",
+      "text" : "CareStoreQueryResults"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore11OCKAnyEventV",
+      "text" : "OCKAnyEvent"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyEventStore\/anyEvents(matching:)-5owja",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "anyEvents(matching:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlyeventstore\/anyevents(matching:)-5owja"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTask/id": {
+  "abstract" : [
+    {
+      "text" : "A user-defined unique identifier, typically human readable.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "id"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTask\/id",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "id",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanytask\/id"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyTask/uuid": {
+  "abstract" : [
+    {
+      "text" : "An universally unique identifier for this task.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "uuid"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4UUIDV",
+      "text" : "UUID"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyTask\/uuid",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "uuid",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanytask\/uuid"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyVersionableTask/effectiveDate": {
+  "abstract" : [
+    {
+      "text" : "A date specifying when this version of the task begins taking effect.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "effectiveDate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyVersionableTask\/effectiveDate",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "effectiveDate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyversionabletask\/effectivedate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery": {
+  "abstract" : [
+    {
+      "text" : "A query that limits which events will be returned when fetching.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKEventQuery"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKEventQuery"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKEventQuery",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockeventquery"
+}
+}
+}

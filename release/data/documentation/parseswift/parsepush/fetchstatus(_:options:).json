@@ -292,34 +292,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "Returns the fetched ",
-              "type" : "text"
-            },
-            {
-              "code" : "ParsePushStatus",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : ".",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -367,6 +339,34 @@
           "name" : "options"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Returns the fetched ",
+              "type" : "text"
+            },
+            {
+              "code" : "ParsePushStatus",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [

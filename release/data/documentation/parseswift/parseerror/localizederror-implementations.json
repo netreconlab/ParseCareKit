@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/errorDescription-nht8",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/errorDescription-tx34",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/errorDescription",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/failureReason",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/helpAnchor",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/recoverySuggestion"
@@ -89,7 +88,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseerror"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/errorDescription-nht8": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/errorDescription": {
   "abstract" : [
 
   ],
@@ -120,50 +119,12 @@
       "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/errorDescription-nht8",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/errorDescription",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "errorDescription",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseerror\/errordescription-nht8"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/errorDescription-tx34": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "errorDescription"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/errorDescription-tx34",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "errorDescription",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseerror\/errordescription-tx34"
+  "url" : "\/documentation\/parseswift\/parseerror\/errordescription"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/failureReason": {
   "abstract" : [

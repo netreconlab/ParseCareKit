@@ -118,6 +118,15 @@
       "kind" : "relationships",
       "title" : "Inherited By",
       "type" : "inheritedBy"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunction",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTrigger"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforming Types",
+      "type" : "conformingTypes"
     }
   ],
   "schemaVersion" : {
@@ -182,6 +191,40 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunction": {
+  "abstract" : [
+    {
+      "text" : "A generic Parse Hook Function type that can be used to create any Parse Hook Function.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseHookFunction"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseHookFunction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseHookFunction",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehookfunction"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunctionable": {
   "abstract" : [
     {
@@ -231,6 +274,40 @@
   "title" : "ParseHookFunctionable",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsehookfunctionable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTrigger": {
+  "abstract" : [
+    {
+      "text" : "A generic Parse Hook Trigger type that can be used to create any Hook Trigger.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseHookTrigger"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookTrigger",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseHookTrigger"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseHookTrigger",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehooktrigger"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTriggerable": {
   "abstract" : [

@@ -121,7 +121,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/deletedDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/effectiveDate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/groupIdentifier",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/id-3hyl8",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/name",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/nextVersionUUIDs",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/notes",
@@ -141,8 +141,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/Equatable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/Identifiable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/Equatable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -273,17 +272,6 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockpatient\/equatable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKPatient/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockpatient\/identifiable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKPatient/acl": {
   "abstract" : [
@@ -731,7 +719,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockpatient\/groupidentifier"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKPatient/id-3hyl8": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKPatient/id": {
   "abstract" : [
 
   ],
@@ -758,12 +746,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/id-3hyl8",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKPatient\/id",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "id",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockpatient\/id-3hyl8"
+  "url" : "\/documentation\/carekitstore\/ockpatient\/id"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKPatient/init(from:)": {
   "abstract" : [

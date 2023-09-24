@@ -156,7 +156,10 @@
     ],
     "modules" : [
       {
-        "name" : "CareKitStore"
+        "name" : "CareKitStore",
+        "relatedModules" : [
+          "_Concurrency"
+        ]
       }
     ],
     "role" : "symbol",

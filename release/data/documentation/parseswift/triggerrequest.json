@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "A type of request for Parse Hook Triggers.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -90,6 +96,14 @@
   "sections" : [
 
   ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/TriggerRequest\/init(trigger:)"
+      ],
+      "title" : "Initializers"
+    }
+  ],
   "variants" : [
     {
       "paths" : [
@@ -122,7 +136,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/TriggerRequest": {
   "abstract" : [
-
+    {
+      "text" : "A type of request for Parse Hook Triggers.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -150,6 +167,59 @@
   "title" : "TriggerRequest",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/triggerrequest"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/TriggerRequest/init(trigger:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an instance.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "trigger"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift14TriggerRequestV7triggerACx_tKcAA0A15HookTriggerableRzlufc1TL_xmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/TriggerRequest\/init(trigger:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(trigger:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/triggerrequest\/init(trigger:)"
 }
 }
 }

@@ -158,14 +158,13 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/fractionCompleted",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/isCompleted-2ce3j"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/isCompleted"
       ],
       "title" : "Instance Properties"
     },
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/CareTaskProgress-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/Equatable-Implementations"
       ],
       "title" : "Default Implementations"
@@ -240,17 +239,6 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/binarycaretaskprogress"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/CareTaskProgress-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/CareTaskProgress-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "CareTaskProgress Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/caretaskprogress-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/Equatable-Implementations": {
   "abstract" : [
 
@@ -299,7 +287,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/fractioncompleted"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/isCompleted-2ce3j": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/BinaryCareTaskProgress/isCompleted": {
   "abstract" : [
     {
       "text" : "True if the task is considered completed.",
@@ -329,12 +317,12 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/isCompleted-2ce3j",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/BinaryCareTaskProgress\/isCompleted",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "isCompleted",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/iscompleted-2ce3j"
+  "url" : "\/documentation\/carekitstore\/binarycaretaskprogress\/iscompleted"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/CareTaskProgress": {
   "abstract" : [

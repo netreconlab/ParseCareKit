@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/description-3wz8a",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/description-4dn6d"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/description"
       ],
       "title" : "Instance Properties"
     }
@@ -157,7 +156,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckhealthkittask"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/description-3wz8a": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/description": {
   "abstract" : [
 
   ],
@@ -184,46 +183,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/description-3wz8a",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/description",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "description",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/description-3wz8a"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKHealthKitTask/description-4dn6d": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "description"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKHealthKitTask\/description-4dn6d",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "description",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/description-4dn6d"
+  "url" : "\/documentation\/parsecarekit\/pckhealthkittask\/description"
 }
 }
 }

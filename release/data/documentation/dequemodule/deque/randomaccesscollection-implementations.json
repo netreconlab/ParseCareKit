@@ -1,0 +1,769 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/RandomAccessCollection-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "DequeModule"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "RandomAccessCollection Implementations"
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/endIndex",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/indices-swift.property",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/startIndex"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/distance(from:to:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/formIndex(after:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/formIndex(before:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(_:offsetBy:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(_:offsetBy:limitedBy:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(after:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(before:)"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/subscript(_:)-22tpo",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/subscript(_:)-9nk44"
+      ],
+      "title" : "Subscripts"
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "DequeModule",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque": {
+  "abstract" : [
+    {
+      "text" : "A collection implementing a double-ended queue. ",
+      "type" : "text"
+    },
+    {
+      "code" : "Deque",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (pronounced “deck”)",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "implements an ordered random-access collection that supports efficient",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "insertions and removals from both ends.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Deque",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/distance(from:to:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "distance"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "from"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "to"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/distance(from:to:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "distance(from:to:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/distance(from:to:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/endIndex": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "endIndex"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/endIndex",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "endIndex",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/endindex"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/formIndex(after:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "formIndex"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "after"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/formIndex(after:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "formIndex(after:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/formindex(after:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/formIndex(before:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "formIndex"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "before"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "inout"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/formIndex(before:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "formIndex(before:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/formindex(before:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/index(_:offsetBy:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "offsetBy"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(_:offsetBy:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "index(_:offsetBy:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/index(_:offsetby:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/index(_:offsetBy:limitedBy:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "offsetBy"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "limitedBy"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(_:offsetBy:limitedBy:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "index(_:offsetBy:limitedBy:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/index(_:offsetby:limitedby:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/index(after:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "after"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(after:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "index(after:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/index(after:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/index(before:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "index"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "before"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/index(before:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "index(before:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/index(before:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/indices-swift.property": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "indices"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sn",
+      "text" : "Range"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/indices-swift.property",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "indices",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/indices-swift.property"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/startIndex": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "startIndex"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/startIndex",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "startIndex",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/startindex"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/subscript(_:)-22tpo": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "subscript"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sn",
+      "text" : "Range"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s5SliceV",
+      "text" : "Slice"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V",
+      "text" : "Deque"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">>"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/subscript(_:)-22tpo",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "subscript(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/subscript(_:)-22tpo"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/subscript(_:)-9nk44": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "subscript"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Element"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/subscript(_:)-9nk44",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "subscript(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/subscript(_:)-9nk44"
+}
+}
+}

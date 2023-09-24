@@ -124,7 +124,10 @@
     ],
     "modules" : [
       {
-        "name" : "ParseSwift"
+        "name" : "ParseSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",

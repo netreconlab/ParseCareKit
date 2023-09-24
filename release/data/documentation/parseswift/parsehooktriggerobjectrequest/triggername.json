@@ -1,8 +1,19 @@
 {
   "abstract" : [
     {
-      "text" : "The types of Parse Hook Trigger.",
+      "text" : "The name of the Parse Hook Trigger.",
       "type" : "text"
+    }
+  ],
+  "deprecationSummary" : [
+    {
+      "inlineContent" : [
+        {
+          "text" : "Use \\\"trigger\\\" instead.",
+          "type" : "text"
+        }
+      ],
+      "type" : "paragraph"
     }
   ],
   "hierarchy" : {
@@ -52,6 +63,9 @@
         "name" : "ParseSwift"
       }
     ],
+    "platforms" : [
+
+    ],
     "role" : "symbol",
     "roleHeading" : "Instance Property",
     "symbolKind" : "property",
@@ -91,7 +105,15 @@
             },
             {
               "kind" : "text",
-              "text" : "?"
+              "text" : "? { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
@@ -177,10 +199,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTriggerObjectRequest/triggerName": {
   "abstract" : [
     {
-      "text" : "The types of Parse Hook Trigger.",
+      "text" : "The name of the Parse Hook Trigger.",
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",

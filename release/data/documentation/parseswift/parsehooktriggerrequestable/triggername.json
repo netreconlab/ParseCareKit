@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The types of Parse Hook Trigger.",
+      "text" : "The name of the Parse Hook Trigger.",
       "type" : "text"
     }
   ],
@@ -202,7 +202,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookTriggerRequestable/triggerName": {
   "abstract" : [
     {
-      "text" : "The types of Parse Hook Trigger.",
+      "text" : "The name of the Parse Hook Trigger.",
       "type" : "text"
     }
   ],

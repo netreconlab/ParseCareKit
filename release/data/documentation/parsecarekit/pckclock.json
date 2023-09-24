@@ -131,7 +131,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/className-swift.type.property-7tzyb"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/className-swift.type.property"
       ],
       "title" : "Type Properties"
     },
@@ -144,9 +144,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Equatable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Fetchable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Hashable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Identifiable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Objectable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/ParseEncodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/ParseObject-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Savable-Implementations"
       ],
@@ -336,17 +334,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckclock\/hashable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/identifiable-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/Objectable-Implementations": {
   "abstract" : [
 
@@ -357,17 +344,6 @@
   "title" : "Objectable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckclock\/objectable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/ParseEncodable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/ParseEncodable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "ParseEncodable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/parseencodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/ParseObject-Implementations": {
   "abstract" : [
@@ -391,7 +367,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckclock\/savable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/className-swift.type.property-7tzyb": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/className-swift.type.property": {
   "abstract" : [
 
   ],
@@ -426,12 +402,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/className-swift.type.property-7tzyb",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/className-swift.type.property",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "className",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/classname-swift.type.property-7tzyb"
+  "url" : "\/documentation\/parsecarekit\/pckclock\/classname-swift.type.property"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/createdAt": {
   "abstract" : [

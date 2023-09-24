@@ -128,11 +128,11 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/anyPatients(matching:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/anyPatients(matching:)-2qi38",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatient(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatient(withID:callbackQueue:completion:)-4hg58",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatients(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatients(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatients(query:callbackQueue:completion:)-59q5b"
       ],
       "title" : "Instance Methods"
     }
@@ -246,7 +246,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlypatientstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore/anyPatients(matching:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore/anyPatients(matching:)-2qi38": {
   "abstract" : [
     {
       "text" : "A continuous stream of patients that exist in the store.",
@@ -307,13 +307,13 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/anyPatients(matching:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/anyPatients(matching:)-2qi38",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "anyPatients(matching:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlypatientstore\/anypatients(matching:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlypatientstore\/anypatients(matching:)-2qi38"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore/fetchAnyPatient(withID:)": {
   "abstract" : [
@@ -565,7 +565,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlypatientstore\/fetchanypatients(query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore/fetchAnyPatients(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore/fetchAnyPatients(query:callbackQueue:completion:)-59q5b": {
   "abstract" : [
     {
       "code" : "fetchAnyPatients",
@@ -655,13 +655,13 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatients(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyPatientStore\/fetchAnyPatients(query:callbackQueue:completion:)-59q5b",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetchAnyPatients(query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlypatientstore\/fetchanypatients(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlypatientstore\/fetchanypatients(query:callbackqueue:completion:)-59q5b"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyResettableStore": {
   "abstract" : [

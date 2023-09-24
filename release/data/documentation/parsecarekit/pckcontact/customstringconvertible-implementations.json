@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/description-1aiqz",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/description-274v0"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/description"
       ],
       "title" : "Instance Properties"
     }
@@ -129,7 +128,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcontact"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/description-1aiqz": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/description": {
   "abstract" : [
 
   ],
@@ -156,46 +155,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/description-1aiqz",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/description",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "description",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcontact\/description-1aiqz"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKContact/description-274v0": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "description"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKContact\/description-274v0",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "description",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcontact\/description-274v0"
+  "url" : "\/documentation\/parsecarekit\/pckcontact\/description"
 }
 }
 }

@@ -40,7 +40,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/id-27z0a",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/id",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/mergeable",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/operation",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation"
@@ -70,8 +70,9 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:child:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:className:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.method-473ct",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.method-6n2lm",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-473ct",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-6n2lm",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:object:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/replace(options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/replace(options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/replacePublisher(options:)",
@@ -90,19 +91,12 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query-swift.type.property"
-      ],
-      "title" : "Type Properties"
-    },
-    {
-      "generated" : true,
-      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query(_:)-1f2xg",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query(_:)-m51y",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/queryRelations(_:parent:)-4cj59",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/queryRelations(_:parent:)-p3o1",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.type.method-4n4k6",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.type.method-9k0oc"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-4n4k6",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-9k0oc"
       ],
       "title" : "Type Methods"
     }
@@ -1391,7 +1385,7 @@
       "type" : "text"
     },
     {
-      "text" : "types in a way meaninful for a Parse Server to consume.",
+      "text" : "types in a way meaningful for a Parse Server to consume.",
       "type" : "text"
     }
   ],
@@ -1536,7 +1530,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushstatus\/hassameobjectid(as:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/id-27z0a": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/id": {
   "abstract" : [
     {
       "text" : "A computed property that is a unique identifier and makes it easy to use ",
@@ -1582,12 +1576,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/id-27z0a",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/id",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "id",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/id-27z0a"
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/id"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/init(objectId:)": {
   "abstract" : [
@@ -2133,63 +2127,6 @@
   "title" : "query(_:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushstatus\/query(_:)-m51y"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/query-swift.type.property": {
-  "abstract" : [
-    {
-      "text" : "Create a query with no constraints.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "query"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV",
-      "text" : "Query"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query-swift.type.property",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "query",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/query-swift.type.property"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/queryRelations(_:parent:)-4cj59": {
   "abstract" : [
@@ -2768,7 +2705,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-swift.method-473ct": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-473ct": {
   "abstract" : [
     {
       "text" : "Establish a relation based on a stored relation.",
@@ -2888,132 +2825,14 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.method-473ct",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-473ct",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "relation(_:key:with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-swift.method-473ct"
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-473ct"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-swift.method-6n2lm": {
-  "abstract" : [
-    {
-      "text" : "Establish a relation based on a stored relation.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "relation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
-      "text" : "ParseRelation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_3key4withAA0A8RelationVyqd__GAISg_SSqd__tKAaBRd__lF1TL_qd__mfp",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">?, "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "key"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "with"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_3key4withAA0A8RelationVyqd__GAISg_SSqd__tKAaBRd__lF1TL_qd__mfp",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
-      "text" : "ParseRelation"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_3key4withAA0A8RelationVyqd__GAISg_SSqd__tKAaBRd__lF1TL_qd__mfp",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.method-6n2lm",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "relation(_:key:with:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-swift.method-6n2lm"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-swift.type.method-4n4k6": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-4n4k6": {
   "abstract" : [
     {
       "text" : "Establish a relation based on a stored relation.",
@@ -3132,14 +2951,132 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.type.method-4n4k6",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-4n4k6",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "relation(_:key:with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-swift.type.method-4n4k6"
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-4n4k6"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-swift.type.method-9k0oc": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-6n2lm": {
+  "abstract" : [
+    {
+      "text" : "Establish a relation based on a stored relation.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "relation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_3key4withAA0A8RelationVyqd__GAISg_SSqd__tKAaBRd__lF1TL_qd__mfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_3key4withAA0A8RelationVyqd__GAISg_SSqd__tKAaBRd__lF1TL_qd__mfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_3key4withAA0A8RelationVyqd__GAISg_SSqd__tKAaBRd__lF1TL_qd__mfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-6n2lm",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "relation(_:key:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-6n2lm"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:key:with:)-9k0oc": {
   "abstract" : [
     {
       "text" : "Establish a relation based on a stored relation.",
@@ -3267,12 +3204,103 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-swift.type.method-9k0oc",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:key:with:)-9k0oc",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "relation(_:key:with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-swift.type.method-9k0oc"
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:key:with:)-9k0oc"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/relation(_:object:)": {
+  "abstract" : [
+    {
+      "text" : "Create a new relation with a specific key.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "relation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "object"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A6ObjectPAAE8relation_6objectAA0A8RelationVyxGSS_qd__mtKAaBRd__lF1VL_qd__mfp",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV",
+      "text" : "ParseRelation"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/relation(_:object:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "relation(_:object:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/relation(_:object:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/replace(options:)": {
   "abstract" : [

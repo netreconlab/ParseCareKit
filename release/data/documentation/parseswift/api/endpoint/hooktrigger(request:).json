@@ -257,7 +257,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/TriggerRequest": {
   "abstract" : [
-
+    {
+      "text" : "A type of request for Parse Hook Triggers.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

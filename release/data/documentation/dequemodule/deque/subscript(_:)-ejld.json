@@ -1,0 +1,288 @@
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Collection.subscript(_:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Collection-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/subscript(_:)-ejld"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "Swift",
+    "externalID" : "s:SlsEy11SubSequenceQzys15UnboundedRange_OXEcip::SYNTHESIZED::s:11DequeModule0A0V",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "subscript"
+      },
+      {
+        "kind" : "text",
+        "text" : "(("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s15UnboundedRange_O",
+        "text" : "UnboundedRange_"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> ()) -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "Self"
+      },
+      {
+        "kind" : "text",
+        "text" : "."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "SubSequence"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "Collections",
+        "relatedModules" : [
+          "Swift"
+        ]
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Subscript",
+    "symbolKind" : "subscript",
+    "title" : "subscript(_:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "subscript"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "x"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s15UnboundedRange_O",
+              "text" : "UnboundedRange_"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> ()) -> "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "SubSequence"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/dequemodule\/deque\/subscript(_:)-ejld"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "DequeModule",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque": {
+  "abstract" : [
+    {
+      "text" : "A collection implementing a double-ended queue. ",
+      "type" : "text"
+    },
+    {
+      "code" : "Deque",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " (pronounced “deck”)",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "implements an ordered random-access collection that supports efficient",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "insertions and removals from both ends.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Deque"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "Deque",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Collection-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Collection-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Collection Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/collection-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/subscript(_:)-ejld": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "subscript"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15UnboundedRange_O",
+      "text" : "UnboundedRange_"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> ()) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "SubSequence"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/subscript(_:)-ejld",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "subscript(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/subscript(_:)-ejld"
+}
+}
+}

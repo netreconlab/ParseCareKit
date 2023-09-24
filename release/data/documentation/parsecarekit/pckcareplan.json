@@ -225,7 +225,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property-4wvbc"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property"
       ],
       "title" : "Type Properties"
     },
@@ -247,11 +247,9 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Equatable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Fetchable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Hashable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Identifiable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Objectable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/PCKObjectable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/PCKVersionable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/ParseEncodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/ParseObject-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Savable-Implementations"
       ],
@@ -519,17 +517,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/hashable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcareplan\/identifiable-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/Objectable-Implementations": {
   "abstract" : [
 
@@ -562,17 +549,6 @@
   "title" : "PCKVersionable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/pckversionable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/ParseEncodable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/ParseEncodable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "ParseEncodable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcareplan\/parseencodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/ParseObject-Implementations": {
   "abstract" : [
@@ -653,7 +629,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/asset"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/className-swift.type.property-4wvbc": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/className-swift.type.property": {
   "abstract" : [
 
   ],
@@ -688,12 +664,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property-4wvbc",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "className",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcareplan\/classname-swift.type.property-4wvbc"
+  "url" : "\/documentation\/parsecarekit\/pckcareplan\/classname-swift.type.property"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/clock": {
   "abstract" : [

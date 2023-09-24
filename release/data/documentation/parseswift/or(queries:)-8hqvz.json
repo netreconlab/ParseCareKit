@@ -202,6 +202,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The list of queries to ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "or",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " together.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "queries"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -236,33 +263,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The list of queries to ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "or",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " together.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "queries"
-        }
-      ]
     }
   ],
   "schemaVersion" : {

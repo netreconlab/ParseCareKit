@@ -148,6 +148,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "An instance of ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParsePushAppleSound",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "sound"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -174,33 +201,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "An instance of ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParsePushAppleSound",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "sound"
-        }
-      ]
     },
     {
       "content" : [

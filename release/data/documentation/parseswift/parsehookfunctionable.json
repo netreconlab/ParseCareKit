@@ -169,6 +169,14 @@
       "kind" : "relationships",
       "title" : "Inherits From",
       "type" : "inheritsFrom"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunction"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforming Types",
+      "type" : "conformingTypes"
     }
   ],
   "schemaVersion" : {
@@ -258,6 +266,40 @@
   "title" : "ParseSwift",
   "type" : "topic",
   "url" : "\/documentation\/parseswift"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunction": {
+  "abstract" : [
+    {
+      "text" : "A generic Parse Hook Function type that can be used to create any Parse Hook Function.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ParseHookFunction"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseHookFunction",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ParseHookFunction"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "ParseHookFunction",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parsehookfunction"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseHookFunctionable": {
   "abstract" : [

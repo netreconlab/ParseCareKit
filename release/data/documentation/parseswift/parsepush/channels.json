@@ -129,7 +129,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "Cannot send a notification with this valuel and ",
+                  "text" : "Cannot send a notification with this value and ",
                   "type" : "text"
                 },
                 {

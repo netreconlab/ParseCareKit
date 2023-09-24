@@ -117,6 +117,8 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudUser\/accountLockoutExpiresAt-2drtq",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudUser\/failedLoginCount-9kljm",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudUser\/sessionToken"
       ],
       "title" : "Instance Properties"
@@ -301,6 +303,104 @@
   "title" : "ParseCloudUser",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseclouduser"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudUser/accountLockoutExpiresAt-2drtq": {
+  "abstract" : [
+    {
+      "text" : "The date the lockout expires. After this date, the ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseUser",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "can attempt to login again.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "accountLockoutExpiresAt"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudUser\/accountLockoutExpiresAt-2drtq",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "accountLockoutExpiresAt",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseclouduser\/accountlockoutexpiresat-2drtq"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudUser/failedLoginCount-9kljm": {
+  "abstract" : [
+    {
+      "text" : "The number of unsuccessful login attempts.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "failedLoginCount"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseCloudUser\/failedLoginCount-9kljm",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "failedLoginCount",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseclouduser\/failedlogincount-9kljm"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudUser/sessionToken": {
   "abstract" : [

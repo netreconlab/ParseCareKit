@@ -33,7 +33,6 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/errorDescription-71d97",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/failureReason",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/helpAnchor",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/recoverySuggestion"
@@ -99,44 +98,6 @@
   "title" : "OCKStoreError",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstoreerror"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreError/errorDescription-71d97": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "errorDescription"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : "?"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/errorDescription-71d97",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "errorDescription",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstoreerror\/errordescription-71d97"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreError/failureReason": {
   "abstract" : [

@@ -351,7 +351,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "U"
     },
     {
       "kind" : "text",
@@ -368,8 +368,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5EventO2eeoiySbACyqd__G_AEtAA0A6ObjectRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5EventO2eeoiySbACyqd__G_AEtAA0A6ObjectRd__lFZ1UL_qd__mfp",
+      "text" : "U"
     },
     {
       "kind" : "text",
@@ -386,8 +386,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5EventO2eeoiySbACyqd__G_AEtAA0A6ObjectRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5EventO2eeoiySbACyqd__G_AEtAA0A6ObjectRd__lFZ1UL_qd__mfp",
+      "text" : "U"
     },
     {
       "kind" : "text",

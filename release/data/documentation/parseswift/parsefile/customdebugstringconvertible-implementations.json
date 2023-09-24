@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/debugDescription-5c855",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/debugDescription-67efx"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/debugDescription"
       ],
       "title" : "Instance Properties"
     }
@@ -102,7 +101,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsefile"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/debugDescription-5c855": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/debugDescription": {
   "abstract" : [
 
   ],
@@ -129,46 +128,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/debugDescription-5c855",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/debugDescription",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "debugDescription",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsefile\/debugdescription-5c855"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFile/debugDescription-67efx": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "debugDescription"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFile\/debugDescription-67efx",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "debugDescription",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsefile\/debugdescription-67efx"
+  "url" : "\/documentation\/parseswift\/parsefile\/debugdescription"
 }
 }
 }

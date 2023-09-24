@@ -42,16 +42,10 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/endpoint(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/isSaved()"
       ],
       "title" : "Instance Methods"
-    },
-    {
-      "generated" : true,
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property-3wrb8"
-      ],
-      "title" : "Type Properties"
     }
   ]
 , 
@@ -202,48 +196,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/classname-swift.property"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/className-swift.type.property-3wrb8": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "className"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/className-swift.type.property-3wrb8",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "className",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckcareplan\/classname-swift.type.property-3wrb8"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/endpoint": {
   "abstract" : [
 
@@ -286,6 +238,83 @@
   "title" : "endpoint",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/endpoint"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/endpoint(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "endpoint"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV",
+      "text" : "API"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV6MethodO",
+      "text" : "Method"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV",
+      "text" : "API"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV8EndpointO",
+      "text" : "Endpoint"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKCarePlan\/endpoint(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "endpoint(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parsecarekit\/pckcareplan\/endpoint(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKCarePlan/isSaved": {
   "abstract" : [

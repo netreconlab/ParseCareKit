@@ -183,6 +183,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/authData",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/email",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/emailVerified",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/endpoint",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/facebook-swift.property",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/github-swift.property",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/google-swift.property",
@@ -248,6 +249,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/become(sessionToken:options:callbackQueue:completion:)-swift.type.method",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/becomePublisher(sessionToken:options:)-swift.type.method",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/current()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/enableAutomaticLogin(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/link(_:authData:options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/link(_:authData:options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/linkPublisher(_:authData:options:)",
@@ -2402,7 +2404,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/current()": {
   "abstract" : [
     {
-      "text" : "Gets the currently logged in user and returns an instance of it.",
+      "text" : "Get the current logged-in user from the Keychain.",
       "type" : "text"
     }
   ],
@@ -2895,6 +2897,130 @@
   "title" : "emailVerified",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseuser\/emailverified"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/enableAutomaticLogin(_:)": {
+  "abstract" : [
+    {
+      "text" : "Enables\/disables automatic creation of anonymous users. After calling this method,",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "Self.current()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " will always have a value or throw an error from the server.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "When enabled, the user will only be created on the server once.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "enableAutomaticLogin"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/enableAutomaticLogin(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "enableAutomaticLogin(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseuser\/enableautomaticlogin(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/endpoint": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "endpoint"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV",
+      "text" : "API"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV8EndpointO",
+      "text" : "Endpoint"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseUser\/endpoint",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "endpoint",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseuser\/endpoint"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/facebook-swift.property": {
   "abstract" : [

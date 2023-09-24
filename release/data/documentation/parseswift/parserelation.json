@@ -223,7 +223,9 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:child:)-8evhy",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:child:)-912hj",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:className:)-5ijuf",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:className:)-7xhg8"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:className:)-7xhg8",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:object:)-2y4rx",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:object:)-8sj83"
       ],
       "title" : "Initializers"
     },
@@ -242,8 +244,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/add(_:objects:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.method-2ymy3",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.method-6niph",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-2ymy3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-6niph",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/remove(_:)-5sx9o",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/remove(_:)-8lzzm",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/remove(_:)-ks5y",
@@ -253,8 +255,8 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.type.method-4a90y",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.type.method-52scm"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-4a90y",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-52scm"
       ],
       "title" : "Type Methods"
     },
@@ -1706,6 +1708,201 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parserelation\/init(parent:key:classname:)-7xhg8"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/init(parent:key:object:)-2y4rx": {
+  "abstract" : [
+    {
+      "text" : "Create a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseRelation",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with a specific parent, key, and object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "parent"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift7PointerV",
+      "text" : "Pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "object"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV6parent3key6objectACyxGAA7PointerVyxG_SSSgqd__mtcAA0A6ObjectRd__lufc1VL_qd__mfp",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:object:)-2y4rx",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(parent:key:object:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parserelation\/init(parent:key:object:)-2y4rx"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/init(parent:key:object:)-8sj83": {
+  "abstract" : [
+    {
+      "text" : "Create a ",
+      "type" : "text"
+    },
+    {
+      "code" : "ParseRelation",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with a specific parent, key, and object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "parent"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "key"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "object"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV6parent3key6objectACyxGx_SSSgqd__mtKcAA0A6ObjectRd__lufc1VL_qd__mfp",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/init(parent:key:object:)-8sj83",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(parent:key:object:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parserelation\/init(parent:key:object:)-8sj83"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/parent": {
   "abstract" : [
     {
@@ -1933,7 +2130,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parserelation\/query(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-swift.method-2ymy3": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-2ymy3": {
   "abstract" : [
     {
       "text" : "Returns a ",
@@ -2042,131 +2239,14 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.method-2ymy3",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-2ymy3",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "query(_:parent:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-swift.method-2ymy3"
+  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-2ymy3"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-swift.method-6niph": {
-  "abstract" : [
-    {
-      "text" : "Returns a ",
-      "type" : "text"
-    },
-    {
-      "code" : "Query",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " that is limited to objects for a specific ",
-      "type" : "text"
-    },
-    {
-      "code" : "key",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " and ",
-      "type" : "text"
-    },
-    {
-      "code" : "parent",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " in this relation.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "query"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "U"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "parent"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift7PointerV",
-      "text" : "Pointer"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV5query_6parentAA5QueryVyxGSS_AA7PointerVyqd__GtAA0A6ObjectRd__lF1UL_qd__mfp",
-      "text" : "U"
-    },
-    {
-      "kind" : "text",
-      "text" : ">) -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV",
-      "text" : "Query"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift0A8RelationV1Txmfp",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.method-6niph",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "query(_:parent:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-swift.method-6niph"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-swift.type.method-4a90y": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-4a90y": {
   "abstract" : [
     {
       "text" : "Returns a ",
@@ -2284,14 +2364,14 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.type.method-4a90y",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-4a90y",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "query(_:parent:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-swift.type.method-4a90y"
+  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-4a90y"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-swift.type.method-52scm": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-52scm": {
   "abstract" : [
     {
       "text" : "Returns a ",
@@ -2408,12 +2488,129 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-swift.type.method-52scm",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-52scm",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "query(_:parent:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-swift.type.method-52scm"
+  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-52scm"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/query(_:parent:)-6niph": {
+  "abstract" : [
+    {
+      "text" : "Returns a ",
+      "type" : "text"
+    },
+    {
+      "code" : "Query",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that is limited to objects for a specific ",
+      "type" : "text"
+    },
+    {
+      "code" : "key",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "parent",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " in this relation.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "query"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "U"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "parent"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift7PointerV",
+      "text" : "Pointer"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV5query_6parentAA5QueryVyxGSS_AA7PointerVyqd__GtAA0A6ObjectRd__lF1UL_qd__mfp",
+      "text" : "U"
+    },
+    {
+      "kind" : "text",
+      "text" : ">) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift5QueryV",
+      "text" : "Query"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift0A8RelationV1Txmfp",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseRelation\/query(_:parent:)-6niph",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "query(_:parent:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parserelation\/query(_:parent:)-6niph"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseRelation/remove(_:)-5sx9o": {
   "abstract" : [

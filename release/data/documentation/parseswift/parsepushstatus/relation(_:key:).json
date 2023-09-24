@@ -227,34 +227,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "A usable ",
-              "type" : "text"
-            },
-            {
-              "code" : "ParseRelation",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " based on the stored relation property.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -286,6 +258,34 @@
           "name" : "key"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "A usable ",
+              "type" : "text"
+            },
+            {
+              "code" : "ParseRelation",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " based on the stored relation property.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {

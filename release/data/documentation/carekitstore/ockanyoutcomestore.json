@@ -127,15 +127,15 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcome(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcome(_:callbackQueue:completion:)-8fewj",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)-70fi7",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcome(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcome(_:callbackQueue:completion:)-7z9j9",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcomes(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcomes(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcomes(_:callbackQueue:completion:)-348no",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcome(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcome(_:callbackQueue:completion:)-6m13u",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcomes(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcomes(_:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcomes(_:callbackQueue:completion:)-99hj6"
       ],
       "title" : "Instance Methods"
     }
@@ -460,7 +460,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/addanyoutcomes(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcomes(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcomes(_:callbackQueue:completion:)-70fi7": {
   "abstract" : [
     {
       "text" : "Asynchronously add an array of outcomes to the store.",
@@ -538,13 +538,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)-70fi7",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "addAnyOutcomes(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/addanyoutcomes(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/addanyoutcomes(_:callbackqueue:completion:)-70fi7"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcome(_:)": {
   "abstract" : [
@@ -760,7 +760,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/deleteanyoutcomes(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcomes(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/deleteAnyOutcomes(_:callbackQueue:completion:)-348no": {
   "abstract" : [
     {
       "text" : "Asynchronously delete an array of outcomes from the store.",
@@ -838,13 +838,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcomes(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/deleteAnyOutcomes(_:callbackQueue:completion:)-348no",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "deleteAnyOutcomes(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/deleteanyoutcomes(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/deleteanyoutcomes(_:callbackqueue:completion:)-348no"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcome(_:)": {
   "abstract" : [
@@ -1060,7 +1060,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/updateanyoutcomes(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcomes(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/updateAnyOutcomes(_:callbackQueue:completion:)-99hj6": {
   "abstract" : [
     {
       "text" : "Asynchronously update an array of outcomes in the store.",
@@ -1138,13 +1138,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcomes(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/updateAnyOutcomes(_:callbackQueue:completion:)-99hj6",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "updateAnyOutcomes(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/updateanyoutcomes(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/updateanyoutcomes(_:callbackqueue:completion:)-99hj6"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyOutcomeStore": {
   "abstract" : [

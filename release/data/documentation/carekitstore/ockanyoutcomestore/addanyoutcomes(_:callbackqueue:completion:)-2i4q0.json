@@ -1,0 +1,556 @@
+{
+  "abstract" : [
+    {
+      "text" : "Asynchronously add an array of outcomes to the store.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)-70fi7"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)-2i4q0"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "CareKitStore",
+    "externalID" : "s:12CareKitStore010OCKOutcomeC0PAAE14addAnyOutcomes_13callbackQueue10completionySayAA13OCKAnyOutcome_pG_So17OS_dispatch_queueCys6ResultOyAhA13OCKStoreErrorOGcSgtF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "addAnyOutcomes"
+      },
+      {
+        "kind" : "text",
+        "text" : "(["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+        "text" : "OCKAnyOutcome"
+      },
+      {
+        "kind" : "text",
+        "text" : "], "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "callbackQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+        "text" : "DispatchQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "completion"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+        "text" : "OCKResultClosure"
+      },
+      {
+        "kind" : "text",
+        "text" : "<["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+        "text" : "OCKAnyOutcome"
+      },
+      {
+        "kind" : "text",
+        "text" : "]>?)"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitStore"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "addAnyOutcomes(_:callbackQueue:completion:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "addAnyOutcomes"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "outcomes"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+              "text" : "OCKAnyOutcome"
+            },
+            {
+              "kind" : "text",
+              "text" : "], "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "callbackQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+              "text" : "DispatchQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "completion"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKResultClosure",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+              "text" : "OCKResultClosure"
+            },
+            {
+              "kind" : "text",
+              "text" : "<["
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+              "text" : "OCKAnyOutcome"
+            },
+            {
+              "kind" : "text",
+              "text" : "]>?)"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "An array of outcomes to add to the store.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "outcomes"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The queue that the function calls the closure on. In most cases this is the main queue.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "callbackQueue"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A callback that the function calls on the provided callback queue.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "completion"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitstore\/ockanyoutcomestore\/addanyoutcomes(_:callbackqueue:completion:)-2i4q0"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcome": {
+  "abstract" : [
+    {
+      "text" : "A protocol that allows CareKit to query and display outcomes.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyOutcome"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcome",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyOutcome"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyOutcome",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyoutcome"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyOutcomeStore"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKAnyOutcomeStore"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKAnyOutcomeStore",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcomes(_:callbackQueue:completion:)-2i4q0": {
+  "abstract" : [
+    {
+      "text" : "Asynchronously add an array of outcomes to the store.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "addAnyOutcomes"
+    },
+    {
+      "kind" : "text",
+      "text" : "(["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "callbackQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+      "text" : "DispatchQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+      "text" : "OCKResultClosure"
+    },
+    {
+      "kind" : "text",
+      "text" : "<["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>?)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)-2i4q0",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "addAnyOutcomes(_:callbackQueue:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/addanyoutcomes(_:callbackqueue:completion:)-2i4q0"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyOutcomeStore/addAnyOutcomes(_:callbackQueue:completion:)-70fi7": {
+  "abstract" : [
+    {
+      "text" : "Asynchronously add an array of outcomes to the store.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "addAnyOutcomes"
+    },
+    {
+      "kind" : "text",
+      "text" : "(["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
+    },
+    {
+      "kind" : "text",
+      "text" : "], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "callbackQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)OS_dispatch_queue",
+      "text" : "DispatchQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "completion"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore16OCKResultClosurea",
+      "text" : "OCKResultClosure"
+    },
+    {
+      "kind" : "text",
+      "text" : "<["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
+    },
+    {
+      "kind" : "text",
+      "text" : "]>?)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyOutcomeStore\/addAnyOutcomes(_:callbackQueue:completion:)-70fi7",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "addAnyOutcomes(_:callbackQueue:completion:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockanyoutcomestore\/addanyoutcomes(_:callbackqueue:completion:)-70fi7"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKResultClosure": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKResultClosure"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKResultClosure",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKResultClosure"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResultClosure",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockresultclosure"
+}
+}
+}

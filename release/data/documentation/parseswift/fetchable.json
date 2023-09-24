@@ -142,7 +142,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/fetch()-2agid",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/fetch(includeKeys:options:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/fetch(includeKeys:options:)-6xt2n"
       ],
       "title" : "Instance Methods"
     }
@@ -983,7 +983,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/fetchable\/fetch()-2agid"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Fetchable/fetch(includeKeys:options:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Fetchable/fetch(includeKeys:options:)-6xt2n": {
   "abstract" : [
 
   ],
@@ -1070,13 +1070,13 @@
       "text" : "FetchingType"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/fetch(includeKeys:options:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/fetch(includeKeys:options:)-6xt2n",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetch(includeKeys:options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/fetchable\/fetch(includekeys:options:)"
+  "url" : "\/documentation\/parseswift\/fetchable\/fetch(includekeys:options:)-6xt2n"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseCloudUser": {
   "abstract" : [

@@ -167,6 +167,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseUser",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " to check authentication type. The user must be logged in on this device.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "user"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -227,33 +254,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseUser",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " to check authentication type. The user must be logged in on this device.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "user"
-        }
-      ]
     }
   ],
   "schemaVersion" : {

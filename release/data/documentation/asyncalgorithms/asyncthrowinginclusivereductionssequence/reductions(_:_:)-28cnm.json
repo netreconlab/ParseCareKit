@@ -136,7 +136,10 @@
     ],
     "modules" : [
       {
-        "name" : "AsyncAlgorithms"
+        "name" : "AsyncAlgorithms",
+        "relatedModules" : [
+          "_Concurrency"
+        ]
       }
     ],
     "role" : "symbol",
@@ -304,34 +307,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "An asynchronous sequence of the initial value followed by the reduced",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "elements.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -379,6 +354,34 @@
           "name" : "transform"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "An asynchronous sequence of the initial value followed by the reduced",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "elements.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [

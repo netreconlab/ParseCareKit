@@ -146,15 +146,15 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatient(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatient(_:callbackQueue:completion:)-6ps1z",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatients(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatients(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatients(_:callbackQueue:completion:)-817v4",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatient(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatient(_:callbackQueue:completion:)-567nr",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatients(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatients(_:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatients(_:callbackQueue:completion:)-50sq4",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatient(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatient(_:callbackQueue:completion:)-73rnk",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatients(_:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatients(_:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatients(_:callbackQueue:completion:)-65oda"
       ],
       "title" : "Instance Methods"
     }
@@ -460,7 +460,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanypatientstore\/addanypatients(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/addAnyPatients(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/addAnyPatients(_:callbackQueue:completion:)-817v4": {
   "abstract" : [
     {
       "code" : "addAnyPatients",
@@ -542,13 +542,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatients(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/addAnyPatients(_:callbackQueue:completion:)-817v4",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "addAnyPatients(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanypatientstore\/addanypatients(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanypatientstore\/addanypatients(_:callbackqueue:completion:)-817v4"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/deleteAnyPatient(_:)": {
   "abstract" : [
@@ -776,7 +776,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanypatientstore\/deleteanypatients(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/deleteAnyPatients(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/deleteAnyPatients(_:callbackQueue:completion:)-50sq4": {
   "abstract" : [
     {
       "code" : "deleteAnyPatients",
@@ -858,13 +858,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatients(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/deleteAnyPatients(_:callbackQueue:completion:)-50sq4",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "deleteAnyPatients(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanypatientstore\/deleteanypatients(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanypatientstore\/deleteanypatients(_:callbackqueue:completion:)-50sq4"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/updateAnyPatient(_:)": {
   "abstract" : [
@@ -1092,7 +1092,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanypatientstore\/updateanypatients(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/updateAnyPatients(_:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyPatientStore/updateAnyPatients(_:callbackQueue:completion:)-65oda": {
   "abstract" : [
     {
       "code" : "updateAnyPatients",
@@ -1174,13 +1174,13 @@
       "text" : "]>?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatients(_:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyPatientStore\/updateAnyPatients(_:callbackQueue:completion:)-65oda",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "updateAnyPatients(_:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanypatientstore\/updateanypatients(_:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanypatientstore\/updateanypatients(_:callbackqueue:completion:)-65oda"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyPatientStore": {
   "abstract" : [

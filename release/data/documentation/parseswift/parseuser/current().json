@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Gets the currently logged in user and returns an instance of it.",
+      "text" : "Get the current logged-in user from the Keychain.",
       "type" : "text"
     }
   ],
@@ -196,6 +196,38 @@
           "name" : "Throws",
           "style" : "note",
           "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "If ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "enableAutomaticLogin()",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " has been used, the user will automatically be logged into the Parse Server",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "if no current user is in the Keychain.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
         }
       ],
       "kind" : "content"
@@ -319,7 +351,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseUser/current()": {
   "abstract" : [
     {
-      "text" : "Gets the currently logged in user and returns an instance of it.",
+      "text" : "Get the current logged-in user from the Keychain.",
       "type" : "text"
     }
   ],

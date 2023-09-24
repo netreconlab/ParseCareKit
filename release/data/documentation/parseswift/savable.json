@@ -143,7 +143,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/save()-51ej7",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/save(options:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/save(options:)-15f1x"
       ],
       "title" : "Instance Methods"
     }
@@ -1633,7 +1633,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/savable\/save()-51ej7"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Savable/save(options:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Savable/save(options:)-15f1x": {
   "abstract" : [
 
   ],
@@ -1703,13 +1703,13 @@
       "text" : "SavingType"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/save(options:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/save(options:)-15f1x",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "save(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/savable\/save(options:)"
+  "url" : "\/documentation\/parseswift\/savable\/save(options:)-15f1x"
 }
 }
 }

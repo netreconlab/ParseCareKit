@@ -133,11 +133,11 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/anyTasks(matching:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/anyTasks(matching:)-14w9p",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTask(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTask(withID:callbackQueue:completion:)-60dim",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTasks(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTasks(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTasks(query:callbackQueue:completion:)-3if8p"
       ],
       "title" : "Instance Methods"
     }
@@ -285,7 +285,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/anyTasks(matching:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/anyTasks(matching:)-14w9p": {
   "abstract" : [
     {
       "text" : "A continuous stream of tasks that exist in the store.",
@@ -346,13 +346,13 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/anyTasks(matching:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/anyTasks(matching:)-14w9p",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "anyTasks(matching:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/anytasks(matching:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/anytasks(matching:)-14w9p"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTask(withID:)": {
   "abstract" : [
@@ -610,7 +610,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/fetchanytasks(query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTasks(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyTaskStore/fetchAnyTasks(query:callbackQueue:completion:)-3if8p": {
   "abstract" : [
     {
       "text" : "Asynchronously retrieve an array of tasks from the store.",
@@ -696,13 +696,13 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTasks(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyTaskStore\/fetchAnyTasks(query:callbackQueue:completion:)-3if8p",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetchAnyTasks(query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/fetchanytasks(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlytaskstore\/fetchanytasks(query:callbackqueue:completion:)-3if8p"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyResettableStore": {
   "abstract" : [

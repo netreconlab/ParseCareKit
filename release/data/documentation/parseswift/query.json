@@ -6623,7 +6623,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -6631,8 +6631,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribeyqd__qd__YaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribeyqd__qd__YaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -6656,8 +6656,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribeyqd__qd__YaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribeyqd__qd__YaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+      "text" : "V"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Query\/subscribe(_:)-swift.type.method",
@@ -6733,7 +6733,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -6741,8 +6741,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -6783,8 +6783,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+      "text" : "V"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Query\/subscribe(_:client:)",
@@ -7189,7 +7189,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7197,8 +7197,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV11unsubscribeyyqd__YaKAA0C12SubscribableRd__lF1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV11unsubscribeyyqd__YaKAA0C12SubscribableRd__lF1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7294,7 +7294,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7302,8 +7302,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV11unsubscribe_6clientyqd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lF1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV11unsubscribe_6clientyqd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lF1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7525,7 +7525,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7533,8 +7533,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV6updateyyqd__YaKAA0C12SubscribableRd__lF1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV6updateyyqd__YaKAA0C12SubscribableRd__lF1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7634,7 +7634,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -7642,8 +7642,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV6update_6clientyqd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lF1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV6update_6clientyqd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lF1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",

@@ -236,7 +236,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/payload",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/pushHash",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/pushTime",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query-swift.property",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/sentPerType",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/sentPerUTCOffset",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/source",
@@ -261,9 +261,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Equatable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Fetchable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Hashable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Identifiable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Objectable-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/ParseEncodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/ParseObject-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Savable-Implementations"
       ],
@@ -727,17 +725,6 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushstatus\/hashable-implementations"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/Identifiable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/Identifiable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Identifiable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/identifiable-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/Objectable-Implementations": {
   "abstract" : [
 
@@ -748,17 +735,6 @@
   "title" : "Objectable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushstatus\/objectable-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/ParseEncodable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/ParseEncodable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "ParseEncodable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/parseencodable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/ParseObject-Implementations": {
   "abstract" : [
@@ -1507,7 +1483,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushstatus\/pushtime"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/query-swift.property": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/query": {
   "abstract" : [
     {
       "text" : "The ",
@@ -1554,12 +1530,12 @@
       "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query-swift.property",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushStatus\/query",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "query",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsepushstatus\/query-swift.property"
+  "url" : "\/documentation\/parseswift\/parsepushstatus\/query"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/sentPerType": {
   "abstract" : [

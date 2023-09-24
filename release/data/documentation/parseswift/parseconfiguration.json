@@ -238,7 +238,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:usingAutomaticLogin:maxConnectionAttempts:liveQueryConnectionAdditionalProperties:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)"
       ],
       "title" : "Initializers"
     },
@@ -252,10 +252,12 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isDeletingKeychainIfNeeded",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isMigratingFromObjcSDK",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isRequiringCustomObjectIds",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isUsingAutomaticLogin",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isUsingDataProtectionKeychain",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isUsingEqualQueryConstraint",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isUsingPostForQuery",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isUsingTransactions",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/liveQueryConnectionAdditionalProperties",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/liveQueryMaxConnectionAttempts",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/liveQuerysServerURL",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/maxConnectionAttempts",
@@ -545,7 +547,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseconfiguration\/httpadditionalheaders"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:usingAutomaticLogin:maxConnectionAttempts:liveQueryConnectionAdditionalProperties:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)": {
   "abstract" : [
     {
       "text" : "Create a Parse Swift configuration.",
@@ -869,6 +871,23 @@
     },
     {
       "kind" : "externalParam",
+      "text" : "usingAutomaticLogin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
       "text" : "maxConnectionAttempts"
     },
     {
@@ -879,6 +898,23 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:Si",
       "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "liveQueryConnectionAdditionalProperties"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
     },
     {
       "kind" : "text",
@@ -981,12 +1017,12 @@
       "text" : ")?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:usingAutomaticLogin:maxConnectionAttempts:liveQueryConnectionAdditionalProperties:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:maxConnectionAttempts:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)",
+  "title" : "init(applicationId:clientKey:primaryKey:webhookKey:serverURL:liveQueryServerURL:requiringCustomObjectIds:usingTransactions:usingEqualQueryConstraint:usingPostForQuery:primitiveStore:requestCachePolicy:cacheMemoryCapacity:cacheDiskCapacity:usingDataProtectionKeychain:deletingKeychainIfNeeded:httpAdditionalHeaders:usingAutomaticLogin:maxConnectionAttempts:liveQueryConnectionAdditionalProperties:liveQueryMaxConnectionAttempts:parseFileTransfer:authentication:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:primarykey:webhookkey:serverurl:livequeryserverurl:requiringcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:primitivestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:u-81oic"
+  "url" : "\/documentation\/parseswift\/parseconfiguration\/init(applicationid:clientkey:primarykey:webhookkey:serverurl:livequeryserverurl:requiringcustomobjectids:usingtransactions:usingequalqueryconstraint:usingpostforquery:primitivestore:requestcachepolicy:cachememorycapacity:cachediskcapacity:u-4vywn"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/isDeletingKeychainIfNeeded": {
   "abstract" : [
@@ -1169,6 +1205,101 @@
   "title" : "isRequiringCustomObjectIds",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseconfiguration\/isrequiringcustomobjectids"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/isUsingAutomaticLogin": {
+  "abstract" : [
+    {
+      "text" : "If ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "true",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : ", automatic creation of anonymous users is enabled.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "When enabled, ",
+      "type" : "text"
+    },
+    {
+      "code" : "User.current()",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " will always have a value or throw an error from the server.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "The user will only be created on the server once.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Defaults to ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "false",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "isUsingAutomaticLogin"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/isUsingAutomaticLogin",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "isUsingAutomaticLogin",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseconfiguration\/isusingautomaticlogin"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/isUsingDataProtectionKeychain": {
   "abstract" : [
@@ -1432,6 +1563,64 @@
   "title" : "isUsingTransactions",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseconfiguration\/isusingtransactions"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/liveQueryConnectionAdditionalProperties": {
+  "abstract" : [
+    {
+      "text" : "Send additional information when establishing Parse LiveQuery connections.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "Defaults to ",
+      "type" : "text"
+    },
+    {
+      "inlineContent" : [
+        {
+          "text" : "true",
+          "type" : "text"
+        }
+      ],
+      "type" : "strong"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "liveQueryConnectionAdditionalProperties"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseConfiguration\/liveQueryConnectionAdditionalProperties",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "liveQueryConnectionAdditionalProperties",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseconfiguration\/livequeryconnectionadditionalproperties"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/liveQueryMaxConnectionAttempts": {
   "abstract" : [

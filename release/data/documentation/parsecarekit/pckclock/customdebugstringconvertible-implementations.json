@@ -33,8 +33,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/debugDescription-3rkzl",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/debugDescription-5ljob"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/debugDescription"
       ],
       "title" : "Instance Properties"
     }
@@ -86,7 +85,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckclock"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/debugDescription-3rkzl": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/debugDescription": {
   "abstract" : [
 
   ],
@@ -113,46 +112,12 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/debugDescription-3rkzl",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/debugDescription",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "debugDescription",
   "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/debugdescription-3rkzl"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKClock/debugDescription-5ljob": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "debugDescription"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKClock\/debugDescription-5ljob",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "debugDescription",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckclock\/debugdescription-5ljob"
+  "url" : "\/documentation\/parsecarekit\/pckclock\/debugdescription"
 }
 }
 }

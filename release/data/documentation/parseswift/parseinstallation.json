@@ -414,6 +414,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/channels",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/deviceToken",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/deviceType",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/endpoint",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/installationId",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/localeIdentifier",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/parseVersion",
@@ -1943,7 +1944,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseInstallation/current()": {
   "abstract" : [
     {
-      "text" : "Gets\/Sets properties of the current installation in the Keychain.",
+      "text" : "Get the current installation from the Keychain.",
       "type" : "text"
     }
   ],
@@ -2809,6 +2810,49 @@
   "title" : "deviceType",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseinstallation\/devicetype"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseInstallation/endpoint": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "endpoint"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV",
+      "text" : "API"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift3APIV8EndpointO",
+      "text" : "Endpoint"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseInstallation\/endpoint",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "endpoint",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseinstallation\/endpoint"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseInstallation/fetch(includeKeys:options:)": {
   "abstract" : [

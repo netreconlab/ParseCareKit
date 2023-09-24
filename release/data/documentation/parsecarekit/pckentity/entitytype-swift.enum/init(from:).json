@@ -112,7 +112,10 @@
     ],
     "modules" : [
       {
-        "name" : "ParseCareKit"
+        "name" : "ParseCareKit",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",

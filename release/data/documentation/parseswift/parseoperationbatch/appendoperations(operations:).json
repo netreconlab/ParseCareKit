@@ -176,6 +176,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The array of ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseOperationable",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " operations to append.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "operations"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -202,33 +229,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The array of ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseOperationable",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " operations to append.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "operations"
-        }
-      ]
     },
     {
       "content" : [

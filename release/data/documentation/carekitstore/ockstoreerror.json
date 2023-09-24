@@ -125,7 +125,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/errorDescription-4ygi8"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/errorDescription"
       ],
       "title" : "Instance Properties"
     },
@@ -334,7 +334,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstoreerror\/deletefailed(reason:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreError/errorDescription-4ygi8": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreError/errorDescription": {
   "abstract" : [
 
   ],
@@ -365,12 +365,12 @@
       "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/errorDescription-4ygi8",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStoreError\/errorDescription",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "errorDescription",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockstoreerror\/errordescription-4ygi8"
+  "url" : "\/documentation\/carekitstore\/ockstoreerror\/errordescription"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStoreError/fetchFailed(reason:)": {
   "abstract" : [

@@ -203,34 +203,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "A mutated instance of ",
-              "type" : "text"
-            },
-            {
-              "code" : "ParseCLP",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " for easy chaining.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -270,6 +242,34 @@
           "name" : "objectId"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "A mutated instance of ",
+              "type" : "text"
+            },
+            {
+              "code" : "ParseCLP",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " for easy chaining.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [

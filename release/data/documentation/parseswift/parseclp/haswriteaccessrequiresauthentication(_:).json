@@ -126,52 +126,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "",
-              "type" : "text"
-            },
-            {
-              "inlineContent" : [
-                {
-                  "text" : "true",
-                  "type" : "text"
-                }
-              ],
-              "type" : "strong"
-            },
-            {
-              "text" : " if has access, ",
-              "type" : "text"
-            },
-            {
-              "inlineContent" : [
-                {
-                  "text" : "false",
-                  "type" : "text"
-                }
-              ],
-              "type" : "strong"
-            },
-            {
-              "text" : " otherwise.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -244,6 +198,52 @@
           "name" : "checkAddField"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "",
+              "type" : "text"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "true",
+                  "type" : "text"
+                }
+              ],
+              "type" : "strong"
+            },
+            {
+              "text" : " if has access, ",
+              "type" : "text"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "false",
+                  "type" : "text"
+                }
+              ],
+              "type" : "strong"
+            },
+            {
+              "text" : " otherwise.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [

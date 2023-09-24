@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "A type of request for Parse Hook Functions.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -90,6 +96,14 @@
   "sections" : [
 
   ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/FunctionRequest\/init(hookFunction:)"
+      ],
+      "title" : "Initializers"
+    }
+  ],
   "variants" : [
     {
       "paths" : [
@@ -122,7 +136,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/FunctionRequest": {
   "abstract" : [
-
+    {
+      "text" : "A type of request for Parse Hook Functions.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -150,6 +167,59 @@
   "title" : "FunctionRequest",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/functionrequest"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/FunctionRequest/init(hookFunction:)": {
+  "abstract" : [
+    {
+      "text" : "Creates an instance.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "F"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "hookFunction"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift15FunctionRequestV04hookC0ACx_tKcAA0A16HookFunctionableRzlufc1FL_xmfp",
+      "text" : "F"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/FunctionRequest\/init(hookFunction:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(hookFunction:)",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/functionrequest\/init(hookfunction:)"
 }
 }
 }

@@ -97,6 +97,9 @@
         "name" : "ParseSwift"
       }
     ],
+    "platforms" : [
+
+    ],
     "role" : "symbol",
     "roleHeading" : "Function",
     "symbolKind" : "func",
@@ -176,34 +179,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "The same instance of ",
-              "type" : "text"
-            },
-            {
-              "code" : "QueryConstraint",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " as the receiver.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -243,6 +218,34 @@
           "name" : "points"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The same instance of ",
+              "type" : "text"
+            },
+            {
+              "code" : "QueryConstraint",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " as the receiver.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [
@@ -433,6 +436,7 @@
       "type" : "text"
     }
   ],
+  "deprecated" : true,
   "fragments" : [
     {
       "kind" : "keyword",

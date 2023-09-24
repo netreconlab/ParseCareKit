@@ -108,7 +108,10 @@
     ],
     "modules" : [
       {
-        "name" : "AsyncAlgorithms"
+        "name" : "AsyncAlgorithms",
+        "relatedModules" : [
+          "_Concurrency"
+        ]
       }
     ],
     "role" : "symbol",
@@ -185,26 +188,6 @@
       "kind" : "declarations"
     },
     {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "An asynchronous sequence that buffers elements up to a given limit.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
-    },
-    {
       "kind" : "parameters",
       "parameters" : [
         {
@@ -227,6 +210,26 @@
           "name" : "policy"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "An asynchronous sequence that buffers elements up to a given limit.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [

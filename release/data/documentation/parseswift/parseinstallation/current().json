@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Gets\/Sets properties of the current installation in the Keychain.",
+      "text" : "Get the current installation from the Keychain.",
       "type" : "text"
     }
   ],
@@ -323,7 +323,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseInstallation/current()": {
   "abstract" : [
     {
-      "text" : "Gets\/Sets properties of the current installation in the Keychain.",
+      "text" : "Get the current installation from the Keychain.",
       "type" : "text"
     }
   ],

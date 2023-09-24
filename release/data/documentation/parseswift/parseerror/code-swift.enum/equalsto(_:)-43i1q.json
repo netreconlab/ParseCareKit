@@ -74,7 +74,10 @@
     ],
     "modules" : [
       {
-        "name" : "ParseSwift"
+        "name" : "ParseSwift",
+        "relatedModules" : [
+          "Swift"
+        ]
       }
     ],
     "role" : "symbol",
@@ -156,6 +159,33 @@
       "kind" : "declarations"
     },
     {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseError",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " code to compare to.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "errorCode"
+        }
+      ]
+    },
+    {
       "content" : [
         {
           "anchor" : "return-value",
@@ -190,33 +220,6 @@
         }
       ],
       "kind" : "content"
-    },
-    {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "A ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "ParseError",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " code to compare to.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "errorCode"
-        }
-      ]
     },
     {
       "content" : [

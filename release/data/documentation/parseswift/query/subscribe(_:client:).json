@@ -80,7 +80,7 @@
       },
       {
         "kind" : "genericParameter",
-        "text" : "T"
+        "text" : "V"
       },
       {
         "kind" : "text",
@@ -88,8 +88,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-        "text" : "T"
+        "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+        "text" : "V"
       },
       {
         "kind" : "text",
@@ -130,8 +130,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-        "text" : "T"
+        "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+        "text" : "V"
       }
     ],
     "modules" : [
@@ -181,7 +181,7 @@
             },
             {
               "kind" : "genericParameter",
-              "text" : "T"
+              "text" : "V"
             },
             {
               "kind" : "text",
@@ -205,8 +205,8 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-              "text" : "T"
+              "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+              "text" : "V"
             },
             {
               "kind" : "text",
@@ -248,8 +248,8 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-              "text" : "T"
+              "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+              "text" : "V"
             },
             {
               "kind" : "text",
@@ -265,7 +265,7 @@
             },
             {
               "kind" : "typeIdentifier",
-              "text" : "T"
+              "text" : "V"
             },
             {
               "kind" : "text",
@@ -281,26 +281,6 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "return-value",
-          "level" : 2,
-          "text" : "Return Value",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "Your subscription handler, for easy chaining.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
     },
     {
       "kind" : "parameters",
@@ -334,6 +314,26 @@
           "name" : "client"
         }
       ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Your subscription handler, for easy chaining.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     },
     {
       "content" : [
@@ -570,7 +570,7 @@
     },
     {
       "kind" : "genericParameter",
-      "text" : "T"
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -578,8 +578,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+      "text" : "V"
     },
     {
       "kind" : "text",
@@ -620,8 +620,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1TL_qd__mfp",
-      "text" : "T"
+      "preciseIdentifier" : "s:10ParseSwift5QueryV9subscribe_6clientqd__qd___AA0a4LiveC0CtYaKAA0C12SubscribableRd__lFZ1VL_qd__mfp",
+      "text" : "V"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Query\/subscribe(_:client:)",

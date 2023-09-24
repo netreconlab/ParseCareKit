@@ -128,11 +128,11 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/anyCarePlans(matching:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/anyCarePlans(matching:)-1fueu",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlan(withID:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlan(withID:callbackQueue:completion:)-v9kd",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)-5jg20"
       ],
       "title" : "Instance Methods"
     }
@@ -230,7 +230,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/anyCarePlans(matching:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/anyCarePlans(matching:)-1fueu": {
   "abstract" : [
     {
       "text" : "A continuous stream of care plans that exist in the store.",
@@ -291,13 +291,13 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/anyCarePlans(matching:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/anyCarePlans(matching:)-1fueu",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "anyCarePlans(matching:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/anycareplans(matching:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/anycareplans(matching:)-1fueu"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlan(withID:)": {
   "abstract" : [
@@ -537,7 +537,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/fetchanycareplans(query:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyReadOnlyCarePlanStore/fetchAnyCarePlans(query:callbackQueue:completion:)-5jg20": {
   "abstract" : [
     {
       "text" : "A continuous stream of care plans that exist in the store. The stream yields a new value whenever",
@@ -631,13 +631,13 @@
       "text" : "]>)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAnyReadOnlyCarePlanStore\/fetchAnyCarePlans(query:callbackQueue:completion:)-5jg20",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "fetchAnyCarePlans(query:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/fetchanycareplans(query:callbackqueue:completion:)"
+  "url" : "\/documentation\/carekitstore\/ockanyreadonlycareplanstore\/fetchanycareplans(query:callbackqueue:completion:)-5jg20"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAnyResettableStore": {
   "abstract" : [
