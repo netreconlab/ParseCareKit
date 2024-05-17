@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 env:
-  CI_XCODE: '/Applications/Xcode_15.0.app/Contents/Developer'
+  CI_XCODE: '/Applications/Xcode_15.4.app/Contents/Developer'
 
 concurrency:
    group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,11 +14,13 @@ concurrency:
 
 jobs:
   xcode-test-ios:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
     - name: Use multiple cores
       run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+    - name: Install SwiftLint
+      run: brew install swiftlint
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 14\ Pro\ Max -derivedDataPath DerivedData clean test | xcpretty
       env:
@@ -42,7 +44,7 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   xcode-test-macos:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
     - name: Use multiple cores
@@ -70,7 +72,7 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   xcode-build-watchos:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
     - name: Use multiple cores
@@ -82,7 +84,7 @@ jobs:
 
   spm-test:
     timeout-minutes: 15
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
     - name: Use multiple cores
@@ -93,7 +95,7 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   docs:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
       - name: Use multiple cores
