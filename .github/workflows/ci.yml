@@ -17,8 +17,6 @@ jobs:
     runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
-    - name: Use multiple cores
-      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build
@@ -47,8 +45,8 @@ jobs:
     runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
-    - name: Use multiple cores
-      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+    - name: Install SwiftLint
+      run: brew install swiftlint
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test | xcpretty
       env:
@@ -87,8 +85,6 @@ jobs:
     runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
-    - name: Use multiple cores
-      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
     - name: Build-Test
       run: swift build -v
       env:
