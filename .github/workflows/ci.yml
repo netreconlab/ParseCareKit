@@ -37,6 +37,7 @@ jobs:
       with:
         files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
         env_vars: IOS
+        token: ${{ secrets.CODECOV_TOKEN }}
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
@@ -64,6 +65,7 @@ jobs:
       with:
         files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
         env_vars: MACOS
+        token: ${{ secrets.CODECOV_TOKEN }}
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
