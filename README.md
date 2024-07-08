@@ -11,7 +11,7 @@
 [![CI Status](https://github.com/netreconlab/ParseCareKit/workflows/ci/badge.svg?branch=main)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aci)
 [![Release Status](https://github.com/netreconlab/ParseCareKit/workflows/release/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Arelease)
 [![Slider Status](https://github.com/netreconlab/ParseCareKit/workflows/slider/badge.svg)](https://github.com/netreconlab/ParseCareKit/actions?query=workflow%3Aslider)
-![Codecov](https://codecov.io/gh/netreconlab/ParseCareKit/branches/main/graph/badge.svg)
+[![Coverage](https://codecov.io/gh/netreconlab/ParseCareKit/branch/main/graph/badge.svg)](https://app.codecov.io/gh/netreconlab/ParseCareKit/branch/main)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/netreconlab/ParseCareKit/#license)
 
 ---
