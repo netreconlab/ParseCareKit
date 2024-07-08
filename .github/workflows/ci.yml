@@ -73,8 +73,9 @@ jobs:
     runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
-    - name: Use multiple cores
-      run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
+    - name: Upload codecov yml
+      run: |
+        cat .codecov.yml | curl --data-binary @- https://codecov.io/validate
     - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 6\ \(44mm\) | xcpretty
       env:
@@ -94,8 +95,6 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: Use multiple cores
-        run: defaults write com.apple.dt.XCBuild EnableSwiftBuildSystemIntegration 1
       - name: Generate Docs
         run: set -o pipefail && env NSUnbufferedIO=YES Scripts/generate-documentation
         env:
