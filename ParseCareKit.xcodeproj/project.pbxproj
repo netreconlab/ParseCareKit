@@ -1011,16 +1011,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/netreconlab/Parse-Swift.git";
 			requirement = {
-				kind = revision;
-				revision = e46737b6506783ffd9568ef5e235270951202c3e;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.0;
 			};
 		};
 		91FF60492AC0A51100E90E16 /* XCRemoteSwiftPackageReference "CareKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
-				branch = "3.0.0-beta.14";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = "3.0.0-beta.14";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
