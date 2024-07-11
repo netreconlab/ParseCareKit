@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Decodable Implementations"
   },
   "schemaVersion" : {
@@ -87,7 +88,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/init(from:)": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new ordered set by decoding from the given decoder.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

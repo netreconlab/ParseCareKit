@@ -72,23 +72,6 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:18OrderedCollections0A3SetV",
-        "text" : "OrderedSet"
-      },
-      {
-        "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "Element"
-      },
-      {
-        "kind" : "text",
-        "text" : ">."
-      },
-      {
-        "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:18OrderedCollections0A3SetV13UnorderedViewV",
         "text" : "UnorderedView"
       },
@@ -99,10 +82,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -162,24 +142,6 @@
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:18OrderedCollections0A3SetV",
-              "text" : "OrderedSet"
-            },
-            {
-              "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ">."
-            },
-            {
               "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView",
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:18OrderedCollections0A3SetV13UnorderedViewV",
@@ -230,6 +192,39 @@
           ],
           "syntax" : null,
           "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The result will only contain instances that were originally in ",
+              "type" : "text"
+            },
+            {
+              "code" : "self",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "(This matters if equal members can be distinguished by comparing their",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "identities, or by some other means.)",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         },
         {
           "content" : [
@@ -471,23 +466,6 @@
     {
       "kind" : "text",
       "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:18OrderedCollections0A3SetV",
-      "text" : "OrderedSet"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">."
     },
     {
       "kind" : "typeIdentifier",

@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "ExpressibleByArrayLiteral Implementations"
   },
   "schemaVersion" : {
@@ -87,7 +88,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/init(arrayLiteral:)": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new ordered set from the contents of an array literal.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [
@@ -140,6 +144,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetV7Elementxmfp",
       "text" : "Element"
     },
     {

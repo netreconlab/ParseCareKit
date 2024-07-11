@@ -77,31 +77,38 @@
       },
       {
         "kind" : "text",
-        "text" : "<"
+        "text" : "("
       },
       {
-        "kind" : "genericParameter",
-        "text" : "S"
+        "kind" : "keyword",
+        "text" : "some"
       },
       {
         "kind" : "text",
-        "text" : ">("
+        "text" : " "
       },
       {
         "kind" : "typeIdentifier",
-        "text" : "S"
+        "preciseIdentifier" : "s:ST",
+        "text" : "Sequence"
       },
       {
         "kind" : "text",
-        "text" : ")"
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A3SetV13UnorderedViewV7Elementxmfp",
+        "text" : "Element"
+      },
+      {
+        "kind" : "text",
+        "text" : ">)"
       }
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -142,15 +149,7 @@
             },
             {
               "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "genericParameter",
-              "text" : "S"
-            },
-            {
-              "kind" : "text",
-              "text" : ">("
+              "text" : "("
             },
             {
               "kind" : "externalParam",
@@ -169,16 +168,8 @@
               "text" : ": "
             },
             {
-              "kind" : "typeIdentifier",
-              "text" : "S"
-            },
-            {
-              "kind" : "text",
-              "text" : ") "
-            },
-            {
               "kind" : "keyword",
-              "text" : "where"
+              "text" : "some"
             },
             {
               "kind" : "text",
@@ -186,40 +177,21 @@
             },
             {
               "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : " == "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "S"
-            },
-            {
-              "kind" : "text",
-              "text" : "."
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ", "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "S"
-            },
-            {
-              "kind" : "text",
-              "text" : " : "
-            },
-            {
-              "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:ST",
               "text" : "Sequence"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetV13UnorderedViewV7Elementxmfp",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : ">)"
             }
           ]
         }
@@ -604,23 +576,33 @@
     },
     {
       "kind" : "text",
-      "text" : "<"
+      "text" : "("
     },
     {
-      "kind" : "genericParameter",
-      "text" : "S"
+      "kind" : "keyword",
+      "text" : "some"
     },
     {
       "kind" : "text",
-      "text" : ">("
+      "text" : " "
     },
     {
       "kind" : "typeIdentifier",
-      "text" : "S"
+      "preciseIdentifier" : "s:ST",
+      "text" : "Sequence"
     },
     {
       "kind" : "text",
-      "text" : ")"
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetV13UnorderedViewV7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">)"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/formSymmetricDifference(_:)-75z52",

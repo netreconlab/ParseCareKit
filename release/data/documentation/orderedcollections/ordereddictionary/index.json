@@ -63,10 +63,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "navigatorTitle" : [

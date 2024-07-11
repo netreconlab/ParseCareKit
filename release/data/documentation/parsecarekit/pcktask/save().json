@@ -73,6 +73,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10ParseSwift7SavableP10SavingTypeQa",
         "text" : "SavingType"
       }
     ],
@@ -141,7 +142,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/SavingType",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10ParseSwift7SavableP10SavingTypeQa",
               "text" : "SavingType"
             }
           ]
@@ -346,6 +349,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift7SavableP10SavingTypeQa",
       "text" : "SavingType"
     }
   ],
@@ -355,6 +359,32 @@
   "title" : "save()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pcktask\/save()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Savable/SavingType": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SavingType"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Savable\/SavingType",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "SavingType",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/savable\/savingtype"
 }
 }
 }

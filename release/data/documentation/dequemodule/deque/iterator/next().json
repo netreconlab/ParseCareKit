@@ -1,15 +1,23 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "Advances to the next element and returns it, or ",
       "type" : "text"
     },
     {
-      "code" : "IteratorProtocol.next()",
+      "code" : "nil",
       "type" : "codeVoice"
     },
     {
-      "text" : ".",
+      "text" : " if no next element",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "exists.",
       "type" : "text"
     }
   ],
@@ -49,6 +57,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
         "text" : "Element"
       },
       {
@@ -58,7 +67,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections"
+        "name" : "DequeModule"
       }
     ],
     "role" : "symbol",
@@ -103,6 +112,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
               "text" : "Element"
             },
             {
@@ -113,6 +123,42 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Once ",
+              "type" : "text"
+            },
+            {
+              "code" : "nil",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " has been returned, all subsequent calls return ",
+              "type" : "text"
+            },
+            {
+              "code" : "nil",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -208,7 +254,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Iterator": {
   "abstract" : [
-
+    {
+      "text" : "An iterator over the members of a deque.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -239,7 +288,26 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Iterator/next()": {
   "abstract" : [
-
+    {
+      "text" : "Advances to the next element and returns it, or ",
+      "type" : "text"
+    },
+    {
+      "code" : "nil",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " if no next element",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "exists.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -260,6 +328,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
       "text" : "Element"
     },
     {

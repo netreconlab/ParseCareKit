@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Deletable Implementations"
   },
   "schemaVersion" : {
@@ -183,6 +184,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift9DeletableP12DeletingTypeQa",
       "text" : "DeletingType"
     }
   ],

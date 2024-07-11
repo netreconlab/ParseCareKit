@@ -81,6 +81,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -99,10 +100,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -155,6 +153,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -276,7 +275,8 @@
             "let countryCodes: OrderedDictionary = [\"BR\": \"Brazil\", \"GH\": \"Ghana\", \"JP\": \"Japan\"]",
             "let index = countryCodes.elements.index(forKey: \"JP\")",
             "",
-            "print(\"Country code for \\(countryCodes[offset: index!].value): '\\(countryCodes[offset: index!].key)'.\")",
+            "let (key, value) = countryCodes.elements[index!]",
+            "print(\"Country code for \\(value): '\\(key)'.\")",
             "\/\/ Prints \"Country code for Japan: 'JP'.\""
           ],
           "syntax" : null,
@@ -525,6 +525,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV3Keyxmfp",
       "text" : "Key"
     },
     {

@@ -29,7 +29,7 @@
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "_Concurrency",
-    "externalID" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF::SYNTHESIZED::s:12CareKitStore0aC12QueryResultsV",
+    "externalID" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__sAL7ElementRpzlF::SYNTHESIZED::s:12CareKitStore0aC12QueryResultsV",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -73,6 +73,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
         "text" : "Instant"
       },
       {
@@ -81,6 +82,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
         "text" : "Duration"
       },
       {
@@ -105,6 +107,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
         "text" : "Instant"
       },
       {
@@ -113,6 +116,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
         "text" : "Duration"
       },
       {
@@ -265,6 +269,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
               "text" : "Instant"
             },
             {
@@ -273,6 +278,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
               "text" : "Duration"
             },
             {
@@ -297,6 +303,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
               "text" : "Instant"
             },
             {
@@ -305,6 +312,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
               "text" : "Duration"
             },
             {
@@ -390,6 +398,32 @@
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:12_Concurrency5ClockP",
               "text" : "Clock"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
+              "text" : "Element"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s8SendableP",
+              "text" : "Sendable"
             }
           ]
         }
@@ -572,6 +606,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
       "text" : "Instant"
     },
     {
@@ -580,6 +615,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
       "text" : "Duration"
     },
     {
@@ -604,6 +640,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
       "text" : "Instant"
     },
     {
@@ -612,6 +649,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
       "text" : "Duration"
     },
     {

@@ -141,7 +141,7 @@
       ]
     },
     "extendedModule" : "AsyncAlgorithms",
-    "externalID" : "s:15AsyncAlgorithms0A14Merge2SequenceV04makeA8IteratorAC0aF0Vyxq__GyF",
+    "externalID" : "s:15AsyncAlgorithms0A14Merge2SequenceV04makeA8IteratorAC0F0Vyxq__GyF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -161,8 +161,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge2SequenceV0A8IteratorV",
-        "text" : "AsyncIterator"
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge2SequenceV8IteratorV",
+        "text" : "Iterator"
       }
     ],
     "modules" : [
@@ -203,10 +203,10 @@
               "text" : "() -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/AsyncIterator",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/Iterator",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge2SequenceV0A8IteratorV",
-              "text" : "AsyncIterator"
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge2SequenceV8IteratorV",
+              "text" : "Iterator"
             }
           ]
         }
@@ -297,7 +297,18 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge2Sequence/AsyncIterator": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge2Sequence/AsyncSequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/AsyncSequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "AsyncSequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence\/asyncsequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge2Sequence/Iterator": {
   "abstract" : [
 
   ],
@@ -424,32 +435,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "AsyncIterator"
+      "text" : "Iterator"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/AsyncIterator",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/Iterator",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "AsyncIterator"
+      "text" : "Iterator"
     }
   ],
   "role" : "symbol",
-  "title" : "AsyncMerge2Sequence.AsyncIterator",
+  "title" : "AsyncMerge2Sequence.Iterator",
   "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence\/asynciterator"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge2Sequence/AsyncSequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/AsyncSequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "AsyncSequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence\/asyncsequence-implementations"
+  "url" : "\/documentation\/asyncalgorithms\/asyncmerge2sequence\/iterator"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge2Sequence/makeAsyncIterator()": {
   "abstract" : [
@@ -586,8 +586,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge2SequenceV0A8IteratorV",
-      "text" : "AsyncIterator"
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge2SequenceV8IteratorV",
+      "text" : "Iterator"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge2Sequence\/makeAsyncIterator()",

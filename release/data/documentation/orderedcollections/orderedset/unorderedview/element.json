@@ -79,10 +79,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "navigatorTitle" : [
@@ -131,18 +128,11 @@
             },
             {
               "kind" : "text",
-              "text" : "<"
+              "text" : "."
             },
             {
               "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ">."
-            },
-            {
-              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetV7Elementa",
               "text" : "Element"
             }
           ]

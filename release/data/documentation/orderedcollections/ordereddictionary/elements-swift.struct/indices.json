@@ -1,15 +1,19 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "The type that represents the indices that are valid for subscripting the",
       "type" : "text"
     },
     {
-      "code" : "RandomAccessCollection.Indices",
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "Elements",
       "type" : "codeVoice"
     },
     {
-      "text" : ".",
+      "text" : " collection, in ascending order.",
       "type" : "text"
     }
   ],
@@ -79,10 +83,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "navigatorTitle" : [
@@ -290,7 +291,22 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Elements-swift.struct/Indices": {
   "abstract" : [
-
+    {
+      "text" : "The type that represents the indices that are valid for subscripting the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "Elements",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " collection, in ascending order.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

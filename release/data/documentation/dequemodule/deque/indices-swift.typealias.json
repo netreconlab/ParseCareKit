@@ -46,10 +46,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "DequeModule"
-        ]
+        "name" : "DequeModule"
       }
     ],
     "navigatorTitle" : [

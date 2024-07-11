@@ -73,6 +73,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10ParseSwift9FetchableP12FetchingTypeQa",
         "text" : "FetchingType"
       }
     ],
@@ -141,7 +142,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/FetchingType",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10ParseSwift9FetchableP12FetchingTypeQa",
               "text" : "FetchingType"
             }
           ]
@@ -326,6 +329,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift9FetchableP12FetchingTypeQa",
       "text" : "FetchingType"
     }
   ],
@@ -335,6 +339,32 @@
   "title" : "fetch()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckoutcome\/fetch()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Fetchable/FetchingType": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FetchingType"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Fetchable\/FetchingType",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "FetchingType",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/fetchable\/fetchingtype"
 }
 }
 }

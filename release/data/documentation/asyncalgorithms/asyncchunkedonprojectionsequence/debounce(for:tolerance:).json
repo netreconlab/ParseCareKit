@@ -29,7 +29,7 @@
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "_Concurrency",
-    "externalID" : "s:Sci15AsyncAlgorithmsE8debounce3for9toleranceAA0A16DebounceSequenceVyx12_Concurrency15ContinuousClockVGs8DurationV_ALSgts8SendableRzrlF::SYNTHESIZED::s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
+    "externalID" : "s:Sci15AsyncAlgorithmsE8debounce3for9toleranceAA0A16DebounceSequenceVyx12_Concurrency15ContinuousClockVGs8DurationV_ALSgts8SendableRzsAN7ElementRpzrlF::SYNTHESIZED::s:15AsyncAlgorithms0A27ChunkedOnProjectionSequenceV",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -258,6 +258,32 @@
             {
               "kind" : "typeIdentifier",
               "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s8SendableP",
+              "text" : "Sendable"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "Self"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
+              "text" : "Element"
             },
             {
               "kind" : "text",

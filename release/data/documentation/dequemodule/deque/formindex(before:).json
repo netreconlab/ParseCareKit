@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "RandomAccessCollection.formIndex(before:)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "Replaces the given index with its predecessor.",
       "type" : "text"
     }
   ],
@@ -75,10 +67,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "DequeModule"
-        ]
+        "name" : "DequeModule"
       }
     ],
     "role" : "symbol",
@@ -150,6 +139,75 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Parameter ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "i",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : ": A valid index of the deque. ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "i",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " must be greater than ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "startIndex",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : ".",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "O(1)",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Complexity",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -256,7 +314,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/formIndex(before:)": {
   "abstract" : [
-
+    {
+      "text" : "Replaces the given index with its predecessor.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "A read-only collection view for the keys contained in this dictionary, as",
+      "text" : "A read-only ordered collection view for the keys contained in this dictionary, as",
       "type" : "text"
     },
     {
@@ -97,6 +97,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -106,10 +107,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -156,6 +154,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -273,7 +272,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/keys": {
   "abstract" : [
     {
-      "text" : "A read-only collection view for the keys contained in this dictionary, as",
+      "text" : "A read-only ordered collection view for the keys contained in this dictionary, as",
       "type" : "text"
     },
     {
@@ -353,6 +352,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
       "text" : "Key"
     },
     {

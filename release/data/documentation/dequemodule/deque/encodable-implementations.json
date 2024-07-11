@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Encodable Implementations"
   },
   "schemaVersion" : {
@@ -111,7 +112,18 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/encode(to:)": {
   "abstract" : [
-
+    {
+      "text" : "Encodes the elements of this deque into the given encoder in an unkeyed",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "container.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

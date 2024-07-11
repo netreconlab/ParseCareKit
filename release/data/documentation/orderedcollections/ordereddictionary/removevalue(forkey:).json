@@ -80,6 +80,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -88,6 +89,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
         "text" : "Value"
       },
       {
@@ -97,10 +99,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -169,6 +168,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -177,6 +177,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
               "text" : "Value"
             },
             {
@@ -484,6 +485,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
       "text" : "Key"
     },
     {
@@ -492,6 +494,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
       "text" : "Value"
     },
     {

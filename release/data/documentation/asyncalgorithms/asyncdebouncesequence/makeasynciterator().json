@@ -71,7 +71,7 @@
           "type" : "codeVoice"
         },
         {
-          "text" : ", and ",
+          "text" : ", ",
           "type" : "text"
         },
         {
@@ -87,13 +87,29 @@
           "type" : "codeVoice"
         },
         {
+          "text" : ", and ",
+          "type" : "text"
+        },
+        {
+          "code" : "Base.Element",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " conforms to ",
+          "type" : "text"
+        },
+        {
+          "code" : "Sendable",
+          "type" : "codeVoice"
+        },
+        {
           "text" : ".",
           "type" : "text"
         }
       ]
     },
     "extendedModule" : "AsyncAlgorithms",
-    "externalID" : "s:15AsyncAlgorithms0A16DebounceSequenceV04makeA8IteratorAC0aF0Vyxq__GyF",
+    "externalID" : "s:15AsyncAlgorithms0A16DebounceSequenceV04makeA8IteratorAC0F0Vyxq__GyF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -113,8 +129,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV0A8IteratorV",
-        "text" : "AsyncIterator"
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV8IteratorV",
+        "text" : "Iterator"
       }
     ],
     "modules" : [
@@ -185,10 +201,10 @@
               "text" : "() -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/AsyncIterator",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/Iterator",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV0A8IteratorV",
-              "text" : "AsyncIterator"
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV8IteratorV",
+              "text" : "Iterator"
             }
           ]
         }
@@ -279,7 +295,18 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncDebounceSequence/AsyncIterator": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncDebounceSequence/AsyncSequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/AsyncSequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "AsyncSequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence\/asyncsequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncDebounceSequence/Iterator": {
   "abstract" : [
 
   ],
@@ -326,7 +353,7 @@
         "type" : "codeVoice"
       },
       {
-        "text" : ", and ",
+        "text" : ", ",
         "type" : "text"
       },
       {
@@ -339,6 +366,22 @@
       },
       {
         "code" : "Clock",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ", and ",
+        "type" : "text"
+      },
+      {
+        "code" : "Base.Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Sendable",
         "type" : "codeVoice"
       },
       {
@@ -358,32 +401,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "AsyncIterator"
+      "text" : "Iterator"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/AsyncIterator",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/Iterator",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "AsyncIterator"
+      "text" : "Iterator"
     }
   ],
   "role" : "symbol",
-  "title" : "AsyncDebounceSequence.AsyncIterator",
+  "title" : "AsyncDebounceSequence.Iterator",
   "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence\/asynciterator"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncDebounceSequence/AsyncSequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/AsyncSequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "AsyncSequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence\/asyncsequence-implementations"
+  "url" : "\/documentation\/asyncalgorithms\/asyncdebouncesequence\/iterator"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncDebounceSequence/makeAsyncIterator()": {
   "abstract" : [
@@ -432,7 +464,7 @@
         "type" : "codeVoice"
       },
       {
-        "text" : ", and ",
+        "text" : ", ",
         "type" : "text"
       },
       {
@@ -445,6 +477,22 @@
       },
       {
         "code" : "Clock",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ", and ",
+        "type" : "text"
+      },
+      {
+        "code" : "Base.Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Sendable",
         "type" : "codeVoice"
       },
       {
@@ -472,8 +520,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV0A8IteratorV",
-      "text" : "AsyncIterator"
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A16DebounceSequenceV8IteratorV",
+      "text" : "Iterator"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncDebounceSequence\/makeAsyncIterator()",

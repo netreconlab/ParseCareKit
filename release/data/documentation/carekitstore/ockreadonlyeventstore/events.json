@@ -107,7 +107,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadOnlyEventStore\/Events",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore016OCKReadOnlyEventC0P6EventsQa",
               "text" : "Events"
             },
             {
@@ -116,6 +118,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
               "text" : "Element"
             },
             {
@@ -141,7 +144,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Task",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore015OCKReadableTaskC0P0E0Qa",
               "text" : "Task"
             },
             {
@@ -157,7 +162,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableOutcomeStore\/Outcome",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore018OCKReadableOutcomeC0P0E0Qa",
               "text" : "Outcome"
             },
             {
@@ -308,6 +315,103 @@
   "title" : "Events",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadonlyeventstore\/events"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableOutcomeStore/Outcome": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Outcome"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyOutcomeP",
+      "text" : "OCKAnyOutcome"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SQ",
+      "text" : "Equatable"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s12IdentifiableP",
+      "text" : "Identifiable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableOutcomeStore\/Outcome",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "Outcome",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockreadableoutcomestore\/outcome"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableTaskStore/Task": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Task"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore10OCKAnyTaskP",
+      "text" : "OCKAnyTask"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SQ",
+      "text" : "Equatable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore\/Task",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "Task",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockreadabletaskstore\/task"
 }
 }
 }

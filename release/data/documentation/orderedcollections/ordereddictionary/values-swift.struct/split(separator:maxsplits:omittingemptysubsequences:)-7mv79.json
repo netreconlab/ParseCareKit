@@ -98,6 +98,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -148,6 +149,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl11SubSequenceQa",
         "text" : "SubSequence"
       },
       {
@@ -157,7 +159,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
+        "name" : "OrderedCollections",
         "relatedModules" : [
           "Swift"
         ]
@@ -213,6 +215,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -263,6 +266,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl11SubSequenceQa",
               "text" : "SubSequence"
             },
             {
@@ -490,6 +494,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -540,6 +545,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     },
     {

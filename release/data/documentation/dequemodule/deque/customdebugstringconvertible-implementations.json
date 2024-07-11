@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "CustomDebugStringConvertible Implementations"
   },
   "schemaVersion" : {
@@ -111,7 +112,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/debugDescription": {
   "abstract" : [
-
+    {
+      "text" : "A textual representation of this instance, suitable for debugging.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

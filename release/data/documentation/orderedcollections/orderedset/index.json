@@ -1,11 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "The index type for ordered sets, ",
       "type" : "text"
     },
     {
-      "code" : "RandomAccessCollection.Index",
+      "code" : "Int",
       "type" : "codeVoice"
     },
     {
@@ -78,10 +78,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "navigatorTitle" : [
@@ -131,6 +128,38 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "code" : "OrderedSet",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " indices are integer offsets from the start of the collection,",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "starting at zero for the first element (if exists).",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -202,7 +231,18 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/Index": {
   "abstract" : [
-
+    {
+      "text" : "The index type for ordered sets, ",
+      "type" : "text"
+    },
+    {
+      "code" : "Int",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

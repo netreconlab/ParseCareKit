@@ -135,14 +135,6 @@
                 {
                   "text" : " instead.",
                   "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "BAKER mark this internal.",
-                  "type" : "text"
                 }
               ],
               "type" : "paragraph"

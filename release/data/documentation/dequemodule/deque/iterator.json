@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "Sequence.Iterator",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "An iterator over the members of a deque.",
       "type" : "text"
     }
   ],
@@ -46,10 +38,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "DequeModule"
-        ]
+        "name" : "DequeModule"
       }
     ],
     "navigatorTitle" : [
@@ -217,7 +206,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Iterator": {
   "abstract" : [
-
+    {
+      "text" : "An iterator over the members of a deque.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -248,7 +240,26 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Iterator/next()": {
   "abstract" : [
-
+    {
+      "text" : "Advances to the next element and returns it, or ",
+      "type" : "text"
+    },
+    {
+      "code" : "nil",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " if no next element",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "exists.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -269,6 +280,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
       "text" : "Element"
     },
     {

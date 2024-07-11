@@ -107,7 +107,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableContactStore\/Contacts",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore018OCKReadableContactC0P8ContactsQa",
               "text" : "Contacts"
             },
             {
@@ -116,6 +118,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
               "text" : "Element"
             },
             {
@@ -131,7 +134,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableContactStore\/Contact",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore018OCKReadableContactC0P0E0Qa",
               "text" : "Contact"
             },
             {
@@ -210,6 +215,59 @@
   "title" : "OCKReadableContactStore",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadablecontactstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableContactStore/Contact": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Contact"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyContactP",
+      "text" : "OCKAnyContact"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SQ",
+      "text" : "Equatable"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s12IdentifiableP",
+      "text" : "Identifiable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableContactStore\/Contact",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "Contact",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockreadablecontactstore\/contact"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadableContactStore/Contacts": {
   "abstract" : [

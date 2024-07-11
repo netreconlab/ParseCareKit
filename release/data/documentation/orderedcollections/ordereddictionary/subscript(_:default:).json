@@ -80,6 +80,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -96,6 +97,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
         "text" : "Value"
       },
       {
@@ -104,15 +106,13 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
         "text" : "Value"
       }
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -149,6 +149,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -173,14 +174,15 @@
             },
             {
               "kind" : "attribute",
-              "text" : "@autoclosure "
+              "text" : "@autoclosure"
             },
             {
               "kind" : "text",
-              "text" : "() -> "
+              "text" : " () -> "
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
               "text" : "Value"
             },
             {
@@ -189,6 +191,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
               "text" : "Value"
             },
             {
@@ -410,7 +413,7 @@
         {
           "code" : [
             "let message = \"Hello, Elle!\"",
-            "var letterCounts: [Character: Int] = [:]",
+            "var letterCounts: OrderedDictionary<Character, Int> = [:]",
             "for letter in message {",
             "    letterCounts[letter, default: 0] += 1",
             "}",
@@ -745,6 +748,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
       "text" : "Key"
     },
     {
@@ -761,6 +765,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
       "text" : "Value"
     },
     {
@@ -769,6 +774,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV5Valueq_mfp",
       "text" : "Value"
     }
   ],

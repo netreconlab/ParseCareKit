@@ -68,6 +68,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl5IndexQa",
         "text" : "Index"
       },
       {
@@ -94,7 +95,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
+        "name" : "OrderedCollections",
         "relatedModules" : [
           "Swift"
         ]
@@ -166,6 +167,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -357,7 +359,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Elements-swift.struct/SubSequence": {
   "abstract" : [
-
+    {
+      "text" : "A collection that represents a contiguous slice of an ordered dictionary.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [
@@ -468,6 +473,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {

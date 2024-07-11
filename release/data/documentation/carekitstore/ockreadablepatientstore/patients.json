@@ -107,7 +107,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patients",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore018OCKReadablePatientC0P8PatientsQa",
               "text" : "Patients"
             },
             {
@@ -116,6 +118,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
               "text" : "Element"
             },
             {
@@ -131,7 +134,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patient",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:12CareKitStore018OCKReadablePatientC0P0E0Qa",
               "text" : "Patient"
             },
             {
@@ -210,6 +215,59 @@
   "title" : "OCKReadablePatientStore",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockreadablepatientstore"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore/Patient": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Patient"
+    },
+    {
+      "kind" : "text",
+      "text" : " : "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:12CareKitStore13OCKAnyPatientP",
+      "text" : "OCKAnyPatient"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SQ",
+      "text" : "Equatable"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s12IdentifiableP",
+      "text" : "Identifiable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadablePatientStore\/Patient",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "Patient",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockreadablepatientstore\/patient"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKReadablePatientStore/Patients": {
   "abstract" : [

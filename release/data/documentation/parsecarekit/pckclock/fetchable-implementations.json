@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Fetchable Implementations"
   },
   "schemaVersion" : {
@@ -132,6 +133,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift9FetchableP12FetchingTypeQa",
       "text" : "FetchingType"
     }
   ],

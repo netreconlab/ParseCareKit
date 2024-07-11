@@ -65,12 +65,13 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl11SubSequenceQa",
         "text" : "SubSequence"
       }
     ],
     "modules" : [
       {
-        "name" : "Collections",
+        "name" : "DequeModule",
         "relatedModules" : [
           "Swift"
         ]
@@ -134,6 +135,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl11SubSequenceQa",
               "text" : "SubSequence"
             },
             {
@@ -175,6 +177,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -191,6 +194,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SX5BoundQa",
               "text" : "Bound"
             },
             {
@@ -360,6 +364,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl11SubSequenceQa",
       "text" : "SubSequence"
     }
   ],

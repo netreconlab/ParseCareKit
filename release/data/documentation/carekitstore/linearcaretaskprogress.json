@@ -165,6 +165,12 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/LinearCareTaskProgress\/init(value:goal:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/LinearCareTaskProgress\/fractionCompleted",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/LinearCareTaskProgress\/goal",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/LinearCareTaskProgress\/value"
@@ -382,6 +388,64 @@
   "title" : "goal",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/linearcaretaskprogress\/goal"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/LinearCareTaskProgress/init(value:goal:)": {
+  "abstract" : [
+    {
+      "text" : "Create a structure that defines user progress for a task that can be completed over time.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "value"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sd",
+      "text" : "Double"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "goal"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sd",
+      "text" : "Double"
+    },
+    {
+      "kind" : "text",
+      "text" : "?)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/LinearCareTaskProgress\/init(value:goal:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(value:goal:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/linearcaretaskprogress\/init(value:goal:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/LinearCareTaskProgress/value": {
   "abstract" : [

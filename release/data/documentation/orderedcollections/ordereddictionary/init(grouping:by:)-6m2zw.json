@@ -96,6 +96,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8grouping2byACyxSay7ElementQyd__GGqd___xAGKXEtKcAHRs_STRd__lufc1SL_qd__mfp",
         "text" : "S"
       },
       {
@@ -112,6 +113,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8grouping2byACyxSay7ElementQyd__GGqd___xAGKXEtKcAHRs_STRd__lufc1SL_qd__mfp",
         "text" : "S"
       },
       {
@@ -120,6 +122,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:ST7ElementQa",
         "text" : "Element"
       },
       {
@@ -136,6 +139,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -149,10 +153,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -205,6 +206,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8grouping2byACyxSay7ElementQyd__GGqd___xAGKXEtKcAHRs_STRd__lufc1SL_qd__mfp",
               "text" : "S"
             },
             {
@@ -229,6 +231,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8grouping2byACyxSay7ElementQyd__GGqd___xAGKXEtKcAHRs_STRd__lufc1SL_qd__mfp",
               "text" : "S"
             },
             {
@@ -237,6 +240,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -253,6 +257,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -293,6 +298,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -681,6 +687,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8grouping2byACyxSay7ElementQyd__GGqd___xAGKXEtKcAHRs_STRd__lufc1SL_qd__mfp",
       "text" : "S"
     },
     {
@@ -697,6 +704,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8grouping2byACyxSay7ElementQyd__GGqd___xAGKXEtKcAHRs_STRd__lufc1SL_qd__mfp",
       "text" : "S"
     },
     {
@@ -705,6 +713,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:ST7ElementQa",
       "text" : "Element"
     },
     {
@@ -721,6 +730,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV3Keyxmfp",
       "text" : "Key"
     },
     {

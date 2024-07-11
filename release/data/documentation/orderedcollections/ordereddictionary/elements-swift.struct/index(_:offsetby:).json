@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "RandomAccessCollection.index(_:offsetBy:)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "Returns an index that is the specified distance from the given index.",
       "type" : "text"
     }
   ],
@@ -114,10 +106,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -211,6 +200,207 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A valid index of the collection.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "i"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The distance to offset ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "i",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "distance"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "An index offset by ",
+              "type" : "text"
+            },
+            {
+              "code" : "distance",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " from the index ",
+              "type" : "text"
+            },
+            {
+              "code" : "i",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ". If ",
+              "type" : "text"
+            },
+            {
+              "code" : "distance",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "is positive, this is the same value as the result of ",
+              "type" : "text"
+            },
+            {
+              "code" : "distance",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " calls to",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "code" : "index(after:)",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ". If ",
+              "type" : "text"
+            },
+            {
+              "code" : "distance",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " is negative, this is the same value as",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "the result of ",
+              "type" : "text"
+            },
+            {
+              "code" : "abs(distance)",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " calls to ",
+              "type" : "text"
+            },
+            {
+              "code" : "index(before:)",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The value passed as ",
+              "type" : "text"
+            },
+            {
+              "code" : "distance",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " must not offset ",
+              "type" : "text"
+            },
+            {
+              "code" : "i",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " beyond the bounds of",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "the collection, or the returned value will not be a valid index.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "O(1)",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Complexity",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -367,7 +557,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Elements-swift.struct/index(_:offsetBy:)": {
   "abstract" : [
-
+    {
+      "text" : "Returns an index that is the specified distance from the given index.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

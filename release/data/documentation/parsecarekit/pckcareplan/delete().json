@@ -73,6 +73,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10ParseSwift9DeletableP12DeletingTypeQa",
         "text" : "DeletingType"
       }
     ],
@@ -141,7 +142,9 @@
               "text" : "."
             },
             {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Deletable\/DeletingType",
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10ParseSwift9DeletableP12DeletingTypeQa",
               "text" : "DeletingType"
             }
           ]
@@ -342,6 +345,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10ParseSwift9DeletableP12DeletingTypeQa",
       "text" : "DeletingType"
     }
   ],
@@ -351,6 +355,32 @@
   "title" : "delete()",
   "type" : "topic",
   "url" : "\/documentation\/parsecarekit\/pckcareplan\/delete()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Deletable/DeletingType": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "associatedtype"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "DeletingType"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Deletable\/DeletingType",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "DeletingType",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/deletable\/deletingtype"
 }
 }
 }

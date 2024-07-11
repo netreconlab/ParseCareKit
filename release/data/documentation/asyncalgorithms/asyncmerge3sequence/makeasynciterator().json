@@ -189,7 +189,7 @@
       ]
     },
     "extendedModule" : "AsyncAlgorithms",
-    "externalID" : "s:15AsyncAlgorithms0A14Merge3SequenceV04makeA8IteratorAC0aF0Vyxq_q0__GyF",
+    "externalID" : "s:15AsyncAlgorithms0A14Merge3SequenceV04makeA8IteratorAC0F0Vyxq_q0__GyF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -209,8 +209,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge3SequenceV0A8IteratorV",
-        "text" : "AsyncIterator"
+        "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge3SequenceV8IteratorV",
+        "text" : "Iterator"
       }
     ],
     "modules" : [
@@ -251,10 +251,10 @@
               "text" : "() -> "
             },
             {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/AsyncIterator",
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/Iterator",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge3SequenceV0A8IteratorV",
-              "text" : "AsyncIterator"
+              "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge3SequenceV8IteratorV",
+              "text" : "Iterator"
             }
           ]
         }
@@ -345,7 +345,18 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge3Sequence/AsyncIterator": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge3Sequence/AsyncSequence-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/AsyncSequence-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "AsyncSequence Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence\/asyncsequence-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge3Sequence/Iterator": {
   "abstract" : [
 
   ],
@@ -520,32 +531,21 @@
     },
     {
       "kind" : "identifier",
-      "text" : "AsyncIterator"
+      "text" : "Iterator"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/AsyncIterator",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/Iterator",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "AsyncIterator"
+      "text" : "Iterator"
     }
   ],
   "role" : "symbol",
-  "title" : "AsyncMerge3Sequence.AsyncIterator",
+  "title" : "AsyncMerge3Sequence.Iterator",
   "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence\/asynciterator"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge3Sequence/AsyncSequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/AsyncSequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "AsyncSequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence\/asyncsequence-implementations"
+  "url" : "\/documentation\/asyncalgorithms\/asyncmerge3sequence\/iterator"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncMerge3Sequence/makeAsyncIterator()": {
   "abstract" : [
@@ -730,8 +730,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge3SequenceV0A8IteratorV",
-      "text" : "AsyncIterator"
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A14Merge3SequenceV8IteratorV",
+      "text" : "Iterator"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncMerge3Sequence\/makeAsyncIterator()",

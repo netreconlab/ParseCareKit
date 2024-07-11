@@ -1,11 +1,11 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "The index type for a dictionary’s values view, ",
       "type" : "text"
     },
     {
-      "code" : "RandomAccessCollection.Index",
+      "code" : "Int",
       "type" : "codeVoice"
     },
     {
@@ -79,10 +79,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "navigatorTitle" : [
@@ -132,6 +129,34 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Indices in ",
+              "type" : "text"
+            },
+            {
+              "code" : "Values",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " are integer offsets from the start of the collection.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -269,7 +294,18 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Values-swift.struct/Index": {
   "abstract" : [
-
+    {
+      "text" : "The index type for a dictionary’s values view, ",
+      "type" : "text"
+    },
+    {
+      "code" : "Int",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

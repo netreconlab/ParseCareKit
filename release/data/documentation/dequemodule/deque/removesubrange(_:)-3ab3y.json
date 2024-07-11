@@ -66,7 +66,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
+        "name" : "DequeModule",
         "relatedModules" : [
           "Swift"
         ]
@@ -179,6 +179,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -195,6 +196,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SX5BoundQa",
               "text" : "Bound"
             }
           ]

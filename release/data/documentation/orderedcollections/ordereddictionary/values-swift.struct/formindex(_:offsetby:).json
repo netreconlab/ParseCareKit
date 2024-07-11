@@ -66,6 +66,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl5IndexQa",
         "text" : "Index"
       },
       {
@@ -92,7 +93,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
+        "name" : "OrderedCollections",
         "relatedModules" : [
           "Swift"
         ]
@@ -164,6 +165,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -384,6 +386,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {

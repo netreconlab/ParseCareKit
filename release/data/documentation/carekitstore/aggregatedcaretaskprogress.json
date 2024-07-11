@@ -418,7 +418,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/AggregatedCareTaskProgress/init(events:by:)": {
   "abstract" : [
     {
-      "text" : "Create user progress  by computing and combining the progress for multiple tasks using a single strategy.",
+      "text" : "Create user progress by computing and combining the progress for multiple tasks using a single strategy.",
       "type" : "text"
     }
   ],

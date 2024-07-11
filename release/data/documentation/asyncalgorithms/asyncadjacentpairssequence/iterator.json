@@ -98,7 +98,6 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/ScI"
       ],
       "kind" : "relationships",
@@ -365,11 +364,6 @@
   "title" : "next()",
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncadjacentpairssequence\/iterator\/next()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
-  "title" : "Swift.Sendable",
-  "type" : "unresolvable"
 }
 }
 }

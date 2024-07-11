@@ -1,15 +1,31 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "Call ",
       "type" : "text"
     },
     {
-      "code" : "Sequence.withContiguousStorageIfAvailable(_:)",
+      "code" : "body(p)",
       "type" : "codeVoice"
     },
     {
-      "text" : ".",
+      "text" : ", where ",
+      "type" : "text"
+    },
+    {
+      "code" : "p",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is a buffer pointer to the collection’s",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "contiguous storage. Ordered sets always have contiguous storage.",
       "type" : "text"
     }
   ],
@@ -100,6 +116,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV7Elementxmfp",
         "text" : "Element"
       },
       {
@@ -116,6 +133,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV32withContiguousStorageIfAvailableyqd__Sgqd__SRyxGKXEKlF1RL_qd__mfp",
         "text" : "R"
       },
       {
@@ -132,6 +150,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV32withContiguousStorageIfAvailableyqd__Sgqd__SRyxGKXEKlF1RL_qd__mfp",
         "text" : "R"
       },
       {
@@ -141,10 +160,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -214,6 +230,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV7Elementxmfp",
               "text" : "Element"
             },
             {
@@ -230,6 +247,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV32withContiguousStorageIfAvailableyqd__Sgqd__SRyxGKXEKlF1RL_qd__mfp",
               "text" : "R"
             },
             {
@@ -246,6 +264,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV32withContiguousStorageIfAvailableyqd__Sgqd__SRyxGKXEKlF1RL_qd__mfp",
               "text" : "R"
             },
             {
@@ -256,6 +275,96 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A function to call. The function must not escape its",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "unsafe buffer pointer argument.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "body"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The value returned by ",
+              "type" : "text"
+            },
+            {
+              "code" : "body",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "O(1) (ignoring time spent in ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "body",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ")",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Complexity",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -338,7 +447,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/SubSequence": {
   "abstract" : [
-
+    {
+      "text" : "A collection that represents a contiguous slice of an ordered set.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [
@@ -412,7 +524,34 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/SubSequence/withContiguousStorageIfAvailable(_:)-16p2s": {
   "abstract" : [
-
+    {
+      "text" : "Call ",
+      "type" : "text"
+    },
+    {
+      "code" : "body(p)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", where ",
+      "type" : "text"
+    },
+    {
+      "code" : "p",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is a buffer pointer to the collection’s",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "contiguous storage. Ordered sets always have contiguous storage.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [
@@ -482,6 +621,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV7Elementxmfp",
       "text" : "Element"
     },
     {
@@ -498,6 +638,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV32withContiguousStorageIfAvailableyqd__Sgqd__SRyxGKXEKlF1RL_qd__mfp",
       "text" : "R"
     },
     {
@@ -514,6 +655,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetV11SubSequenceV32withContiguousStorageIfAvailableyqd__Sgqd__SRyxGKXEKlF1RL_qd__mfp",
       "text" : "R"
     },
     {

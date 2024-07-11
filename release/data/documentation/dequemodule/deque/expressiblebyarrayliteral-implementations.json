@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "ExpressibleByArrayLiteral Implementations"
   },
   "schemaVersion" : {
@@ -111,7 +112,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/init(arrayLiteral:)": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new deque from the contents of an array literal.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -132,6 +136,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
       "text" : "Element"
     },
     {

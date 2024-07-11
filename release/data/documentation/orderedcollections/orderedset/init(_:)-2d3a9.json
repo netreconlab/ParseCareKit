@@ -81,6 +81,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A3SetV7Elementxmfp",
         "text" : "Element"
       },
       {
@@ -89,6 +90,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A3SetVyACyxGSD4KeysVyxqd___Gclufc5ValueL_qd__mfp",
         "text" : "Value"
       },
       {
@@ -107,10 +109,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -172,6 +171,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetV7Elementxmfp",
               "text" : "Element"
             },
             {
@@ -180,6 +180,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A3SetVyACyxGSD4KeysVyxqd___Gclufc5ValueL_qd__mfp",
               "text" : "Value"
             },
             {
@@ -409,6 +410,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetV7Elementxmfp",
       "text" : "Element"
     },
     {
@@ -417,6 +419,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A3SetVyACyxGSD4KeysVyxqd___Gclufc5ValueL_qd__mfp",
       "text" : "Value"
     },
     {

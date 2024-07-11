@@ -83,6 +83,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV11SubSequenceV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -101,10 +102,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -157,6 +155,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV11SubSequenceV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -279,7 +278,8 @@
             "let slice = countryCodes.elements[1...]",
             "let index = slice.index(forKey: \"JP\")",
             "",
-            "print(\"Country code for \\(countryCodes[offset: index!].value): '\\(countryCodes[offset: index!].key)'.\")",
+            "let (key, value) = countryCodes.elements[index!]",
+            "print(\"Country code for \\(value): '\\(key)'.\")",
             "\/\/ Prints \"Country code for Japan: 'JP'.\""
           ],
           "syntax" : null,
@@ -475,7 +475,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Elements-swift.struct/SubSequence": {
   "abstract" : [
-
+    {
+      "text" : "A collection that represents a contiguous slice of an ordered dictionary.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [
@@ -602,6 +605,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV11SubSequenceV3Keyxmfp",
       "text" : "Key"
     },
     {

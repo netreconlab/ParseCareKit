@@ -81,24 +81,6 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV",
-        "text" : "AsyncInterspersedSequence"
-      },
-      {
-        "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV4Basexmfp",
-        "text" : "Base"
-      },
-      {
-        "kind" : "text",
-        "text" : ">."
-      },
-      {
-        "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV8IteratorV",
         "text" : "Iterator"
       }
@@ -139,25 +121,6 @@
             {
               "kind" : "text",
               "text" : "() -> "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncInterspersedSequence",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV",
-              "text" : "AsyncInterspersedSequence"
-            },
-            {
-              "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV4Basexmfp",
-              "text" : "Base"
-            },
-            {
-              "kind" : "text",
-              "text" : ">."
             },
             {
               "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncInterspersedSequence\/Iterator",
@@ -383,24 +346,6 @@
     {
       "kind" : "text",
       "text" : "() -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV",
-      "text" : "AsyncInterspersedSequence"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV4Basexmfp",
-      "text" : "Base"
-    },
-    {
-      "kind" : "text",
-      "text" : ">."
     },
     {
       "kind" : "typeIdentifier",

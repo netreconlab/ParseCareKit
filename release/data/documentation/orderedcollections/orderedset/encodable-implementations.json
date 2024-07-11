@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Encodable Implementations"
   },
   "schemaVersion" : {
@@ -87,7 +88,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/encode(to:)": {
   "abstract" : [
-
+    {
+      "text" : "Encodes the elements of this ordered set into the given encoder.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

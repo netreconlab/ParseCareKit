@@ -1,15 +1,63 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "Call ",
       "type" : "text"
     },
     {
-      "code" : "MutableCollection.withContiguousMutableStorageIfAvailable(_:)",
+      "code" : "body(b)",
       "type" : "codeVoice"
     },
     {
-      "text" : ".",
+      "text" : ", where ",
+      "type" : "text"
+    },
+    {
+      "code" : "b",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is an unsafe buffer pointer to the deque’s",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "mutable contiguous storage. If the deque’s contents aren’t stored",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "contiguously, ",
+      "type" : "text"
+    },
+    {
+      "code" : "body",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is not called and ",
+      "type" : "text"
+    },
+    {
+      "code" : "nil",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is returned. The supplied",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "buffer pointer is only valid for the duration of the call.",
       "type" : "text"
     }
   ],
@@ -74,6 +122,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
         "text" : "Element"
       },
       {
@@ -90,6 +139,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:11DequeModule0A0V39withContiguousMutableStorageIfAvailableyqd__Sgqd__SryxGzKXEKlF1RL_qd__mfp",
         "text" : "R"
       },
       {
@@ -106,6 +156,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:11DequeModule0A0V39withContiguousMutableStorageIfAvailableyqd__Sgqd__SryxGzKXEKlF1RL_qd__mfp",
         "text" : "R"
       },
       {
@@ -115,10 +166,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "DequeModule"
-        ]
+        "name" : "DequeModule"
       }
     ],
     "role" : "symbol",
@@ -204,6 +252,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
               "text" : "Element"
             },
             {
@@ -220,6 +269,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:11DequeModule0A0V39withContiguousMutableStorageIfAvailableyqd__Sgqd__SryxGzKXEKlF1RL_qd__mfp",
               "text" : "R"
             },
             {
@@ -236,6 +286,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:11DequeModule0A0V39withContiguousMutableStorageIfAvailableyqd__Sgqd__SryxGzKXEKlF1RL_qd__mfp",
               "text" : "R"
             },
             {
@@ -246,6 +297,157 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The function to invoke.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "body"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The value returned by ",
+              "type" : "text"
+            },
+            {
+              "code" : "body",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", or ",
+              "type" : "text"
+            },
+            {
+              "code" : "nil",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " if ",
+              "type" : "text"
+            },
+            {
+              "code" : "body",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " wasn’t called.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Often, the optimizer can eliminate bounds- and uniqueness-checks within an",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "algorithm, but when that fails, invoking the same algorithm on the unsafe",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "buffer supplied to ",
+              "type" : "text"
+            },
+            {
+              "code" : "body",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " lets you trade safety for speed.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "O(1) when this instance has a unique reference to its",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "underlying storage; O(",
+                  "type" : "text"
+                },
+                {
+                  "code" : "count",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ") otherwise. (Not counting the call to",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "body",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ".)",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Complexity",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -352,7 +554,66 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/withContiguousMutableStorageIfAvailable(_:)-9ksuh": {
   "abstract" : [
-
+    {
+      "text" : "Call ",
+      "type" : "text"
+    },
+    {
+      "code" : "body(b)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ", where ",
+      "type" : "text"
+    },
+    {
+      "code" : "b",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is an unsafe buffer pointer to the deque’s",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "mutable contiguous storage. If the deque’s contents aren’t stored",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "contiguously, ",
+      "type" : "text"
+    },
+    {
+      "code" : "body",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is not called and ",
+      "type" : "text"
+    },
+    {
+      "code" : "nil",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is returned. The supplied",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "buffer pointer is only valid for the duration of the call.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -398,6 +659,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
       "text" : "Element"
     },
     {
@@ -414,6 +676,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V39withContiguousMutableStorageIfAvailableyqd__Sgqd__SryxGzKXEKlF1RL_qd__mfp",
       "text" : "R"
     },
     {
@@ -430,6 +693,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V39withContiguousMutableStorageIfAvailableyqd__Sgqd__SryxGzKXEKlF1RL_qd__mfp",
       "text" : "R"
     },
     {

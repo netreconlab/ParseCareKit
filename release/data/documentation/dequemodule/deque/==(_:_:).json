@@ -1,15 +1,23 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
+      "text" : "Returns a Boolean value indicating whether two values are equal. Two",
       "type" : "text"
     },
     {
-      "code" : "Equatable.==(_:_:)",
-      "type" : "codeVoice"
+      "text" : " ",
+      "type" : "text"
     },
     {
-      "text" : ".",
+      "text" : "deques are considered equal if they contain the same elements in the same",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "order.",
       "type" : "text"
     }
   ],
@@ -89,41 +97,15 @@
       },
       {
         "kind" : "text",
-        "text" : "("
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:11DequeModule0A0V",
-        "text" : "Deque"
+        "text" : "(`Self`"
       },
       {
         "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "Element"
+        "text" : ", `Self`"
       },
       {
         "kind" : "text",
-        "text" : ">, "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:11DequeModule0A0V",
-        "text" : "Deque"
-      },
-      {
-        "kind" : "text",
-        "text" : "<"
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "Element"
-      },
-      {
-        "kind" : "text",
-        "text" : ">) -> "
+        "text" : ") -> "
       },
       {
         "kind" : "typeIdentifier",
@@ -133,10 +115,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "DequeModule"
-        ]
+        "name" : "DequeModule"
       }
     ],
     "role" : "symbol",
@@ -189,25 +168,11 @@
             },
             {
               "kind" : "text",
-              "text" : ": "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:11DequeModule0A0V",
-              "text" : "Deque"
+              "text" : ": `Self`"
             },
             {
               "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ">, "
+              "text" : ", "
             },
             {
               "kind" : "internalParam",
@@ -215,25 +180,11 @@
             },
             {
               "kind" : "text",
-              "text" : ": "
-            },
-            {
-              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:11DequeModule0A0V",
-              "text" : "Deque"
+              "text" : ": `Self`"
             },
             {
               "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "Element"
-            },
-            {
-              "kind" : "text",
-              "text" : ">) -> "
+              "text" : ") -> "
             },
             {
               "kind" : "typeIdentifier",
@@ -244,6 +195,41 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "O(",
+                  "type" : "text"
+                },
+                {
+                  "code" : "min(left.count, right.count)",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : ")",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Complexity",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -339,7 +325,26 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/==(_:_:)": {
   "abstract" : [
-
+    {
+      "text" : "Returns a Boolean value indicating whether two values are equal. Two",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "deques are considered equal if they contain the same elements in the same",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "order.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [
@@ -400,41 +405,15 @@
     },
     {
       "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:11DequeModule0A0V",
-      "text" : "Deque"
+      "text" : "(`Self`"
     },
     {
       "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Element"
+      "text" : ", `Self`"
     },
     {
       "kind" : "text",
-      "text" : ">, "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:11DequeModule0A0V",
-      "text" : "Deque"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">) -> "
+      "text" : ") -> "
     },
     {
       "kind" : "typeIdentifier",

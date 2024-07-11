@@ -20,6 +20,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "CustomReflectable Implementations"
   },
   "schemaVersion" : {
@@ -166,7 +167,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/customMirror": {
   "abstract" : [
-
+    {
+      "text" : "The custom mirror for this instance.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "AsyncSequence Implementations"
   },
   "schemaVersion" : {
@@ -61,7 +62,11 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/first(where:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/flatMap(_:)-1l3sb",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/flatMap(_:)-277gw",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(with:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-1y8ra",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-51url",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-7azjg",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-9a6nu",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-oy16",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/joined()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/joined(separator:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/map(_:)-5k84n",
@@ -80,11 +85,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/reductions(into:_:)-78zlg",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/reductions(into:_:)-942q",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/removeDuplicates()",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/removeDuplicates(by:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:clock:latest:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:clock:reducing:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:latest:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:reducing:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/removeDuplicates(by:)"
       ],
       "title" : "Instance Methods"
     }
@@ -248,6 +249,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -1940,6 +1942,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2042,6 +2045,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2250,6 +2254,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2324,6 +2329,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2534,7 +2540,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__sAL7ElementRpzlF1CL_qd__mfp",
       "text" : "C"
     },
     {
@@ -2569,7 +2575,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__sAL7ElementRpzlF1CL_qd__mfp",
       "text" : "C"
     },
     {
@@ -2604,7 +2610,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__sAL7ElementRpzlF1CL_qd__mfp",
       "text" : "C"
     },
     {
@@ -2630,7 +2636,7 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__lF1CL_qd__mfp",
+      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8debounce3for9tolerance5clockAA0A16DebounceSequenceVyxqd__G8DurationQyd___AJSgqd__ts8SendableRz12_Concurrency5ClockRd__sAL7ElementRpzlF1CL_qd__mfp",
       "text" : "C"
     },
     {
@@ -2684,6 +2690,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2818,6 +2825,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2905,6 +2913,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -2962,6 +2971,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3015,6 +3025,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3117,6 +3128,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3172,10 +3184,10 @@
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/flatmap(_:)-277gw"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/interspersed(with:)": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/interspersed(every:with:)-1y8ra": {
   "abstract" : [
     {
-      "text" : "Returns an asynchronous sequence containing elements of this asynchronous sequence with",
+      "text" : "Returns a new asynchronous sequence containing the elements of this asynchronous sequence, inserting",
       "type" : "text"
     },
     {
@@ -3183,7 +3195,7 @@
       "type" : "text"
     },
     {
-      "text" : "the given separator inserted in between each element.",
+      "text" : "the given separator between each element.",
       "type" : "text"
     }
   ],
@@ -3203,6 +3215,328 @@
     {
       "kind" : "text",
       "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "every"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": () "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A28ThrowingInterspersedSequenceV",
+      "text" : "AsyncThrowingInterspersedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-1y8ra",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "interspersed(every:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/interspersed(every:with:)-1y8ra"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/interspersed(every:with:)-51url": {
+  "abstract" : [
+    {
+      "text" : "Returns a new asynchronous sequence containing the elements of this asynchronous sequence, inserting",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the given separator between each element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "interspersed"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "every"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": () "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV",
+      "text" : "AsyncInterspersedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-51url",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "interspersed(every:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/interspersed(every:with:)-51url"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/interspersed(every:with:)-7azjg": {
+  "abstract" : [
+    {
+      "text" : "Returns a new asynchronous sequence containing the elements of this asynchronous sequence, inserting",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the given separator between each element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "interspersed"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "every"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": () "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "async"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A28ThrowingInterspersedSequenceV",
+      "text" : "AsyncThrowingInterspersedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-7azjg",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "interspersed(every:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/interspersed(every:with:)-7azjg"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/interspersed(every:with:)-9a6nu": {
+  "abstract" : [
+    {
+      "text" : "Returns a new asynchronous sequence containing the elements of this asynchronous sequence, inserting",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the given separator between each element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "interspersed"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "every"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
     },
     {
       "kind" : "externalParam",
@@ -3239,12 +3573,103 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(with:)",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-9a6nu",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "interspersed(with:)",
+  "title" : "interspersed(every:with:)",
   "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/interspersed(with:)"
+  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/interspersed(every:with:)-9a6nu"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/interspersed(every:with:)-oy16": {
+  "abstract" : [
+    {
+      "text" : "Returns a new asynchronous sequence containing the elements of this asynchronous sequence, inserting",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "the given separator between each element.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "interspersed"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "every"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": () -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:15AsyncAlgorithms0A20InterspersedSequenceV",
+      "text" : "AsyncInterspersedSequence"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/interspersed(every:with:)-oy16",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "interspersed(every:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/interspersed(every:with:)-oy16"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/joined()": {
   "abstract" : [
@@ -3449,6 +3874,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3551,6 +3977,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3685,6 +4112,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3738,6 +4166,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3754,6 +4183,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3811,6 +4241,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3904,6 +4335,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3957,6 +4389,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -3973,6 +4406,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -4030,6 +4464,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -4138,6 +4573,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -4249,6 +4685,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -4378,6 +4815,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sci7ElementQa",
       "text" : "Element"
     },
     {
@@ -5221,596 +5659,6 @@
   "title" : "removeDuplicates(by:)",
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/removeduplicates(by:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/throttle(for:clock:latest:)": {
-  "abstract" : [
-    {
-      "text" : "Create a rate-limited ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncSequence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " by emitting values at most every specified interval.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "throttle"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock6latestAA0A16ThrottleSequenceVyxqd__7ElementQzG8DurationQyd___qd__Sbt12_Concurrency5ClockRd__lF1CL_qd__mfp",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
-      "text" : "Instant"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
-      "text" : "Duration"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "clock"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock6latestAA0A16ThrottleSequenceVyxqd__7ElementQzG8DurationQyd___qd__Sbt12_Concurrency5ClockRd__lF1CL_qd__mfp",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "latest"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
-      "text" : "AsyncThrottleSequence"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock6latestAA0A16ThrottleSequenceVyxqd__7ElementQzG8DurationQyd___qd__Sbt12_Concurrency5ClockRd__lF1CL_qd__mfp",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:clock:latest:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "throttle(for:clock:latest:)",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/throttle(for:clock:latest:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/throttle(for:clock:reducing:)": {
-  "abstract" : [
-    {
-      "text" : "Create a rate-limited ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncSequence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " by emitting values at most every specified interval.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "throttle"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF1CL_qd__mfp",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12_Concurrency5ClockP7InstantQa",
-      "text" : "Instant"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s15InstantProtocolP8DurationQa",
-      "text" : "Duration"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "clock"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF1CL_qd__mfp",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "reducing"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF7ReducedL_qd_0_mfp",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : "?, "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "async"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF7ReducedL_qd_0_mfp",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
-      "text" : "AsyncThrottleSequence"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF1CL_qd__mfp",
-      "text" : "C"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for5clock8reducingAA0A16ThrottleSequenceVyxqd__qd_0_G8DurationQyd___qd__qd_0_qd_0_Sg_7ElementQztYaYbct12_Concurrency5ClockRd__r0_lF7ReducedL_qd_0_mfp",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:clock:reducing:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "throttle(for:clock:reducing:)",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/throttle(for:clock:reducing:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/throttle(for:latest:)": {
-  "abstract" : [
-    {
-      "text" : "Create a rate-limited ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncSequence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " by emitting values at most every specified interval.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "throttle"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s8DurationV",
-      "text" : "Duration"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "latest"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
-      "text" : "AsyncThrottleSequence"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
-      "text" : "ContinuousClock"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:latest:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "throttle(for:latest:)",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/throttle(for:latest:)"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncBufferSequence/throttle(for:reducing:)": {
-  "abstract" : [
-    {
-      "text" : "Create a rate-limited ",
-      "type" : "text"
-    },
-    {
-      "code" : "AsyncSequence",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " by emitting values at most every specified interval.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "throttle"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "genericParameter",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : ">("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s8DurationV",
-      "text" : "Duration"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "reducing"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for8reducingAA0A16ThrottleSequenceVyx12_Concurrency15ContinuousClockVqd__Gs8DurationV_qd__qd__Sg_7ElementQztYaYbctlF7ReducedL_qd__mfp",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : "?, "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci7ElementQa",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "async"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for8reducingAA0A16ThrottleSequenceVyx12_Concurrency15ContinuousClockVqd__Gs8DurationV_qd__qd__Sg_7ElementQztYaYbctlF7ReducedL_qd__mfp",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A16ThrottleSequenceV",
-      "text" : "AsyncThrottleSequence"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "Self"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:12_Concurrency15ContinuousClockV",
-      "text" : "ContinuousClock"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sci15AsyncAlgorithmsE8throttle3for8reducingAA0A16ThrottleSequenceVyx12_Concurrency15ContinuousClockVqd__Gs8DurationV_qd__qd__Sg_7ElementQztYaYbctlF7ReducedL_qd__mfp",
-      "text" : "Reduced"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncBufferSequence\/throttle(for:reducing:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "throttle(for:reducing:)",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asyncbuffersequence\/throttle(for:reducing:)"
 }
 }
 }

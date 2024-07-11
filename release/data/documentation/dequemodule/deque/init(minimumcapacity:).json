@@ -57,7 +57,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections"
+        "name" : "DequeModule"
       }
     ],
     "role" : "symbol",

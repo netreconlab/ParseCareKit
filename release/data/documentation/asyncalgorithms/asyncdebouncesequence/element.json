@@ -71,7 +71,7 @@
           "type" : "codeVoice"
         },
         {
-          "text" : ", and ",
+          "text" : ", ",
           "type" : "text"
         },
         {
@@ -84,6 +84,22 @@
         },
         {
           "code" : "Clock",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ", and ",
+          "type" : "text"
+        },
+        {
+          "code" : "Base.Element",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " conforms to ",
+          "type" : "text"
+        },
+        {
+          "code" : "Sendable",
           "type" : "codeVoice"
         },
         {
@@ -342,7 +358,7 @@
         "type" : "codeVoice"
       },
       {
-        "text" : ", and ",
+        "text" : ", ",
         "type" : "text"
       },
       {
@@ -355,6 +371,22 @@
       },
       {
         "code" : "Clock",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : ", and ",
+        "type" : "text"
+      },
+      {
+        "code" : "Base.Element",
+        "type" : "codeVoice"
+      },
+      {
+        "text" : " conforms to ",
+        "type" : "text"
+      },
+      {
+        "code" : "Sendable",
         "type" : "codeVoice"
       },
       {

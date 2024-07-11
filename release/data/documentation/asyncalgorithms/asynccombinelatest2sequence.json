@@ -186,6 +186,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
               "text" : "Element"
             },
             {
@@ -211,6 +212,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sci7ElementQa",
               "text" : "Element"
             },
             {
@@ -253,12 +255,6 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncCombineLatest2Sequence\/Iterator"
       ],
       "title" : "Structures"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncCombineLatest2Sequence\/init(_:_:)"
-      ],
-      "title" : "Initializers"
     },
     {
       "identifiers" : [
@@ -456,45 +452,6 @@
   "title" : "AsyncCombineLatest2Sequence.Iterator",
   "type" : "topic",
   "url" : "\/documentation\/asyncalgorithms\/asynccombinelatest2sequence\/iterator"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncCombineLatest2Sequence/init(_:_:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A22CombineLatest2SequenceV5Base1xmfp",
-      "text" : "Base1"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:15AsyncAlgorithms0A22CombineLatest2SequenceV5Base2q_mfp",
-      "text" : "Base2"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/AsyncAlgorithms\/AsyncCombineLatest2Sequence\/init(_:_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(_:_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/asyncalgorithms\/asynccombinelatest2sequence\/init(_:_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/AsyncAlgorithms/AsyncCombineLatest2Sequence/makeAsyncIterator()": {
   "abstract" : [

@@ -91,6 +91,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV3Keyxmfp",
         "text" : "Key"
       },
       {
@@ -99,6 +100,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV5Valueq_mfp",
         "text" : "Value"
       },
       {
@@ -113,10 +115,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -163,6 +162,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV3Keyxmfp",
               "text" : "Key"
             },
             {
@@ -171,6 +171,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV5Valueq_mfp",
               "text" : "Value"
             },
             {
@@ -405,6 +406,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV3Keyxmfp",
       "text" : "Key"
     },
     {
@@ -413,6 +415,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:18OrderedCollections0A10DictionaryV8ElementsV5Valueq_mfp",
       "text" : "Value"
     },
     {
@@ -434,7 +437,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Iterator": {
   "abstract" : [
-
+    {
+      "text" : "The type that allows iteration over an ordered dictionary’s elements.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

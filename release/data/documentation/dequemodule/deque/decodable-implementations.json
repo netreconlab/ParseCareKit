@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "Decodable Implementations"
   },
   "schemaVersion" : {
@@ -111,7 +112,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/init(from:)": {
   "abstract" : [
-
+    {
+      "text" : "Creates a new deque by decoding from the given decoder.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

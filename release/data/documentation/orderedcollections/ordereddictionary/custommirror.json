@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Inherited from ",
-      "type" : "text"
-    },
-    {
-      "code" : "CustomReflectable.customMirror",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : ".",
+      "text" : "The custom mirror for this instance.",
       "type" : "text"
     }
   ],
@@ -87,10 +79,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
-        "relatedModules" : [
-          "OrderedCollections"
-        ]
+        "name" : "OrderedCollections"
       }
     ],
     "role" : "symbol",
@@ -228,7 +217,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/customMirror": {
   "abstract" : [
-
+    {
+      "text" : "The custom mirror for this instance.",
+      "type" : "text"
+    }
   ],
   "conformance" : {
     "availabilityPrefix" : [

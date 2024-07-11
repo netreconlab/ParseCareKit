@@ -19,6 +19,7 @@
       }
     ],
     "role" : "collectionGroup",
+    "roleHeading" : "API Collection",
     "title" : "CustomReflectable Implementations"
   },
   "schemaVersion" : {
@@ -111,7 +112,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/customMirror": {
   "abstract" : [
-
+    {
+      "text" : "The custom mirror for this instance.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {

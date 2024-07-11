@@ -74,6 +74,7 @@
       },
       {
         "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sl5IndexQa",
         "text" : "Index"
       },
       {
@@ -99,7 +100,7 @@
     ],
     "modules" : [
       {
-        "name" : "Collections",
+        "name" : "DequeModule",
         "relatedModules" : [
           "Swift"
         ]
@@ -191,6 +192,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sl5IndexQa",
               "text" : "Index"
             },
             {
@@ -256,6 +258,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             },
             {
@@ -272,6 +275,7 @@
             },
             {
               "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ST7ElementQa",
               "text" : "Element"
             }
           ]
@@ -431,6 +435,7 @@
     },
     {
       "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
       "text" : "Index"
     },
     {
