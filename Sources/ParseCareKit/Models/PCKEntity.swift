@@ -10,7 +10,7 @@ import CareKitStore
 import Foundation
 
 /// Holds one of several possible modified entities.
-public enum PCKEntity: Equatable, Codable {
+public enum PCKEntity: Hashable, Codable, Sendable {
 
     /// A patient entity.
     case patient(PCKPatient)

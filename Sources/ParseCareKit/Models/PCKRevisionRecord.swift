@@ -12,7 +12,7 @@ import ParseSwift
 
 /// Revision records are exchanged by the CareKit and a ParseCareKit remote during synchronization.
 /// Each revision record contains an array of entities as well as a knowledge vector.
-struct PCKRevisionRecord: ParseObject, Equatable, Codable {
+struct PCKRevisionRecord: ParseObject {
 
     public static var className: String {
         "RevisionRecord"
@@ -116,10 +116,29 @@ struct PCKRevisionRecord: ParseObject, Equatable, Codable {
              logicalClock, clock, clockUUID
     }
 
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(createdAt)
+        hasher.combine(updatedAt)
+        hasher.combine(ACL)
+        hasher.combine(originalData)
+        hasher.combine(clockUUID)
+        hasher.combine(knowledgeVectorString)
+        hasher.combine(logicalClock)
+        hasher.combine(clock)
+        hasher.combine(entities)
+    }
+
     static func == (lhs: PCKRevisionRecord, rhs: PCKRevisionRecord) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.createdAt == rhs.createdAt &&
+        lhs.updatedAt == rhs.updatedAt &&
+        lhs.ACL == rhs.ACL &&
+        lhs.originalData == rhs.originalData &&
+        lhs.clockUUID == rhs.clockUUID &&
+        lhs.clock == rhs.clock &&
         lhs.knowledgeVectorString == rhs.knowledgeVectorString &&
         lhs.logicalClock == rhs.logicalClock &&
-        lhs.objectId == rhs.objectId &&
         lhs.entities == rhs.entities
     }
 

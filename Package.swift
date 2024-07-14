@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/cbaker6/CareKit.git",
             .upToNextMajor(from: "3.0.0-beta.14")),
         .package(url: "https://github.com/netreconlab/Parse-Swift.git",
-            .upToNextMajor(from: "5.10.0"))
+            .upToNextMajor(from: "5.10.3"))
     ],
     targets: [
         .target(
