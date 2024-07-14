@@ -89,6 +89,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
       ],
       "kind" : "relationships",
@@ -147,6 +148,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SE": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
   "title" : "Swift.Encodable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {

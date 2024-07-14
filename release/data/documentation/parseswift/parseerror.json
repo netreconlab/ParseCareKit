@@ -89,6 +89,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s5ErrorP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
       ],
       "kind" : "relationships",
@@ -137,6 +138,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/Encodable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/Equatable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/Error-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/Hashable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/LocalizedError-Implementations"
       ],
       "title" : "Default Implementations"
@@ -164,6 +166,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SE": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
   "title" : "Swift.Encodable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
@@ -348,6 +355,17 @@
   "title" : "Error Implementations",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseerror\/error-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseError\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/parseerror\/hashable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseError/LocalizedError-Implementations": {
   "abstract" : [

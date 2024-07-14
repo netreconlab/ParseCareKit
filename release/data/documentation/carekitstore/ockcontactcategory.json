@@ -85,7 +85,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -316,6 +317,11 @@
   "title" : "init(rawValue:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockcontactcategory\/init(rawvalue:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
 }
 }
 }

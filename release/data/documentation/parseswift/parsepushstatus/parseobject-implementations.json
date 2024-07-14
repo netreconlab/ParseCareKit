@@ -1534,7 +1534,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParsePushStatus/id": {
   "abstract" : [
     {
-      "text" : "A computed property that is a unique identifier and makes it easy to use ",
+      "text" : "A computed property that ensures ",
       "type" : "text"
     },
     {
@@ -1542,15 +1542,7 @@
       "type" : "codeVoice"
     },
     {
-      "text" : "’s",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "as models in MVVM and SwiftUI.",
+      "text" : "’s can be uniquely identified across instances.",
       "type" : "text"
     }
   ],

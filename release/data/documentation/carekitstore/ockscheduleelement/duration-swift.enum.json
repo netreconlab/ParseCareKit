@@ -84,7 +84,8 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -129,7 +130,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Duration-swift.enum\/Equatable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Duration-swift.enum\/Equatable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Duration-swift.enum\/Hashable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -151,6 +153,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SE": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
   "title" : "Swift.Encodable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
@@ -268,6 +275,17 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockscheduleelement\/duration-swift.enum\/equatable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/Duration-swift.enum/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Duration-swift.enum\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockscheduleelement\/duration-swift.enum\/hashable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/Duration-swift.enum/allDay": {
   "abstract" : [

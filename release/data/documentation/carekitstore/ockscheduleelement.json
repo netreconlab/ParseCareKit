@@ -99,7 +99,9 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -158,7 +160,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Equatable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Equatable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Hashable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -180,6 +183,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SE": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SE",
   "title" : "Swift.Encodable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
@@ -297,6 +305,17 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockscheduleelement\/equatable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKScheduleElement\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockscheduleelement\/hashable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKScheduleElement/date(ofOccurrence:)": {
   "abstract" : [
@@ -1107,6 +1126,11 @@
   "title" : "text",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockscheduleelement\/text"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
 }
 }
 }

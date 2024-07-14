@@ -84,7 +84,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s12CaseIterableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -482,6 +483,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s12CaseIterableP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s12CaseIterableP",
   "title" : "Swift.CaseIterable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
   "type" : "unresolvable"
 }
 }
