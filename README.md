@@ -26,9 +26,9 @@ You can also use ParseCareKit with any parse-server setup. If you devide to use 
 The following CareKit Entities are synchronized with Parse tables/classes:
 - [x] OCKPatient <-> Patient
 - [x] OCKCarePlan <-> CarePlan
+- [x] OCKContact <-> Contact
 - [x] OCKTask <-> Task
 - [x] OCKHealthKitTask <-> HealthKitTask
-- [x] OCKContact <-> Contact
 - [x] OCKOutcome <-> Outcome
 - [x] OCKRevisionRecord <-> RevisionRecord
 
@@ -37,7 +37,7 @@ ParseCareKit enables iOS, watchOS, macOS devices belonging to the same user to b
 ## CareKit Sample App with ParseCareKit
 A sample app, [CareKitSample-ParseCareKit](https://github.com/netreconlab/CareKitSample-ParseCareKit), connects to the aforementioned [parse-hipaa](https://github.com/netreconlab/parse-hipaa) and demonstrates how CareKit data can be easily synched to the Cloud using ParseCareKit.
 
-<img src="https://user-images.githubusercontent.com/8621344/99022137-1ec7ca80-2530-11eb-897c-ace7c70536f2.png" width="300"> <img src="https://user-images.githubusercontent.com/8621344/99022190-3bfc9900-2530-11eb-8ad1-c1e8ba2e7f55.png" width="300">
+<img src="https://github.com/netreconlab/CareKitSample-ParseCareKit/assets/8621344/d60d194a-87a5-41e9-8ae4-41a847e91ea3" width="300"> <img src="https://github.com/netreconlab/CareKitSample-ParseCareKit/assets/8621344/ca0ac2e0-d17d-4bae-88fd-f59b94812419" width="300">
 
 ### ParseCareKit.plist with server connection information
 ParseCareKit comes with a helper method, [PCKUtility.configureParse()](https://github.com/netreconlab/ParseCareKit/blob/4912bf7677511d148b52d03146c31cc428a83454/ParseCareKit/PCKUtility.swift#L14) that easily helps apps connect to your parse-server. To leverage the helper method, copy the [ParseCareKit.plist](https://github.com/netreconlab/CareKitSample-ParseCareKit/blob/main/OCKSample/Supporting%20Files/ParseCareKit.plist) file your "Supporting Files" folder in your Xcode project. Be sure to change `ApplicationID` and `Server` to the correct values for your server. Simply add the following inside `didFinishLaunchingWithOptions` in `AppDelegate.swift`:
@@ -156,7 +156,7 @@ Register as a delegate just in case ParseCareKit needs your application to updat
 
 
 ```swift
-extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteDelegate{
+extension AppDelegate: OCKRemoteSynchronizationDelegate, ParseRemoteDelegate {
     func didRequestSynchronization(_ remote: OCKRemoteSynchronizable) {
         print("Implement so ParseCareKit can tell your OCKStore to sync to the cloud")
         //example
