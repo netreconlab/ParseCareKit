@@ -254,7 +254,6 @@ extension PCKRevisionRecord {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(className, forKey: .className)
         try container.encodeIfPresent(objectId, forKey: .objectId)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
