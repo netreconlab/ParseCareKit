@@ -33,7 +33,7 @@ jobs:
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
         env_vars: IOS
@@ -61,7 +61,7 @@ jobs:
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
         env_vars: MACOS
