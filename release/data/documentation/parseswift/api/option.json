@@ -118,6 +118,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/serverURL(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/sessionToken(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/tags(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/useMaintenanceKey",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/usePrimaryKey"
       ],
       "title" : "Enumeration Cases"
@@ -843,6 +844,34 @@
   "title" : "API.Option.tags(_:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/api\/option\/tags(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/API/Option/useMaintenanceKey": {
+  "abstract" : [
+    {
+      "text" : "Use the maintenanceKey if it was provided during initial configuraration.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "useMaintenanceKey"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/API\/Option\/useMaintenanceKey",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "API.Option.useMaintenanceKey",
+  "type" : "topic",
+  "url" : "\/documentation\/parseswift\/api\/option\/usemaintenancekey"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/API/Option/usePrimaryKey": {
   "abstract" : [

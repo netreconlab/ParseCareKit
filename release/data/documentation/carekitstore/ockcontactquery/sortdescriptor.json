@@ -102,7 +102,8 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactQuery\/SortDescriptor\/effectiveDate(ascending:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactQuery\/SortDescriptor\/familyName(ascending:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactQuery\/SortDescriptor\/givenName(ascending:)"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactQuery\/SortDescriptor\/givenName(ascending:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactQuery\/SortDescriptor\/groupIdentifier(ascending:)"
       ],
       "title" : "Enumeration Cases"
     },
@@ -360,6 +361,52 @@
   "title" : "OCKContactQuery.SortDescriptor.givenName(ascending:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockcontactquery\/sortdescriptor\/givenname(ascending:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKContactQuery/SortDescriptor/groupIdentifier(ascending:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "groupIdentifier"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ascending"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKContactQuery\/SortDescriptor\/groupIdentifier(ascending:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "OCKContactQuery.SortDescriptor.groupIdentifier(ascending:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockcontactquery\/sortdescriptor\/groupidentifier(ascending:)"
 }
 }
 }

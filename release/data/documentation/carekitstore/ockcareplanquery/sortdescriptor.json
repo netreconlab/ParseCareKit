@@ -101,6 +101,7 @@
     {
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanQuery\/SortDescriptor\/effectiveDate(ascending:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanQuery\/SortDescriptor\/groupIdentifier(ascending:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanQuery\/SortDescriptor\/title(ascending:)"
       ],
       "title" : "Enumeration Cases"
@@ -267,6 +268,52 @@
   "title" : "OCKCarePlanQuery.SortDescriptor.effectiveDate(ascending:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockcareplanquery\/sortdescriptor\/effectivedate(ascending:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlanQuery/SortDescriptor/groupIdentifier(ascending:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "groupIdentifier"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "ascending"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKCarePlanQuery\/SortDescriptor\/groupIdentifier(ascending:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "OCKCarePlanQuery.SortDescriptor.groupIdentifier(ascending:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockcareplanquery\/sortdescriptor\/groupidentifier(ascending:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKCarePlanQuery/SortDescriptor/title(ascending:)": {
   "abstract" : [

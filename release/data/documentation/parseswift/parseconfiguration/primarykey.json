@@ -1,15 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The primary key for your Parse application. This key should only",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "be specified when using the SDK on a server.",
+      "text" : "The primary key for your Parse application.",
       "type" : "text"
     }
   ],
@@ -119,6 +111,30 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "This key should only be specified when",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "using the SDK on a server.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Warning",
+          "style" : "warning",
+          "type" : "aside"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "This has been renamed from ",
                   "type" : "text"
                 },
@@ -217,15 +233,7 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseConfiguration/primaryKey": {
   "abstract" : [
     {
-      "text" : "The primary key for your Parse application. This key should only",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "be specified when using the SDK on a server.",
+      "text" : "The primary key for your Parse application.",
       "type" : "text"
     }
   ],

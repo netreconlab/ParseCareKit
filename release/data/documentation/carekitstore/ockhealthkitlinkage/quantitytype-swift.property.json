@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12CareKitStore09OCKHealthB7LinkageV12quantityTypeAC08QuantityG0Ovp",
+    "externalID" : "s:12CareKitStore09OCKHealthB7LinkageV12quantityTypeAC08QuantityG0OSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -41,6 +41,10 @@
         "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7LinkageV12QuantityTypeO",
         "text" : "QuantityType"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -85,6 +89,10 @@
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7LinkageV12QuantityTypeO",
               "text" : "QuantityType"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
             }
           ]
         }
@@ -218,6 +226,10 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:12CareKitStore09OCKHealthB7LinkageV12QuantityTypeO",
       "text" : "QuantityType"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitLinkage\/quantityType-swift.property",

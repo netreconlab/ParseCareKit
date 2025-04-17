@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12CareKitStore09OCKHealthB7LinkageV18quantityIdentifierSo014HKQuantityTypeG0avp",
+    "externalID" : "s:12CareKitStore09OCKHealthB7LinkageV18quantityIdentifierSo014HKQuantityTypeG0aSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -41,6 +41,10 @@
         "kind" : "typeIdentifier",
         "preciseIdentifier" : "c:@T@HKQuantityTypeIdentifier",
         "text" : "HKQuantityTypeIdentifier"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -84,6 +88,26 @@
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "c:@T@HKQuantityTypeIdentifier",
               "text" : "HKQuantityTypeIdentifier"
+            },
+            {
+              "kind" : "text",
+              "text" : "? { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "set"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
@@ -186,6 +210,10 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "c:@T@HKQuantityTypeIdentifier",
       "text" : "HKQuantityTypeIdentifier"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKHealthKitLinkage\/quantityIdentifier",
