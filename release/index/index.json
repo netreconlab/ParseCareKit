@@ -25500,25 +25500,6 @@
       {
         "children" : [
           {
-            "title" : "Initialize the SDK",
-            "type" : "groupMarker"
-          },
-          {
-            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:subscribetoremoteupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
-            "type" : "init"
-          },
-          {
-            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:subscribetoremoteupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type], subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
-            "type" : "init"
-          },
-          {
-            "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:auto:replacepckstoreclasses:customclasses:subscribetoremoteupdates:defaultacl:)",
-            "title" : "init(uuid: UUID, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type]?, customClasses: [String : any PCKVersionable.Type], subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
-            "type" : "init"
-          },
-          {
             "title" : "Classes",
             "type" : "groupMarker"
           },
@@ -25571,12 +25552,36 @@
           {
             "children" : [
               {
+                "title" : "Initializers",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:batchlimit:auto:replacepckstoreclasses:customclasses:subscribetoremoteupdates:defaultacl:)",
+                "title" : "init(uuid: UUID, batchLimit: Int, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type]?, customClasses: [String : any PCKVersionable.Type], subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:batchlimit:auto:replacepckstoreclasses:subscribetoremoteupdates:defaultacl:)",
+                "title" : "init(uuid: UUID, batchLimit: Int, auto: Bool, replacePCKStoreClasses: [PCKStoreClass : any PCKVersionable.Type], subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
+                "type" : "init"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/parseremote\/init(uuid:batchlimit:auto:subscribetoremoteupdates:defaultacl:)",
+                "title" : "init(uuid: UUID, batchLimit: Int, auto: Bool, subscribeToRemoteUpdates: Bool, defaultACL: ParseACL?) async throws",
+                "type" : "init"
+              },
+              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },
               {
                 "path" : "\/documentation\/parsecarekit\/parseremote\/automaticallysynchronizes",
                 "title" : "var automaticallySynchronizes: Bool",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/parsecarekit\/parseremote\/batchlimit",
+                "title" : "var batchLimit: Int",
                 "type" : "property"
               },
               {
@@ -32651,13 +32656,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       }
                     ],
@@ -33924,12 +33929,12 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-96fqk",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-60gba",
                         "title" : "var mergeable: Self",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-60gba",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-96fqk",
                         "title" : "var mergeable: Self",
                         "type" : "property"
                       }
@@ -34044,22 +34049,22 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-35a9v",
-                        "title" : "func merge(with: Self) throws -> Self",
-                        "type" : "method"
-                      },
-                      {
                         "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-99wj6",
                         "title" : "func merge(with: Self) throws -> Self",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-4hjo0",
+                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-35a9v",
                         "title" : "func merge(with: Self) throws -> Self",
                         "type" : "method"
                       },
                       {
                         "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-3cli5",
+                        "title" : "func merge(with: Self) throws -> Self",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-4hjo0",
                         "title" : "func merge(with: Self) throws -> Self",
                         "type" : "method"
                       }
@@ -34077,7 +34082,7 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-6csd5",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-8plu3",
                         "title" : "func mergeParse(with: Self) throws -> Self",
                         "type" : "method"
                       },
@@ -34087,7 +34092,7 @@
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-8plu3",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-6csd5",
                         "title" : "func mergeParse(with: Self) throws -> Self",
                         "type" : "method"
                       },
