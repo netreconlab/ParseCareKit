@@ -1326,6 +1326,13 @@ class ParseCareKitTests: XCTestCase {
             XCTFail("Should have been patient")
         }
     }
+
+	func testClock() async throws {
+		let uuid = UUID()
+		let clock = PCKClock(uuid: uuid)
+		XCTAssertEqual(clock.uuid, uuid)
+		XCTAssertEqual(clock.objectId, uuid.uuidString)
+	}
 /*
     func testAddContact() async throws {
         let contact = OCKContact(id: "test", givenName: "hello", familyName: "world", carePlanUUID: nil)
