@@ -152,14 +152,34 @@ struct PCKRevisionRecord: ParseObject {
                                  knowledgeVector: knowledgeVector)
     }
 
-    func save(options: API.Options = []) async throws {
-        try await patients.createAll(options: options)
-        try await carePlans.createAll(options: options)
-        try await contacts.createAll(options: options)
-        try await tasks.createAll(options: options)
-        try await healthKitTasks.createAll(options: options)
-        try await outcomes.createAll(options: options)
-        try await self.create(options: options)
+	func save(options: API.Options = [], batchLimit: Int) async throws {
+        try await patients.createAll(
+			batchLimit: batchLimit,
+			options: options
+		)
+        try await carePlans.createAll(
+			batchLimit: batchLimit,
+			options: options
+		)
+        try await contacts.createAll(
+			batchLimit: batchLimit,
+			options: options
+		)
+        try await tasks.createAll(
+			batchLimit: batchLimit,
+			options: options
+		)
+        try await healthKitTasks.createAll(
+			batchLimit: batchLimit,
+			options: options
+		)
+        try await outcomes.createAll(
+			batchLimit: batchLimit,
+			options: options
+		)
+        try await self.create(
+			options: options
+		)
     }
 
     func fetchEntities(options: API.Options = []) async throws -> Self {

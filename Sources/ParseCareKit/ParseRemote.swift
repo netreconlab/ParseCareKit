@@ -35,6 +35,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
     /// The unique identifier of the remote clock.
     public var uuid: UUID!
 
+	/// The batchLimit for sending tansactions to the ParseServer.
+	public var batchLimit: Int
+
     /// A dictionary of any custom classes to synchronize between the `CareKitStore` and the Parse Server.
     public var customClassesToSynchronize: [String: any PCKVersionable.Type]?
 
@@ -63,13 +66,17 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
         you need to provide `ParseACL.defaultACL`.
     */
-    public init(uuid: UUID,
-                auto: Bool,
-                subscribeToRemoteUpdates: Bool,
-                defaultACL: ParseACL? = nil) async throws {
+    public init(
+		uuid: UUID,
+		batchLimit: Int = 100,
+		auto: Bool,
+		subscribeToRemoteUpdates: Bool,
+		defaultACL: ParseACL? = nil
+	) async throws {
         self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
         self.customClassesToSynchronize = nil
         self.uuid = uuid
+		self.batchLimit = batchLimit
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
         self.automaticallySynchronizes = auto
         self.subscribeToRemoteUpdates = subscribeToRemoteUpdates
@@ -94,15 +101,21 @@ public class ParseRemote: OCKRemoteSynchronizable {
      - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
      you need to provide `ParseACL.defaultACL`.
     */
-    convenience public init(uuid: UUID,
-                            auto: Bool,
-                            replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type],
-                            subscribeToRemoteUpdates: Bool,
-                            defaultACL: ParseACL? = nil) async throws {
-        try await self.init(uuid: uuid,
-                            auto: auto,
-                            subscribeToRemoteUpdates: subscribeToRemoteUpdates,
-                            defaultACL: defaultACL)
+    convenience public init(
+		uuid: UUID,
+		batchLimit: Int = 100,
+		auto: Bool,
+		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type],
+		subscribeToRemoteUpdates: Bool,
+		defaultACL: ParseACL? = nil
+	) async throws {
+        try await self.init(
+			uuid: uuid,
+			batchLimit: batchLimit,
+			auto: auto,
+			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+			defaultACL: defaultACL
+		)
         try self.pckStoreClassesToSynchronize = PCKStoreClass
             .replaceRemoteConcreteClasses(replacePCKStoreClasses)
         self.customClassesToSynchronize = nil
@@ -125,16 +138,22 @@ public class ParseRemote: OCKRemoteSynchronizable {
      - note: If you want the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
      you need to provide `ParseACL.defaultACL`.
     */
-    convenience public init(uuid: UUID,
-                            auto: Bool,
-                            replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
-                            customClasses: [String: any PCKVersionable.Type],
-                            subscribeToRemoteUpdates: Bool,
-                            defaultACL: ParseACL? = nil) async throws {
-        try await self.init(uuid: uuid,
-                            auto: auto,
-                            subscribeToRemoteUpdates: subscribeToRemoteUpdates,
-                            defaultACL: defaultACL)
+    convenience public init(
+		uuid: UUID,
+		batchLimit: Int = 100,
+		auto: Bool,
+		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
+		customClasses: [String: any PCKVersionable.Type],
+		subscribeToRemoteUpdates: Bool,
+		defaultACL: ParseACL? = nil
+	) async throws {
+        try await self.init(
+			uuid: uuid,
+			batchLimit: batchLimit,
+			auto: auto,
+			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+			defaultACL: defaultACL
+		)
         if let replacePCKStoreClasses = replacePCKStoreClasses {
             self.pckStoreClassesToSynchronize = try PCKStoreClass
                 .replaceRemoteConcreteClasses(replacePCKStoreClasses)
@@ -259,7 +278,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     parseClock = try await PCKClock.fetchFromRemote(uuid)
                     createdNewClock = false
                 } catch {
-                    parseClock = try await PCKClock.new(uuid: uuid)
+					parseClock = try await PCKClock.new(uuid: uuid)
                     createdNewClock = true
                 }
                 guard let parseVector = parseClock.knowledgeVector else {
@@ -304,7 +323,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                                                    remoteClockUUID: self.uuid,
                                                                    remoteClock: parseClock,
                                                                    remoteClockValue: logicalClock)
-                        try await remoteRevision.save()
+                        try await remoteRevision.save(batchLimit: batchLimit)
                         if index < deviceRevisions.count - 1 {
                             self.notifyRevisionProgress(index + 1,
                                                         total: deviceRevisions.count)

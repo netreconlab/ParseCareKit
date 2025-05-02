@@ -147,6 +147,8 @@ public struct PCKClock: ParseObject {
         }
         var mutatingClock = self
         mutatingClock.ACL = ACL ?? ParseACL()
+		mutatingClock.ACL?.setReadAccess(user: currentUser, value: true)
+		mutatingClock.ACL?.setWriteAccess(user: currentUser, value: true)
         mutatingClock.ACL?.setWriteAccess(roleName: writeRoleName, value: true)
         mutatingClock.ACL?.setReadAccess(roleName: readRoleName, value: true)
         mutatingClock.ACL?.setWriteAccess(roleName: ParseCareKitConstants.administratorRole, value: true)
