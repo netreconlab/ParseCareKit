@@ -9,17 +9,17 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskQuery"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskQuery\/excludesTasksWithNoEvents"
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/excludesTasksWithNoEvents"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:12CareKitStore12OCKTaskQueryV25excludesTasksWithNoEventsSbvp",
+    "externalID" : "s:12CareKitStore13OCKEventQueryV25excludesTasksWithNoEventsSbvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -102,7 +102,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/carekitstore\/ocktaskquery\/excludestaskswithnoevents"
+        "\/documentation\/carekitstore\/ockeventquery\/excludestaskswithnoevents"
       ],
       "traits" : [
         {
@@ -124,10 +124,10 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitstore"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKTaskQuery": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery": {
   "abstract" : [
     {
-      "text" : "A query that limits which tasks will be returned when fetching.",
+      "text" : "A query that limits which events will be returned when fetching.",
       "type" : "text"
     }
   ],
@@ -142,23 +142,23 @@
     },
     {
       "kind" : "identifier",
-      "text" : "OCKTaskQuery"
+      "text" : "OCKEventQuery"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskQuery",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery",
   "kind" : "symbol",
   "navigatorTitle" : [
     {
       "kind" : "identifier",
-      "text" : "OCKTaskQuery"
+      "text" : "OCKEventQuery"
     }
   ],
   "role" : "symbol",
-  "title" : "OCKTaskQuery",
+  "title" : "OCKEventQuery",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ocktaskquery"
+  "url" : "\/documentation\/carekitstore\/ockeventquery"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKTaskQuery/excludesTasksWithNoEvents": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKEventQuery/excludesTasksWithNoEvents": {
   "abstract" : [
     {
       "text" : "Determines if tasks with no events should be included in the query results or not. False by default.",
@@ -188,12 +188,12 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskQuery\/excludesTasksWithNoEvents",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKEventQuery\/excludesTasksWithNoEvents",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "excludesTasksWithNoEvents",
   "type" : "topic",
-  "url" : "\/documentation\/carekitstore\/ocktaskquery\/excludestaskswithnoevents"
+  "url" : "\/documentation\/carekitstore\/ockeventquery\/excludestaskswithnoevents"
 }
 }
 }

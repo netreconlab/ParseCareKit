@@ -107,7 +107,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKReadableTaskStore",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKRemoteSynchronizationDelegate",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKTaskStore",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -154,6 +155,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/Equatable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/Hashable-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/OCKAnyCarePlanStore-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/OCKAnyContactStore-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/OCKAnyOutcomeStore-Implementations",
@@ -195,6 +197,11 @@
   ]
 , 
 "references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
   "title" : "Swift.Equatable",
@@ -1299,6 +1306,17 @@
   "title" : "Equatable Implementations",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockstore\/equatable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKStore\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockstore\/hashable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKStore/OCKAnyCarePlanStore-Implementations": {
   "abstract" : [

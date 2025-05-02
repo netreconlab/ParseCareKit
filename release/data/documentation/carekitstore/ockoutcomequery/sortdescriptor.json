@@ -82,7 +82,8 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -127,6 +128,11 @@
   ]
 , 
 "references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
   "title" : "Swift.Equatable",

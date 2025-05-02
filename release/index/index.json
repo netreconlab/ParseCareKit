@@ -10202,6 +10202,22 @@
                     "type" : "groupMarker"
                   },
                   {
+                    "path" : "\/documentation\/carekitstore\/ockstore\/hash(into:)",
+                    "title" : "func hash(into: inout Hasher)",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/carekitstore\/ockstore\/hashable-implementations",
+                "title" : "Hashable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
                     "path" : "\/documentation\/carekitstore\/ockstore\/addanycareplan(_:)",
                     "title" : "func addAnyCarePlan(OCKAnyCarePlan) async throws -> OCKAnyCarePlan",
                     "type" : "method"
@@ -15322,6 +15338,47 @@
                 "path" : "\/documentation\/carekitstore\/ockadherencequery\/taskids",
                 "title" : "var taskIDs: [String]",
                 "type" : "property"
+              },
+              {
+                "title" : "Default Implementations",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Operators",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/carekitstore\/ockadherencequery\/!=(_:_:)",
+                    "title" : "static func != (Self, Self) -> Bool",
+                    "type" : "op"
+                  },
+                  {
+                    "path" : "\/documentation\/carekitstore\/ockadherencequery\/==(_:_:)",
+                    "title" : "static func == (OCKAdherenceQuery, OCKAdherenceQuery) -> Bool",
+                    "type" : "op"
+                  }
+                ],
+                "path" : "\/documentation\/carekitstore\/ockadherencequery\/equatable-implementations",
+                "title" : "Equatable Implementations",
+                "type" : "symbol"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Methods",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/carekitstore\/ockadherencequery\/hash(into:)",
+                    "title" : "func hash(into: inout Hasher)",
+                    "type" : "method"
+                  }
+                ],
+                "path" : "\/documentation\/carekitstore\/ockadherencequery\/hashable-implementations",
+                "title" : "Hashable Implementations",
+                "type" : "symbol"
               }
             ],
             "path" : "\/documentation\/carekitstore\/ockadherencequery",
@@ -16213,6 +16270,11 @@
               {
                 "path" : "\/documentation\/carekitstore\/ockeventquery\/dateinterval",
                 "title" : "var dateInterval: DateInterval",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/carekitstore\/ockeventquery\/excludestaskswithnoevents",
+                "title" : "var excludesTasksWithNoEvents: Bool",
                 "type" : "property"
               },
               {
@@ -32562,14 +32624,14 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/issaved()-9c65v",
-                        "title" : "func isSaved() async throws -> Bool",
-                        "type" : "method"
-                      },
-                      {
                         "path" : "\/documentation\/parseswift\/objectable\/issaved",
                         "title" : "var isSaved: Bool",
                         "type" : "property"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/objectable\/issaved()-9c65v",
+                        "title" : "func isSaved() async throws -> Bool",
+                        "type" : "method"
                       }
                     ],
                     "title" : "Objectable Implementations",
@@ -32589,13 +32651,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-499yb",
-                        "title" : "static var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
+                        "title" : "var className: String",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/objectable\/classname-swift.property",
-                        "title" : "var className: String",
+                        "path" : "\/documentation\/parseswift\/objectable\/classname-499yb",
+                        "title" : "static var className: String",
                         "type" : "property"
                       }
                     ],
@@ -33760,13 +33822,13 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
-                        "title" : "func received(Error)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
+                        "title" : "func received(URLSessionTaskTransactionMetrics)",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-798hl",
-                        "title" : "func received(URLSessionTaskTransactionMetrics)",
+                        "path" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:)-1f3yl",
+                        "title" : "func received(Error)",
                         "type" : "method"
                       }
                     ],
@@ -33862,12 +33924,12 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-60gba",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-96fqk",
                         "title" : "var mergeable: Self",
                         "type" : "property"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-96fqk",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeable-60gba",
                         "title" : "var mergeable: Self",
                         "type" : "property"
                       }
@@ -33982,12 +34044,12 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-3cli5",
+                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-35a9v",
                         "title" : "func merge(with: Self) throws -> Self",
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-35a9v",
+                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-99wj6",
                         "title" : "func merge(with: Self) throws -> Self",
                         "type" : "method"
                       },
@@ -33997,7 +34059,7 @@
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-99wj6",
+                        "path" : "\/documentation\/parseswift\/parseobject\/merge(with:)-3cli5",
                         "title" : "func merge(with: Self) throws -> Self",
                         "type" : "method"
                       }
@@ -34015,12 +34077,7 @@
                   {
                     "children" : [
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-49r7x",
-                        "title" : "func mergeParse(with: Self) throws -> Self",
-                        "type" : "method"
-                      },
-                      {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-8plu3",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-6csd5",
                         "title" : "func mergeParse(with: Self) throws -> Self",
                         "type" : "method"
                       },
@@ -34030,7 +34087,12 @@
                         "type" : "method"
                       },
                       {
-                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-6csd5",
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-8plu3",
+                        "title" : "func mergeParse(with: Self) throws -> Self",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/parseswift\/parseobject\/mergeparse(with:)-49r7x",
                         "title" : "func mergeParse(with: Self) throws -> Self",
                         "type" : "method"
                       }

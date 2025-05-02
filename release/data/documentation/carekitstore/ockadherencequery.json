@@ -82,6 +82,17 @@
       "kind" : "declarations"
     }
   ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
   "schemaVersion" : {
     "major" : 0,
     "minor" : 3,
@@ -104,6 +115,14 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/taskIDs"
       ],
       "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/Equatable-Implementations",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/Hashable-Implementations"
+      ],
+      "title" : "Default Implementations"
     }
   ],
   "variants" : [
@@ -120,6 +139,16 @@
   ]
 , 
 "references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore": {
   "abstract" : [
 
@@ -168,6 +197,28 @@
   "title" : "OCKAdherenceQuery",
   "type" : "topic",
   "url" : "\/documentation\/carekitstore\/ockadherencequery"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/Equatable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/Equatable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Equatable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockadherencequery\/equatable-implementations"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/Hashable-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitStore\/OCKAdherenceQuery\/Hashable-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Hashable Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitstore\/ockadherencequery\/hashable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitStore/OCKAdherenceQuery/dateInterval": {
   "abstract" : [
