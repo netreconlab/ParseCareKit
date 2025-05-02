@@ -180,7 +180,7 @@ public struct PCKClock: ParseObject {
 				}
 				do {
 					let newClock = try await new(uuid: uuid)
-					let savedClock = try await newClock.save()
+					let savedClock = try await newClock.create()
 					return savedClock
 				} catch {
 					guard let parseError = error as? ParseError else {
