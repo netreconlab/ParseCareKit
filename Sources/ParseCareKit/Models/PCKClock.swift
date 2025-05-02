@@ -147,6 +147,8 @@ public struct PCKClock: ParseObject {
         }
         var mutatingClock = self
         mutatingClock.ACL = ACL ?? ParseACL()
+		mutatingClock.ACL?.setReadAccess(user: currentUser, value: true)
+		mutatingClock.ACL?.setWriteAccess(user: currentUser, value: true)
         mutatingClock.ACL?.setWriteAccess(roleName: writeRoleName, value: true)
         mutatingClock.ACL?.setReadAccess(roleName: readRoleName, value: true)
         mutatingClock.ACL?.setWriteAccess(roleName: ParseCareKitConstants.administratorRole, value: true)
@@ -180,8 +182,7 @@ public struct PCKClock: ParseObject {
 				}
 				do {
 					let newClock = try await new(uuid: uuid)
-					let savedClock = try await newClock.create()
-					return savedClock
+					return newClock
 				} catch {
 					guard let parseError = error as? ParseError else {
 						let errorString = "Could not cast error to ParseError"
