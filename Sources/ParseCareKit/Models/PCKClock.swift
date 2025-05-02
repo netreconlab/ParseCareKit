@@ -160,56 +160,49 @@ public struct PCKClock: ParseObject {
         return try await newClock.create()
     }
 
-    static func fetchFromRemote(_ uuid: UUID,
-                                createNewIfNeeded: Bool,
-                                completion: @escaping(Result<Self, ParseError>) -> Void) {
-
-        // Fetch Clock from Remote
-        let query = Self.query(ClockKey.uuid == uuid)
-        query.first { result in
-
-            switch result {
-
-            case .success(let foundVector):
-                completion(.success(foundVector))
-            case .failure(let error):
-                if !createNewIfNeeded {
-                    completion(.failure(error))
-                } else {
-                    // This is the first time the Clock is user setup for this user
-                    Task {
-                        do {
-                            let newClock = try await new(uuid: uuid)
-                            completion(.success(newClock))
-                        } catch {
-                            guard let parseError = error as? ParseError else {
-                                let errorString = "Could not cast error to ParseError"
-                                Logger.clock.error("\(errorString): \(error)")
-                                completion(.failure(.init(message: errorString, swift: error)))
-                                return
-                            }
-                            Logger.clock.error("\(parseError)")
-                            completion(.failure(parseError))
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    static func fetchFromRemote(_ uuid: UUID,
-                                createNewIfNeeded: Bool = false) async throws -> Self {
-        try await withCheckedThrowingContinuation { continuation in
-            Self.fetchFromRemote(uuid,
-                                createNewIfNeeded: createNewIfNeeded,
-                                completion: continuation.resume)
-        }
+    static func fetchFromRemote(
+		_ uuid: UUID,
+		createNewIfNeeded: Bool = false
+	) async throws -> Self {
+		do {
+			let fetchedClock = try await Self(uuid: uuid).fetch()
+			return fetchedClock
+		} catch let originalError {
+			do {
+				// Check if using an old version of ParseCareKit
+				// which didn't have the uuid as the objectID.
+				let query = Self.query(ClockKey.uuid == uuid)
+				let queriedClock = try await query.first()
+				return queriedClock
+			} catch {
+				guard createNewIfNeeded else {
+					throw originalError
+				}
+				do {
+					let newClock = try await new(uuid: uuid)
+					return newClock
+				} catch {
+					guard let parseError = error as? ParseError else {
+						let errorString = "Could not cast error to ParseError"
+						Logger.clock.error("\(errorString): \(error)")
+						let parseError = ParseError(
+							message: errorString,
+							swift: error
+						)
+						throw parseError
+					}
+					Logger.clock.error("\(parseError)")
+					throw parseError
+				}
+			}
+		}
     }
 }
 
 extension PCKClock {
     init(uuid: UUID) {
         self.uuid = uuid
+		self.objectId = uuid.uuidString
         knowledgeVectorString = "{\"processes\":[{\"id\":\"\(uuid)\",\"clock\":0}]}"
         ACL = PCKUtility.getDefaultACL()
     }
