@@ -82,15 +82,17 @@ public class PCKUtility {
             deleteKeychainIfNeeded = deleteKeychain
         }
 
-        try await ParseSwift.initialize(applicationId: appID,
-                                        clientKey: clientKey,
-                                        serverURL: serverURL,
-                                        liveQueryServerURL: liveQueryURL,
-                                        requiringCustomObjectIds: true,
-                                        usingTransactions: useTransactions,
-                                        usingPostForQuery: true,
-                                        deletingKeychainIfNeeded: deleteKeychainIfNeeded,
-                                        authentication: authentication)
+        try await ParseSwift.initialize(
+			applicationId: appID,
+			clientKey: clientKey,
+			serverURL: serverURL,
+			liveQueryServerURL: liveQueryURL,
+			requiringCustomObjectIds: true,
+			usingTransactions: useTransactions,
+			usingPostForQuery: true,
+			deletingKeychainIfNeeded: deleteKeychainIfNeeded,
+			authentication: authentication
+		)
     }
 
     /**
