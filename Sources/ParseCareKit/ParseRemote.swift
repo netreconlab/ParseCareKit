@@ -278,11 +278,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
                     parseClock = try await PCKClock.fetchFromRemote(uuid)
                     createdNewClock = false
                 } catch {
-					do {
-						parseClock = try await PCKClock.new(uuid: uuid)
-					} catch {
-						
-					}
+					parseClock = try await PCKClock.new(uuid: uuid)
                     createdNewClock = true
                 }
                 guard let parseVector = parseClock.knowledgeVector else {
