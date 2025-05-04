@@ -8,6 +8,7 @@
 
 import CareKitStore
 import Foundation
+import os.log
 import ParseSwift
 
 /// Revision records are exchanged by the CareKit and a ParseCareKit remote during synchronization.
@@ -152,31 +153,226 @@ struct PCKRevisionRecord: ParseObject {
                                  knowledgeVector: knowledgeVector)
     }
 
-	func save(options: API.Options = [], batchLimit: Int) async throws {
-        try await patients.createAll(
-			batchLimit: batchLimit,
-			options: options
-		)
-        try await carePlans.createAll(
-			batchLimit: batchLimit,
-			options: options
-		)
-        try await contacts.createAll(
-			batchLimit: batchLimit,
-			options: options
-		)
-        try await tasks.createAll(
-			batchLimit: batchLimit,
-			options: options
-		)
-        try await healthKitTasks.createAll(
-			batchLimit: batchLimit,
-			options: options
-		)
-        try await outcomes.createAll(
-			batchLimit: batchLimit,
-			options: options
-		)
+	func save(
+		options: API.Options = [],
+		batchLimit: Int
+	) async throws {
+		let duplicateErrorString = "Attempted to add an object that is already on the server, skipping the save"
+		let patientObjectIDs: [String] = patients.compactMap(\.objectId)
+		do {
+			let numberOfPatients = patients.count
+			if numberOfPatients > batchLimit {
+				Logger.revisionRecord.warning(
+					"Attempting to save a large amount of \(numberOfPatients) Patients to the server, please ensure your server supports transactions of this size"
+				)
+			}
+			let results = try await patients.createAll(
+				batchLimit: numberOfPatients,
+				options: options
+			)
+			results.forEach { result in
+				switch result {
+				case .success:
+					return
+				case .failure(let error):
+					if error.equalsTo(.duplicateValue) {
+						Logger.revisionRecord.warning(
+							"\(duplicateErrorString)"
+						)
+					} else {
+						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+					}
+				}
+			}
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following Patients are already on the server: \(patientObjectIDs)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+			}
+		}
+
+		let carePlanObjectIDs: [String] = carePlans.compactMap(\.objectId)
+		do {
+			let numberOfCarePlans = carePlans.count
+			if numberOfCarePlans > batchLimit {
+				Logger.revisionRecord.warning(
+					"Attempting to save a large amount of \(numberOfCarePlans) CarePlans to the server, please ensure your server supports transactions of this size"
+				)
+			}
+			let results = try await carePlans.createAll(
+				batchLimit: numberOfCarePlans,
+				options: options
+			)
+			results.forEach { result in
+				switch result {
+				case .success:
+					return
+				case .failure(let error):
+					if error.equalsTo(.duplicateValue) {
+						Logger.revisionRecord.warning(
+							"\(duplicateErrorString)"
+						)
+					} else {
+						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+					}
+				}
+			}
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following CarePlans are already on the server: \(carePlanObjectIDs)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+			}
+		}
+
+		let contactObjectIDs: [String] = contacts.compactMap(\.objectId)
+		do {
+			let numberOfContacts = contacts.count
+			if numberOfContacts > batchLimit {
+				Logger.revisionRecord.warning(
+					"Attempting to save a large amount of \(numberOfContacts) Contacts to the server, please ensure your server supports transactions of this size"
+				)
+			}
+			let results = try await contacts.createAll(
+				batchLimit: numberOfContacts,
+				options: options
+			)
+			results.forEach { result in
+				switch result {
+				case .success:
+					return
+				case .failure(let error):
+					if error.equalsTo(.duplicateValue) {
+						Logger.revisionRecord.warning(
+							"\(duplicateErrorString)"
+						)
+					} else {
+						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+					}
+				}
+			}
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following Contacts are already on the server: \(contactObjectIDs)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+			}
+		}
+
+		let taskObjectIDs: [String] = tasks.compactMap(\.objectId)
+		do {
+			let numberOfTasks = tasks.count
+			if numberOfTasks > batchLimit {
+				Logger.revisionRecord.warning(
+					"Attempting to save a large amount of \(numberOfTasks) Tasks to the server, please ensure your server supports transactions of this size"
+				)
+			}
+			let results = try await tasks.createAll(
+				batchLimit: numberOfTasks,
+				options: options
+			)
+			results.forEach { result in
+				switch result {
+				case .success:
+					return
+				case .failure(let error):
+					if error.equalsTo(.duplicateValue) {
+						Logger.revisionRecord.warning(
+							"\(duplicateErrorString)"
+						)
+					} else {
+						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+					}
+				}
+			}
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following Tasks are already on the server: \(taskObjectIDs)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+			}
+		}
+
+		let healthKitTaskObjectIDs: [String] = healthKitTasks.compactMap(\.objectId)
+		do {
+			let numberOfHealthKitTasks = healthKitTasks.count
+			if numberOfHealthKitTasks > batchLimit {
+				Logger.revisionRecord.warning(
+					"Attempting to save a large amount of \(numberOfHealthKitTasks) HealthKitTasks to the server, please ensure your server supports transactions of this size"
+				)
+			}
+			let results = try await healthKitTasks.createAll(
+				batchLimit: numberOfHealthKitTasks,
+				options: options
+			)
+			results.forEach { result in
+				switch result {
+				case .success:
+					return
+				case .failure(let error):
+					if error.equalsTo(.duplicateValue) {
+						Logger.revisionRecord.warning(
+							"\(duplicateErrorString)"
+						)
+					} else {
+						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+					}
+				}
+			}
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following HealthKitTasks are already on the server: \(healthKitTaskObjectIDs)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+			}
+		}
+
+		let outcomeObjectIDs: [String] = outcomes.compactMap(\.objectId)
+		do {
+			let numberOfOutcomes = outcomes.count
+			if numberOfOutcomes > batchLimit {
+				Logger.revisionRecord.warning(
+					"Attempting to save a large amount of \(numberOfOutcomes) Outcomes to the server, please ensure your server supports transactions of this size"
+				)
+			}
+			let results = try await outcomes.createAll(
+				batchLimit: numberOfOutcomes,
+				options: options
+			)
+			results.forEach { result in
+				switch result {
+				case .success:
+					return
+				case .failure(let error):
+					if error.equalsTo(.duplicateValue) {
+						Logger.revisionRecord.warning(
+							"\(duplicateErrorString)"
+						)
+					} else {
+						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+					}
+				}
+			}
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following Outcomes are already on the server: \(outcomeObjectIDs)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+			}
+		}
         try await self.create(
 			options: options
 		)
