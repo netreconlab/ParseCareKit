@@ -53,6 +53,7 @@ extension Logger {
     static let syncProgress = Logger(subsystem: subsystem, category: "\(category).syncProgress")
     static let clock = Logger(subsystem: subsystem, category: "\(category).clock")
     static let clockSubscription = Logger(subsystem: subsystem, category: "\(category).clockSubscription")
+	static let revisionRecord = Logger(subsystem: subsystem, category: "\(category).revisionRecord")
     static let defaultACL = Logger(subsystem: subsystem, category: "\(category).defaultACL")
     static let initializer = Logger(subsystem: subsystem, category: "\(category).initializer")
     static let deinitializer = Logger(subsystem: subsystem, category: "\(category).deinitializer")

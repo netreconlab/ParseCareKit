@@ -35,7 +35,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
     /// The unique identifier of the remote clock.
     public var uuid: UUID!
 
-	/// The batchLimit for sending tansactions to the ParseServer.
+	/// The limit at which ParseCareKit will log a warning about a batch size potentially
+	/// being to large. The framework will attempt to send over this limit, but be sure
+	/// your server supports transactions this large. Defaults to 100.
 	public var batchLimit: Int
 
     /// A dictionary of any custom classes to synchronize between the `CareKitStore` and the Parse Server.
@@ -56,6 +58,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
      Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
+        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
@@ -97,6 +100,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
         no public read/write access.
+        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
      - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
      - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
      you need to provide `ParseACL.defaultACL`.
@@ -125,6 +129,7 @@ public class ParseRemote: OCKRemoteSynchronizable {
      Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
+        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
             by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.
@@ -176,9 +181,11 @@ public class ParseRemote: OCKRemoteSynchronizable {
 
     // MARK: Conformance to OCKRemoteSynchronizable
 
-    public func pullRevisions(since knowledgeVector: OCKRevisionRecord.KnowledgeVector,
-                              mergeRevision: @escaping (OCKRevisionRecord) -> Void,
-                              completion: @escaping (Error?) -> Void) {
+    public func pullRevisions(
+		since knowledgeVector: OCKRevisionRecord.KnowledgeVector,
+		mergeRevision: @escaping (OCKRevisionRecord) -> Void,
+		completion: @escaping (Error?) -> Void
+	) {
 
         Task {
             // 1. Make sure a remote is setup and available.
