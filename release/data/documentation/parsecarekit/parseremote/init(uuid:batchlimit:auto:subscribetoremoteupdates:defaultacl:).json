@@ -281,6 +281,28 @@
             {
               "inlineContent" : [
                 {
+                  "text" : "The limit at which ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "ParseCareKit",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "batchLimit"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
                   "text" : "If set to ",
                   "type" : "text"
                 },

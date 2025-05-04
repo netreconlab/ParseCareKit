@@ -275,7 +275,23 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/ParseRemote/batchLimit": {
   "abstract" : [
     {
-      "text" : "The batchLimit for sending tansactions to the ParseServer.",
+      "text" : "The limit at which ParseCareKit will log a warning about a batch size potentially",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "being to large. The framework will attempt to send over this limit, but be sure",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "your server supports transactions this large. Defaults to 100.",
       "type" : "text"
     }
   ],
