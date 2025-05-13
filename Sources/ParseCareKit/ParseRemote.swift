@@ -475,11 +475,9 @@ public class ParseRemote: OCKRemoteSynchronizable {
                                 // If currently syncing need to check in the future
                                 do {
                                     let delay = try await self.remoteStatus.retryLiveQueryAfter()
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                                        Task {
-                                            await self.requestSyncIfNewerClock(updatedClock)
-                                        }
-                                    }
+									let nanoSecondDelay = UInt64(delay * 1_000_000_000)
+									try? await Task.sleep(nanoseconds: nanoSecondDelay)
+									await self.requestSyncIfNewerClock(updatedClock)
                                 } catch {
                                     Logger.clockSubscription.error("\(error)")
                                     await self.remoteStatus.notSynchronzing()
