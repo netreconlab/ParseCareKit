@@ -10,13 +10,3 @@ import CareKitStore
 import Foundation
 
 extension OCKSemanticVersion: @unchecked Sendable {}
-
-extension OCKSemanticVersion: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(majorVersion)
-        hasher.combine(minorVersion)
-        hasher.combine(patchNumber)
-    }
-
-}

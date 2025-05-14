@@ -10,13 +10,3 @@ import CareKitStore
 import Foundation
 
 extension OCKNote: @unchecked Sendable {}
-
-extension OCKNote: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(author)
-        hasher.combine(title)
-        hasher.combine(content)
-    }
-
-}

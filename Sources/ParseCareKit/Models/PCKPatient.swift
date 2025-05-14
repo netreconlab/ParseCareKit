@@ -6,10 +6,11 @@
 //  Copyright © 2019 Network Reconnaissance Lab. All rights reserved.
 //
 
-import Foundation
-import ParseSwift
+import CareKitEssentials
 import CareKitStore
+import Foundation
 import os.log
+import ParseSwift
 
 // swiftlint:disable cyclomatic_complexity
 // swiftlint:disable type_body_length
