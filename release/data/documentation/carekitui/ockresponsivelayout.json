@@ -1,0 +1,678 @@
+{
+  "abstract" : [
+    {
+      "text" : "Accessible view configuration that contains layout information for different ",
+      "type" : "text"
+    },
+    {
+      "code" : "UserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "and ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " combinations.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9CareKitUI19OCKResponsiveLayoutV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "OCKResponsiveLayout"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitUI"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "OCKResponsiveLayout"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "OCKResponsiveLayout"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "OCKResponsiveLayout"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "LayoutOption"
+            },
+            {
+              "kind" : "text",
+              "text" : ">"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/Rule",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/init(defaultLayout:anySizeClassRuleSet:sizeClassSpecificRuleSets:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/defaultRuleSet",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/sizeClassSpecificRuleSets"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/responsiveLayoutRule(traitCollection:)"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClass"
+      ],
+      "title" : "Type Aliases"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitui\/ockresponsivelayout"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitUI",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout": {
+  "abstract" : [
+    {
+      "text" : "Accessible view configuration that contains layout information for different ",
+      "type" : "text"
+    },
+    {
+      "code" : "UserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "and ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " combinations.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKResponsiveLayout"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKResponsiveLayout"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/Rule": {
+  "abstract" : [
+    {
+      "text" : "A layout rule for a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Rule"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/Rule",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Rule"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout.Rule",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/rule"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/SizeClass": {
+  "abstract" : [
+    {
+      "text" : "A lightweight typealias for a horizontal and vertical ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIUserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " definition.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SizeClass"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClass",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SizeClass"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout.SizeClass",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/sizeclass"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/SizeClassRuleSet": {
+  "abstract" : [
+    {
+      "text" : "A set of ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " specific rules for a given size class.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SizeClassRuleSet"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SizeClassRuleSet"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout.SizeClassRuleSet",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/sizeclassruleset"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/defaultRuleSet": {
+  "abstract" : [
+    {
+      "text" : "A default ",
+      "type" : "text"
+    },
+    {
+      "code" : "SizeClassRuleSet",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to apply for different ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : "’s when the",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "exact ",
+      "type" : "text"
+    },
+    {
+      "code" : "UserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " is not important.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "defaultRuleSet"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV16SizeClassRuleSetV",
+      "text" : "SizeClassRuleSet"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/defaultRuleSet",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "defaultRuleSet",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/defaultruleset"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/init(defaultLayout:anySizeClassRuleSet:sizeClassSpecificRuleSets:)": {
+  "abstract" : [
+    {
+      "text" : "Initialize a ",
+      "type" : "text"
+    },
+    {
+      "code" : "OCKResponsiveLayout",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " with default and specific size class rules.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "defaultLayout"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV0E6Optionxmfp",
+      "text" : "LayoutOption"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "anySizeClassRuleSet"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV",
+      "text" : "OCKResponsiveLayout"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV4RuleV",
+      "text" : "Rule"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV0E6Optionxmfp",
+      "text" : "LayoutOption"
+    },
+    {
+      "kind" : "text",
+      "text" : ">], "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "sizeClassSpecificRuleSets"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV16SizeClassRuleSetV",
+      "text" : "SizeClassRuleSet"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/init(defaultLayout:anySizeClassRuleSet:sizeClassSpecificRuleSets:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(defaultLayout:anySizeClassRuleSet:sizeClassSpecificRuleSets:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/init(defaultlayout:anysizeclassruleset:sizeclassspecificrulesets:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/responsiveLayoutRule(traitCollection:)": {
+  "abstract" : [
+    {
+      "text" : "Get a generic ",
+      "type" : "text"
+    },
+    {
+      "code" : "LayoutOption",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " that has been mapped to a ",
+      "type" : "text"
+    },
+    {
+      "code" : "UserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " for comparison provided by a given ",
+      "type" : "text"
+    },
+    {
+      "code" : "UITraitCollection",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "responsiveLayoutRule"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "traitCollection"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "c:objc(cs)UITraitCollection",
+      "text" : "UITraitCollection"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV0E6Optionxmfp",
+      "text" : "LayoutOption"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/responsiveLayoutRule(traitCollection:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "responsiveLayoutRule(traitCollection:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/responsivelayoutrule(traitcollection:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/sizeClassSpecificRuleSets": {
+  "abstract" : [
+    {
+      "text" : "A set of ",
+      "type" : "text"
+    },
+    {
+      "code" : "UserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " specific rule sets to provide different accessible layouts",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "for specific size class combinations.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "sizeClassSpecificRuleSets"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV16SizeClassRuleSetV",
+      "text" : "SizeClassRuleSet"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/sizeClassSpecificRuleSets",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "sizeClassSpecificRuleSets",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/sizeclassspecificrulesets"
+}
+}
+}

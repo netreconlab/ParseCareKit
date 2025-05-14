@@ -202,14 +202,6 @@
       "kind" : "relationships",
       "title" : "Inherits From",
       "type" : "inheritsFrom"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKRoleable"
-      ],
-      "kind" : "relationships",
-      "title" : "Inherited By",
-      "type" : "inheritedBy"
     }
   ],
   "schemaVersion" : {
@@ -292,56 +284,6 @@
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Se",
   "title" : "Swift.Decodable",
   "type" : "unresolvable"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseCareKit/PCKRoleable": {
-  "abstract" : [
-    {
-      "text" : "Objects that conform to the ",
-      "type" : "text"
-    },
-    {
-      "code" : "PCKRoleable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " protocol are ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseRole",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : "’s .",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "protocol"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "PCKRoleable"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseCareKit\/PCKRoleable",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "PCKRoleable"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "PCKRoleable",
-  "type" : "topic",
-  "url" : "\/documentation\/parsecarekit\/pckroleable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift": {
   "abstract" : [

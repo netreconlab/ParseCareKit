@@ -1,0 +1,317 @@
+{
+  "abstract" : [
+    {
+      "text" : "The valid size class combinations for this set of rules",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet\/sizeClasses"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:9CareKitUI19OCKResponsiveLayoutV16SizeClassRuleSetV11sizeClassesSaySo015UIUserInterfacefG0V10horizontal_AH8verticaltGvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "sizeClasses"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV9SizeClassa",
+        "text" : "SizeClass"
+      },
+      {
+        "kind" : "text",
+        "text" : "]"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitUI"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "sizeClasses"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "sizeClasses"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClass",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV9SizeClassa",
+              "text" : "SizeClass"
+            },
+            {
+              "kind" : "text",
+              "text" : "]"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitui\/ockresponsivelayout\/sizeclassruleset\/sizeclasses"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitUI",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout": {
+  "abstract" : [
+    {
+      "text" : "Accessible view configuration that contains layout information for different ",
+      "type" : "text"
+    },
+    {
+      "code" : "UserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "and ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " combinations.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKResponsiveLayout"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKResponsiveLayout"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/SizeClass": {
+  "abstract" : [
+    {
+      "text" : "A lightweight typealias for a horizontal and vertical ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIUserInterfaceSizeClass",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " definition.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SizeClass"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClass",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SizeClass"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout.SizeClass",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/sizeclass"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/SizeClassRuleSet": {
+  "abstract" : [
+    {
+      "text" : "A set of ",
+      "type" : "text"
+    },
+    {
+      "code" : "UIContentSizeCategory",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " specific rules for a given size class.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "SizeClassRuleSet"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "SizeClassRuleSet"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKResponsiveLayout.SizeClassRuleSet",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/sizeclassruleset"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKResponsiveLayout/SizeClassRuleSet/sizeClasses": {
+  "abstract" : [
+    {
+      "text" : "The valid size class combinations for this set of rules",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "sizeClasses"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI19OCKResponsiveLayoutV9SizeClassa",
+      "text" : "SizeClass"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet\/sizeClasses",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "sizeClasses",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockresponsivelayout\/sizeclassruleset\/sizeclasses"
+}
+}
+}

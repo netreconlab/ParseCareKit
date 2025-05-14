@@ -1,0 +1,832 @@
+{
+  "abstract" : [
+    {
+      "text" : "A horizontal row of seven selectable completion rings and corresponding labels.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "c:@M@CareKitUI@objc(cs)OCKWeekCalendarView",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "class"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "OCKWeekCalendarView"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "CareKitUI"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "OCKWeekCalendarView"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Class",
+    "symbolKind" : "class",
+    "title" : "OCKWeekCalendarView"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "class"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "OCKWeekCalendarView"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "+--------------------------------------+",
+            "|  [title] [title] [title]     [title] |",
+            "|                                      |",
+            "|    o o     o o     o o         o o   |",
+            "|   o   o   o   o   o   o  ...  o   o  |",
+            "|    o o     o o     o o         o o   |",
+            "+--------------------------------------+"
+          ],
+          "syntax" : null,
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKView"
+      ],
+      "kind" : "relationships",
+      "title" : "Inherits From",
+      "type" : "inheritsFrom"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)NSCoding",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCalendarDisplayable",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)NSObject",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)CALayerDelegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s7CVarArgP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAccessibilityIdentification",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIActivityItemsConfigurationProviding",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAppearance",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAppearanceContainer",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UICoordinateSpace",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIDynamicItem",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusEnvironment",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusItem",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusItemContainer",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UILargeContentViewerItem",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIPasteConfigurationSupporting",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIPopoverPresentationControllerSourceItem",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIResponderStandardEditActions",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/5UIKit23UITraitChangeObservableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UITraitEnvironment",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIUserActivityRestoring"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/init(weekOfDate:)"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/completionRingButtons",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/dateInterval",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/delegate",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/selectedDate"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/completionRingFor(date:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/selectDate(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/showDate(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/styleDidChange()"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/carekitui\/ockweekcalendarview"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/5UIKit23UITraitChangeObservableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/5UIKit23UITraitChangeObservableP",
+  "title" : "UIKit.UITraitChangeObservable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SH": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
+  "title" : "Swift.Hashable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/SQ": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
+  "title" : "Swift.Equatable",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "CareKitUI",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKCalendarDisplayable": {
+  "abstract" : [
+    {
+      "text" : "An object that can display and handle interactions with a calendar.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKCalendarDisplayable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCalendarDisplayable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKCalendarDisplayable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKCalendarDisplayable",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockcalendardisplayable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStylable": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKStylable"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKStylable"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKStylable",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockstylable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKView": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKView"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKView",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKView"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKView",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockview"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView": {
+  "abstract" : [
+    {
+      "text" : "A horizontal row of seven selectable completion rings and corresponding labels.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OCKWeekCalendarView"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OCKWeekCalendarView"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "OCKWeekCalendarView",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/completionRingButtons": {
+  "abstract" : [
+    {
+      "text" : "The completion ring buttons in the view. There will be one ring for each day in the ",
+      "type" : "text"
+    },
+    {
+      "code" : "dateInterval",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "completionRingButtons"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI23OCKCompletionRingButtonC",
+      "text" : "OCKCompletionRingButton"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/completionRingButtons",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "completionRingButtons",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/completionringbuttons"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/completionRingFor(date:)": {
+  "abstract" : [
+    {
+      "text" : "Get the completion ring that corresponds to a particular date.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "completionRingFor"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "date"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI23OCKCompletionRingButtonC",
+      "text" : "OCKCompletionRingButton"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/completionRingFor(date:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "completionRingFor(date:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/completionringfor(date:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/dateInterval": {
+  "abstract" : [
+    {
+      "text" : "The date interval of the week currently being displayed.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "dateInterval"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation12DateIntervalV",
+      "text" : "DateInterval"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/dateInterval",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "dateInterval",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/dateinterval"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/delegate": {
+  "abstract" : [
+    {
+      "text" : "An object that handles events related to a calendar object.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "delegate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:9CareKitUI23OCKCalendarViewDelegateP",
+      "text" : "OCKCalendarViewDelegate"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/delegate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "delegate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/delegate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/init(weekOfDate:)": {
+  "abstract" : [
+    {
+      "text" : "A view that displays interactable completion rings for each day in a week. The week is computed based on the provided date parameter.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "weekOfDate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/init(weekOfDate:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(weekOfDate:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/init(weekofdate:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/selectDate(_:)": {
+  "abstract" : [
+    {
+      "text" : "Select the completion ring that corresponds to the given date.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "selectDate"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/selectDate(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "selectDate(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/selectdate(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/selectedDate": {
+  "abstract" : [
+    {
+      "text" : "The currently selected date in the calendar.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "selectedDate"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/selectedDate",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "selectedDate",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/selecteddate"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/showDate(_:)": {
+  "abstract" : [
+    {
+      "text" : "Display the week for the given date. Each ring will correspond to one day in the week.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "showDate"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation4DateV",
+      "text" : "Date"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/showDate(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "showDate(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/showdate(_:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKWeekCalendarView/styleDidChange()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "styleDidChange"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKWeekCalendarView\/styleDidChange()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "styleDidChange()",
+  "type" : "topic",
+  "url" : "\/documentation\/carekitui\/ockweekcalendarview\/styledidchange()"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)CALayerDelegate": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)CALayerDelegate",
+  "title" : "QuartzCore.CALayerDelegate",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)NSCoding": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)NSCoding",
+  "title" : "Foundation.NSCoding",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)NSObject": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)NSObject",
+  "title" : "ObjectiveC.NSObjectProtocol",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIAccessibilityIdentification": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAccessibilityIdentification",
+  "title" : "UIKit.UIAccessibilityIdentification",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIActivityItemsConfigurationProviding": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIActivityItemsConfigurationProviding",
+  "title" : "UIKit.UIActivityItemsConfigurationProviding",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIAppearance": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAppearance",
+  "title" : "UIKit.UIAppearance",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIAppearanceContainer": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAppearanceContainer",
+  "title" : "UIKit.UIAppearanceContainer",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UICoordinateSpace": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UICoordinateSpace",
+  "title" : "UIKit.UICoordinateSpace",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIDynamicItem": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIDynamicItem",
+  "title" : "UIKit.UIDynamicItem",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIFocusEnvironment": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusEnvironment",
+  "title" : "UIKit.UIFocusEnvironment",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIFocusItem": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusItem",
+  "title" : "UIKit.UIFocusItem",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIFocusItemContainer": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusItemContainer",
+  "title" : "UIKit.UIFocusItemContainer",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UILargeContentViewerItem": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UILargeContentViewerItem",
+  "title" : "UIKit.UILargeContentViewerItem",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIPasteConfigurationSupporting": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIPasteConfigurationSupporting",
+  "title" : "UIKit.UIPasteConfigurationSupporting",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIPopoverPresentationControllerSourceItem": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIPopoverPresentationControllerSourceItem",
+  "title" : "UIKit.UIPopoverPresentationControllerSourceItem",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIResponderStandardEditActions": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIResponderStandardEditActions",
+  "title" : "UIKit.UIResponderStandardEditActions",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UITraitEnvironment": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UITraitEnvironment",
+  "title" : "UIKit.UITraitEnvironment",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIUserActivityRestoring": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIUserActivityRestoring",
+  "title" : "UIKit.UIUserActivityRestoring",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s23CustomStringConvertibleP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
+  "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s28CustomDebugStringConvertibleP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
+  "title" : "Swift.CustomDebugStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s7CVarArgP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s7CVarArgP",
+  "title" : "Swift.CVarArg",
+  "type" : "unresolvable"
+}
+}
+}
