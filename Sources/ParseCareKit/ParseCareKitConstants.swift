@@ -12,12 +12,13 @@ import CareKitStore
 import os.log
 
 public enum ParseCareKitConstants {
-    static let defaultACL = "edu.uky.cs.netreconlab.ParseCareKit_defaultACL"
+    static let defaultACL = "edu.netreconlab.ParseCareKit_defaultACL"
     static let acl = "_acl"
     static let administratorRole = "Administrators"
 }
 
 // MARK: Custom Enums
+let queryLimit = 1000
 enum CustomKey {
     static let className                                  = "className"
 }

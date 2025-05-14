@@ -311,6 +311,7 @@ public struct PCKOutcome: PCKVersionable {
 
     func findOutcomes() async throws -> [PCKOutcome] {
         let query = Self.queryNotDeleted()
+			.limit(queryLimit)
         return try await query.find()
     }
 

@@ -22,12 +22,16 @@ public extension PCKVersionable {
         - options: A set of header options sent to the remote. Defaults to an empty set.
         - returns: `Future<[Self],ParseError>`.
     */
-    func findPublisher(for date: Date,
-                       options: API.Options = []) -> Future<[Self], ParseError> {
+    func findPublisher(
+		for date: Date,
+		options: API.Options = []
+	) -> Future<[Self], ParseError> {
         Future { promise in
-            self.find(for: date,
-                         options: options,
-                         completion: promise)
+            self.find(
+				for: date,
+				options: options,
+				completion: promise
+			)
         }
     }
 

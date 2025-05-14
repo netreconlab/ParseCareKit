@@ -21,12 +21,16 @@ public extension PCKVersionable {
         - returns: An array of objects matching the query.
         - throws: `ParseError`.
     */
-    func find(for date: Date,
-              options: API.Options = []) async throws -> [Self] {
+    func find(
+		for date: Date,
+		options: API.Options = []
+	) async throws -> [Self] {
         try await withCheckedThrowingContinuation { continuation in
-            self.find(for: date,
-                         options: options,
-                         completion: continuation.resume)
+            self.find(
+				for: date,
+				options: options,
+				completion: { continuation.resume(with: $0) }
+			)
         }
     }
 
@@ -41,8 +45,10 @@ public extension PCKVersionable {
     */
     func save(options: API.Options = []) async throws -> Self {
         try await withCheckedThrowingContinuation { continuation in
-            self.save(options: options,
-                      completion: continuation.resume)
+            self.save(
+				options: options,
+				completion: { continuation.resume(with: $0) }
+			)
         }
     }
 }

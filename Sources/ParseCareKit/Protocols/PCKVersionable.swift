@@ -100,15 +100,20 @@ extension PCKVersionable {
         - completion: The block to execute.
      It should have the following argument signature: `(Result<[Self],ParseError>)`.
     */
-    public func find(for date: Date,
-                     options: API.Options = [],
-                     callbackQueue: DispatchQueue = .main,
-                     completion: @escaping(Result<[Self], ParseError>) -> Void) {
+    public func find(
+		for date: Date,
+		options: API.Options = [],
+		callbackQueue: DispatchQueue = .main,
+		completion: @escaping(Result<[Self], ParseError>) -> Void
+	) {
         let query = Self.query(for: date)
+			.limit(queryLimit)
             .includeAll()
-        query.find(options: options,
-                   callbackQueue: callbackQueue,
-                   completion: completion)
+        query.find(
+			options: options,
+			callbackQueue: callbackQueue,
+			completion: completion
+		)
     }
 }
 
