@@ -10,12 +10,3 @@ import CareKitStore
 import Foundation
 
 extension OCKLabeledValue: @unchecked Sendable {}
-
-extension OCKLabeledValue: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(label)
-        hasher.combine(value)
-    }
-
-}

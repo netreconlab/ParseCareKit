@@ -300,17 +300,29 @@ public struct PCKOutcome: PCKVersionable {
     }
 
     public static func queryNotDeleted() -> Query<PCKOutcome> {
-        let taskQuery = PCKTask.query(doesNotExist(key: OutcomeKey.deletedDate))
+        let taskQuery = PCKTask.query(
+			doesNotExist(key: OutcomeKey.deletedDate)
+		)
         // **** BAKER need to fix matchesKeyInQuery and find equivalent "queryKey" in matchesQuery
-        let query = Self.query(doesNotExist(key: OutcomeKey.deletedDate),
-                                  matchesKeyInQuery(key: OutcomeKey.task,
-                                                    queryKey: OutcomeKey.task, query: taskQuery))
-            .includeAll()
+        let query = Self.query(
+			doesNotExist(
+				key: OutcomeKey.deletedDate
+			),
+			matchesKeyInQuery(
+				key: OutcomeKey.task,
+				queryKey: OutcomeKey.task,
+				query: taskQuery
+			)
+		)
+		.limit(queryLimit)
+		.includeAll()
+
         return query
     }
 
     func findOutcomes() async throws -> [PCKOutcome] {
         let query = Self.queryNotDeleted()
+			.limit(queryLimit)
         return try await query.find()
     }
 

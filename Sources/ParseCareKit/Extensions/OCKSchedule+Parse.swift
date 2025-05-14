@@ -10,11 +10,3 @@ import CareKitStore
 import Foundation
 
 extension OCKSchedule: @unchecked Sendable {}
-
-extension OCKSchedule: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(elements)
-    }
-
-}

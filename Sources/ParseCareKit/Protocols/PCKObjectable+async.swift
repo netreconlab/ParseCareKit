@@ -23,9 +23,11 @@ public extension PCKObjectable {
     static func first(_ uuid: UUID?,
                       options: API.Options = []) async throws -> Self {
         try await withCheckedThrowingContinuation { continuation in
-            Self.first(uuid,
-                       options: options,
-                       completion: continuation.resume)
+            Self.first(
+				uuid,
+				options: options,
+				completion: { continuation.resume(with: $0) }
+			)
         }
     }
 }

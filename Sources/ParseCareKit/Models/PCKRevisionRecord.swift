@@ -383,25 +383,60 @@ struct PCKRevisionRecord: ParseObject {
             throw ParseCareKitError.couldntUnwrapSelf
         }
         var mutableRecord = self
-        let patients = try await PCKPatient.query(containedIn(key: ParseKey.objectId,
-                                                              array: self.patients.compactMap { $0.objectId }))
-            .find(options: options)
-        let carePlans = try await PCKCarePlan.query(containedIn(key: ParseKey.objectId,
-                                                                array: self.carePlans.compactMap { $0.objectId }))
-            .find(options: options)
-        let contacts = try await PCKContact.query(containedIn(key: ParseKey.objectId,
-                                                              array: self.contacts.compactMap { $0.objectId }))
-            .find(options: options)
-        let tasks = try await PCKTask.query(containedIn(key: ParseKey.objectId,
-                                                        array: self.tasks.compactMap { $0.objectId }))
-            .find(options: options)
-        let healthKitTasks = try await PCKHealthKitTask.query(containedIn(key: ParseKey.objectId,
-                                                                          // swiftlint:disable:next line_length
-                                                                          array: self.healthKitTasks.compactMap { $0.objectId }))
-            .find(options: options)
-        let outcomes = try await PCKOutcome.query(containedIn(key: ParseKey.objectId,
-                                                              array: self.outcomes.compactMap { $0.objectId }))
-            .find(options: options)
+        let patients = try await PCKPatient.query(
+			containedIn(
+				key: ParseKey.objectId,
+				array: self.patients.compactMap { $0.objectId }
+			)
+		)
+		.limit(queryLimit)
+		.find(options: options)
+
+        let carePlans = try await PCKCarePlan.query(
+			containedIn(
+				key: ParseKey.objectId,
+				array: self.carePlans.compactMap { $0.objectId }
+			)
+		)
+		.limit(queryLimit)
+		.find(options: options)
+
+        let contacts = try await PCKContact.query(
+			containedIn(
+				key: ParseKey.objectId,
+				array: self.contacts.compactMap { $0.objectId }
+			)
+		)
+		.limit(queryLimit)
+		.find(options: options)
+
+        let tasks = try await PCKTask.query(
+			containedIn(
+				key: ParseKey.objectId,
+				array: self.tasks.compactMap { $0.objectId }
+			)
+		)
+		.limit(queryLimit)
+		.find(options: options)
+
+        let healthKitTasks = try await PCKHealthKitTask.query(
+			containedIn(
+				key: ParseKey.objectId,
+				array: self.healthKitTasks.compactMap { $0.objectId }
+			)
+		)
+		.limit(queryLimit)
+		.find(options: options)
+
+        let outcomes = try await PCKOutcome.query(
+			containedIn(
+				key: ParseKey.objectId,
+				array: self.outcomes.compactMap { $0.objectId }
+			)
+		)
+		.limit(queryLimit)
+		.find(options: options)
+
         mutableRecord.entities?.removeAll()
         try entities.forEach { entity in
             switch entity {
