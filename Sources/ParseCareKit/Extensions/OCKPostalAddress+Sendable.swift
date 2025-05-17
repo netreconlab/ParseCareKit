@@ -1,5 +1,5 @@
 //
-//  OCKSchedule+Parse.swift
+//  OCKPostalAddress+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKSchedule: @unchecked Sendable {}
+extension OCKPostalAddress: @unchecked Sendable {}

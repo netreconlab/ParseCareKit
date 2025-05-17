@@ -1,5 +1,5 @@
 //
-//  OCKSemanticVersion+Parse.swift
+//  OCKNote+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKSemanticVersion: @unchecked Sendable {}
+extension OCKNote: @unchecked Sendable {}

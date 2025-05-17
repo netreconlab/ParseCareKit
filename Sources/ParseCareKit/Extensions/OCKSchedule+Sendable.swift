@@ -1,5 +1,5 @@
 //
-//  OCKLabeledValue+Parse.swift
+//  OCKSchedule+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKLabeledValue: @unchecked Sendable {}
+extension OCKSchedule: @unchecked Sendable {}

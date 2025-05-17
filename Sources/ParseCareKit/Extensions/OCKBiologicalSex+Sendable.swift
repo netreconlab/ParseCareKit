@@ -1,5 +1,5 @@
 //
-//  OCKNote+Parse.swift
+//  OCKBiologicalSex+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKNote: @unchecked Sendable {}
+extension OCKBiologicalSex: @unchecked Sendable {}

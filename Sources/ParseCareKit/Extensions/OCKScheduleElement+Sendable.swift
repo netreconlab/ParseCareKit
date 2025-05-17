@@ -1,5 +1,5 @@
 //
-//  OCKScheduleElement+Parse.swift
+//  OCKScheduleElement+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
