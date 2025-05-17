@@ -1,5 +1,5 @@
 //
-//  OCKBiologicalSex+Parse.swift
+//  OCKSemanticVersion+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKBiologicalSex: @unchecked Sendable {}
+extension OCKSemanticVersion: @unchecked Sendable {}

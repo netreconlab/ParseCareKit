@@ -180,7 +180,7 @@ struct PCKRevisionRecord: ParseObject {
 							"\(duplicateErrorString)"
 						)
 					} else {
-						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+						Logger.revisionRecord.error("Failed to save RevisionRecord due to Patient: \(error)")
 					}
 				}
 			}
@@ -190,7 +190,7 @@ struct PCKRevisionRecord: ParseObject {
 					"\(duplicateErrorString). Verify the following Patients are already on the server: \(patientObjectIDs)"
 				)
 			} else {
-				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to Patients: \(parseError)")
 			}
 		}
 
@@ -216,7 +216,7 @@ struct PCKRevisionRecord: ParseObject {
 							"\(duplicateErrorString)"
 						)
 					} else {
-						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+						Logger.revisionRecord.error("Failed to save RevisionRecord due to CarePlan: \(error)")
 					}
 				}
 			}
@@ -226,7 +226,7 @@ struct PCKRevisionRecord: ParseObject {
 					"\(duplicateErrorString). Verify the following CarePlans are already on the server: \(carePlanObjectIDs)"
 				)
 			} else {
-				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to CarePlans: \(parseError)")
 			}
 		}
 
@@ -252,7 +252,7 @@ struct PCKRevisionRecord: ParseObject {
 							"\(duplicateErrorString)"
 						)
 					} else {
-						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+						Logger.revisionRecord.error("Failed to save RevisionRecord due to Contact: \(error)")
 					}
 				}
 			}
@@ -262,7 +262,7 @@ struct PCKRevisionRecord: ParseObject {
 					"\(duplicateErrorString). Verify the following Contacts are already on the server: \(contactObjectIDs)"
 				)
 			} else {
-				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to Contacts: \(parseError)")
 			}
 		}
 
@@ -288,7 +288,7 @@ struct PCKRevisionRecord: ParseObject {
 							"\(duplicateErrorString)"
 						)
 					} else {
-						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+						Logger.revisionRecord.error("Failed to save RevisionRecord due to Task: \(error)")
 					}
 				}
 			}
@@ -298,7 +298,7 @@ struct PCKRevisionRecord: ParseObject {
 					"\(duplicateErrorString). Verify the following Tasks are already on the server: \(taskObjectIDs)"
 				)
 			} else {
-				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to Tasks: \(parseError)")
 			}
 		}
 
@@ -324,7 +324,7 @@ struct PCKRevisionRecord: ParseObject {
 							"\(duplicateErrorString)"
 						)
 					} else {
-						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+						Logger.revisionRecord.error("Failed to save RevisionRecord due to HealthKitTask: \(error)")
 					}
 				}
 			}
@@ -334,7 +334,7 @@ struct PCKRevisionRecord: ParseObject {
 					"\(duplicateErrorString). Verify the following HealthKitTasks are already on the server: \(healthKitTaskObjectIDs)"
 				)
 			} else {
-				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to HealthKitTasks: \(parseError)")
 			}
 		}
 
@@ -360,7 +360,7 @@ struct PCKRevisionRecord: ParseObject {
 							"\(duplicateErrorString)"
 						)
 					} else {
-						Logger.revisionRecord.error("Failed to save revision record: \(error)")
+						Logger.revisionRecord.error("Failed to save RevisionRecord due to Outcome: \(error)")
 					}
 				}
 			}
@@ -370,12 +370,22 @@ struct PCKRevisionRecord: ParseObject {
 					"\(duplicateErrorString). Verify the following Outcomes are already on the server: \(outcomeObjectIDs)"
 				)
 			} else {
-				Logger.revisionRecord.error("Failed to save revision record: \(parseError)")
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to Outcomes: \(parseError)")
 			}
 		}
-        try await self.create(
-			options: options
-		)
+		do {
+			try await self.create(
+				options: options
+			)
+		} catch let parseError as ParseError {
+			if parseError.equalsTo(.duplicateValue) {
+				Logger.revisionRecord.warning(
+					"\(duplicateErrorString). Verify the following RevisionRecord is already on the server: \(self.id)"
+				)
+			} else {
+				Logger.revisionRecord.error("Failed to save RevisionRecord due to creating RevisionRecord: \(parseError)")
+			}
+		}
     }
 
     func fetchEntities(options: API.Options = []) async throws -> Self {
