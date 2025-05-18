@@ -1,5 +1,5 @@
 //
-//  OCKTask+Parse.swift
+//  CareKitEssentialVersionable+Parse.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 11/21/21.
@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import CareKitEssentials
 import CareKitStore
 import ParseSwift
 import os.log
 
-public extension OCKTask {
+public extension CareKitEssentialVersionable {
     /**
      The Parse ACL for this object.
     */
@@ -36,7 +37,7 @@ public extension OCKTask {
                     userInfo = [ParseCareKitConstants.acl: aclString]
                 }
             } catch {
-                Logger.ockTask.error("Cannot set ACL: \(error)")
+                Logger.ockCarePlan.error("Cannot set ACL: \(error)")
             }
         }
     }

@@ -1,5 +1,5 @@
 //
-//  OCKPostalAddress+Parse.swift
+//  OCKContactCategory+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKPostalAddress: @unchecked Sendable {}
+extension OCKContactCategory: @unchecked Sendable {}

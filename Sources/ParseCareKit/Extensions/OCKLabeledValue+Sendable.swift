@@ -1,5 +1,5 @@
 //
-//  OCKContactCategory+Parse.swift
+//  OCKLabeledValue+Sendable.swift
 //  ParseCareKit
 //
 //  Created by Corey Baker on 7/13/24.
@@ -9,4 +9,4 @@
 import CareKitStore
 import Foundation
 
-extension OCKContactCategory: @unchecked Sendable {}
+extension OCKLabeledValue: @unchecked Sendable {}
