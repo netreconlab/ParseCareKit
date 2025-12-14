@@ -223,7 +223,7 @@ public struct PCKOutcome: PCKVersionable {
     }
 
     public func fetchLocalDataAndSave(_ delegate: ParseRemoteDelegate?,
-                                      completion: @escaping(Result<Self, Error>) -> Void) {
+                                      completion: @escaping @Sendable (Result<Self, Error>) -> Void) {
         guard let taskUUID = taskUUID,
               let taskOccurrenceIndex = taskOccurrenceIndex else {
             completion(.failure(ParseCareKitError.errorString("""

@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "ParseCareKit",
-    platforms: [.iOS(.v16), .macOS(.v14), .watchOS(.v10)],
+    platforms: [.iOS("18.0"), .macOS("15.0"), .watchOS("11.0")],
     products: [
         .library(
             name: "ParseCareKit",
@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
         .package(
 			url: "https://github.com/cbaker6/CareKit.git",
-            .upToNextMajor(from: "3.1.3")
+            .upToNextMajor(from: "4.0.5")
 		),
         .package(
 			url: "https://github.com/netreconlab/Parse-Swift.git",
@@ -22,7 +22,7 @@ let package = Package(
 		),
 		.package(
 			url: "https://github.com/netreconlab/CareKitEssentials.git",
-			.upToNextMajor(from: "1.1.4")
+			.upToNextMajor(from: "2.0.0")
 		)
     ],
     targets: [

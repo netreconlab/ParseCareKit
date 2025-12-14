@@ -1065,8 +1065,13 @@ class ParseCareKitTests: XCTestCase {
         let careKitNote = OCKNote(author: "myId", title: "hello", content: "world")
 
         // Special
-        let address = OCKPostalAddress()
-        address.state = "KY"
+        let address = OCKPostalAddress(
+			street: "123 Vermont Avenue",
+			city: "Los Angeles",
+			state: "CA",
+			postalCode: "91210",
+			country: "US"
+		)
         careKit.address = address
         careKit.category = .careProvider
         careKit.organization = "yo"

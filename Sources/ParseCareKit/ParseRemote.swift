@@ -12,7 +12,7 @@ import ParseSwift
 import os.log
 
 /// Allows the `CareKitStore` to synchronize with a remote Parse Server.
-public class ParseRemote: OCKRemoteSynchronizable {
+public final class ParseRemote: OCKRemoteSynchronizable {
 
     /// - warning: Should set `parseRemoteDelegate` instead.
     public weak var delegate: OCKRemoteSynchronizationDelegate?
