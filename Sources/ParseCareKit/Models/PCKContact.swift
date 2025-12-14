@@ -196,7 +196,7 @@ public struct PCKContact: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from contactAny: OCKAnyContact) throws -> PCKContact {
+    public static func new(from contactAny: any OCKAnyContact) throws -> PCKContact {
 
         guard let contact = contactAny as? OCKContact else {
             throw ParseCareKitError.cantCastToNeededClassType

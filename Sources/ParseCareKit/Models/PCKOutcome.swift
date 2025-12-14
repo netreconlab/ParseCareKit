@@ -177,7 +177,7 @@ public struct PCKOutcome: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from outcomeAny: OCKAnyOutcome) throws -> Self {
+    public static func new(from outcomeAny: any OCKAnyOutcome) throws -> Self {
 
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType

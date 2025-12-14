@@ -159,7 +159,7 @@ public struct PCKPatient: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from patientAny: OCKAnyPatient) throws -> PCKPatient {
+    public static func new(from patientAny: any OCKAnyPatient) throws -> PCKPatient {
 
         guard let patient = patientAny as? OCKPatient else {
             throw ParseCareKitError.cantCastToNeededClassType

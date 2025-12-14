@@ -160,7 +160,7 @@ public struct PCKCarePlan: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from carePlanAny: OCKAnyCarePlan) throws -> PCKCarePlan {
+    public static func new(from carePlanAny: any OCKAnyCarePlan) throws -> PCKCarePlan {
 
         guard let carePlan = carePlanAny as? OCKCarePlan else {
             throw ParseCareKitError.cantCastToNeededClassType
