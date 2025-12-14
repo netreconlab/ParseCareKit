@@ -205,7 +205,7 @@ public struct PCKHealthKitTask: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from taskAny: OCKAnyTask) throws -> PCKHealthKitTask {
+    public static func new(from taskAny: any OCKAnyTask) throws -> PCKHealthKitTask {
 
         guard let task = taskAny as? OCKHealthKitTask else {
             throw ParseCareKitError.cantCastToNeededClassType

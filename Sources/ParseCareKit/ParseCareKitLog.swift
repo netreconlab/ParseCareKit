@@ -10,7 +10,7 @@ import Foundation
 import os.log
 
 extension OSLog {
-    private static var subsystem = Bundle.main.bundleIdentifier!
+    private static let subsystem = Bundle.main.bundleIdentifier!
     static let category = "ParseCareKit"
     static let carePlan = OSLog(subsystem: subsystem, category: "\(category).carePlan")
     static let contact = OSLog(subsystem: subsystem, category: "\(category).carePlan")
@@ -38,7 +38,7 @@ extension OSLog {
 
 @available(iOS 14.0, watchOS 7.0, *)
 extension Logger {
-    private static var subsystem = Bundle.main.bundleIdentifier!
+    private static let subsystem = Bundle.main.bundleIdentifier!
     static let category = "ParseCareKit"
     static let carePlan = Logger(subsystem: subsystem, category: "\(category).carePlan")
     static let contact = Logger(subsystem: subsystem, category: "\(category).carePlan")

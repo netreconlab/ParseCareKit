@@ -177,7 +177,7 @@ public struct PCKOutcome: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from outcomeAny: OCKAnyOutcome) throws -> Self {
+    public static func new(from outcomeAny: any OCKAnyOutcome) throws -> Self {
 
         guard let outcome = outcomeAny as? OCKOutcome else {
             throw ParseCareKitError.cantCastToNeededClassType
@@ -223,7 +223,7 @@ public struct PCKOutcome: PCKVersionable {
     }
 
     public func fetchLocalDataAndSave(_ delegate: ParseRemoteDelegate?,
-                                      completion: @escaping(Result<Self, Error>) -> Void) {
+                                      completion: @escaping @Sendable (Result<Self, Error>) -> Void) {
         guard let taskUUID = taskUUID,
               let taskOccurrenceIndex = taskOccurrenceIndex else {
             completion(.failure(ParseCareKitError.errorString("""
@@ -326,7 +326,7 @@ public struct PCKOutcome: PCKVersionable {
         return try await query.find()
     }
 
-    public func findOutcomesInBackground(completion: @escaping([PCKOutcome]?, Error?) -> Void) {
+    public func findOutcomesInBackground(completion: @escaping ([PCKOutcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
         query.find { results in
 

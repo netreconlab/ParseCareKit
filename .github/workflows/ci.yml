@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 env:
-  CI_XCODE: '/Applications/Xcode_15.4.app/Contents/Developer'
+  CI_XCODE: '/Applications/Xcode_26.1.app/Contents/Developer'
 
 concurrency:
    group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,17 +14,17 @@ concurrency:
 
 jobs:
   xcode-test-ios:
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 14\ Pro\ Max -derivedDataPath DerivedData clean test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 17\ Pro\ Max -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Prepare codecov
-      uses: sersoft-gmbh/swift-coverage-action@v4
+      uses: sersoft-gmbh/swift-coverage-action@v5
       id: coverage-files
       with:
         target-name-filter: '^ParseCareKit$'
@@ -42,17 +42,17 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   xcode-test-macos:
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Prepare codecov
-      uses: sersoft-gmbh/swift-coverage-action@v4
+      uses: sersoft-gmbh/swift-coverage-action@v5
       id: coverage-files
       with:
         target-name-filter: '^ParseCareKit$'
@@ -70,31 +70,31 @@ jobs:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   xcode-build-watchos:
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Upload codecov yml
       run: |
         cat .codecov.yml | curl --data-binary @- https://codecov.io/validate
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 6\ \(44mm\) | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 11\ \(46mm\) 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   spm-test:
     timeout-minutes: 15
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Build-Test
       run: swift build -v
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
   docs:
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Generate Docs
         run: set -o pipefail && env NSUnbufferedIO=YES Scripts/generate-documentation
         env:

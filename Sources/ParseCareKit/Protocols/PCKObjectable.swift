@@ -179,7 +179,7 @@ extension PCKObjectable {
     */
     static public func first(_ uuid: UUID?,
                              options: API.Options = [],
-                             completion: @escaping(Result<Self, Error>) -> Void) {
+                             completion: @escaping (Result<Self, Error>) -> Void) {
 
         guard let uuidString = uuid?.uuidString else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
