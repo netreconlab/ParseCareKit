@@ -20,7 +20,7 @@ jobs:
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 17\ Pro\ Max -derivedDataPath DerivedData clean test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 17\ Pro\ Max -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Prepare codecov
@@ -48,7 +48,7 @@ jobs:
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
     - name: Prepare codecov
@@ -77,7 +77,7 @@ jobs:
       run: |
         cat .codecov.yml | curl --data-binary @- https://codecov.io/validate
     - name: Build
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 11\ \(46mm\) | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme ParseCareKit -destination platform\=watchOS\ Simulator,name\=Apple\ Watch\ Series\ 11\ \(46mm\) 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
