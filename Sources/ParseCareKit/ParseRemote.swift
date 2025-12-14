@@ -11,6 +11,8 @@ import CareKitStore
 import ParseSwift
 import os.log
 
+// swiftlint:disable line_length
+
 /// Allows the `CareKitStore` to synchronize with a remote Parse Server.
 public final class ParseRemote: OCKRemoteSynchronizable {
 
@@ -429,7 +431,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
         }
     }
 
-    class func setDefaultACL(_ defaultACL: ParseACL?, for user: PCKUser) throws {
+    static func setDefaultACL(_ defaultACL: ParseACL?, for user: PCKUser) throws {
         let acl: ParseACL!
         if let defaultACL = defaultACL {
             acl = defaultACL

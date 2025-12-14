@@ -17,15 +17,6 @@
 		705DC9292526A55E0035BBE3 /* EncodingCareKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7098A7782524E92900DDF53D /* EncodingCareKitTests.swift */; };
 		705DC92B2526A5610035BBE3 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7098A7762524E92900DDF53D /* MockURLProtocol.swift */; };
 		705DC92D2526A5650035BBE3 /* MockURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7098A7772524E92900DDF53D /* MockURLResponse.swift */; };
-		707DC1D22C4345B100FC1DFD /* OCKSemanticVersion+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1D12C4345B100FC1DFD /* OCKSemanticVersion+Sendable.swift */; };
-		707DC1D42C4346D000FC1DFD /* OCKNote+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1D32C4346D000FC1DFD /* OCKNote+Sendable.swift */; };
-		707DC1D62C4347B000FC1DFD /* OCKSchedule+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1D52C4347B000FC1DFD /* OCKSchedule+Sendable.swift */; };
-		707DC1D82C43486900FC1DFD /* OCKScheduleElement+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1D72C43486900FC1DFD /* OCKScheduleElement+Sendable.swift */; };
-		707DC1DA2C43492300FC1DFD /* OCKOutcomeValue+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1D92C43492300FC1DFD /* OCKOutcomeValue+Sendable.swift */; };
-		707DC1DC2C434B1E00FC1DFD /* OCKBiologicalSex+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1DB2C434B1E00FC1DFD /* OCKBiologicalSex+Sendable.swift */; };
-		707DC1DE2C434B8700FC1DFD /* OCKPostalAddress+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1DD2C434B8700FC1DFD /* OCKPostalAddress+Sendable.swift */; };
-		707DC1E02C434BD700FC1DFD /* OCKContactCategory+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1DF2C434BD700FC1DFD /* OCKContactCategory+Sendable.swift */; };
-		707DC1E22C434C1A00FC1DFD /* OCKLabeledValue+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707DC1E12C434C1A00FC1DFD /* OCKLabeledValue+Sendable.swift */; };
 		7085DDAD26CDA2980033B977 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7085DDAC26CDA2980033B977 /* Documentation.docc */; };
 		708A2CA42A092EE100AAB18A /* TestHostAllApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708A2CA32A092EE100AAB18A /* TestHostAllApp.swift */; };
 		708A2CA62A092EE100AAB18A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708A2CA52A092EE100AAB18A /* ContentView.swift */; };
@@ -124,15 +115,6 @@
 		700B0EDB270DE0C400EEF103 /* PCKVersionable+combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PCKVersionable+combine.swift"; sourceTree = "<group>"; };
 		70365BEA2A0D774400F577F7 /* ParseCareKit.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ParseCareKit.xctestplan; sourceTree = "<group>"; };
 		705DC91D2526A4B80035BBE3 /* ParseCareKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCareKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		707DC1D12C4345B100FC1DFD /* OCKSemanticVersion+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKSemanticVersion+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1D32C4346D000FC1DFD /* OCKNote+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKNote+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1D52C4347B000FC1DFD /* OCKSchedule+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKSchedule+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1D72C43486900FC1DFD /* OCKScheduleElement+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKScheduleElement+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1D92C43492300FC1DFD /* OCKOutcomeValue+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKOutcomeValue+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1DB2C434B1E00FC1DFD /* OCKBiologicalSex+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKBiologicalSex+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1DD2C434B8700FC1DFD /* OCKPostalAddress+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKPostalAddress+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1DF2C434BD700FC1DFD /* OCKContactCategory+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKContactCategory+Sendable.swift"; sourceTree = "<group>"; };
-		707DC1E12C434C1A00FC1DFD /* OCKLabeledValue+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OCKLabeledValue+Sendable.swift"; sourceTree = "<group>"; };
 		7085DDAC26CDA2980033B977 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		708A2CA12A092EE100AAB18A /* TestHostAll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHostAll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		708A2CA32A092EE100AAB18A /* TestHostAllApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHostAllApp.swift; sourceTree = "<group>"; };
@@ -340,15 +322,6 @@
 			isa = PBXGroup;
 			children = (
 				91226D53274AC1DB00B5C2DF /* CareKitEssentialVersionable+Parse.swift */,
-				707DC1DB2C434B1E00FC1DFD /* OCKBiologicalSex+Sendable.swift */,
-				707DC1DF2C434BD700FC1DFD /* OCKContactCategory+Sendable.swift */,
-				707DC1E12C434C1A00FC1DFD /* OCKLabeledValue+Sendable.swift */,
-				707DC1D32C4346D000FC1DFD /* OCKNote+Sendable.swift */,
-				707DC1D92C43492300FC1DFD /* OCKOutcomeValue+Sendable.swift */,
-				707DC1DD2C434B8700FC1DFD /* OCKPostalAddress+Sendable.swift */,
-				707DC1D52C4347B000FC1DFD /* OCKSchedule+Sendable.swift */,
-				707DC1D72C43486900FC1DFD /* OCKScheduleElement+Sendable.swift */,
-				707DC1D12C4345B100FC1DFD /* OCKSemanticVersion+Sendable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -562,7 +535,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n    swiftlint --fix && swiftlint --strict\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$BUILD_DIR/Debug-iphonesimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-iphonesimulator/*.bundle $BUILD_DIR/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n    swiftlint --fix && swiftlint --strict\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\necho $SRCROOT\n\nif [ -d \"$BUILD_DIR/Debug-iphonesimulator/\" ]; then\n    cp -r $BUILD_DIR/Debug-iphonesimulator/*.bundle $BUILD_DIR/Debug-iphonesimulator/ParseCareKit.framework/\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -595,13 +568,10 @@
 			files = (
 				709D175D258551D20002E772 /* ParseCareKitLog.swift in Sources */,
 				700B0ED3270DD62200EEF103 /* PCKObjectable+async.swift in Sources */,
-				707DC1DC2C434B1E00FC1DFD /* OCKBiologicalSex+Sendable.swift in Sources */,
 				700B0ED6270DD7D900EEF103 /* PCKVersionable+async.swift in Sources */,
 				9119D60B24561B02001B7AA3 /* ParseCareKitConstants.swift in Sources */,
 				700B0ED9270DDF5600EEF103 /* PCKObjectable+combine.swift in Sources */,
 				9181F1A629EC48B700C50391 /* PCKEntity.swift in Sources */,
-				707DC1E02C434BD700FC1DFD /* OCKContactCategory+Sendable.swift in Sources */,
-				707DC1DA2C43492300FC1DFD /* OCKOutcomeValue+Sendable.swift in Sources */,
 				9119D60D24561B22001B7AA3 /* PCKUtility.swift in Sources */,
 				700775AA2522686D00EC0EDA /* PCKVersionable.swift in Sources */,
 				70D5A29425E0D2D30036A8AD /* PCKHealthKitTask.swift in Sources */,
@@ -618,18 +588,12 @@
 				9119D60424561A28001B7AA3 /* PCKPatient.swift in Sources */,
 				7099D21C29ED8B420037CD8E /* PCKStoreClass.swift in Sources */,
 				70B5578927A744A9002C39D4 /* PCKWriteRole.swift in Sources */,
-				707DC1D22C4345B100FC1DFD /* OCKSemanticVersion+Sendable.swift in Sources */,
-				707DC1DE2C434B8700FC1DFD /* OCKPostalAddress+Sendable.swift in Sources */,
 				7085DDAD26CDA2980033B977 /* Documentation.docc in Sources */,
 				9181F1A329EC47D800C50391 /* PCKRevisionRecord.swift in Sources */,
 				91226D54274AC1DB00B5C2DF /* CareKitEssentialVersionable+Parse.swift in Sources */,
 				709D1818258699840002E772 /* ParseRemoteDelegate.swift in Sources */,
 				70B5578327A74113002C39D4 /* PCKRoleable.swift in Sources */,
-				707DC1D82C43486900FC1DFD /* OCKScheduleElement+Sendable.swift in Sources */,
 				916570D72462DABC008F2997 /* ParseRemote.swift in Sources */,
-				707DC1E22C434C1A00FC1DFD /* OCKLabeledValue+Sendable.swift in Sources */,
-				707DC1D62C4347B000FC1DFD /* OCKSchedule+Sendable.swift in Sources */,
-				707DC1D42C4346D000FC1DFD /* OCKNote+Sendable.swift in Sources */,
 				70B5578627A7439B002C39D4 /* PCKReadRole.swift in Sources */,
 				9119D60724561A28001B7AA3 /* PCKCarePlan.swift in Sources */,
 			);

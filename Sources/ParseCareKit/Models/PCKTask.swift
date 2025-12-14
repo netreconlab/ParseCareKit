@@ -176,7 +176,7 @@ public struct PCKTask: PCKVersionable {
      - returns: Returns a new version of `Self`
      - throws: `Error`.
     */
-    public static func new(from taskAny: OCKAnyTask) throws -> PCKTask {
+    public static func new(from taskAny: any OCKAnyTask) throws -> PCKTask {
 
         guard let task = taskAny as? OCKTask else {
             throw ParseCareKitError.cantCastToNeededClassType

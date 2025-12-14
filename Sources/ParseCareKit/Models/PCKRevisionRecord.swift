@@ -162,7 +162,7 @@ struct PCKRevisionRecord: ParseObject {
 		do {
 			let numberOfPatients = patients.count
 			if numberOfPatients > batchLimit {
-				Logger.revisionRecord.warning(
+				Logger.revisionRecord.warning( // swiftlint:disable:next line_length
 					"Attempting to save a large amount of \(numberOfPatients) Patients to the server, please ensure your server supports transactions of this size"
 				)
 			}
@@ -198,7 +198,7 @@ struct PCKRevisionRecord: ParseObject {
 		do {
 			let numberOfCarePlans = carePlans.count
 			if numberOfCarePlans > batchLimit {
-				Logger.revisionRecord.warning(
+				Logger.revisionRecord.warning( // swiftlint:disable:next line_length
 					"Attempting to save a large amount of \(numberOfCarePlans) CarePlans to the server, please ensure your server supports transactions of this size"
 				)
 			}
@@ -234,7 +234,7 @@ struct PCKRevisionRecord: ParseObject {
 		do {
 			let numberOfContacts = contacts.count
 			if numberOfContacts > batchLimit {
-				Logger.revisionRecord.warning(
+				Logger.revisionRecord.warning( // swiftlint:disable:next line_length
 					"Attempting to save a large amount of \(numberOfContacts) Contacts to the server, please ensure your server supports transactions of this size"
 				)
 			}
@@ -270,7 +270,7 @@ struct PCKRevisionRecord: ParseObject {
 		do {
 			let numberOfTasks = tasks.count
 			if numberOfTasks > batchLimit {
-				Logger.revisionRecord.warning(
+				Logger.revisionRecord.warning( // swiftlint:disable:next line_length
 					"Attempting to save a large amount of \(numberOfTasks) Tasks to the server, please ensure your server supports transactions of this size"
 				)
 			}
@@ -306,7 +306,7 @@ struct PCKRevisionRecord: ParseObject {
 		do {
 			let numberOfHealthKitTasks = healthKitTasks.count
 			if numberOfHealthKitTasks > batchLimit {
-				Logger.revisionRecord.warning(
+				Logger.revisionRecord.warning( // swiftlint:disable:next line_length
 					"Attempting to save a large amount of \(numberOfHealthKitTasks) HealthKitTasks to the server, please ensure your server supports transactions of this size"
 				)
 			}
@@ -342,7 +342,7 @@ struct PCKRevisionRecord: ParseObject {
 		do {
 			let numberOfOutcomes = outcomes.count
 			if numberOfOutcomes > batchLimit {
-				Logger.revisionRecord.warning(
+				Logger.revisionRecord.warning( // swiftlint:disable:next line_length
 					"Attempting to save a large amount of \(numberOfOutcomes) Outcomes to the server, please ensure your server supports transactions of this size"
 				)
 			}
