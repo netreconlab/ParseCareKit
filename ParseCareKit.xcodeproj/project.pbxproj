@@ -661,13 +661,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ParseCareKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netrecon.ParseCareKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx watchos watchsimulator";
@@ -676,7 +676,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,4";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHostAll.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestHostAll";
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -685,13 +685,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ParseCareKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netrecon.ParseCareKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx watchos watchsimulator";
@@ -700,7 +700,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,4";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHostAll.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestHostAll";
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -728,10 +728,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netrecon.TestHostAll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -767,10 +767,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netrecon.TestHostAll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -925,13 +925,13 @@
 				INFOPLIST_FILE = ParseCareKit/Info.plist;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netreconlab.ParseCareKit;
@@ -945,7 +945,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,4";
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -964,13 +964,13 @@
 				INFOPLIST_FILE = ParseCareKit/Info.plist;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.netreconlab.ParseCareKit;
@@ -983,7 +983,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,4";
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -1042,7 +1042,7 @@
 			repositoryURL = "https://github.com/netreconlab/CareKitEssentials";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.4;
+				minimumVersion = 2.0.0;
 			};
 		};
 		91FF60492AC0A51100E90E16 /* XCRemoteSwiftPackageReference "CareKit" */ = {
@@ -1050,7 +1050,7 @@
 			repositoryURL = "https://github.com/cbaker6/CareKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.3;
+				minimumVersion = 4.0.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
