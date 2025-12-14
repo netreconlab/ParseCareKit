@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/RangeReplaceableCollection-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque"
       ]
     ]
   },
@@ -260,17 +259,6 @@
   "title" : "Deque",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/RangeReplaceableCollection-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/RangeReplaceableCollection-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "RangeReplaceableCollection Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/rangereplaceablecollection-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeSubrange(_:)-6dkhw": {
   "abstract" : [

@@ -10,9 +10,7 @@
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/RandomAccessCollection-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/SubSequence",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/SubSequence\/RandomAccessCollection-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/SubSequence"
       ]
     ]
   },
@@ -149,57 +147,6 @@
       "kind" : "declarations"
     },
     {
-      "kind" : "parameters",
-      "parameters" : [
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
-                  "text" : "The position of the element to access. ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "index",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " must be",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "greater than or equal to ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "startIndex",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " and less than ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "endIndex",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ".",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "index"
-        }
-      ]
-    },
-    {
       "content" : [
         {
           "anchor" : "overview",
@@ -294,17 +241,6 @@
   "type" : "topic",
   "url" : "\/documentation\/orderedcollections\/orderedset"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/RandomAccessCollection-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/RandomAccessCollection-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "RandomAccessCollection Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/orderedcollections\/orderedset\/randomaccesscollection-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/SubSequence": {
   "abstract" : [
     {
@@ -370,17 +306,6 @@
   "title" : "OrderedSet.SubSequence",
   "type" : "topic",
   "url" : "\/documentation\/orderedcollections\/orderedset\/subsequence"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/SubSequence/RandomAccessCollection-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/SubSequence\/RandomAccessCollection-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "RandomAccessCollection Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/orderedcollections\/orderedset\/subsequence\/randomaccesscollection-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/SubSequence/subscript(_:)-8zt5n": {
   "abstract" : [

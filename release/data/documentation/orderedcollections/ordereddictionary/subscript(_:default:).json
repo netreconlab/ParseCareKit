@@ -93,7 +93,15 @@
       },
       {
         "kind" : "text",
-        "text" : " _: () -> "
+        "text" : " _: "
+      },
+      {
+        "kind" : "attribute",
+        "text" : "@autoclosure"
+      },
+      {
+        "kind" : "text",
+        "text" : " () -> "
       },
       {
         "kind" : "typeIdentifier",
@@ -761,7 +769,15 @@
     },
     {
       "kind" : "text",
-      "text" : " _: () -> "
+      "text" : " _: "
+    },
+    {
+      "kind" : "attribute",
+      "text" : "@autoclosure"
+    },
+    {
+      "kind" : "text",
+      "text" : " () -> "
     },
     {
       "kind" : "typeIdentifier",

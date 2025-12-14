@@ -214,7 +214,8 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -231,12 +232,16 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseEncoder\/encode(_:acl:skipKeys:)"
       ],
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Enumerations",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseEncoder\/SkipKeys"
       ],
@@ -439,6 +444,11 @@
   "title" : "encode(_:acl:skipKeys:)",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseencoder\/encode(_:acl:skipkeys:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",

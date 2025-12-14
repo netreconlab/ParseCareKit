@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Sequence-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque"
       ]
     ]
   },
@@ -368,17 +367,6 @@
   "title" : "Deque",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Sequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Sequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Sequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/sequence-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/min(by:)": {
   "abstract" : [

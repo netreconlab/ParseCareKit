@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets2-1twdh"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler"
       ]
     ]
   },
@@ -165,42 +164,6 @@
   "title" : "OCKDimensionStyler",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockdimensionstyler"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/directionalInsets2-1twdh": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "directionalInsets2"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:@S@NSDirectionalEdgeInsets",
-      "text" : "NSDirectionalEdgeInsets"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets2-1twdh",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "directionalInsets2",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/directionalinsets2-1twdh"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/directionalInsets2-4ocny": {
   "abstract" : [

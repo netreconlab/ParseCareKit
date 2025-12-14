@@ -129,6 +129,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/init(amount:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/init(from:)"
@@ -136,10 +138,10 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/CustomDebugStringConvertible-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/CustomStringConvertible-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/ParseOperationable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -213,27 +215,16 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseoperationincrementdouble"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationIncrementDouble/CustomDebugStringConvertible-Implementations": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationIncrementDouble/ParseOperationable-Implementations": {
   "abstract" : [
 
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/CustomDebugStringConvertible-Implementations",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/ParseOperationable-Implementations",
   "kind" : "article",
   "role" : "collectionGroup",
-  "title" : "CustomDebugStringConvertible Implementations",
+  "title" : "ParseOperationable Implementations",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseoperationincrementdouble\/customdebugstringconvertible-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationIncrementDouble/CustomStringConvertible-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationIncrementDouble\/CustomStringConvertible-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "CustomStringConvertible Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseoperationincrementdouble\/customstringconvertible-implementations"
+  "url" : "\/documentation\/parseswift\/parseoperationincrementdouble\/parseoperationable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationIncrementDouble/init(amount:)": {
   "abstract" : [

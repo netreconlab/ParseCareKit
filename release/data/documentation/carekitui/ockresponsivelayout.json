@@ -120,6 +120,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Structures",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/Rule",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet"
@@ -127,12 +129,16 @@
       "title" : "Structures"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/init(defaultLayout:anySizeClassRuleSet:sizeClassSpecificRuleSets:)"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/defaultRuleSet",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/sizeClassSpecificRuleSets"
@@ -140,12 +146,16 @@
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/responsiveLayoutRule(traitCollection:)"
       ],
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Type-Aliases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClass"
       ],

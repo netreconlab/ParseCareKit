@@ -98,6 +98,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCompletionState\/dimmed",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCompletionState\/empty",
@@ -107,6 +109,7 @@
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCompletionState\/Equatable-Implementations"

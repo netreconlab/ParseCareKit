@@ -61,6 +61,19 @@
           ],
           "tokens" : [
             {
+              "kind" : "attribute",
+              "text" : "@"
+            },
+            {
+              "kind" : "attribute",
+              "preciseIdentifier" : "s:ScM",
+              "text" : "MainActor"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
               "kind" : "keyword",
               "text" : "struct"
             },
@@ -154,6 +167,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/7SwiftUI4ViewP"
       ],
       "kind" : "relationships",
@@ -171,6 +185,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/NumericProgressTaskView\/init(progress:goal:instructions:isComplete:header:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/NumericProgressTaskView\/init(title:detail:progress:goal:instructions:isComplete:)"
@@ -178,12 +194,15 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/NumericProgressTaskView\/body"
       ],
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/NumericProgressTaskView\/View-Implementations"
@@ -207,7 +226,7 @@
 "references": {
 "doc://edu.uky.cs.netreconlab.ParseCareKit/7SwiftUI4ViewP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/7SwiftUI4ViewP",
-  "title" : "SwiftUI.View",
+  "title" : "SwiftUICore.View",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI": {
@@ -574,6 +593,11 @@
   "title" : "init(title:detail:progress:goal:instructions:isComplete:)",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/numericprogresstaskview\/init(title:detail:progress:goal:instructions:iscomplete:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
 }
 }
 }

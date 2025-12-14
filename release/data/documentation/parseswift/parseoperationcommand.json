@@ -86,7 +86,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -103,6 +104,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationCommand\/add",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationCommand\/addRelation",
@@ -116,12 +119,15 @@
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationCommand\/init(rawValue:)"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationCommand\/Equatable-Implementations",
@@ -497,6 +503,11 @@
   "title" : "ParseOperationCommand.removeRelation",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseoperationcommand\/removerelation"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",

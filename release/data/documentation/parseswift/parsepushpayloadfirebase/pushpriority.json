@@ -87,7 +87,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SY",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -104,6 +105,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Enumeration-Cases",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushPayloadFirebase\/PushPriority\/high",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushPayloadFirebase\/PushPriority\/normal"
@@ -111,12 +114,15 @@
       "title" : "Enumeration Cases"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushPayloadFirebase\/PushPriority\/init(rawValue:)"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParsePushPayloadFirebase\/PushPriority\/Equatable-Implementations",
@@ -405,6 +411,11 @@
   "title" : "ParsePushPayloadFirebase.PushPriority.normal",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsepushpayloadfirebase\/pushpriority\/normal"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",

@@ -25,8 +25,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimatedButton",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimatedButton\/OCKStylable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimatedButton"
       ]
     ]
   },
@@ -221,17 +220,6 @@
   "title" : "OCKAnimatedButton",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockanimatedbutton"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAnimatedButton/OCKStylable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimatedButton\/OCKStylable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKStylable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockanimatedbutton\/ockstylable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAnimatedButton/styleChildren()": {
   "abstract" : [

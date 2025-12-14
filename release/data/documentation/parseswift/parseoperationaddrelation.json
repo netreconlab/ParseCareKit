@@ -137,6 +137,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/init(from:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/init(objects:)"
@@ -144,16 +146,18 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/objects"
       ],
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/CustomDebugStringConvertible-Implementations",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/CustomStringConvertible-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/ParseOperationable-Implementations"
       ],
       "title" : "Default Implementations"
     }
@@ -277,27 +281,16 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseoperationaddrelation"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationAddRelation/CustomDebugStringConvertible-Implementations": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationAddRelation/ParseOperationable-Implementations": {
   "abstract" : [
 
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/CustomDebugStringConvertible-Implementations",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/ParseOperationable-Implementations",
   "kind" : "article",
   "role" : "collectionGroup",
-  "title" : "CustomDebugStringConvertible Implementations",
+  "title" : "ParseOperationable Implementations",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseoperationaddrelation\/customdebugstringconvertible-implementations"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationAddRelation/CustomStringConvertible-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseOperationAddRelation\/CustomStringConvertible-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "CustomStringConvertible Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseoperationaddrelation\/customstringconvertible-implementations"
+  "url" : "\/documentation\/parseswift\/parseoperationaddrelation\/parseoperationable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseOperationAddRelation/init(from:)": {
   "abstract" : [

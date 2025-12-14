@@ -25,8 +25,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKView",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKView\/OCKStylable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKView"
       ]
     ]
   },
@@ -194,17 +193,6 @@
   "title" : "OCKView",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockview"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKView/OCKStylable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKView\/OCKStylable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKStylable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockview\/ockstylable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKView/styleChildren()": {
   "abstract" : [

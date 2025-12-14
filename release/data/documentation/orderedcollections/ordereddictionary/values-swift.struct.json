@@ -125,6 +125,7 @@
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SK",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sl",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8CopyableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
@@ -132,6 +133,7 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SM",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/Sk",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/ST"
       ],
       "kind" : "relationships",
@@ -149,12 +151,16 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/Values-swift.struct\/elements"
       ],
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/Values-swift.struct\/withUnsafeBufferPointer(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/Values-swift.struct\/withUnsafeMutableBufferPointer(_:)"
@@ -162,6 +168,7 @@
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Default-Implementations",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/Values-swift.struct\/BidirectionalCollection-Implementations",
@@ -774,6 +781,11 @@
   "type" : "topic",
   "url" : "\/documentation\/orderedcollections\/ordereddictionary\/values-swift.struct\/withunsafemutablebufferpointer(_:)"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
+  "type" : "unresolvable"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s23CustomStringConvertibleP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s23CustomStringConvertibleP",
   "title" : "Swift.CustomStringConvertible",
@@ -782,6 +794,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s28CustomDebugStringConvertibleP": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s28CustomDebugStringConvertibleP",
   "title" : "Swift.CustomDebugStringConvertible",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s8CopyableP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8CopyableP",
+  "title" : "Swift.Copyable",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s8SendableP": {

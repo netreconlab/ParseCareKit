@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOffset1-4hagz"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler"
       ]
     ]
   },
@@ -165,42 +164,6 @@
   "title" : "OCKAppearanceStyler",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockappearancestyler"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOffset1-4hagz": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "shadowOffset1"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:@S@CGSize",
-      "text" : "CGSize"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOffset1-4hagz",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "shadowOffset1",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowoffset1-4hagz"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOffset1-7rrqj": {
   "abstract" : [

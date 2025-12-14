@@ -98,26 +98,28 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight1-8myqi",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight2-5api3",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight3-1h7vk",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight4-7ier6",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets1-7cgzb",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets2-1twdh",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight1-454ni",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight2-9x9ws",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/lineWidth1-4bv88",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize1-2lj2d",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize2-60pm9",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize3-4ygz0",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/separatorHeight-nr57",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/stackSpacing1-9v3do",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize1-3m4wx",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize2-5guhg",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize3-133z9",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize4-51iia",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize5-8v009"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight4",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/lineWidth1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/separatorHeight",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/stackSpacing1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize4",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize5"
       ],
       "title" : "Instance Properties"
     }
@@ -215,7 +217,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockdimensionstyler"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight1-8myqi": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight1": {
   "abstract" : [
 
   ],
@@ -243,15 +245,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight1-8myqi",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "buttonHeight1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight1-8myqi"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight2-5api3": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight2": {
   "abstract" : [
 
   ],
@@ -279,15 +281,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight2-5api3",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "buttonHeight2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight2-5api3"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight3-1h7vk": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight3": {
   "abstract" : [
 
   ],
@@ -315,15 +317,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight3-1h7vk",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight3",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "buttonHeight3",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight3-1h7vk"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight3"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight4-7ier6": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight4": {
   "abstract" : [
 
   ],
@@ -351,15 +353,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight4-7ier6",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight4",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "buttonHeight4",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight4-7ier6"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight4"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/directionalInsets1-7cgzb": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/directionalInsets1": {
   "abstract" : [
 
   ],
@@ -387,15 +389,15 @@
       "text" : "NSDirectionalEdgeInsets"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets1-7cgzb",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "directionalInsets1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/directionalinsets1-7cgzb"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/directionalinsets1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/directionalInsets2-1twdh": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/directionalInsets2": {
   "abstract" : [
 
   ],
@@ -423,15 +425,15 @@
       "text" : "NSDirectionalEdgeInsets"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets2-1twdh",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/directionalInsets2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "directionalInsets2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/directionalinsets2-1twdh"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/directionalinsets2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/imageHeight1-454ni": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/imageHeight1": {
   "abstract" : [
 
   ],
@@ -459,15 +461,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight1-454ni",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "imageHeight1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/imageheight1-454ni"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/imageheight1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/imageHeight2-9x9ws": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/imageHeight2": {
   "abstract" : [
 
   ],
@@ -495,15 +497,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight2-9x9ws",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/imageHeight2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "imageHeight2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/imageheight2-9x9ws"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/imageheight2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/lineWidth1-4bv88": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/lineWidth1": {
   "abstract" : [
 
   ],
@@ -531,15 +533,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/lineWidth1-4bv88",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/lineWidth1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "lineWidth1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/linewidth1-4bv88"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/linewidth1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/pointSize1-2lj2d": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/pointSize1": {
   "abstract" : [
 
   ],
@@ -567,15 +569,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize1-2lj2d",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "pointSize1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/pointsize1-2lj2d"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/pointsize1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/pointSize2-60pm9": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/pointSize2": {
   "abstract" : [
 
   ],
@@ -603,15 +605,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize2-60pm9",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "pointSize2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/pointsize2-60pm9"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/pointsize2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/pointSize3-4ygz0": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/pointSize3": {
   "abstract" : [
 
   ],
@@ -639,15 +641,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize3-4ygz0",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/pointSize3",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "pointSize3",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/pointsize3-4ygz0"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/pointsize3"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/separatorHeight-nr57": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/separatorHeight": {
   "abstract" : [
 
   ],
@@ -675,15 +677,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/separatorHeight-nr57",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/separatorHeight",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "separatorHeight",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/separatorheight-nr57"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/separatorheight"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/stackSpacing1-9v3do": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/stackSpacing1": {
   "abstract" : [
 
   ],
@@ -711,15 +713,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/stackSpacing1-9v3do",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/stackSpacing1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "stackSpacing1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/stackspacing1-9v3do"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/stackspacing1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize1-3m4wx": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize1": {
   "abstract" : [
 
   ],
@@ -747,15 +749,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize1-3m4wx",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "symbolPointSize1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize1-3m4wx"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize2-5guhg": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize2": {
   "abstract" : [
 
   ],
@@ -783,15 +785,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize2-5guhg",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "symbolPointSize2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize2-5guhg"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize3-133z9": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize3": {
   "abstract" : [
 
   ],
@@ -819,15 +821,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize3-133z9",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize3",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "symbolPointSize3",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize3-133z9"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize3"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize4-51iia": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize4": {
   "abstract" : [
 
   ],
@@ -855,15 +857,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize4-51iia",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize4",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "symbolPointSize4",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize4-51iia"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize4"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize5-8v009": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/symbolPointSize5": {
   "abstract" : [
 
   ],
@@ -891,13 +893,13 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize5-8v009",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/symbolPointSize5",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "symbolPointSize5",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize5-8v009"
+  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/symbolpointsize5"
 }
 }
 }

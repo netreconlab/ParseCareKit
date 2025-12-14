@@ -26,7 +26,6 @@
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Sequence-Implementations",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Iterator"
       ]
     ]
@@ -342,17 +341,6 @@
   "title" : "next()",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/iterator\/next()"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/Sequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/Sequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Sequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/sequence-implementations"
 }
 }
 }

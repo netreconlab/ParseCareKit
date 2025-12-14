@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray5-yn4o"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler"
       ]
     ]
   },
@@ -199,42 +198,6 @@
   "title" : "customGray5",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray5-97510"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray5-yn4o": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "customGray5"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:objc(cs)UIColor",
-      "text" : "UIColor"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray5-yn4o",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "customGray5",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray5-yn4o"
 }
 }
 }

@@ -113,7 +113,12 @@
       }
     ],
     "platforms" : [
-
+      {
+        "beta" : false,
+        "deprecated" : true,
+        "renamed" : "health",
+        "unavailable" : false
+      }
     ],
     "role" : "symbol",
     "roleHeading" : "Type Method",

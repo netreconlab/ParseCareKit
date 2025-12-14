@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight4-7ier6"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler"
       ]
     ]
   },
@@ -199,42 +198,6 @@
   "title" : "buttonHeight4",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight4-5t9yv"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyler/buttonHeight4-7ier6": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "buttonHeight4"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
-      "text" : "CGFloat"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyler\/buttonHeight4-7ier6",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "buttonHeight4",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyler\/buttonheight4-7ier6"
 }
 }
 }

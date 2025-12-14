@@ -278,7 +278,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "index path of the event.",
+                  "text" : "Index path of the event.",
                   "type" : "text"
                 }
               ],

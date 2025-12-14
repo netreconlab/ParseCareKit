@@ -33,9 +33,10 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/init(arrayLiteral:)-1tjdx"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/init(arrayLiteral:)"
       ],
       "title" : "Initializers"
     }
@@ -165,7 +166,7 @@
   "type" : "topic",
   "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/init(arrayLiteral:)-1tjdx": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/init(arrayLiteral:)": {
   "abstract" : [
     {
       "text" : "Creates a new unordered set from the contents of an array literal.",
@@ -231,12 +232,12 @@
       "text" : "...)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/init(arrayLiteral:)-1tjdx",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/init(arrayLiteral:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "init(arrayLiteral:)",
   "type" : "topic",
-  "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview\/init(arrayliteral:)-1tjdx"
+  "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview\/init(arrayliteral:)"
 }
 }
 }

@@ -32,6 +32,7 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Operators",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/+(_:_:)-2ezjl",
@@ -42,52 +43,55 @@
       "title" : "Operators"
     },
     {
+      "anchor" : "Initializers",
       "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(_:)-2pl79",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(_:)-8tyaw",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(repeating:count:)-4v1gt",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(repeating:count:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(repeating:count:)-5n2n3"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Methods",
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(_:)-6xmiz",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(_:)-9h4m7",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(contentsOf:)-6ewjz",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(contentsOf:)-8rqnl",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/applying(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/filter(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(_:at:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(_:at:)-6fcpk",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(_:at:)-9hsp7",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(contentsOf:at:)-1d60f",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(contentsOf:at:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(contentsOf:at:)-quf0",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/popLast()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/remove(at:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/remove(at:)-25pt",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/remove(at:)-3imgi",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(keepingCapacity:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(keepingCapacity:)-2cas8",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(keepingCapacity:)-yeby",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(where:)-2ynh1",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(where:)-5e3im",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst()-1vdmt",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst()-5sg5i",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst(_:)-2vuji",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst(_:)-8phg7",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeLast()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeLast(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubrange(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubrange(_:)-3ab3y",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubrange(_:)-6dkhw",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubrange(_:)-8oy85",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubranges(_:)-98w6y",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replace(_:with:maxReplacements:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replaceSubrange(_:with:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replaceSubrange(_:with:)-1sroc",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replaceSubrange(_:with:)-2xunu",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replaceSubrange(_:with:)-5rtzd",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replacing(_:with:maxReplacements:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replacing(_:with:subrange:maxReplacements:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/reserveCapacity(_:)-7qlut",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/reserveCapacity(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/reserveCapacity(_:)-9lqxx",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/trimPrefix(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/trimPrefix(while:)"
@@ -446,6 +450,47 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/+=(_:_:)"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/append(_:)": {
+  "abstract" : [
+    {
+      "text" : "Adds a new element at the end of the deque.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "append"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "append(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/append(_:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/append(_:)-6xmiz": {
   "abstract" : [
 
@@ -491,47 +536,6 @@
   "title" : "append(_:)",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/append(_:)-6xmiz"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/append(_:)-9h4m7": {
-  "abstract" : [
-    {
-      "text" : "Adds a new element at the end of the deque.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "append"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/append(_:)-9h4m7",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "append(_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/append(_:)-9h4m7"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/append(contentsOf:)-6ewjz": {
   "abstract" : [
@@ -901,7 +905,7 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/init(_:)-8tyaw"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/init(repeating:count:)-4v1gt": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/init(repeating:count:)": {
   "abstract" : [
     {
       "text" : "Creates a new deque containing the specified number of a single, repeated",
@@ -960,12 +964,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(repeating:count:)-4v1gt",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/init(repeating:count:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "init(repeating:count:)",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/init(repeating:count:)-4v1gt"
+  "url" : "\/documentation\/dequemodule\/deque\/init(repeating:count:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/init(repeating:count:)-5n2n3": {
   "abstract" : [
@@ -1029,6 +1033,64 @@
   "title" : "init(repeating:count:)",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/init(repeating:count:)-5n2n3"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/insert(_:at:)": {
+  "abstract" : [
+    {
+      "text" : "Inserts a new element at the specified position.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "insert"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "at"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(_:at:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "insert(_:at:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/insert(_:at:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/insert(_:at:)-6fcpk": {
   "abstract" : [
@@ -1101,65 +1163,7 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/insert(_:at:)-6fcpk"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/insert(_:at:)-9hsp7": {
-  "abstract" : [
-    {
-      "text" : "Inserts a new element at the specified position.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "insert"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "at"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Si",
-      "text" : "Int"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(_:at:)-9hsp7",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "insert(_:at:)",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/insert(_:at:)-9hsp7"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/insert(contentsOf:at:)-1d60f": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/insert(contentsOf:at:)": {
   "abstract" : [
     {
       "text" : "Inserts the elements of a collection into the deque at the specified",
@@ -1243,12 +1247,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(contentsOf:at:)-1d60f",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/insert(contentsOf:at:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "insert(contentsOf:at:)",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/insert(contentsof:at:)-1d60f"
+  "url" : "\/documentation\/dequemodule\/deque\/insert(contentsof:at:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/insert(contentsOf:at:)-quf0": {
   "abstract" : [
@@ -1406,6 +1410,60 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/poplast()"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/remove(at:)": {
+  "abstract" : [
+    {
+      "text" : "Removes and returns the element at the specified position.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "remove"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "at"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/remove(at:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "remove(at:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/remove(at:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/remove(at:)-25pt": {
   "abstract" : [
 
@@ -1473,10 +1531,10 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/remove(at:)-25pt"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/remove(at:)-3imgi": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeAll(keepingCapacity:)": {
   "abstract" : [
     {
-      "text" : "Removes and returns the element at the specified position.",
+      "text" : "Removes all elements from the deque.",
       "type" : "text"
     }
   ],
@@ -1491,7 +1549,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "remove"
+      "text" : "removeAll"
     },
     {
       "kind" : "text",
@@ -1499,7 +1557,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "at"
+      "text" : "keepingCapacity"
     },
     {
       "kind" : "text",
@@ -1507,25 +1565,20 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Si",
-      "text" : "Int"
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
     },
     {
       "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
-      "text" : "Element"
+      "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/remove(at:)-3imgi",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(keepingCapacity:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "remove(at:)",
+  "title" : "removeAll(keepingCapacity:)",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/remove(at:)-3imgi"
+  "url" : "\/documentation\/dequemodule\/deque\/removeall(keepingcapacity:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeAll(keepingCapacity:)-2cas8": {
   "abstract" : [
@@ -1572,55 +1625,6 @@
   "title" : "removeAll(keepingCapacity:)",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/removeall(keepingcapacity:)-2cas8"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeAll(keepingCapacity:)-yeby": {
-  "abstract" : [
-    {
-      "text" : "Removes all elements from the deque.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "removeAll"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "keepingCapacity"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeAll(keepingCapacity:)-yeby",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "removeAll(keepingCapacity:)",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/removeall(keepingcapacity:)-yeby"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeAll(where:)-2ynh1": {
   "abstract" : [
@@ -1804,7 +1808,7 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/removeall(where:)-5e3im"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeFirst()-1vdmt": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeFirst()": {
   "abstract" : [
     {
       "text" : "Removes and returns the first element of the deque.",
@@ -1834,12 +1838,12 @@
       "text" : "Element"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst()-1vdmt",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst()",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "removeFirst()",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/removefirst()-1vdmt"
+  "url" : "\/documentation\/dequemodule\/deque\/removefirst()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeFirst()-5sg5i": {
   "abstract" : [
@@ -1883,7 +1887,7 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/removefirst()-5sg5i"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeFirst(_:)-2vuji": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeFirst(_:)": {
   "abstract" : [
     {
       "text" : "Removes the specified number of elements from the beginning of the deque.",
@@ -1917,12 +1921,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst(_:)-2vuji",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeFirst(_:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "removeFirst(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/removefirst(_:)-2vuji"
+  "url" : "\/documentation\/dequemodule\/deque\/removefirst(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeFirst(_:)-8phg7": {
   "abstract" : [
@@ -2106,6 +2110,80 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/removelast(_:)"
 },
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeSubrange(_:)": {
+  "abstract" : [
+    {
+      "text" : "All elements following the specified range are (logically) moved up to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "close the resulting gap. (Internally, the deque may actually decide to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "shift previous elements forward instead to minimize the number of elements",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "that need to be moved.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeSubrange"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sn",
+      "text" : "Range"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ">)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubrange(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "removeSubrange(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/removesubrange(_:)"
+},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeSubrange(_:)-3ab3y": {
   "abstract" : [
 
@@ -2206,36 +2284,9 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/removesubrange(_:)-6dkhw"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeSubrange(_:)-8oy85": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/removeSubranges(_:)-98w6y": {
   "abstract" : [
-    {
-      "text" : "All elements following the specified range are (logically) moved up to",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "close the resulting gap. (Internally, the deque may actually decide to",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "shift previous elements forward instead to minimize the number of elements",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "that need to be moved.)",
-      "type" : "text"
-    }
+
   ],
   "fragments" : [
     {
@@ -2248,7 +2299,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "removeSubrange"
+      "text" : "removeSubranges"
     },
     {
       "kind" : "text",
@@ -2256,8 +2307,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sn",
-      "text" : "Range"
+      "preciseIdentifier" : "s:s8RangeSetV",
+      "text" : "RangeSet"
     },
     {
       "kind" : "text",
@@ -2265,20 +2316,28 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Si",
-      "text" : "Int"
+      "text" : "Self"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl5IndexQa",
+      "text" : "Index"
     },
     {
       "kind" : "text",
       "text" : ">)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubrange(_:)-8oy85",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/removeSubranges(_:)-98w6y",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "removeSubrange(_:)",
+  "title" : "removeSubranges(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/removesubrange(_:)-8oy85"
+  "url" : "\/documentation\/dequemodule\/deque\/removesubranges(_:)-98w6y"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/replace(_:with:maxReplacements:)": {
   "abstract" : [
@@ -2397,6 +2456,98 @@
   "title" : "replace(_:with:maxReplacements:)",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/replace(_:with:maxreplacements:)"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/replaceSubrange(_:with:)": {
+  "abstract" : [
+    {
+      "text" : "Replaces a range of elements with the elements in the specified",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "collection.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "replaceSubrange"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sn",
+      "text" : "Range"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ">, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "with"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "some"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sl",
+      "text" : "Collection"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
+      "text" : "Element"
+    },
+    {
+      "kind" : "text",
+      "text" : ">)"
+    }
+  ],
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replaceSubrange(_:with:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "replaceSubrange(_:with:)",
+  "type" : "topic",
+  "url" : "\/documentation\/dequemodule\/deque\/replacesubrange(_:with:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/replaceSubrange(_:with:)-1sroc": {
   "abstract" : [
@@ -2546,98 +2697,6 @@
   "title" : "replaceSubrange(_:with:)",
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/replacesubrange(_:with:)-2xunu"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/replaceSubrange(_:with:)-5rtzd": {
-  "abstract" : [
-    {
-      "text" : "Replaces a range of elements with the elements in the specified",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "collection.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "replaceSubrange"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sn",
-      "text" : "Range"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Si",
-      "text" : "Int"
-    },
-    {
-      "kind" : "text",
-      "text" : ">, "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "with"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "some"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sl",
-      "text" : "Collection"
-    },
-    {
-      "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:11DequeModule0A0V7Elementxmfp",
-      "text" : "Element"
-    },
-    {
-      "kind" : "text",
-      "text" : ">)"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/replaceSubrange(_:with:)-5rtzd",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "replaceSubrange(_:with:)",
-  "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/replacesubrange(_:with:)-5rtzd"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/replacing(_:with:maxReplacements:)": {
   "abstract" : [
@@ -2917,7 +2976,7 @@
   "type" : "topic",
   "url" : "\/documentation\/dequemodule\/deque\/replacing(_:with:subrange:maxreplacements:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/reserveCapacity(_:)-7qlut": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/reserveCapacity(_:)": {
   "abstract" : [
     {
       "text" : "Reserves enough space to store the specified number of elements.",
@@ -2951,12 +3010,12 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/reserveCapacity(_:)-7qlut",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/DequeModule\/Deque\/reserveCapacity(_:)",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "reserveCapacity(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/dequemodule\/deque\/reservecapacity(_:)-7qlut"
+  "url" : "\/documentation\/dequemodule\/deque\/reservecapacity(_:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/DequeModule/Deque/reserveCapacity(_:)-9lqxx": {
   "abstract" : [

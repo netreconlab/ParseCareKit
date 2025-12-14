@@ -9,8 +9,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable\/className-7kg6w"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable"
       ]
     ]
   },
@@ -240,53 +239,6 @@
   "title" : "className",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/objectable\/classname-499yb"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/Objectable/className-7kg6w": {
-  "abstract" : [
-    {
-      "text" : "The class name of the object.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 2,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "className"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/Objectable\/className-7kg6w",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "className",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/objectable\/classname-7kg6w"
 }
 }
 }

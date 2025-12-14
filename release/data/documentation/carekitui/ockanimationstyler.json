@@ -98,8 +98,10 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyler\/stateChangeDuration-486fh"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyler\/stateChangeDuration"
       ],
       "title" : "Instance Properties"
     }
@@ -197,7 +199,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockanimationstyler"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAnimationStyler/stateChangeDuration-486fh": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAnimationStyler/stateChangeDuration": {
   "abstract" : [
 
   ],
@@ -225,13 +227,13 @@
       "text" : "Double"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyler\/stateChangeDuration-486fh",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyler\/stateChangeDuration",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "stateChangeDuration",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockanimationstyler\/statechangeduration-486fh"
+  "url" : "\/documentation\/carekitui\/ockanimationstyler\/statechangeduration"
 }
 }
 }

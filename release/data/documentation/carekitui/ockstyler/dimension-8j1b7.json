@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/dimension-4gu38"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler"
       ]
     ]
   },
@@ -200,42 +199,6 @@
   "title" : "OCKStyler",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockstyler"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/dimension-4gu38": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "dimension"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9CareKitUI18OCKDimensionStylerP",
-      "text" : "OCKDimensionStyler"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/dimension-4gu38",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "dimension",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/dimension-4gu38"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/dimension-8j1b7": {
   "abstract" : [

@@ -466,7 +466,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "expected complexity is amortized O(1), if ",
+                  "text" : "Expected complexity is amortized O(1), if ",
                   "type" : "text"
                 },
                 {

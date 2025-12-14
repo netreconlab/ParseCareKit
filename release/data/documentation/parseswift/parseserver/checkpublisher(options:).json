@@ -119,7 +119,12 @@
       }
     ],
     "platforms" : [
-
+      {
+        "beta" : false,
+        "deprecated" : true,
+        "renamed" : "healthPublisher",
+        "unavailable" : false
+      }
     ],
     "role" : "symbol",
     "roleHeading" : "Type Method",

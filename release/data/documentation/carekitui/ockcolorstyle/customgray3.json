@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyle",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyle\/OCKColorStyler-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyle"
       ]
     ]
   },
@@ -179,17 +178,6 @@
   "title" : "OCKColorStyle",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyle"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyle/OCKColorStyler-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyle\/OCKColorStyler-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKColorStyler Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyle\/ockcolorstyler-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyle/customGray3": {
   "abstract" : [

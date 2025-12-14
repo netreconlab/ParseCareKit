@@ -97,6 +97,8 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet\/init(sizeClass:rules:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet\/init(sizeClasses:rules:)"
@@ -104,6 +106,8 @@
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet\/rules",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKResponsiveLayout\/SizeClassRuleSet\/sizeClasses"

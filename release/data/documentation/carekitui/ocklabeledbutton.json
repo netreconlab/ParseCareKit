@@ -61,6 +61,19 @@
           ],
           "tokens" : [
             {
+              "kind" : "attribute",
+              "text" : "@"
+            },
+            {
+              "kind" : "attribute",
+              "preciseIdentifier" : "s:ScM",
+              "text" : "MainActor"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
               "kind" : "keyword",
               "text" : "class"
             },
@@ -119,12 +132,12 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SQ",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/SH",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s8SendableP",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAccessibilityIdentification",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIActivityItemsConfigurationProviding",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAppearance",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIAppearanceContainer",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIContextMenuInteractionDelegate",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UICoordinateSpace",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIDynamicItem",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusEnvironment",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIFocusItem",
@@ -135,7 +148,8 @@
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIResponderStandardEditActions",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/5UIKit23UITraitChangeObservableP",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UITraitEnvironment",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIUserActivityRestoring"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIUserActivityRestoring",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UICoordinateSpace"
       ],
       "kind" : "relationships",
       "title" : "Conforms To",
@@ -152,18 +166,24 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabeledButton\/init()"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabeledButton\/label"
       ],
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabeledButton\/setStyleForSelectedState(_:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabeledButton\/styleDidChange()",
@@ -405,7 +425,10 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKLabeledButton/styleDidChange()": {
   "abstract" : [
-
+    {
+      "text" : "Called when the style changes.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -534,7 +557,7 @@
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UICoordinateSpace": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UICoordinateSpace",
-  "title" : "UIKit.UICoordinateSpace",
+  "title" : "UIUtilities.UICoordinateSpace",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIDynamicItem": {
@@ -585,6 +608,11 @@
 "doc://edu.uky.cs.netreconlab.ParseCareKit/objc(pl)UIUserActivityRestoring": {
   "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/objc(pl)UIUserActivityRestoring",
   "title" : "UIKit.UIUserActivityRestoring",
+  "type" : "unresolvable"
+},
+"doc://edu.uky.cs.netreconlab.ParseCareKit/s16SendableMetatypeP": {
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/s16SendableMetatypeP",
+  "title" : "Swift.SendableMetatype",
   "type" : "unresolvable"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/s23CustomStringConvertibleP": {

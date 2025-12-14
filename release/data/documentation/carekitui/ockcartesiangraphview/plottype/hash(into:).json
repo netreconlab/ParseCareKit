@@ -18,8 +18,7 @@
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCartesianGraphView",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCartesianGraphView\/PlotType",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCartesianGraphView\/PlotType\/RawRepresentable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCartesianGraphView\/PlotType"
       ]
     ]
   },
@@ -301,17 +300,6 @@
   "title" : "OCKCartesianGraphView.PlotType",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcartesiangraphview\/plottype"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKCartesianGraphView/PlotType/RawRepresentable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKCartesianGraphView\/PlotType\/RawRepresentable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "RawRepresentable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcartesiangraphview\/plottype\/rawrepresentable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKCartesianGraphView/PlotType/hash(into:)": {
   "abstract" : [

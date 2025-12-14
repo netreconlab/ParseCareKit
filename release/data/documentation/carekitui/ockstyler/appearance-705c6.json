@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/appearance-2f8aq"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler"
       ]
     ]
   },
@@ -200,42 +199,6 @@
   "title" : "OCKStyler",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockstyler"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/appearance-2f8aq": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "appearance"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9CareKitUI19OCKAppearanceStylerP",
-      "text" : "OCKAppearanceStyler"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/appearance-2f8aq",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "appearance",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/appearance-2f8aq"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/appearance-705c6": {
   "abstract" : [

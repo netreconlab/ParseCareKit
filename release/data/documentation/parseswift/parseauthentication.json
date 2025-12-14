@@ -171,39 +171,47 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Associated-Types",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/AuthenticatedUser"
       ],
       "title" : "Associated Types"
     },
     {
+      "anchor" : "Initializers",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/init()"
       ],
       "title" : "Initializers"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked()-5a3xp",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/link(authData:options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/link(authData:options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/linkPublisher(authData:options:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/login(authData:options:callbackQueue:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/loginPublisher(authData:options:)",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip()-7jyyz",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip(_:)-ovl0",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:)-5hyok",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:callbackQueue:completion:)-7rp64",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:)-8buh1",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:callbackQueue:completion:)-6gyvj",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(_:options:)-2zjlv",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(options:)-2wrer"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip(_:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:callbackQueue:completion:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(_:options:)",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(options:)"
       ],
       "title" : "Instance Methods"
     },
     {
+      "anchor" : "Type-Methods",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked(with:)-7d4nj"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked(with:)"
       ],
       "title" : "Type Methods"
     }
@@ -492,7 +500,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseauthentication\/init()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/isLinked()-5a3xp": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/isLinked()": {
   "abstract" : [
     {
       "text" : "Returns ",
@@ -557,15 +565,15 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked()-5a3xp",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "isLinked()",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/islinked()-5a3xp"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/islinked()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/isLinked(with:)-7d4nj": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/isLinked(with:)": {
   "abstract" : [
     {
       "text" : "Whether the ",
@@ -629,13 +637,13 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked(with:)-7d4nj",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/isLinked(with:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "isLinked(with:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/islinked(with:)-7d4nj"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/islinked(with:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/link(authData:options:)": {
   "abstract" : [
@@ -1403,7 +1411,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parseauthentication\/loginpublisher(authdata:options:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/strip()-7jyyz": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/strip()": {
   "abstract" : [
     {
       "text" : "Strips the ",
@@ -1463,15 +1471,15 @@
       "text" : "AuthenticatedUser"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip()-7jyyz",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "strip()",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/strip()-7jyyz"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/strip()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/strip(_:)-ovl0": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/strip(_:)": {
   "abstract" : [
     {
       "text" : "Strips the ",
@@ -1519,15 +1527,15 @@
       "text" : "AuthenticatedUser"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip(_:)-ovl0",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/strip(_:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "strip(_:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/strip(_:)-ovl0"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/strip(_:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(_:options:)-5hyok": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(_:options:)": {
   "abstract" : [
     {
       "text" : "Unlink the ",
@@ -1630,15 +1638,15 @@
       "text" : "AuthenticatedUser"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:)-5hyok",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "unlink(_:options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(_:options:)-5hyok"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(_:options:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(_:options:callbackQueue:completion:)-7rp64": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(_:options:callbackQueue:completion:)": {
   "abstract" : [
     {
       "text" : "Unlink the ",
@@ -1781,15 +1789,15 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:callbackQueue:completion:)-7rp64",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(_:options:callbackQueue:completion:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "unlink(_:options:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(_:options:callbackqueue:completion:)-7rp64"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(_:options:callbackqueue:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(options:)-8buh1": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(options:)": {
   "abstract" : [
     {
       "text" : "Unlink the ",
@@ -1896,15 +1904,15 @@
       "text" : "AuthenticatedUser"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:)-8buh1",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "unlink(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(options:)-8buh1"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(options:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(options:callbackQueue:completion:)-6gyvj": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlink(options:callbackQueue:completion:)": {
   "abstract" : [
     {
       "text" : "Unlink the ",
@@ -2051,15 +2059,15 @@
       "text" : ")"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:callbackQueue:completion:)-6gyvj",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlink(options:callbackQueue:completion:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "unlink(options:callbackQueue:completion:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(options:callbackqueue:completion:)-6gyvj"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/unlink(options:callbackqueue:completion:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlinkPublisher(_:options:)-2zjlv": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlinkPublisher(_:options:)": {
   "abstract" : [
     {
       "text" : "Unlink the ",
@@ -2168,15 +2176,15 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(_:options:)-2zjlv",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(_:options:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "unlinkPublisher(_:options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/unlinkpublisher(_:options:)-2zjlv"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/unlinkpublisher(_:options:)"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlinkPublisher(options:)-2wrer": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseAuthentication/unlinkPublisher(options:)": {
   "abstract" : [
     {
       "text" : "Unlink the ",
@@ -2289,13 +2297,13 @@
       "text" : ">"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(options:)-2wrer",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseAuthentication\/unlinkPublisher(options:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "unlinkPublisher(options:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parseauthentication\/unlinkpublisher(options:)-2wrer"
+  "url" : "\/documentation\/parseswift\/parseauthentication\/unlinkpublisher(options:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFacebook": {
   "abstract" : [

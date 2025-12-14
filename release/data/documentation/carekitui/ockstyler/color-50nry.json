@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/color-7cq8t"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler"
       ]
     ]
   },
@@ -234,42 +233,6 @@
   "title" : "color",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockstyler\/color-50nry"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/color-7cq8t": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "color"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9CareKitUI14OCKColorStylerP",
-      "text" : "OCKColorStyler"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/color-7cq8t",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "color",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/color-7cq8t"
 }
 }
 }

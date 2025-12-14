@@ -102,7 +102,12 @@
       }
     ],
     "platforms" : [
-
+      {
+        "beta" : false,
+        "deprecated" : true,
+        "message" : "Change \\\"triggerName\\\" to \\\"trigger\\\"",
+        "unavailable" : false
+      }
     ],
     "role" : "symbol",
     "roleHeading" : "Initializer",

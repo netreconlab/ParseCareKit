@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/LiveQuerySocketDelegate-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery"
       ]
     ]
   },
@@ -181,17 +180,6 @@
   "title" : "ParseLiveQuery",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parselivequery"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/LiveQuerySocketDelegate-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQuery\/LiveQuerySocketDelegate-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "LiveQuerySocketDelegate Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parselivequery\/livequerysocketdelegate-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQuery/close()": {
   "abstract" : [

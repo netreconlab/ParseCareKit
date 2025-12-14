@@ -61,8 +61,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQueryDelegate",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQueryDelegate\/received(_:completionHandler:)-8g2o0"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQueryDelegate"
       ]
     ]
   },
@@ -291,6 +290,53 @@
                 }
               ],
               "type" : "paragraph"
+            },
+            {
+              "items" : [
+                {
+                  "content" : [
+                    {
+                      "inlineContent" : [
+                        {
+                          "text" : "disposition - One of several constants that describes how the challenge should be handled.",
+                          "type" : "text"
+                        }
+                      ],
+                      "type" : "paragraph"
+                    }
+                  ]
+                },
+                {
+                  "content" : [
+                    {
+                      "inlineContent" : [
+                        {
+                          "text" : "credential - The credential that should be used for authentication if disposition is",
+                          "type" : "text"
+                        },
+                        {
+                          "text" : " ",
+                          "type" : "text"
+                        },
+                        {
+                          "text" : "URLSessionAuthChallengeUseCredential; otherwise, ",
+                          "type" : "text"
+                        },
+                        {
+                          "code" : "nil",
+                          "type" : "codeVoice"
+                        },
+                        {
+                          "text" : ".",
+                          "type" : "text"
+                        }
+                      ],
+                      "type" : "paragraph"
+                    }
+                  ]
+                }
+              ],
+              "type" : "unorderedList"
             }
           ],
           "name" : "completionHandler"
@@ -393,145 +439,6 @@
   "title" : "ParseLiveQueryDelegate",
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parselivequerydelegate"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQueryDelegate/received(_:completionHandler:)-8g2o0": {
-  "abstract" : [
-    {
-      "text" : "Respond to authentication requests from a ParseLiveQuery Server. If you become a delegate",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "and implement this method you will need to with",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "code" : "completionHandler(.performDefaultHandling, nil)",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " to accept all connections approved",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "by the OS. Becoming a delegate allows you to make authentication decisions for all connections in",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "the ",
-      "type" : "text"
-    },
-    {
-      "code" : "ParseLiveQuery",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " session, meaning there can only be one delegate for the whole session. The newest",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "instance to become the delegate will be the only one to receive authentication challenges.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "received"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:objc(cs)NSURLAuthenticationChallenge",
-      "text" : "URLAuthenticationChallenge"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "completionHandler"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:objc(cs)NSURLSession",
-      "text" : "URLSession"
-    },
-    {
-      "kind" : "text",
-      "text" : "."
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:@E@NSURLSessionAuthChallengeDisposition",
-      "text" : "AuthChallengeDisposition"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:objc(cs)NSURLCredential",
-      "text" : "URLCredential"
-    },
-    {
-      "kind" : "text",
-      "text" : "?) -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s4Voida",
-      "text" : "Void"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseLiveQueryDelegate\/received(_:completionHandler:)-8g2o0",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "received(_:completionHandler:)",
-  "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parselivequerydelegate\/received(_:completionhandler:)-8g2o0"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseLiveQueryDelegate/received(_:completionHandler:)-o1ge": {
   "abstract" : [

@@ -3,8 +3,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOpacity1-3xc01"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler"
       ]
     ]
   },
@@ -165,42 +164,6 @@
   "title" : "OCKAppearanceStyler",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockappearancestyler"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOpacity1-3xc01": {
-  "abstract" : [
-
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "shadowOpacity1"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sf",
-      "text" : "Float"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOpacity1-3xc01",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "shadowOpacity1",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowopacity1-3xc01"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOpacity1-r59": {
   "abstract" : [

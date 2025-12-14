@@ -98,28 +98,30 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/black",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/clear",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customBackground",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customBlue-69xy6",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customFill-lp9l",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray-2dzf1",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray2-7v4ud",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray3-91bsn",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray4-3csgm",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray5-yn4o",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customBlue",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customFill",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray3",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray4",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray5",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGroupedBackground",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/label-3e23d",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/quaternaryCustomFill-9s8ur",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/label",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/quaternaryCustomFill",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryCustomBackground",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryCustomFill-4dn43",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryCustomFill",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryCustomGroupedBackground",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryLabel-45w1p",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/separator-7r6nr",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryCustomFill-9u7ey",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryLabel",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/separator",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryCustomFill",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryCustomGroupedBackground",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryLabel-99xfq",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryLabel",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/white"
       ],
       "title" : "Instance Properties"
@@ -320,7 +322,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyler\/custombackground"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customBlue-69xy6": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customBlue": {
   "abstract" : [
 
   ],
@@ -348,15 +350,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customBlue-69xy6",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customBlue",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customBlue",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customblue-69xy6"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customblue"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customFill-lp9l": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customFill": {
   "abstract" : [
 
   ],
@@ -384,15 +386,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customFill-lp9l",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customFill",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customFill",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customfill-lp9l"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customfill"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray-2dzf1": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray": {
   "abstract" : [
 
   ],
@@ -420,15 +422,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray-2dzf1",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customGray",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray-2dzf1"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray2-7v4ud": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray2": {
   "abstract" : [
 
   ],
@@ -456,15 +458,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray2-7v4ud",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customGray2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray2-7v4ud"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray3-91bsn": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray3": {
   "abstract" : [
 
   ],
@@ -492,15 +494,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray3-91bsn",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray3",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customGray3",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray3-91bsn"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray3"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray4-3csgm": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray4": {
   "abstract" : [
 
   ],
@@ -528,15 +530,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray4-3csgm",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray4",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customGray4",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray4-3csgm"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray4"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray5-yn4o": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGray5": {
   "abstract" : [
 
   ],
@@ -564,13 +566,13 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray5-yn4o",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/customGray5",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "customGray5",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray5-yn4o"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgray5"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/customGroupedBackground": {
   "abstract" : [
@@ -606,7 +608,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyler\/customgroupedbackground"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/label-3e23d": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/label": {
   "abstract" : [
 
   ],
@@ -634,15 +636,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/label-3e23d",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/label",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "label",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/label-3e23d"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/label"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/quaternaryCustomFill-9s8ur": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/quaternaryCustomFill": {
   "abstract" : [
 
   ],
@@ -670,13 +672,13 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/quaternaryCustomFill-9s8ur",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/quaternaryCustomFill",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "quaternaryCustomFill",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/quaternarycustomfill-9s8ur"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/quaternarycustomfill"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/secondaryCustomBackground": {
   "abstract" : [
@@ -712,7 +714,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyler\/secondarycustombackground"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/secondaryCustomFill-4dn43": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/secondaryCustomFill": {
   "abstract" : [
 
   ],
@@ -740,13 +742,13 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryCustomFill-4dn43",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryCustomFill",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "secondaryCustomFill",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/secondarycustomfill-4dn43"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/secondarycustomfill"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/secondaryCustomGroupedBackground": {
   "abstract" : [
@@ -782,7 +784,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyler\/secondarycustomgroupedbackground"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/secondaryLabel-45w1p": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/secondaryLabel": {
   "abstract" : [
 
   ],
@@ -810,15 +812,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryLabel-45w1p",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/secondaryLabel",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "secondaryLabel",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/secondarylabel-45w1p"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/secondarylabel"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/separator-7r6nr": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/separator": {
   "abstract" : [
 
   ],
@@ -846,15 +848,15 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/separator-7r6nr",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/separator",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "separator",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/separator-7r6nr"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/separator"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/tertiaryCustomFill-9u7ey": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/tertiaryCustomFill": {
   "abstract" : [
 
   ],
@@ -882,13 +884,13 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryCustomFill-9u7ey",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryCustomFill",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "tertiaryCustomFill",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/tertiarycustomfill-9u7ey"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/tertiarycustomfill"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/tertiaryCustomGroupedBackground": {
   "abstract" : [
@@ -924,7 +926,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockcolorstyler\/tertiarycustomgroupedbackground"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/tertiaryLabel-99xfq": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/tertiaryLabel": {
   "abstract" : [
 
   ],
@@ -952,13 +954,13 @@
       "text" : "UIColor"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryLabel-99xfq",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKColorStyler\/tertiaryLabel",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "tertiaryLabel",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockcolorstyler\/tertiarylabel-99xfq"
+  "url" : "\/documentation\/carekitui\/ockcolorstyler\/tertiarylabel"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKColorStyler/white": {
   "abstract" : [

@@ -25,8 +25,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabel",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabel\/OCKStylable-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabel"
       ]
     ]
   },
@@ -197,17 +196,6 @@
   "title" : "OCKLabel",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ocklabel"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKLabel/OCKStylable-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKLabel\/OCKStylable-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKStylable Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ocklabel\/ockstylable-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKLabel/styleChildren()": {
   "abstract" : [

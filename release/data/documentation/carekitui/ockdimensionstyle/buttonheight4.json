@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyle",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyle\/OCKDimensionStyler-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyle"
       ]
     ]
   },
@@ -179,17 +178,6 @@
   "title" : "OCKDimensionStyle",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockdimensionstyle"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyle/OCKDimensionStyler-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKDimensionStyle\/OCKDimensionStyler-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKDimensionStyler Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockdimensionstyle\/ockdimensionstyler-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKDimensionStyle/buttonHeight4": {
   "abstract" : [

@@ -98,7 +98,12 @@
       }
     ],
     "platforms" : [
-
+      {
+        "beta" : false,
+        "deprecated" : true,
+        "renamed" : "geoPoint",
+        "unavailable" : false
+      }
     ],
     "role" : "symbol",
     "roleHeading" : "Function",

@@ -9,8 +9,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/style()-1pdd6"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable"
       ]
     ]
   },
@@ -189,45 +188,6 @@
   "title" : "OCKStylable",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockstylable"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStylable/style()-1pdd6": {
-  "abstract" : [
-    {
-      "text" : "Returns in order of existence: This object’s custom style, the first parent with a custom style, or the default style.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "style"
-    },
-    {
-      "kind" : "text",
-      "text" : "() -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:9CareKitUI9OCKStylerP",
-      "text" : "OCKStyler"
-    }
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/style()-1pdd6",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "style()",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstylable\/style()-1pdd6"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStylable/style()-4ubfv": {
   "abstract" : [

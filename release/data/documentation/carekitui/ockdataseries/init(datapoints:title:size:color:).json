@@ -244,20 +244,6 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "A solid color to be used when plotting the data series.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "color"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
                   "text" : "A size specifying how large this data series should appear on the plot.",
                   "type" : "text"
                 }
@@ -266,6 +252,20 @@
             }
           ],
           "name" : "size"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "A solid color to be used when plotting the data series.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "color"
         }
       ]
     }

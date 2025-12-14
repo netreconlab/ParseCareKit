@@ -98,11 +98,13 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/animation-27hei",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/appearance-2f8aq",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/color-7cq8t",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/dimension-4gu38"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/animation",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/appearance",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/color",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/dimension"
       ],
       "title" : "Instance Properties"
     }
@@ -197,7 +199,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockstyler"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/animation-27hei": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/animation": {
   "abstract" : [
 
   ],
@@ -225,15 +227,15 @@
       "text" : "OCKAnimationStyler"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/animation-27hei",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/animation",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "animation",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/animation-27hei"
+  "url" : "\/documentation\/carekitui\/ockstyler\/animation"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/appearance-2f8aq": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/appearance": {
   "abstract" : [
 
   ],
@@ -261,15 +263,15 @@
       "text" : "OCKAppearanceStyler"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/appearance-2f8aq",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/appearance",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "appearance",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/appearance-2f8aq"
+  "url" : "\/documentation\/carekitui\/ockstyler\/appearance"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/color-7cq8t": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/color": {
   "abstract" : [
 
   ],
@@ -297,15 +299,15 @@
       "text" : "OCKColorStyler"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/color-7cq8t",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/color",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "color",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/color-7cq8t"
+  "url" : "\/documentation\/carekitui\/ockstyler\/color"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/dimension-4gu38": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStyler/dimension": {
   "abstract" : [
 
   ],
@@ -333,13 +335,13 @@
       "text" : "OCKDimensionStyler"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/dimension-4gu38",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStyler\/dimension",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "dimension",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstyler\/dimension-4gu38"
+  "url" : "\/documentation\/carekitui\/ockstyler\/dimension"
 }
 }
 }

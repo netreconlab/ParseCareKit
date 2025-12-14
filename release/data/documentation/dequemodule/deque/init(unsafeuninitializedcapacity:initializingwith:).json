@@ -275,28 +275,6 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The number of elements to allocate",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "space for in the new deque.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "unsafeUninitializedCapacity"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
                   "text" : "A closure that initializes elements and sets the count",
                   "type" : "text"
                 },

@@ -10,8 +10,7 @@
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/SetAlgebra-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView"
       ]
     ]
   },
@@ -320,6 +319,39 @@
                 }
               ],
               "type" : "paragraph"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Removing the last element only takes (amortized) O(1)",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "hashing\/comparisons operations, if ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Element",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " implements high quality",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "hashing.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
             }
           ],
           "name" : "Complexity",
@@ -474,17 +506,6 @@
   "title" : "OrderedSet.UnorderedView",
   "type" : "topic",
   "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/SetAlgebra-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedSet\/UnorderedView\/SetAlgebra-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "SetAlgebra Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/orderedcollections\/orderedset\/unorderedview\/setalgebra-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedSet/UnorderedView/remove(_:)": {
   "abstract" : [

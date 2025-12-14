@@ -98,16 +98,18 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth1-2tf1m",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth2-7e6z5",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius1-6x5vb",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius2-1j90j",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/lineWidth1-29t2q",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/opacity1-n85w",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOffset1-4hagz",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOpacity1-3xc01",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowRadius1-aa8j"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius2",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/lineWidth1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/opacity1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOffset1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOpacity1",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowRadius1"
       ],
       "title" : "Instance Properties"
     }
@@ -205,7 +207,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockappearancestyler"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/borderWidth1-2tf1m": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/borderWidth1": {
   "abstract" : [
 
   ],
@@ -233,15 +235,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth1-2tf1m",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "borderWidth1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/borderwidth1-2tf1m"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/borderwidth1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/borderWidth2-7e6z5": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/borderWidth2": {
   "abstract" : [
 
   ],
@@ -269,15 +271,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth2-7e6z5",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/borderWidth2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "borderWidth2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/borderwidth2-7e6z5"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/borderwidth2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/cornerRadius1-6x5vb": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/cornerRadius1": {
   "abstract" : [
 
   ],
@@ -305,15 +307,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius1-6x5vb",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "cornerRadius1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/cornerradius1-6x5vb"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/cornerradius1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/cornerRadius2-1j90j": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/cornerRadius2": {
   "abstract" : [
 
   ],
@@ -341,15 +343,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius2-1j90j",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/cornerRadius2",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "cornerRadius2",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/cornerradius2-1j90j"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/cornerradius2"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/lineWidth1-29t2q": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/lineWidth1": {
   "abstract" : [
 
   ],
@@ -377,15 +379,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/lineWidth1-29t2q",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/lineWidth1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "lineWidth1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/linewidth1-29t2q"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/linewidth1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/opacity1-n85w": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/opacity1": {
   "abstract" : [
 
   ],
@@ -413,15 +415,15 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/opacity1-n85w",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/opacity1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "opacity1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/opacity1-n85w"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/opacity1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOffset1-4hagz": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOffset1": {
   "abstract" : [
 
   ],
@@ -449,15 +451,15 @@
       "text" : "CGSize"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOffset1-4hagz",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOffset1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "shadowOffset1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowoffset1-4hagz"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowoffset1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOpacity1-3xc01": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowOpacity1": {
   "abstract" : [
 
   ],
@@ -485,15 +487,15 @@
       "text" : "Float"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOpacity1-3xc01",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowOpacity1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "shadowOpacity1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowopacity1-3xc01"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowopacity1"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowRadius1-aa8j": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyler/shadowRadius1": {
   "abstract" : [
 
   ],
@@ -521,13 +523,13 @@
       "text" : "CGFloat"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowRadius1-aa8j",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyler\/shadowRadius1",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "shadowRadius1",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowradius1-aa8j"
+  "url" : "\/documentation\/carekitui\/ockappearancestyler\/shadowradius1"
 }
 }
 }

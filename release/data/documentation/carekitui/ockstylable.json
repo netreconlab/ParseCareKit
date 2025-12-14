@@ -119,14 +119,18 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Properties",
+      "generated" : true,
       "identifiers" : [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/customStyle"
       ],
       "title" : "Instance Properties"
     },
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/style()-1pdd6",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/style()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/styleChildren()",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/styleDidChange()"
       ],
@@ -1235,7 +1239,7 @@
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockstylable\/customstyle"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStylable/style()-1pdd6": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStylable/style()": {
   "abstract" : [
     {
       "text" : "Returns in order of existence: This object’s custom style, the first parent with a custom style, or the default style.",
@@ -1266,13 +1270,13 @@
       "text" : "OCKStyler"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/style()-1pdd6",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKStylable\/style()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "style()",
   "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockstylable\/style()-1pdd6"
+  "url" : "\/documentation\/carekitui\/ockstylable\/style()"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKStylable/styleChildren()": {
   "abstract" : [

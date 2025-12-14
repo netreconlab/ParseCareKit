@@ -108,9 +108,11 @@
   ],
   "topicSections" : [
     {
+      "anchor" : "Instance-Methods",
+      "generated" : true,
       "identifiers" : [
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeDummyUploadTask()-71gc1",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeSuccessfulUploadResponse(_:url:)-h8xr",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeDummyUploadTask()",
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeSuccessfulUploadResponse(_:url:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/upload(with:from:completion:)",
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/upload(with:fromFile:completion:)"
       ],
@@ -192,7 +194,7 @@
   "type" : "topic",
   "url" : "\/documentation\/parseswift\/parsefiletransferable"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileTransferable/makeDummyUploadTask()-71gc1": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileTransferable/makeDummyUploadTask()": {
   "abstract" : [
     {
       "text" : "Compose a dummy upload task.",
@@ -231,15 +233,15 @@
       "text" : "URLSessionUploadTask"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeDummyUploadTask()-71gc1",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeDummyUploadTask()",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "makeDummyUploadTask()",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsefiletransferable\/makedummyuploadtask()-71gc1"
+  "url" : "\/documentation\/parseswift\/parsefiletransferable\/makedummyuploadtask()"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileTransferable/makeSuccessfulUploadResponse(_:url:)-h8xr": {
+"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileTransferable/makeSuccessfulUploadResponse(_:url:)": {
   "abstract" : [
     {
       "text" : "Compose a valid file upload response with a name and url.",
@@ -317,13 +319,13 @@
       "text" : "?)"
     }
   ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeSuccessfulUploadResponse(_:url:)-h8xr",
+  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/ParseSwift\/ParseFileTransferable\/makeSuccessfulUploadResponse(_:url:)",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
   "title" : "makeSuccessfulUploadResponse(_:url:)",
   "type" : "topic",
-  "url" : "\/documentation\/parseswift\/parsefiletransferable\/makesuccessfuluploadresponse(_:url:)-h8xr"
+  "url" : "\/documentation\/parseswift\/parsefiletransferable\/makesuccessfuluploadresponse(_:url:)"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/ParseSwift/ParseFileTransferable/upload(with:from:completion:)": {
   "abstract" : [

@@ -102,7 +102,12 @@
       }
     ],
     "platforms" : [
-
+      {
+        "beta" : false,
+        "deprecated" : true,
+        "message" : "Add \\\"object\\\" as the first argument",
+        "unavailable" : false
+      }
     ],
     "role" : "symbol",
     "roleHeading" : "Initializer",

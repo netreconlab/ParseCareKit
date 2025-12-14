@@ -1042,28 +1042,6 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The maintenance key for your Parse application. This key should only be",
-                  "type" : "text"
-                },
-                {
-                  "text" : " ",
-                  "type" : "text"
-                },
-                {
-                  "text" : "specified when using the SDK on a server.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "maintenanceKey"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
                   "text" : "The primary key for your Parse application. This key should only be",
                   "type" : "text"
                 },
@@ -1080,6 +1058,28 @@
             }
           ],
           "name" : "primaryKey"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The maintenance key for your Parse application. This key should only be",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "specified when using the SDK on a server.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "maintenanceKey"
         },
         {
           "content" : [

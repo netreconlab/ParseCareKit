@@ -318,6 +318,39 @@
                 }
               ],
               "type" : "paragraph"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Removing the last element only takes (amortized) O(1)",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "hashing\/comparisons operations, if ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "Element",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " implements high quality",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "hashing.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
             }
           ],
           "name" : "Complexity",

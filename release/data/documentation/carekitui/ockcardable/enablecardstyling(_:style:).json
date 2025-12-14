@@ -174,7 +174,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "true to turn the card styling on.",
+                  "text" : "True to turn the card styling on.",
                   "type" : "text"
                 }
               ],

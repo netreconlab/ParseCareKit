@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/Sequence-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary"
       ]
     ]
   },
@@ -29,7 +28,7 @@
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "Swift",
-    "externalID" : "s:STsE3mapySayqd__Gqd__7ElementQzKXEKlF::SYNTHESIZED::s:18OrderedCollections0A10DictionaryV",
+    "externalID" : "s:STsE3mapySayqd__Gqd__7ElementQzqd_0_YKXEqd_0_YKs5ErrorRd_0_r0_lF::SYNTHESIZED::s:18OrderedCollections0A10DictionaryV",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -50,6 +49,14 @@
       {
         "kind" : "genericParameter",
         "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "genericParameter",
+        "text" : "E"
       },
       {
         "kind" : "text",
@@ -78,7 +85,15 @@
       },
       {
         "kind" : "text",
-        "text" : " -> "
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "E"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
       },
       {
         "kind" : "typeIdentifier",
@@ -90,11 +105,19 @@
       },
       {
         "kind" : "keyword",
-        "text" : "rethrows"
+        "text" : "throws"
       },
       {
         "kind" : "text",
-        "text" : " -> ["
+        "text" : "("
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "E"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> ["
       },
       {
         "kind" : "typeIdentifier",
@@ -151,6 +174,14 @@
             },
             {
               "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "E"
+            },
+            {
+              "kind" : "text",
               "text" : ">("
             },
             {
@@ -192,7 +223,15 @@
             },
             {
               "kind" : "text",
-              "text" : " -> "
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "E"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
             },
             {
               "kind" : "typeIdentifier",
@@ -204,11 +243,19 @@
             },
             {
               "kind" : "keyword",
-              "text" : "rethrows"
+              "text" : "throws"
             },
             {
               "kind" : "text",
-              "text" : " -> ["
+              "text" : "("
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "E"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> ["
             },
             {
               "kind" : "typeIdentifier",
@@ -216,7 +263,28 @@
             },
             {
               "kind" : "text",
-              "text" : "]"
+              "text" : "] "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "E"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s5ErrorP",
+              "text" : "Error"
             }
           ]
         }
@@ -291,17 +359,6 @@
   "type" : "topic",
   "url" : "\/documentation\/orderedcollections\/ordereddictionary"
 },
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/Sequence-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/OrderedCollections\/OrderedDictionary\/Sequence-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "Sequence Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/orderedcollections\/ordereddictionary\/sequence-implementations"
-},
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/OrderedCollections/OrderedDictionary/map(_:)": {
   "abstract" : [
 
@@ -326,6 +383,14 @@
     {
       "kind" : "genericParameter",
       "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "E"
     },
     {
       "kind" : "text",
@@ -354,7 +419,15 @@
     },
     {
       "kind" : "text",
-      "text" : " -> "
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "E"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
     },
     {
       "kind" : "typeIdentifier",
@@ -366,11 +439,19 @@
     },
     {
       "kind" : "keyword",
-      "text" : "rethrows"
+      "text" : "throws"
     },
     {
       "kind" : "text",
-      "text" : " -> ["
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "E"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> ["
     },
     {
       "kind" : "typeIdentifier",

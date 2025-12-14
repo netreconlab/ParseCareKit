@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyle",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyle\/OCKAppearanceStyler-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyle"
       ]
     ]
   },
@@ -179,17 +178,6 @@
   "title" : "OCKAppearanceStyle",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockappearancestyle"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyle/OCKAppearanceStyler-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAppearanceStyle\/OCKAppearanceStyler-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKAppearanceStyler Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockappearancestyle\/ockappearancestyler-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAppearanceStyle/shadowRadius1": {
   "abstract" : [

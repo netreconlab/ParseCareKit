@@ -17,8 +17,7 @@
     "paths" : [
       [
         "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyle",
-        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyle\/OCKAnimationStyler-Implementations"
+        "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyle"
       ]
     ]
   },
@@ -179,17 +178,6 @@
   "title" : "OCKAnimationStyle",
   "type" : "topic",
   "url" : "\/documentation\/carekitui\/ockanimationstyle"
-},
-"doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAnimationStyle/OCKAnimationStyler-Implementations": {
-  "abstract" : [
-
-  ],
-  "identifier" : "doc:\/\/edu.uky.cs.netreconlab.ParseCareKit\/documentation\/CareKitUI\/OCKAnimationStyle\/OCKAnimationStyler-Implementations",
-  "kind" : "article",
-  "role" : "collectionGroup",
-  "title" : "OCKAnimationStyler Implementations",
-  "type" : "topic",
-  "url" : "\/documentation\/carekitui\/ockanimationstyle\/ockanimationstyler-implementations"
 },
 "doc://edu.uky.cs.netreconlab.ParseCareKit/documentation/CareKitUI/OCKAnimationStyle/stateChangeDuration": {
   "abstract" : [
