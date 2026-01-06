@@ -35,20 +35,20 @@ public final class ParseRemote: OCKRemoteSynchronizable, @unchecked Sendable {
     public var automaticallySynchronizes: Bool
 
     /// The unique identifier of the remote clock.
-    public var uuid: UUID!
+    public let uuid: UUID!
 
 	/// The limit at which ParseCareKit will log a warning about a batch size potentially
 	/// being to large. The framework will attempt to send over this limit, but be sure
 	/// your server supports transactions this large. Defaults to 100.
-	public var batchLimit: Int
+	public let batchLimit: Int
 
     /// A dictionary of any custom classes to synchronize between the `CareKitStore` and the Parse Server.
-    public var customClassesToSynchronize: [String: any PCKVersionable.Type]?
+    public let customClassesToSynchronize: [String: any PCKVersionable.Type]?
 
     /// A dictionary of any default classes to synchronize between the `CareKitStore` and the Parse Server. These
     /// are `PCKPatient`, `PCKCarePlan`, `PCKContact`, `PCKTask`,  `PCKHealthKitTask`,
     /// and `PCKOutcome`.
-    public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]!
+    public let pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]?
 
     private weak var parseDelegate: ParseRemoteDelegate?
     private var clockSubscription: SubscriptionCallback<PCKClock>?
@@ -73,13 +73,15 @@ public final class ParseRemote: OCKRemoteSynchronizable, @unchecked Sendable {
     */
     public init(
 		uuid: UUID,
-		batchLimit: Int = 100,
+		batchLimit: Int,
 		auto: Bool,
 		subscribeToRemoteUpdates: Bool,
-		defaultACL: ParseACL? = nil
+		pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]?,
+		customClassesToSynchronize: [String: any PCKVersionable.Type]?,
+		defaultACL: ParseACL?
 	) async throws {
-        self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
-        self.customClassesToSynchronize = nil
+        self.pckStoreClassesToSynchronize = try pckStoreClassesToSynchronize ?? PCKStoreClass.getConcrete()
+        self.customClassesToSynchronize = customClassesToSynchronize
         self.uuid = uuid
 		self.batchLimit = batchLimit
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
@@ -115,16 +117,17 @@ public final class ParseRemote: OCKRemoteSynchronizable, @unchecked Sendable {
 		subscribeToRemoteUpdates: Bool,
 		defaultACL: ParseACL? = nil
 	) async throws {
+		let storeClassesToSynchronize = try PCKStoreClass
+			.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         try await self.init(
 			uuid: uuid,
 			batchLimit: batchLimit,
 			auto: auto,
 			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+			pckStoreClassesToSynchronize: storeClassesToSynchronize,
+			customClassesToSynchronize: nil,
 			defaultACL: defaultACL
 		)
-        try self.pckStoreClassesToSynchronize = PCKStoreClass
-            .replaceRemoteConcreteClasses(replacePCKStoreClasses)
-        self.customClassesToSynchronize = nil
     }
 
     /**
@@ -150,24 +153,33 @@ public final class ParseRemote: OCKRemoteSynchronizable, @unchecked Sendable {
 		batchLimit: Int = 100,
 		auto: Bool,
 		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
-		customClasses: [String: any PCKVersionable.Type],
+		customClasses: [String: any PCKVersionable.Type]? = nil,
 		subscribeToRemoteUpdates: Bool,
 		defaultACL: ParseACL? = nil
 	) async throws {
-        try await self.init(
-			uuid: uuid,
-			batchLimit: batchLimit,
-			auto: auto,
-			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
-			defaultACL: defaultACL
-		)
-        if let replacePCKStoreClasses = replacePCKStoreClasses {
-            self.pckStoreClassesToSynchronize = try PCKStoreClass
-                .replaceRemoteConcreteClasses(replacePCKStoreClasses)
-        } else {
-            self.pckStoreClassesToSynchronize = nil
-        }
-        self.customClassesToSynchronize = customClasses
+		if let replacePCKStoreClasses = replacePCKStoreClasses {
+			let storeClasses = try PCKStoreClass
+				.replaceRemoteConcreteClasses(replacePCKStoreClasses)
+			try await self.init(
+				uuid: uuid,
+				batchLimit: batchLimit,
+				auto: auto,
+				subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+				pckStoreClassesToSynchronize: storeClasses,
+				customClassesToSynchronize: customClasses,
+				defaultACL: defaultACL
+			)
+		} else {
+			try await self.init(
+				uuid: uuid,
+				batchLimit: batchLimit,
+				auto: auto,
+				subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+				pckStoreClassesToSynchronize: nil,
+				customClassesToSynchronize: customClasses,
+				defaultACL: defaultACL
+			)
+		}
     }
 
     deinit {
