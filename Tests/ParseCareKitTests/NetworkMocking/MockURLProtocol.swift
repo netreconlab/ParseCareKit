@@ -9,12 +9,12 @@
 import Foundation
 
 typealias MockURLProtocolRequestTestClosure = @Sendable (URLRequest) -> Bool
-typealias MockURLResponseContructingClosure = @Sendable (URLRequest) -> MockURLResponse?
+typealias MockURLResponseConstructingClosure = @Sendable (URLRequest) -> MockURLResponse?
 
 struct MockURLProtocolMock {
     var attempts: Int
     var test: MockURLProtocolRequestTestClosure
-    var response: MockURLResponseContructingClosure
+    var response: MockURLResponseConstructingClosure
 }
 
 final class MockURLProtocol: URLProtocol, @unchecked Sendable {
@@ -49,14 +49,14 @@ final class MockURLProtocol: URLProtocol, @unchecked Sendable {
 	}
 
     static func mockRequests(
-		response: @escaping MockURLResponseContructingClosure
+		response: @escaping MockURLResponseConstructingClosure
 	) {
         mockRequestsPassing(NSIntegerMax, test: { _ in return true }, with: response)
     }
 
     static func mockRequestsPassing(
 		_ test: @escaping MockURLProtocolRequestTestClosure,
-		with response: @escaping MockURLResponseContructingClosure
+		with response: @escaping MockURLResponseConstructingClosure
 	) {
         mockRequestsPassing(NSIntegerMax, test: test, with: response)
     }
@@ -64,7 +64,7 @@ final class MockURLProtocol: URLProtocol, @unchecked Sendable {
     static func mockRequestsPassing(
 		_ attempts: Int,
 		test: @escaping MockURLProtocolRequestTestClosure,
-		with response: @escaping MockURLResponseContructingClosure
+		with response: @escaping MockURLResponseConstructingClosure
 	) {
         let mock = MockURLProtocolMock(attempts: attempts, test: test, response: response)
         mocks.append(mock)

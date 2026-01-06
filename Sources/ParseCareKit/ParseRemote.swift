@@ -15,7 +15,7 @@ import Synchronization
 // swiftlint:disable line_length
 
 /// Allows the `CareKitStore` to synchronize with a remote Parse Server.
-public final class ParseRemote: OCKRemoteSynchronizable, @unchecked Sendable {
+public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 
     /// - warning: Should set `parseRemoteDelegate` instead.
 	public var delegate: OCKRemoteSynchronizationDelegate? {
