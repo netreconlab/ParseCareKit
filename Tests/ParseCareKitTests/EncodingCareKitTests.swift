@@ -13,7 +13,7 @@ import XCTest
 @testable import CareKitStore
 @testable import ParseSwift
 
-class ParseCareKitTests: XCTestCase {
+final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 
     struct LoginSignupResponse: ParseUser {
 

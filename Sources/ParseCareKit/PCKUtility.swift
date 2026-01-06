@@ -46,7 +46,7 @@ public class PCKUtility {
      See Apple's [documentation](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession) for more for details.
      */
     public class func configureParse(fileName: String = "ParseCareKit",
-                                     authentication: ((URLAuthenticationChallenge,
+                                     authentication: (@Sendable (URLAuthenticationChallenge,
                                                        (URLSession.AuthChallengeDisposition,
                                                         URLCredential?) -> Void) -> Void)? = nil) async throws {
         var plistConfiguration: [String: AnyObject]

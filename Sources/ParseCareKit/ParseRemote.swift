@@ -14,7 +14,7 @@ import os.log
 // swiftlint:disable line_length
 
 /// Allows the `CareKitStore` to synchronize with a remote Parse Server.
-public final class ParseRemote: OCKRemoteSynchronizable {
+public final class ParseRemote: OCKRemoteSynchronizable, @unchecked Sendable {
 
     /// - warning: Should set `parseRemoteDelegate` instead.
     public weak var delegate: OCKRemoteSynchronizationDelegate?
@@ -22,7 +22,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
     /// If set, the delegate will be alerted to important events delivered by the remote
     /// store.
     /// - note: Setting `parseRemoteDelegate` automatically sets `delegate`.
-    public weak var parseRemoteDelegate: ParseRemoteDelegate? {
+    public var parseRemoteDelegate: ParseRemoteDelegate? {
         get {
             return parseDelegate
         }
@@ -171,9 +171,10 @@ public final class ParseRemote: OCKRemoteSynchronizable {
     }
 
     deinit {
-        Task {
+        Task { [weak self] in
+			guard let self else { return }
             do {
-                try await clockQuery.unsubscribe()
+				try await self.clockQuery.unsubscribe()
                 Logger.deinitializer.error("Unsubscribed from Parse remote")
             } catch {
                 Logger.deinitializer.error("Could not unsubscribe from Parse remote: \(error)")
@@ -185,8 +186,8 @@ public final class ParseRemote: OCKRemoteSynchronizable {
 
     public func pullRevisions(
 		since knowledgeVector: OCKRevisionRecord.KnowledgeVector,
-		mergeRevision: @escaping (OCKRevisionRecord) -> Void,
-		completion: @escaping (Error?) -> Void
+		mergeRevision: @escaping @Sendable (OCKRevisionRecord) -> Void,
+		completion: @escaping @Sendable (Error?) -> Void
 	) {
 
         Task {
@@ -286,7 +287,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
 
     public func pushRevisions(deviceRevisions: [CareKitStore.OCKRevisionRecord],
                               deviceKnowledge: CareKitStore.OCKRevisionRecord.KnowledgeVector,
-                              completion: @escaping (Error?) -> Void) {
+                              completion: @escaping @Sendable (Error?) -> Void) {
 
         Task {
             do {
@@ -395,7 +396,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
                                parseClock: PCKClock,
                                parseVector: OCKRevisionRecord.KnowledgeVector,
                                localClock: OCKRevisionRecord.KnowledgeVector,
-                               completion: @escaping (Error?) -> Void) {
+                               completion: @escaping @Sendable (Error?) -> Void) {
         Task {
             // 9. Increment and merge clocks if new local revisions were pushed.
             var updatedParseVector = parseVector

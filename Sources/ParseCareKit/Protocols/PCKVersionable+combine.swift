@@ -27,11 +27,18 @@ public extension PCKVersionable {
 		options: API.Options = []
 	) -> Future<[Self], ParseError> {
         Future { promise in
+			nonisolated(unsafe) let promise = promise
             self.find(
 				for: date,
-				options: options,
-				completion: promise
-			)
+				options: options
+			) { result in
+				switch result {
+				case .success(let found):
+					promise(.success(found))
+				case .failure(let error):
+					promise(.failure(error))
+				}
+			}
         }
     }
 
@@ -44,8 +51,17 @@ public extension PCKVersionable {
     func savePublisher(for date: Date,
                        options: API.Options = []) -> Future<Self, ParseError> {
         Future { promise in
-            self.save(options: options,
-                      completion: promise)
+			nonisolated(unsafe) let promise = promise
+            self.save(
+				options: options
+			) { result in
+				switch result {
+				case .success(let saved):
+					promise(.success(saved))
+				case .failure(let error):
+					promise(.failure(error))
+				}
+			}
         }
     }
 }

@@ -104,7 +104,7 @@ extension PCKVersionable {
 		for date: Date,
 		options: API.Options = [],
 		callbackQueue: DispatchQueue = .main,
-		completion: @escaping (Result<[Self], ParseError>) -> Void
+		completion: @escaping @Sendable (Result<[Self], ParseError>) -> Void
 	) {
         let query = Self.query(for: date)
 			.limit(queryLimit)

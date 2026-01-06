@@ -177,9 +177,11 @@ extension PCKObjectable {
         - completion: The block to execute.
      It should have the following argument signature: `(Result<Self,Error>)`.
     */
-    static public func first(_ uuid: UUID?,
-                             options: API.Options = [],
-                             completion: @escaping (Result<Self, Error>) -> Void) {
+    static public func first(
+		_ uuid: UUID?,
+		options: API.Options = [],
+		completion: @escaping @Sendable (Result<Self, Error>) -> Void
+	) {
 
         guard let uuidString = uuid?.uuidString else {
             completion(.failure(ParseCareKitError.requiredValueCantBeUnwrapped))
