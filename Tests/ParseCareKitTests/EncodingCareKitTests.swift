@@ -104,7 +104,7 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 
     override func tearDown() async throws {
         MockURLProtocol.removeAll()
-        try await KeychainStore.shared.deleteAll()
+        try KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
         try store.delete()
         PCKUtility.removeCache()

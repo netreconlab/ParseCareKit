@@ -16,7 +16,7 @@ class UtilityTests: XCTestCase {
 
     override func tearDown() async throws {
         MockURLProtocol.removeAll()
-        try await KeychainStore.shared.deleteAll()
+        try KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
         PCKUtility.removeCache()
     }
