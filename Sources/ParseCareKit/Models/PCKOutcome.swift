@@ -326,7 +326,7 @@ public struct PCKOutcome: PCKVersionable {
         return try await query.find()
     }
 
-    public func findOutcomesInBackground(completion: @escaping ([PCKOutcome]?, Error?) -> Void) {
+    public func findOutcomesInBackground(completion: @escaping @Sendable ([PCKOutcome]?, Error?) -> Void) {
         let query = Self.queryNotDeleted()
         query.find { results in
 

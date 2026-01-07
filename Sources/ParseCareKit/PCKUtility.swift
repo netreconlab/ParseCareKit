@@ -15,7 +15,7 @@ import os.log
 /// Utility functions designed to make things easier.
 public class PCKUtility {
 
-    class func getPlistConfiguration(fileName: String) throws -> [String: AnyObject] {
+    static func getPlistConfiguration(fileName: String) throws -> [String: AnyObject] {
         var propertyListFormat = PropertyListSerialization.PropertyListFormat.xml
         guard let path = Bundle.main.path(forResource: fileName, ofType: "plist"),
             let xml = FileManager.default.contents(atPath: path) else {
@@ -45,10 +45,18 @@ public class PCKUtility {
      completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void`.
      See Apple's [documentation](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/1411595-urlsession) for more for details.
      */
-    public class func configureParse(fileName: String = "ParseCareKit",
-                                     authentication: ((URLAuthenticationChallenge,
-                                                       (URLSession.AuthChallengeDisposition,
-                                                        URLCredential?) -> Void) -> Void)? = nil) async throws {
+    public static func configureParse(
+		fileName: String = "ParseCareKit",
+		authentication: (
+			@Sendable (
+				URLAuthenticationChallenge,
+				(
+					URLSession.AuthChallengeDisposition,
+					URLCredential?
+				) -> Void
+			) -> Void
+		)? = nil
+	) async throws {
         var plistConfiguration: [String: AnyObject]
         var clientKey: String?
         var liveQueryURL: URL?
@@ -103,7 +111,7 @@ public class PCKUtility {
      - SynchronizeKeychain - (Boolean) Whether or not to synchronize the Keychain across devices.
      - parameter fileName: Name of **.plist** file that contains config. Defaults to "ParseCareKit".
      */
-    public class func setAccessGroup(fileName: String = "ParseCareKit") async throws {
+    public static func setAccessGroup(fileName: String = "ParseCareKit") async throws {
         var plistConfiguration: [String: AnyObject]
         var accessGroup: String?
         var synchronizeKeychain = false
@@ -127,28 +135,28 @@ public class PCKUtility {
     }
 
     /// Get the current Parse Encoder with custom date strategy.
-    public class func encoder() -> ParseEncoder {
+    public static func encoder() -> ParseEncoder {
         PCKOutcome.getEncoder()
     }
 
     /// Get the current JSON Encoder with custom date strategy.
-    public class func jsonEncoder() -> JSONEncoder {
+    public static func jsonEncoder() -> JSONEncoder {
         PCKOutcome.getJSONEncoder()
     }
 
     /// Get the current JSON Decoder with custom date strategy.
-    public class func decoder() -> JSONDecoder {
+    public static func decoder() -> JSONDecoder {
         PCKOutcome.getDecoder()
     }
 
     /// Remove ParseCareKit cache from device.
-    public class func removeCache() {
+    public static func removeCache() {
         UserDefaults.standard.removeObject(forKey: ParseCareKitConstants.defaultACL)
         UserDefaults.standard.synchronize()
     }
 
     /// Get the default ACL for `ParseCareKit` objects.
-    public class func getDefaultACL() -> ParseACL? {
+    public static func getDefaultACL() -> ParseACL? {
         guard let aclString = UserDefaults.standard.value(forKey: ParseCareKitConstants.defaultACL) as? String,
               let aclData = aclString.data(using: .utf8),
               let acl = try? decoder().decode(ParseACL.self, from: aclData) else {

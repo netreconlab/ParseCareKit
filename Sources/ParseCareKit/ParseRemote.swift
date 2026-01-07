@@ -8,53 +8,83 @@
 
 import Foundation
 import CareKitStore
-import ParseSwift
 import os.log
+import ParseSwift
+import Synchronization
 
 // swiftlint:disable line_length
 
 /// Allows the `CareKitStore` to synchronize with a remote Parse Server.
-public final class ParseRemote: OCKRemoteSynchronizable {
+public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 
     /// - warning: Should set `parseRemoteDelegate` instead.
-    public weak var delegate: OCKRemoteSynchronizationDelegate?
+	public var delegate: OCKRemoteSynchronizationDelegate? {
+		get {
+			return state.withLock { $0.delegate }
+		}
+		set {
+			state.withLock { $0.delegate = newValue }
+		}
+	}
 
     /// If set, the delegate will be alerted to important events delivered by the remote
     /// store.
     /// - note: Setting `parseRemoteDelegate` automatically sets `delegate`.
-    public weak var parseRemoteDelegate: ParseRemoteDelegate? {
+    public var parseRemoteDelegate: ParseRemoteDelegate? {
         get {
-            return parseDelegate
+			return state.withLock { $0.parseDelegate }
         }
         set {
-            parseDelegate = newValue
-            delegate = newValue
+			state.withLock {
+				$0.parseDelegate = newValue
+				$0.delegate = newValue
+			}
         }
     }
 
-    public var automaticallySynchronizes: Bool
+	public var automaticallySynchronizes: Bool {
+		get {
+			return state.withLock { $0.automaticallySynchronizes }
+		} set {
+			state.withLock { $0.automaticallySynchronizes = newValue }
+		}
+	}
 
     /// The unique identifier of the remote clock.
-    public var uuid: UUID!
+    public let uuid: UUID!
 
 	/// The limit at which ParseCareKit will log a warning about a batch size potentially
 	/// being to large. The framework will attempt to send over this limit, but be sure
 	/// your server supports transactions this large. Defaults to 100.
-	public var batchLimit: Int
+	public let batchLimit: Int
 
     /// A dictionary of any custom classes to synchronize between the `CareKitStore` and the Parse Server.
-    public var customClassesToSynchronize: [String: any PCKVersionable.Type]?
+    public let customClassesToSynchronize: [String: any PCKVersionable.Type]?
 
     /// A dictionary of any default classes to synchronize between the `CareKitStore` and the Parse Server. These
     /// are `PCKPatient`, `PCKCarePlan`, `PCKContact`, `PCKTask`,  `PCKHealthKitTask`,
     /// and `PCKOutcome`.
-    public var pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]!
+    public let pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]?
 
-    private weak var parseDelegate: ParseRemoteDelegate?
-    private var clockSubscription: SubscriptionCallback<PCKClock>?
-    private var subscribeToRemoteUpdates: Bool
+	/// Specifies if ParseCareKit is allowed to subscribe to remote updates.
+	public let subscribeToRemoteUpdates: Bool
+
+	private struct State {
+		weak var delegate: OCKRemoteSynchronizationDelegate?
+		weak var parseDelegate: ParseRemoteDelegate?
+		var automaticallySynchronizes: Bool = false
+		nonisolated(unsafe) var clockSubscription: SubscriptionCallback<PCKClock>?
+	}
     private let remoteStatus = RemoteSynchronizing()
     private let clockQuery: Query<PCKClock>
+	private let state = Mutex<State>(.init())
+	private var clockSubscription: SubscriptionCallback<PCKClock>? {
+		get {
+			return state.withLock { $0.clockSubscription }
+		} set {
+			state.withLock { $0.clockSubscription = newValue }
+		}
+	}
 
     /**
      Creates an instance of ParseRemote.
@@ -73,17 +103,19 @@ public final class ParseRemote: OCKRemoteSynchronizable {
     */
     public init(
 		uuid: UUID,
-		batchLimit: Int = 100,
+		batchLimit: Int,
 		auto: Bool,
 		subscribeToRemoteUpdates: Bool,
-		defaultACL: ParseACL? = nil
+		pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]?,
+		customClassesToSynchronize: [String: any PCKVersionable.Type]?,
+		defaultACL: ParseACL?
 	) async throws {
-        self.pckStoreClassesToSynchronize = try PCKStoreClass.getConcrete()
-        self.customClassesToSynchronize = nil
+        self.pckStoreClassesToSynchronize = try pckStoreClassesToSynchronize ?? PCKStoreClass.getConcrete()
+        self.customClassesToSynchronize = customClassesToSynchronize
         self.uuid = uuid
 		self.batchLimit = batchLimit
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
-        self.automaticallySynchronizes = auto
+		self.state.withLock { $0.automaticallySynchronizes = auto }
         self.subscribeToRemoteUpdates = subscribeToRemoteUpdates
         if let currentUser = try? await PCKUser.current() {
             try Self.setDefaultACL(defaultACL, for: currentUser)
@@ -115,16 +147,17 @@ public final class ParseRemote: OCKRemoteSynchronizable {
 		subscribeToRemoteUpdates: Bool,
 		defaultACL: ParseACL? = nil
 	) async throws {
+		let storeClassesToSynchronize = try PCKStoreClass
+			.replaceRemoteConcreteClasses(replacePCKStoreClasses)
         try await self.init(
 			uuid: uuid,
 			batchLimit: batchLimit,
 			auto: auto,
 			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+			pckStoreClassesToSynchronize: storeClassesToSynchronize,
+			customClassesToSynchronize: nil,
 			defaultACL: defaultACL
 		)
-        try self.pckStoreClassesToSynchronize = PCKStoreClass
-            .replaceRemoteConcreteClasses(replacePCKStoreClasses)
-        self.customClassesToSynchronize = nil
     }
 
     /**
@@ -150,30 +183,28 @@ public final class ParseRemote: OCKRemoteSynchronizable {
 		batchLimit: Int = 100,
 		auto: Bool,
 		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
-		customClasses: [String: any PCKVersionable.Type],
+		customClasses: [String: any PCKVersionable.Type]? = nil,
 		subscribeToRemoteUpdates: Bool,
 		defaultACL: ParseACL? = nil
 	) async throws {
-        try await self.init(
+		let storeClasses = try replacePCKStoreClasses.map {
+			try PCKStoreClass.replaceRemoteConcreteClasses($0)
+		}
+		try await self.init(
 			uuid: uuid,
 			batchLimit: batchLimit,
 			auto: auto,
 			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+			pckStoreClassesToSynchronize: storeClasses,
+			customClassesToSynchronize: customClasses,
 			defaultACL: defaultACL
 		)
-        if let replacePCKStoreClasses = replacePCKStoreClasses {
-            self.pckStoreClassesToSynchronize = try PCKStoreClass
-                .replaceRemoteConcreteClasses(replacePCKStoreClasses)
-        } else {
-            self.pckStoreClassesToSynchronize = nil
-        }
-        self.customClassesToSynchronize = customClasses
     }
 
     deinit {
-        Task {
+        Task { [weak self] in
             do {
-                try await clockQuery.unsubscribe()
+				try await self?.clockQuery.unsubscribe()
                 Logger.deinitializer.error("Unsubscribed from Parse remote")
             } catch {
                 Logger.deinitializer.error("Could not unsubscribe from Parse remote: \(error)")
@@ -185,8 +216,8 @@ public final class ParseRemote: OCKRemoteSynchronizable {
 
     public func pullRevisions(
 		since knowledgeVector: OCKRevisionRecord.KnowledgeVector,
-		mergeRevision: @escaping (OCKRevisionRecord) -> Void,
-		completion: @escaping (Error?) -> Void
+		mergeRevision: @escaping @Sendable (OCKRevisionRecord) -> Void,
+		completion: @escaping @Sendable (Error?) -> Void
 	) {
 
         Task {
@@ -286,7 +317,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
 
     public func pushRevisions(deviceRevisions: [CareKitStore.OCKRevisionRecord],
                               deviceKnowledge: CareKitStore.OCKRevisionRecord.KnowledgeVector,
-                              completion: @escaping (Error?) -> Void) {
+                              completion: @escaping @Sendable (Error?) -> Void) {
 
         Task {
             do {
@@ -315,7 +346,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
                     await self.remoteStatus.notSynchronzing()
                     let random = Int.random(in: 0..<2)
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
-                        self.parseDelegate?.didRequestSynchronization(self)
+                        self.parseRemoteDelegate?.didRequestSynchronization(self)
                     }
                     completion(ParseCareKitError.errorString(errorString))
                     return
@@ -370,7 +401,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
     public func chooseConflictResolution(conflicts: [OCKEntity],
                                          completion: @escaping OCKResultClosure<OCKEntity>) {
 
-        guard let parseDelegate = self.parseDelegate else {
+        guard let parseDelegate = self.parseRemoteDelegate else {
             // Last write wins
             do {
                 let lastWrite = try conflicts
@@ -395,7 +426,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
                                parseClock: PCKClock,
                                parseVector: OCKRevisionRecord.KnowledgeVector,
                                localClock: OCKRevisionRecord.KnowledgeVector,
-                               completion: @escaping (Error?) -> Void) {
+                               completion: @escaping @Sendable (Error?) -> Void) {
         Task {
             // 9. Increment and merge clocks if new local revisions were pushed.
             var updatedParseVector = parseVector
@@ -517,7 +548,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
         }
         let random = Int.random(in: 0..<2)
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(random)) {
-            self.parseDelegate?.didRequestSynchronization(self)
+            self.parseRemoteDelegate?.didRequestSynchronization(self)
         }
         Logger
             .clockSubscription
@@ -534,7 +565,7 @@ public final class ParseRemote: OCKRemoteSynchronizable {
         if total > 0 {
             let ratioComplete = Double(numberCompleted)/Double(total)
             DispatchQueue.main.async {
-                self.parseDelegate?.remote(self, didUpdateProgress: ratioComplete)
+                self.parseRemoteDelegate?.remote(self, didUpdateProgress: ratioComplete)
             }
             Logger.syncProgress.info("\(ratioComplete, privacy: .private)")
         }

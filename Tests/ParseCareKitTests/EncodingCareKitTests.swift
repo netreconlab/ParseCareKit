@@ -13,7 +13,7 @@ import XCTest
 @testable import CareKitStore
 @testable import ParseSwift
 
-class ParseCareKitTests: XCTestCase {
+final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 
     struct LoginSignupResponse: ParseUser {
 
@@ -87,24 +87,32 @@ class ParseCareKitTests: XCTestCase {
             XCTFail("Should create valid URL")
             return
         }
-        try await ParseSwift.initialize(applicationId: "applicationId",
-                                        clientKey: "clientKey",
-                                        primaryKey: "primaryKey",
-                                        serverURL: url,
-                                        requiringCustomObjectIds: true,
-                                        usingPostForQuery: true,
-                                        testing: true)
+        try await ParseSwift.initialize(
+			applicationId: "applicationId",
+			clientKey: "clientKey",
+			primaryKey: "primaryKey",
+			serverURL: url,
+			requiringCustomObjectIds: true,
+			usingPostForQuery: true,
+			testing: true
+		)
         _ = try await userLogin()
-        parse = try await ParseRemote(uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
-                                      auto: false,
-                                      subscribeToRemoteUpdates: false)
-        store = OCKStore(name: "SampleAppStore", type: .inMemory, remote: parse)
+        parse = try await ParseRemote(
+			uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+			auto: false,
+			subscribeToRemoteUpdates: false
+		)
+        store = OCKStore(
+			name: "SampleAppStore",
+			type: .inMemory,
+			remote: parse
+		)
         parse?.parseRemoteDelegate = self
     }
 
     override func tearDown() async throws {
         MockURLProtocol.removeAll()
-        try await KeychainStore.shared.deleteAll()
+        try KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
         try store.delete()
         PCKUtility.removeCache()

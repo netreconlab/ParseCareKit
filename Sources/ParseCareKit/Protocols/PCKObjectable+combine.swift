@@ -23,12 +23,23 @@ public extension PCKObjectable {
         - returns: The first object found with the matching `uuid`.
         - throws: `Error`.
     */
-    static func firstPublisher(_ uuid: UUID?,
-                               options: API.Options = []) -> Future<Self, Error> {
+    static func firstPublisher(
+		_ uuid: UUID?,
+		options: API.Options = []
+	) -> Future<Self, Error> {
         Future { promise in
-            Self.first(uuid,
-                       options: options,
-                       completion: promise)
+			nonisolated(unsafe) let promise = promise
+            Self.first(
+				uuid,
+				options: options
+			) { result in
+				switch result {
+				case .success(let object):
+					promise(.success(object))
+				case .failure(let error):
+					promise(.failure(error))
+				}
+			}
         }
     }
 }
