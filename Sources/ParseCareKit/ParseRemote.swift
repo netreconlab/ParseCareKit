@@ -185,29 +185,18 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 		subscribeToRemoteUpdates: Bool,
 		defaultACL: ParseACL? = nil
 	) async throws {
-		if let replacePCKStoreClasses = replacePCKStoreClasses {
-			let storeClasses = try PCKStoreClass
-				.replaceRemoteConcreteClasses(replacePCKStoreClasses)
-			try await self.init(
-				uuid: uuid,
-				batchLimit: batchLimit,
-				auto: auto,
-				subscribeToRemoteUpdates: subscribeToRemoteUpdates,
-				pckStoreClassesToSynchronize: storeClasses,
-				customClassesToSynchronize: customClasses,
-				defaultACL: defaultACL
-			)
-		} else {
-			try await self.init(
-				uuid: uuid,
-				batchLimit: batchLimit,
-				auto: auto,
-				subscribeToRemoteUpdates: subscribeToRemoteUpdates,
-				pckStoreClassesToSynchronize: nil,
-				customClassesToSynchronize: customClasses,
-				defaultACL: defaultACL
-			)
+		let storeClasses = try replacePCKStoreClasses.map {
+			try PCKStoreClass.replaceRemoteConcreteClasses($0)
 		}
+		try await self.init(
+			uuid: uuid,
+			batchLimit: batchLimit,
+			auto: auto,
+			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
+			pckStoreClassesToSynchronize: storeClasses,
+			customClassesToSynchronize: customClasses,
+			defaultACL: defaultACL
+		)
     }
 
     deinit {
