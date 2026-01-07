@@ -73,17 +73,25 @@ final class MockURLProtocol: URLProtocol, @unchecked Sendable {
 		with response: @escaping MockURLResponseConstructingClosure
 	) {
         let mock = MockURLProtocolMock(attempts: attempts, test: test, response: response)
-        mocks.append(mock)
-        if mocks.count == 1 {
-            URLProtocol.registerClass(MockURLProtocol.self)
-        }
+		let shouldRegister = Self._mocks.withLock { mocks -> Bool in
+			mocks.append(mock)
+			return mocks.count == 1
+		}
+		if shouldRegister {
+			URLProtocol.registerClass(MockURLProtocol.self)
+		}
     }
 
     static func removeAll() {
-        if !mocks.isEmpty {
+		let shouldUnregister = Self._mocks.withLock { mocks -> Bool in
+			let wasNotEmpty = !mocks.isEmpty
+			mocks.removeAll()
+			return wasNotEmpty
+		}
+
+		if shouldUnregister {
             URLProtocol.unregisterClass(MockURLProtocol.self)
         }
-        mocks.removeAll()
     }
 
     static func firstMockForRequest(

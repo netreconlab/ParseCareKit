@@ -212,9 +212,8 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 
     deinit {
         Task { [weak self] in
-			guard let self else { return }
             do {
-				try await self.clockQuery.unsubscribe()
+				try await self?.clockQuery.unsubscribe()
                 Logger.deinitializer.error("Unsubscribed from Parse remote")
             } catch {
                 Logger.deinitializer.error("Could not unsubscribe from Parse remote: \(error)")
