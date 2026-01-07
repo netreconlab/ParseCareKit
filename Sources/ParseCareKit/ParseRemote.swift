@@ -65,23 +65,25 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
     /// are `PCKPatient`, `PCKCarePlan`, `PCKContact`, `PCKTask`,  `PCKHealthKitTask`,
     /// and `PCKOutcome`.
     public let pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]?
-    private var clockSubscription: SubscriptionCallback<PCKClock>? {
-		get {
-			return state.withLock { $0.clockSubscription }
-		} set {
-			state.withLock { $0.clockSubscription = newValue }
-		}
-	}
-    private let subscribeToRemoteUpdates: Bool
-    private let remoteStatus = RemoteSynchronizing()
-    private let clockQuery: Query<PCKClock>
 
-	private let state = Mutex<State>(.init())
+	/// Specifies if ParseCareKit is allowed to subscribe to remote updates.
+	public let subscribeToRemoteUpdates: Bool
+
 	private struct State {
 		weak var delegate: OCKRemoteSynchronizationDelegate?
 		weak var parseDelegate: ParseRemoteDelegate?
 		var automaticallySynchronizes: Bool = false
 		nonisolated(unsafe) var clockSubscription: SubscriptionCallback<PCKClock>?
+	}
+    private let remoteStatus = RemoteSynchronizing()
+    private let clockQuery: Query<PCKClock>
+	private let state = Mutex<State>(.init())
+	private var clockSubscription: SubscriptionCallback<PCKClock>? {
+		get {
+			return state.withLock { $0.clockSubscription }
+		} set {
+			state.withLock { $0.clockSubscription = newValue }
+		}
 	}
 
     /**
