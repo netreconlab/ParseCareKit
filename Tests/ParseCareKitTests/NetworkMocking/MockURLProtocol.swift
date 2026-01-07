@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Synchronization
 
 typealias MockURLProtocolRequestTestClosure = @Sendable (URLRequest) -> Bool
 typealias MockURLResponseConstructingClosure = @Sendable (URLRequest) -> MockURLResponse?
@@ -18,34 +19,39 @@ struct MockURLProtocolMock {
 }
 
 final class MockURLProtocol: URLProtocol, @unchecked Sendable {
-	private let mockLock = NSLock()
-	private let loadingLock = NSLock()
-	private var _mock: MockURLProtocolMock?
+
 	var mock: MockURLProtocolMock? {
 		get {
-			mockLock.lock()
-			defer { mockLock.unlock() }
-			return _mock
+			return state.withLock { $0.mock }
 		}
 		set {
-			mockLock.lock()
-			defer { mockLock.unlock() }
-			_mock = newValue
+			state.withLock { $0.mock = newValue }
 		}
 	}
-	nonisolated(unsafe) static var mocks: [MockURLProtocolMock] = []
-	private var _loading: Bool = false
-	private var loading: Bool {
+
+	static var mocks: [MockURLProtocolMock] {
 		get {
-			loadingLock.lock()
-			defer { loadingLock.unlock() }
-			return _loading
+			return Self._mocks.withLock { $0 }
 		}
 		set {
-			loadingLock.lock()
-			defer { loadingLock.unlock() }
-			_loading = newValue
+			Self._mocks.withLock { $0 = newValue }
 		}
+	}
+	private static let _mocks = Mutex<[MockURLProtocolMock]>([])
+
+	private var loading: Bool {
+		get {
+			return state.withLock { $0.loading }
+		}
+		set {
+			state.withLock { $0.loading = newValue }
+		}
+	}
+
+	private let state = Mutex<State>(.init())
+	private struct State {
+		var mock: MockURLProtocolMock?
+		var loading: Bool = false
 	}
 
     static func mockRequests(
