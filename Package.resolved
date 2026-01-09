@@ -1,5 +1,5 @@
 {
-  "originHash" : "aa377d5ab3ec9400b28a8bbfd1572b7646ffa24f650e614a27ea2f49c724be05",
+  "originHash" : "4919d2fe0edffae81e5ef59dac2ed5204b68e17aa538b8fd8ff06b4217d027c0",
   "pins" : [
     {
       "identity" : "carekit",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/CareKitEssentials.git",
       "state" : {
-        "revision" : "a12febdce8eedcc5289362c958233b3ed2f38e09",
-        "version" : "2.0.1"
+        "revision" : "e2c6cfc18ce6ae10cbe5aadb35638f231ad16613",
+        "version" : "2.0.2"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/Parse-Swift.git",
       "state" : {
-        "revision" : "894a9ea9bc4078cbdee4f38408a005184102a5ea",
-        "version" : "6.0.0-beta.1"
+        "revision" : "4dc656189c13aeb0099df63ae6266f9836dd0cc7",
+        "version" : "6.0.0-beta.6"
       }
     },
     {

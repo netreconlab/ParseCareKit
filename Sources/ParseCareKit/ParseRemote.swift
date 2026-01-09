@@ -115,8 +115,8 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
         self.uuid = uuid
 		self.batchLimit = batchLimit
         self.clockQuery = PCKClock.query(ClockKey.uuid == uuid)
-		self.state.withLock { $0.automaticallySynchronizes = auto }
         self.subscribeToRemoteUpdates = subscribeToRemoteUpdates
+		self.automaticallySynchronizes = auto
         if let currentUser = try? await PCKUser.current() {
             try Self.setDefaultACL(defaultACL, for: currentUser)
             await subscribeToClock()
