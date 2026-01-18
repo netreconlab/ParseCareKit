@@ -18,7 +18,7 @@ let package = Package(
 		),
 		.package(
 			url: "https://github.com/netreconlab/CareKitEssentials.git",
-			.upToNextMajor(from: "2.0.3")
+			.upToNextMajor(from: "2.0.4")
 		)
     ],
     targets: [

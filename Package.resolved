@@ -1,5 +1,5 @@
 {
-  "originHash" : "faa7774e7dfeaf81977fbb7d2bd59b648ee5f6621e404247d80b6ed56fd91a70",
+  "originHash" : "9fa59e89f69eed4da1c81a17c013ccaee16e6e004c94ae0300fe3efb2f7fcb50",
   "pins" : [
     {
       "identity" : "carekit",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/CareKitEssentials.git",
       "state" : {
-        "revision" : "6d26e5d13562b667d4e4b722c304ae9cf9dbc6f4",
-        "version" : "2.0.3"
+        "revision" : "9d8058ad1c7dc120bf34475224a36f3023c29430",
+        "version" : "2.0.4"
       }
     },
     {
