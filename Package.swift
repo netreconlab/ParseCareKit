@@ -14,11 +14,11 @@ let package = Package(
     dependencies: [
         .package(
 			url: "https://github.com/cbaker6/CareKit.git",
-            .upToNextMajor(from: "4.0.7")
+            .upToNextMajor(from: "4.0.8")
 		),
         .package(
 			url: "https://github.com/netreconlab/Parse-Swift.git",
-            .upToNextMajor(from: "6.0.0-beta.6")
+            .upToNextMajor(from: "6.0.0")
 		),
 		.package(
 			url: "https://github.com/netreconlab/CareKitEssentials.git",
