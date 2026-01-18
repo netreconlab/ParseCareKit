@@ -1,13 +1,13 @@
 {
-  "originHash" : "70318a0906644aa395dd64986187b9077a1ec57a5bde92a8ed22413801f95af5",
+  "originHash" : "9fa59e89f69eed4da1c81a17c013ccaee16e6e004c94ae0300fe3efb2f7fcb50",
   "pins" : [
     {
       "identity" : "carekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/cbaker6/CareKit.git",
       "state" : {
-        "revision" : "4dcd1956d8aaa9f1fa3ad011d6b158e016692bac",
-        "version" : "4.0.8"
+        "revision" : "6acb8c801cf66dc2ed67a9dd6f42f3f04871da60",
+        "version" : "4.0.9"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/CareKitEssentials.git",
       "state" : {
-        "revision" : "e2c6cfc18ce6ae10cbe5aadb35638f231ad16613",
-        "version" : "2.0.2"
+        "revision" : "9d8058ad1c7dc120bf34475224a36f3023c29430",
+        "version" : "2.0.4"
       }
     },
     {
