@@ -13,16 +13,12 @@ let package = Package(
     ],
     dependencies: [
         .package(
-			url: "https://github.com/cbaker6/CareKit.git",
-            .upToNextMajor(from: "4.0.8")
-		),
-        .package(
 			url: "https://github.com/netreconlab/Parse-Swift.git",
             .upToNextMajor(from: "6.0.0")
 		),
 		.package(
 			url: "https://github.com/netreconlab/CareKitEssentials.git",
-			.upToNextMajor(from: "2.0.2")
+			.upToNextMajor(from: "2.0.3")
 		)
     ],
     targets: [
@@ -30,7 +26,6 @@ let package = Package(
             name: "ParseCareKit",
             dependencies: [
                 .product(name: "ParseSwift", package: "Parse-Swift"),
-                .product(name: "CareKitStore", package: "CareKit"),
 				.product(name: "CareKitEssentials", package: "CareKitEssentials")
 			]
 		),

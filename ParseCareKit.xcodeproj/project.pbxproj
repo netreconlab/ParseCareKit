@@ -56,7 +56,6 @@
 		9181F1A629EC48B700C50391 /* PCKEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9181F1A529EC48B700C50391 /* PCKEntity.swift */; };
 		918F07EE247D66C800C3A205 /* PCKObjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918F07ED247D66C800C3A205 /* PCKObjectable.swift */; };
 		91AA07232466F0CD00B39452 /* PCKClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AA07222466F0CD00B39452 /* PCKClock.swift */; };
-		91FF604B2AC0A51100E90E16 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 91FF604A2AC0A51100E90E16 /* CareKitStore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,7 +179,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				70E55DB72DD4404A00FA85DD /* CareKitEssentials in Frameworks */,
-				91FF604B2AC0A51100E90E16 /* CareKitStore in Frameworks */,
 				70B12C792904BA07002EE2FA /* ParseSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,7 +430,6 @@
 			name = ParseCareKit;
 			packageProductDependencies = (
 				70B12C782904BA07002EE2FA /* ParseSwift */,
-				91FF604A2AC0A51100E90E16 /* CareKitStore */,
 				70E55DB62DD4404A00FA85DD /* CareKitEssentials */,
 			);
 			productName = ParseCareKit;
@@ -474,7 +471,6 @@
 			mainGroup = 9119D5E1245618D7001B7AA3;
 			packageReferences = (
 				70B12C772904BA07002EE2FA /* XCRemoteSwiftPackageReference "Parse-Swift" */,
-				91FF60492AC0A51100E90E16 /* XCRemoteSwiftPackageReference "CareKit" */,
 				70E55DB52DD43FF900FA85DD /* XCRemoteSwiftPackageReference "CareKitEssentials" */,
 			);
 			productRefGroup = 9119D5EC245618D7001B7AA3 /* Products */;
@@ -1016,15 +1012,7 @@
 			repositoryURL = "https://github.com/netreconlab/CareKitEssentials";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
-			};
-		};
-		91FF60492AC0A51100E90E16 /* XCRemoteSwiftPackageReference "CareKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/cbaker6/CareKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.8;
+				minimumVersion = 2.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1039,11 +1027,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 70E55DB52DD43FF900FA85DD /* XCRemoteSwiftPackageReference "CareKitEssentials" */;
 			productName = CareKitEssentials;
-		};
-		91FF604A2AC0A51100E90E16 /* CareKitStore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 91FF60492AC0A51100E90E16 /* XCRemoteSwiftPackageReference "CareKit" */;
-			productName = CareKitStore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
