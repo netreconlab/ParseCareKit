@@ -6,6 +6,7 @@ on:
     branches: [ main ]
 
 env:
+  CI_XCODE_OLDEST: '/Applications/Xcode_16.3.app/Contents/Developer'
   CI_XCODE: '/Applications/Xcode_26.1.app/Contents/Developer'
 
 concurrency:
@@ -86,10 +87,32 @@ jobs:
     runs-on: macos-26
     steps:
     - uses: actions/checkout@v6
+    - name: Create and set the default keychain
+      run: |
+        security create-keychain -p "" temporary
+        security default-keychain -s temporary
+        security unlock-keychain -p "" temporary
+        security set-keychain-settings -lut 7200 temporary
     - name: Build-Test
-      run: swift build -v
+      run: swift test
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
+
+  spm-test-oldest:
+    timeout-minutes: 15
+    runs-on: macos-26
+    steps:
+    - uses: actions/checkout@v6
+    - name: Create and set the default keychain
+      run: |
+        security create-keychain -p "" temporary
+        security default-keychain -s temporary
+        security unlock-keychain -p "" temporary
+        security set-keychain-settings -lut 7200 temporary
+    - name: Build-Test
+      run: swift test
+      env:
+          DEVELOPER_DIR: ${{ env.CI_XCODE_OLDEST }}
 
   docs:
     runs-on: macos-26

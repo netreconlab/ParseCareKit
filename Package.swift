@@ -2,6 +2,18 @@
 
 import PackageDescription
 
+#if swift(>=6.2)
+let sharedSwiftSettings: [SwiftSetting] = [
+	.enableUpcomingFeature("InferIsolatedConformances"),
+	.enableUpcomingFeature("ImmutableWeakCaptures"),
+	.enableUpcomingFeature("NonisolatedNonsendingByDefault")
+]
+#else
+let sharedSwiftSettings: [SwiftSetting] = [
+	.enableUpcomingFeature("InferIsolatedConformances")
+]
+#endif
+
 let package = Package(
     name: "ParseCareKit",
     platforms: [.iOS("18.0"), .macOS("15.0"), .watchOS("11.0")],
@@ -27,11 +39,13 @@ let package = Package(
             dependencies: [
                 .product(name: "ParseSwift", package: "Parse-Swift"),
 				.product(name: "CareKitEssentials", package: "CareKitEssentials")
-			]
+			],
+			swiftSettings: sharedSwiftSettings
 		),
         .testTarget(
             name: "ParseCareKitTests",
-            dependencies: ["ParseCareKit"]
+            dependencies: ["ParseCareKit"],
+			swiftSettings: sharedSwiftSettings
 		)
     ]
 )
