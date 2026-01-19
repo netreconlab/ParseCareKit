@@ -8,10 +8,11 @@
 
 // swiftlint:disable type_body_length
 
-import XCTest
-@testable import ParseCareKit
 @testable import CareKitStore
+@testable import ParseCareKit
 @testable import ParseSwift
+import Synchronization
+import XCTest
 
 final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 
@@ -78,9 +79,25 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
             }
         }
     }
+	private let parse = Mutex<ParseRemote>(
+		ParseCareKitTests.newParseRemote()
+	)
+    private let store = Mutex<OCKStore>(
+		.init(
+			name: "SampleAppStore",
+			type: .inMemory
+		)
+	)
 
-    private var parse: ParseRemote!
-    private var store: OCKStore!
+	static func newParseRemote() -> ParseRemote {
+		.init(
+			uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
+			batchLimit: 100,
+			auto: false,
+			subscribeToRemoteUpdates: false,
+			pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]()
+		)
+	}
 
     override func setUp() async throws {
         guard let url = URL(string: "http://localhost:1337/1") else {
@@ -97,24 +114,31 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 			testing: true
 		)
         _ = try await userLogin()
-        parse = try await ParseRemote(
+		let newRemote = try await ParseRemote(
 			uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
 			auto: false,
 			subscribeToRemoteUpdates: false
 		)
-        store = OCKStore(
+		let newStore = OCKStore(
 			name: "SampleAppStore",
 			type: .inMemory,
-			remote: parse
+			remote: newRemote
 		)
-        parse?.parseRemoteDelegate = self
+		newRemote.parseRemoteDelegate = self
+		parse.setValue(newRemote)
+		store.setValue(newStore)
     }
 
     override func tearDown() async throws {
         MockURLProtocol.removeAll()
         try KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
-        try store?.delete()
+		try store.value().delete()
+		let newStore = OCKStore(
+			name: "SampleAppStore",
+			type: .inMemory
+		)
+
         PCKUtility.removeCache()
     }
 
@@ -1279,6 +1303,7 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
     func testRevisionRecord() async throws {
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         careKit.sex = .female
+		let store = store.value()
         careKit = try await store.addPatient(careKit)
         let entity = OCKEntity.patient(careKit)
         let remoteUUID = UUID()
@@ -1393,7 +1418,7 @@ extension ParseCareKitTests: ParseRemoteDelegate {
     }
 
     func provideStore() -> OCKAnyStoreProtocol {
-        store
+		store.value()
     }
 
     func chooseConflictResolution(conflicts: [OCKEntity], completion: @escaping OCKResultClosure<OCKEntity>) {
