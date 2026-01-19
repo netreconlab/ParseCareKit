@@ -114,7 +114,7 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
         MockURLProtocol.removeAll()
         try KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
-        try store.delete()
+        try store?.delete()
         PCKUtility.removeCache()
     }
 
