@@ -94,7 +94,7 @@ jobs:
         security unlock-keychain -p "" temporary
         security set-keychain-settings -lut 7200 temporary
     - name: Build-Test
-      run: set -o pipefail && env NSUnbufferedIO=YES swift test 2>&1 | xcbeautify --renderer github-actions
+      run: set -o pipefail && env NSUnbufferedIO=YES swift build 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
@@ -110,7 +110,7 @@ jobs:
         security unlock-keychain -p "" temporary
         security set-keychain-settings -lut 7200 temporary
     - name: Build-Test
-      run: set -o pipefail && env NSUnbufferedIO=YES swift test 2>&1 | xcbeautify --renderer github-actions
+      run: set -o pipefail && env NSUnbufferedIO=YES swift build 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_OLDEST }}
 
