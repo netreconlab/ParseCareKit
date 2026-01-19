@@ -100,7 +100,7 @@ jobs:
 
   spm-test-oldest:
     timeout-minutes: 15
-    runs-on: macos-26
+    runs-on: macos-15-arm64
     steps:
     - uses: actions/checkout@v6
     - name: Create and set the default keychain
