@@ -104,7 +104,7 @@ mv ParseCareKit.xcodeproj "$TEMP_WORKSPACE_DIR/ParseCareKit.xcodeproj"
 
 xcodebuild clean build -scheme ParseCareKit \
     -destination generic/platform=iOS \
-    OTHER_SWIFT_FLAGS="-emit-symbol-graph -emit-symbol-graph-dir '$SGFS_DIR'" | xcpretty
+    OTHER_SWIFT_FLAGS="-emit-symbol-graph -emit-symbol-graph-dir '$SGFS_DIR'" 2>&1 | xcbeautify
 
 mv "$TEMP_WORKSPACE_DIR/ParseCareKit.xcodeproj" ./ParseCareKit.xcodeproj
 rm -r "$TEMP_WORKSPACE_DIR"
