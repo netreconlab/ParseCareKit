@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v6
     - name: Install SwiftLint
       run: brew install swiftlint
-    - name: Build
+    - name: Build and Test
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=iOS\ Simulator,name\=iPhone\ 17\ Pro\ Max -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
@@ -48,7 +48,7 @@ jobs:
     - uses: actions/checkout@v6
     - name: Install SwiftLint
       run: brew install swiftlint
-    - name: Build
+    - name: Build and Test
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
@@ -95,7 +95,7 @@ jobs:
         security default-keychain -s "$KEYCHAIN_NAME"
         security unlock-keychain -p "" "$KEYCHAIN_NAME"
         security set-keychain-settings -lut 7200 "$KEYCHAIN_NAME"
-    - name: Build-Test
+    - name: Build
       run: set -o pipefail && env NSUnbufferedIO=YES swift build 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
@@ -113,8 +113,8 @@ jobs:
         security default-keychain -s "$KEYCHAIN_NAME"
         security unlock-keychain -p "" "$KEYCHAIN_NAME"
         security set-keychain-settings -lut 7200 "$KEYCHAIN_NAME"
-    - name: Build-Test
-      run: set -o pipefail && env NSUnbufferedIO=YES swift build 2>&1 | xcbeautify --renderer github-actions
+    - name: Build
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_OLDEST }}
 

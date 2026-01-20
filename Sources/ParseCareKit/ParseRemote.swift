@@ -130,7 +130,7 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
         no public read/write access.
         - important: This `defaultACL` is not the same as `ParseACL.defaultACL`.
-        - note: If you want the the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
+        - note: If you want the `ParseCareKit` `defaultACL` to match the `ParseACL.defaultACL`,
         you need to provide `ParseACL.defaultACL`.
     */
 	convenience public init(
@@ -187,8 +187,7 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 		customClasses: [String: any PCKVersionable.Type]? = nil,
 		defaultACL: ParseACL?
 	) async throws {
-		let replacedClasses = replacePCKStoreClasses
-		let storeClasses = try PCKStoreClass.replaceConcreteClasses(replacedClasses)
+		let storeClasses = try PCKStoreClass.replaceConcreteClasses(replacePCKStoreClasses)
 		try await self.init(
 			uuid: uuid,
 			batchLimit: batchLimit,

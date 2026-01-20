@@ -90,7 +90,7 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
     }
 
 	static func newParseRemote() -> ParseRemote {
-		let defualtClasses: [PCKStoreClass: any PCKVersionable.Type] = [
+		let defaultClasses: [PCKStoreClass: any PCKVersionable.Type] = [
 			.carePlan: PCKStoreClass.carePlan.getDefault(),
 			.contact: PCKStoreClass.contact.getDefault(),
 			.outcome: PCKStoreClass.outcome.getDefault(),
@@ -104,7 +104,7 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 			batchLimit: 100,
 			auto: false,
 			subscribeToRemoteUpdates: false,
-			pckStoreClassesToSynchronize: defualtClasses
+			pckStoreClassesToSynchronize: defaultClasses
 		)
 		return remote
 	}
@@ -1310,8 +1310,7 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
     func testRevisionRecord() async throws {
         var careKit = OCKPatient(id: "myId", givenName: "hello", familyName: "world")
         careKit.sex = .female
-		let store = store.value()
-        careKit = try await store.addPatient(careKit)
+        careKit = try await store.value().addPatient(careKit)
         let entity = OCKEntity.patient(careKit)
         let remoteUUID = UUID()
         let clock = PCKClock(uuid: remoteUUID)
