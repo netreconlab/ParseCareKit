@@ -54,7 +54,7 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
     public let uuid: UUID!
 
 	/// The limit at which ParseCareKit will log a warning about a batch size potentially
-	/// being to large. The framework will attempt to send over this limit, but be sure
+	/// being too large. The framework will attempt to send over this limit, but be sure
 	/// your server supports transactions this large. Defaults to 100.
 	public let batchLimit: Int
 
@@ -90,12 +90,13 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 	 Creates an instance of ParseRemote.
 	 - Parameters:
 	    - uuid: The unique identifier of the remote clock.
-	    - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
+	    - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being too large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
 	    - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
 	    - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
 	    - pckStoreClassesToSynchronize: The PCK classes that should be synchronized
 		  by passing in the respective Key/Value pairs.
 	    - customClassesToSynchronize: Add custom classes to synchronize by passing in the respective key/value pair.
+		Defaults to nil.
 		Requires `ParseLiveQuery` server to be setup.
 	*/
 	init(
@@ -119,13 +120,14 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
      Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
-        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
+        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being too large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - pckStoreClassesToSynchronize: The PCK classes that should be synchronized
-			 by passing in the respective Key/Value pairs.
+		by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities..
         - customClassesToSynchronize: Add custom classes to synchronize by passing in the respective key/value pair.
+		Defaults to nil.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
         no public read/write access.
@@ -153,7 +155,11 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 		)
 		do {
 			let currentUser = try await PCKUser.current()
-			try Self.setDefaultACL(defaultACL, for: currentUser)
+			do {
+				try Self.setDefaultACL(defaultACL, for: currentUser)
+			} catch {
+				Logger.initializer.error("Not setting default ACL: \(error)")
+			}
 			await subscribeToClock()
 		} catch {
 			Logger.initializer.error("Not setting default ACL or subscribing to clock: \(error)")
@@ -164,11 +170,12 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
      Creates an instance of ParseRemote.
      - Parameters:
         - uuid: The unique identifier of the remote clock.
-        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
+        - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being too large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - replacePCKStoreClasses: Replace some or all of the default classes that are synchronized
-            by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.
+            by passing in the respective Key/Value pairs.
         - customClassesToSynchronize: Add custom classes to synchronize by passing in the respective key/value pair.
+		Defaults to nil.
         - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
@@ -184,7 +191,7 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 		auto: Bool,
 		subscribeToRemoteUpdates: Bool,
 		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type],
-		customClasses: [String: any PCKVersionable.Type]? = nil,
+		customClassesToSynchronize: [String: any PCKVersionable.Type]? = nil,
 		defaultACL: ParseACL?
 	) async throws {
 		let storeClasses = try PCKStoreClass.replaceConcreteClasses(replacePCKStoreClasses)
@@ -194,7 +201,7 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 			auto: auto,
 			subscribeToRemoteUpdates: subscribeToRemoteUpdates,
 			pckStoreClassesToSynchronize: storeClasses,
-			customClassesToSynchronize: customClasses,
+			customClassesToSynchronize: customClassesToSynchronize,
 			defaultACL: defaultACL
 		)
     }

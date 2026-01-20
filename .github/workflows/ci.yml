@@ -82,7 +82,7 @@ jobs:
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
-  spm-test:
+  spm-build:
     timeout-minutes: 15
     runs-on: macos-26
     steps:
@@ -100,7 +100,7 @@ jobs:
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE }}
 
-  spm-test-oldest:
+  xcode-test-oldest:
     timeout-minutes: 15
     runs-on: macos-15
     steps:
@@ -113,7 +113,7 @@ jobs:
         security default-keychain -s "$KEYCHAIN_NAME"
         security unlock-keychain -p "" "$KEYCHAIN_NAME"
         security set-keychain-settings -lut 7200 "$KEYCHAIN_NAME"
-    - name: Build
+    - name: Build and Test
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -testPlan ParseCareKit -scheme ParseCareKit -destination platform\=macOS -derivedDataPath DerivedData clean test 2>&1 | xcbeautify --renderer github-actions
       env:
           DEVELOPER_DIR: ${{ env.CI_XCODE_OLDEST }}
