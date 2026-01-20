@@ -17,7 +17,6 @@ import XCTest
 final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 
     struct LoginSignupResponse: ParseUser {
-
         var authData: [String: [String: String]?]?
         var objectId: String?
         var createdAt: Date?
@@ -47,6 +46,16 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
             self.email = "hello@parse.com"
         }
     }
+
+	private let parse = Mutex<ParseRemote>(
+		ParseCareKitTests.newParseRemote()
+	)
+	private let store = Mutex<OCKStore>(
+		.init(
+			name: "SampleAppStore",
+			type: .inMemory
+		)
+	)
 
     func userLogin() async throws -> PCKUser {
         let loginResponse = LoginSignupResponse()
@@ -79,24 +88,25 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
             }
         }
     }
-	private let parse = Mutex<ParseRemote>(
-		ParseCareKitTests.newParseRemote()
-	)
-    private let store = Mutex<OCKStore>(
-		.init(
-			name: "SampleAppStore",
-			type: .inMemory
-		)
-	)
 
 	static func newParseRemote() -> ParseRemote {
-		.init(
+		let defualtClasses: [PCKStoreClass: any PCKVersionable.Type] = [
+			.carePlan: PCKStoreClass.carePlan.getDefault(),
+			.contact: PCKStoreClass.contact.getDefault(),
+			.outcome: PCKStoreClass.outcome.getDefault(),
+			.patient: PCKStoreClass.patient.getDefault(),
+			.task: PCKStoreClass.task.getDefault(),
+			.healthKitTask: PCKStoreClass.healthKitTask.getDefault()
+		]
+
+		let remote = ParseRemote(
 			uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
 			batchLimit: 100,
 			auto: false,
 			subscribeToRemoteUpdates: false,
-			pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]()
+			pckStoreClassesToSynchronize: defualtClasses
 		)
+		return remote
 	}
 
     override func setUp() async throws {
@@ -117,7 +127,9 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
 		let newRemote = try await ParseRemote(
 			uuid: UUID(uuidString: "3B5FD9DA-C278-4582-90DC-101C08E7FC98")!,
 			auto: false,
-			subscribeToRemoteUpdates: false
+			subscribeToRemoteUpdates: false,
+			replacePCKStoreClasses: [:],
+			defaultACL: nil
 		)
 		let newStore = OCKStore(
 			name: "SampleAppStore",
@@ -134,11 +146,6 @@ final class ParseCareKitTests: XCTestCase, @unchecked Sendable {
         try KeychainStore.shared.deleteAll()
         try await ParseStorage.shared.deleteAll()
 		try store.value().delete()
-		let newStore = OCKStore(
-			name: "SampleAppStore",
-			type: .inMemory
-		)
-
         PCKUtility.removeCache()
     }
 

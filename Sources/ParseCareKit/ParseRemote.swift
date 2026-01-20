@@ -89,10 +89,13 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 	/**
 	 Creates an instance of ParseRemote.
 	 - Parameters:
-		- uuid: The unique identifier of the remote clock.
-		- batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
-		- auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
-		- subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
+	    - uuid: The unique identifier of the remote clock.
+	    - batchLimit: The limit at which `ParseCareKit` will log a warning about a batch size potentially being to large. The framework will attempt to send over this limit, but be sure your server supports transactions this large. Defaults to 100.
+	    - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
+	    - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
+	    - pckStoreClassesToSynchronize: The PCK classes that should be synchronized
+		  by passing in the respective Key/Value pairs.
+	    - customClasses: Add custom classes to synchronize by passing in the respective key/value pair.
 		Requires `ParseLiveQuery` server to be setup.
 	*/
 	init(
@@ -120,6 +123,9 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
         - auto: If set to `true`, then the store will attempt to synchronize every time it is modified locally.
         - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
+        - pckStoreClassesToSynchronize: The PCK classes that should be synchronized
+			 by passing in the respective Key/Value pairs.
+        - customClasses: Add custom classes to synchronize by passing in the respective key/value pair.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
         objects. If no `defaultACL` is provided, the default is set to read/write for the user who created the data with
         no public read/write access.
@@ -132,8 +138,8 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 		batchLimit: Int = 100,
 		auto: Bool,
 		subscribeToRemoteUpdates: Bool,
-		pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]?,
-		customClassesToSynchronize: [String: any PCKVersionable.Type]?,
+		pckStoreClassesToSynchronize: [PCKStoreClass: any PCKVersionable.Type]? = nil,
+		customClassesToSynchronize: [String: any PCKVersionable.Type]? = nil,
 		defaultACL: ParseACL?
 	) async throws {
 		let updatedPCKStoreClassesToSynchronize = try pckStoreClassesToSynchronize ?? PCKStoreClass.getConcrete()
@@ -145,10 +151,13 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 			pckStoreClassesToSynchronize: updatedPCKStoreClassesToSynchronize,
 			customClassesToSynchronize: customClassesToSynchronize
 		)
-        if let currentUser = try? await PCKUser.current() {
-            try Self.setDefaultACL(defaultACL, for: currentUser)
-            await subscribeToClock()
-        }
+		do {
+			let currentUser = try await PCKUser.current()
+			try Self.setDefaultACL(defaultACL, for: currentUser)
+			await subscribeToClock()
+		} catch {
+			Logger.initializer.error("Not setting default ACL or subscribing to clock: \(error)")
+		}
     }
 
     /**
@@ -173,13 +182,13 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
 		uuid: UUID,
 		batchLimit: Int = 100,
 		auto: Bool,
-		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type]? = nil,
-		customClasses: [String: any PCKVersionable.Type]? = nil,
 		subscribeToRemoteUpdates: Bool,
-		defaultACL: ParseACL? = nil
+		replacePCKStoreClasses: [PCKStoreClass: any PCKVersionable.Type],
+		customClasses: [String: any PCKVersionable.Type]? = nil,
+		defaultACL: ParseACL?
 	) async throws {
-		let replacedClasses = replacePCKStoreClasses ?? [:]
-		let storeClasses = try PCKStoreClass.replaceRemoteConcreteClasses(replacedClasses)
+		let replacedClasses = replacePCKStoreClasses
+		let storeClasses = try PCKStoreClass.replaceConcreteClasses(replacedClasses)
 		try await self.init(
 			uuid: uuid,
 			batchLimit: batchLimit,

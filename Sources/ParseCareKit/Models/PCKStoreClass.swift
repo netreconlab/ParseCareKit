@@ -44,22 +44,25 @@ public enum PCKStoreClass: String, Hashable, CaseIterable, Sendable {
         }
     }
 
-    static func replaceRemoteConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable.Type]) throws -> [PCKStoreClass: any PCKVersionable.Type] {
-        var updatedClasses = try getConcrete()
-
-        for (key, value) in newClasses {
-            if isCorrectType(key, check: value) {
-                updatedClasses[key] = value
-            } else {
-                Logger.pullRevisions.debug("PCKStoreClass.replaceRemoteConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class is not compatibile")
-            }
-        }
-        return updatedClasses
+    static func replaceConcreteClasses(
+		_ newClasses: [PCKStoreClass: any PCKVersionable.Type]
+	) throws -> [PCKStoreClass: any PCKVersionable.Type] {
+        let concreteClasses = try getConcrete()
+		let replacedClasses = newClasses.reduce(into: concreteClasses) { (result, pair) in
+			if isCorrectType(pair.key, check: pair.value) {
+				result[pair.key] = pair.value
+			} else {
+				Logger.initializer.debug(
+					"PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(pair.key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class is not compatibile"
+				)
+			}
+		}
+        return replacedClasses
     }
 
     static func getConcrete() throws -> [PCKStoreClass: any PCKVersionable.Type] {
 
-        var concreteClasses: [PCKStoreClass: any PCKVersionable.Type] = [
+        let concreteClasses: [PCKStoreClass: any PCKVersionable.Type] = [
             .carePlan: PCKStoreClass.carePlan.getDefault(),
             .contact: PCKStoreClass.contact.getDefault(),
             .outcome: PCKStoreClass.outcome.getDefault(),
@@ -68,32 +71,18 @@ public enum PCKStoreClass: String, Hashable, CaseIterable, Sendable {
             .healthKitTask: PCKStoreClass.healthKitTask.getDefault()
         ]
 
-        for (key, value) in concreteClasses {
-            // swiftlint:disable for_where
-            if !isCorrectType(key, check: value) {
-                concreteClasses.removeValue(forKey: key)
-            }
-        }
+		let classes = concreteClasses.reduce(into: concreteClasses) { (result, pair) in
+			if !isCorrectType(pair.key, check: pair.value) {
+				result.removeValue(forKey: pair.key)
+			}
+		}
 
         // Ensure all default classes are created
-        guard concreteClasses.count == Self.allCases.count else {
+        guard classes.count == Self.allCases.count else {
             throw ParseCareKitError.couldntCreateConcreteClasses
         }
 
-        return concreteClasses
-    }
-
-    static func replaceConcreteClasses(_ newClasses: [PCKStoreClass: any PCKVersionable.Type]) throws -> [PCKStoreClass: any PCKVersionable.Type] {
-        var updatedClasses = try getConcrete()
-
-        for (key, value) in newClasses {
-            if isCorrectType(key, check: value) {
-                updatedClasses[key] = value
-            } else {
-                Logger.pullRevisions.debug("PCKStoreClass.replaceConcreteClasses(). Discarding class for `\(key.rawValue, privacy: .private)` because it's of the wrong type. All classes need to subclass a PCK concrete type. If you are trying to map a class to a OCKStore concreate type, pass it to `customClasses` instead. This class is not compatibile")
-            }
-        }
-        return updatedClasses
+        return classes
     }
 
     static func isCorrectType(_ type: PCKStoreClass, check: any PCKVersionable.Type) -> Bool {
