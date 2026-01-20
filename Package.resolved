@@ -1,5 +1,5 @@
 {
-  "originHash" : "9fa59e89f69eed4da1c81a17c013ccaee16e6e004c94ae0300fe3efb2f7fcb50",
+  "originHash" : "ccdd734622331f04e9101b5a9bb3366a38e3dab30e21669d925bb7db59bbd7a6",
   "pins" : [
     {
       "identity" : "carekit",
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/netreconlab/Parse-Swift.git",
       "state" : {
-        "revision" : "8baacc9f39ef86f80cb8a91aa7a1e7bb6faa547b",
-        "version" : "6.0.0"
+        "revision" : "41a3ccbe488ac8223bd5f7ec0a70f0eb59cf9438",
+        "version" : "6.0.2"
       }
     },
     {

@@ -196,13 +196,6 @@
 			path = Parse;
 			sourceTree = "<group>";
 		};
-		705DC91E2526A4B80035BBE3 /* ParseCareKitTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ParseCareKitTests;
-			sourceTree = "<group>";
-		};
 		70854C2E25218F2300BA2179 /* ParseCareKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,7 +276,6 @@
 				708D038D25218D3D00646C70 /* Sources */,
 				708D038E25218D7200646C70 /* Tests */,
 				70854C2E25218F2300BA2179 /* ParseCareKit */,
-				705DC91E2526A4B80035BBE3 /* ParseCareKitTests */,
 				708A2CA22A092EE100AAB18A /* TestHostAll */,
 				9119D5EC245618D7001B7AA3 /* Products */,
 				70F2E192254EFCB900B2EA5C /* Frameworks */,
@@ -1004,7 +996,7 @@
 			repositoryURL = "https://github.com/netreconlab/Parse-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
+				minimumVersion = 6.0.2;
 			};
 		};
 		70E55DB52DD43FF900FA85DD /* XCRemoteSwiftPackageReference "CareKitEssentials" */ = {
