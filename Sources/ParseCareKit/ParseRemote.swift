@@ -125,7 +125,7 @@ public final class ParseRemote: OCKRemoteSynchronizable, Sendable {
         - subscribeToRemoteUpdates: Automatically receive updates from other devices linked to this Clock.
         Requires `ParseLiveQuery` server to be setup.
         - pckStoreClassesToSynchronize: The PCK classes that should be synchronized
-		by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities..
+		by passing in the respective Key/Value pairs. Defaults to nil, which uses the standard default entities.
         - customClassesToSynchronize: Add custom classes to synchronize by passing in the respective key/value pair.
 		Defaults to nil.
         - defaultACL: The default access control list for which users can access or modify `ParseCareKit`
