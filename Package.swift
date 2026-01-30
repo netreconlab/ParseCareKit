@@ -26,11 +26,11 @@ let package = Package(
     dependencies: [
         .package(
 			url: "https://github.com/netreconlab/Parse-Swift.git",
-            .upToNextMajor(from: "6.0.3")
+            .upToNextMajor(from: "6.0.5")
 		),
 		.package(
 			url: "https://github.com/netreconlab/CareKitEssentials.git",
-			.upToNextMajor(from: "2.0.4")
+			.upToNextMajor(from: "2.0.6")
 		)
     ],
     targets: [
