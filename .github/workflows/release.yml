@@ -9,7 +9,7 @@ jobs:
   docs:
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Build and Deploy Docs
         run: set -o pipefail && env NSUnbufferedIO=YES Scripts/update-gh-pages-documentation-site
         env:

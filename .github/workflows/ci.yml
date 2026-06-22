@@ -17,7 +17,7 @@ jobs:
   xcode-test-ios:
     runs-on: macos-26
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build and Test
@@ -45,7 +45,7 @@ jobs:
   xcode-test-macos:
     runs-on: macos-26
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Install SwiftLint
       run: brew install swiftlint
     - name: Build and Test
@@ -73,7 +73,7 @@ jobs:
   xcode-build-watchos:
     runs-on: macos-26
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Upload codecov yml
       run: |
         cat .codecov.yml | curl --data-binary @- https://codecov.io/validate
@@ -86,7 +86,7 @@ jobs:
     timeout-minutes: 15
     runs-on: macos-26
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Create and set the default keychain
       run: |
         KEYCHAIN_NAME="temporary-${GITHUB_RUN_ID}"
@@ -104,7 +104,7 @@ jobs:
     timeout-minutes: 15
     runs-on: macos-15
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Create and set the default keychain
       run: |
         KEYCHAIN_NAME="temporary-${GITHUB_RUN_ID}"
@@ -121,7 +121,7 @@ jobs:
   docs:
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Generate Docs
         run: set -o pipefail && env NSUnbufferedIO=YES Scripts/generate-documentation
         env:
